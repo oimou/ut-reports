@@ -1,0 +1,542 @@
+\documentclass[report]{jlreq}
+\usepackage{global}
+\usepackage{./local}
+\subfiletrue
+\def\assetspath{../}
+%\makeindex
+\chead{2023/04/25}
+\begin{document}
+
+% ============================================================
+%
+% ============================================================
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{導入と振り返り}
+
+前回、指数型分布族を
+4つ組$(\calP, \mu, \Theta, \calX)$として定義した
+($\calP$は確率分布の族、$\mu$は$\sigma$-有限測度、$\Theta$は添字集合、$\calX$は可測空間)。
+しかし発表時の指摘により、うまく定義すれば4つ組を持ち出さずとも
+$\calP$のみで「指数型分布族」を定義できるらしいことがわかった。
+そこで本稿では指数型分布族を改めて定義し直し、
+新たな定義に基づいて指数型分布族の性質と具体例を調べる。
+定義は Dropbox の吉野先生の資料 (I01-...などで始まるもの) と、そこで参考文献に挙げられていた
+\cite[Chap. 3]{wainwright_graphical_2007} を参考にした。
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{指数型分布族の定義}
+
+指数型分布族を定義する。
+本稿では、可測空間$\calX$上の確率測度全体の集合を
+$\calP(\calX)$と書くことにする。
+
+\begin{definition}[指数型分布族]
+    \label[definition]{def:exponential-family}
+    $\calX$を可測空間、
+    $\emptyset \neq \calP \subset \calP(\calX)$とする。
+    $\calP$が$\calX$上の
+    \term{指数型分布族}[exponential family]
+        {指数型分布族}[しすうがたぶんぷぞく]
+    であるとは、次が成り立つことをいう:
+    $\exists \; (T, \mu)$ s.t.
+    \begin{description}
+        \item[(E1)] $T \colon \calX \to \R^m$ ($m \in \Z_{\ge 0}$) は可測写像である。
+        \item[(E2)] $\mu$は$\calX$上の$\sigma$-有限測度であり、
+            $\forall \; p \in \calP$に対し$p \ll \mu$をみたす。
+        \item[(E3)] $\forall \; p \in \calP$に対し、
+            $\exists \; \theta \in \R^m$ s.t.
+            \begin{equation}
+                \dd[p]{\mu}(x)
+                    = \frac{
+                        \exp \langle \theta, T(x) \rangle
+                    }{
+                        \int_\calX \exp \langle \theta, T(y) \rangle \, \mu(dy)
+                    }
+                    \quad
+                    \text{$\mu$-a.e. $x \in \calX$}
+            \end{equation}
+            である。
+            ただし$\langle \cdot, \cdot \rangle$は$\R^m$の標準的な内積である。
+    \end{description}
+    さらに次のように定める:
+    \begin{itemize}
+        \item $(T, \mu)$を$\calP$の
+            \term{実現}[representation]
+            {実現}[じつげん]
+            という。
+            \begin{itemize}
+                \item $m$を$(T, \mu)$の
+                    \term{次元}[dimension]{次元}[じげん]
+                    という。
+                \item $T$を$(T, \mu)$の
+                    \term{十分統計量}[sufficient statistic]
+                    {十分統計量}[じゅうぶんとうけいりょう]
+                    という。
+                \item $\mu$を$(T, \mu)$の
+                    \term{基底測度}[base measure]
+                    {基底測度}[きていそくど]
+                    という。
+            \end{itemize}
+        \item 集合$\Theta_{(T, \mu)}$
+            \begin{equation}
+                \Theta_{(T, \mu)}
+                    \coloneqq \mybrace{
+                        \theta \in \R^m
+                        \;\Big|\;
+                        \int_\calX \exp \langle \theta, T(y) \rangle \, \mu(dy) < +\infty
+                    }
+            \end{equation}
+            を$(T, \mu)$の
+            \term{自然パラメータ空間}[natural parameter space]
+            {自然パラメータ空間}[しぜんぱらめーたくうかん]
+            という。
+        \item 関数$\psi \colon \Theta_{(T, \mu)} \to \R,$
+            \begin{equation}
+                \psi(\theta)
+                    \coloneqq
+                    \log \int_\calX \exp \langle \theta, T(y) \rangle \, \mu(dy)
+            \end{equation}
+            を$(T, \mu)$の
+            \term{対数分配関数}[log-partition function]
+            {対数分配関数}[たいすうぶんぱいかんすう]
+            という。
+    \end{itemize}
+\end{definition}
+
+対数分配関数の性質は本稿ではまだ扱わない。
+自然パラメータ空間は次の性質を持つ。
+
+\begin{proposition}[自然パラメータ空間は凸集合]
+    $\Theta_{(T, \mu)}$は$\R^m$の凸集合である。
+\end{proposition}
+
+\begin{proof}
+    表記の簡略化のため$\Theta \coloneqq \Theta_{(T, \mu)}$とおく。
+    $\theta, \theta' \in \Theta, \; t \in (0, 1)$とし、
+    $(1 - t) \theta + t \theta' \in \Theta$を示せばよい。
+    そこで$p \coloneqq \frac{1}{1 - t}, \; q \coloneqq \frac{1}{t}$とおくと、
+    $p, q \in (1, +\infty)$であり、
+    $\frac{1}{p} + \frac{1}{q} = (1 - t) + t = 1$であり、
+    $e^{(1 - t)\langle \theta, T(x) \rangle} \in L^p(\calX, \mu)$かつ
+    $e^{t \langle \theta', T(x) \rangle} \in L^q(\calX, \mu)$だから、
+    H\"older の不等式より
+    \begin{alignat}{1}
+        \int_\calX e^{\langle (1 - t) \theta + t \theta', T(x) \rangle} \, \mu(dx)
+            &= \int_\calX
+                e^{(1 - t) \langle \theta, T(x) \rangle}
+                e^{t \langle \theta', T(x) \rangle}
+                \, \mu(dx) \\
+            &\le \myparen{
+                \int_\calX
+                e^{(1 - t) \langle \theta, T(x) \rangle p}
+                \, \mu(dx)
+            }^{1 / p}
+            \myparen{
+                \int_\calX
+                e^{t \langle \theta, T(x) \rangle q}
+                \, \mu(dx)
+            }^{1 / q} \\
+            &= \myparen{
+                \int_\calX
+                e^{\langle \theta, T(x) \rangle}
+                \, \mu(dx)
+            }^{1 / p}
+            \myparen{
+                \int_\calX
+                e^{\langle \theta, T(x) \rangle}
+                \, \mu(dx)
+            }^{1 / q} \\
+            &< +\infty
+    \end{alignat}
+    が成り立つ。
+    したがって$(1 - t) \theta + t \theta' \in \Theta$である。
+\end{proof}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{指数型分布族の具体例}
+
+指数型分布族の具体例を挙げる。
+
+\begin{example}[有限集合上の確率分布]
+    \label[example]{ex:finite-set}
+    $\calX = \{ 1, \dots, n \}$、$\gamma$を$\calX$上の数え上げ測度とする。
+    $\calX$上の確率分布全体の集合$\calP(\calX)$が
+    $\calX$上の指数型分布族であることを確かめる。
+    $\delta^j \; (j = 1, \dots, n)$を点$j$での Dirac 測度とおく。
+    任意の$P \in \calP(\calX)$に対し、
+    \begin{equation}
+        P(dk)
+            \coloneqq \sum_{j = 1}^n a_j \delta^j(dk),
+            \quad
+            a_1, \dots, a_n \in \R_{> 0},
+            \quad
+            \sum_{j = 1}^n a_j = 1
+    \end{equation}
+    が成り立つから、
+    $\delta_{jk} \; (j, k = 1, \dots, n)$を
+    Kronecker のデルタとして
+    \begin{alignat}{1}
+        P(dk)
+            &= \exp\myparen{
+                \sum_{j = 1}^n (\log a_j) \delta_{jk}
+            } \, \gamma(dk) \\
+            &= \exp\myparen{
+                \sum_{j = 1}^n \theta_j \delta_{jk}
+            } \, \gamma(dk)
+    \end{alignat}
+    (ただし$\theta_j \coloneqq \log a_j$)
+    と表せる。
+    したがって$T \colon \calX \to \R^n, \;
+        k \mapsto \up{t}(\delta_{1k}, \dots, \delta_{nk})$
+    とおけば、
+    $(T, \gamma)$を実現として
+    $\calP(\calX)$は指数型分布族となることがわかる。
+\end{example}
+
+\begin{example}[正規分布族]
+    $\calX = \R$、
+    $\lambda$を$\R$上の Lebesgue 測度とする。
+    $\calX$上の確率分布の集合
+    \begin{equation}
+        \calP \coloneqq \mybrace{
+            P_{(\mu, \sigma^2)}(dx)
+                = \frac{1}{\sqrt{2\pi\sigma^2}} \exp\myparen{
+                    -\frac{(x - \mu)^2}{2\sigma^2}
+                } \lambda(dx)
+            \;\Big|\;
+            \mu \in \R, \; \sigma^2 > 0
+        }
+    \end{equation}
+    を\term{正規分布族}[family of normal distributions]
+        {正規分布族}[せいきぶんぷぞく]
+    という。
+    このとき$\calP$が$\calX$上の指数型分布族であることを確かめる。
+    任意の$P_{(\mu, \sigma^2)} \in \calP$に対し
+    \begin{alignat}{1}
+        P_{(\mu, \sigma^2)}(dx)
+            &= \frac{1}{\sqrt{2\pi\sigma^2}} \exp\myparen{
+                -\frac{(x - \mu)^2}{2\sigma^2}
+            } \lambda(dx) \\
+            &= \exp\myparen{
+                -\frac{1}{2\sigma^2} (x^2 - 2\mu x + \mu^2)
+                -\frac{1}{2} \log 2\pi\sigma^2
+            } \lambda(dx) \\
+            &= \exp\myparen{
+                \begin{bmatrix}
+                    \frac{\mu}{\sigma^2} & -\frac{1}{2\sigma^2}
+                \end{bmatrix}
+                \begin{bmatrix}
+                    x \\ x^2
+                \end{bmatrix}
+                - \frac{\mu^2}{2\sigma^2}
+                - \frac{1}{2} \log 2\pi\sigma^2
+            } \lambda(dx) \\
+            &= \exp\myparen{
+                \begin{bmatrix}
+                    \theta_1 & \theta_2
+                \end{bmatrix}
+                \begin{bmatrix}
+                    x \\ x^2
+                \end{bmatrix}
+                + \frac{\theta_1^2}{4\theta_2}
+                - \frac{1}{2} \log\myparen{-\frac{\pi}{\theta_2}}
+            } \lambda(dx)
+    \end{alignat}
+    (ただし$\theta_1 \coloneqq \frac{\mu}{\sigma^2}, \;
+        \theta_2 \coloneqq -\frac{1}{2\sigma^2}$)
+    が成り立つから、
+    $T \colon \calX \to \R^2, x \mapsto \up{t}(x, x^2)$
+    とおけば、
+    $(T, \lambda)$を実現として
+    $\calP$は指数型分布族となることがわかる。
+\end{example}
+
+\begin{example}[Poisson 分布族]
+    $\calX = \N$、
+    $\gamma$を$\N$上の数え上げ測度とする。
+    $\calX$上の確率分布の集合
+    \begin{equation}
+        \calP \coloneqq \mybrace{
+            P_\lambda(dk)
+                = \frac{\lambda^k}{k!} e^{-\lambda} \, \gamma(dk)
+            \;\Big|\;
+            \lambda > 0
+        }
+    \end{equation}
+    を$P_\lambda$を\term{Poisson 分布族}[family of Poisson distributions]
+        {Poisson 分布族}[Poisson ぶんぷぞく]
+    という。
+    このとき$\calP$が$\calX$上の指数型分布族であることを確かめる。
+    任意の$P_\lambda \in \calP$に対し
+    \begin{alignat}{1}
+        P_\lambda(dk)
+            &= \frac{\lambda^k}{k!} e^{-\lambda} \, \gamma(dk) \\
+            &= \exp\myparen{
+                k \log\lambda - \lambda
+            } \frac{1}{k!} \, \gamma(dk) \\
+            &= \exp\myparen{
+                \theta k - e^\theta
+            } \frac{1}{k!} \, \gamma(dk)
+    \end{alignat}
+    (ただし$\theta \coloneqq \log \lambda$)
+    が成り立つから、
+    $T \colon \calX \to \R, k \mapsto k$
+    とおけば、
+    $\myparen{ T, \frac{1}{k!} \gamma(dk) }$を実現として
+    $\calP$は指数型分布族となることがわかる。
+\end{example}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{極小実現}
+
+一般の$(T, \mu)$に対しては、
+各$p \in \calP$に対し
+\cref{def:exponential-family}の条件(E3)をみたす
+$\theta \in \Theta_{(T, \mu)}$は一意とは限らないが\footnote{
+    たとえば$T$の第$i$成分関数$T_i$が零写像ならば、
+    $\langle \theta, T(x) \rangle$は
+    $\theta$の第$i$成分の値によらず決まるため、
+    $\theta$の第$i$成分を動かしたものはすべて
+    \cref{def:exponential-family}の条件(E3)をみたす。
+}、
+この一意性を持つ実現は特に重要である。
+
+\begin{definition}[極小実現]
+    $\calX$を可測空間、
+    $\calP \subset \calP(\calX)$を
+    $\calX$上の指数型分布族とする。
+    $\calP$の実現$(T, \mu)$であって、
+    各$p \in \calP$に対し、
+    \cref{def:exponential-family}の条件(E3)を満たす$\theta$が
+    ただひとつ定まるようなものを、
+    $\calP$の
+    \term{極小実現}[minimal representation]
+        {極小実現}[きょくしょうじつげん]
+    という\footnote{
+        極小実現は$\calP$に対し一意とは限らない。
+        実際、$(T, \mu)$が極小実現ならば、
+        任意の直交行列$A \in \O(m)$に対し
+        $\langle A\theta, AT(x) \rangle = \langle \theta, T(x) \rangle$
+        ゆえに$(AT, \mu)$も極小実現となる。
+    }。
+    \TODO{できれば吉野先生に倣って「最小次元実現」と訳したいが、
+        本稿でいう極小実現が必ずしも次元最小であるかどうかわからなかったので、
+        ひとまず「極小実現」と訳すことにする。}
+\end{definition}
+
+\begin{theorem}[極小実現の存在]
+    $\calX$を可測空間、
+    $\calP \subset \calP(\calX)$を
+    $\calX$上の指数型分布族とする。
+    このとき、$\calP$の極小実現が存在する。
+\end{theorem}
+
+\begin{proof}
+    $(T, \mu)$は$\calP$の実現のうちで次元が最小のものであるとする。
+    $(T, \mu)$が極小実現であることを示す。
+    背理法のために$(T, \mu)$が極小実現でないこと、すなわち
+    ある$p_0 \in \calP$および
+    $\theta_0, \theta_0' \in \R^m, \; \theta_0 \neq \theta_0'$が存在して
+    \begin{equation}
+        \exp\myparen{\langle \theta_0, T(x) \rangle - \psi(\theta_0)}
+            = \dd[p_0]{\mu}(x)
+            = \exp\myparen{\langle \theta_0', T(x) \rangle - \psi(\theta_0')}
+            \qquad
+            \text{$\mu$-a.e. $x \in \calX$}
+    \end{equation}
+    が成り立つことを仮定する。
+    式を整理して
+    \begin{equation}
+        \langle \theta_0 - \theta_0', T(x) \rangle
+            = \psi(\theta_0) - \psi(\theta_0')
+            \qquad
+            \text{$\mu$-a.e. $x \in \calX$}
+    \end{equation}
+    を得る。
+    いま背理法の仮定より$\theta_0 - \theta_0' \neq 0$だから、
+    単位ベクトル$u \coloneqq (\theta_0 - \theta_0') / \|\theta_0 - \theta_0'\|$
+    が定義でき、
+    \begin{equation}
+        \langle u, T(x) \rangle
+            = \frac{1}{\|\theta_0 - \theta_0'\|}
+                (\psi(\theta_0) - \psi(\theta_0'))
+            \eqqcolon c
+    \end{equation}
+    ($c$は$x \in \calX$によらない定数)
+    が成り立つ。
+    ここで$u$を$e_1 = \up{t}(1, 0, \dots, 0)$に写す直交行列$A \in \O(m)$をひとつ選べば
+    \begin{alignat}{1}
+        c
+            &= \langle u, T(x) \rangle \\
+            &= \langle Au, AT(x) \rangle \\
+            &= \langle e_1, AT(x) \rangle \\
+            &= (AT(x))_1
+    \end{alignat}
+    (ただし$(AT(x))_i$は$AT(x)$の第$i$成分)
+    が成り立つ。
+
+    写像$T' \colon \calX \to \R^{m - 1}$を
+    $T'(x) \coloneqq \up{t}((AT(x))_2, \dots, (AT(x))_m)$と定め、
+    $(T', \mu)$が$\calP$の実現であることを示す。
+    まず$T'$は定め方より可測写像だから
+    \cref{def:exponential-family}の条件(E1)は満たされ、
+    また$\mu$は元々条件(E2)を満たしている。
+    あとは条件(E3)を確認すればよい。
+    そこで$p \in \calP$とする。
+    いま$(T, \mu)$が$\calP$の実現であることより、
+    ある$\theta \in \R^m$が存在して
+    \begin{equation}
+        \dd[p]{\mu}(x)
+            = \frac{
+                \exp\langle \theta, T(x) \rangle
+            }{
+                \int_{\calX} \exp\langle \theta, T(y) \rangle \, \mu(dy)
+            }
+            \qquad
+            \text{$\mu$-a.e. $x \in \calX$}
+    \end{equation}
+    が成り立つ。
+    ここで
+    $\theta'' \coloneqq ((A\theta)_2, \dots, (A\theta)_m) \in \R^{m - 1}$
+    とおくと
+    \begin{alignat}{1}
+        \langle \theta, T(x) \rangle
+            &= \langle A\theta, AT(x) \rangle \\
+            &= \sum_{i = 1}^m (A\theta)_i (AT(x))_i \\
+            &= (A\theta)_1 (AT(x))_1 + \sum_{i = 2}^m (A\theta)_i (AT(x))_i \\
+            &= \underbrace{(A\theta)_1 c}_{\eqqcolon d}
+                + \langle \theta'', T'(x) \rangle
+    \end{alignat}
+    ($d$は$x \in \calX$によらない定数)
+    が成り立つから
+    \begin{equation}
+        \dd[p]{\mu}(x)
+            = \frac{
+                \exp\myparen{d + \langle \theta'', T'(x) \rangle}
+            }{
+                \int_{\calX} \exp\myparen{d + \langle \theta'', T'(y) \rangle} \, \mu(dy)
+            }
+            = \frac{
+                \exp \langle \theta'', T'(x) \rangle
+            }{
+                \int_{\calX} \exp \langle \theta'', T'(y) \rangle \, \mu(dy)
+            }
+            \qquad
+            \text{$\mu$-a.e. $x \in \calX$}
+    \end{equation}
+    を得る。
+    したがって$(T', \mu)$は
+    \cref{def:exponential-family}の条件(E3)も満たし、
+    $\calP$の実現であることがいえた。
+    $(T', \mu)$は次元$m - 1$だから$(T, \mu)$の次元$m$の最小性に矛盾する。
+    背理法より$(T, \mu)$は$\calP$の極小実現である。
+\end{proof}
+
+\begin{theorem}[極小実現の性質]
+    $\calX$を可測空間、
+    $\calP \subset \calP(\calX)$を
+    $\calX$上の指数型分布族、
+    $(T, \mu)$を$\calP$の次元$m$の実現とする。
+    このとき、
+    $(T, \mu)$が極小実現ならば、
+    $\langle u, T(x) \rangle$が$\mu$-a.e. 定数であるような
+    $u \in \R^m$は$u = 0$のみである。
+\end{theorem}
+
+\begin{proof}
+    $(T, \mu)$を$\calP$の極小実現とする。
+    背理法のため、ある$u \neq 0$が存在して
+    $\langle u, T(x) \rangle$が$\calX$上$\mu$-a.e. 定数であると仮定しておく。
+    $p \in \calP$とし、
+    \cref{def:exponential-family}の条件(E3)の
+    $\theta \in \R^m$をひとつ選ぶと、
+    \begin{alignat}{1}
+        \dd[p]{\mu}(x)
+            &= \frac{
+                e^{\langle \theta, T(x) \rangle}
+            }{
+                \int_{\calX} e^{\langle \theta, T(y) \rangle} \, \mu(dy)
+            } \\
+            &= \frac{
+                e^{\langle \theta, T(x) \rangle}
+            }{
+                \int_{\calX} e^{\langle \theta, T(y) \rangle} \, \mu(dy)
+            }
+            \cdot \frac{
+                e^{\langle u, T(x) \rangle}
+            }{
+                e^{\langle u, T(x) \rangle}
+            } \\
+            &= \frac{
+                e^{\langle \theta + u, T(x) \rangle}
+            }{
+                \int_{\calX}
+                e^{\langle \theta, T(y) \rangle}
+                e^{\langle u, T(x) \rangle}
+                \, \mu(dy)
+            } \\
+            &= \frac{
+                e^{\langle \theta + u, T(x) \rangle}
+            }{
+                \int_{\calX}
+                e^{\langle \theta, T(y) \rangle}
+                e^{\langle u, T(y) \rangle}
+                \, \mu(dy)
+            } \\
+            &= \frac{
+                e^{\langle \theta + u, T(x) \rangle}
+            }{
+                \int_{\calX}
+                e^{\langle \theta + u, T(y) \rangle}
+                \, \mu(dy)
+            }
+    \end{alignat}
+    を得る。
+    したがって$\theta + u$も
+    \cref{def:exponential-family}の条件(E3)を満たすが、
+    いま$u \neq 0$より$\theta + u \neq \theta$だから、
+    $(T, \mu)$が$\calP$の極小実現であることに反する。
+    背理法より定理が示された。
+\end{proof}
+
+\begin{example}[有限集合上の確率分布族]
+    \cref{ex:finite-set}の$(T, \gamma)$は
+    $\calP(\calX)$の極小実現である。
+    実際、任意の$P \in \calP(\calX)$に対し、
+    $\theta_j$は
+    $\theta_j = \log P(\{ j \}) \; (j = 1, \dots, n)$として
+    一意に決まる。
+\end{example}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{次回以降の予定}
+
+\begin{itemize}
+    \item 期待値と分散の定義および基本性質
+    \item 対数分配関数の微分可能性およびその Hesse 行列の正定値性
+\end{itemize}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{参考文献}
+
+{
+    \renewcommand{\bibsection}{}
+    \bibliographystyle{amsalpha}
+    \bibliography{../../mybibliography}
+}
+
+
+\end{document}

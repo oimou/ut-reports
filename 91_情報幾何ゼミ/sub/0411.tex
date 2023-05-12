@@ -1,0 +1,567 @@
+\documentclass[report]{jlreq}
+\usepackage{global}
+\usepackage{./local}
+\subfiletrue
+\def\assetspath{../}
+%\makeindex
+\chead{2023/04/11}
+\begin{document}
+
+% ============================================================
+%
+% ============================================================
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{Introduction}
+
+情報幾何学とは、
+可微分多様体上の双対構造と呼ばれる幾何学的構造を扱う、
+幾何学の一分野である。
+情報幾何の重要な応用先のひとつは統計的推定であり、
+推定の問題を幾何学的に捉えなおすことで、より深い理解につながることが期待される。
+
+情報幾何が統計的推定へどのように応用されるかをみるために、
+本稿では指数型分布族および混合型分布族について説明する。
+指数型/混合型分布族とは、ある可測空間上の確率測度からなる族の一種である。
+指数型分布族は、正規分布や Poisson 分布など基本的な確率分布が属するクラスであり、
+数学的にもよい性質を備えている\TODO{どのような？}。
+混合型分布族は、いくつかの確率分布の重み付け和からなる族であり、
+応用上重要なクラスである。
+
+指数型/混合型分布族は確率密度関数の形によって定義される。
+そこで本稿では、まず測度論の基本事項を復習した後、
+確率空間や確率変数などの確率論の基本事項を整理する。
+その後、指数型分布族と混合型分布族の定義および具体例を与える。
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{Radon-Nikod\'ym の定理と H\"older の不等式}
+
+Radon-Nikod\'ym の定理について復習する。
+
+\begin{definition}[絶対連続]
+    $(\calX, \calB)$を可測空間、
+    $\mu, \nu$を$\calX$上の測度とする。
+    $\nu$が$\mu$に関し
+    \term{絶対連続}[absolutely continuous]{絶対連続}[ぜったいれんぞく]
+    であるとは、
+    任意の$E \in \calB$に対し
+    $\mu(E) = 0$ならば$\nu(E) = 0$が成り立つことをいう。
+\end{definition}
+
+\begin{theorem}[Radon-NIkod\'ym の定理]
+    $(X, \calB)$を可測空間、
+    $\mu$を$X$上の$\sigma$-有限測度、
+    $\nu$を$X$上の測度とする。
+    このとき、
+    $\nu$が$\mu$に関して絶対連続であるための必要十分条件は、
+    $\mu$-a.e. $x \in X$に対し定義された
+    可積分関数$f$が存在して
+    \begin{equation}
+        \nu(E) = \int_E f(x) \, d\mu(x)
+            \quad
+            (E \in \calB)
+    \end{equation}
+    が成り立つことである。
+    この$f$を$\mu$に関する$\nu$の
+    \term{Radon-Nikod\'ym 微分}[Radon-Nikod\'ym derivative]
+        {Radon-Nikod\'ym 微分}[Radon-Nikod\'ym びぶん]
+    といい、
+    $\frac{d\nu}{d\mu}$と書く。
+\end{theorem}
+
+Radon-Nikod\'ym 微分のイメージとしては、
+$\mu$の変化に対する$\nu$の変化率を表している。
+
+\begin{proof}
+    関数族の$\sup$として$f$を構成する。
+\end{proof}
+
+H\"older の不等式について復習する。
+
+\begin{proposition}[H\"older の不等式]
+    $(\calX, \calB)$を可測空間、
+    $\mu$を$\calX$上の測度とする。
+    $1 < p < \infty$、$q = p(p - 1)^{-1}$、
+    $f$を$p$乗$\mu$-可積分関数、
+    $g$を$q$乗$\mu$-可積分関数とする。
+    このとき、$fg$は$\mu$-可積分であり、かつ
+    \begin{equation}
+        \int_\calX |fg| \mu(dx)
+            \le \myparen{
+                \int_\calX |f|^{p} \mu(dx)
+            }^{\frac{1}{p}}
+            \myparen{
+                \int_\calX |g|^{q} \mu(dx)
+            }^{\frac{1}{q}}
+    \end{equation}
+    が成り立つ。
+\end{proposition}
+
+\begin{proof}
+    Young の不等式を使う。
+\end{proof}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{確率論の基本事項}
+
+確率論の基本事項を整理する。
+
+\subsection{確率空間}
+
+\begin{definition}[確率空間]
+    測度空間$(\Omega, \calF, P)$であって
+    \begin{enumerate}
+        \item 各$E \in \calF$に対し$P(E) \ge 0$
+        \item $P(\Omega) = 1$
+    \end{enumerate}
+    をみたすものを
+    \term{確率空間}[probability space]{確率空間}[かくりつくうかん]
+    といい、
+    $P$を$(\Omega, \calF)$上の
+    \term{確率測度}[probability measure]{確率測度}[かくりつそくど]
+    あるいは
+    \term{確率分布}[probability distribution]{確率分布}[かくりつぶんぷ]
+    という。
+\end{definition}
+
+\begin{definition}[確率変数]
+    $(\Omega, \calF, P)$を確率空間、
+    $(\calX, \calA)$を可測空間とする。
+    可測関数$X \colon (\Omega, \calF) \to (\calX, \calA)$を
+    $(\calX, \calA)$に値をもつ
+    \term{確率変数}[random variable; r.v.]{確率変数}[かくりつへんすう]
+    という。
+\end{definition}
+
+\begin{definition}[確率変数の確率分布]
+    $(\Omega, \calF, P)$を確率空間、
+    $X \colon (\Omega, \calF) \to (\calX, \calA)$を確率変数とする。
+    このとき、写像
+    \begin{equation}
+        P^X \colon \calA \to [0, +\infty),
+            \quad
+            E \mapsto P(X^{-1}(E))
+            \quad
+            (E \in \calA)
+    \end{equation}
+    は$(\calX, \calA)$上の確率測度となる。
+    これを
+    \term{$X$の確率分布}[probability distribution of $X$]
+        {確率分布!確率変数の---}[かくりつぶんぷ]
+    という。
+
+    $X$の確率分布が$(\calX, \calA)$上のある確率分布$\nu$に等しいとき、
+    $X$は
+    \term{$\nu$に従う}{確率分布に従う}[かくりつぶんぷにしたがう]
+    という。
+\end{definition}
+
+\begin{definition}[確率密度関数]
+    $(\calX, \calA)$を可測空間、
+    $\mu$を$\calX$上の$\sigma$-有限測度、
+    $\nu$を$\mu$に関し絶対連続な$(\calX, \calA)$上の確率測度とする。
+    このとき、
+    $\nu$の$\mu$に関する Radon-NIkod\'ym 微分
+    $\dd[\nu]{\mu}$を、
+    $\nu$の\term{確率密度関数}[probability density function; PDF]
+        {確率密度関数}[かくりつみつどかんすう]
+    という。
+\end{definition}
+
+
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{指数型分布族と混合型分布族}
+
+\subsection{指数型分布族}
+
+指数型分布族について述べる。
+
+\begin{definition}[指数型分布族]
+    $(\calX, \calA)$を可測空間、
+    $\mu$を$(\calX, \calA)$上の$\sigma$-有限測度、
+    $\Theta \subset \R^n$を部分集合、
+    $\calP = (P_\theta)_{\theta \in \Theta}$を
+    $\calX$上の確率分布族とする。
+    ここで、ある
+    \begin{itemize}
+        \item $m \in \Z_{\ge 1}$
+        \item $\calX$上の可測関数$g \colon \calX \to \R_{\ge 0}$
+        \item $\calX$上の可測関数$T_i \colon \calX \to \R \; (i = 1, \dots, m)$
+        \item $\Theta$上の関数$\psi \colon \Theta \to \R$
+            および$a_i \colon \Theta \to \R \; (i = 1, \dots, m)$
+    \end{itemize}
+    が存在し、各$P_\theta$が$\mu$に関し絶対連続で、
+    確率密度関数が
+    \begin{equation}
+        \locallabel{eq:expfam}
+        \frac{dP_\theta}{d\mu}(x)
+            = g(x) \exp\myparen{
+                \sum_{i = 1}^m a_i(\theta) T_i(x)
+                - \psi(\theta)
+            }
+            \quad
+            \text{$\mu$-a.e. $x \in \calX$}
+    \end{equation}
+    となるとき、
+    $\calP$を\term{指数型分布族}[exponential family]
+        {指数型分布族}[しすうがたぶんぷぞく]
+    という。
+    \localcref{eq:expfam}を
+    \begin{equation}
+        P_\theta(dx) = g(x) \exp\myparen{
+            \sum_{i = 1}^m a_i(\theta) T_i(x)
+            - \psi(\theta)
+        } \mu(dx)
+    \end{equation}
+    とも書く。
+    \begin{itemize}
+        \item $g \colon \calX \to \R_{\ge 0}$
+        \item $a_i(\theta) = \theta_i \; (i = 1, \dots, m)$のとき
+            \term{正準形}[canonical form]{正準形}[せいじゅんけい]
+            という。
+            $a_i(\theta) \; (i = 1, \dots, m)$を
+            \term{自然パラメータ}[natural parameter]{自然パラメータ}[しぜんぱらめーた]
+            という。
+        \item 十分統計量$T_i \colon \calX \to \Theta$
+        \item 対数分配関数$\psi \colon \Theta \to \R$
+    \end{itemize}
+\end{definition}
+
+対数分配関数の形は$g, a_i, T_i$によって決まる。
+
+\begin{proposition}[対数分配関数の式]
+    対数分配関数$\psi$は
+    \begin{equation}
+        \psi(\theta)
+            = \log \int_\calX g(x) \exp\myparen{
+                \langle a(\theta), T(x) \rangle
+            } \mu(dx)
+    \end{equation}
+    と表せる\footnote{
+        $e^{\psi(\theta)} = \int_\calX g(x) \exp\myparen{
+            \langle a(\theta), T(x) \rangle
+        } \mu(dx)$は0より大きい実数だから$\psi$は確かに定義される。
+    }。
+    ただし$\langle a(\theta), T(x) \rangle$は
+    $\sum_{i = 1}^m a_i(\theta) T_i(x)$の意味である。
+\end{proposition}
+
+\begin{proof}
+    $P_\theta$が確率測度であることより
+    \begin{equation}
+        1
+            = P_\theta(\calX)
+            = \int_\calX g(x) \exp\myparen{
+                \langle a(\theta), T(x) \rangle
+                - \psi(\theta)
+            } \mu(dx)
+    \end{equation}
+    が成り立つ。$\exp(\psi(\theta))$を両辺にかけて
+    \begin{equation}
+        \exp(\psi(\theta))
+            = \int_\calX g(x) \exp\myparen{
+                \langle a(\theta), T(x) \rangle
+            } \mu(dx)
+    \end{equation}
+    となり、対数をとって命題の式が得られる。
+\end{proof}
+
+以下に指数型分布族に関する具体例を挙げる。
+
+\begin{example}[正規分布]
+    $(\calX, \calA) = (\R, \calB(\R))$、
+    $\mu$は$\R$上の Lebesgue 測度、
+    $\Theta = \R \times \R_{> 0}$の場合を考える。
+    $(\mu, \sigma^2) \in \Theta$に対し、
+    \begin{equation}
+        P_{(\mu, \sigma^2)}(dx)
+            = \frac{1}{\sqrt{2\pi\sigma^2}} \exp\myparen{
+                -\frac{(x - \mu)^2}{2\sigma^2}
+            } \mu(dx)
+    \end{equation}
+    で定義される確率分布$P_{(\mu, \sigma^2)}$を\term{正規分布}[normal distribution]
+        {正規分布}[せいきぶんぷ]
+    という。
+    このとき$\{ P_{\mu, \sigma^2} \}_{(\mu, \sigma^2) \in \Theta}$が指数型分布族であることを確かめる。
+    \begin{alignat}{1}
+        P_{(\mu, \sigma^2)}(dx)
+            &= \frac{1}{\sqrt{2\pi\sigma^2}} \exp\myparen{
+                -\frac{(x - \mu)^2}{2\sigma^2}
+            } \mu(dx) \\
+            &= \exp\myparen{
+                -\frac{1}{2\sigma^2} (x^2 - 2\mu x + \mu^2)
+                -\frac{1}{2} \log 2\pi\sigma^2
+            } \mu(dx) \\
+            &= \exp\myparen{
+                \begin{bmatrix}
+                    -\frac{1}{2\sigma^2} & \frac{\mu}{\sigma^2}
+                \end{bmatrix}
+                \begin{bmatrix}
+                    x^2 \\ x
+                \end{bmatrix}
+                - \frac{\mu^2}{2\sigma^2}
+                - \frac{1}{2} \log 2\pi\sigma^2
+            } \mu(dx)
+    \end{alignat}
+    となるから、
+    $g(x) = 1, \;
+        a_1(\mu, \sigma^2) = -\frac{1}{2\sigma^2}, \;
+        a_2(\mu, \sigma^2) = \frac{\mu}{\sigma^2}, \;
+        T_1(x) = x^2, \;
+        T_2(x) = x, \;
+        \psi(\mu, \sigma^2) = \frac{\mu^2}{2\sigma^2} + \frac{1}{2} \log 2\pi\sigma^2$
+    とおけばよいことがわかる。
+    \TODO{十分統計量から自然パラメータを推定できる？}
+\end{example}
+
+\begin{example}[Poisson 分布]
+    $(\calX, \calA) = (\N, 2^\N)$、
+    $\mu$は$\N$上の数え上げ測度、
+    $\Theta = \R_{> 0}$の場合を考える。
+    \begin{equation}
+        P_\lambda(dk)
+            = \frac{\lambda^k}{k!} \exp(-\lambda) \mu(dk)
+    \end{equation}
+    で定義される確率分布$P_\lambda$を\term{Poisson 分布}[Poisson distribution]
+        {Poisson 分布}[Poisson 分布]
+    という。
+    このとき$\{ P_\lambda \}_{\lambda > 0}$が指数型分布族であることを確かめる。
+    \begin{alignat}{1}
+        P_\lambda(dk)
+            &= \frac{\lambda^k}{k!} \exp(-\lambda) \mu(dk) \\
+            &= \frac{1}{k!} \exp\myparen{
+                k \log\lambda - \lambda
+            } \mu(dk)
+    \end{alignat}
+    となるから、
+    $g(k) = \frac{1}{k!}, \;
+        a_1(\lambda) = \log\lambda, \;
+        T_1(k) = k, \;
+        \psi(\lambda) = \lambda$
+    とおけばよいことがわかる。
+\end{example}
+
+\begin{example}[指数型分布族でない例]
+    $(\calX, \calA) = (\R, \calB(\R))$、
+    $\mu$は$\R$上の Lebesgue 測度、
+    $\Theta = \R_{> 0}$の場合を考える。
+    $\R$上の一様分布の族
+    \begin{equation}
+        \locallabel{eq:uniform}
+        \mybrace{ P_\theta }_{\theta > 0},
+            \qquad
+            \dd[P_\theta]{\mu}(x) = \begin{cases}
+                \frac{1}{\theta} & 0 \leq x \leq \theta \\
+                0 & \text{otherwise}
+            \end{cases}
+    \end{equation}
+    を考える。
+    これは指数型分布族ではないことを確かめる。
+    もし指数型分布族であったとすると
+    $\dd[P_\theta]{\mu}(x) = g(x) e^{\varphi(x, \theta)}$
+    と表せる ($g$は$\theta$によらない関数)。
+    そこでとくに$\theta = 1, x = 2$に対し
+    \begin{equation}
+        0 = \dd[P_1]{\mu}(2) = g(2) e^{\varphi(2, 1)}
+    \end{equation}
+    より$g(2) = 0$となる。一方$\theta = 2, x = 2$に対し
+    \begin{equation}
+        \frac{1}{2} = \dd[P_2]{\mu}(2) = g(2) e^{\varphi(2, 2)}
+    \end{equation}
+    より$g(2) \neq 0$となり矛盾が従う。
+    よって\localcref{eq:uniform}は指数型分布族ではない。
+\end{example}
+
+\begin{example}[Cauchy 分布]
+    \TODO{}
+\end{example}
+
+さて指数型分布族の定義では$g, a_i, T_i, \psi$などいくつかの関数が出てきた。
+ここではとくに$\psi$に着目してその性質を調べる。
+
+\begin{proposition}[対数分配関数の凸性]
+    $\Theta \subset \R^n$が凸集合で
+    $a_i(\theta) = \theta_i \; (i = 1, \dots, n)$ならば、
+    対数分配関数$\psi$は凸関数である。
+\end{proposition}
+
+\begin{proof}
+    示したいことは
+    \begin{equation}
+        \psi(t\theta + (1 - t)\theta')
+            \leq t \psi(\theta) + (1 - t) \psi(\theta')
+            \quad
+            (\forall t \in (0, 1), \; \theta, \theta' \in \Theta)
+    \end{equation}
+    である。
+    \begin{alignat}{1}
+        \psi(t\theta + (1 - t)\theta')
+            &= \log \int_\calX
+                g(x)
+                \exp \langle t\theta + (1 - t)\theta', T(x) \rangle
+                \mu(dx) \\
+            &= \log \int_\calX
+                g(x)^t
+                \exp t \langle \theta, T(x) \rangle \;
+                g(x)^{1 - t}
+                \exp (1 - t) \langle \theta', T(x) \rangle
+                \mu(dx) \\
+            &\le \log \myparen{
+                \int_\calX
+                g(x)
+                \exp \langle \theta, T(x) \rangle
+                \mu(dx)
+            }^t
+            \myparen{
+                \int_\calX
+                g(x)
+                \exp \langle \theta', T(x) \rangle
+                \mu(dx)
+            }^{1 - t}
+                \quad \text{(H\"older の不等式)} \\
+            &= t \log \int_\calX
+                g(x)
+                \exp \langle \theta, T(x) \rangle
+                \mu(dx)
+            + (1 - t) \log \int_\calX
+                g(x)
+                \exp \langle \theta', T(x) \rangle
+                \mu(dx) \\
+            &= t \psi(\theta) + (1 - t) \psi(\theta')
+    \end{alignat}
+    よって示せた。
+\end{proof}
+
+\begin{proposition}[対数分配関数の微分可能性]
+    $\Theta \subset \R^n$が開集合で
+    $a_i(\theta) = \theta_i \; (i = 1, \dots, n)$ならば、
+    対数分配関数$\psi$は$\Theta$上で任意回微分可能である。
+\end{proposition}
+
+\begin{proof}
+    証明の要点に集中するために、$n = 1$の場合のみ示す。
+    積分記号下での微分を行うため、次の claim を示す。
+    \begin{itemize}
+        \item 任意の$k \in \Z_{\ge 0}$と$\theta \in \Theta$に対し、
+            $g(x) T(x)^k e^{\theta T(x)}$は$\calX$上$\mu$-可積分である。
+    \end{itemize}
+    \begin{innerproof}
+        $k \in \Z_{\ge 0}$に関する帰納法で示す。
+        $k = 0$で成り立つことは、
+        すべての$\theta \in \Theta$に対し
+        $\psi(\theta)$が定義されることからわかる。
+
+        与えられた$k \in \Z_{\ge 0}$で成立を仮定し、
+        $k + 1$での成立を示す。
+        $\theta \in \Theta$を任意に固定する。
+        $\Theta$が開集合であることから、
+        ある$\theta' > 0$が存在して$\theta \pm \theta' \in \Theta$が成り立つ。
+        $g(x) T(x)^{k + 1} e^{\theta T(x)}$が$\calX$上$\mu$-可積分であることを示すため、
+        $|g(x) T(x)^{k + 1} e^{\theta T(x)}| \le \Phi_\theta(x)$なる
+        $\mu$-可積分関数$\Phi_\theta \colon \calX \to \R$を構成する。
+
+        ここで各$x \in \calX$に対し$T(x)$の符号で場合分けすると次が成り立つ。
+        $T(x) > 0$のとき
+        \begin{alignat}{1}
+            |g(x) T(x)^{k + 1} e^{\theta T(x)}|
+                &= |g(x) T(x)^k| T(x) e^{\theta T(x)} \\
+                &= \frac{1}{\theta'} |g(x) T(x)^k| \theta' T(x) e^{\theta T(x)} \\
+                &\le \frac{1}{\theta'} |g(x) T(x)^k| e^{(\theta + \theta') T(x)}
+                    \quad
+                    (\because \theta' T(x) \le e^{\theta' T(x)}) \\
+                &= \frac{1}{\theta'} |g(x) T(x)^k e^{(\theta + \theta') T(x)}|
+        \end{alignat}
+        $T(x) \le 0$のとき
+        \begin{align}
+            |g(x) T(x)^{k + 1} e^{\theta T(x)}|
+                &= |g(x) T(x)^k| (- T(x)) e^{\theta T(x)} \\
+                &= \frac{1}{\theta'} |g(x) T(x)^k| (- \theta' T(x)) e^{\theta T(x)} \\
+                &\le \frac{1}{\theta'} |g(x) T(x)^k| e^{(\theta - \theta') T(x)}
+                    \quad
+                    (\because - \theta' T(x) \le e^{- \theta' T(x)}) \\
+                &= \frac{1}{\theta'} |g(x) T(x)^k e^{(\theta - \theta') T(x)}|
+        \end{align}
+        そこで$\Phi_\theta(x)$を上の2つの不等式の右辺の和と定めれば、
+        帰納法の仮定よりそれぞれは$\calX$上$\mu$-可積分だから、
+        $\Phi_\theta$も$\calX$上$\mu$-可積分である。
+        したがって$g(x) T(x)^{k + 1} e^{\theta T(x)}$も$\calX$上$\mu$-可積分である。
+        これで帰納法が完成した。
+    \end{innerproof}
+    $\psi(\theta) = \log \int g(x) e^{\theta T(x)} \mu(dx)$の被積分関数は
+    $\theta$に関し微分可能で、
+    導関数$g(x) T(x) e^{\theta T(x)}$は補題より$\calX$上$\mu$-可積分だから、
+    積分記号下の微分ができる。したがって
+    \begin{alignat}{1}
+        \psi'(\theta)
+            &= \frac{\int_\calX g(x) T(x) e^{\theta T(x)} \mu(dx)}
+                {\int_\calX g(x) e^{\theta T(x)} \mu(dx)} \\
+            &= \frac{e^{-\psi(\theta)} \int_\calX g(x) T(x) e^{\theta T(x)} \mu(dx)}
+                {\int_\calX g(x) e^{\theta T(x) - \psi(\theta)} \mu(dx)} \\
+            &= e^{-\psi(\theta)} \int_\calX g(x) T(x) e^{\theta T(x)} \mu(dx)
+    \end{alignat}
+    を得る。
+    上の claim より、右辺に現れる積分も積分記号下の微分ができるから、
+    帰納的に$\psi$は任意回微分可能であることがわかる。
+\end{proof}
+
+\subsection{混合型分布族}
+
+混合型分布族について述べる。
+
+\begin{definition}[混合型分布族]
+    $(\calX, \calA)$を可測空間、
+    $\mu$を$(\calX, \calA)$上の$\sigma$-有限測度、
+    $H \subset (0, 1)^n$を部分集合、
+    $\calP = \myparen{\calP_\eta}_{\eta \in H}$を
+    $\calX$上の確率分布族とする。
+    ここで、ある
+    \begin{itemize}
+        \item $m \in \Z_{\ge 1}$
+        \item $\calX$上の確率分布$q_i \; (i = 1, \dots, k)$
+    \end{itemize}
+    が存在し、各$P_\eta$が$\mu$に関し絶対連続で、確率密度関数が
+    \begin{equation}
+        \dd[P_\eta]{\mu}(x) = \sum_{i = 1}^m \eta_i q_i(x)
+            \quad
+            \text{$\mu$-a.e. $x \in \calX$},
+            \qquad
+            \eta_i \in H,
+            \qquad
+            \eta_1 + \cdots + \eta_m = 1
+    \end{equation}
+    の形に表されるとき、$\calP$を
+    \term{混合型分布族}[mixture family]{混合型分布族}[こんごうがたぶんぷぞく]
+    という。
+    \TODO{1次独立性は何に使う？}
+\end{definition}
+
+\begin{proposition}[負のエントロピー]
+    \TODO{}
+\end{proposition}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{今後の予定}
+
+\begin{itemize}
+    \item \TODO{}
+\end{itemize}
+
+
+\end{document}

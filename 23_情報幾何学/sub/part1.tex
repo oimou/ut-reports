@@ -1,0 +1,465 @@
+\documentclass[report]{jlreq}
+\usepackage{global}
+\usepackage{./local}
+\subfiletrue
+\def\assetspath{../}
+%\makeindex
+\begin{document}
+
+第1部では、
+情報幾何の議論に必要となる確率論と数理統計の前提知識を整理する。
+ただしここではごく基礎的な事項のみを述べ、
+それ以外の話題は第2部で情報幾何的な視点から扱うものとする。
+そもそも確率・統計を幾何学的に定式化しようとする際には、
+座標変換に関する不変性などを定義に繰り入れる必要がある。
+このとき定義が見かけ上煩雑になることで、
+確率・統計的な意味を一時的に見失ってしまうおそれがある。
+それを防ぐために、確率・統計的な意味を一旦明らかにしておくのもこの部の目的である。
+
+% ============================================================
+%
+% ============================================================
+\chapter{確率論}
+
+確率論の基礎事項を整理する。
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{確率空間}
+
+\begin{definition}[確率空間]
+    測度空間$(\Omega, \calF, P)$であって
+    \begin{enumerate}
+        \item 各$E \in \calF$に対し$P(E) \ge 0$
+        \item $P(\Omega) = 1$
+    \end{enumerate}
+    をみたすものを
+    \term{確率空間}[probability space]{確率空間}[かくりつくうかん]
+    といい、
+    $P$を$(\Omega, \calF)$上の
+    \term{確率測度}[probability measure]{確率測度}[かくりつそくど]
+    あるいは
+    \term{確率分布}[probability distribution]{確率分布}[かくりつぶんぷ]
+    という。
+\end{definition}
+
+\begin{definition}[確率変数]
+    $(\Omega, \calF, P)$を確率空間、
+    $(\calX, \calA)$を可測空間とする。
+    可測関数$X \colon (\Omega, \calF) \to (\calX, \calA)$を
+    $(\calX, \calA)$に値をもつ
+    \term{確率変数}[random variable; r.v.]{確率変数}[かくりつへんすう]
+    という。
+    とくに$\calX = \R, \; \calA = \calB(\R) \; (\text{Borel 集合族})$のとき、
+    $X$を単に\term{確率変数}{確率変数}[かくりつへんすう]という。
+\end{definition}
+
+\begin{definition}[確率変数の確率分布]
+    $X \colon (\Omega, \calF) \to (\calX, \calA)$を確率変数とする。
+    このとき、写像
+    \begin{equation}
+        P^X \colon \calA \to [0, +\infty],
+            \quad
+            E \mapsto P(X^{-1}(E))
+            \quad
+            (E \in \calA)
+    \end{equation}
+    は$(\calX, \calA)$上の測度となる (このあと示す)。
+    これを
+    \term{$X$の確率分布}[probability distribution of $X$]
+        {確率分布!確率変数の---}[かくりつぶんぷ]
+    という。
+
+    $X$の確率分布が$(\calX, \calA)$上のある確率分布$\nu$に等しいとき、
+    $X$は
+    \term{$\nu$に従う}{確率分布に従う}[かくりつぶんぷにしたがう]
+    という。
+\end{definition}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+確率論には「\term{0-1法則}[zero-one law]{0-1法則}[0-1ほうそく]」
+と呼ばれるいくつかの定理がある。
+次に述べる Borel-Cantelli の補題はそのひとつである。
+
+\begin{theorem}[Borel-Cantelli の補題]
+    \TODO{}
+\end{theorem}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+\begin{theorem}[Jensen の不等式]
+    $(\Omega, \calF, P)$を確率空間、
+    $A \subset \R^n$を凸集合、
+    $\Psi \colon A \to \R$を凸関数とする。
+    このとき、$\Psi(f)$が$P$-可積分となるような
+    任意の$P$-可積分関数$f$に対し
+    \begin{equation}
+        \Psi\myparen{
+            \int_\Omega f(x) \, P(dx)
+        }
+            \le \int_\Omega \Psi(f(x)) \, P(dx)
+    \end{equation}
+    が成り立つ。
+\end{theorem}
+
+\begin{proof}
+    \TODO{cf. \cite[p.153]{Bog07}}
+\end{proof}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{離散確率分布}
+
+\begin{definition}[離散確率分布]
+    $\calX$を高々可算集合、
+    $\calA \coloneqq 2^{\calX}$とするとき、
+    可測空間$(\calX, \calA)$を
+    \term{離散確率空間}[discrete probability space]
+        {離散確率空間}[りさんかくりつくうかん]
+    といい、$(\calX, \calA)$上の確率分布を
+    \term{離散確率分布}[discrete probability distribution]
+        {離散確率分布}[りさんかくりつぶんぷ]
+    という。
+\end{definition}
+
+\begin{definition}[確率質量関数]
+    $(\calX, \calA)$を離散確率空間、
+    $\mu$を$(\calX, \calA)$上の確率分布とする。
+    このとき、$(\calX, \calA)$上の数え上げ測度に関する
+    $\mu$の Radon-Nikodym 微分\footnote{
+        数え上げ測度に関する$\mu$の Radon-Nikodym 微分はつねに存在する。
+        なぜなら、$(\calX, \calA)$上のいかなる確率測度も
+        $(\calX, \calA)$上の数え上げ測度に関して絶対連続だからである。
+    }、すなわち
+    \begin{equation}
+        \mu(E)
+            = \sum_{x \in E} p(x)
+            \quad (E \in \calA)
+    \end{equation}
+    なる関数$p \colon \calX \to [0, +\infty]$を
+    $\mu$の\term{確率質量関数}[probability mass function; PMF]
+        {確率質量関数}[かくりつしつりょうかんすう]
+    という。
+\end{definition}
+
+\begin{definition}[確率母関数]
+    \TODO{}
+\end{definition}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{連続確率分布}
+
+$\R$上の確率分布は確率論や統計学において重要である。
+
+\begin{definition}[連続確率分布]
+    $\calB$を$\R$の Borel 集合族とするとき、
+    可測空間$(\R, \calB)$を
+    \term{連続確率空間}[continuous probability space]
+        {連続確率空間}[れんぞくかくりつくうかん]
+    といい、$(\R, \calB)$上の確率分布を
+    \term{連続確率分布}[continuous probability distribution]
+        {連続確率分布}[れんぞくかくりつぶんぷ]
+    という。
+\end{definition}
+
+\begin{definition}[絶対連続分布]
+    \TODO{}
+\end{definition}
+
+\begin{definition}[確率密度関数]
+    $(\R, \calB)$を連続確率空間、
+    $\mu$を
+    $(\R, \calB)$上の Lebesgue 測度に関し絶対連続な確率分布とする。
+    このとき、
+    $\mu$の Radon-Nikodym 微分、すなわち
+    \begin{equation}
+        \mu(E)
+            = \int_E p(x) \, dx
+            \quad (E \in \calB)
+    \end{equation}
+    なる関数$p \colon \R \to [0, +\infty]$を
+    $\mu$の\term{確率密度関数}[probability density function; PDF]
+        {確率密度関数}[かくりつみつどかんすう]
+    という。
+\end{definition}
+
+\begin{definition}[モーメント母関数]
+    \TODO{}
+\end{definition}
+
+モーメント母関数と異なり、特性関数は常に存在する。
+
+\begin{definition}[特性関数]
+    \TODO{}
+\end{definition}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{多変量分布}
+
+\TODO{}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{確率変数の収束}
+
+\begin{theorem}[大数の法則]
+    \TODO{}
+\end{theorem}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+\begin{theorem}[中心極限定理]
+    \TODO{}
+\end{theorem}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+
+
+% ============================================================
+%
+% ============================================================
+\chapter{推定}
+
+この章では、統計的推論の基本的な問題のひとつである推定について述べる。
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{十分統計量}
+
+標本 (=確率変数) \TODO{標本とは確率変数のことなのか？$\Omega$の元ではないのか？}の実現値に対し
+その特徴を要約した値を割り当てる関数を統計量という。
+事象は統計量を通して「観測」される。
+もちろん標本それ自体も統計量である。
+
+\begin{definition}[統計量]
+    \TODO{}
+\end{definition}
+
+統計量を用いて母集団 (=確率分布) のパラメータを推定することを考える。
+
+\begin{definition}[点推定]
+    標本$X$から母集団のパラメータ$\theta$を特定することを
+    \term{推定}[estimate]{推定}[すいてい]
+    といい、とくに一意に推定することを
+    \term{点推定}[point estimation]{点推定}[てんすいてい]
+    という。
+    点推定において、標本$X$の実現値$x$に対し
+    $\theta$の\term{推定値}[estimate]{推定値}[すいていち]
+    $\what{\theta}(x)$を割り当てる関数$\what{\theta}$を
+    $\theta$の\term{推定量}[estimator]{推定量}[すいていりょう]
+    という。
+\end{definition}
+
+\begin{remark}
+    今後、点推定のことを単に推定ということにする。
+\end{remark}
+
+推定のために"十分"な情報を含んだ統計量を十分統計量という。
+
+\begin{definition}[十分統計量]
+    \TODO{}
+\end{definition}
+
+\begin{example}[Bernoulli 分布の例]
+    \TODO{}
+\end{example}
+
+次の定理はある統計量が十分統計量であるための必要十分条件を与え、
+具体的な判定に役立つ。
+
+\begin{theorem}[Fisher-Neyman の分解定理]
+    \TODO{}
+\end{theorem}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+\begin{example}[正規分布の例]
+    \TODO{}
+\end{example}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{指数型分布族}
+
+指数型分布族について述べる。
+
+\begin{definition}[指数型分布族]
+    $(\calX, \calA)$を可測空間、
+    $\mu$を$(\calX, \calA)$上の$\sigma$-有限測度、
+    $\calP = (P_\theta)_{\theta \in \Theta}$を
+    $(\calX, \calA)$上の確率分布族とする。
+    ここで、各$P_\theta$が$\mu$に関し絶対連続で、
+    Radon-Nikodym 微分が
+    \begin{equation}
+        \frac{dP_\theta}{d\mu}(x)
+            = g(x) \exp\myparen{
+                \sum_{i = 1}^m a_i(\theta) T_i(x)
+                - \psi(\theta)
+            }
+            = g(x) \exp(a(\theta) \cdot T(x) - \psi(\theta))
+            \quad
+            \text{$\mu$-a.e. $x \in \calX$}
+    \end{equation}
+    の形に表せるとき、
+    $\calP$を\term{指数型分布族}[exponential family]
+        {指数型分布族}[しすうがたぶんぷぞく]
+    という。
+    ただし、$T_i, g$は$(\calX, \calA)$上の可測関数、
+    $a_i, \psi$は$\Theta$上の実数値関数である。
+    とくに
+    \begin{equation}
+        \frac{dP_\theta}{d\mu}(x)
+            = g(x) \exp\myparen{
+                \sum_{i = 1}^m \theta_i T_i(x)
+                - \psi(\theta)
+            }
+            = g(x) \exp(\theta \cdot T(x) - \psi(\theta))
+            \quad
+            \text{$\mu$-a.e. $x \in \calX$}
+    \end{equation}
+    の形を
+    \term{正準形}[canonical form]{正準形}[せいじゅんけい]
+    という\footnote{
+        指数型分布族は常に正準形で書くことができる。
+        実際、$\theta$の代わりに$a(\theta)$をパラメータとすればよい。
+    }。
+\end{definition}
+
+以下に指数型分布族に関する具体例を挙げる。
+
+\begin{example}[正規分布]
+    \TODO{}
+\end{example}
+
+\begin{proposition}
+    指数型分布族の定義の$T = (T_1, \dots, T_m)$は
+    $\theta$の十分統計量である。
+\end{proposition}
+
+\begin{proof}
+    Fisher-Neyman の分解定理より従う。
+\end{proof}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{混合型分布族}
+
+\begin{definition}[混合型分布族]
+    \TODO{}
+\end{definition}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{点推定の手法}
+
+\begin{definition}[最尤推定]
+    \TODO{}
+\end{definition}
+
+\begin{definition}[モーメント法]
+    \TODO{}
+\end{definition}
+
+\begin{definition}[最小2乗法]
+    \TODO{}
+\end{definition}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{推定量の性質}
+
+\begin{definition}[不偏性]
+    \TODO{}
+\end{definition}
+
+\begin{definition}[一様最小分散不偏推定量; UMVUE]
+    \TODO{}
+\end{definition}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{推定量の評価}
+
+\begin{definition}[スコア関数]
+    \TODO{}
+\end{definition}
+
+Fisher 情報量を定義する。
+
+\begin{definition}[Fisher 情報量]
+    \TODO{}
+\end{definition}
+
+不偏推定量の分散の下界を Fisher 情報量の言葉で与えるのが Cramer-Rao 不等式である。
+\TODO{Cramer-Rao 不等式は Fisher "計量" に対しどのような意味を持つ？}
+
+\begin{proposition}[Cramer-Rao 不等式]
+    \TODO{}
+\end{proposition}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+\begin{definition}[有効性]
+    \TODO{}
+\end{definition}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{漸近理論}
+
+漸近理論について述べる。
+一般に最尤推定量は有効性をみたすとは限らないが、
+漸近的には有効性をみたすことが知られている\footnote{
+    ただし Neyman-Scott 問題においては
+    最尤推定量は漸近有効とは限らない。
+}。
+
+\TODO{}
+
+
+
+% ============================================================
+%
+% ============================================================
+\chapter{仮説検定}
+
+この章では、統計的推論の基本的な問題のひとつである仮説検定について述べる。
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{仮説検定}
+
+\TODO{}
+
+
+
+\end{document}

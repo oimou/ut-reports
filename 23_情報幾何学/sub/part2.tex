@@ -1,0 +1,1051 @@
+\documentclass[report]{jlreq}
+\usepackage{global}
+\usepackage{./local}
+\subfiletrue
+%\makeindex
+\begin{document}
+
+第2部では、情報幾何の基本的な概念を整理する。
+まず第1章と第2章では具体例を扱う。
+第1章では有限集合上の測度の空間を考える。
+測度の空間を多様体とみなし、
+さらに統計的に自然な要請に基づいて計量や接続、ダイバージェンスなどの概念を導入する。
+第2章ではパラメトリックモデルを考える。
+
+第3章と第4章では、
+パラメトリックモデルのパラメータ空間の内在的な幾何構造として、
+双対構造と双対平坦性を整理する。
+
+第5章では無限集合上の測度の空間を考える。
+
+第6章では正定値行列の空間について考える。
+
+第7章では統計的推定について考える。
+
+% ============================================================
+%
+% ============================================================
+\chapter{有限集合上の測度の空間}
+
+この章では有限集合上の確率分布について考える。
+有限集合上の確率分布を扱う目的は、
+これが情報幾何学の最も基本的な具体例だからというだけでなく、
+パラメータ空間の内在的な幾何や
+無限集合上の確率分布を扱う際に、
+幾何学的直感の基礎になると期待できるからである。
+
+この章では全体を通して
+$n \in \Z_{\ge 0}, \;
+    \calX \coloneqq \{ 1, \dots, n + 1 \}, \;
+    \calA \coloneqq 2^\calX$
+とし、可測空間$(\calX, \calA)$を考える。
+イメージとしては、$(\calX, \calA)$は
+何らかの確率変数の (定義域というよりも) 値域を表している。
+いまはそれが有限集合ということだから、
+たとえば「コインの裏表」「サイコロの出目」などといった、
+値が有限通りしかない確率変数を考えているという雰囲気である。
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{有限集合上の測度の空間}
+
+まず$\calX$上の実数値関数全体の集合を考える。
+
+\begin{definition}
+    $\R$-代数$\calF(\calX)$を
+    \begin{equation}
+        \calF(\calX)
+            \coloneqq \mybrace{
+                f \colon \calX \to \R
+            }
+    \end{equation}
+    と定め、
+    $\calF(\calX)$の
+    $\R$-ベクトル空間としての (代数的) 双対空間$\calF(\calX)^*$を
+    $\calS(\calX)$とおく。
+\end{definition}
+
+先に注意しておくと、
+この章で主役となるのは$\calF(\calX)$よりもむしろ$\calS(\calX)$の方である。
+さて、$\calF(\calX)$は次の標準的な基底を持つ。
+
+\begin{proposition}[$\calF(\calX)$の標準基底]
+    各$i \in \calX$に対して
+    \begin{equation}
+        e_i(j) \coloneqq \begin{cases}
+            1 & (j = i) \\
+            0 & (j \neq i)
+        \end{cases}
+            \quad (j \in \calX)
+    \end{equation}
+    と定めると、
+    $(e_1, \dots, e_{n + 1})$は
+    $\calF(\calX)$の$\R$上の基底となる。
+\end{proposition}
+
+\begin{proof}
+    $\R$-線型写像$\R^{n + 1} \to \calF(\calX), \;
+        (x^1, \dots, x^{n + 1}) \mapsto \sum_{i \in \calX} x^i e_i$
+    が写像
+    $\calF(\calX) \to \R^{n + 1}, \;
+        f \mapsto (f(1), \dots, f(n + 1))$
+    を逆写像として同型を与える。
+\end{proof}
+
+そこで$(e_1, \dots, e_{n + 1})$の双対基底を
+$(\delta^1, \dots, \delta^{n + 1})$とおく。
+すると$\calS(\calX)$について次が成り立つ。
+
+\begin{proposition}[$\calS(\calX)$と符号付き測度の空間]
+    $\calS(\calX)$は
+    $\calX$上の符号付き測度全体の空間とみなせる。
+    より詳しく言えば、
+    $\calX$上の符号付き測度全体の空間は、
+    要素ごとの和とスカラー倍で$\R$-ベクトル空間となり、
+    写像
+    \begin{equation}
+        \Phi \colon \calS(\calX) \to \{ \text{$\calX$上の符号付き測度} \},
+            \quad
+            \omega = \sum_{i \in \calX} \omega_i \delta^i
+            \mapsto
+            (A \mapsto \sum_{i \in A} \omega_i)
+    \end{equation}
+    が$\R$-線型同型を与える。
+\end{proposition}
+
+\begin{proof}
+    $\Phi$が$\R$-線型写像であることの証明はルーティンワークである。
+    逆写像は
+    \begin{equation}
+        \Psi \colon \{ \text{$\calX$上の符号付き測度} \} \to \calS(\calX),
+            \quad
+            \mu \mapsto \sum_{i \in \calX} \mu(\{ i \}) \delta^i
+    \end{equation}
+    で与えられる。
+    $\Psi \circ \Phi(\omega) = \omega$の証明に
+    $\omega$の線型性を用いる。
+    $\Phi \circ \Psi(\mu) = \mu$の証明に
+    $\mu$の加法性を用いる。
+    \TODO{もう少しちゃんと書く}
+\end{proof}
+
+上の命題の同型により、
+$\calF(\calX)$上の線型形式$\delta^i$は、
+$\calX$上の Dirac 測度$\Phi(\delta^i)$と同一視できる。
+そこで記号の濫用により、以後$\Phi(\delta^i)$も$\delta^i$と書くことにする。
+
+さて、$\calS(\calX)$の部分集合を定義する。
+
+\begin{definition}[$\calS(\calX)$の部分集合]
+    $\calS(\calX)$の部分集合を次のように定義する:
+    \begin{alignat}{1}
+        \calM(\calX)
+            &\coloneqq \mybrace{
+                \mu = \sum_{i \in \calX} \mu_i \delta^i \in \calS(\calX)
+                \,\Big|\,
+                \mu_i \ge 0
+            }, \\
+        \calP(\calX)
+            &\coloneqq \mybrace{
+                \mu = \sum_{i \in \calX} \mu_i \delta^i \in \calM_+(\calX)
+                \,\Big|\,
+                \sum_{i \in \calX} \mu_i = 1
+            }
+    \end{alignat}
+    すなわち、$\calM_+(\calX)$は$\calX$上の有限測度全体の集合であり、
+    $\calP_+(\calX)$は$\calX$上の確率測度全体の集合である。
+    また、次のように定義する:
+    \begin{alignat}{1}
+        \calM_+(\calX)
+            &\coloneqq \mybrace{
+                \mu = \sum_{i \in \calX} \mu_i \delta^i \in \calS(\calX)
+                \,\Big|\,
+                \mu_i > 0
+            }, \\
+        \calP_+(\calX)
+            &\coloneqq \mybrace{
+                \mu = \sum_{i \in \calX} \mu_i \delta^i \in \calM_+(\calX)
+                \,\Big|\,
+                \sum_{i \in \calX} \mu_i = 1
+            }
+    \end{alignat}
+    すなわち、$\calM_+(\calX)$は$\calX$上の正の測度全体の集合であり、
+    $\calP_+(\calX)$は$\calX$上の正の確率測度全体の集合である。
+\end{definition}
+
+$\calM_+(\calX)$および$\calP_+(\calX)$は、
+次の意味で部分多様体になっている。
+
+\begin{proposition}
+    \label[proposition]{prop:submanifolds of S(X)}
+    $\calM_+(\calX)$は$\calS(\calX)$の開部分多様体であり、
+    $\calP_+(\calX)$は$\calM_+(\calX)$の$n$次元部分多様体である。
+\end{proposition}
+
+\begin{proof}
+    多様体としての同一視$\calS(\calX) = \R^{n + 1}$のもとで
+    $\calM_+(\calX) = \R_{> 0}^{n + 1} \opensubset \R^{n + 1} = \calS(\calX)$
+    が成り立つから、
+    $\calM_+(\calX)$は$\calS(\calX)$の開部分多様体である。
+    また、\smooth 写像
+    \begin{equation}
+        F \colon \calM_+(\calX) = \R_{> 0}^{n + 1} \to \R,
+            \quad
+            (\mu_1, \dots, \mu_{n + 1}) \mapsto \mu_1 + \dots + \mu_{n + 1}
+    \end{equation}
+    の Jacobi 行列は
+    $JF_{(\mu_1, \dots, \mu_{n + 1})} = [1 \dots 1]$
+    だから、
+    微分$dF_{(\mu_1, \dots, \mu_{n + 1})}$は
+    各点$(\mu_1, \dots, \mu_{n + 1}) \in \R_{> 0}^{n + 1}$で全射であり、
+    したがってとくに$F$は$1$を正則値にもつ。
+    よって
+    $\calP_+(\calX) = F^{-1}(0)$は$\calM_+(\calX)$の
+    $\dim \calM_+(\calX) - \dim \R = n$次元部分多様体である。
+\end{proof}
+
+それぞれの多様体の接空間は次のように表される。
+
+\begin{proposition}[$\calS(\calX), \calM_+(\calX), \calP_+(\calX)$の接空間]
+    \begin{alignat}{1}
+        T_{\mu} \calS(\calX)
+            &= \calS(\calX), \\
+        T_{\mu} \calM_+(\calX)
+            &= \calS(\calX), \\
+        T_{\mu} \calP_+(\calX)
+            &= \calS_0(\calX)
+    \end{alignat}
+    ただし
+    \begin{equation}
+        \calS_0
+            \coloneqq \mybrace{
+                a = \sum_{i \in \calX} a_i \delta^i \in \calS(\calX)
+                \,\Big|\,
+                \sum_{i \in \calX} a_i = 0
+            }
+    \end{equation}
+    とおいた。
+\end{proposition}
+
+\begin{proof}
+    $T_{\mu} \calS(\calX) = \calS(\calX)$および
+    $T_{\mu} \calM_+(\calX) = \calS(\calX)$は、
+    一般にベクトル空間の開部分多様体の接空間が
+    もとのベクトル空間に一致することから従う。
+    また、\cref{prop:submanifolds of S(X)}の証明の写像$F$を用いると、
+    部分多様体の接空間の一般論より
+    $T_{\mu} \calP_+(\calX) = \Ker dF_\mu$が成り立つが、
+    ここで
+    \begin{equation}
+        dF_{(\mu_1, \dots, \mu_{n + 1})}
+            \colon \R^{n + 1} \to \R,
+            \quad
+            \myparen{\begin{smallmatrix}
+                a_1 \\ \vdots \\ a_{n + 1}
+            \end{smallmatrix}}
+            \mapsto
+            JF_{(\mu_1, \dots, \mu_{n + 1})}
+            \myparen{\begin{smallmatrix}
+                a_1 \\ \vdots \\ a_{n + 1}
+            \end{smallmatrix}}
+            = a_1 + \dots + a_{n + 1}
+    \end{equation}
+    より$T_{\mu} \calP_+(\calX) = \Ker dF_\mu = \calS_0(\calX)$が従う。
+\end{proof}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{Fisher 計量}
+
+$\calS(\calX)$に Riemann 計量を定義する。
+考えられる Riemann 計量は無数に存在するが、
+ここでは Fisher 計量と呼ばれる計量を導入する。
+$\calM_+(\calX)$および$\calP_+(\calX)$には誘導計量を入れる。
+
+最適化理論において、自然勾配法で解の更新を行う際には、
+解きたい問題に適した計量を用いる必要がある。
+統計的推論を最適化問題として解く場合、
+Fisher 計量はその目的に最も適した計量であると考えられる。
+
+\TODO{下の定義をもっと統計的要請から自然に導入したい}
+
+\begin{definition}[Fisher 計量]
+    各$\mu = \mu_i \delta^i \in \calM_+(\calX), \;
+        a = a_i \delta^i, b = b_i \delta^i \in \calS(\calX)$に対し
+    \begin{equation}
+        \langle a, b \rangle_\mu
+            \coloneqq \int_\calX \dd[a]{\mu} \dd[b]{\mu} \, d\mu
+            = \sum_{i \in \calX} \frac{1}{\mu_i} a_i b_i
+    \end{equation}
+    と定義する。
+    $\calM_+(\calX)$上の Riemann 計量$\frakg$を
+    \begin{equation}
+        \frakg_\mu(a, b)
+            \coloneqq \langle a, b \rangle_\mu
+            \quad (\mu \in \calM_+(\calX), \; a, b \in T_\mu \calM_+(\calX))
+    \end{equation}
+    と定義し、これを
+    \term{Fisher 計量}[Fisher metric]{Fisher 計量}[Fisher けいりょう]
+    と呼ぶ。
+\end{definition}
+
+$\calP_+(\calX)$上に誘導される Fisher 計量は
+次の形で与えられる。
+
+\begin{proposition}[$\calP_+(\calX)$上の Fisher 計量]
+    \begin{equation}
+        g_{ij}(\mu)
+            = \sum_{k = 1}^n \frac{1}{\mu_k} \delta_{ki} \delta_{kj}
+            + \frac{1}{\mu_{n + 1}}
+    \end{equation}
+    \TODO{}
+\end{proposition}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+\subsection{等長変換群}
+
+\TODO{}
+
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{Chentsov の定理}
+
+前節で導入した Fisher 計量が、
+統計的に自然な計量であることを示す。
+本節では
+$n' \in \Z_{\ge 0}, \;
+    \calX' \coloneqq \{ 1, \dots, n' + 1 \}, \;
+    \calA' \coloneqq 2^{\calX'}$
+とし、可測空間$(\calX', \calA')$を
+$(\calX, \calA)$とあわせて考える。
+まず、統計量と Markov カーネルの概念を導入する。
+
+\begin{definition}[統計量]
+    $\calX \to \calX'$なる写像$\kappa$を
+    \term{統計量}[statistic]{統計量}[とうけいりょう]
+    という\footnote{
+        より一般には$\kappa$が可測写像であることも要求されるが、
+        いまは$\calA = 2^\calX$だから、
+        この要求は自ずから満たされる。
+    }。
+\end{definition}
+
+\begin{definition}[Markov カーネル]
+    $\calX \to \calP(\calX')$なる写像$K$を
+    \term{Markov カーネル}[Markov kernel]{Markov カーネル}
+    といい、ここだけの記法として
+    $K(i) \; (i \in I)$の成分表示を
+    \begin{equation}
+        K(i) = \sum_{i' \in \calX'} K(i)_{i'} \delta^{i'}
+    \end{equation}
+    と書くことにする。
+\end{definition}
+
+統計量$\kappa \colon \calX \to \calX'$が与えられると、
+$K^{\kappa}(i) \coloneqq \delta^{\kappa(i)} \; (i \in I)$
+とおくことで Markov カーネル$K^{\kappa}$が定義される。
+ただし右辺は$\kappa(i)$を台とする Dirac 測度である。
+この意味で、Markov カーネルは統計量の一般化になっている。
+
+次に Markov カーネルの congruent 性を定義する。
+
+\begin{definition}[congruent な Markov カーネル]
+    \TODO{}
+\end{definition}
+
+\begin{example}[congruent な Markov カーネルの例]
+    $\calX \coloneqq \{ 0, 1 \}, \;
+        \calX' \coloneqq \{ 1, 2, 3, 4, 5, 6 \}$
+    とし、Markov カーネル$K \colon \calX \to \calP(\calX')$を
+    \TODO{}
+\end{example}
+
+次の定理により、
+$\calP_+(\calX)$上の統計的に自然な計量は
+Fisher 計量に限られることがわかる。
+
+\begin{theorem}[Chentsov; \foreignlanguage{russian}{Ченцов}]
+    すべての空でない有限集合$\calX$に対し、
+    $\calP_+(\calX)$上の Riemann 計量$h^\calX$が与えられているとする。
+    このとき、任意の congruent な
+    Markov カーネル$K \colon \calX \to \calP(\calX')$
+    ($\calX'$は空でない有限集合)
+    が不変ならば、
+    ある正定数$\alpha > 0$が存在して、
+    すべての$\calX$に対し
+    $h^\calX = \alpha \frakg^\calX$が成り立つ。
+\end{theorem}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{$m$-接続と$e$-接続}
+
+この節では$m$-接続と$e$-接続を導入する。
+まず$T_\mu \calM_+(\calX)$や$T_\mu \calM_+^*(\calX)$の定義から、
+$m, e$-平行移動が自ずと現れることをみる。
+$m, e$-平行移動から、それぞれに対応する$m, e$-接続の概念が、
+ひいては$m, e$-測地線、$m, e$-指数写像の概念が導かれる。
+
+\TODO{$m, e$-接続には統計的にどんな意味がある？}
+
+\begin{definition}[$m, e$-平行移動]
+    \TODO{}
+\end{definition}
+
+\begin{definition}[$m, e$-接続]
+    \TODO{}
+\end{definition}
+
+\begin{proposition}[$m, e$-測地線と指数写像]
+    \TODO{}
+\end{proposition}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+\subsection{アファイン群}
+
+\TODO{}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{Amari-Chentsov テンソル}
+
+\TODO{なんのためにある？Skewness テンソルとも呼ぶから、3次のキュムラント (歪度) と関係あり？}
+
+\begin{definition}[Amari-Chentsov テンソル]
+    \TODO{}
+\end{definition}
+
+\begin{definition}[$\alpha$-接続]
+    \TODO{}
+\end{definition}
+
+\subsection{アファイン群}
+
+\TODO{}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{ダイバージェンス}
+
+前節までに、$\calM_+(\calX)$上の幾何学的構造として、
+Fisher 計量$\frakg$や$m, e$-接続$\nabla^{(m)}, \nabla^{(e)}$を扱った。
+本節ではこれらの幾何学的構造が
+ダイバージェンスと呼ばれるひとつの関数により誘導されることをみる。
+ダイバージェンスとは、空間の2点の相違性を表す関数であり、
+イメージとしては距離のようなものである。
+最適輸送理論における輸送コストにも似ているが、
+一般にはダイバージェンスの方が粗いものである\TODO{本当に?}。
+
+\begin{definition}[KLダイバージェンス]
+    \TODO{}
+\end{definition}
+
+\begin{proposition}[KLダイバージェンスは Fisher 計量を誘導する]
+    \TODO{}
+\end{proposition}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+\subsection{$\alpha$-ダイバージェンス}
+
+Fisher 計量を誘導するダイバージェンスは、
+実はKLダイバージェンスだけではない。
+$\alpha$-ダイバージェンスと呼ばれる、
+より広いクラスのダイバージェンスが Fisher 計量を誘導する。
+
+\begin{definition}[$\alpha$-ダイバージェンス]
+    \begin{equation}
+        D^{(\alpha)}(\mu \| \nu)
+            \coloneqq \frac{2}{1 - \alpha} \sum_{i \in \calX} \nu_i
+            + \frac{2}{1 + \alpha} \sum_{i \in \calX} \mu_i
+            - \frac{4}{1 - \alpha^2} \sum_{i \in \calX}
+                \mu_i^{\frac{1 + \alpha}{2}}
+                \nu_i^{\frac{1 - \alpha}{2}}
+    \end{equation}
+    \TODO{}
+\end{definition}
+
+\begin{proposition}[$\alpha$-ダイバージェンスは Fisher 計量を誘導する]
+    \TODO{}
+\end{proposition}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+KLダイバージェンスは$\alpha$-ダイバージェンスの
+$\alpha = -1$の場合である。
+
+\begin{proposition}
+    KLダイバージェンスは$\alpha$-ダイバージェンスの
+    $\alpha = -1$の場合である。
+\end{proposition}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+\subsection{$f$-ダイバージェンス}
+
+ダイバージェンスを最小化したいという最適化問題への応用を考えると、
+凸関数を用いて定義されるダイバージェンスのクラスは重要である\TODO{そうなの？}。
+
+\begin{definition}[$f$-ダイバージェンス]
+    \TODO{}
+\end{definition}
+
+
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{指数型分布族}
+
+\TODO{}
+
+
+% ============================================================
+%
+% ============================================================
+\chapter{パラメトリックモデル}
+
+本章では、有限個のパラメータで特徴付けられるパラメトリックモデルについて述べる。
+パラメトリックモデルの定式化は\cite{calin_geometric_2014}を参考にした。
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{パラメトリックモデル}
+
+\TODO{}
+
+
+% ============================================================
+%
+% ============================================================
+\chapter{双対構造}
+
+第1章では、有限集合上の測度の空間$\calM_+(\calX)$について調べた。
+また$\calM_+(\calX)$に入る幾何学的構造としては、
+Fisher 計量$\frakg$と$m, e$-接続$\nabla^{(m)}, \nabla^{(e)}$を
+扱ったのであった。
+本章ではこの構造を抽象化して整理する。
+すなわち Fisher 計量および$m, e$-接続という具体的対象から離れて、
+Riemann 計量$g$と$g$に関し互いに双対的なアファイン接続$\nabla, \nabla^*$の
+3つ組$(g, \nabla, \nabla^*)$について考える。
+この3つ組は双対構造と呼ばれる。
+本章ではダイバージェンスにより双対構造が誘導されることをみる。
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{双対構造}
+
+双対構造とは、
+Riemann 計量$g$と$g$に関し互いに双対的なアファイン接続$\nabla, \nabla^*$の
+3つ組$(g, \nabla, \nabla)$のことである。
+双対アファイン接続の概念は、
+計量を保つアファイン接続の概念の一般化である。
+
+\begin{definition}[双対アファイン接続]
+    $(M, g)$を擬 Riemann 多様体、
+    $\nabla, \nabla^*$を$M$のアファイン接続とする。
+    $\nabla^*$が
+    $g$に関する$\nabla$の
+    \term{双対アファイン接続}[dual affine connection]
+        {双対アファイン接続}[そうついあふぁいんせつぞく]
+    であるとは、
+    \begin{equation}
+        X(g(Y, Z))
+            = g(\nabla_X Y, Z)
+            + g(Y, \nabla^*_X Z)
+            \quad
+            (X, Y, Z \in \frakX(M))
+    \end{equation}
+    が成り立つことをいう。
+    このとき$(g, \nabla, \nabla^*)$を
+    $M$の\term{双対構造}[dualistic structure]
+        {双対構造}[そうついこうぞう]
+    という。
+\end{definition}
+
+\begin{proposition}[双対アファイン接続の存在と一意性]
+    \TODO{}
+\end{proposition}
+
+\begin{proof}
+    \TODO{構成は\cite[p.96]{Lee18}を参照}
+
+    一意性を示す。
+    $\nabla', \nabla''$を$g$に関する
+    $\nabla$の双対アファイン接続とすると、
+    各$X, Z \in \frakX(M)$に対して
+    \begin{equation}
+        0 = g(Y, \nabla'_X Z) - g(Y, \nabla''_X Z)
+            = g(Y, \nabla'_X Z - \nabla''_X Z)
+            \quad
+            (\forall Y \in \frakX(M))
+    \end{equation}
+    が成り立つから、
+    $g$の非退化性より$\nabla'_X Z = \nabla''_X Z$となる。
+    したがって$\nabla' = \nabla''$である。
+\end{proof}
+
+とくに$\nabla$が計量$g$を保つ接続ならば
+$\nabla$自身も$\nabla$の双対アファイン接続となるから、
+一意性より$\nabla^* = \nabla$が成り立つ。
+
+双対アファイン接続は次のような基本性質を持つ。
+
+\begin{proposition}[双対アファイン接続の基本性質]
+    \TODO{}
+\end{proposition}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+\begin{proposition}[双対アファイン接続と平行移動]
+    \TODO{}
+\end{proposition}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+次の定理は情報幾何学の基本定理である\cite{nielsen_elementary_2020}。
+\TODO{なぜ？曲率一定だと測地線の表示がシンプルになるから？}
+
+\begin{proposition}[双対アファイン接続と曲率]
+    \TODO{torsion-free の仮定は不要！}
+\end{proposition}
+
+\begin{proof}
+    \cite[p.226]{calin_geometric_2014}による。
+    \TODO{}
+\end{proof}
+
+ところで、双対アファイン接続の概念を
+Levi-Civita 接続と比較してみたとき、
+次の定義の意味での「強い」双対性が想起されるかもしれない。
+
+\begin{definition}[強い双対アファイン接続]
+    \TODO{}
+\end{definition}
+
+しかし、実は強い双対アファイン接続は
+Levi-Civita 接続に限られるため、
+これは文字通り強すぎる制約である。
+
+\begin{proposition}[強い双対アファイン接続は Levi-Civita 接続]
+    \TODO{}
+\end{proposition}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{統計的構造}
+
+有限集合上の測度の空間には、
+Fisher 計量$\frakg$と
+Amari-Chentsov テンソル$T$の組$(\frakg, T)$によっても
+幾何学的構造が定まるのであった。
+本節ではこれを抽象化して統計的構造と呼ばれるものを導入する。
+後で見るように統計的構造は、
+捩れのないアファイン接続の対からなる双対構造と等価である。
+
+\TODO{捩れなしであることはなぜ重要なのか？そもそもねじれとは何か？}
+
+\begin{definition}[統計的構造]
+    \TODO{}
+\end{definition}
+
+\begin{proposition}[双対アファイン接続と Levi-Civita 接続]
+    \begin{equation}
+        \frac{1}{2} (\nabla + \nabla^*)
+            = \nabla^{\mathrm{LC}}
+    \end{equation}
+    \TODO{}
+\end{proposition}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{ダイバージェンス}
+
+ダイバージェンスの概念を定義する。
+ダイバージェンスは双対構造を誘導する方法の1つであり、
+またダイバージェンスにより誘導されるアファイン接続は捩れなしである。
+同じことだが、ダイバージェンスは統計的構造を誘導する。
+
+\begin{definition}[ダイバージェンス]
+    $M$を多様体とする。
+    \smooth 関数
+    \begin{equation}
+        D \colon M \times M \to \R,
+            \quad
+            (p, q) \mapsto D(p \| q)
+    \end{equation}
+    が\term{ダイバージェンス}[divergence]{ダイバージェンス}
+    であるとは、次が成り立つことをいう:
+    \begin{enumerate}
+        \item 任意の$p, q \in M$に対し$D(p \| q) \geq 0$である。
+        \item $p, q \in M$に関し$D(p \| q) = 0 \iff p = q$である。
+        \item \TODO{}
+    \end{enumerate}
+    ただし、以下の記法を用いる:
+    \begin{itemize}
+        \item \TODO{}
+    \end{itemize}
+\end{definition}
+
+\begin{proposition}
+    \begin{enumerate}
+        \item $D[\del_i \| \cdot] = D[\cdot \| \del_i] = 0$である。
+        \item $D[\del_i \del_j \| \cdot]
+            = D[\cdot \| \del_i \del_j]
+            = - D[\del_i \| \del_j]$である。
+    \end{enumerate}
+\end{proposition}
+
+証明は\cite{eguchi_geometry_1992}によった。
+
+\begin{proof}
+    \uline{(1)} \quad
+    \TODO{}
+
+    \uline{(2)} \quad
+    \TODO{}
+\end{proof}
+
+\begin{definition}[ダイバージェンスから誘導される双対構造]
+    \TODO{}
+\end{definition}
+
+ダイバージェンスの分解可能性を定義する。
+
+\begin{definition}[ダイバージェンスの分解可能性]
+    \TODO{}
+\end{definition}
+
+
+
+
+% ============================================================
+%
+% ============================================================
+\chapter{双対平坦性}
+
+情報幾何学では、双対構造がさらに双対平坦な場合を考えることが多い。
+\TODO{why?}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{平坦性とアファインチャート}
+
+\TODO{アファイン座標と正規座標はどう違う？正規座標は局所的には必ず存在するが…}
+
+\begin{definition}[アファインチャート\footnote{
+    「アファインチャート」という名前は
+    \cite{藤原21}で使われている「アファイン座標近傍」に由来する。
+}]
+    $M$を多様体、
+    $\nabla$を$M$のアファイン接続とする。
+    $M$のチャート$(U, \varphi)$が
+    \term{$\nabla$-アファインチャート}[$\nabla$-affine chart]
+        {アファインチャート}[あふぁいんちゃーと]
+    であるとは、
+    $(U, \varphi)$により定まる
+    $TM$の局所フレームに関する
+    $\nabla$の接続形式が$0$であることをいう。
+\end{definition}
+
+\begin{proposition}[アファインチャートの存在]
+    $M$を多様体、
+    $\nabla$を$M$のアファイン接続とする。
+    このとき次は同値である:
+    \begin{enumerate}
+        \item $M$は$\nabla$-平坦である。
+        \item 各$p \in M$に対し、$p$のまわりの
+            アファインチャートが存在する。
+    \end{enumerate}
+\end{proposition}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+平坦性とアファインチャートのアナロジーで
+双対平坦性と双対アファインチャートを定義する。
+
+\begin{definition}[双対平坦]
+    \TODO{}
+\end{definition}
+
+\begin{definition}[双対アファインチャート]
+    \TODO{}
+\end{definition}
+
+\begin{proposition}[双対アファインチャートの存在]
+    \TODO{}
+\end{proposition}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+平行移動と測地線は、
+双対アファイン座標によって非常に簡単な形に書ける。
+
+\begin{proposition}[平行移動と測地線の双対アファイン座標表示]
+    \TODO{}
+\end{proposition}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+双対平坦な双対構造を誘導するダイバージェンスは平坦であるという。
+
+\begin{definition}[ダイバージェンスの平坦性]
+    \TODO{}
+\end{definition}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{凸関数と Legendre 変換}
+
+\TODO{geodesically convex とはどう違う？}
+
+まず通常の凸関数の定義を復習する。
+
+\begin{proposition}[凸関数]
+    $A$を$\R$-ベクトル空間の凸部分集合とする。
+    関数$f \colon A \to \R$が
+    \term{凸}[convex]{凸関数}[とつかんすう]
+    であるとは、
+    任意の$x, y \in A, \; x \neq y$
+    および任意の$t \in (0, 1) \subset \R$に対して
+    \begin{equation}
+        f(tx + (1 - t)y) < tf(x) + (1 - t)f(y)
+    \end{equation}
+    が成り立つことをいう。
+\end{proposition}
+
+\begin{remark}
+    関数の凸性は座標に依存する。
+    この意味を理解するため、
+    多様体$M = \R_{> 0}$上の関数
+    $f \colon \R_{> 0} \to \R$の座標表示について考えてみよう。
+    実は、$f$がある座標で凸であったとしても
+    別の座標でも凸とは限らない。
+    たとえば$f \colon \R_{> 0} \to \R, \; x \mapsto x$は
+    座標$\varphi \colon \R_{> 0} \to \R_{> 0}, \; x \mapsto \sqrt{x}$のもとで
+    $f \circ \varphi(t) = f(t^2) = t^2$だから凸だが、
+    座標$\varphi' \colon \R_{> 0} \to \R_{> 0}, \; x \mapsto x$のもとでは
+    $f \circ \varphi'(t) = f(t) = t$だから凸ではない。
+\end{remark}
+
+\begin{proposition}[凸性はアファイン変換で不変]
+    \TODO{}
+\end{proposition}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+\begin{definition}[Legendre 変換]
+    \TODO{}
+\end{definition}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{Bregman 幾何}
+
+凸関数をポテンシャルとして
+双対平坦構造が誘導される。
+
+\begin{definition}[Bregman ダイバージェンス]
+    \TODO{}
+\end{definition}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{一般化 Pythagoras の定理}
+
+\begin{theorem}[一般化 Pythagoras の定理]
+    \TODO{}
+\end{theorem}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{射影定理}
+
+\begin{definition}[測地射影]
+    \TODO{}
+\end{definition}
+
+\begin{theorem}[射影定理]
+    $M$を多様体、
+    $D$を$M$上のダイバージェンス、
+    $(g, \nabla, \nabla^*)$を$D$により誘導された双対構造、
+    $S \subset M$を部分多様体とする。
+    このとき次が成り立つ:
+    \begin{enumerate}
+        \item 任意の$p \in M$に対し、
+            $D(p \| \Box)$を最小化する$S$上の点$q \in S$は
+            $p$の$S$への$\nabla^*$-射影である。
+        \item 任意の$p \in M$に対し、
+            $D^*(p \| \Box)$を最小化する$S$上の点$q \in S$は
+            $p$の$S$への$\nabla$-射影である。
+    \end{enumerate}
+\end{theorem}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+\begin{theorem}[一意性]
+    $S$が平坦のとき
+    \TODO{}
+\end{theorem}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+
+
+% ============================================================
+%
+% ============================================================
+\chapter{無限集合上の測度の空間}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{無限集合上の測度の空間}
+
+\TODO{}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{パラメータ付き測度モデル}
+
+\begin{definition}[パラメータ付き測度モデル]
+    \TODO{}
+\end{definition}
+
+パラメトリックモデルとは、
+$M$が有限次元で$\bfp$の値が確率分布の場合である。
+
+\begin{definition}[パラメトリックモデル]
+    \TODO{}
+\end{definition}
+
+
+
+% ============================================================
+%
+% ============================================================
+\chapter{正定値行列の空間}
+
+\TODO{$n \times n$行列を$n$元集合上の測度とみなす？}
+
+\TODO{Stiefel 多様体と最適化についても触れる？}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{正定値対称行列の空間}
+
+\begin{definition}[正定値対称行列の空間]
+    \TODO{}
+\end{definition}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{ダイバージェンス}
+
+
+
+% ============================================================
+%
+% ============================================================
+\chapter{統計的推定と情報幾何}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{漸近理論 (1次オーダー)}
+
+測地射影を用いて漸近理論を幾何学的に考察する。
+
+\TODO{}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{漸近理論 (高次オーダー)}
+
+高次オーダーの漸近理論には曲率が現れる。
+
+\TODO{}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{ノンパラメトリック統計}
+
+\begin{definition}[Estimating function]
+    \TODO{}
+\end{definition}
+
+
+
+
+
+
+
+
+
+\end{document}

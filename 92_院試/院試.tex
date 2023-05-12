@@ -1,0 +1,71 @@
+\documentclass[report, notitlepage]{jlreq}
+\usepackage{docmute}
+\usepackage{global}
+\usepackage{./sub/local}
+\def\assetspath{./}
+%\makeindex
+\makeglossaries
+
+\title{情報幾何学}
+\author{Yahata}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\chapter*{Preface}
+
+院試の問題をまとめる。
+
+\tableofcontents
+\markboth{\contentsname}{}
+
+% ============================================================
+%
+% ============================================================
+\input{sub/2007A}
+
+% ============================================================
+%
+% ============================================================
+\newpage
+\phantomsection
+\addcontentsline{toc}{part}{演習問題の解答}
+\part*{演習問題の解答}
+
+\includecollection{answers}
+
+% ============================================================
+%
+% ============================================================
+\newpage
+\phantomsection
+\addcontentsline{toc}{part}{参考文献}
+\renewcommand{\bibname}{参考文献}
+\markboth{\bibname}{}
+\part*{参考文献}
+
+{
+    \renewcommand{\bibsection}{}
+    \bibliographystyle{amsalpha}
+    \bibliography{../mybibliography}
+}
+
+% ============================================================
+%
+% ============================================================
+\newpage
+\phantomsection
+\addcontentsline{toc}{part}{記号一覧; Nomenclature}
+\printglossary[title={記号一覧; Nomenclature}]
+
+% ============================================================
+%
+% ============================================================
+\newpage
+\phantomsection
+\addcontentsline{toc}{part}{索引}
+\printindex
+
+\end{document}

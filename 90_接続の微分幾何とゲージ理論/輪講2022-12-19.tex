@@ -1,0 +1,780 @@
+\documentclass[report]{jlreq}
+\usepackage{../global}
+\usepackage{./local}
+\begin{document}
+
+\tableofcontents
+\markboth{\contentsname}{}
+
+% ============================================================
+%
+% ============================================================
+\newpage
+\setcounter{chapter}{1}
+\chapter{接続}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\setcounter{section}{7}
+\section{平行移動とホロノミー}
+
+\subsection{ベクトルバンドルの平行移動とホロノミー}
+
+速度ベクトルの一般化として、
+曲線に沿う切断を定義する。
+
+\begin{definition}[曲線に沿う切断]
+    $M$を多様体、
+    $\pi \colon E \to M$をベクトルバンドル、
+    $J$を$\R$の区間、
+    $\gamma \colon J \to M$を{\smooth}曲線とする。
+    {\smooth}写像$\xi \colon J \to E$が
+    \term{曲線$\gamma$に沿う$E$の切断}[section along a curve]
+    {曲線に沿う切断}[きょくせんにそうせつだん]
+    であるとは、
+    \begin{equation}
+        \xi(t) \in E_{\gamma(t)}
+            \quad
+            (\forall t \in J)
+    \end{equation}
+    が成り立つことをいう。
+    $\xi(t)$を$\xi_t$とも書く。
+    \begin{equation}
+        \begin{tikzcd}
+            & E \ar{d}{\pi} \\
+            J \ar{ru}{\xi} \ar{r}[swap]{\gamma}
+                & M
+        \end{tikzcd}
+    \end{equation}
+\end{definition}
+
+\begin{example}
+    曲線$\gamma$の速度ベクトルは、
+    曲線$\gamma$に沿う$TM$の切断である。
+\end{example}
+
+さて、ここで曲線$\gamma$に沿う$\xi$の共変微分
+「$\nabla_{\dot{\gamma}(t)} \xi$」を定義したい。
+ところが、ややこしいことに「曲線$\gamma$に沿う$E$の切断」は「$E$の切断」ではないため、
+「$\nabla_{\dot{\gamma}(t)} \xi$」という文字列に
+正確な意味を与えるにはさらなる定義が必要となる。
+
+\highlight{引き戻しを用いて定義したほうがよさそう}。
+
+\begin{definition}[曲線に沿う切断の拡張可能性]
+    $M$を多様体、
+    $\pi \colon E \to M$をベクトルバンドル、
+    $J$を$\R$の区間、
+    $\gamma \colon J \to M$を{\smooth}曲線とする。
+    曲線$\gamma$に沿う$E$の切断$\xi \colon J \to E$が
+    \term{拡張可能}[extendible]{拡張可能}[かくちょうかのう]
+    であるとは、
+    $\gamma$の像$\gamma(J)$を含む$U \opensubset M$と
+    $U$上の$E$の切断$\widetilde{\xi}$が存在して
+    \begin{equation}
+        \widetilde{\xi}_{\gamma(t)} = \xi_t
+            \quad
+            (\forall t \in J)
+    \end{equation}
+    が成り立つことをいう。
+    $\widetilde{\xi}$を
+    \term{$\xi$の拡張}{拡張!曲線に沿う切断の---}[かくちょう]という。
+\end{definition}
+
+\begin{example}[拡張可能でない例]
+    8の字曲線$\gamma \colon (-\pi, \pi) \to \R^2, \;
+    t \mapsto (\sin t, \sin t \cos t)$の
+    速度ベクトル$\dot{\gamma}$は拡張可能でない。
+    なぜならば、8の字の中央部分で速度ベクトルが2方向に出ているからである。
+\end{example}
+
+\begin{definition}[曲線に沿う共変微分]
+    上の定義の状況で、
+    さらに$\nabla$を$E$の接続とし、
+    $\xi$は拡張可能であるとする。
+    このとき、$\xi$の拡張$\widetilde{\xi} \in \Gamma(E)$をひとつ選び
+    \begin{equation}
+        \nabla_{\dot{\gamma}(t)} \xi
+            \coloneqq \nabla_{\dot{\gamma}(t)} \widetilde{\xi}
+            \quad
+            (t \in J)
+    \end{equation}
+    と定義し、これを
+    \term{曲線$\gamma$に沿う共変微分}[covariant derivative along $\gamma$]
+    {曲線に沿う共変微分}[きょくせんにそうきょうへんびぶん]という。
+    これは$\widetilde{\xi}$の選び方によらず well-defined に定まる (このあと示す)。
+\end{definition}
+
+\begin{proposition}
+    上の定義の状況で、
+    さらに$\widetilde{\xi} \in \Gamma(E)$を$\xi$の拡張、
+    $t \in J$、
+    $U$を$M$における$\gamma(t)$の開近傍、
+    $e_1, \dots, e_r$を$U$上の$E$の局所フレーム、
+    $x^1, \dots, x^n$を$U$上の$M$の局所座標とする。
+    $\widetilde{\xi}$を局所的に
+    \begin{alignat}{1}
+        \widetilde{\xi} &= \widetilde{\xi}^\lambda e_\lambda
+            \quad
+            (\widetilde{\xi}^\lambda \in \smooth(U))
+    \end{alignat}
+    と表し、$\xi^\lambda \coloneqq \widetilde{\xi}^\lambda \circ \gamma$とおく。
+    また$\nabla e_\mu$を局所的に
+    \begin{alignat}{1}
+        \nabla e_\mu
+            &= \omega_\mu^\lambda \otimes e_\lambda
+                \quad
+                (\omega_\mu^\lambda \in A^1(U)) \\
+            &= \Gamma^\lambda_{\mu i} dx^i \otimes e_\lambda
+                \quad
+                (\Gamma^\lambda_{\mu i} \in \smooth(U))
+    \end{alignat}
+    と表す。
+    このとき
+    \begin{equation}
+        \nabla_{\dot{\gamma}(t)} \xi
+            = \left\{
+                \frac{d\xi^\lambda}{dt}(t)
+                +
+                \xi^\mu (t)
+                \Gamma^\lambda_{\mu i} (\gamma(t))
+                \frac{d\gamma^i}{dt}(t)
+            \right\}
+            (e_\lambda)_{\gamma(t)}
+    \end{equation}
+    が成り立つ。
+    したがってとくに$\nabla_{\dot{\gamma}(t)} \xi$の値は
+    $\widetilde{\xi}$の選び方によらず well-defined に定まる。
+\end{proposition}
+
+\begin{proof}
+    まず記法を整理すると
+    \begin{equation}
+        \nabla_{\dot{\gamma}(t)} \xi
+            = \nabla_{\dot{\gamma}(t)} \widetilde{\xi}
+            = (\nabla \widetilde{\xi}) (\dot{\gamma}(t))
+            = \underbrace{
+                (\nabla \widetilde{\xi})_{\gamma(t)}
+            }_{\in \, T^*_{\gamma(t)} M \otimes E_{\gamma(t)}}
+            (\underbrace{\dot{\gamma}(t)}_{\in \, T_{\gamma(t)} M})
+    \end{equation}
+    と書けることに注意する。
+    そこで$\nabla \widetilde{\xi}$を変形すると
+    \begin{alignat}{1}
+        \nabla \widetilde{\xi}
+            &= d\widetilde{\xi}^\lambda \otimes e_\lambda
+                + \widetilde{\xi}^\mu \nabla e_\mu \\
+            &= d\widetilde{\xi}^\lambda \otimes e_\lambda
+                + \widetilde{\xi}^\mu \Gamma^\lambda_{\mu i} dx^i \otimes e_\lambda \\
+            &= \left\{
+                d\widetilde{\xi}^\lambda
+                + \widetilde{\xi}^\mu \Gamma^\lambda_{\mu i} dx^i
+            \right\} \otimes e_\lambda
+    \end{alignat}
+    となるから、点$\gamma(t)$での値は
+    \begin{alignat}{1}
+        (\nabla \widetilde{\xi})_{\gamma(t)}
+            &= \left\{
+                d\widetilde{\xi}^\lambda_{\gamma(t)}
+                + \widetilde{\xi}^\mu (\gamma(t))
+                \Gamma^\lambda_{\mu i} (\gamma(t))
+                dx^i_{\gamma(t)}
+            \right\} \otimes (e_\lambda)_{\gamma(t)} \\
+            &= \left\{
+                d\widetilde{\xi}^\lambda_{\gamma(t)}
+                + \xi^\mu (\gamma(t))
+                \Gamma^\lambda_{\mu i} (\gamma(t))
+                dx^i_{\gamma(t)}
+            \right\} \otimes (e_\lambda)_{\gamma(t)}
+    \end{alignat}
+    である。
+    ここで
+    \begin{alignat}{1}
+        (d\widetilde{\xi}^\lambda)_{\gamma(t)} (\dot{\gamma}(t))
+            &= \dd{t}\bigg|_{t = t} \widetilde{\xi}^\lambda \circ \gamma(t)
+            = \frac{d\xi^\lambda}{dt}(t) \\
+        (dx^i)_\gamma(t) (\dot{\gamma}(t))
+            &= \dd{t}\bigg|_{t = t} x^i \circ \gamma(t)
+            = \frac{d\gamma^i}{dt}(t)
+    \end{alignat}
+    だから
+    \begin{alignat}{1}
+        \nabla_{\dot{\gamma}(t)} \xi
+            = (\nabla \widetilde{\xi})_{\gamma(t)}
+            = \left\{
+                \frac{d\xi^\lambda}{dt}(t)
+                +
+                \xi^\mu (t)
+                \Gamma^\lambda_{\mu i} (\gamma(t))
+                \frac{d\gamma^i}{dt}(t)
+            \right\}
+            (e_\lambda)_{\gamma(t)}
+    \end{alignat}
+    を得る。
+    関数$\xi^\lambda$は
+    $\widetilde{\xi}$の選び方によらないから
+    well-defined 性もいえた。
+\end{proof}
+
+測地線の一般化として、
+平行の概念を定義する。
+
+\begin{definition}[平行]
+    $M$を多様体、$E \to M$をベクトルバンドル、
+    $\nabla$を$E$の接続、
+    $J$を$\R$の区間、
+    $\gamma \colon J \to M$を{\smooth}曲線、
+    $\xi$を曲線$\gamma$に沿う$E$の切断とする。
+    $\xi$が
+    \begin{equation}
+        \nabla_{\dot{\gamma}(t)} \xi = 0
+            \quad
+            (\forall t \in J)
+    \end{equation}
+    をみたすとき、$\xi$は
+    \term{曲線$\gamma$に沿って平行}[parallel along $\gamma$]{平行}[へいこう]
+    であるという。
+    上の命題より、これは次の斉次1階常微分方程式系が成り立つことと同値である:
+    \begin{equation}
+        \frac{d\xi^\lambda}{dt}(t)
+            + \xi^\mu (t)
+            \Gamma^\lambda_{\mu i} (\gamma(t))
+            \frac{d\gamma^i}{dt}(t)
+            = 0
+            \quad
+            (\lambda = 1, \ldots, r)
+    \end{equation}
+    $\bm{\xi} \coloneqq \up{t}(\xi^1, \dots, \xi^r), \;
+    A \coloneqq \left(
+        \Gamma^{\lambda}_{\mu i} \frac{d\gamma^i}{dt}
+    \right)_{\lambda, \mu}$
+    とおけば
+    \begin{equation}
+        \frac{d\bm{\xi}}{dt} = - A \bm{\xi}
+    \end{equation}
+    と書ける。
+\end{definition}
+
+\begin{remark}
+    測地線とは、
+    その速度ベクトルが自身に沿って平行な曲線のことである。
+\end{remark}
+
+\begin{definition}[平行移動]
+    上の命題の状況で
+    さらに$J = [a, b], \; a, b \in \R$とするとき、
+    初期値問題の解の存在と一意性より
+    任意の$\xi_a \in E_{\gamma(a)}$に対し
+    $\xi(a) = \xi_a$なる
+    解$\xi$が一意に定まる。
+    このとき、$\xi$は
+    $\xi_a$を曲線$\gamma$に沿って
+    \term{平行移動}[parallel displacement]{平行移動}[へいこういどう]
+    して得られたという。
+\end{definition}
+
+\begin{proposition}
+    上の定義の状況で、
+    写像
+    \begin{equation}
+        E_{\gamma(a)} \to E_{\gamma(b)},
+        \quad
+        \xi_a \mapsto \xi_b \coloneqq \xi(b)
+    \end{equation}
+    は$\R$-線型同型である。
+\end{proposition}
+
+\begin{proof}
+    初期値問題の解の存在と一意性より、写像であることはよい。
+    全射性は$t = b$での$\xi$の値を指定した初期値問題を考えればよい。
+    $\R$-スカラー倍を保つことは次のようにしてわかる:
+    $\xi$が$\xi(a) = \xi_a$なる解であったとすると、
+    各$c \in \R$に対し
+    $\eta(t) \coloneqq c \xi(t)$は$\eta(a) = c \xi_a$をみたすただひとつの解であるから、
+    $c \xi_a = \eta(a)$を曲線$\gamma$に沿って平行移動して得られる値は
+    $\eta(b) = c \xi(b) = c \xi_b$に他ならない。
+    和を保つことも同様にして示せる。
+    よって命題の写像は全射$\R$-線型写像である。
+    $\dim_\R E_{\gamma(a)} = \dim_\R E_{\gamma(b)}$より
+    $\R$-線型同型であることが従う。
+\end{proof}
+
+\begin{definition}[区分的に{\smooth}な曲線]
+    $M$を多様体、
+    $J = [a, b], \; a, b \in \R$、
+    $\gamma \colon J \to M$を連続写像とする。
+    $\gamma$が
+    \term{区分的に{\smooth}な曲線}[piecewise smooth curve]
+    {区分的に{\smooth}な曲線}[くぶんてきに C infinity なきょくせん]
+    であるとは、
+    $a = t_0 < t_1 < \dots < t_k = b$なる
+    $t_0, t_1, \dots, t_k \in \R, \; k \in \Z_{\ge 1}$と
+    {\smooth}曲線$\gamma_i \colon [t_{i-1}, t_i] \to M \; (1 \le i \le k)$
+    が存在し
+    \begin{equation}
+        \gamma(t) = \begin{cases}
+            \gamma_1(t) & (t \in [t_0, t_1]) \\
+            \gamma_2(t) & (t \in [t_1, t_2]) \\
+            \cdots \\
+            \gamma_k(t) & (t \in [t_{k-1}, t_k])
+        \end{cases}
+    \end{equation}
+    が成り立つことをいう。
+\end{definition}
+
+\begin{definition}[ベクトルバンドルの接続のホロノミー群]
+    $x_0 \in M$とする。
+    $x_0$を基点とする区分的に{\smooth}な任意の閉曲線$c$に対し、
+    平行移動により$\R$-ベクトル空間$E_{x_0}$の自己同型写像
+    ($\tau_c$とおく) が得られる。
+    そこで
+    \begin{equation}
+        \Psi_{x_0} \coloneqq \{
+            \tau_c \in GL(E_{x_0})
+            \mid
+            \text{$c$は$x_0$を基点とする区分的に{\smooth}な閉曲線}
+        \}
+    \end{equation}
+    とおくと、
+    $\Psi_{x_0}$は$GL(E_{x_0})$の部分群となる (このあと示す)。
+    $\Psi_{x_0}$を$x_0$を基点とする
+    \term{ホロノミー群}[holonomy group]{ホロノミー群}[ほろのみーぐん]という。
+\end{definition}
+
+\begin{proof}
+    \uline{写像の合成について閉じていること} \quad
+    $\tau_c, \tau_{c'} \in \Psi_{x_0}$とすると
+    $c \circ c'$は$x_0$を基点とする区分的に{\smooth}な閉曲線であり、
+    $\tau_c \circ \tau_{c'} = \tau_{c \circ c'}$が成り立つ。
+
+    \uline{単位元を含むこと} \quad
+    定値曲線$x_0$に対し$\tau_{x_0} \in \Psi_{x_0}$が恒等写像となる。
+
+    \uline{逆元を含むこと} \quad
+    $\tau_c \in \Psi_{x_0}$とする。
+    $c$を逆向きに動く曲線$d$を
+    $d(t) \coloneqq c(a + b - t) \; t \in [a, b]$で定め、
+    $\xi$を逆向きに動く曲線$\eta$を
+    $\eta(t) \coloneqq \xi(a + b - t) \; t \in [a, b]$で定める。
+    このとき$d$は$x_0$を基点とする区分的に{\smooth}な閉曲線だから
+    $\tau_d \in \Psi_{x_0}$である。
+    また、$\eta$は$d$に沿う$E$の切断である。
+    さらに$\eta$が$d$に沿って平行であることは、
+    $\xi$の拡張を$\widetilde{\xi}$として
+    (これは$\eta$の拡張でもある)
+    \begin{alignat}{1}
+        \nabla_{\dot{d}(t)} \eta
+            &= \nabla_{\dot{d}(t)} \widetilde{\xi} \\
+            &= \nabla_{- \dot{c}(a + b - t)} \widetilde{\xi} \\
+            &= - \nabla_{\dot{c}(a + b - t)} \widetilde{\xi} \\
+            &= - \nabla_{\dot{c}(a + b - t)} \xi \\
+            &= 0
+    \end{alignat}
+    よりわかる。
+    よって$\xi_b = \eta(a)$を$d$に沿って平行移動すると
+    $\eta(b) = \xi(a) = \xi_a$が得られる。
+    したがって$\eta_d = \eta_c^{-1}$である。
+\end{proof}
+
+%\begin{proposition}
+%    $M$を多様体、$E \to M$をベクトルバンドル、
+%    $g$を$E$の内積、
+%    $\nabla$を$g$を保つ$E$の接続とする。
+%    このとき、内積は平行移動で不変である\TODO{どういう意味？}。
+%\end{proposition}
+%
+%\begin{proof}
+%    \TODO{}
+%\end{proof}
+
+\subsection{主ファイバーバンドルの平行移動とホロノミー}
+
+\begin{definition}[水平な曲線]
+    $M$を多様体、
+    $G$を Lie 群、
+    $p \colon P \to M$を主$G$バンドル、
+    $\omega$を$P$の接続形式、
+    $J \subset \R$を区間とする。
+    {\smooth}曲線$u \colon J \to P$が
+    \term{水平}[horizontal]{水平}[すいへい]であるとは、
+    $u$の速度ベクトル$\dot{u}$がつねに水平部分空間に含まれること、すなわち
+    \begin{equation}
+        \omega(\dot{u}(t)) = 0
+            \quad (\forall t \in J)
+    \end{equation}
+    が成り立つことをいう。
+\end{definition}
+
+\begin{definition}[平行移動]
+    $M$を多様体、
+    $G$を Lie 群、
+    $p \colon P \to M$を主$G$バンドル、
+    $\omega$を$P$の接続形式、
+    $J \subset \R$を区間、
+    $x \colon J \to M$を$x_0 \in M$を始点とする{\smooth}曲線
+    とする。
+    このとき各$u_0 \in P_{x_0}$に対し、
+    $u_0$を始点とする水平な{\smooth}曲線$u \colon J \to P$であって
+    \begin{equation}
+        \pi(u(t)) = x(t) \quad (t \in J)
+    \end{equation}
+    をみたすものが一意に存在する (証明略)。
+    このとき、
+    $u$は曲線$x$に沿った$u_0$の
+    \term{平行移動}[parallel displacement]{平行移動}[へいこういどう]
+    であるという。
+    \begin{equation}
+        \begin{tikzcd}
+            & P \ar{d}{p} \\
+            J \ar{ru}{u} \ar{r}[swap]{x}
+                & M
+        \end{tikzcd}
+    \end{equation}
+\end{definition}
+
+\begin{proposition}
+    $u$が水平ならば、任意の$s \in G$に対し
+    $u(t) . s$も水平である。
+\end{proposition}
+
+\begin{proof}
+    水平接分布が$G$の作用で保たれることより明らか。
+\end{proof}
+
+\begin{definition}[主ファイバーバンドルの接続のホロノミー群]
+    $u_0 \in P$とし、$x_0 = p(u_0)$とおく。
+    $x_0$を始点とする$M$内の任意の閉曲線$c$に対し、
+    $x$に沿った$u_0$の平行移動を$u$とおくと
+    \begin{equation}
+        u(b) = u_0 . \tau_c
+    \end{equation}
+    なる$\tau_c \in G$が一意に定まる。
+    このような$\tau_c$全体の集合を$\Psi_{u_0}$とおくと、
+    $\Psi_{u_0}$は$G$の部分群となる。
+    $\Psi_{u_0}$を$u_0$を始点とする$\omega$の
+    \term{ホロノミー群}[holonomy group]{ホロノミー群}[ほろのみーぐん]という。
+\end{definition}
+
+\begin{proposition}[ホロノミー群の共役]
+    $u_0, u_1 \in P$とし、
+    $x_0 = p(u_0), \; x_1 = p(u_1)$とおく。
+    $c_0$を$x_0$から$x_1$への区分的に{\smooth}な曲線とし、
+    曲線$c_0$に沿った$u_0$の平行移動を$\widetilde{c}_0$とおく。
+    すると$\widetilde{c}_0(b) = u_1 . a$なる$a \in G$がただひとつ存在するが、
+    このとき$\Psi_{u_1} = a \Psi_{u_0} a^{-1}$が成り立つ。
+\end{proposition}
+
+\begin{proof}
+    $a \Psi_{u_0} a^{-1} \subset \Psi_{u_1}$および
+    $a^{-1} \Psi_{u_1} a \subset \Psi_{u_0}$を示せばよい。
+    実際、これらが示されたならば
+    $a \Psi_{u_0} a^{-1} \subset \Psi_{u_1}
+    = aa^{-1} \Psi_{u_1} aa^{-1} \subset a \Psi_{u_0} a^{-1}$
+    より$a \Psi_{u_0} a^{-1} = \Psi_{u_1}$が従う。
+    さらに$u_0, u_1$に関する対称性より
+    $a \Psi_{u_0} a^{-1} \subset \Psi_{u_1}$を示せば十分。
+    そこで$\tau_c \in \Psi_{u_1}$とし、
+    $c$に沿う$u_0$の平行移動を$\widetilde{c}$とおき、
+    $a \tau_c a^{-1} \in \Psi_{u_0}$を示す。
+    そのためには$a \tau_c a^{-1} = \tau_{c_0 \circ c \circ c_0^{-1}}$であること、
+    すなわち$c_0 \circ c \circ c_0^{-1}$に沿う
+    $u_1$の平行移動の終点が$u_1 . a \tau_c a^{-1}$であることをいえばよい。
+
+    まず$c_0^{-1}$に沿う$u_1$の平行移動は
+    $R_{a^{-1}} \circ \widetilde{c}_0^{-1}$であり、
+    その終点は$u_0 . a^{-1}$である。
+
+    つぎに$c$に沿う$u_0 . a^{-1}$の平行移動は
+    $R_{a^{-1}} \circ \widetilde{c}$であり、
+    その終点は$u_0 . \tau_c a^{-1}$である。
+
+    最後に$c_0$に沿う$u_0 . \tau_c a^{-1}$の平行移動は
+    $R_{\tau_c a^{-1}} \circ \widetilde{c}_0$であり、
+    その終点は$u_1 . a \tau_c a^{-1}$である。
+    これが示したいことであった。
+\end{proof}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\newpage
+\appendix
+
+% ============================================================
+%
+% ============================================================
+\chapter{測地線}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{測地線}
+
+\begin{theorem}[初期値問題の解の一意性]
+    \TODO{}
+\end{theorem}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+\begin{definition}[速度ベクトル]
+    \idxsym{velocity vector}{$\dd{t}\bigg|_{t = t_0} \gamma(t)$}
+        {曲線$\gamma$の$t = t_0$における速度ベクトル}
+    $M$を多様体、
+    $J$を$\R$の区間、
+    $\gamma \colon J \to M$を{\smooth}曲線とする。
+    各$t_0 \in J$に対し、
+    $\gamma$の$t = t_0$における
+    \term{速度ベクトル}[velocity vector]{速度ベクトル}[そくどべくとる]
+    $\dot{\gamma} \colon J \to TM$
+    を
+    \begin{equation}
+        \dot{\gamma}(t_0)
+            \coloneqq \dd{t}\bigg|_{t = t_0} \gamma(t)
+            \coloneqq d\gamma\left(
+                \dd{t}\bigg|_{t = t_0}
+            \right)
+            \quad
+            (t_0 \in J)
+    \end{equation}
+    で定義する。ただし$\dd{t}\bigg|_{t = t_0}$は
+    $J \subset \R$の標準的な座標$t$
+    により定まる$T_{t_0}\R$の基底
+    $\deldel{t}_{t_0}$のことである。
+\end{definition}
+
+\begin{definition}[測地線]
+    \TODO{}
+\end{definition}
+
+
+
+% ============================================================
+%
+% ============================================================
+\chapter{前回までの振り返り}
+
+前回までの内容のうち、
+今回の内容にとくに関係するものを参照用に整理しておく。
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{主ファイバーバンドルの接続}
+
+\begin{definition}[主ファイバーバンドルの接続形式]
+    $M$を多様体、
+    $G$を Lie 群、$\frakg$を$G$の Lie 代数、
+    $p \colon P \to M$を主$G$バンドルとする。
+    $\{ (U_\alpha, \varphi_\alpha) \}_{\alpha \in A}$
+    を$\bigcup U_\alpha = P$なる$P$の局所自明化の族とし、
+    これにより定まる切断の族を$\{ \sigma_\alpha \}$とおく。
+    $\frakg$に値をもつ$P$上の$1$-形式$\omega$を
+    各$p^{-1}(U_\alpha) \subset P$上で
+    \begin{equation}
+        \omega \coloneqq
+            s_\alpha^{-1} \omega_\alpha s_\alpha
+            + s_{\alpha}^{-1} ds_\alpha
+    \end{equation}
+    と定めることができる (このあとすぐ示す)。
+    ただし右辺の積は$TG$における積であり、
+    $s_\alpha$は
+    \begin{equation}
+        s_\alpha \coloneqq \mathrm{pr}_2 \circ \varphi_\alpha
+        \colon \pi^{-1}(U_\alpha) \to G,
+        \quad
+        (x, \sigma_\alpha(x) . s) \mapsto s
+    \end{equation}
+    と定めた。
+    $\omega$を$P$の
+    \term{接続形式}[connection form]{接続形式!主ファイバーバンドルの---}[せつぞくけいしき]
+    という。
+\end{definition}
+
+\begin{proof}
+    \uline{($\Rightarrow$)} \quad
+    $\{ (U_\alpha, \varphi_\alpha) \}_{\alpha \in A}$
+    を$\bigcup U_\alpha = P$なる$P$の局所自明化の族とし、
+    これにより定まる切断の族を$\{ \sigma_\alpha \}$とおき、
+    $\omega$はこれにより定まる$P$の接続形式であるとする。
+\end{proof}
+
+\begin{theorem}[主ファイバーバンドルの接続形式の特徴付け]
+    $M$を多様体、
+    $G$を Lie 群、$\frakg$を$G$の Lie 代数、
+    $p \colon P \to M$を主$G$バンドルとする。
+    $\frakg$に値をもつ$P$上の$1$-形式$\omega$に関し、
+    $\omega$が$P$の接続形式であることと
+    $\omega$がつぎの条件をみたすこととは同値である:
+    \begin{enumerate}
+        \item $R_a^* \omega = a^{-1} \omega a \quad (a \in G)$
+        \item $\omega(A^*) = A \quad (A \in \frakg)$
+    \end{enumerate}
+\end{theorem}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{水平部分空間}
+
+\begin{definition}[接分布]
+    $M$を多様体とする。
+    $D \subset TM$が$M$上の
+    \term{接分布}[tangent distribution]{接分布}[せつぶんぷ]
+    であるとは、
+    $D$が$TM$の部分ベクトルバンドルであることをいう。
+\end{definition}
+
+\begin{definition}[積分多様体]
+    $M$を多様体、$D \subset TM$を$M$上の接分布とする。
+    部分多様体$N \subset M$が$D$の
+    \term{積分多様体}[integral manifold]{積分多様体}[せきぶんたようたい]
+    であるとは、
+    \begin{equation}
+        T_xN = D_x
+            \quad
+            (\forall x \in N)
+    \end{equation}
+    が成り立つことをいう。
+
+    各$x \in M$に対し
+    $D$のある積分多様体$N \subset M$が存在して
+    $x \in N$となるとき、
+    $D$は\term{積分可能}[integrable]{積分可能}[せきぶんかのう]
+    であるという。
+\end{definition}
+
+\begin{definition}[包合的]
+    $M$を多様体、$D \subset TM$を$M$上の接分布とする。
+    $D$が\term{包合的}[involutive]{包合的}[ほうごうてき]であるとは、
+    $D$の任意の局所切断$X, Y$に対し
+    $[X, Y]$も$D$の局所切断となることをいう。
+\end{definition}
+
+\begin{theorem}[Frobenius]
+    \TODO{}
+\end{theorem}
+
+\subsection{垂直部分空間と水平部分空間}
+
+\begin{definition}[垂直部分空間]
+    $M$を多様体、$p \colon P \to M$を主$G$バンドルとする。
+    各$u \in P$に対し、$\R$-部分ベクトル空間
+    \begin{equation}
+        V_u \coloneqq \{
+            v \in T_uP \mid p_* v = 0
+        \}
+    \end{equation}
+    を$T_uP$の\term{垂直部分空間}[vertical subspace]{垂直部分空間}[すいちょくぶぶんくうかん]
+    という。
+\end{definition}
+
+\begin{proposition}
+    $V_u = \{ A^*_u \mid A \in \frakg \}$
+\end{proposition}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+\begin{theorem}[垂直接分布は積分可能]
+    \TODO{}
+\end{theorem}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+\begin{definition}[水平部分空間]
+    $M$を多様体、$p \colon P \to M$を主$G$バンドル、
+    $\omega$を$P$の接続形式とする。
+    各$u \in P$に対し、$\R$-部分ベクトル空間
+    \begin{equation}
+        H_u \coloneqq \Ker \omega_u
+    \end{equation}
+    を$T_uP$の\term{水平部分空間}[horizontal subspace]{水平部分空間}[すいへいぶぶんくうかん]
+    という。
+\end{definition}
+
+\begin{theorem}[水平接分布の積分可能性]
+    $P$の水平接分布$\coprod_{u \in P} H_u$に関し次は同値である:
+    \begin{enumerate}
+        \item $\coprod H_u$は積分可能である。
+        \item $P$の曲率は$0$である。
+    \end{enumerate}
+\end{theorem}
+
+\begin{theorem}[水平接分布による接続の特徴付け]
+    $P$上の接分布$\bigcup_{u \in P} H_u$であって
+    \begin{enumerate}[label=(1-\roman*)]
+        \item $T_uP = V_u \oplus H_u$
+        \item $R_{a*} (H_u) = H_{ua}$
+    \end{enumerate}
+    なるものと、
+    $P$上の$\frakg$値$1$-形式$\omega$であって
+    \begin{enumerate}[label=(2-\roman*)]
+        \item $\omega(A^*) = A$
+        \item $R_a^* \omega = a^{-1} \omega a$
+    \end{enumerate}
+    なるものは
+    \begin{equation}
+        \Ker \omega_u = H_u,
+        \quad
+        \dots
+    \end{equation}
+    により 1:1 に対応する。
+    \TODO{}
+\end{theorem}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+\begin{proposition}
+    接続形式$\omega$の曲率形式$\Omega$は
+    \begin{equation}
+        \Omega(X, Y) = d\omega(X^H, Y^H)
+            \quad
+            (X, Y \in T_uP)
+    \end{equation}
+    をみたす。
+\end{proposition}
+
+
+\newpage
+\phantomsection
+\addcontentsline{toc}{chapter}{参考文献}
+\renewcommand{\bibname}{参考文献}
+\markboth{\bibname}{}
+\begin{thebibliography}{9}
+    \bibitem{leesmo}
+        John. M. Lee.
+        \textit{Introduction to Smooth Manifolds}.
+        Springer,
+        2012
+    \bibitem{leerie}
+        John. M. Lee.
+        \textit{Introduction to Riemannian Manifolds}.
+        Springer,
+        2018
+    \bibitem{kob} 小林 昭七. "接続の微分幾何とゲージ理論". 裳華房, 2004
+    \bibitem{tu}
+        Loring W. Tu.
+        \textit{Differential Geometry}.
+        Springer,
+        2017
+    \bibitem{rotman} Joseph J. Rotman \textit{An Introduction to Homological Algebra}. Springer, 2008
+    \bibitem{kol}
+        Ivan Kolář, Jan Slovák, Peter W. Michor.
+        \textit{Natural Operations in Differential Geometry}.
+        Springer Berlin, Heidelberg,
+        1993
+\end{thebibliography}
+
+\end{document}

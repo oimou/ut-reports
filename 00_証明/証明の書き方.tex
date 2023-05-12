@@ -1,0 +1,68 @@
+\documentclass[report, notitlepage]{jlreq}
+\usepackage{docmute}
+\usepackage{../global}
+\usepackage{sub/local}
+
+%\makeindex
+%\makeglossaries
+
+\title{証明の書き方}
+\author{Yahata}
+\date{}
+
+\begin{document}
+
+\maketitle
+\begin{abstract}
+    証明の書き方についてまとめる。
+\end{abstract}
+
+% ============================================================
+%
+% ============================================================
+\tableofcontents
+\markboth{\contentsname}{}
+
+% ============================================================
+%
+% ============================================================
+\input{sub/chapter1}
+
+% ============================================================
+%
+% ============================================================
+\newpage
+\phantomsection
+\addcontentsline{toc}{chapter}{参考文献}
+\renewcommand{\bibname}{参考文献}
+\markboth{\bibname}{}
+\chapter*{参考文献}
+
+{
+    \renewcommand{\bibsection}{}
+    \bibliographystyle{amsalpha}
+    \bibliography{../mybibliography}
+}
+
+% ============================================================
+%
+% ============================================================
+\newpage
+\phantomsection
+\addcontentsline{toc}{chapter}{記号一覧}
+\chapter*{記号一覧}
+
+{
+    \renewcommand{\glossarysection}[2][]{}
+    \printglossary[title={記号一覧}]
+}
+
+% ============================================================
+%
+% ============================================================
+\newpage
+\phantomsection
+\addcontentsline{toc}{chapter}{索引}
+\printindex
+
+\end{document}

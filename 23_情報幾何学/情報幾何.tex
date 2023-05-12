@@ -1,0 +1,129 @@
+\documentclass[report, notitlepage]{jlreq}
+\usepackage{docmute}
+\usepackage{global}
+\usepackage{./sub/local}
+\def\assetspath{./}
+%\makeindex
+\makeglossaries
+
+\title{情報幾何学}
+\author{Yahata}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\chapter*{Preface}
+
+本稿では情報幾何学について整理する。
+情報幾何学とは、
+可微分多様体上の双対構造と呼ばれる幾何学的構造を扱う、
+微分幾何学の一分野である。
+
+情報幾何学で扱われる代表的な対象のひとつが、
+数理統計学におけるパラメトリックモデルを幾何学的に定式化した、
+パラメータ付き測度モデルである。
+パラメータ付き測度モデルとは、
+パラメータ全体の多様体$M$と可測空間$\calX$、
+パラメータに測度を割り付ける滑らかな写像$\bfp$からなる
+3つ組$(M, \calX, \bfp)$のことである。
+ここで$\bfp$の像は$\calX$上の測度全体の多様体$\calM(\calX)$に
+埋め込まれているとみなせるが、
+$\calM(\calX)$には自然に Fisher 計量や Amari-Chentsov テンソルなどの
+幾何学的構造が入っているから、
+$M$上にこれらの構造を引き戻せば、
+$M$を介して$\calM(\calX)$を調べることができる。
+これが情報幾何の基本的なアイディアのひとつである。
+
+さてこのような外在的 (extrinsic) な見方は幾何学の研究において重要であるが、
+一方で空間$M$の内在的 (intrinsic) な性質を峻別することが難しくなるという問題もある。
+$M$の内在的性質としては、
+双対構造や Amari-Chentsov 構造、双対平坦性などの概念が基本的である。
+そこでパラメータ付き測度モデルから離れて、
+これらの内在的性質を研究するという方向性もある。
+
+測度全体の多様体$\calM(\calX)$についてもう少し詳しく考えてみる。
+ある可測空間$(\calX, \calA)$上の符号付き測度全体の空間は、
+全変動をノルムとして Banach 空間をなす。
+この空間を Banach 多様体とみれば、
+$(\calX, \calA)$上の確率分布の全体は (Banach) 部分多様体として扱うことができる。
+\cite{ay_information_2017}ではこのような枠組みが情報幾何学の基礎となっている。
+Banach 多様体の教科書は\cite{lang_differential_1985}が有名であり、
+より一般的な無限次元多様体を論じた文献には\cite{schmeding_introduction_2022}がある。
+ただし本稿では Banach 多様体よりも一般の無限次元多様体を扱うことはしない。
+また (測度の空間$\calM(\calX)$は無限次元であるが)
+パラメータの空間$M$は主に有限次元の場合のみを扱う。
+
+本稿を読み進めるための前提知識としては
+数学科の学部3年生レベルの知識を仮定する。
+ただし確率・統計については学部1年生レベルの知識があれば十分である。
+
+\tableofcontents
+\markboth{\contentsname}{}
+
+% ============================================================
+%
+% ============================================================
+\part{確率と統計}
+\input{sub/part1}
+
+\part{情報幾何学}
+\input{sub/part2}
+
+% ============================================================
+%
+% ============================================================
+\newpage
+\phantomsection
+\addcontentsline{toc}{part}{演習問題の解答}
+\part*{演習問題の解答}
+
+\includecollection{answers}
+
+% ============================================================
+%
+% ============================================================
+\newpage
+\phantomsection
+\addcontentsline{toc}{part}{参考文献}
+\renewcommand{\bibname}{参考文献}
+\markboth{\bibname}{}
+\part*{参考文献}
+
+扱う内容は\cite{amari_information_2016}をベースとしたが、
+同じ内容を同じ配列で並べたわけではない。
+情報幾何学の内容については
+\cite{amari_methods_2007}や\cite{ay_information_2017}
+も参考にした。
+日本語の文献では
+\cite{甘利19}、\cite{藤岡21}や\cite{藤原21}を参考にした部分もある。
+サーベイ論文の
+\cite{nielsen_elementary_2020}も参考にした。
+関数解析は\cite{bogachev_real_2020}、
+Banach 多様体は\cite{lang_differential_1985}、
+数理統計は\cite{吉田06}が詳しいと思う。
+
+{
+    \renewcommand{\bibsection}{}
+    \bibliographystyle{amsalpha}
+    \bibliography{../mybibliography}
+}
+
+% ============================================================
+%
+% ============================================================
+\newpage
+\phantomsection
+\addcontentsline{toc}{part}{記号一覧; Nomenclature}
+\printglossary[title={記号一覧; Nomenclature}]
+
+% ============================================================
+%
+% ============================================================
+\newpage
+\phantomsection
+\addcontentsline{toc}{part}{索引}
+\printindex
+
+\end{document}

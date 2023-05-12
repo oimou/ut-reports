@@ -1,0 +1,469 @@
+\documentclass[report]{jlreq}
+\usepackage{../../global}
+\usepackage{./local}
+\subfiletrue
+\def\assetspath{../}
+%\makeindex
+\begin{document}
+
+
+\chapter{常微分方程式の基礎}
+
+\section{常微分方程式とその解}
+
+\begin{definition}[1.1.1 $n$階常微分方程式]
+    関係式
+    \begin{equation}
+        f(x, y, y', \dots, y^{(n)}) = 0
+    \end{equation}
+    を\textbf{$n$階常微分方程式}という。
+\end{definition}
+
+\begin{problem}[例1.1.3]
+    ヨウ素131の半減期は約8日である。10年後の時点で残っている割合を求めよ。
+
+    解答：
+    \begin{equation}
+        \text{約}\, 2^{-365 \times 10 / 8} = 10^{-(3650 / 8) \times \log_{10} 2} < 10^{-100}
+    \end{equation}
+\end{problem}
+
+\begin{problem}[例1.1.7]
+    2階常微分方程式$my'' = -ky$を連立1階常微分方程式に書き直し、その解を求めよ。
+
+    解答：
+    \begin{equation}
+        \begin{bmatrix}
+            y_1 \\ y_2
+        \end{bmatrix}
+        =
+        C_1 \begin{bmatrix}
+            \sin \omega x \\
+            \omega \cos \omega x
+        \end{bmatrix}
+        + C_2 \begin{bmatrix}
+            \cos \omega x \\
+            - \omega \sin \omega x
+        \end{bmatrix}
+        \quad \left(\omega = \sqrt{k / m}\right)
+    \end{equation}
+\end{problem}
+
+\section{解の存在と一意性など}
+
+\begin{definition}[1.2.1 正規形]
+    \,
+    \begin{enumerate}
+        \item $n$階常微分方程式が\textbf{正規形}であるとは
+            \begin{equation}
+                y^{(n)} = f(x, y, \dots, y^{(n-1)})
+            \end{equation}
+            という形をしていること。
+        \item $n$個の未知関数を持つ連立1階常微分方程式が\textbf{正規形}であるとは
+            \begin{equation}
+                y_j' = f_j(x, y_1, \dots, y_n)
+            \end{equation}
+            という形をしていること。
+    \end{enumerate}
+\end{definition}
+
+この講義で扱う微分方程式は全て正規形に直せる。
+以下、$\bm{x} = {}^t (x_1, \dots, x_n) \in \R^n$に対し
+\begin{equation}
+    \| \bm{x} \| \coloneqq \sum_{i=1}^n |x_i|
+\end{equation}
+とおく。
+
+\begin{definition}[1.2.3 リプシッツ条件]
+    $\alpha \in \R,\, \bm{\beta} \in \R^n$と
+    $a \in \R_{>0},\, b \in \overline{\R}_{>0}$をとり
+    \begin{equation}
+        D \coloneqq \left\{
+            \begin{pmatrix}
+                x \\
+                \bm{y}
+            \end{pmatrix} \in \R^{n+1}
+            \,\middle|\,
+            |x-\alpha| \le a,\, \|\bm{y} - \bm{\beta}\| \le b
+        \right\}
+    \end{equation}
+    とおく。
+    $\bm{f}$が$D$上で\textbf{リプシッツ条件}をみたすとは、
+    $\exists L > 0$\quad s.t.
+    \begin{equation}
+        \forall
+            \begin{pmatrix}
+                x \\
+                \bm{y}
+            \end{pmatrix},
+        \forall
+            \begin{pmatrix}
+                x \\
+                \bm{z}
+            \end{pmatrix}
+            \in D
+        \quad \text{に対し} \quad
+        \| \bm{f}(x, \bm{y}) - \bm{f}(x, \bm{z}) \| \le L \| \bm{y} - \bm{z} \|
+    \end{equation}
+    が成立することである。
+\end{definition}
+
+\begin{theorem}[1.2.5 解の存在と一意性]
+    $\bf$を$D$上の連続関数とし、$D$上でリプシッツ条件をみたすとすると、
+    初期値問題
+    \begin{equation}
+        \by' = \bf(x, \by),\quad \by(\alpha) = \bm{\beta}
+        \label{1:eq:1}
+    \end{equation}
+    の解が、$[\alpha - \delta, \alpha + \delta]$上でただ1つ存在する。
+    ただし、
+    \begin{enumerate}
+        \item $b = \infty$のとき$\delta = a$
+        \item $b < \infty$のとき$\delta = \min\{a, b/M\},\, M = \max_{D} \| \bf(x, \bm{y}) \|$
+    \end{enumerate}
+    である。
+\end{theorem}
+
+定理の後半からわかるように、リプシッツ条件の成立範囲$D$と解の存在範囲は一般に一致しない。
+
+\begin{proof}
+    まず解の一意性を示そう。
+    $\by,\, \wideby \colon [\alpha - \delta, \alpha + \delta] \to \R^n$を
+    ふたつの解とすると、それらが式(\ref{1:eq:1})をみたすことから
+    \begin{equation}
+        \begin{split}
+            \by(x) &= \beta + \int_\alpha^x \bf(t, \bm{y}(t))\, dt \\
+            \wideby(x) &= \beta + \int_\alpha^x \bf(t, \wideby(t))\, dt
+        \end{split}
+    \end{equation}
+    が成り立つ。これらの差を$\bm{z}(x) \coloneqq \by(x) - \wideby(x)$とおくと
+    \begin{align}
+        \|\bm{z}(x)\|
+            &= \left\| \int_\alpha^x \left( \bf(t, \by(t)) - \bf(t, \wideby(t)) \right)\, dt \right\| \\
+            &= \sum_i
+                \left| \int_\alpha^x \left( f_i(t, \by(t)) - f_i(t, \wideby(t)) \right)\, dt \right| \\
+            &\le \sum_i
+                \left| \int_\alpha^x \left| f_i(t, \by(t)) - f_i(t, \wideby(t)) \right|\, dt \right| \\
+            \intertext{外側の絶対値は$x \ge \alpha$ならば不要、$x < \alpha$ならばすべて負となるので}
+            &= \left| \int_\alpha^x \left\| \bf(t, \by(t)) - \bf(t, \wideby(t)) \right\|\, dt \right| \\
+            &\le L \left| \int_\alpha^x \| \bm{z}(t) \|\, dt \right|
+                \label{1:eq:2}
+    \end{align}
+    となる。ただし、$L$はリプシッツ定数である。
+    ここで$N \coloneqq \max_{|x - \alpha| \le \delta} \|\bm{z}(x)\|$とおくと、
+    不等式(\ref{1:eq:2})を繰り返し用いることで
+    \begin{equation}
+        \begin{split}
+            \|\bm{z}(x)\|
+                &\le L \left| \int_\alpha^x \| \bm{z}(t) \|\, dt \right|
+                \le LN |x - \alpha| \\
+            \|\bm{z}(x)\|
+                &\le L \left| \int_\alpha^x \| \bm{z}(t) \|\, dt \right|
+                \le \frac{L^2 N}{2} |x - \alpha|^2 \\
+            &\vdots \\
+            \|\bm{z}(x)\|
+                &\le L \left| \int_\alpha^x \| \bm{z}(t) \|\, dt \right|
+                \le \frac{L^k N}{k!} |x - \alpha|^k
+                \to 0 \quad (k \to \infty)
+        \end{split}
+    \end{equation}
+    を得る。
+    したがって$\bm{z}(x) \equiv 0$すなわち$\by(x) \equiv \wideby(x)$を得る。
+    これで解の一意性がいえた。
+
+    つぎに解の存在を示そう。
+    証明の方針は、逐次近似法により解の存在を構成的に示すというものである。
+    そこで近似解$\by_k \colon [\alpha - \delta, \alpha + \delta] \to \R^n\; (k = 0, 1, \dots)$を
+    帰納的に
+    \begin{equation}
+        \by_0(x) \equiv \bm{\beta},\quad
+        \by_k(x) = \bm{\beta} + \int_\alpha^x \bf(t, \by_{k-1}(t))\, dt
+        \label{1:eq:4}
+    \end{equation}
+    と定める。このとき
+    \begin{equation}
+        \begin{split}
+            \| \by_k(x) - \beta \|
+                &= \left\| \int_\alpha^x \bf(t, \by_{k-1}(t))\, dt \right\| \\
+                &\le \left| \int_\alpha^x \| \bf(t, \by_{k-1}(t)) \|\, dt \right| \\
+                &\le \delta M \\
+                &\le b
+        \end{split}
+    \end{equation}
+    も併せ考えると、$k$をどのようにとっても
+    $\forall x \in [\alpha - \delta, \alpha + \delta]$に対し
+    $(x, \by_k(x)) \in D$が成り立っていることに注意する$\cdots$(イ)。
+    さて、$\by_k$の定め方より
+    \begin{align}
+        \| \by_{k+1}(x) - \by_k(x) \|
+            &= \left\| \int_\alpha^x (\bf(t, \by_k(t)) - \bf(t, \by_{k-1}(t)))\, dt \right\| \\
+            &\le \left| \int_\alpha^x \| \bf(t, \by_k(t)) - \bf(t, \by_{k-1}(t)) \|\, dt \right| \\
+            &\le L \left| \int_\alpha^x \| \by_k(t) - \by_{k-1}(t) \|\, dt \right|
+                \label{1:eq:3}
+    \end{align}
+    が成り立つが、$N \coloneqq \max_{|x - \alpha| \le \delta} \| \by_1(x) - \by_0(x) \|$とおき
+    不等式(\ref{1:eq:3})を繰り返し用いることで
+    \begin{equation}
+        \begin{split}
+            \| \by_2(x) - \by_1(x) \|
+                &\le L \left| \int_\alpha^x \| \by_1(t) - \by_0(t) \|\, dt \right|
+                \le LN |x - \alpha| \\
+            \| \by_3(x) - \by_2(x) \|
+                &\le L \left| \int_\alpha^x \| \by_2(t) - \by_1(t) \|\, dt \right|
+                \le \frac{L^2 N}{2} |x - \alpha|^2 \\
+                &\vdots \\
+            \| \by_{k+1}(x) - \by_k(x) \|
+                &\le L \left| \int_\alpha^x \| \by_{k}(t) - \by_{k-1}(t) \|\, dt \right|
+                \le \frac{L^k N}{k!} |x - \alpha|^k
+        \end{split}
+    \end{equation}
+    を得る。ここで最終行の右辺は
+    \begin{equation}
+        \frac{L^k N}{k!} |x - \alpha|^k
+            \le \frac{L^k N}{k!} \delta^k
+    \end{equation}
+    をみたすので、任意の$m, l\; (m \le l)$に対し
+    \begin{equation}
+        \begin{split}
+            \| \by_l(x) - \by_m(x) \|
+                &\le \sum_{k = m}^{l - 1} \| \by_{k+1}(x) - \by_k(x) \| \\
+                &\le \sum_{k = m}^{\infty} \| \by_{k+1}(x) - \by_k(x) \| \\
+                &\le \sum_{k = m}^{\infty} \frac{L^k N}{k!} \delta^k \\
+                &\to 0 \quad (m \to \infty)
+        \end{split}
+    \end{equation}
+    が成り立つ。これは$\by_k(x)$が$[\alpha - \delta, \alpha + \delta]$上で
+    或る関数$\by(x)$に一様収束することを示している。
+    しかも各$\by_k(x)$は連続なので$\by(x)$も連続である。
+    ここで (イ) より、関数$\by(x)$についても
+    $\forall x \in [\alpha - \delta, \alpha + \delta]$に対し
+    $(x, \by(x)) \in D$が成り立つ。
+    よって
+    \begin{equation}
+        \begin{split}
+            \| \bf(x, \by(x)) - \bf(x, \by_k(x)) \|
+                &\le L \| \by(x) - \by_k(x) \| \\
+                &\le \sum_{j = k}^{\infty} \frac{L^j N}{j!} \delta^j \\
+                &\to 0 \quad (k \to \infty)
+        \end{split}
+    \end{equation}
+    なので、$\bf(x, \by_k(x))$は$[\alpha - \delta, \alpha + \delta]$上で
+    $\bf(x, \by(x))$に一様収束する。
+    しかも各$\bf(x, \by_k(x))$は連続なので$\bf(x, \by(x))$も連続である\footnote{
+        $\bf(x, \by(x))$の連続性は、微分積分学の基本定理の適用のために必須である。
+    }。
+    したがって$\by_k(x)$の定義式(\ref{1:eq:4})で$k \to \infty$として
+    \begin{equation}
+        \by(x) = \bm{\beta} + \int_\alpha^x \bf(t, \by(t))\, dt
+    \end{equation}
+    を得る。これは$\by(\alpha) = \bm{\beta}$をみたし、さらに右辺は微分可能なので
+    \begin{equation}
+        \by'(x) = \bf(x, \by(x))
+    \end{equation}
+    をみたす。これで解の存在がいえた。
+\end{proof}
+
+\begin{theorem}[1.2.8 パラメータに関する解の連続性]
+    $\alpha \in \R,\, \bm{\beta} \in \R^n,\, \bm{\gamma} \in \R^m,\; a,b,c \in \R_{>0}$とし、
+    \begin{equation}
+        D \coloneqq \left\{
+            {}^t (x, \by, \bm{\lambda}) \in \R^{n+m+1}
+            \,\Big|\,
+            |x - \alpha| \le a,\,
+            \|\by - \bbeta\| \le b,\,
+            \|\blambda - \bgamma\| \le c
+        \right\}
+    \end{equation}
+    とおく。
+    $\bf$を$D$上の$\R^n$値連続関数で、リプシッツ条件
+    \begin{equation}
+        \begin{split}
+            &\exists L > 0,\,
+                \forall\, {}^t (x, \by, \blambda),\,
+                \forall\, {}^t (x, \bz, \blambda) \in D, \\
+            &\qquad \| \bf(x, \by; \blambda) - \bf(x, \bz; \blambda) \| \le L \| \by - \bz \|
+        \end{split}
+    \end{equation}
+    をみたすものとする。
+    このとき、初期値問題
+    \begin{equation}
+        \by'(x) = \bf(x, \by; \blambda),\quad \by(\alpha) = \bbeta
+    \end{equation}
+    の解を$\by(x; \blambda)$とおくと、$\by(x; \blambda)$は$(x, \blambda)$に関して連続である。
+\end{theorem}
+
+この定理は、微分方程式（すなわちパラメータ）を連続的に変形させると
+解も連続的に変形するということを主張している。
+
+\begin{proof}
+    解$\by(x; \blambda)$の定義域は定理1.2.5に準ずるが、
+    必要ならば$a$を小さくとりかえることにより、$\by(x; \blambda)$は
+    \begin{equation}
+        \left\{
+            {}^t (x, \blambda) \in \R^{n+m}
+            \,\Big|\,
+            |x - \alpha| \le a,\,
+            \|\blambda - \bgamma\| \le c
+        \right\}
+    \end{equation}
+    上定義されているとしてよい\footnote{
+        $\by(x; \blambda)$が定義されている範囲で議論ができればよいので、
+        $D$は必要最小限の広さがあれば充分だからである。
+    }。
+    さて、$x \in [\alpha - a, \alpha + a]$をひとつとる。
+    すると、$\by(x; \blambda) = \bbeta + \int_\alpha^x \bf(t, \by(t; \blambda); \blambda)\, dt$
+    が成り立つことから
+    \begin{align}
+        \| \by(x; \blambda) - \by(x; \bmu) \|
+            &\le \left|
+                \int_\alpha^x \| \bf(t, \by(t; \blambda); \blambda) - \bf(t, \by(t; \bmu); \bmu) \|\, dt
+            \right| \\
+            \begin{split}
+                &\le \left|
+                    \int_\alpha^x \| \bf(t, \by(t; \blambda); \blambda) - \bf(t, \by(t; \blambda); \bmu) \|\, dt
+                \right| \\
+                &\qquad + \left|
+                    \int_\alpha^x \| \bf(t, \by(t; \blambda); \bmu) - \bf(t, \by(t; \bmu); \bmu) \|\, dt
+                \right|
+            \end{split}
+            \label{1:eq:5}
+    \end{align}
+    を得る。
+    ここで$\eps > 0$に対し
+    \begin{equation}
+        M(\eps) \coloneqq \max_{\substack{
+            {}^t(x, \by, \blambda) \in D \\
+            {}^t(x, \by, \bmu) \in D \\
+            \| \blambda - \bmu \| \le \eps
+        }} \| \bf(x, \by; \blambda) - \bf(x, \by; \bmu) \|
+    \end{equation}
+    とおく\footnote{
+        $\bf$はコンパクト集合$D$上の連続関数ゆえに一様連続なので、
+        $(x, \by)$のとり方によらず$\eps \to 0$で$M(\eps) \to 0$となる。
+    }。
+    すると、$\|\blambda - \bmu\| \le \eps$のとき
+    \begin{equation}
+        (\text{式(\ref{1:eq:5})の第1項}) \le M(\eps) |x - \alpha|
+    \end{equation}
+    であり、また
+    \begin{equation}
+        (\text{式(\ref{1:eq:5})の第2項})
+            \le L \left| \int_\alpha^x \| \by(t; \blambda) - \by(t; \bmu) \|\, dt \right|
+    \end{equation}
+    も併せ考えると
+    \begin{equation}
+        \| \by(x; \blambda) - \by(x; \bmu) \|
+            \le M(\eps) |x - \alpha|
+            + L \left| \int_\alpha^x \| \by(t; \blambda) - \by(t; \bmu) \|\, dt \right|
+            \label{1:eq:6}
+    \end{equation}
+    が成り立つ。
+    ここで$N \coloneqq \max_{|x - \alpha| \le a} \| \by(x; \blambda) - \by(x; \bmu) \|$とおき
+    不等式(\ref{1:eq:6})を繰り返し用いることで
+    \begin{equation}
+        \begin{split}
+            \| \by(x; \blambda) - \by(x; \bmu) \|
+                &\le M(\eps) |x - \alpha| + LN |x - \alpha| \\
+            \| \by(x; \blambda) - \by(x; \bmu) \|
+                &\le
+                    M(\eps) |x - \alpha|
+                    + \frac{LM(\eps)}{2} |x - \alpha|^2
+                    + \frac{L^2 N}{2} |x - \alpha|^2 \\
+                &=
+                    \frac{M(\eps)}{L} \left( L|x - \alpha|
+                    + \frac{L^2}{2} |x - \alpha|^2 \right)
+                    + \frac{L^2 N}{2} |x - \alpha|^2 \\
+                &\vdots \\
+            \| \by(x; \blambda) - \by(x; \bmu) \|
+                &\le
+                    \frac{M(\eps)}{L} \sum_{k=1}^m \frac{L^k}{k!} |x - \alpha|^k
+                    + \frac{L^m N}{m!} |x - \alpha|^m \\
+                &\to \frac{M(\eps)}{L} \left( \exp L|x - \alpha| - 1 \right)
+                    \quad (m \to \infty)
+        \end{split}
+    \end{equation}
+    を得る。したがって、$\|\blambda - \bmu\| \le \eps$をみたすように
+    $(\widetilde{x}, \bmu)$を$(x, \blambda)$に充分近くとると
+    \begin{equation}
+        \begin{split}
+            \| \by(\widetilde{x}, \bmu) - \by(x, \blambda) \|
+                &\le \| \by(\widetilde{x}, \bmu) - \by(\widetilde{x}, \blambda) \|
+                    + \| \by(\widetilde{x}, \blambda) - \by(x, \blambda) \| \\
+                &\le \frac{M(\eps)}{L} \left( \exp L|\widetilde{x} - \alpha| - 1 \right)
+                    + \| \by(\widetilde{x}, \blambda) - \by(x, \blambda) \|
+        \end{split}
+    \end{equation}
+    が成り立つ。
+    この右辺は$(\widetilde{x}, \bmu) \to (x, \blambda)$で$0$に収束するから、
+    $\by(x; \blambda)$が$(x, \blambda)$に関して連続であることがいえた。
+\end{proof}
+
+\begin{corollary}[1.2.9 初期値に関する解の連続性]
+    $\alpha_0 \in \R,\, \bbeta_0 \in \R^n,\; a, b \in \R_{>0}$とし、
+    \begin{equation}
+        D \coloneqq \left\{
+            {}^t(x, \by) \in \R^{n+1}
+            \mid
+            |x - \alpha_0| \le a,\;
+            \| \by - \bbeta_0 \| \le b
+        \right\}
+    \end{equation}
+    とおく。
+    $\bf$は$D$上の$\R^n$値連続関数で、$D$上リプシッツ条件をみたすものとする。
+    $(\alpha_0, \bbeta_0)$に充分近い$(\alpha, \bbeta)$に対し、
+    初期値問題
+    \begin{equation}
+        \by' = \bf(x, \by),\quad \by(\alpha) = \bbeta
+        \label{1:eq:7}
+    \end{equation}
+    の解を$\by(x; \alpha, \bbeta)$とおくと、
+    $\by(x; \alpha, \bbeta)$は$(x, \alpha, \bbeta)$に関して連続である。
+\end{corollary}
+
+この系は、初期条件を連続的に変形させると解も連続的に変形するということを主張している。
+
+\begin{proof}
+    $\bg(x, \bz; (\alpha, \bbeta)) \coloneqq \bf(x + \alpha, \bz + \bbeta)$とおくと、
+    初期値問題(\ref{1:eq:7})の解$\by(x; \alpha, \bbeta)$は、
+    初期値問題
+    \begin{equation}
+        \bz' = \bg(x, \bz; (\alpha, \bbeta)),\quad \bz(0) = \bm{o}
+    \end{equation}
+    の解$\bz(x; (\alpha, \bbeta))$を用いて
+    \begin{equation}
+        \by(x; \alpha, \bbeta) = \bz(x - \alpha; (\alpha, \bbeta)) + \bbeta
+    \end{equation}
+    と書ける\footnote{
+        $\by' = \bz'(x-\alpha; (\alpha, \bbeta)) = \bg(x-\alpha, \bz; (\alpha, \bbeta))
+            = \bg(x-\alpha, \by - \bbeta; (\alpha, \bbeta))
+            = \bf(x, \by)$
+    }。
+    定理1.2.8より$\bz$は$(x, \alpha, \bbeta)$に関して連続なので、
+    $\by$も$(x, \alpha, \bbeta)$に関して連続である。
+\end{proof}
+
+
+\begin{problem}[小テスト2]
+    関数
+    \begin{equation}
+        f(x, y) = xy^2 + 3^x y + x^2 + 1
+    \end{equation}
+    は集合
+    \begin{equation}
+        D = \{ (x, y) \in \R^2 \mid |x| \le 1,\; |y| \le 1 \}
+    \end{equation}
+    上でリプシッツ条件をみたす。このとき、リプシッツ定数$L$としてとれる最小の正の実数を求めよ。
+
+    解答：$5$
+\end{problem}
+
+\begin{problem}[例1.2.4]
+    リプシッツ条件の定義で$b \in \R_{>0}$のとき、
+    $\bm{f}$が$C^1$級ならば$\bm{f}$は$D$上でリプシッツ条件をみたすことを示せ。
+\end{problem}
+
+\begin{problem}[例1.2.10]
+    解の一意性を用いて指数法則$e^t e^x = e^{t+x}$を示せ。
+\end{problem}
+
+\end{document}

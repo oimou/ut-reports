@@ -1,0 +1,502 @@
+\documentclass[report]{jlreq}
+\usepackage{../../global}
+\usepackage{./local}
+\subfiletrue
+\begin{document}
+
+fuga
+
+% ============================================================
+%
+% ============================================================
+\chapter{トーラス上の Fourier 変換}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{Fourier Coefficients and Summation Methods}
+
+\begin{definition}[Fourier 係数]
+    $f \in L^1(\bbT)$とする。
+    各$n \ge 0$に対し
+    \begin{equation}
+        \what{f}(n) \coloneqq \frac{1}{2\pi}
+            \int_0^{2\pi} f(t) e^{-int} dt
+    \end{equation}
+    を$f$の\term{第$n$ Fourier 係数}{Fourier 係数}[Fourierけいすう]という。
+\end{definition}
+
+\begin{definition}[Fourier 部分和]
+    $f \in L^1(\bbT)$とする。
+    各$N \ge 0$に対し
+    \begin{equation}
+        S_N(f)(t) \coloneqq \sum_{n=-N}^N \what{f}(n) e^{int}
+    \end{equation}
+    を$f$の\term{第$N$ Fourier 部分和}{Fourier 部分和}[Fourierぶぶんわ]という。
+\end{definition}
+
+次の定理は、
+Fourier 変換/逆変換に対する反転公式の、
+Fourier 係数/級数に対する類似物である。
+
+\begin{theorem}
+    $f \in L^1(\bbT)$とする。
+    このとき、$\sum_{n = -\infty}^{\infty} |\what{f}(n)| < \infty$ならば、
+    \begin{equation}
+        f(t) = \sum_{n = -\infty}^{\infty} \what{f}(n) e^{int}
+            \quad \text{a.e. } t \in \bbT
+    \end{equation}
+    が成り立つ。
+\end{theorem}
+
+\begin{proof}
+    省略
+\end{proof}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{%
+    \texorpdfstring{%
+        Fourier Transform of $L^2$ functions%
+    }{%
+        Fourier Transform of L^2 functions%
+    }%
+}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{Trigonometric Series}
+
+
+
+% ============================================================
+%
+% ============================================================
+\chapter{%
+    \texorpdfstring{%
+        $\R$と$\R^d$上の Fourier 変換%
+    }{%
+        R と R^d 上の Fourier 変換%
+    }%
+}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{Fourier 変換の基本性質}
+
+\begin{definition}[Fourier 変換]
+    $f \in L^1(\R)$とする。$\R$上の関数$\what{f}$を
+    \begin{equation}
+        \what{f}(\xi) \coloneqq \int_\R f(x) e^{-i\xi x} dx \quad (\xi \in \R)
+    \end{equation}
+    で定義し、これを$f$の\term{Fourier 変換}[Fourier transform]{Fourier 変換}[Fourierへんかん]という。
+    $\what{f}$を$f^\wedge$とも書く。
+    $\what{\R} \coloneqq \R$とおき、
+    $\R, \what{\R}$の座標をそれぞれ$x, \xi$で表すことが多い。
+\end{definition}
+
+\begin{proposition}
+    $f \in L^1(\R)$に対し、$\what{f}$は$\what{\R}$上一様連続である。
+\end{proposition}
+
+\begin{proof}
+    \begin{alignat}{1}
+        |\what{f}(\xi + \eta) - \what{f}(\xi)|
+            &= \left| \int_\R f(x) (e^{-i (\xi + \eta) x} - e^{-i \xi x}) dx \right| \\
+            &\le \int_\R |f(x)| |e^{-i \eta x} - 1| dx \label[equation]{eq:tri-ineq} \\
+            &\le 2 \|f\|_1 \\
+            &< \infty
+    \end{alignat}
+    より、\cref{eq:tri-ineq}は$\eta \in \wR$に関し可積分であり、
+    優収束定理より$\eta \to 0$で$0$に収束する。
+\end{proof}
+
+\begin{proposition}
+    次の図式は可換である：
+    \begin{equation}
+        \begin{tikzcd}[column sep=huge, row sep=large]
+            L^1(\R) \times L^1(\R)
+                \ar{r}{\calF \times \calF}
+                \ar{d}[swap]{\text{たたみ込み}}
+                & C_0(\R) \times C_0(\R) \ar{d}{各点での積} \\
+            L^1(\R) \ar{r}[swap]{\calF}
+                & C_0(\R)
+        \end{tikzcd}
+    \end{equation}
+    ただし、$C_0(\R)$は$\R$上の連続関数であって$|x| \to \infty$で$0$に収束するもの全体の集合である。
+\end{proposition}
+
+\begin{proof}
+    省略
+\end{proof}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{The Dirichlet and Fej\'{e}r Kernels}
+
+$\bbT$の場合と同様に Dirichlet 核と Fej\'{e}r 核を定義する。
+
+\begin{definition}[Dirichlet 核]
+    $\R$上の関数の族
+    \begin{equation}
+        D_\lambda(x) \coloneqq \frac{1}{2\pi} \int_{-\lambda}^\lambda e^{i\xi x} d\xi
+            \quad (\lambda > 0)
+    \end{equation}
+    を\term{Dirichlet 核}[Dirichlet kernel]{Dirichlet 核}[Dirichletかく]という。
+\end{definition}
+
+\begin{proposition}
+    \begin{equation}
+        D_\lambda(x) = \frac{\sin \lambda x}{\pi x} \quad (x \neq 0)
+    \end{equation}
+\end{proposition}
+
+\begin{proof}
+    省略
+\end{proof}
+
+\begin{definition}[Fej\'{e}r 核]
+    $\R$上の関数の族
+    \begin{equation}
+        K_\lambda(x) \coloneqq \frac{1}{2\pi}
+            \int_{-\lambda}^\lambda \left(1 - \frac{|\xi|}{\lambda}\right) e^{i\xi x} d\xi
+            \quad (\lambda > 0)
+    \end{equation}
+    を\term{Fej\'{e}r 核}[Fej\'{e}r kernel]{Fej\'{e}r 核}[Fej\'{e}rかく]という。
+\end{definition}
+
+\begin{proposition}
+    \begin{equation}
+        K_\lambda(x) = \frac{\lambda}{2\pi} \left(\frac{\sin(\lambda x / 2)}{\lambda x / 2}\right)^2
+            \quad (x \neq 0)
+    \end{equation}
+\end{proposition}
+
+\begin{proof}
+    省略
+\end{proof}
+
+\begin{definition}[総和核]
+    次をみたす$L^1(\R)$の元の族$(k_\lambda)_{\lambda > 0}$を
+    $\R$上の\term{総和核}[summability kernel]{総和核}[そうわかく]という：
+    \begin{enumerate}
+        \item $\forall \lambda > 0$に対し$\int_\R k_\lambda(x) dx = 1$
+        \item $\exists C > 0$が存在して、$\forall \lambda > 0$に対し$\|k_\lambda\|_1 \ge C$
+        \item $\forall \delta > 0$に対し、$\lambda \to \infty$で$\int_{|x| \ge \delta} |k_\lambda(x)| dx \to 0$
+    \end{enumerate}
+\end{definition}
+
+\begin{example}
+    ~
+    \begin{itemize}
+        \item Dirichlet 核は$\R$上の総和核ではない。
+        \item Fej\'{e}r 核は$\R$上の総和核である。
+    \end{itemize}
+\end{example}
+
+総和核のたたみ込みにより、関数の近似が得られる。
+
+\begin{theorem}
+    $\{ k_\lambda(x) \}_{\lambda > 0}$を$\R$上の総和核とする。
+    このとき、
+    \begin{enumerate}
+        \item $\R$上の関数$f$が有界かつ一様連続ならば、
+            $\lambda \to \infty$で$k_\lambda * f$は$f$に$\R$上一様収束する。
+        \item $1 \le p < \infty$と$f \in L^p(\R)$に対し、
+            $\lambda \to \infty$で$k_\lambda * f$は$f$に$L^p$収束する。
+    \end{enumerate}
+\end{theorem}
+
+\begin{proof}
+    省略
+\end{proof}
+
+\begin{theorem}[Riemann-Lebesgue の補題]
+    任意の$f \in L^1(\R)$に対し、
+    $|\xi| \to \infty$で$\what{f}(\xi) \to 0$
+\end{theorem}
+
+\begin{proof}
+    省略
+\end{proof}
+
+Fej\'{e}r 核を用いて次の定理が示せる。
+Fej\'{e}r 核を用いた証明は$\bbT$の場合と似ている。
+
+\begin{theorem}[反転公式]
+    $f \in L^1(\R)$とし、$\what{f} \in L^1(\R)$と仮定する。
+    このとき、
+    \begin{equation}
+        f(x) = \frac{1}{2\pi} \int_{\wR} \what{f}(\xi) e^{i\xi x} d\xi
+            \quad \text{a.e. } x \in \R
+    \end{equation}
+    が成り立つ。
+\end{theorem}
+
+\begin{proof}
+    省略
+\end{proof}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{%
+    \texorpdfstring{%
+        Relations to Fourier Transform on $\bbT$%
+    }{%
+        Relations to Fourier Transform on T%
+    }%
+}
+
+Fourier 係数と Fourier 変換の関連をみる。
+
+\begin{theorem}[各点収束性]
+    \TODO{}
+\end{theorem}
+
+\begin{proof}
+    省略
+\end{proof}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{Periodization}
+
+\begin{definition}[周期化]
+    $f \in L^1(\R)$とする。
+    $\bbT$上の関数
+    \begin{equation}
+        F(t) \coloneqq \sum_{k \in \Z} f(t + 2\pi k)
+    \end{equation}
+    を$f$の\term{周期化}[periodization]{周期化}[しゅうきか]という。
+\end{definition}
+
+\begin{theorem}[Poisson の和公式]
+    \TODO{}
+\end{theorem}
+
+\begin{proof}
+    省略
+\end{proof}
+
+\begin{example}[Fej\'{e}r 核]
+    \TODO{}
+\end{example}
+
+\begin{example}[Dirichlet 核]
+    \TODO{}
+\end{example}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{Schwartz Functions}
+
+$\R^d$での話題に移る。
+
+\begin{definition}[Fourier 変換]
+    $f \in L^d(\R)$とする。$\R$上の関数$\what{f}$を
+    \begin{equation}
+        \what{f}(\xi) \coloneqq \int_{\R^d} f(x) e^{-i\xi \cdot x} dx \quad (\xi \in \R^d)
+    \end{equation}
+    で定義し、これを$f$の\term{Fourier 変換}[Fourier transform]{Fourier 変換}[Fourierへんかん]という。
+\end{definition}
+
+\begin{definition}[急減少]
+    $\R^d$上の関数$f$が
+    \term{急減少}{急減少}[きゅうげんしょう]であるとは、
+    任意の$k \in \N$に対し
+    $|x| \to \infty$で$f(x) = o(|x|^{-k})$となることをいう。
+\end{definition}
+
+\begin{definition}[Schwartz 急減少関数]
+    $f \in \smooth(\R^d)$とする。
+    $f$が\term{Schwartz 急減少関数}[Schwartz function]{Schwartz 急減少関数}[Schwartzきゅうげんしょうかんすう]
+    であるとは、
+    任意の多重指数$\alpha$に対し$\partial^\alpha f$が急減少であることをいう。
+    $\calS = \calS(\R^d)$で$\R^d$上の Schwartz 急減少関数全体の集合を表す。
+\end{definition}
+
+\begin{proposition}
+    次の図式は可換である：
+    \begin{equation}
+        \begin{tikzcd}[row sep=large]
+            \calS \ar{r}{\calF} \ar{d}[swap]{\partial_x^\alpha} 
+                & \calS \ar{d}{i^{|\alpha|}\xi^\alpha \times} \\
+            \calS \ar{r}[swap]{\calF}
+                & \calS
+        \end{tikzcd}
+        \quad
+        \begin{tikzcd}[row sep=large]
+            \calS \ar{r}{\calF} \ar{d}[swap]{x^\alpha \times} 
+                & \calS \ar{d}{i^{|\alpha|}\partial_\xi^\alpha} \\
+            \calS \ar{r}[swap]{\calF}
+                & \calS
+        \end{tikzcd}
+    \end{equation}
+\end{proposition}
+
+\begin{proof}
+    省略
+\end{proof}
+
+\begin{theorem}[反転公式]
+    $f \in L^d(\R)$とし、$\what{f} \in L^d(\R)$と仮定する。
+    このとき、
+    \begin{equation}
+        f(x) = \frac{1}{(2\pi)^d} \int_{\wR} \what{f}(\xi) e^{i\xi x} d\xi
+            \quad \text{a.e. } x \in \R^d
+    \end{equation}
+    が成り立つ。
+\end{theorem}
+
+\begin{proof}
+    省略
+\end{proof}
+
+\begin{theorem}[Planchrel の定理]
+    \TODO{}
+\end{theorem}
+
+\begin{proof}
+    省略
+\end{proof}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{Some Partial Differential Equations}
+
+% ============================================================
+%
+% ============================================================
+\chapter{Distributions}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{Distributions}
+
+Distributions の定義と具体例を与える。
+
+\begin{definition}[テスト関数]
+    $\calD \coloneqq \calD(\R^d) \coloneqq C_\smooth(\R^d)$とおく。
+    $\calD$の元を\term{テスト関数}[test function]{テスト関数}[てすとかんすう]という。
+\end{definition}
+
+\begin{definition}[$\calD$の位相]
+    \TODO{}
+\end{definition}
+
+\begin{definition}[超関数]
+    $\calD$の位相的双対空間を$\calD'$と書き、
+    $\calD'$の元を\term{超関数}[distribution]{超関数}[ちょうかんすう]という。
+    $T \in \calD', \varphi \in \calD$に対し$T(\varphi)$を$\langle T, \varphi \rangle$とも書く。
+\end{definition}
+
+\begin{example}[局所可積分関数]
+    \TODO{}
+\end{example}
+
+\begin{proposition}[変分法の基本補題]
+    \TODO{}
+\end{proposition}
+
+\begin{proof}
+    省略
+\end{proof}
+
+\begin{example}[Dirac のデルタ]
+    \TODO{}
+\end{example}
+
+\begin{example}[波動方程式]
+    \TODO{}
+\end{example}
+
+\begin{example}[Poisson 方程式]
+    \TODO{}
+\end{example}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{Differentiation of Distributions}
+
+\begin{definition}[超関数の微分]
+    $T \in \calD'$と多重指数$\alpha$に対し、
+    $\partial^\alpha T \in \calD'$を
+    \begin{equation}
+        \langle \partial^\alpha T, \varphi \rangle
+            \coloneqq (-1)^{|\alpha|} \langle T, \partial^\alpha \varphi \rangle
+            \quad (\varphi \in \calD)
+    \end{equation}
+    と定義する（ことができる）。
+\end{definition}
+
+\begin{example}[Heaviside 関数]
+    \TODO{}
+\end{example}
+
+\begin{theorem}[2次元 Laplace 方程式の基本解]
+    $\R^2$上の局所可積分関数
+    \begin{equation}
+        E(x) \coloneqq \begin{cases}
+            \frac{1}{2\pi} \log |x| &\quad (x \neq 0) \\
+            0 &\quad (x = 0)
+        \end{cases}
+    \end{equation}
+    は Laplacian $\Delta$の基本解である。
+\end{theorem}
+
+\begin{proof}
+    $\Delta T_E = \delta$すなわち
+    $\langle \Delta T_E, \varphi \rangle = \varphi(0)\; (\varphi \in \calD)$を示せばよい。
+    積分の形で書けば
+    \begin{equation}
+        \int_{\R^2} E(x, y) \Delta\varphi(x, y)\, dx dy = \varphi(0, 0)
+    \end{equation}
+    である。ここで$\eps > 0$とし、
+    \begin{equation}
+        \Omega \coloneqq \{ (x, y) \colon x^2 + y^2 \ge \eps^2 \}
+    \end{equation}
+    とおく。
+    $\Omega$上の1次微分形式$\omega$を
+    \begin{equation}
+        \omega \coloneqq \varphi_x E\, dy
+    \end{equation}
+    で定める。
+    $\omega$は compactly supported だから、Stokes の定理より
+    \begin{equation}
+        \int_\Omega d\omega = \int_{\partial\Omega} \omega
+    \end{equation}
+    が成り立つ。
+    \TODO{}
+\end{proof}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{Convolutions}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{Distributions with Compact Support}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{Tempered Distributions}
+
+Tempered distributions の Fourier 変換の基本性質を確かめる。
+
+
+
+
+\end{document}

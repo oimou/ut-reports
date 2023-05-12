@@ -1,0 +1,191 @@
+\documentclass[report]{jlreq}
+\usepackage{../../global}
+\usepackage{./local}
+\subfiletrue
+\def\assetspath{../}
+%\makeindex
+\begin{document}
+
+\chapter{2階線型常微分方程式の級数解}
+
+同次の2階線型常微分方程式
+\begin{equation}
+    y'' + p(x) y' + q(x) y = 0
+    \label{4:eq:1}
+\end{equation}
+を考えよう。
+この方程式の解はべき級数として求めることができる。
+
+\section{正則点における級数解}
+
+\begin{definition}[4.1.1 正則点]
+    方程式(\ref{4:eq:1})の\textbf{正則点}とは、
+    $|x - a| < {}^\exists R$で
+    $p(x),\, q(x)$がべき級数で表せる点をいう。
+    正則点でない点を\textbf{特異点}という。
+\end{definition}
+
+\begin{theorem}[4.1.2 正則点での級数解の存在]
+    $x = a$が方程式(\ref{4:eq:1})の正則点であるとき、級数解
+    \begin{equation}
+        \begin{split}
+            &y(x) = \sum_{n = 0}^\infty c_n (x - a)^n \\
+            &(\text{$c_0 = y(a),\; c_1 = y'(a)$は任意に決める})
+        \end{split}
+    \end{equation}
+    が一意的に存在し、$|x - a| < R$で広義一様に絶対収束する。
+\end{theorem}
+
+展開係数は、もとの方程式にべき級数を代入することで漸化式の形で求まる。
+
+\begin{proof}
+    まず必要条件から展開係数を決め、そうして定まった級数が
+    或る$R > 0$に対し$|x - a| < R$で広義一様に絶対収束することを示せばよい。
+\end{proof}
+
+\section{確定特異点における級数解}
+
+\begin{definition}[4.2.1 確定特異点]
+    \,
+    \begin{enumerate}
+        \item 方程式(\ref{4:eq:1})の\textbf{確定特異点}とは、
+            特異点であって、$0 < |x - a| < {}^\exists R$で
+            \begin{equation}
+                \begin{split}
+                    (x - a)p(x) &= \sum_{n=0}^\infty p_n (x - a)^n \\
+                    (x - a)^{\textcolor{red}{2}} q(x) &= \sum_{n = 0}^\infty q_n (x - a)^n
+                \end{split}
+            \end{equation}
+            と書ける点をいう。
+        \item 多項式
+            \begin{equation}
+                f(t) \coloneqq t(t-1) + p_0 t + q_0
+            \end{equation}
+            を\textbf{決定多項式}といい、その根を\textbf{特性指数}という。
+    \end{enumerate}
+\end{definition}
+
+\begin{theorem}[4.2.2 確定特異点での級数解の存在]
+    任意の正整数$n$に対し$f(\lambda + n) \neq 0$のとき、級数解
+    \begin{equation}
+        y(x) = (x - a)^{\lambda} \sum_{n = 0}^\infty c_n (x - a)^n
+    \end{equation}
+    が$c_0$を決めると一意的に存在し、
+    級数の部分は$|x - a| < R$で広義一様に絶対収束する。
+\end{theorem}
+
+展開係数は、もとの方程式にべき級数を代入することで漸化式の形で求まる。
+
+\begin{proof}
+    まず必要条件から展開係数を決め、そうして定まった級数が
+    或る$R > 0$に対し$|x - a| < R$で広義一様に絶対収束することを示せばよい。
+\end{proof}
+
+定理4.2.2の仮定からわかるように、
+確定特異点での級数解を求めるにあたっては、特性指数の差が整数か否かという点が重要である。
+以下、$N \coloneqq \lambda_+ - \lambda_- \ge 0$とおく。
+
+\begin{corollary}[4.2.3 $N$が整数でない場合の基本解]
+    $N$は整数でないとする。
+    $c_{0} = d_{0} = 1$である級数解
+    \begin{equation}
+        \begin{split}
+            y_{+}(x) &= (x - a)^{\lambda_+} \sum_{n = 0}^\infty c_{n} (x - a)^n \\
+            y_{-}(x) &= (x - a)^{\lambda_-} \sum_{n = 0}^\infty d_{n} (x - a)^n \\
+        \end{split}
+        \label{4:eq:2}
+    \end{equation}
+    が存在し、これらは$0 < x - a < R$における基本解をなす。
+\end{corollary}
+
+区間$-R < x - a < 0$と$0 < x - a < R$ではそれぞれ独立に任意定数をとれるため、
+「$0 < |x - a| < R$で基本解をなす」と言うことはできない。
+
+\begin{proof}
+    系の仮定より$f(\lambda_+ + n),\, f(\lambda_- + n) \neq 0$であるから、
+    定理4.2.2が適用できて、級数(\ref{4:eq:2})が構成できる。
+    あとは線型独立性をいえばよい。
+\end{proof}
+
+\begin{theorem}[4.2.4 $N$が整数の場合の基本解]
+    $N$は非負整数であるとする。
+    $c_{0} = d_{0} = 1,\, c = \text{Const.}$である級数解
+    \begin{enumerate}
+        \item $N = 0$のとき
+            \begin{equation}
+                \begin{split}
+                    y_{+}(x) &= (x - a)^{\lambda_+} \sum_{n = 0}^\infty c_{n} (x - a)^n \\
+                    y_{-}(x)
+                        &= \textcolor{red}{y_{+}(x) \log(x - a)}
+                        + (x - a)^{\lambda_+} \sum_{n = 0}^\infty d_{n} (x - a)^n
+                \end{split}
+            \end{equation}
+        \item $N > 0$のとき
+            \begin{equation}
+                \begin{split}
+                    y_{+}(x) &= (x - a)^{\lambda_+} \sum_{n = 0}^\infty c_{n} (x - a)^n \\
+                    y_{-}(x)
+                        &= \textcolor{red}{c} y_{+}(x) \log(x - a)
+                        + (x - a)^{\lambda_+} \sum_{n = 0}^\infty d_{n} (x - a)^n
+                \end{split}
+            \end{equation}
+    \end{enumerate}
+    が存在し、これらは$0 < x - a < R$における基本解をなす。
+\end{theorem}
+
+\begin{proof}
+    $\lambda_+$の方は$f(\lambda_+ + n) \neq 0$をみたすので、定理4.2.2によって$y_+(x)$が構成できる。
+    また、$y_-(x)$が構成されたとすれば$y_\pm(x)$は確かに線型独立であることが示せるので、
+    あとは$y_-(x)$を構成すればよい。
+\end{proof}
+
+以上をまとめると、級数解を求める手順は以下の通りである。
+\begin{enumerate}
+    \item 考えている点が正則点か確定特異点かを判定し、
+    \item （確定特異点の場合のみ）決定多項式から特性指数を求め、
+    \item （確定特異点の場合のみ）特性指数の差が整数か否かに応じて基本解の形を決め、
+    \item もとの微分方程式に代入して係数を決める。
+\end{enumerate}
+なお、決定多項式を得るには$p_0, q_0$を求めなければならないが、
+これらは$(x - a)\,p(x),\; (x-a)^2q(x)$に$x = a$を代入した値に他ならない。
+
+\begin{problem}[4.2.5]
+    $a, b \in \R$のとき
+    \begin{equation}
+        x^2 y'' - (a + b - 1) xy' + aby = 0
+    \end{equation}
+    の基本解を求めよ。
+\end{problem}
+
+\begin{problem}[4.2.6]
+    $a, b, c \in \R$とし、$c$は整数でないとする。このとき$x = 0$のまわりでの
+    \begin{equation}
+        x(1 - x)y'' + (c - (a + b + 1)x) y' - aby = 0
+    \end{equation}
+    の基本解を求めよ。
+\end{problem}
+
+\textbf{ポッホハマー記号}$(e)_n$
+\begin{equation}
+    (e)_0 \coloneqq 1,\quad (e)_n \coloneqq e(e+1) \cdots (e+n-1)\quad (n \ge 1)
+\end{equation}
+を用いて表される\textbf{ガウスの超幾何級数}
+\begin{equation}
+    F(a, b, c; x) \coloneqq \sum_{n=0}^\infty \frac{(a)_n (b)_n}{(1)_n (c)_n} x^n
+\end{equation}
+を用いて解が表される。
+
+
+\begin{problem}[合流型超幾何微分方程式]
+    $\alpha, \gamma$を定数とし、$\gamma \not\in - \N$とする。
+    \begin{equation}
+        xy'' + (\gamma - x) y' - \alpha y = 0
+    \end{equation}
+    の$x = 0$における特性指数$0$の解を求めよ。
+\end{problem}
+
+\begin{problem}
+    \cite{寺坂10} 第5章例題1-3を読者の演習問題とする。
+\end{problem}
+
+\end{document}

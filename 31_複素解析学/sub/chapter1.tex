@@ -1,0 +1,80 @@
+\documentclass[report]{jlreq}
+\usepackage{../../global}
+\usepackage{./local}
+\subfiletrue
+\def\assetspath{../}
+\begin{document}
+
+% ============================================================
+%
+% ============================================================
+\chapter{解析関数}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{Cauchy-Riemann 方程式}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{孤立特異点と留数}
+
+\begin{definition}[孤立特異点]
+    \TODO{}
+\end{definition}
+
+\begin{definition}[留数]
+    \begin{equation}
+        \Res_{z = a} f(z) \coloneqq
+            \frac{1}{2\pi i}
+            \int_{C(a; r)} f(\zeta) \, d\zeta
+    \end{equation}
+    \TODO{}
+\end{definition}
+
+極における留数は、Laurent 展開を求めなくても計算できる。
+
+\begin{proposition}[極における留数]
+    \begin{equation}
+        \Res_{z = a} f(z)
+            = \frac{1}{(n - 1)!}
+            \lim_{\substack{z \to a \\ z \neq a}}
+            \frac{d^{n - 1}}{dz^{n - 1}} ((z - a)^n f(z))
+    \end{equation}
+    \TODO{}
+\end{proposition}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\newpage
+\section{演習問題}
+
+\begin{problem}[ChatGPT]
+    関数$f(z) = \frac{1}{z^2 + 1}$の$z = i$における留数を求めよ。
+\end{problem}
+
+\begin{answer}
+    $f(z) = \frac{1}{(z + i)(z - i)}$と表せるから、
+    $z = i$は$f$の1位の極である。
+    したがって、極における留数の公式より
+    \begin{equation}
+        \Res_{z = i} f(z)
+            = \lim_{\substack{z \to i \\ z \neq i}}
+                (z - i) f(z)
+            = \lim_{\substack{z \to i \\ z \neq i}}
+                \frac{1}{z + i}
+            = \frac{1}{2i}
+            = - \frac{1}{2} i
+    \end{equation}
+    である。
+\end{answer}
+
+
+
+\end{document}

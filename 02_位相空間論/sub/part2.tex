@@ -1,0 +1,1302 @@
+\documentclass[report]{jlreq}
+\usepackage{../../global}
+\usepackage{./local}
+\subfiletrue
+\def\assetspath{../}
+\begin{document}
+
+% ============================================================
+%
+% ============================================================
+\chapter{実数と複素数}
+
+この章では、距離空間の定義の準備として実数について考える。
+実数とは、「連続の公理」などと呼ばれるある種の完備性を備えた順序体のことである。
+ここで順序体とは、演算と整合的な全順序を備えた体のことである。
+一般に全順序集合には順序位相が入るから、
+順序体は位相空間とみなすことができる。
+また、順序体の元に絶対値が定まることを用いて
+(一般化)距離の構造を導入することもできる。
+このように順序体は、すぐに挙げられるものだけでも
+体・順序集合・位相空間・(一般化)距離空間という4つの顔を持つ、
+非常に彩り豊かな対象である。
+そこで第1節ではこれらの観点から順序体の性質を調べる。
+なお、一般的な大学教養レベルの微分積分学の教科書では、
+代数学や位相空間論などの知識は仮定せずに
+微分や積分の定義に向かうことが多いと思うが、
+本稿ではそれらの知識を仮定して話を進めることにする。
+
+第2節では実数を具体的に構成する。
+実数の定義は\cite{杉浦80}のように公理的に導入することもできるが、
+ここでは有理数の存在を前提として実数の具体的な構成を与えることにする。
+
+第3節では複素数を構成する。
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{順序体}
+
+順序体を定義する。
+
+\begin{definition}[順序体]
+    \idxsym{absolute value}{$|x|$}{$x$の絶対値}
+    $A \neq 0$を環、
+    $\le$を$A$上の全順序とする。
+    組$(A, \le)$が
+    \term{順序環}[ordered ring]{順序環}[じゅんじょかん]
+    であるとは、次が成り立つことをいう:
+    \begin{description}
+        \item[(O1)] 各$x, y, z \in A$に対し、
+            $x < y \implies x + z < y + z$である。
+        \item[(O2)] 各$x, y, z \in A$に対し、
+            $x < y, \; 0 < z \implies xz < yz, \; zx < zy$である。
+    \end{description}
+    とくに$A$が体のとき
+    \term{順序体}[ordered field]{順序体}[じゅんじょたい]
+    という。
+    各$x \in A$は$x > 0$ならば
+    \term{正}[positive]{正}[せい]、
+    $x < 0$ならば
+    \term{負}[negative]{負}[ふ]であるという。
+\end{definition}
+
+順序体の順序に関する基本的な補題を示しておく。
+
+\begin{lemma}
+    $(A, \le)$を順序環とする。
+    \begin{enumerate}
+        \item 各$x \in A, \, x \neq 0$に対し、
+            $x$と$-x$のちょうど一方のみが正で
+            他方は負である。
+        \item $0 < 1$である。
+    \end{enumerate}
+\end{lemma}
+
+\begin{proof}
+    \uline{(1)} \quad
+    全順序の性質より$x > 0$または$x < 0$である。
+    $x > 0$なら (O1) より各辺に$-x$を加えて$0 > -x$を得る。
+    他方の場合も同様。
+    したがって$x$と$-x$のちょうど一方のみが正である。
+
+    \uline{(2)} \quad
+    $A \neq 0$ゆえに$1 \neq 0$だから、
+    全順序の性質より$1 > 0$または$1 < 0$である。
+    $1 < 0$であったとすると
+    (1) より$0 < -1$だから、
+    (O2) より$1 \cdot 0 < 0 \cdot (-1)$
+    すなわち$0 < 0$となり矛盾する。
+    背理法より$1 > 0$である。
+\end{proof}
+
+上の補題より絶対値が定義できる。
+
+\begin{definition}[絶対値]
+    $(A, \le)$を順序環とする。
+    各$x \in A$に対し、
+    $x$の\term{絶対値}[absolute value]{絶対値}[ぜったいち]
+    $|x|$を次のように定める。
+    \begin{itemize}
+        \item $x \neq 0$ならば
+            $x$と$-x$のうち正の元を$|x|$とする。
+        \item $x = 0$ならば$|x| = 0$とする。
+    \end{itemize}
+\end{definition}
+
+絶対値は次の性質を持つ。
+
+\begin{proposition}[絶対値の基本性質]
+    \TODO{}
+\end{proposition}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+ここで次のことが成り立つ。
+
+\begin{proposition}
+    \label[proposition]{prop:characteristic-of-ordered-field-is-zero}
+    順序体の標数は$0$である。
+\end{proposition}
+
+\begin{proof}
+    $(K, \le)$を順序体とする。
+    すべての$n \in \Z_{\ge 1}$に対し
+    $n 1_K > 0_K$となることを帰納法で示す。
+    $1_K > 0_K$はすでに示した。
+    また、(O1)と帰納法の仮定より
+    $n 1_K = (n - 1)1_K + 1_K > 1_K > 0_K$
+    だから帰納法が完成した。
+    したがって$(-n) 1_K = - (n 1_K) < 0_K$も成り立つ。
+    よって、自然な環準同型$\Z \to K, \, n \mapsto n 1_K$
+    の$\Ker$は$0$である。
+    したがって$K$の標数は$0$である。
+\end{proof}
+
+\cref{prop:characteristic-of-ordered-field-is-zero}
+より$\Q$は$K$に埋め込まれているとみなすことができる\TODO{なぜ？どういう意味で？}。
+
+\begin{definition}[Archimedes 的]
+    $(K, \le)$を順序体とする。
+    $K$が
+    \term{Archimedes 的}[Archimedean]{Archimedes 的}[Archimedes てき]
+    であるとは、
+    任意の$x \in K$に対し、
+    $n > x$なる$n \in \Z_{\ge 1}$が存在することをいう。
+\end{definition}
+
+Archimedes 的な順序体は次の性質を持つ。
+
+\begin{proposition}
+    $(K, \le)$を Archimedes 的な順序体とする。
+    このとき、$\Q$は$K$で稠密である。
+\end{proposition}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+\begin{definition}[Cauchy 完備]
+    $K$を順序体とし、
+    通常の方法で一般化距離空間かつ位相空間とみなす。
+    $K$の任意の Cauchy 点列が収束するとき、
+    $K$は\term{Cauchy 完備}{Cauchy 完備}[Cauchy かんび]
+    であるという。
+\end{definition}
+
+\begin{definition}[Weierstrass の公理]
+    順序体$K$に関する次の条件を
+    \term{Weierstrass の公理}[Weierstrass' axiom]
+        {Weierstrass の公理}[Weierstrass のこうり]
+    という:
+    \begin{itemize}
+        \item $K$の上に有界な空でない任意の部分集合は
+            $K$に上限を持つ。
+    \end{itemize}
+\end{definition}
+
+\begin{proposition}
+    順序体$K$に関し次は同値である:
+    \begin{enumerate}
+        \item $K$は Archimedes 的かつ Cauchy 完備である。
+        \item $K$は Weierstrass の公理をみたす。
+    \end{enumerate}
+\end{proposition}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{実数の構成}
+
+実数の構成には様々な方法がある\cite{noauthor_construction_2023}。
+
+\begin{enumerate}
+    \item (Dedekind) 切断を用いて$\Q$を順序完備化する方法
+    \item (Cantor-M\'eray) $\Q$の Cauchy 列を Cauchy 完備化する方法
+    \item 超実数の方法
+    \item (Schanuel) Eudoxus 実数の方法
+\end{enumerate}
+
+これらの構成法により得られる実数体は
+いずれも順序体として同型であることが知られている。
+ここでは Cantor-M\'eray の方法を用いて実数を構成する。
+
+\begin{definition}[集合としての$\R$]
+    $\Q$の Cauchy 列全部の集合を$C$とおき、
+    $C$上の同値関係$\sim$を次のように定める。
+    すなわち、$(a_n)_n \sim (b_n)_n$であるとは
+    次が成り立つこととする:
+    \begin{itemize}
+        \item 任意の$\eps \in \Q, \; \eps > 0$に対し、
+            ある$N \in \N$が存在して、
+            $m, n \ge N$なる任意の$m, n \in \N$に対し
+            $|a_n - b_m| \le \eps$が成り立つ。
+    \end{itemize}
+    商集合$C / \sim$を$\R$とおく。
+\end{definition}
+
+\begin{definition}[体としての$\R$]
+    \TODO{演算を定める}
+\end{definition}
+
+\begin{definition}[順序体としての$\R$]
+    \TODO{順序を定める}
+\end{definition}
+
+\begin{proposition}
+    $\R$は
+    Archimedes 的かつ Cauchy 完備な順序体である。
+\end{proposition}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{上限と下限の性質}
+
+実数体の部分集合の下限については
+次の性質が成り立つ。
+上限についても同様である。
+
+\begin{proposition}
+    $\emptyset \neq A \subset \R, \; c \in \R$とし、
+    $A$は$\R$内に下限を持つとする。
+    このとき
+    \begin{equation}
+        \inf (A + c) = \inf A + c
+    \end{equation}
+    が成り立つ。
+    ただし$A + c \coloneqq \{a + c \mid a \in A\}$の意味である。
+\end{proposition}
+
+\begin{proof}
+    すべての$a \in A$に対し
+    $\inf A \le a$ゆえに
+    $\inf A + c \le a + c$が成り立つ (順序体の性質) から、
+    $\inf A + c$は$A + c$の下界である。
+    また、$A + c$の任意の下界$t \in \R$に対し、
+    $t - c$は$A$の下界となるから、
+    $\inf A$が$A$の下界の最大元であることより
+    $t - c \le \inf A$、したがって
+    $t \le \inf A + c$が成り立つ。
+    よって$\inf A + c$は$A + c$の下界の最大元である。
+    以上より$\inf A + c = \inf (A + c)$が成り立つ。
+\end{proof}
+
+\begin{proposition}
+    $A, B \subset \R, \; A \neq \emptyset, \; B \neq \emptyset$とし、
+    $A, B$は$\R$内に下限を持つとする。
+    このとき、
+    すべての$a \in A, \; b \in B$に対し
+    $a \le b$が成り立つならば、
+    $\inf A \le \inf B$である。
+    \TODO{自明すぎて意味のない主張では？}
+\end{proposition}
+
+\begin{proof}
+    $\inf A > \inf B$であったと仮定して矛盾を導く。
+    $\alpha \coloneqq (\inf A + \inf B) / 2$とおく。
+    $\alpha \le \inf A$より
+    $\alpha$は$A$の下界だから、
+    $a \in A$をひとつ選ぶと
+    $\alpha \le a$が成り立つ。
+    一方$\alpha > \inf B$だから、
+    $\inf B$が$B$の最大の下界であることとあわせて、
+    ある$b \in B$が存在して$\alpha > b$が成り立つ。
+    したがって$b < \alpha \le a$となり、
+    命題の仮定$a \le b$に矛盾する。
+    したがって$\inf A \le \inf B$である。
+\end{proof}
+
+\begin{proposition}[和の下限と下限の和]
+    $A, B \subset \R, \; A \neq \emptyset, \; B \neq \emptyset$とする。
+    $A, B$がともに下に有界であるとき
+    \begin{equation}
+        \inf (A + B) = \inf A + \inf B
+    \end{equation}
+    が成り立つ。ただし$A + B = \{ a + b \mid a \in A, \; b \in B \}$の意味である。
+\end{proposition}
+
+\begin{proof}
+    まず任意の$a \in A, \; b \in B$に対し、
+    $a \le \inf A, \; b \le \inf B$ゆえに
+    $a + b \le \inf A + \inf B$が成り立つから、
+    $\inf A + \inf B$は$A + B$の下界である。
+    つぎに任意の$\eps > 0$に対し、
+    下限の特徴付けより
+    ある$a_0 \in A, \; b_0 \in B$が存在して
+    $a_0 - \inf A < \frac{\eps}{2}, \; b_0 - \inf B < \frac{\eps}{2}$が成り立つ。
+    よって$a_0 + b_0 - (\inf A + \inf B) < \eps$が成り立つから、
+    ふたたび下限の特徴付けより
+    $\inf A + \inf B$は$A + B$の下界の最大元、すなわち下限である。
+\end{proof}
+
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{実数列の極限}
+
+\TODO{}
+
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{複素数の構成}
+
+\begin{definition}[複素数]
+    \TODO{$\C \coloneqq \R[X] / (X^2 + 1)$}
+\end{definition}
+
+
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\newpage
+\section{演習問題}
+
+\begin{problem}[東大数理 2006A]
+    $\R^2$における同値関係$\sim$を以下のように定義する。
+    \begin{equation}
+        (x, y) \sim (x', y'),
+            \qquad
+            (x, y), (x', y') \in \R^{2}
+    \end{equation}
+    とは、整数$n$と有理数$\xi$が存在して
+    \begin{equation}
+        x' = x + n, \qquad y' = y + \xi
+    \end{equation}
+    と表されること、とする。
+    この同値関係による同値類の集合を$X \coloneqq \R^2 / \sim$とおき、
+    $\pi \colon \R^2 \to X$を自然な射影とする。
+    $X$の要素$a_1, a_2$について，
+    $\pi(x_1) = a_1, \pi(x_2) = a_2$となる$x_1, x_2 \in \R^2$に対する
+    $\| x_1 - x_2 \|$の下限を$d(a_1, a_2)$とおく。つまり、
+    \begin{equation}
+        d(a_1, a_2) = \inf\{ \| x_1 - x_2 \| \mid \pi(x_1) = a_1, \pi(x_2) = a_2\}
+    \end{equation}
+    とする。ここで$\| x \|$はベクトル$x$の通常のノルムを表す。
+    \begin{enumerate}
+        \item $a, b, c \in X$に対して、不等式
+            \begin{equation}
+                d(a, c) \leq d(a, b) + d(b, c)
+            \end{equation}
+            を示せ。
+        \item $a, b \in X$に対して、$d(a,b) = 0$ならば$a = b$が成立するかどうかを述べよ。
+    \end{enumerate}
+\end{problem}
+
+\begin{proof}
+    \uline{(1)} \quad
+    まず$X$の元の "$x$-座標" として
+    写像$f \colon X \to [0, 1)$を次のように定義する。
+    すなわち、
+    各同値類$a \in X$に対し、代表元$(s, t) \in \pi^{-1}(a)$であって
+    $s \in [0, 1)$なるものをひとつ選んで
+    $f(a) \coloneqq s$と定義する。
+    ただし、このような$s$は同値関係$\sim$の定義より確かに存在し、
+    また範囲を$[0, 1)$としたことにより一意に決まる。
+
+    まず関数$d$をより簡単な形で書くことを考える。
+    そこで、関数$\varphi \colon (-1, 1) \to \R$を
+    \begin{equation}
+        \varphi(t)
+            \coloneqq \begin{cases}
+                |t| & (|t| \le 1 / 2) \\
+                1 - |t| & (|t| > 1 / 2)
+            \end{cases}
+    \end{equation}
+    とおく。
+    $\varphi$のグラフは下図のようになる。
+    \begin{center}
+        \begin{tikzpicture}[scale=2]
+            % Draw axes
+            \draw[->] (-1.5,0) -- (1.5,0) node[right] {$t$};
+            \draw[->] (0,-0.5) -- (0,1.5) node[above] {$\varphi(t)$};
+        
+            % Define function
+            \def\phi(#1){
+                ifthenelse(abs(#1)<=0.5, abs(#1), 1-abs(#1))
+            }
+        
+            % Plot function
+            \draw[blue, thick, domain=-1:1, samples=100] plot (\x,{\phi(\x)});
+
+            \draw[dashed, gray] (0.5, 0) -- (0.5, 0.5);
+            \draw[dashed, gray] (-0.5, 0) -- (-0.5, 0.5);
+            \draw[dashed, gray] (-0.5, 0.5) -- (0.5, 0.5);
+
+            \node[label={below left:$O$}, xshift=3pt] at (0, 0) {};
+            \node[label={below:$-1$}] at (-1, 0) {};
+            \node[label={below:$-\frac{1}{2}$}] at (-0.5, 0) {};
+            \node[label={below:$\frac{1}{2}$}] at (0.5, 0) {};
+            \node[label={below:$1$}] at (1, 0) {};
+            \node[label={above left:$\frac{1}{2}$}] at (0, 0.5) {};
+        \end{tikzpicture}
+    \end{center}
+    したがって、すべての$t \in (-1, 1)$に対し
+    $\varphi(t) < |t|$および$\varphi(t) \le 1 - |t|$が成り立つ。
+    さて、関数$h \colon X \times X \to \R$を
+    $h(a, b) \coloneqq \varphi(f(a) - f(b))$と定義する。
+    以下、すべての$a, b \in X$に対し$d(a, b) = h(a, b)$が成り立つことを示す。
+
+    まず$h(a, b)$が
+    集合$\{ \| x_1 - x_2 \| \mid \pi(x_1) = a, \pi(x_2) = b\}$の下界であることを示す。
+    そこで$x = (s, t) \in \pi^{-1}(a)$, \; $y = (u, v) \in \pi^{-1}(b)$とする。
+    $f$の定義より$(f(a), t) \in \pi^{-1}(a), \; (f(b), v) \in \pi^{-1}(b)$であるから、
+    同値関係$\sim$の定義より
+    $s = f(a) + n, \; u = f(b) + m$なる整数$n, m$が存在する。
+    したがって
+    \begin{alignat}{1}
+        \| x - y \|
+            &\ge |s - u| \\
+            &= |(f(a) + n) - (f(b) + m)| \\
+            &= |f(a) - f(b) + (n - m)| \\
+            &\ge | \, |f(a) - f(b)| - |n - m| \, | \\
+            &\ge \begin{cases}
+                |f(a) - f(b)| & (n = m) \\
+                |n - m| - |f(a) - f(b)| & (n \neq m)
+            \end{cases} \\
+            &\ge \begin{cases}
+                |f(a) - f(b)| & (n = m) \\
+                1 - |f(a) - f(b)| & (n \neq m)
+            \end{cases} \\
+            &\ge \varphi(f(a) - f(b))
+    \end{alignat}
+    が成り立つ。
+    ただし、最後の不等号では$f(a) - f(b) \in (-1, 1)$であることを用いた。
+    よって$h(a, b)$は
+    集合$\{ \| x_1 - x_2 \| \mid \pi(x_1) = a, \pi(x_2) = b\}$の下界である。
+
+    つぎに$h(a, b)$が
+    $\{ \| x_1 - x_2 \| \mid \pi(x_1) = a, \pi(x_2) = b\}$の最大の下界であること、
+    すなわち$d(a, b) = h(a, b)$を示す。
+    そのためには$\eps > 0$とし、
+    $\| x - y \| - h(a, b) < \eps$なる
+    $x \in \pi^{-1}(a), \; y \in \pi^{-1}(b)$が存在することを示せばよい。
+    これは$f(a) \ge f(b)$の場合に示せば十分であるから、
+    以下$f(a) \ge f(b)$とする。
+    \begin{innerproof}
+        $f(a) \ge f(b)$なるすべての$a, b$に対し示せたとする。
+        すると$f(a) \le f(b)$の場合
+        $d(b, a) = h(b, a)$が成り立つことになるが、
+        $d, h$はいずれも2つの引数の入れ替えで値が変わらないから、
+        $d(a, b) = h(a, b)$が従う。
+    \end{innerproof}
+    $f$の定義より、
+    $(f(a), t) \in \pi^{-1}(a), \; (f(b), v) \in \pi^{-1}(b)$
+    なる$t, v \in \R$をひとつずつ選ぶことができる。
+    さらに有理数の稠密性より
+    $|t - q| < \frac{\eps}{2}$, \; $|v - r| < \frac{\eps}{2}$
+    なる$q, r \in \Q$が存在する。
+
+    $|f(a) - f(b)| \ge \frac{1}{2}$の場合を考える。
+    $x \coloneqq (f(a) - 1, t - q), \; y \coloneqq (f(b), v - r)$とおくと
+    $x \in \pi^{-1}(a), \; y \in \pi^{-1}(b)$が成り立つ。
+    この$x, y$が求めるものであることをいうために、
+    $\| x - y \| - h(a, b) < \eps$を示す。
+    \begin{alignat}{1}
+        \| x - y \|^2
+            &= |f(a) - 1 - f(b)|^2 + |t - q - (v - r)|^2 \\
+            &= (1 - |f(a) - f(b)|)^2 + (t - q - (v - r))^2 \\
+            &< (1 - |f(a) - f(b)|)^2 + \eps^2 \\
+            &\le (1 - |f(a) - f(b)| + \eps)^2
+    \end{alignat}
+    ゆえに$\| x - y \| \le 1 - |f(a) - f(b)| + \eps$である。
+    いま$| f(a) - f(b) | \ge \frac{1}{2}$ゆえに
+    $1 - | f(a) - f(b) | = h(a, b)$だから、
+    $\| x - y \| - h(a, b) < \eps$が示せた。
+
+    $| f(a) - f(b) | < \frac{1}{2}$の場合も、
+    $x \coloneqq (f(a), t - q), \; y \coloneqq (f(b), v - r)$とおけば
+    同様にして$\| x - y \| - h(a, b) < \eps$が示せる。
+    以上で$d(a, b) = h(a, b)$がいえた。
+
+    最後に$d(a, c) \le d(a, b) + d(b, c)$を示す。
+    \begin{itemize}
+        \item $| f(a) - f(b) | \le \frac{1}{2}, \;
+            | f(b) - f(c) | \le \frac{1}{2}$の場合、
+            \begin{alignat}{1}
+                d(a, b) + d(b, c)
+                    &= h(a, b) + h(b, c) \\
+                    &= |f(a) - f(b)| + |f(b) - f(c)| \\
+                    &\ge |f(a) - f(c)| \\
+                    &\ge h(a, c) \\
+                    &= d(a, c)
+            \end{alignat}
+        \item  $| f(a) - f(b) | > \frac{1}{2}, \;
+            | f(b) - f(c) | \le \frac{1}{2}$の場合、
+            \begin{alignat}{1}
+                d(a, b) + d(b, c)
+                    &= h(a, b) + h(b, c) \\
+                    &= 1 - |f(a) - f(b)| + |f(b) - f(c)| \\
+                    &= 1 - (|f(a) - f(b)| - |f(b) - f(c)|) \\
+                    &\ge 1 - |f(a) - f(c)| \\
+                    &\ge h(a, c) \\
+                    &= d(a, c)
+            \end{alignat}
+        \item $| f(a) - f(b) | \le \frac{1}{2}, \;
+            | f(b) - f(c) | > \frac{1}{2}$の場合、
+            \begin{alignat}{1}
+                d(a, b) + d(b, c)
+                    &= h(a, b) + h(b, c) \\
+                    &= |f(a) - f(b)| + 1 - |f(b) - f(c)| \\
+                    &= 1 - (|f(b) - f(c)| - |f(a) - f(b)|) \\
+                    &\ge 1 - |f(a) - f(c)| \\
+                    &\ge h(a, c) \\
+                    &= d(a, c)
+            \end{alignat}
+        \item $| f(a) - f(b) | > \frac{1}{2}, \;
+            | f(b) - f(c) | > \frac{1}{2}$の場合、
+            $f(a), f(b), f(c) \in [0, 1)$ゆえに
+            $|f(a) - f(c)| \le \frac{1}{2}$であるから、
+            \begin{alignat}{1}
+                d(a, c) - d(a, b)
+                    &= h(a, c) - h(a, b) \\
+                    &= 1 - |f(a) - f(c)| - |f(a) - f(b)| \\
+                    &= 1 - (|f(a) - f(c)| + |f(a) - f(b)|) \\
+                    &\le 1 - |f(b) - f(c)| \\
+                    &= h(b, c) \\
+                    &= d(b, c)
+            \end{alignat}
+            よって$d(a, c) \le d(a, b) + d(b, c)$である。
+    \end{itemize}
+    以上で$d(a, c) \le d(a, b) + d(b, c)$が示せた。
+
+    \uline{(2)} \quad
+    反例を挙げる。
+    $a \coloneqq \pi(0, \sqrt{2} / 2), \; b \coloneqq \pi(0, 1 / 2)$とおくと、
+    $d(a, b) = h(a, b) = |0 - 0| = 0$であるが、
+    $\sqrt{2} / 2 - 1 / 2 \not\in \Q$ゆえに
+    $(0, \sqrt{2} / 2) \not\sim (0, 1 / 2)$だから
+    $a \neq b$である。
+    したがってこれが反例となっている。
+\end{proof}
+
+
+
+
+
+
+% ============================================================
+%
+% ============================================================
+\chapter{関数}
+
+この章では関数について考える。
+ここで「関数」や「写像」という術語についてひとつ注意しておこう。
+多様体論などでは$\R^n$や$\C$に値をもつ写像だけを
+「関数」と呼んで一般の写像と区別することがある。
+そのような立場から見ると、
+この章でしばしば扱うような一般の Hausdorff 空間に値をもつ写像などは
+「関数」ではなく「写像」と呼ぶべきかもしれない。
+しかし、この章で述べる内容は
+後で$\R^n$や$\C$に値をもつ写像へ応用することがまず念頭にあるから、
+ここでは呼び方に区別をつけずにすべて「関数」と呼ぶことにする。
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{関数の極限}
+
+関数の極限はネットの収束で定義される。
+
+\begin{definition}[関数の極限]
+    \idxsym{limit of a function}
+        {$\lim_{x \to a, \; x \in A} f(x)$}
+        {$x$が$A$内で$a$に近づくときの$f(x)$の極限}
+    $X$を位相空間、
+    $Y$を Hausdorff 空間、
+    $f \colon X \to Y$を関数、
+    $A \subset X$、
+    $a \in \Cl_X A$、
+    $b \in Y$とする。
+    \term{$x$が$A$内で$a$に近づくときの$f(x)$の極限}
+        {極限!関数の---}[きょくげん]
+    が$b$であるとは、
+    $X$内の任意のネット$(x_\lambda)_\lambda$であって条件
+    \begin{enumerate}
+        \item $(x_\lambda)_\lambda$は$a$に収束する。
+        \item 各$\lambda$に対し$x_\lambda \in A$である。
+    \end{enumerate}
+    をみたすものに対し、
+    $Y$内のネット$(f(x_\lambda))_\lambda$が$b$に収束することをいう。
+    このことを
+    $\lim_{\substack{x \to a \\ x \in A}} f(x) = b$
+    と書いて表す。
+    $A = X$の場合は「$A$内で」という言葉を省略し、
+    単に$\lim_{x \to a} f(x) = b$と書く。
+\end{definition}
+
+$X, Y$が一般化距離空間の場合、
+関数の極限は次のように特徴付けられる。
+一般的な微分積分学の教科書 (\cite{杉浦80}など) では
+むしろこちらが定義になっていると思う。
+
+\begin{proposition}[関数の極限の特徴付け]
+    \label[proposition]{prop:limit-in-a-metric-space}
+    $(X, d_X \colon X \times X \to F), \;
+        (Y, d_Y \colon Y \times Y \to G)$
+    を一般化距離空間、
+    $A \subset X$、
+    $a \in \Cl_X A$、
+    $b \in Y$とする。
+    このとき、関数$f \colon X \to Y$に関し次は同値である:
+    \begin{enumerate}
+        \item $\lim_{\substack{x \to a \\ x \in A}} f(x) = b$
+        \item 任意の$\eps > 0_G$に対し、
+            ある$\delta > 0_F$が存在して、
+            $d_X(x, a) < \delta$なる任意の$x \in A$に対し、
+            $d_Y(f(x), b) < \eps$が成り立つ。
+    \end{enumerate}
+\end{proposition}
+
+\TODO{$a \in \Cl_X A$であることをどこで使った？}
+
+\begin{proof}
+    \uline{(1) \Rightarrow (2)} \quad
+    (1) を仮定する。
+    背理法のため (2) を否定すると、
+    ある$\eps > 0_G$が存在して、
+    任意の$\delta > 0_F$に対し、
+    ある$x_\delta \in A$であって
+    $d_X(x_\delta, a) < \delta$かつ$d_Y(f(x_\delta), b) \geq \eps$
+    なるものが存在する。
+    したがって選択公理より
+    $X$内のネット$(x_\delta)_{\delta > 0_F}$であって
+    \begin{enumerate}
+        \item $(x_\delta)_{\delta > 0_F}$は$a$に収束する。
+        \item 各$\delta > 0_F$に対し$x_\delta \in A$である。
+        \item $(f(x_\delta))_{\delta > 0_F}$は$b$に収束しない。
+    \end{enumerate}
+    をみたすものが存在する。
+    これは (1) に反するから、
+    背理法より (2) が成り立つ。
+
+    \uline{(2) \Rightarrow (1)} \quad
+    (2) を仮定する。
+    背理法のため、
+    $a$に収束する$X$内のネット
+    $(x_\lambda)_{\lambda \in (\Lambda, \preceq)}, \;
+        x_\lambda \in A$
+    であって
+    $(f(x_\lambda))_\lambda$が$b$に収束しないものが存在したとする。
+    すると仮定より、$Y$における$b$のある近傍$V$であって、
+    条件
+    \begin{equation}
+        \text{
+            任意の$\lambda_0 \in \Lambda$に対し、
+            $\lambda_1 \succeq \lambda_0$なるある$\lambda_1 \in \Lambda$が存在して、
+            $f(x_{\lambda_1}) \notin V$となる
+        }
+        \locallabel{eq:1}
+    \end{equation}
+    をみたすものが存在する。
+    明らかに$V$に含まれる任意の ($b$の) 近傍も条件\localcref{eq:1}をみたすから、
+    必要ならば$V$を小さく取り直して、最初から
+    $V = \{ y \in Y \mid d_Y(y, b) < \eps \} \;
+        (\exists \eps > 0_G)$
+    の形であるとしてよい。
+    すると、(2)の仮定より
+    ある$\delta > 0_F$が存在して、
+    $d_X(x, a) < \delta$なる任意の$x \in A$に対し
+    $f(x) \in V$が成り立つ。
+    すなわち、
+    $X$における$a$の近傍$U$を
+    $U \coloneqq \{ x \in X \mid d_X(x, a) < \delta \}$とおくとき
+    $f(U \cap A) \subset V$が成り立つ。
+    いま$(x_\lambda)_\lambda$は$a$に収束するネットであって
+    $x_\lambda \in A \; (\forall \lambda \in \Lambda)$をみたすから、
+    ある$\lambda_0 \in \Lambda$が存在して、
+    すべての$\lambda \succeq \lambda_0$に対し
+    $x_\lambda \in U \cap A$が成り立つ。
+    ここで条件\localcref{eq:1}より
+    $\lambda_1 \succeq \lambda_0$なるある$\lambda_1 \in \Lambda$が存在して
+    $f(x_{\lambda_1}) \notin V$となるが、
+    一方
+    $\lambda_1 \succeq \lambda_0$ゆえに
+    $x_{\lambda_1} \in U \cap A$だから
+    $f(x_{\lambda_1}) \in f(U \cap A) \subset V$となり矛盾が従う。
+    背理法より (1) が成り立つ。
+\end{proof}
+
+さらに一般化距離が Archimedes 的順序体に値をもつ場合は
+一般化距離位相が第1可算となる\TODO{本当に？}から、
+ネットの収束を点列の収束で特徴づけることができる。
+
+\begin{proposition}
+    \TODO{}
+\end{proposition}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{連続関数}
+
+関数の1点における連続性は
+関数の極限により特徴づけることができる。
+
+\begin{theorem}[1点における連続性と関数の極限]
+    $X$を位相空間、
+    $Y$を Hausdorff 空間、
+    $a \in X$とする。
+    このとき、関数$f \colon X \to Y$に関して次は同値である:
+    \begin{enumerate}
+        \item $f$は$a$において連続である。
+        \item $\lim_{x \to a} f(x) = f(a)$
+    \end{enumerate}
+\end{theorem}
+
+\begin{proof}
+    関数の1点における連続性の
+    ネットの収束による特徴付けより明らか。
+\end{proof}
+
+\begin{corollary}
+    \label[corollary]{corollary:net-cts-and-cts-at-a-point}
+    上の定理の状況で次は同値である:
+    \begin{enumerate}
+        \item $f$は$X$上連続である。
+        \item すべての$a \in X$に対し
+            $\lim_{x \to a} f(x) = f(a)$
+    \end{enumerate}
+\end{corollary}
+
+\begin{proof}
+    定理と
+    \cref{prop:cts-and-cts-at-a-point}
+    より従う。
+\end{proof}
+
+
+
+% ============================================================
+%
+% ============================================================
+\chapter{級数}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{級数}
+
+\begin{definition}[級数]
+    \idxsym{series}{$\sum a_n$}{$a_n$を第$n$項とする級数、あるいはその極限}
+    $(a_n)_{n \in \N}$を$\R^n$の点列とする。
+    各$n \in \N$に対し
+    $s_n \coloneqq a_0 + a_1 + \cdots + a_n$と定める。
+    数列$(s_n)_{n \in \N}$を
+    $a_n$を第$n$項とする
+    \term{級数}[series]{級数}[きゅうすう]といい、
+    $s_n$をこの級数の
+    \term{第$n$部分和}[$n$-th partial sum]{部分和}[ぶぶんわ]
+    という。
+    級数$(s_n)_n$を
+    $\sum_{n = 0}^\infty a_n$や$\sum a_n$と書いて表す。
+    $\sum a_n$が収束するとき、
+    その極限も記号の濫用で
+    $\sum a_n \coloneqq \lim_{n \to \infty} s_n$
+    と書く。
+\end{definition}
+
+\begin{proposition}[級数の三角不等式]
+    \TODO{}
+\end{proposition}
+
+\begin{definition}[並べ替え]
+    \TODO{}
+\end{definition}
+
+\begin{definition}[絶対収束]
+    \TODO{}
+\end{definition}
+
+\begin{definition}[無条件収束]
+    \TODO{}
+\end{definition}
+
+$\R^n$の点列の級数に対しては
+絶対収束と無条件収束は同じことである。
+
+\begin{theorem}[Riemann の級数定理]
+    \label[theorem]{thm:riemann-series-theorem}
+    $\R^n$の収束級数$\sum a_n$に関して次は同値である:
+    \begin{enumerate}
+        \item $\sum a_n$は絶対収束する。
+        \item $\sum a_n$は無条件収束する。
+    \end{enumerate}
+\end{theorem}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{正項級数}
+
+級数のうちとくに重要なのが絶対収束級数である。
+そこで本節では正項級数の収束について調べる。
+
+\begin{definition}[正項級数]
+    各項が非負の級数を
+    \term{正項級数}[positive term series]{正項級数}[せいこうきゅうすう]
+    という。
+\end{definition}
+
+
+
+
+
+% ============================================================
+%
+% ============================================================
+\chapter{距離空間}
+
+この章では距離空間について考える。
+距離空間とは、距離と呼ばれる関数を備えた集合のことである。
+したがって、距離空間の定義そのものは位相空間とは関係がないことに注意すべきである。
+一方、距離は (距離) 位相を誘導するという事実を以て
+距離空間は位相空間の一種だとみなすこともできなくはない。
+しかし、距離は実数体$\R$に値をもつから$\R$の性質に強く影響を受ける。
+たとえば、すべての距離位相は$\R$における$\Q$の稠密性によって
+必然的に第1可算性を備えている。
+そこで、この章では距離空間が$\R$の性質から
+どのように影響を受けるのかを調べるため、
+$\R$よりも一般の順序体に値をもつ一般化距離から議論を始めることにする。
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{一般化距離}
+
+\begin{definition}[一般化距離]
+    $(K, \le)$を順序体、
+    $X$を集合、
+    $d \colon X \times X \to K$を写像とする。
+    $d$が$X$上の
+    \term{一般化距離}[generalized metric]
+        {一般化距離}[いっぱんかきょり]
+    であるとは、次が成り立つことをいう:
+    \begin{description}
+        \item[(GM1)] (非退化性\footnote{
+            $d(x, y) = 0 \implies x = y$
+            という条件を
+            \term{不可識別者同一性}[identity of indiscernibles]
+                {不可識別者同一性}[ふかしきべつしゃどういつせい]
+            と呼ぶことがある。
+        }) 各$x, y \in X$に対し
+            $d(x, y) = 0 \iff x = y$
+            である。
+        \item[(GM2)] (対称性) 各$x, y \in X$に対し
+            $d(x, y) = d(y, x)$
+            である。
+        \item[(GM3)] (三角不等式) 各$x, y, z \in X$に対し
+            $d(x, z) \le d(x, y) + d(y, z)$
+            である。
+    \end{description}
+    このとき、組$(X, d)$を
+    \term{一般化距離空間}[generalized metric space]
+        {一般化距離空間}[いっぱんかきょりくうかん]
+    という。
+\end{definition}
+
+最も簡単な一般化距離空間の例は順序体自身である。
+
+\begin{proposition}[一般化距離空間としての順序体]
+    $(K, \le)$を順序体とする。
+    このとき、写像
+    \begin{equation}
+        d \colon K \times K \to K, \quad
+            (x, y) \mapsto |x - y|
+    \end{equation}
+    は$K$上の一般化距離である。
+\end{proposition}
+
+\begin{proof}
+    絶対値の性質より明らか。
+\end{proof}
+
+開球と閉球を定義する。
+
+\begin{definition}[開球と閉球]
+    \idxsym{open ball}{$B_r(x)$}{$x$を中心とする半径$r$の開球}
+    \idxsym{closed ball}{$\wb{B}_r(x)$}{$x$を中心とする半径$r$の閉球}
+    $(X, d \colon X \times X \to K)$を一般化距離空間とする。
+    各$x \in X$および$r > 0_K$に対し、
+    \begin{equation}
+        B_r(x) \coloneqq \mybrace{
+            y \in X \mid d(x, y) < r
+        },
+        \quad
+        \wb{B}_r(x) \coloneqq \mybrace{
+            y \in X \mid d(x, y) \le r
+        }
+    \end{equation}
+    をそれぞれ$X$における$x$を中心とする半径$r$の
+    \term{開球}[open ball]{開球}[かいきゅう]
+    および
+    \term{閉球}[closed ball]{閉球}[へいきゅう]
+    という。
+    $x$を中心とする半径$r$の開球を$x$の
+    \term{$r$-近傍}[$r$-neighborhood]{近傍}[きんぼう]
+    とも呼ぶ。
+\end{definition}
+
+Cauchy 列を定義する。
+
+\begin{definition}[Cauchy 列]
+    $(K, \le)$を順序体、
+    $(X, d), \, d \colon X \times X \to K$を一般化距離空間、
+    $(a_n)_{n \in \N}$を$X$の元の列とする。
+    このとき$(a_n)_n$が
+    \term{Cauchy 列}[Cauchy sequence]{Cauchy 列}[Cauchy れつ]
+    であるとは、次が成り立つことをいう:
+    \begin{itemize}
+        \item 任意の正の元$\eps \in K$に対し、
+            ある$N \in \N$が存在して、
+            $m, n \ge N$なる任意の$m, n \in \N$に対し
+            $d(a_n, a_m) \le \eps$が成り立つ。
+    \end{itemize}
+\end{definition}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{一般化距離位相}
+
+\begin{definition}[一般化距離位相]
+    $K$を順序体、
+    $(X, d \colon X \times X \to K)$を一般化距離空間とする。
+    このとき、$X$の部分集合系
+    \begin{equation}
+        \calB \coloneqq \mybrace{
+            B_{\eps}(x)
+            \mid
+            \eps > 0_K, \;
+            x \in X
+        },
+        \quad
+        B_{\eps}(x) \coloneqq \mybrace{
+            x' \in X
+            \mid
+            d(x, x') < \eps
+        }
+    \end{equation}
+    を開基として$X$に位相が入る (このあと示す)。
+    これを$d$により誘導された$X$の
+    \term{一般化距離位相}[generalized metric topology]
+        {一般化距離位相}[いっぱんかきょりいそう]
+    という。
+\end{definition}
+
+\begin{remark}
+    今後断りのない限り、一般化距離空間には
+    一般化距離位相が入っているものとみなし、
+    例えば一般化距離位相に関してコンパクトな一般化距離空間を
+    単にコンパクト一般化距離空間などと呼ぶことにする。
+\end{remark}
+
+\begin{proof}
+    $K$が自己稠密であることも用いる。
+    \TODO{}
+\end{proof}
+
+\begin{proposition}
+    $(X, d \colon X \times X \to K)$を一般化距離空間とする。
+    このとき$K$が Archimedes 的ならば、
+    $X$の一般化距離位相は第1可算である。
+\end{proposition}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+\begin{proposition}
+    $K$を順序体とし、通常の方法で一般化距離空間とみなす。
+    このとき、$K$の一般化距離位相と
+    $K$の順序位相は一致する。
+\end{proposition}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{距離空間}
+
+\begin{definition}[距離空間]
+    一般化距離空間$(X, d)$において
+    一般化距離$d$が$\R$に値を持つとき、
+    $d$を$X$上の\term{距離}[metric]{距離}[きょり]といい、
+    $(X, d)$を\term{距離空間}[metric space]{距離空間}[きょりくうかん]という。
+\end{definition}
+
+距離空間においては、
+実数の連続性によって部分集合の間の距離や部分集合の直径が定義できる。
+
+\begin{definition}[部分集合の間の距離]
+    \idxsym{distance between subsets}{$d(A, B)$}{部分集合の間の距離}
+    $A, B \subset X, \; A \neq \emptyset, \; B \neq \emptyset$
+    とする。
+    \term{部分集合の間の距離}{部分集合の間の距離}[ぶぶんしゅうごうのあいだのきょり]
+    を
+    \begin{equation}
+        d(A, B)
+            \coloneqq \inf \{
+                d(x, y) \in \R
+                \mid
+                x \in A, \; y \in B
+            \}
+    \end{equation}
+    で定める。
+    とくに$A$が1点集合$A = \{ x \}$の場合、
+    $d(\{ x \}, B)$を単に$d(x, B)$と書く。
+\end{definition}
+
+1点と部分集合との間の距離について、
+次の意味で三角不等式のようなものが成り立つ。
+
+\begin{lemma}
+    \label[lemma]{lemma:triangle-inequality-of-d-x-A}
+    $(X, d)$を距離空間、
+    $\emptyset \neq A \subset X$
+    とする。
+    このとき、任意の$x, y \in X$に対し
+    \begin{equation}
+        |d(x, A) - d(y, A)| \le d(x, y)
+    \end{equation}
+    が成り立つ。
+\end{lemma}
+
+\begin{proof}
+    下限の性質より、
+    任意の$s, t \in X$に対し
+    \begin{alignat}{1}
+        d(s, A)
+            &= \inf \mybrace{
+                d(s, u) \mid u \in A
+            } \\
+            &\le \inf \mybrace{
+                d(s, t) + d(t, u) \mid u \in A
+            } \\
+            &= d(s, t) + \inf \mybrace{
+                d(t, u) \mid u \in A
+            } \\
+            &= d(s, t) + d(t, A)
+    \end{alignat}
+    である。
+    $x, y \in A$とする。
+    $d(x, A) - d(y, A) \ge 0$の場合、
+    \begin{alignat}{1}
+        |d(x, A) - d(y, A)|
+            &= d(x, A) - d(y, A) \\
+            &\le d(x, y)
+    \end{alignat}
+    である。
+    $d(x, A) - d(y, A) < 0$の場合、
+    \begin{alignat}{1}
+        |d(x, A) - d(y, A)|
+            &= d(y, A) - d(x, A) \\
+            &\le d(y, x) \\
+            &= d(x, y)
+    \end{alignat}
+    である。
+    したがって補題の主張が示せた。
+\end{proof}
+
+1点と部分集合との間の距離から定まる関数は連続である。
+
+\begin{theorem}
+    \label[theorem]{thm:d-x-A-is-cts}
+    $(X, d)$を距離空間、
+    $\emptyset \neq A \subset X$とする。
+    このとき、関数
+    \begin{equation}
+        f \colon X \to \R,
+            \quad
+            x \mapsto d(x, A)
+    \end{equation}
+    は連続である。
+\end{theorem}
+
+\begin{proof}
+    \cref{corollary:net-cts-and-cts-at-a-point}より
+    各点$x_0 \in X$で
+    $\lim_{\substack{x \to x_0 \\ x \in X}} f(x) = f(x_0)$
+    を示せばよく、
+    そのために
+    \cref{prop:limit-in-a-metric-space}
+    の特徴付けを用いる。
+    $\eps > 0$とする。
+    $\delta \coloneqq \eps$とおく。
+    上の補題より
+    $d(x, x_0) < \delta$なる任意の$x \in X$に対し
+    $|f(x) - f(x_0)| \le d(x, x_0) < \delta = \eps$
+    だから
+    $\lim_{\substack{x \to x_0 \\ x \in X}} f(x) = f(x_0)$
+    が成り立つ。
+    したがって$f$は$x_0$で、ひいては$X$上で連続である。
+\end{proof}
+
+\begin{definition}[集合の直径]
+    $(X, d)$を距離空間とする。
+    部分集合$A \subset X$に対し
+    \begin{equation}
+        \delta(A)
+            \coloneqq \sup \{
+                d(x, y) \in \R
+                \mid
+                x, y \in A
+            \}
+    \end{equation}
+    を$A$の
+    \term{直径}[diameter]{直径}[ちょっけい]という。
+    ただし、$A = \emptyset$のときは$\delta(\emptyset) = 0$と約束する\footnote{
+        $A = \emptyset$の場合の直径の定義は文献によって異なり、
+        $\delta(\emptyset) = \infty$とする場合もある。
+    }。
+\end{definition}
+
+距離空間のコンパクト部分集合においては
+開被覆の Lebesgue 数の概念が定義できる。
+
+\begin{theorem}[Lebesgue 数の補題]
+    $(X, d)$を距離空間、
+    $A \subset X$をコンパクト部分集合とする。
+    このとき、
+    $X$における$A$の任意の開被覆
+    $\calU = ( U_\lambda )_{\lambda \in \Lambda}$に対し、
+    ある$\delta > 0$が存在して、
+    任意の$a \in A$の$X$における$\delta$-近傍は
+    $\calU$のある元に含まれる。
+    この$\delta$を$\calU$の
+    \term{Lebesgue 数}[Lebesgue number]{Lebesgue 数}[Lebesgue すう]
+    という。
+\end{theorem}
+
+\begin{proof}
+    $A$はコンパクトだから
+    $\calU$の有限部分被覆$U_1, \ldots, U_n$が存在する。
+    ここで、ある$i \in \{ 1, \ldots, n \}$に対し
+    $U_i = X$が成り立つならば、
+    たとえば$\delta = 1$とおけば
+    各$a \in A$の$X$における$\delta$-近傍は
+    $U_i = X$に含まれるから証明が完結する。
+
+    すべての$i \in \{ 1, \ldots, n \}$に対し
+    $U_i \neq X$の場合を考える。
+    各$i$に対し$U_i \neq X$ゆえに$U_i^c \neq \emptyset$だから
+    \begin{equation}
+        f_i \colon A \to \R,
+            \quad
+            x \mapsto d(x, U_i^c)
+    \end{equation}
+    と定めることができ、\cref{thm:d-x-A-is-cts} より
+    $f_i$は連続である。
+    したがって$f(x) \coloneqq f_1(x) + \cdots + f_n(x)$も連続である。
+    ここで、$f(x) > 0 \; (\forall x \in A)$であることを示す。
+    まず、
+    すべての$i \in \{ 1, \ldots, n \}$に対し
+    $f_i$の定義より$f_i(x) \ge 0$である。
+    また、
+    $U_1, \ldots, U_n$が$X$における$A$の被覆であることより
+    ある$i \in \{ 1, \ldots, n \}$に対し
+    $x \in U_i$が成り立つ。
+    したがって$f_i(x) = d(x, U_i^c) > 0$である。
+    \begin{innerproof}
+        もし$d(x, U_i^c) = 0$ならば、
+        1点と部分集合との間の距離の定義より、
+        任意の$\eps > 0$に対し
+        ある$y \in U_i^c$が存在して
+        $d(x, y) < \eps$が成り立つ。
+        よって$X$における$x$の近傍は
+        すべて$U_i^c$と交わる。
+        したがって閉包の性質より
+        $x \in \Cl_X U_i^c$であるが、
+        いま$U_i \opensubset X$ゆえに
+        $U_i^c \closedsubset X$だから
+        $x \in \Cl_X U_i^c = U_i^c$が成り立つ。
+        これは$x \in U_i$であることに矛盾。
+    \end{innerproof}
+    したがって
+    $f(x) = f_1(x) + \cdots + f_n(x) > 0 \; (\forall x \in A)$がいえた。
+    さて、ここで$\alpha \coloneqq \inf_{x \in A} f(x)$とおくと
+    $\alpha > 0$である。
+    \begin{innerproof}
+        $f > 0$より$\alpha \ge 0$であることはよい。
+        $\alpha = 0$であったとすると
+        $0 = \alpha \in \Cl_\R f(A)$であるが、
+        いま$f$はコンパクト空間$A$から Hausdorff 空間$\R$への連続写像であるから
+        閉写像であり (\cref{thm:compact-to-Hausdorff})、
+        したがって$0 = \alpha \in \Cl_\R f(A) = f(A)$となり、
+        $f(x) > 0 \; (\forall x \in A)$に反する。
+    \end{innerproof}
+    そこで$\delta \coloneqq \frac{\alpha}{n} \; (> 0)$とおき、
+    これが求める$\delta$となることを示す。
+    そこで$a \in A$とし、$a$の$X$における$\delta$-近傍$B_\delta (a)$を考える。
+    $\alpha$の定義より$f(a) \ge \alpha$だから、
+    $f$の定義よりある$i \in \{ 1, \ldots, n \}$が存在して
+    $f_i(a) \ge \frac{\alpha}{n} = \delta$が成り立つ。
+    一方、開球の定義より各$x \in B_\delta (a)$は
+    $d(x, a) < \delta$をみたす。
+    したがって\cref{lemma:triangle-inequality-of-d-x-A}より
+    $d(x, U_i^c) \ge d(a, U_i^c) - d(x, a) > \delta - \delta = 0$
+    が成り立つ。
+    よって$x \in U_i$であり、$B_\delta (a) \subset U_i$がいえた。
+\end{proof}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{完備距離空間}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{演習問題}
+
+\begin{problem}[東大数理 2007A]
+    $A, B$を$\R$のコンパクトな部分集合、
+    $U$を$\R^2$の開集合であって$A \times B \subset U$なるものとする。
+    このとき、$\R$の開集合$V, W$であって
+    $A \times B \subset V \times W \subset U$
+    をみたすものが存在することを示せ。
+\end{problem}
+
+\begin{answer}
+    $A, B$は$\R$のコンパクト部分集合だから
+    $A \times B$は$\R^2$のコンパクト部分集合である。
+    いま$\{ U \}$は$\R^2$における$A \times B$の開被覆であるから、
+    Lebesgue 数の補題より
+    ある$\delta > 0$が存在して、
+    任意の$(a, b) \in A \times B$に対し
+    $(a, b)$の$\R^2$における$\delta$-近傍$B_\delta (a, b)$は
+    $U$に含まれる。
+    ここで$\R$の開集合$V, W$を
+    $V \coloneqq \bigcup_{a \in A} B_{\delta / 2}(a), \;
+        W \coloneqq \bigcup_{b \in B} B_{\delta / 2}(b)$
+    で定める。
+    これらが求める$V, W$であることを示す。
+    まず$A \subset V, \; B \subset W$より
+    $A \times B \subset V \times W$が成り立つ。
+    つぎに$(v, w) \in V \times W$とすると、
+    $V, W$の定義よりある$a \in A, \; b \in B$が存在して
+    $v \in B_{\delta / 2}(a), \; w \in B_{\delta / 2}(b)$が成り立つ。
+    したがって
+    \begin{alignat}{1}
+        \| (v, w) - (a, b) \|^2
+            &\le (v - a)^2 + (w - b)^2 \\
+            &< \myparen{\frac{\delta}{2}}^2 + \myparen{\frac{\delta}{2}}^2 \\
+            &= \frac{\delta^2}{2} \\
+            &< \delta^2 \\
+        \therefore \quad \| (v, w) - (a, b) \|
+            &< \delta
+    \end{alignat}
+    を得る。
+    よって$(v, w) \in B_\delta (a, b) \subset U$である。
+    したがって$V \times W \subset U$もいえた。
+\end{answer}
+
+
+
+\end{document}

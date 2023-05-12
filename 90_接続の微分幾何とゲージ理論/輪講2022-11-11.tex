@@ -1,0 +1,720 @@
+\documentclass[report]{jlreq}
+\usepackage{../global}
+\usepackage{./local}
+\begin{document}
+
+\setcounter{chapter}{1}
+\section{Poincar\'{e} の補題}
+
+\begin{definition}[閉形式と完全形式]
+    $M$を多様体、
+    $\omega \in A^p(M)$とする。
+    \begin{itemize}
+        \item $\omega$が$d\omega = 0$をみたすとき、
+            $\omega$は\term{閉じている}[closed]{閉じている}[とじている]という。
+        \item $M$上の$(p - 1)$-形式$\theta$が存在して
+            $\omega = d\theta$と書けるとき、
+            $\omega$は\term{完全}[exact]{完全}[かんぜん]であるという。
+    \end{itemize}
+    外微分作用素の性質により$dd\theta = 0$だから、完全形式は閉形式である。
+\end{definition}
+
+\begin{lemma}[ホモトピー作用素$K$]
+    $M$を多様体とし、単位区間$I$を境界をもつ多様体とみなす。
+    写像$j_0, j_1$を
+    \begin{alignat}{1}
+        j_0 &\colon M \to I \times M, \quad x \mapsto (0, x) \\
+        j_1 &\colon M \to I \times M, \quad x \mapsto (1, x)
+    \end{alignat}
+    とおく。
+    写像$K \colon A^{p + 1}(I \times M) \to A^p(M)$を
+    次のように定める:
+    \begin{enumerate}
+        \item $I \times M$の局所座標を$(t, x^1, \dots, x^n)$とおく\footnotemark{}。
+        \item $\omega \in A^{p + 1}(I \times M)$は、
+            いずれも$dt$を含まない$(p + 1)$-形式$\omega_1$と
+            $p$-形式$\omega_2$により
+            \begin{equation}
+                \omega = \omega_1 + dt \wedge \omega_2
+            \end{equation}
+            と一意的に表せる。
+        \item $K\omega$を
+            \begin{equation}
+                K\omega \coloneqq \int_0^1 dt \, \omega_2
+            \end{equation}
+            で定める。すなわち、$\omega_2$を
+            \begin{equation}
+                \omega_2 = \sum_{i_1 < \dots < i_p}
+                    a_{i_1 \dots i_p} (t, x) \, dx^{i_1} \wedge \dots \wedge dx^{i_p}
+            \end{equation}
+            と表したとき
+            \begin{equation}
+                K\omega \coloneqq \sum_{i_1 < \dots < i_p}
+                    \biggr( \int_0^1 a_{i_1 \dots i_p} (t, x) \, dt \biggl)
+                    \, dx^{i_1} \wedge \dots \wedge dx^{i_p}
+            \end{equation}
+            と定める\footnotemark{}。
+    \end{enumerate}
+    このとき
+    \begin{equation}
+        K(d\omega) + d(K\omega) = j_1^* \omega - j_0^* \omega
+        \quad
+        (\omega \in A^{p + 1}(I \times M), \; p \ge 0)
+    \end{equation}
+    が成り立つ\footnotemark{}。
+\end{lemma}
+
+\footnotetext{
+    もう少し正確には、
+    $I$の chart $t \colon U_I \to \R_{-}$と
+    $M$の chart $\varphi = (x^1, \dots, x^n) \colon U_M \to \R^n$を用いた
+    $I \times M$の chart
+    $t \times \varphi = (\tau, y^1, \dots, y^n) \colon U_I \times U_M \to \R^{1 + n}$
+    を、同じ記号で$(\tau, y^1, \dots, y^n) = (t, x^1, \dots, x^n)$と書いたものである。
+}
+
+\footnotetext{
+    積分$\int_0^1 a(t, x) \, dt$は微分形式$a(t, x) \, dt$の積分であるが、
+    $I$の chart $t \colon U_I \to \R$として普通の包含写像をとれば
+    Euclid 空間での普通の積分とみなすことができる。
+}
+
+\footnotetext{
+    補題のような$K$を$j_0^*$と$j_1^*$の間の
+    \term{ホモトピー作用素}[homotopy operator]{ホモトピー作用素}[ほもとぴーさようそ]
+    という。
+}
+
+\begin{proof}
+    添字を簡素化して
+    \begin{alignat}{1}
+        \omega
+            &= \sum_{j_1 < \dots < j_{p + 1}}
+                a_{j_1 \dots j_{p + 1}}(t, x) \, dx^{j_1} \wedge \dots \wedge dx^{j_{p + 1}}
+                + \sum_{h_1 < \dots < h_p}
+                a_{h_1 \dots h_p}(t, x) \, dt \wedge dx^{h_1} \wedge \dots \wedge dx^{h_p} \\
+            &= \sum_{J} a_J(t, x) \, dx^J
+                + \sum_{H} a_H(t, x) \, dt \wedge dx^H
+    \end{alignat}
+    と書く (第1項、第2項をそれぞれ$\omega_1, \, dt \wedge \omega_2$とおく)。
+    $K$の$\R$-線型性より
+    \begin{alignat}{1}
+        K(d\omega)
+            &= K\biggl( \sum_{J} da_J \wedge dx^J
+                + \sum_{H} da_H \wedge dt \wedge dx^H \biggr) \\
+            &= K\biggl( \sum_{J} \deldel[a_J]{t} \, dt \wedge dx^J
+                + \sum_{J} \sum_{i = 1}^n \deldel[a_J]{x^i} \, dx^i \wedge dx^J
+                - \sum_{H} \sum_{i = 1}^n \deldel[a_H]{x^i} \, dt \wedge dx^i \wedge dx^H
+                \biggr) \\
+            &= \sum_{J} a_J(1, x) \, dx^J - \sum_{J} a_J(0, x) \, dx^J
+                - \sum_{H} \sum_{i = 1}^n
+                \biggl( \int_0^1 \deldel[a_H]{x^i} \, dt \biggr)
+                \, dx^i \wedge dx^H
+    \end{alignat}
+    および
+    \begin{alignat}{1}
+        d(K\omega)
+            &= d \biggl( \sum_{H} \biggl( \int_0^1 a_H(t, x) \, dt \biggr) \, dx^H \biggr) \\
+            &= \sum_{H} d \biggl( \int_0^1 a_H(t, x) \, dt \biggr) \wedge dx^H \\
+            &= \sum_{H} \sum_{i = 1}^n \biggl( \int_0^1 \deldel[a_H]{x^i} \, dt \biggr)
+                \, dx^i \wedge dx^H
+    \end{alignat}
+    が成り立つ。したがって
+    \begin{alignat}{1}
+        K(d\omega) + d(K\omega)
+            &= \sum_{J} a_J(1, x) \, dx^J - \sum_{J} a_J(0, x) \, dx^J \\
+            &= j_1^* \omega_1 - j_0^* \omega_1 \\
+            &= j_1^* \omega - j_0^* \omega
+    \end{alignat}
+    である。
+    \begin{innerproof}
+        $j_0^* \omega$について
+        \begin{alignat}{1}
+            j_0^* \omega
+                &= j_0^* \omega_1 + \underbrace{
+                        d(j_0^* t)
+                    }_{\mathclap{j_0^* t = t \circ j_0 = \text{const.} \text{ より } 0}}
+                    \wedge j_0^* \omega_2 \\
+                &= j_0^* \omega_1 \\
+                &= \sum_{j_1 < \dots < j_{p + 1}} a_{j_1 \dots j_{p + 1}}(0, x)
+                    \, d(j_0^* x^1) \wedge \dots \wedge d(j_0^* x^n) \\
+                &= \sum_{j_1 < \dots < j_{p + 1}} a_{j_1 \dots j_{p + 1}}(0, x)
+                    \, dx^1 \wedge \dots \wedge dx^n
+        \end{alignat}
+        ただし最後の変形では$I \times M$上の関数としての$x^j$を
+        $M$上の関数としての$x^j$に引き戻した。
+        $j_1^* \omega$も同様。
+    \end{innerproof}
+\end{proof}
+
+\begin{theorem}[Poincar\'{e} の補題]
+    $U \opensubset \R^n$を可縮とする。
+    $U$上の閉形式は完全形式である。
+    すなわち、
+    $\omega \in A^{p + 1}(U)$が
+    $d\omega = 0$をみたすならば、
+    或る$\theta \in A^p(U)$が存在して$\omega = d\theta$が成り立つ。
+\end{theorem}
+
+\begin{proof}
+    可縮性より、(連続) ホモトピー
+    $\varphi \colon I \times U \to U$と1点$x_0 \in U$が存在して
+    \begin{equation}
+        \varphi(1, x) = x,
+        \quad
+        \varphi(0, x) = x_0
+    \end{equation}
+    が成り立つ。図式で書けば
+    \begin{equation}
+        \begin{tikzcd}[row sep=large]
+            U \ar[shift left]{r}{j_1}
+                \ar[shift right]{r}[swap]{j_0}
+                \ar[bend left=60]{rr}{\id_U}
+                \ar[bend right=60]{rr}[swap]{c_{x_0}}
+                & I \times U \ar{r}{\varphi}
+                & U
+        \end{tikzcd}
+    \end{equation}
+    である。
+    このとき、$\varphi$は{\smooth}であるとしてよい\footnotemark{}。
+    よって
+    \begin{alignat}{1}
+        j_1^* \varphi^* \omega
+            &= (\varphi \circ j_1)^* \omega
+            = (\id_U)^* \omega
+            = \omega \\
+        j_0^* \varphi^* \omega
+            &= (\varphi \circ j_0)^* \omega
+            = (c_{x_0})^* \omega
+            = 0
+    \end{alignat}
+    である。
+    \begin{innerproof}
+        $x \in U$と$v_1, \dots, v_{p + 1} \in T_xU$に対し
+        \begin{alignat}{1}
+            ((\id_U)^* \omega)_x (v_1, \dots, v_{p + 1})
+                &= \omega_{x} ((\id_U)_{*x} (v_1), \dots) \\
+                &= \omega_{x} (\id_{T_xU} (v_1), \dots) \\
+                &= \omega_{x} (v_1, \dots) \\
+            ((c_{x_0})^* \omega)_x (v_1, \dots, v_{p + 1})
+                &= \omega_{x} ((c_{x_0})_{*x} (v_1), \dots) \\
+                &= \omega_{x} (0, \dots) \\
+                &= 0
+        \end{alignat}
+        より成り立つ。
+    \end{innerproof}
+    補題より
+    \begin{equation}
+        K d(\varphi^* \omega) + d(K \varphi^* \omega) = \omega
+    \end{equation}
+    であるが、いま$d\omega = 0$の仮定より$d(\varphi^* \omega) = \varphi^* d\omega = 0$
+    だから、$K$の$\R$-線型性より$K d(\varphi^* \omega) = 0$である。
+    したがって
+    \begin{equation}
+        d(\underbrace{K \varphi^* \omega}_{\theta}) = \omega
+    \end{equation}
+    が成り立つ。
+\end{proof}
+
+\footnotetext{
+    $U$内の{\smooth}なホモトピーがとれることの証明には
+    Whitney の近似定理を用いる。
+    cf. [Lee p.142]
+}
+
+\begin{corollary}[Poincar\'{e} の補題 (星型領域の場合)]
+    $U \opensubset \R^n$を星型領域とする。
+    $\omega \in A^{p + 1}(U)$が閉形式ならば
+    Poincar\'{e} の補題より
+    $d\theta = \omega$なる$\theta \in A^p(U)$が上の証明のように構成できるが、
+    $\theta$は
+    \begin{equation}
+        \theta =
+            \frac{1}{p!} \sum_{i_0, \dots, i_p}
+            \biggl(
+                \int_0^1 a_{i_0 \dots i_p}(tx)
+                t^p \, dt
+            \biggr)
+            x^{i_0}
+            \, dx^{i_1} \wedge \dots \wedge dx^{i_p}
+    \end{equation}
+    と具体的に書ける。
+    ただし、$\omega$の局所座標表示を
+    \begin{equation}
+        \omega = \frac{1}{(p + 1)!}
+            \sum_{i_0, \dots, i_p} a_{i_0 \dots i_p}(x)
+            \, dx^{i_0} \wedge \dots \wedge dx^{i_p}
+    \end{equation}
+    とした。
+\end{corollary}
+
+\begin{proof}
+    $\theta = K(\varphi^* \omega)$なので右辺を計算すればよい。
+    まず$U$は星型だから、定理の証明の$\varphi \colon I \times U \to U$として
+    \begin{equation}
+        \varphi(t, x) = tx
+    \end{equation}
+    がとれる。これは明らかに{\smooth}である。
+    引き戻しの局所座標表示の公式から
+    \begin{alignat}{1}
+        \varphi^* \omega
+            &= \frac{1}{(p + 1)!}
+                \sum_{i_0, \dots, i_p} a_{i_0 \dots i_p}(tx)
+                \bigwedge_{k = 0}^p d(\varphi^* x^{i_k})
+            \label[equation]{eq:poincare-cor-1}
+    \end{alignat}
+    である。ここで、外積の各項について
+    \begin{equation}
+        d(\varphi^* x^i) = d(x^i \circ \varphi) = d(t x^i) = t dx^i + x^i dt
+    \end{equation}
+    だから、$dt \wedge dt = 0$に注意すれば
+    \begin{alignat}{1}
+        \bigwedge_{k = 0}^p d(\varphi^* dx^{i_k})
+            &= t dx^{i_0} \wedge \dots \wedge t dx^{i_p} \\[-2.2ex]
+            & \quad + x^{i_0} dt \wedge \dots \wedge t dx^{i_p} \\
+            & \quad + \cdots \\
+            & \quad + t dx^{i_0} \wedge \dots \wedge x^{i_p} dt
+    \end{alignat}
+    と展開できる。そこで
+    \begin{alignat}{1}
+        (\cref{eq:poincare-cor-1})
+            &= \frac{1}{(p + 1)!}
+                \sum_{i_0, \dots, i_p} a_{i_0 \dots i_p}(tx)
+                t^{p + 1} \, dx^{i_0} \wedge \dots \wedge dx^{i_p} \\
+            & \quad + \frac{1}{(p + 1)!}
+                \sum_{k = 0}^p
+                \sum_{i_0, \dots, i_p} a_{i_0 \dots i_p}(tx)
+                t^p x^{i_k} \, dx^{i_0} \wedge \dots \wedge 
+                \overset{\stackrel{k}{\smile}}{dt}
+                \wedge \dots \wedge dx^{i_p} \\
+            \intertext{$dt$を左に移動し、さらに$a_{i_0 \dots i_p}$の交代性を用いて}
+            &= (\text{第1項}) \\
+            & \quad + \frac{1}{(p + 1)!}
+                \sum_{k = 0}^p
+                \sum_{i_0, \dots, i_p}
+                a_{i_k i_0 \dots \what{i_k} \dots i_p}(tx)
+                t^p x^{i_k} \,
+                dt \wedge dx^{i_0} \wedge \dots \wedge 
+                \what{dx^{i_k}}
+                \wedge \dots \wedge dx^{i_p} \\
+            \intertext{内側の総和について添字を取り替えて}
+            &= (\text{第1項}) \\
+            & \quad + \frac{1}{(p + 1)!}
+                \sum_{k = 0}^p
+                \sum_{j_0, \dots, j_p}
+                a_{j_0 \dots j_p}(tx)
+                t^p x^{j_0} \,
+                dt \wedge dx^{j_1} \wedge \dots \wedge dx^{j_p} \\
+            &= (\text{第1項}) \\
+            & \quad + \frac{1}{p!}
+                \sum_{j_0, \dots, j_p}
+                a_{j_0 \dots j_p}(tx)
+                t^p x^{j_0} \,
+                dt \wedge dx^{j_1} \wedge \dots \wedge dx^{j_p}
+    \end{alignat}
+    となる。したがって$K$の定義より
+    \begin{equation}
+        \theta = K(\varphi^* \omega)
+            = \frac{1}{p!}
+                \sum_{j_0, \dots, j_p}
+                \biggl( \int_0^1 a_{j_0 \dots j_p}(tx) t^p \, dt \biggr)
+                x^{j_0} \, dx^{j_1} \wedge \dots \wedge dx^{j_p}
+    \end{equation}
+    を得る。
+\end{proof}
+
+\section{de Rham コホモロジー}
+
+\begin{definition}[de Rham コホモロジー群]
+    \idxsym{space of closed p-forms}{$Z^p(M)$}{$M$上の閉$p$形式全体の空間}
+    \idxsym{space of exact p-forms}{$B^p(M)$}{$M$上の完全$p$形式全体の空間}
+    \idxsym{de Rham cohomology group}{$H^p(M)$}{$M$の$p$次元 de Rham コホモロジー群}
+    $p \in \Z_{\ge 1}$、$M$を多様体とし、$M$上の$p$-形式を考える。
+    \begin{itemize}
+        \item 閉じた$p$-形式全体のなす$\R$-ベクトル空間$\Ker d^p$を$Z^p(M)$と書く。
+        \item 完全な$p$-形式全体のなす$\R$-ベクトル空間$\Im d^{p - 1}$を$B^p(M)$と書く。
+        \item 商ベクトル空間$H^p(M) \coloneqq Z^p(M) / B^p(M)$を
+            $M$の$p$次元
+            \term{de Rham コホモロジー群}[de Rham cohomology group]
+            {de Rham コホモロジー群}[de Rham こほもろじーぐん]という\footnotemark{}。
+    \end{itemize}
+\end{definition}
+
+\footnotetext{
+    ややこしい名前だが、$H^p(M)$のベクトル空間としての次元が$p$次元とは限らない。
+}
+
+\begin{remark}
+    de Rham コホモロジーの言葉で Poincar\'{e}の補題を言い換えると
+    「$U \opensubset \R^n$が可縮ならば
+    $H^p(U) = 0 \; (p \ge 1)$である」
+    となる。
+\end{remark}
+
+\begin{definition}[de Rham コホモロジー環]
+    \idxsym{space of differential forms}{$A(M)$}{$M$上の微分形式全体の空間}
+    \idxsym{space of closed forms}{$Z(M)$}{$M$上の閉形式全体の空間}
+    \idxsym{space of exact forms}{$B(M)$}{$M$上の完全形式全体の空間}
+    上の定義の状況を引き継ぐ。
+    \begin{itemize}
+        \item 直和ベクトル空間
+            \begin{equation}
+                A(M) \coloneqq \bigoplus_{p = 0}^n A^p(M)
+            \end{equation}
+            には積を外積$\wedge$、単位元を定値写像$1 \in A^0(M)$として
+            (非可換) 環の構造が入り、$\R$-多元環 ($\R$-代数) となる。
+        \item 直和ベクトル空間
+            \begin{equation}
+                Z(M) \coloneqq \bigoplus_{p = 0}^n Z^p(M)
+            \end{equation}
+            は外微分と外積の関係
+            $d(\omega \wedge \eta) = d\omega \wedge \eta \pm \omega \wedge d\eta$
+            から明らかに$A(M)$の部分環となる。
+        \item 直和ベクトル空間
+            \begin{equation}
+                B(M) \coloneqq \bigoplus_{p = 0}^n B^p(M)
+            \end{equation}
+            は$Z(M)$の両側イデアルとなる。実際、同じ公式から
+            \begin{equation}
+                \omega = d\theta \in B(M), \; \eta \in Z(M)
+                \quad \implies \quad
+                \omega \wedge \eta
+                    = d\theta \wedge \eta
+                    = d(\theta \wedge \eta) \mp \theta \wedge \cancelto{0}{d\eta}
+            \end{equation}
+            が成り立つ (左からの積も同様)。
+        \item 以上により得られる$\R$-多元環
+            \begin{equation}
+                H(M) \coloneqq Z(M) / B(M)
+            \end{equation}
+            を\term{de Rham コホモロジー環}[de Rham cohomology ring]
+            {de Rham コホモロジー環}[de Rham こほもろじーかん]という。
+    \end{itemize}
+\end{definition}
+
+\section{\v{C}ech コホモロジー}
+
+\begin{definition}[\v{C}ech コホモロジー]
+    \idxsym{p-simplex}{$U_{\alpha_0 \dots \alpha_p}$}{$p$次元単体}
+    \idxsym{space of p-cochains}{$C^p(\frakU, \R)$}{$p$次元双対鎖全体の空間}
+    \idxsym{coboundary operator}{$\delta$}{双対境界作用素}
+    $p \in \Z_{\ge 0}$、$X$を位相空間とし、$X$は局所有限で可縮な開被覆
+    $\frakU = \{U_\alpha\}_{\alpha \in A}$を持つとする\footnotemark{}。
+    \begin{itemize}
+        \item $U_{\alpha_0} \cap \dots \cap U_{\alpha_p} \neq \emptyset$のとき、
+            順序組$(\alpha_0, \dots, \alpha_p)$を
+            \v{C}ech の\term{$p$-次元単体}[$p$-simplex]{単体}[たんたい]と呼ぶ。
+        \item 順序組$(\alpha_0, \dots, \alpha_p)$を
+            実数$c_{\alpha_0 \dots \alpha_p}$に対応させる写像$c$
+            であって交代性
+            \begin{equation}
+                c_{\alpha_0 \dots \alpha_i \dots \alpha_j \dots \alpha_p}
+                    = - c_{\alpha_0 \dots \alpha_j \dots \alpha_i \dots \alpha_p}
+            \end{equation}
+            をみたすものを
+            \v{C}ech の\term{$p$-次元双対鎖}[$p$-cochain]{双対鎖}[そうついさ]と呼ぶ。
+        \item 各$p \ge 0$に対し、$p$-cochain の全体の集合は
+            普通の和とスカラー倍を演算、零写像を零ベクトルとして
+            $\R$-ベクトル空間となる。これを
+            \begin{equation}
+                C^p(\frakU, \R)
+            \end{equation}
+            と書く。
+        \item 写像$\delta = \delta^{p}
+            \colon C^p(\frakU, \R) \to C^{p+1}(\frakU, \R)$を
+            \begin{equation}
+                (\delta c)_{\alpha_0 \dots \alpha_{p + 1}}
+                    \coloneqq \sum_{j = 0}^{p + 1}
+                    (-1)^j c_{\alpha_0 \dots \what{\alpha}_j \dots \alpha_{p + 1}}
+            \end{equation}
+            と定め、これを
+            \term{双対境界作用素}[coboundary operator]{双対境界作用素}[そうついきょうかいさようそ]
+            という。
+            これは明らかに$\R$-線型写像であり、
+            また具体的計算により$\delta \circ \delta = 0$をみたすこともわかる。
+        \item 商ベクトル空間
+            \begin{equation}
+                H^p(\frakU, \R)
+                    \coloneqq \begin{cases}
+                        \Ker \delta^{p} / \Im \delta^{p - 1} & (p \ge 1) \\
+                        \Ker \delta^{p} & (p = 0)
+                    \end{cases}
+            \end{equation}
+            を被覆$\frakU$に関する
+            \term{\v{C}ech コホモロジー群}[\v{C}ech cohomology group]
+            {\v{C}ech コホモロジー群}[\v{C}ech こほもろじーぐん]という。
+    \end{itemize}
+\end{definition}
+
+\footnotetext{
+    開被覆$\frakU = \{ U_\alpha \}_{\alpha \in A}$が
+    \term{可縮}[contractible]{可縮!開被覆が--}[かしゅく]であるとは、
+    $\frakU$の任意の有限個の元$U_{\alpha_0}, \dots, U_{\alpha_p}$の交わりが
+    空または可縮であることをいう。
+    可縮な開被覆を\term{good cover}{good cover}ともいう。
+    パラコンパクトな多様体は可縮な開被覆を持つことが知られているらしい。
+    \TODO{局所有限「かつ」可縮にとれるか？}
+}
+
+\begin{definition}
+    $q \in \Z_{\ge 0}$とする。
+    上の定義で
+    $c_{\alpha_0 \dots \alpha_p}$を
+    $U_{\alpha_0} \cap \dots \cap U_{\alpha_p}$上の
+    $q$-形式$\omega_{\alpha_0 \dots \alpha_p}$に取り替えたものを考え、
+    $C^q(\frakU, \R), \; H^q(\frakU, \R)$のかわりに
+    $C^q(\frakU, \scrA^q), \; H^q(\frakU, \scrA^q)$と書く
+    (ここでは$\scrA^q$自体には特に意味はない\footnotemark{})。
+    $H^q(\frakU, \scrA^q)$を
+    被覆$\frakU$に関する
+    \term{層$\scrA^q$を係数にもつ \v{C}ech コホモロジー群}
+    [\v{C}ech cohomology groups with sheaf coefficients $\scrA^q$]
+    {層を係数にもつ \v{C}ech コホモロジー群}[そうをけいすうにもつCechこほもろじーぐん]
+    という。
+\end{definition}
+
+\footnotetext{
+    $\scrA^q$は、
+    $X$の開集合$U$を$A^q(U)$に写す
+    $X$上のアーベル群の層である。
+    $X$上のアーベル群の層とは、
+    $X$上のアーベル群の前層であって、局所性条件と貼り合わせ条件をみたすものである。
+    $X$上のアーベル群の前層とは、
+    $X$の開集合系$\calT$ (これは集合の包含関係を射として圏をなす) から
+    アーベル群の圏への反変関手である。
+    局所性条件と貼り合わせ条件については省略。
+    cf. [Rotman p.279]
+}
+
+\begin{lemma}
+    $p \in \Z_{\ge 1}, \; q \in \Z_{\ge 0}$、
+    $M$を多様体とする。
+    $M$は局所有限な開被覆$\frakU = \{U_\alpha\}_{\alpha \in A}$を持つとし、
+    $\{ \rho_\alpha \}$をそれに対応する1の分割とする。
+    写像$L \colon C^p(\frakU, \scrA^q) \to C^{p - 1}(M, \scrA^q)$を
+    \begin{equation}
+        (L\omega)_{\alpha_0 \dots \alpha_{p - 1}}
+            \coloneqq
+            \sum_{\alpha \in A}
+            \rho_\alpha
+            \omega_{\alpha \alpha_0 \dots \alpha_{p - 1}}
+            \quad
+            (\omega = (\omega_{\alpha_0 \dots \alpha_p})
+            \in C^p(\frakU, \scrA^q))
+    \end{equation}
+    と定める。ただし各$\rho_\alpha \omega_{\alpha \alpha_0 \dots \alpha_{p - 1}}$は
+    定義域外での値を$0$と定めて
+    $U_{\alpha_0 \dots \alpha_{p - 1}}$上の微分形式と考える。
+    このとき
+    \begin{equation}
+        \delta(L \omega) + L(\delta \omega) = \omega
+            \quad
+            (\omega = (\omega_{\alpha_0 \dots \alpha_p})
+            \in C^p(\frakU, \scrA^q))
+    \end{equation}
+    が成り立つ。
+\end{lemma}
+
+\begin{remark}
+    この議論は$\scrA^q$を$\R$に取り替えた場合に対しては適用できない。
+    それは$\rho_\alpha c_{\alpha \alpha_0 \dots \alpha_{p - 1}}$が
+    もはや定数ではないからである。
+\end{remark}
+
+\begin{proof}
+    省略。定義に従って計算すればよい。
+\end{proof}
+
+\begin{lemma}[層係数 \v{C}ech コホモロジー群の具体形]
+    \label[lemma]{lem:cech-exact-sequence}
+    $M$を多様体とし、
+    $M$は局所有限な開被覆$\frakU$を持つとする。
+    このとき各$q \in \Z_{\ge 0}$に対し
+    \begin{equation}
+        H^p(\frakU, \scrA^q)
+            = \begin{cases}
+                0 & (p \ge 1) \\
+                A^q(M) & (p = 0)
+            \end{cases}
+    \end{equation}
+    が成り立つ。
+\end{lemma}
+
+\begin{proof}
+    $q \in \Z_{\ge 0}$とする。
+
+    \uline{$p \ge 1$のとき} \quad
+    $\omega \in \Ker \delta^p$とする。
+    すると$\delta \omega = 0$だから
+    上の補題より$\delta(L\omega) = \omega$となる。
+    よって$\omega \in \Im \delta^{p - 1}$である。
+    したがって$\Ker \delta^p = \Im \delta^{p - 1}$、
+    よって$H^p(\frakU, \scrA^q) = 0$である。
+
+    \uline{$p = 0$のとき} \quad
+    $\omega \in H^0(\frakU, \scrA^q) \; (= \Ker \delta_0)$とする。
+    すると$\delta \omega = 0$である。
+    すなわち任意の$\alpha_0, \alpha_1 \in A, \;
+    U_{\alpha_0} \cap U_{\alpha_1} \ne \emptyset$に対し
+    \begin{equation}
+        0 = (\delta \omega)_{\alpha_0 \alpha_1}
+            = \omega_{\alpha_1} - \omega_{\alpha_0}
+            \quad \text{i.e.} \quad
+            \omega_{\alpha_0} = \omega_{\alpha_1}
+            \quad \text{on} \quad
+            U_{\alpha_0} \cap U_{\alpha_1}
+    \end{equation}
+    が成り立つ。
+    したがって、$\omega_\alpha \; (\alpha \in A)$は互いに貼りあって
+    $M$上の$q$-形式を定める。
+    この対応は$\R$-ベクトル空間の同型
+    $H^0(\frakU, \scrA^q) \cong A^q(M)$
+    を与える。
+\end{proof}
+
+\begin{theorem}[de Rham の定理]
+    $p \in \Z_{\ge 0}$、
+    $M$を多様体とし、$M$は局所有限で可縮な開被覆
+    $\frakU = \{ U_\alpha \}_{\alpha \in A}$をもつとする。
+    このとき、
+    \v{C}ech コホモロジー群$H^p(\frakU, \R)$と
+    de Rham コホモロジー群$H^p(M)$の間に自然な\footnotemark{}同型対応が存在する。
+\end{theorem}
+
+\footnotetext{
+    自然とは？
+}
+
+\begin{proof}[A. Weil の証明のスケッチ.]
+    \begin{equation}
+        \begin{tikzcd}
+            C^{p + 1}(\frakU, \R)
+                \ar{r}{i}
+                & C^{p + 1}(\frakU, \scrA^0)
+                \ar{r}{d}
+                & C^{p + 1}(\frakU, \scrA^1)
+                \ar{r}{d}
+                & ~ \\
+            C^{p}(\frakU, \R)
+                \ar{r}{i} \ar{u}{\delta}
+                & C^{p}(\frakU, \scrA^0)
+                \ar{r}{d} \ar{u}{\delta}
+                & C^{p}(\frakU, \scrA^1)
+                \ar{r}{d} \ar{u}{\delta}
+                & ~ \\
+            C^{p - 1}(\frakU, \R)
+                \ar{r}{i} \ar{u}{\delta}
+                & C^{p - 1}(\frakU, \scrA^0)
+                \ar{r}{d} \ar{u}{\delta}
+                & C^{p - 1}(\frakU, \scrA^1)
+                \ar{r}{d} \ar{u}{\delta}
+                & ~ \\
+            \vdots
+                \ar{u}{\delta}
+                & \vdots
+                \ar{u}{\delta}
+                & \vdots
+                \ar{u}{\delta}
+                & ~
+                & ~ \\
+            C^{0}(\frakU, \R)
+                \ar{r}{i} \ar{u}{\delta}
+                & C^{0}(\frakU, \scrA^0)
+                \ar{r}{d} \ar{u}{\delta}
+                & C^{0}(\frakU, \scrA^1)
+                \ar{r}{d} \ar{u}{\delta}
+                & \cdots
+                \ar{r}{d}
+                & C^{0}(\frakU, \scrA^{p})
+                \ar{u}{\delta}
+        \end{tikzcd}
+    \end{equation}
+    ($i$は実数を定値写像とみなす写像)
+
+    $p \ge 0$とする。
+    同型写像$H^p(\frakU, \R) \to H^p(M)$を構成する。
+    そこで
+    \begin{equation}
+        [c] \in H^p(\frakU, \R),
+        \quad
+        c \in Z^p(\frakU, \R)
+    \end{equation}
+    とする。$c$から始めて
+    \begin{equation}
+        \begin{tikzcd}
+            \cdot \ar{r}{i \text{ or } d} & \cdot \ar{d}{\cref{lem:cech-exact-sequence}} \\
+            & \cdot
+        \end{tikzcd}
+    \end{equation}
+    の向きに順繰りに元を選んでいくと、
+    最終的に$\omega^{(0, p)} \in C^0(M, \scrA^p)$が得られる。
+    $\omega^{(0, p)}$は$Z^p(M)$の元と同一視できる。
+    このようにして、
+    $[c] \in H^p(\frakU, \R)$を$[\omega^{(0, p)}] \in H^p(M)$に対応させる。
+    この写像は well-defined で、準同型になっている。
+    \cref{lem:cech-exact-sequence}を使うところで
+    $\frakU$の局所有限性を用いた。
+    逆写像の構成は以下のように行う。まず
+    \begin{equation}
+        [\omega] \in H^p(M),
+        \quad
+        \omega \in Z^p(M)
+    \end{equation}
+    とする。$\omega$は$C^0(\frakU, \scrA^p)$の元と同一視できる。
+    $\omega$から始めて
+    \begin{equation}
+        \begin{tikzcd}
+            \cdot \\
+            \cdot \ar{u}{\delta} & \cdot \ar{l}{\text{Poincar\'{e}}}
+        \end{tikzcd}
+    \end{equation}
+    の向きに順繰りに元を選んでいくと、
+    最終的に$c \in C^p(\frakU, \R)$が得られる。
+    このようにして、
+    $[\omega] \in H^p(M)$を$[c] \in H^p(\frakU, \R)$に対応させる。
+    Poincar\'{e} の補題を使うところで
+    $\frakU$の可縮性を用いた。
+\end{proof}
+
+上で de Rham コホモロジーと \v{C}ech コホモロジーの間の同型対応をみたが、
+実は de Rham コホモロジーと$\\smooth$特異コホモロジーの間にも同型が成り立つ。
+
+\begin{remark}[de Rham コホモロジーと特異コホモロジー]
+    $M$をパラコンパクトな多様体とする。
+    $p$次元{\smooth}特異単体$\sigma \colon \Delta^p \to M$と
+    $\omega \in A^p(M)$に対し
+    \begin{equation}
+        \int_{\sigma} \omega \coloneqq \int_{\Delta^p} \sigma^* \omega
+    \end{equation}
+    と定義する。
+    これにより$\R$-双線型写像
+    \begin{equation}
+        Z_{\mathrm{dR}}^p(M) \times Z_{\mathrm{sing}, p}(M) \to \R
+    \end{equation}
+    が定まる (定義域を単体からチェインへ$\R$-線型に拡張した後、サイクルに制限した)。
+    すなわち
+    \begin{equation}
+        Z_{\mathrm{dR}}^p(M) \to \Hom_{\R}(Z_{\mathrm{sing}, p}(M), \R)
+    \end{equation}
+    が定まる。
+    このとき Stokes の定理を用いて
+    \begin{equation}
+        H_{\mathrm{dR}}^p(M)
+            \to \Hom_{\R}(H_{\mathrm{sing}, p}(M), \R)
+            = H_{\mathrm{sing}}^p(M)
+    \end{equation}
+    が誘導され、これは$\R$-ベクトル空間の同型を与える (cf. [Lee p.480])。
+\end{remark}
+
+\newpage
+\phantomsection
+\addcontentsline{toc}{part}{参考文献}
+\renewcommand{\bibname}{参考文献}
+\markboth{\bibname}{}
+\begin{thebibliography}{9}
+    \bibitem{leesmo} John. M. Lee. \textit{Introduction to Smooth Manifolds}. Springer, 2012
+    \bibitem{kob} 小林 昭七. "接続の微分幾何とゲージ理論". 裳華房, 2004
+    \bibitem{rotman} Joseph J. Rotman \textit{An Introduction to Homological Algebra}. Springer, 2008
+\end{thebibliography}
+
+\end{document}

@@ -1,0 +1,949 @@
+\documentclass[report]{jlreq}
+\usepackage{global}
+\usepackage{./local}
+\subfiletrue
+\begin{document}
+
+第1部では Riemann 積分および Lebesgue 積分について整理する。
+
+% ============================================================
+%
+% ============================================================
+\chapter{Riemann 積分}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{Riemann 積分の定義}
+
+点付き分割の概念を定義する。
+なお、ここで定義する「分割」という言葉の意味は
+一般の集合論における分割とは異なることに注意すべきである。
+
+\begin{definition}[点付き分割]
+    $I = [a_1, b_1] \times \cdots \times [a_n, b_n] \subset \R^n$を有界閉区間とする。
+    組$(X, T)$が
+    $I$の\term{点付き分割}[tagged partition]{点付き分割}[てんつきぶんかつ]であるとは、
+    次が成り立つことをいう:
+    \begin{enumerate}
+        \item $X$は順序組$X = (X_1, \dots, X_n)$であって、
+            各$X_i \; (i = 1, \dots, n)$は
+            $[a_i, b_i]$の有限部分集合
+            \begin{equation}
+                X_i = \mybrace{
+                        a_i = x_{i, 0} < x_{i, 1} < \cdots < x_{i, k_i} = b_i
+                    }
+                    \quad
+                    (k_i \in \Z_{\ge 0})
+            \end{equation}
+            である。
+            $X$を$I$の\term{分割}[partition]{分割}[ぶんかつ]といい、
+            \begin{equation}
+                I_{i_1 \dots i_n}
+                    \coloneqq
+                    [x_{1, i_1 - 1}, x_{1, i_1}]
+                    \times \cdots \times
+                    [x_{n, i_n - 1}, x_{n, i_n}]
+                    \quad
+                    (1 \le i_1 \le k_1, \dots, 1 \le i_n \le k_n)
+            \end{equation}
+            を$X$の定める$I$の
+            \term{小区間}[subinterval]{小区間}[しょうくかん]という。
+        \item $T$は$X$の定める各小区間を "代表" する点の集まりである。
+            すなわち
+            \begin{equation}
+                T \coloneqq \mybrace{
+                    t_{i_1 \dots i_n}
+                    \mid
+                    t_{i_1 \dots i_n} \in I_{i_1 \dots i_n}, \;
+                    1 \le i_1 \le k_1, \dots, 1 \le i_n \le k_n
+                }
+            \end{equation}
+            である。
+    \end{enumerate}
+    $I$の点付き分割全部の集合を$\calP(I)$と書くことにする。
+\end{definition}
+
+\begin{definition}[細分]
+    $I \subset \R^n$を有界閉区間、
+    $(X, T), (X', T')$を$I$の点付き分割とする。
+    $(X', T')$が$(X, T)$の\term{細分}[refinement]{細分}[さいぶん]であるとは、
+    $X_i \subset X'_i \; (i = 1, \dots, n)$
+    が成り立つことをいう。
+    このとき$(X, T) \preceq (X', T')$と書く。
+\end{definition}
+
+\begin{lemma}
+    上の定義の状況で
+    $(\calP(I), \preceq)$は有向集合となる。
+\end{lemma}
+
+\begin{proof}
+    反射性と推移性は包含関係の性質から明らか。
+    また、2つの点付き分割$(X, T), (X', T')$に対して
+    $X'' \coloneqq X \cup X'$は$I$の分割であり、
+    $X''$の定める各小区間から1個ずつ点を選んだものを$T''$とおけば、
+    $(X'', T'')$は$I$の点付き分割であって
+    $(X, T), (X', T')$の細分である。
+    したがって共通上界の存在もいえた。
+    よって$(\calP(I), \preceq)$は有向集合である。
+\end{proof}
+
+\begin{definition}[Riemann 和]
+    $I = [a_1, b_1] \times \cdots \times [a_n, b_n] \subset \R^n$を有界閉区間、
+    $f \colon I \to \R$を関数とする。
+    $\R$内のネット$S_f \colon \calP(I) \to \R$を次のように定める:
+    \begin{equation}
+        S_f(X, T)
+            \coloneqq
+            \sum_{i_1, \dots, i_n} f(t_{i_1 \dots i_n})
+            (x_{1, i_1} - x_{1, i_1 - 1}) \cdots (x_{n, i_n} - x_{n, i_n - 1})
+    \end{equation}
+    各$S_f(X, T)$を$(X, T)$に関する$f$の
+    \term{Riemann 和}[Riemann sum]{リーマン和}[Riemann わ]という。
+\end{definition}
+
+Riemann 積分をネット$S_f$の極限として定義する。
+
+\begin{definition}[Riemann 積分]
+    \idxsym{Riemann integral}{$\int_I f(x) dx$}{$f$の$I$上の Riemann 積分}
+    上の定義の状況で、
+    ネット$S_f$が収束するとき
+    $f$は$I$上
+    \term{Riemann 可積分}[Riemann integrable]{リーマン可積分}[Riemann かせきぶん]
+    であるといい、
+    $S_f$の極限\footnote{
+        $\R$は Hausdorff だから$S_f$の極限は存在すれば一意である。
+    }を$f$の$I$上の
+    \term{Riemann 積分}[Riemann integral]{リーマン積分}[Riemann せきぶん]
+    といい、$\int_I f(x) dx$と書く。
+\end{definition}
+
+通常、Riemann 積分といったら
+点付き分割の「幅」を$0$に近づけるときの Riemann 和の極限を指す\footnote{
+    点付き分割の幅を$0$に近づける Riemann 積分の定義は
+    ネットの収束の定義と相性が悪い。
+    すなわち、ネットの収束は
+    「任意の$\eps > 0$に対し、ある$\lambda_0 \in \Lambda$が存在して、
+    $\lambda \succeq \lambda_0$なるすべての$\lambda \in \Lambda$に対し、…」
+    という形で定式化され、
+    「ある〜」の部分$\lambda_0$と「…なるすべての〜」
+    の部分$\lambda$が同じ有向集合に属しているが、
+    一方で点付き分割の幅を$0$に近づける Riemann 積分の定義は
+    「任意の$\eps > 0$に対し、ある$\delta > 0$が存在して、
+    $|(X, T)| < \delta$なるすべての$(X, T)$に対し、…」
+    の形だから、
+    $\delta$と$(X, T)$が同じ有向集合に属していない。
+}。
+そのような定義と上の定義との同値性を示そう。
+
+\begin{proposition}
+    \TODO{}
+\end{proposition}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+\begin{definition}[Darboux 積分]
+    \TODO{}
+\end{definition}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\newpage
+\section{演習問題}
+
+\begin{problem}[東大数理 2006A]
+    
+\end{problem}
+
+\begin{answer}
+    
+\end{answer}
+
+
+
+
+% ============================================================
+%
+% ============================================================
+\chapter{測度}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{
+    \texorpdfstring{%
+        有限加法族と$\sigma$-加法族%
+    }{%
+        有限加法族と sigma 加法族%
+    }%
+}
+
+位相空間における開集合系のように、
+与えられた集合$X$に対して "良い" 性質を持った部分集合系を定義することを考えよう。
+
+\begin{definition}[有限加法族]
+    \TODO{}
+\end{definition}
+
+\begin{definition}[$\sigma$-加法族]
+    \TODO{}
+\end{definition}
+
+\begin{definition}[可測空間]
+    集合$X$と$X$の部分集合の$\sigma$-加法族$\calF$の組
+    $(X, \calF)$を
+    \term{可測空間}[measurable space]{可測空間}[かそくくうかん]
+    という。
+\end{definition}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{有限加法的な実数値集合関数}
+
+測度の導入の準備として、
+有限加法的な実数値集合関数について述べる。
+
+\begin{definition}[集合関数]
+    $X$を集合、
+    $\calA$を$X$の部分集合の族とする。
+    $\calA$上の関数であって
+    $[-\infty, +\infty]$の部分集合に値を持つものを
+    $X$上の (あるいは$\calA$上の)
+    \term{集合関数}[set function]{集合関数}[しゅうごうかんすう]
+    という。
+\end{definition}
+
+\subsection{有限加法的な実数値集合関数}
+
+実数値集合関数のなかでもとくに、
+次に定義する有限加法性を持つものは
+有限加法族と相性が良い。
+
+\begin{definition}[有限加法性]
+    $X$を集合、
+    $\calA$を$X$の部分集合の族\TODO{最初から有限加法族ではだめ？}、
+    $\mu$を$\calA$上の集合関数とする。
+    \begin{enumerate}
+        \item $\mu$が$(-\infty, \infty)$に値を持つとする。
+            $\mu$が
+            \term{有限加法的}[finitely additive]{有限加法的}[ゆうげんかほうてき]
+            であるとは、
+            有限個の互いに素な任意の$A_1, \dots, A_n \in \calA$
+            であって$\bigcup_{i = 1}^n A_i \in \calA$なるものに対し
+            \begin{equation}
+                \mu\myparen{\bigcup_{i = 1}^n A_i} = \sum_{i = 1}^n \mu(A_i)
+            \end{equation}
+            が成り立つことをいう。
+    \end{enumerate}
+\end{definition}
+
+\subsection{有限加法的な非負実数値集合関数}
+
+有限加法的な実数値集合関数がさらに非負の場合を考える。
+
+\begin{proposition}[有限加法的な非負実数値集合関数の基本性質]
+    $X$を集合、
+    $\calA$を$X$の部分集合の有限加法族、
+    $\mu$を$\calA$上の有限加法的な非負実数値集合関数とする。
+    このとき次が成り立つ:
+    \begin{enumerate}
+        \item (単調性) 各$A, B \in \calA$に対し、
+            $A \subset B \implies \mu(A) \leq \mu(B)$
+            が成り立つ。
+        \item (有限劣加法性) 各$A_1, \dots, A_n \in \calA$に対し、
+            \begin{equation}
+                \mu\myparen{\bigcup_{i = 1}^n A_i}
+                    \le \sum_{i = 1}^n \mu(A_i)
+            \end{equation}
+            が成り立つ。
+    \end{enumerate}
+\end{proposition}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{測度}
+
+有限の加法性だけでは理論的に弱すぎるため、
+加法性を可算まで強めたものを考える必要がある。
+
+\begin{definition}[可算加法性]
+    $X$を集合、
+    $\calA$を$X$の部分集合の族\TODO{最初から有限加法族ではだめ？}、
+    $\mu$を$\calA$上の集合関数とする。
+    \begin{enumerate}
+        \item $\mu$が\highlight{$(-\infty, +\infty)$}に値を持つとする。
+            $\mu$が
+            \term{可算加法的}[countably additive]{可算加法的}[かさんかほうてき]
+            であるとは、
+            互いに素な任意の列$(A_i)_{i = 1}^\infty, \, A_i \in \calA$
+            であって$\bigcup_{i = 1}^\infty A_i \in \calA$なるものに対し
+            \begin{equation}
+                \mu\myparen{\bigcup_{i = 1}^\infty A_i}
+                    = \sum_{i = 1}^\infty \mu(A_i)
+            \end{equation}
+            が成り立つことをいう。
+        \item $\mu$が\highlight{$[0, +\infty]$}に値を持つとする。
+            $\mu$が
+            \term{可算加法的}[countably additive]{可算加法的}[かさんかほうてき]
+            であるとは、
+            互いに素な任意の列$(A_i)_{i = 1}^\infty, \, A_i \in \calA$
+            であって$\bigcup_{i = 1}^\infty A_i \in \calA$なるものに対し
+            \begin{equation}
+                \mu\myparen{\bigcup_{i = 1}^\infty A_i}
+                    = \sum_{i = 1}^\infty \mu(A_i)
+            \end{equation}
+            が成り立つことをいう。
+            ただし、両辺が同時に$\infty$となることも許す。
+    \end{enumerate}
+\end{definition}
+
+\begin{remark}
+    可算加法性の定義 (1) の右辺に現れる級数は
+    絶対収束が要求されていることに注意すべきである。
+    実際、$\bigcup A_i \in \calA$ゆえに
+    $\mu\myparen{\bigcup A_i}$は実数だから
+    右辺$\sum \mu(A_i)$は収束する。
+    さらに左辺、したがって右辺は添字の並べ替えで値が変わらないから
+    $\sum \mu(A_i)$は無条件収束であり、
+    Riemann の級数定理
+    (\cref{thm:riemann-series-theorem})
+    より絶対収束となる。
+\end{remark}
+
+符号付き測度を定義する。
+
+\begin{definition}[符号付き測度]
+    $(X, \calA)$を可測空間とする。
+    \begin{itemize}
+        \item $(X, \calA)$上の可算加法的な実数値集合関数$\mu$を
+            $(X, \calA)$上の
+            \term{符号付き測度}[signed measure]{符号付き測度}[ふごうつきそくど]
+            という\footnote{
+                符号付き測度は
+                \term{複素測度}[complex measure]{複素測度}[ふくそそくど]
+                の実数値の場合である。
+            }。
+    \end{itemize}
+\end{definition}
+
+測度を定義する。
+
+\begin{definition}[測度]
+    $(X, \calA)$を可測空間とする。
+    \begin{itemize}
+        \item $\calA$上の集合関数$\mu$であって
+            次をみたすものを、$(X, \calA)$上の
+            \term{測度}[measure]{測度}[そくど]
+            という:
+            \begin{enumerate}
+                \item $[0, +\infty]$に値を持つ。
+                \item 可算加法性をみたす。
+                \item $\mu(\emptyset) = 0$
+            \end{enumerate}
+        \item $(X, \calA)$上の測度$\mu$であって次をみたすものを
+            $(X, \calA)$上の
+            \term{$\sigma$-有限測度}[$\sigma$-finite measure]
+                {$\sigma$-有限測度}[sigmaゆうげんそくど]
+            という:
+            \begin{enumerate}
+                \item $\mu(E_n) < \infty$
+                    かつ$X = \bigcup_{n = 1}^\infty E_n$なる
+                    $E_n \in \calA \; (n = 1, 2, \dots)$が存在する。
+            \end{enumerate}
+        \item $(X, \calA)$上の測度$\mu$であって
+            $[0, +\infty)$に値を持つものを
+            $(X, \calA)$上の
+            \term{有限測度}[finite measure]
+                {有限測度}[ゆうげんそくど]
+            という。
+    \end{itemize}
+\end{definition}
+
+\begin{example}[測度の例]
+    ~
+    \begin{itemize}
+        \item 後で述べる Lebesgue 測度は
+            $(\R, \calB(\R))$ ($\calB(\R)$は Borel 集合族)
+            上の測度である。
+        \item 数え上げ測度は
+            $(\R, \calB(\R))$上の測度である。
+        \item $(X, \calA)$を可測空間、$x \in X$とする。
+            $\delta_x(A) \coloneqq \chi_A(x)$で定義される
+            $(X, \calA)$上の測度を
+            \term{Dirac 測度}[Dirac measure]{Dirac 測度}[Dirac そくど]
+            という。
+    \end{itemize}
+\end{example}
+
+とくに有限測度により測度空間が定義される。
+
+\begin{definition}[測度空間]
+    $(X, \calA)$を可測空間、
+    $\mu$を$\calA$上の有限測度とする。
+    このとき3つ組$(X, \calA, \mu)$を
+    \term{測度空間}[measure space]{測度空間}[そくどくうかん]
+    という。
+\end{definition}
+
+\begin{remark}
+    $\mu$が単に測度というだけでは
+    測度空間の要件を満たさないことに注意すべきである。
+    しかし、可測空間$(X, \calA)$と$\calA$上の ($+\infty$も値に許す) 測度を
+    あわせて扱う場面もしばしばあるから、
+    混同しないようにしなければならない。
+\end{remark}
+
+\begin{definition}[完備な測度]
+    $(X, \calA, \mu)$を測度空間とする\TODO{可測空間ではなく？}。
+    $\mu$が\term{完備}[complete]{完備}[かんび]であるとは、
+    $\mu(A) = 0$なる任意の$A \in \calA$に対し、
+    すべての部分集合$B \subset A$が$\calA$に含まれることをいう。
+\end{definition}
+
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{外測度}
+
+\TODO{どこに書くべき？}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{拡張定理}
+
+\TODO{積測度もここ？}
+
+\TODO{Riesz の表現定理？}
+
+
+
+
+% ============================================================
+%
+% ============================================================
+\chapter{Lebesgue 積分}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{可測関数}
+
+可測関数の概念を定義する。
+可測関数は「可測」という名前に反して
+測度とは無関係に定義される概念であることに注意すべきである。
+
+\begin{definition}[可測関数]
+    $(X, \calA)$を可測空間、
+    $f \colon X \to \R$を関数とする。
+    このとき$f$が$\calA$に関し
+    \term{可測}[measurable]{可測関数}[かそくかんすう]
+    であるとは、
+    任意の$c \in \R$に対し
+    $f^{-1}((-\infty, c)) \in \calA$
+    が成り立つことをいう。
+\end{definition}
+
+\begin{definition}[ほとんどいたるところ]
+    \TODO{測度空間とすべき？}
+    $(X, \calA)$を可測空間、
+    $\mu$を$\calA$上の測度とする。
+    $x \in X$に関する命題$P(x)$が
+    \begin{equation}
+        \mu(\{ x \in X \mid P(x) \text{ は偽} \}) = 0
+    \end{equation}
+    をみたすとき、
+    命題$P(x)$は
+    $X$上
+    \term{$\mu$-ほとんどいたるところ}[$\mu$-almost everywhere; $\mu$-a.e.]
+        {ほとんどいたるところ}
+    で成立するという。
+\end{definition}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{単関数の積分}
+
+単関数を定義する。
+
+\begin{definition}[単関数]
+    $(X, \calA)$を可測関数、
+    $\mu$を$\calA$上の$[0, +\infty]$に値をもつ測度とする。
+    可測関数$f \colon X \to \R$が
+    $\mu$に関し
+    \term{単関数}[simple function]{単関数}[たんかんすう]
+    であるとは、
+    $\mu(\{ x \in X \mid f(x) \neq 0 \}) < \infty$であって\footnote{
+        $\mu$が有限測度の場合は
+        $\mu(\{ x \in X \mid f(x) \neq 0 \}) < \infty$
+        の条件は自然に満たされる。
+    }、
+    $f$を
+    \begin{equation}
+        f = \sum_{i = 1}^n c_i \chi_{A_i},
+            \quad
+            c_i \in \R,
+            \quad
+            A_i \in \calA
+    \end{equation}
+    と$\calA$の元の指示関数の$\R$-線型結合に書けることをいう。
+\end{definition}
+
+文献によっては単関数の定義に
+$\mu(\{ x \in X \mid f(x) \neq 0 \}) < \infty$
+を含めないものもあるが、
+そのような流儀では$+\infty$を許す測度を扱う場合にのみこの条件を課すことになり
+議論が煩雑になってしまう。
+したがって本稿では最初から単関数の定義にこの条件を含めることにした。
+
+次に単関数の積分を定義する。
+
+\begin{definition}[単関数の積分]
+    $(X, \calA)$を可測空間、
+    $\mu$を$\calA$上の$[0, +\infty]$に値をもつ測度とする。
+    $\mu$に関する任意の単関数$f \colon X \to \R$
+    \begin{equation}
+        f = \sum_{i = 1}^n c_i \chi_{A_i},
+            \quad
+            c_i \in \R,
+            \quad
+            A_i \in \calA
+    \end{equation}
+    に対し、
+    $f$の\term{積分}[integral]{積分}[せきぶん]を
+    \begin{equation}
+        \int_X f(x) \, \mu(dx)
+            \coloneqq \sum_{i = 1}^n c_i \mu(A_i)
+    \end{equation}
+    と定義する。
+\end{definition}
+
+\begin{proposition}[単関数の積分の基本性質]
+    \begin{enumerate}
+        \item (三角不等式)
+    \end{enumerate}
+    \TODO{}
+\end{proposition}
+
+\begin{definition}[単関数の平均 Cauchy 列]
+    $(X, \calA)$を可測空間、
+    $\mu$を$X$上の測度、
+    $(f_n)_{n \in \N}$を$X$上の$\mu$に関する単関数の列とする。
+    $(f_n)_n$が
+    \term{平均 Cauchy 列}[mean Cauchy sequence]{平均 Cauchy 列}[へいきん Cauchy れつ]
+    であるとは、
+    任意の$\eps > 0$に対し、
+    ある$n \in \N$が存在して、
+    すべての$i, j \ge n$に対し
+    \begin{equation}
+        \int_X |f_i(x) - f_j(x)| \, \mu(dx) < \eps
+    \end{equation}
+    が成り立つことをいう。
+\end{definition}
+
+\begin{proposition}[平均 Cauchy 列の性質]
+    \label[proposition]{prop:mean-fundamental-sequence-of-simple-functions}
+    $(X, \calA)$を可測空間、
+    $\mu$を$X$上の測度、
+    $(f_n)_{n \in \N}$を$X$上の$\mu$に関する単関数の列とする。
+    このとき次が成り立つ:
+    \begin{enumerate}
+        \item $(f_n)_{n \in \N}$が平均 Cauchy 列ならば、
+            数列$\myparen{\int_X f_n(x) \, \mu(dx)}_{n \in \N}$は
+            ある実数に収束する。
+        \item \TODO{}
+    \end{enumerate}
+\end{proposition}
+
+\begin{proof}
+    \uline{(1)} \quad
+    単関数の積分の三角不等式と実数の完備性より従う。
+
+    \uline{(2)} \quad
+    \TODO{}
+\end{proof}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{一般の関数の積分}
+
+一般の関数の積分を定義する。
+ここで「一般の」関数というのは次の定義で述べるもののことであって、
+決して可測関数を指すわけではないという点に注意すべきである。
+実際、可測関数は実数値関数だから$\pm\infty$を値に持つことはないが、
+今から定義する積分では$\pm\infty$を値に持つ関数も扱うことになる。
+ただし、後で示すように可積分関数はほとんど至るところ可測関数に一致するから、
+この違いは実際上はそれほど問題にはならない。
+
+\begin{definition}[一般の関数の積分]
+    $(X, \calA)$を可測空間、
+    $\mu$を$X$上の測度、
+    $f$を$\mu$-a.e. $x \in X$で定義された
+    \highlight{関数}であって、
+    $[-\infty, +\infty]$に値をもち、
+    $\mu$-a.e. $x \in X$で有限なものとする。
+    このとき$f$が
+    \term{$\mu$-可積分}[$\mu$-integrable]{可積分}[かせきぶん]
+    であるとは、
+    $X$上の単関数の列$(f_n)_{n \in \N}$であって
+    次をみたすものが存在することをいう:
+    \begin{enumerate}
+        \item $\mu$-a.e. $x \in X$に対し
+            $\lim_{n \to \infty} f_n(x) \to f(x)$
+            が成り立つ。
+        \item $(f_n)_{n \in \N}$は平均 Cauchy 列である。
+    \end{enumerate}
+    このとき、
+    \cref{prop:mean-fundamental-sequence-of-simple-functions}
+    より
+    \begin{equation}
+        \int_X f(x) \, \mu(dx)
+            \coloneqq \lim_{n \to \infty} \int_X f_n(x) \, \mu(dx)
+            \in \R
+    \end{equation}
+    が存在するが、これを
+    $f$の\term{積分}[integral]{積分}[せきぶん]という。
+    積分の値は上の条件をみたす単関数列$(f_n)_{n \in \N}$のとり方によらず
+    well-defined に定まる (このあと示す)。
+\end{definition}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+\begin{proposition}
+    可積分関数はほとんど至るところ可測関数に一致する。
+\end{proposition}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+\begin{proposition}[可積分関数の基本性質]
+    \begin{enumerate}
+        \item ($\R$-線型性)
+        \item (単調性)
+    \end{enumerate}
+    \TODO{}
+\end{proposition}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+次の Markov の不等式は確率論において重要な役割を果たす。
+確率論的にいえば、Markov の不等式は
+確率分布の裾の確率を上から評価するものである\footnote{
+    Markov の不等式とは反対に裾の確率を下から評価する不等式としては、
+    Salem-Zygmund の不等式がある\cite[p.142]{Bog07}。
+}。
+
+\begin{theorem}[Markov の不等式]
+    \termhidden[Markov's inequality]{Markov の不等式}[Markov のふとうしき]
+    $(X, \calA)$を可測空間、
+    $\mu$を$\calA$上の$[0, +\infty]$に値をもつ測度、
+    $f$を$\mu$-可積分関数とする。
+    このとき、任意の$R > 0$に対し
+    \begin{equation}
+        \mu(\{ x \in X \mid |f(x)| \ge R \})
+            \le \frac{1}{R} \int_X |f(x)| \, \mu(dx)
+    \end{equation}
+    が成り立つ。
+\end{theorem}
+
+\begin{proof}
+    $f$は$\mu$-可積分だから、
+    $X$上の可測関数であるとしてよい\TODO{why?}。
+    $A_R \coloneqq \{ x \in X \mid |f(x)| \ge R \}$とおくと、
+    各$x \in X$に対し$R \chi_{A_R}(x) \le |f(x)|$である。
+    いま$f$の可積分性より
+    $\mu(A_R) \le \mu(\{ x \in X \mid |f(x)| > 0 \}) < \infty$
+    だから、積分の単調性より
+    \begin{equation}
+        0
+            \le R \mu(A_R)
+            = \int_X R \chi_{A_R}(x) \, \mu(dx)
+            \le \int_X |f(x)| \, \mu(dx)
+            < \infty
+    \end{equation}
+    が成り立つ。$R$を移項して定理の主張の式を得る。
+\end{proof}
+
+\begin{corollary}[Chebyshev の不等式]
+    \TODO{}
+\end{corollary}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{収束定理}
+
+この節では、極限と積分の交換に関する3つの重要な定理を述べる。
+優収束定理は優関数 (dominant function) を用いて
+収束を導くものであり、多くの場面で重宝する。
+なお、優関数を見つけられない場合に一般化した収束定理としては、
+一様可積分性を用いる Lebesgue-Vitali の定理がある\cite[p.268]{Bog07}。
+
+\begin{theorem}[優収束定理; DCT]
+    \termhidden[dominated convergence theorem]{優収束定理}[ゆうしゅうそくていり]
+    $(X, \calA)$を可測空間、
+    $\mu$を$X$上の測度、
+    $(f_n)_{n \in \N}$を$\mu$-可積分関数$X \to \R$の列とする。
+    このとき、条件
+    \begin{enumerate}
+        \item $\mu$-a.e.$x \in X$に対し、
+            $\lim_{n \to \infty} f_n(x)$が
+            $[-\infty, +\infty]$内に存在する。
+            \TODO{a.e.でいいのか？}
+        \item ある$\mu$-可積分関数$\Phi$が存在して、
+            すべての$n \in \N$に対し
+            $|f_n(x)| \le \Phi(x) \; \text{a.e.$x$}$
+            をみたす。
+    \end{enumerate}
+    が成り立つならば、
+    $f \colon X \to [-\infty, +\infty], \;
+        x \mapsto \lim_{n \to \infty} f_n(x)$
+    は$\mu$-可積分であり\TODO{値域あってる？}、
+    \begin{equation}
+        \int_X f(x) \, \mu(dx)
+            = \lim_{n \to \infty} \int_X f_n(x) \, \mu(dx)
+    \end{equation}
+    が成り立つ。
+\end{theorem}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+\begin{theorem}[単調収束定理; MCT]
+    \termhidden[monotone convergence theorem]{単調収束定理}[たんちょうしゅうそくていり]
+    $(X, \calA)$を可測空間、
+    $\mu$を$\calA$上の$[0, +\infty]$に値をもつ測度、
+    $(f_n)_{n \in \N}$を$\mu$-可積分関数の列であって
+    すべての$n \in \N$と
+    $\mu$-a.e. $x \in X$に対し
+    $f_n(x) \le f_{n + 1}(x)$をみたすものとする。
+    このとき、
+    $\sup_n \int_X |f_n(x)| \, \mu(dx) < \infty$
+    ならば、
+    $f(x) \coloneqq \lim_{n \to \infty} f_n(x)$は
+    $\mu$-a.e. $x \in X$に対し有限の値をとる
+    $\mu$-可積分であり、
+    \begin{equation}
+        \int_X f(x) \, \mu(dx)
+            = \lim_{n \to \infty} \int_X f_n(x) \, \mu(dx)
+    \end{equation}
+    が成り立つ。
+\end{theorem}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+\begin{theorem}[Fatou の定理]
+    \TODO{}
+\end{theorem}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\newpage
+\section{演習問題}
+
+\begin{problem}[ChatGPT]
+    $(E, \calA)$を可測空間、
+    $\mu$を$\calA$上の$[0, +\infty]$に値をもつ測度、
+    $f$を非負の可測関数とし、
+    $\int_E f(x) \, dx = 0$が成り立つとする。
+    このとき、ほとんどすべての $x \in E$ に対して
+    $f(x) = 0$ となることを示せ。
+\end{problem}
+
+\begin{answer}
+    任意の正整数$n$に対し、
+    Markov の不等式より
+    $0 \le \mu(\{ x \in E \mid f(x) \ge 1/n \}) \le n \int_E f(x) dx = 0$、
+    したがって
+    $\mu(\{ x \in E \mid f(x) \ge 1/n \}) = 0$
+    が成り立つ。よって
+    $\mu(\{ x \in E \mid f(x) \neq 0 \})
+        = \mu(\bigcup_{n = 1}^\infty \{ x \in E \mid f(x) \ge 1/n \})
+        = \sum_{n = 1}^\infty \mu(\{ x \in E \mid f(x) \ge 1/n \})
+        = 0$
+    が成り立つ。
+    したがって
+    $\mu$-a.e. $x \in E$に対し
+    $f(x) = 0$が成り立つ。
+\end{answer}
+
+
+
+
+% ============================================================
+%
+% ============================================================
+\chapter{Lebesgue 測度}
+
+ここまでは一般の可測空間を考えてきたが、
+実用上は$\R^n$上での積分がとくに重要である。
+この章では Lebesgue 測度を導入し、
+Riemann 積分と Lebesgue 積分との関係性について調べる。
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{Lebesgue 測度の構成}
+
+\begin{definition}
+    \TODO{}
+\end{definition}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{Riemann 積分との関連}
+
+\TODO{これが一番大事？}
+
+
+
+% ============================================================
+%
+% ============================================================
+\chapter{符号付き測度}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{全変動}
+
+\TODO{符号付き測度全体の空間は全変動をノルムとして Banach 空間となる？}
+
+\begin{definition}[全変動]
+    \TODO{}
+\end{definition}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{Radon-Nikodym の定理}
+
+\begin{definition}[絶対連続と特異]
+    \TODO{}
+\end{definition}
+
+\begin{proposition}[Lebesgue 分解]
+    $(X, \calB)$を可測空間、
+    $\mu$を$\sigma$-有限な測度空間、
+    $\Phi$を$\calB$上の測度とする。
+    このとき次が成り立つ:
+    \begin{enumerate}
+        \item \TODO{}
+            \begin{equation}
+                \Phi(E) = F(E) + \Psi(E)
+            \end{equation}
+        \item 上の分解は一意である。
+    \end{enumerate}
+\end{proposition}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+\begin{theorem}[Radon-Nikodym の定理]
+    $(X, \calB)$を可測空間、
+    $\mu$を$X$上の$\sigma$-有限測度、
+    $F$を$\mu$に関し絶対連続な$X$上の測度とする。
+    このとき、
+    $\mu$-a.e. $x \in X$に対し定義された
+    可積分関数$f$が存在して
+    \begin{equation}
+        F(E) = \int_E f(x) \, d\mu(x)
+            \quad
+            (E \in \calB)
+    \end{equation}
+    が成り立つ。
+    この$f$を$\mu$に関する$F$の
+    \term{Radon-Nikodym 微分}[Radon-Nikodym derivative]
+        {Radon-Nikodym 微分}[Radon-Nikodym びぶん]
+    という。
+\end{theorem}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{Fubini の定理}
+
+\begin{theorem}[Fubini の定理]
+    \TODO{}
+\end{theorem}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+
+
+% ============================================================
+%
+% ============================================================
+\chapter{関数空間}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{測度収束}
+
+\TODO{その他の収束概念もまとめるべき？}
+
+\begin{definition}[測度 Cauchy 列と測度収束]
+    \TODO{}
+\end{definition}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{$L^p$ノルム}
+
+\begin{theorem}[Minkowski の不等式]
+    \TODO{}
+\end{theorem}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{Hilbert 空間$L^2$}
+
+
+
+\end{document}

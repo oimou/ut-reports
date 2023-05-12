@@ -1,0 +1,107 @@
+\documentclass[report]{jlreq}
+\usepackage{global}
+\usepackage{./local}
+\subfiletrue
+\def\assetspath{../}
+%\makeindex
+\chead{2023/05/23}
+\begin{document}
+
+% ============================================================
+%
+% ============================================================
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{振り返りと導入}
+
+\begin{itemize}
+    \item KL ダイバージェンス
+    \item Fisher 情報量
+    \item アファイン接続
+\end{itemize}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{期待値パラメータ空間}
+
+指数型分布族の話題に戻る。
+以降、本節では$\calX$を可測空間、
+$\calP \subset \calP(\calX)$を$\calX$上の指数型分布族、
+$(V, T, \nu)$を$\calP$の実現、
+$\Theta \coloneqq \Theta_{(V, T, \nu)}$を
+$(V, T, \nu)$の自然パラメータ空間とする。
+
+\begin{definition}[期待値パラメータ空間]
+    集合$\calM_{(V, T, \nu)}$
+    \begin{equation}
+        \calM_{(V, T, \nu)}
+            \coloneqq \mybrace{
+                \mu \in V
+                \mid
+                \exists \;
+                p \colon \text{$\calX$上の確率分布}
+                \; \text{s.t.} \;
+                p \ll \nu, \;
+                E_p[T] = \mu
+            }
+    \end{equation}
+    を$(V, T, \nu)$の
+    \term{期待値パラメータ空間}[mean parameter space]
+        {期待値パラメータ空間}[きたいちぱらめーたくうかん]
+    という。
+\end{definition}
+
+期待値パラメータ空間$\calM$は、
+$\calP$に属する確率分布に関する$T$の期待値をすべて含んでいる
+(一般には真に含んでいる)。
+
+\begin{proposition}
+    $\mu \in V$が
+    ある$p \in \calP$に関する
+    $T$の期待値ならば (すなわち$\mu = E_p[T]$ならば)、
+    $\mu$は$\calM_{(V, T, \nu)}$に属する。
+\end{proposition}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+\begin{proposition}[$\calM$は凸集合]
+    $\calM_{(V, T, \nu)}$は$V$の凸集合である。
+\end{proposition}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{今後の予定}
+
+\begin{itemize}
+    \item KL ダイバージェンス
+    \item Fisher 計量
+    \item アファイン接続
+\end{itemize}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{参考文献}
+
+\nocite{amari_information_2016}
+\nocite{bn1970_pdf}
+
+{
+    \renewcommand{\bibsection}{}
+    \bibliographystyle{amsalpha}
+    \bibliography{./bibliography,../../mybibliography}
+}
+
+
+\end{document}

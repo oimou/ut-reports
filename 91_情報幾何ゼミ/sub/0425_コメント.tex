@@ -1,0 +1,361 @@
+\documentclass[report]{jlreq}
+\usepackage{global}
+\usepackage{./local}
+\subfiletrue
+\def\assetspath{../}
+%\makeindex
+\chead{2023/04/25}
+\begin{document}
+
+% ============================================================
+%
+% ============================================================
+
+発表時にコメントがあった命題などを整理する。
+
+\begin{definition}[full support]
+    $\calX$を位相空間、$\mu$を$\calX$上の Borel 測度とする。
+    \begin{equation}
+        \supp\mu \coloneqq \Big(
+            \bigcup_{\substack{U \opensubset \calX \\ \mu(U) = 0}} U
+        \Big)^c
+    \end{equation}
+    と定める。
+    $\mu$が\term{full support}{full support}であるとは、
+    $\supp\mu = \calX$であることをいう。
+\end{definition}
+
+\begin{problem}
+    $\calX = \{ 1, \dots, n \}$とする。
+    $\calX$上の full support な確率測度全体の集合$\calP$は
+    例3.1で見たように指数型分布族であるが、
+    $\calP$は$n - 1$次元の実現を持つか？
+\end{problem}
+
+\begin{answer}
+    答え: 持つ。
+
+    $n = 1$の場合は
+    写像$T \colon \calX \to \R^0, \; k \mapsto 0$を十分統計量、
+    数え上げ測度$\gamma$を基底測度として
+    $0$次元の表現を得る。
+
+    $n \ge 2$の場合、
+    各$a_j$が$0 < a_j < 1$をみたすことに注意すれば、
+    \begin{equation}
+        P(dk)
+            = \exp\myparen{
+                \sum_{j = 1}^{n - 1}
+                    (\log a_j)
+                    \myparen{
+                        \delta_{jk}
+                        + \frac{1}{n - 1} \frac{\log a_n}{\log a_j} \delta_{nk}
+                    }
+            } \, \gamma(dk)
+    \end{equation}
+    が成り立つから、
+    $T \colon \calX \to \R^{n - 1},$
+    \begin{equation}
+        T(k)
+            \coloneqq \begin{bmatrix}
+                \delta_{1k}
+                    + \frac{1}{n - 1} \frac{\log a_n}{\log a_1} \delta_{nk} \\
+                \vdots \\
+                \delta_{(n - 1)k}
+                    + \frac{1}{n - 1} \frac{\log a_n}{\log a_{n - 1}} \delta_{nk}
+            \end{bmatrix}
+    \end{equation}
+    を十分統計量、
+    数え上げ測度$\gamma$を基底測度として
+    $n - 1$次元の表現を得る。
+\end{answer}
+
+\begin{problem}
+    $\calX$を可測空間、
+    $\calP$を$\calX$上の指数型分布族とする。
+    任意の$P_1, P_2 \in \calP$に対し
+    $P_1 \sim P_2$ (互いに絶対連続) が成り立つことを示せ。
+\end{problem}
+
+\begin{answer}
+    役割を入れ替えれば逆向きも示せるから、$P_1 \ll P_2$のみ示せばよい。
+    $E \subset \calX$を$P_2(E) = 0$なる可測集合とし、
+    $P_1(E) = 0$を示す。
+    $\calP$の実現$(T, \mu)$をひとつ選んで固定する。
+    $P_2$に対し定義2.1条件(E3)の$\theta_2 \in \R^m$をひとつ選ぶ。
+    \begin{alignat}{1}
+        0
+            &= P_2(E) \\
+            &= \int_E \dd[P_2]{\mu}(x) \mu(dx) \\
+            &= \int_E e^{\langle \theta_2, T(x) \rangle - \psi(\theta_2)} \mu(dx)
+    \end{alignat}
+    であるが、
+    被積分関数は$\mu$に関しほとんど至るところ正であることから、
+    $\mu(E) = 0$でなければならない\footnote{
+        ほとんど至るところ正の値をとる関数$f > 0$に対し
+        $\calX = f^{-1}(
+            (1, +\infty]
+            \cup (1/2, 1]
+            \cup \cdots
+            \cup (1/n, 1/(n - 1)]
+            \cup \cdots
+        )$と表せることを使って示せる。
+    }。
+    よって、$P_1 \ll \mu$であることとあわせて
+    $P_1(E) = 0$が従う。
+\end{answer}
+
+\begin{problem}
+    正規分布族は2より小さい次元の実現を持つか？
+\end{problem}
+
+\begin{answer}
+    条件(as-a), (as-b)を確かめれば、
+    2が最小であることがわかる。
+    \TODO{}
+\end{answer}
+
+指数型分布族の定義の$\R^m$を有限次元ベクトル空間$V$に置き換えてみる。
+発表時点では$\R^m$で十分だと考えていたが、
+$\R^m$の代わりに$V$を使うことで、
+議論を簡潔にできるというメリットが指摘によりわかった。
+
+\begin{definition}[指数型分布族]
+    \label[definition]{def:exponential-family}
+    $\calX$を可測空間、
+    $\emptyset \neq \calP \subset \calP(\calX)$とする。
+    $\calP$が$\calX$上の
+    \term{指数型分布族}[exponential family]
+        {指数型分布族}[しすうがたぶんぷぞく]
+    であるとは、次が成り立つことをいう:
+    $\exists \; (\highlight{V}, T, \mu)$ s.t.
+    \begin{description}
+        \item[\highlight{(E0)}] \highlight{$V$は有限次元$\R$-ベクトル空間である。}
+        \item[(E1)] $T \colon \calX \to \highlight{V}$は可測写像である。
+        \item[(E2)] $\mu$は$\calX$上の$\sigma$-有限測度であり、
+            $\forall \; p \in \calP$に対し$p \ll \mu$をみたす。
+        \item[(E3)] $\forall \; p \in \calP$に対し、
+            $\exists \; \theta \in \highlight{V^\vee}$ s.t.
+            \begin{equation}
+                \dd[p]{\mu}(x)
+                    = \frac{
+                        \exp \langle \theta, T(x) \rangle
+                    }{
+                        \int_\calX \exp \langle \theta, T(y) \rangle \, \mu(dy)
+                    }
+                    \quad
+                    \text{$\mu$-a.e. $x \in \calX$}
+            \end{equation}
+            である。
+            ただし$\langle \cdot, \cdot \rangle$は
+            \highlight{自然なペアリング$V^\vee \times V \to \R$である。}
+    \end{description}
+    さらに次のように定める:
+    \begin{itemize}
+        \item $(\highlight{V}, T, \mu)$を$\calP$の
+            \term{実現}[representation]
+            {実現}[じつげん]
+            という。
+            \begin{itemize}
+                \item $m$を$(\highlight{V}, T, \mu)$の
+                    \term{次元}[dimension]{次元}[じげん]
+                    という。
+                \item $T$を$(\highlight{V}, T, \mu)$の
+                    \term{十分統計量}[sufficient statistic]
+                    {十分統計量}[じゅうぶんとうけいりょう]
+                    という。
+                \item $\mu$を$(\highlight{V}, T, \mu)$の
+                    \term{基底測度}[base measure]
+                    {基底測度}[きていそくど]
+                    という。
+            \end{itemize}
+        \item 集合$\Theta_{(\highlight{V}, T, \mu)}$
+            \begin{equation}
+                \Theta_{(\highlight{V}, T, \mu)}
+                    \coloneqq \mybrace{
+                        \theta \in \highlight{V^\vee}
+                        \;\Big|\;
+                        \int_\calX \exp \langle \theta, T(y) \rangle \, \mu(dy) < +\infty
+                    }
+            \end{equation}
+            を$(\highlight{V}, T, \mu)$の
+            \term{自然パラメータ空間}[natural parameter space]
+            {自然パラメータ空間}[しぜんぱらめーたくうかん]
+            という。
+        \item 関数$\psi \colon \Theta_{(\highlight{V}, T, \mu)} \to \R,$
+            \begin{equation}
+                \psi(\theta)
+                    \coloneqq
+                    \log \int_\calX \exp \langle \theta, T(y) \rangle \, \mu(dy)
+            \end{equation}
+            を$(\highlight{V}, T, \mu)$の
+            \term{対数分配関数}[log-partition function]
+            {対数分配関数}[たいすうぶんぱいかんすう]
+            という。
+    \end{itemize}
+\end{definition}
+
+上の定義に基づいて次の定理を書き直してみる
+(ただし発表時の修正を踏襲し、「極小実現」の語は「$\theta$が一意の実現」に置き換えてある)。
+証明の主な変更点としては、
+$\R^m$を$V$に置き換えたことによって
+ノルムが使えなくなるため、
+かわりに annihilated を使うようになっている。
+証明は\cite[Lemma 21]{bn1970_pdf}を参考にした。
+
+\begin{theorem}[「$\theta$が一意の実現」の存在]
+    $\calX$を可測空間、
+    $\calP \subset \calP(\calX)$を
+    $\calX$上の指数型分布族とする。
+    このとき、$\calP$の「$\theta$が一意の実現」が存在する。
+\end{theorem}
+
+\begin{proof}
+    $(V, T, \mu)$は$\calP$の実現のうちで次元が最小のものであるとする。
+    $(V, T, \mu)$の次元 ($m$とおく) が$0$ならば
+    $V^\vee$は1点集合だから証明は終わる。
+
+    以下$m \ge 1$の場合を考え、
+    $(V, T, \mu)$が「$\theta$が一意の実現」であることを示す。
+    背理法のために$(V, T, \mu)$が「$\theta$が一意の実現」でないこと、
+    すなわちある$p_0 \in \calP$および
+    $\theta_0, \theta_0' \in V^\vee, \; \theta_0 \neq \theta_0'$が存在して
+    \begin{equation}
+        \locallabel{eq:assumption}
+        \exp\myparen{\langle \theta_0, T(x) \rangle - \psi(\theta_0)}
+            = \dd[p_0]{\mu}(x)
+            = \exp\myparen{\langle \theta_0', T(x) \rangle - \psi(\theta_0')}
+            \qquad
+            \text{$\mu$-a.e. $x \in \calX$}
+    \end{equation}
+    が成り立つことを仮定する。
+    証明の方針としては、
+    次元$m - 1$の実現$(V', T', \mu)$を具体的に構成することにより、
+    $(V, T, \mu)$の次元$m$が最小であることとの矛盾を導く。
+
+    さて、式\localcref{eq:assumption}を整理して
+    \begin{equation}
+        \langle \theta_0 - \theta_0', T(x) \rangle
+            = \psi(\theta_0) - \psi(\theta_0')
+            \qquad
+            \text{$\mu$-a.e. $x \in \calX$}
+    \end{equation}
+    を得る。
+    表記の簡略化のために
+    $\theta_1 \coloneqq \theta_0 - \theta_0' \in V^\vee, \;
+        r \coloneqq \psi(\theta_0) - \psi(\theta_0') \in \R$
+    とおけば
+    \begin{equation}
+        \locallabel{eq:costant-pairing}
+        \langle \theta_1, T(x) \rangle
+            = r
+            \qquad
+            \text{$\mu$-a.e. $x \in \calX$}
+    \end{equation}
+    を得る。
+    ここで
+    $V' \coloneqq (\R\theta)^\top = \{ v \in V \mid \langle \theta, v \rangle = 0 \}$
+    とおき、
+    次の claim を示す。
+    \begin{description}
+        \item[Claim] ある可測写像$T' \colon \calX \to V'$および
+            $v_0 \in V$が存在して
+            $T(x) = T'(x) + v_0 \; (\text{$\mu$-a.e.$x$})$
+            が成り立つ。
+    \end{description}
+    \begin{innerproof}
+        いま背理法の仮定より$\theta_1 \neq 0$であるから、
+        $\theta_1$を延長した$V^\vee$の基底$\theta_1, \dots, \theta_m$が存在する。
+        このとき、$\theta_1, \dots, \theta_m$を双対基底に持つ
+        $V$の基底$v_1, \dots, v_m$が存在する。
+        この基底$v_1, \dots, v_m$に関する
+        $T$の成分表示を
+        $T(x) = \sum_{i = 1}^m T^i(x) v_i, \;
+            T^i \colon \calX \to \R$とおくと、
+        \localcref{eq:costant-pairing}より
+        $T^1(x) = \langle \theta_1, T(x) \rangle = r \; (\text{$\mu$-a.e.$x$})$
+        が成り立つ。
+        そこで$v_0 \coloneqq rv_1 \in V$とおくと
+        $\langle \theta_1, T(x) - v_0 \rangle = 0 \; (\text{$\mu$-a.e.$x$})$
+        が成り立つから、
+        可測写像$T' \colon \calX \to V'$を
+        \begin{equation}
+            T'(x) \coloneqq \begin{cases}
+                T(x) - v_0 & (\langle \theta_1, T(x) - v_0 \rangle = 0) \\
+                0 & (\text{otherwise})
+            \end{cases}
+        \end{equation}
+        と定めることができる。
+        この$T, v_0$が求めるものである。
+    \end{innerproof}
+    $(V', T', \mu)$が$\calP$の実現であることを示す。
+    \cref{def:exponential-family}の条件(E0)-(E2)は明らかに成立しているから、
+    あとは条件(E3)を確認すればよい。
+    そこで$p \in \calP$とする。
+    いま$(V, T, \mu)$が$\calP$の実現であることより、
+    ある$\theta \in V^\vee$が存在して
+    \begin{equation}
+        \dd[p]{\mu}(x)
+            = \frac{
+                \exp\langle \theta, T(x) \rangle
+            }{
+                \int_{\calX} \exp\langle \theta, T(y) \rangle \, \mu(dy)
+            }
+            \qquad
+            \text{$\mu$-a.e. $x \in \calX$}
+    \end{equation}
+    が成り立つ。
+    $T', v_0$を用いて式変形すると、$\mu$-a.e.$x$に対し
+    \begin{alignat}{1}
+        \dd[p]{\mu}(x)
+            &= \frac{
+                \exp\myparen{
+                    \langle \theta, T(x) \rangle
+                }
+            }{
+                \int_{\calX} \exp\myparen{
+                    \langle \theta, T(x) \rangle
+                } \, \mu(dy)
+            } \\
+            &= \frac{
+                \exp\myparen{
+                    \langle \theta, T'(x) \rangle
+                    + \langle \theta, v_0 \rangle
+                }
+            }{
+                \int_{\calX} \exp\myparen{
+                    \langle \theta, T'(x) \rangle
+                    + \langle \theta, v_0 \rangle
+                } \, \mu(dy)
+            } \\
+            &= \frac{
+                \exp\myparen{
+                    \langle \theta, T'(x) \rangle
+                }
+            }{
+                \int_{\calX} \exp\myparen{
+                    \langle \theta, T'(x) \rangle
+                } \, \mu(dy)
+            }
+    \end{alignat}
+    が成り立つ。
+    したがって$(V', T', \mu)$は条件(E3)も満たし、
+    $\calP$の実現であることがいえた。
+    $(V', T', \mu)$は次元$m - 1$だから
+    $(V, T, \mu)$の次元$m$の最小性に矛盾する。
+    背理法より$(V, T, \mu)$は$\calP$の「$\theta$が一意の実現」である。
+\end{proof}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{参考文献}
+
+{
+    \renewcommand{\bibsection}{}
+    \bibliographystyle{amsalpha}
+    \bibliography{./bibliography,../../mybibliography}
+}
+
+
+\end{document}

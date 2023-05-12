@@ -1,0 +1,2812 @@
+\documentclass[report]{jlreq}
+\usepackage{global}
+\usepackage{./local}
+\subfiletrue
+\def\assetspath{../}
+%\makeindex
+\begin{document}
+
+
+
+
+
+% ============================================================
+%
+% ============================================================
+\chapter{向き}
+
+多様体の向きについて定義する。
+多様体の向きは、次章で多様体上での積分を定義するにあたり不可欠な概念である。
+向きに関する用語の定義は微妙で捉えがたいところがあって難しい。
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{ベクトル空間の向き}
+
+この章の後半では多様体の向きを接空間の向きに基づいて決める。
+そこで、まずベクトル空間の向きを定義する。
+
+\begin{definition}[ベクトル空間の向き]
+    $V$を1次元以上のベクトル空間とする。
+    $V$の順序基底全体の集合上の同値関係$\sim$を
+    \begin{equation}
+        B \sim B'
+            \quad \logeq \quad
+            \text{$B$から$B'$への基底の変換行列の行列式が正}
+    \end{equation}
+    と定める。
+    この同値関係に関する同値類を
+    $V$のベクトル空間としての
+    \term{向き}[orientation]{向き!ベクトル空間---}[むき]という。
+
+    定義から明らかに$V$の向きはちょうど2通り存在する。
+    そこで$O, O'$を$V$の向きとして次のように用語を定める:
+    \begin{itemize}
+        \item $O = O'$のとき、
+            $O$は$O'$と\term{同じ向き}{同じ向き!ベクトル空間---}[おなじむき]であるという。
+        \item $O \neq O'$のとき、
+            $O$は$O'$と\term{異なる向き}{異なる向き!ベクトル空間---}[ことなるむき]
+            あるいは
+            \term{逆の向き}{逆の向き!ベクトル空間---}[ぎゃくのむき]
+            であるという。
+    \end{itemize}
+    $V$の順序基底$B, B'$に対しても同様に用語を定める。
+\end{definition}
+
+ベクトル空間の向きは
+$0$でない最高次の線型形式により定めることができる。
+
+\begin{proposition}[最高次の線型形式により定まる向き]
+    $r \in \Z_{\ge 1}$、
+    $V$を$r$次元ベクトル空間、
+    $\omega \in \bigwedge^r V^*, \; \omega \neq 0$とする。
+    このとき、
+    $V$の順序基底$B, B'$に関し
+    $B \sim B'$であることと
+    $\omega(B) / \omega(B') > 0$であることとは同値である。
+    したがってとくに
+    $\omega \neq 0$が与えられたとき
+    $\omega(B) > 0$となる順序基底$B$をひとつ選ぶことで
+    $V$の向きが well-defined に決まる。
+\end{proposition}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+\begin{definition}[向きづけられたベクトル空間]
+    $V$を1次元以上のベクトル空間とする。
+    $V$が
+    \term{向きづけられた}[oriented]{向きづけられた!ベクトル空間---}[むきづけられた]
+    ベクトル空間であるとは、
+    $V$の向きがひとつ与えられていることをいう。
+    この向きを$V$の
+    \term{正の向き}[positive orientation]{正の向き!ベクトル空間---}[せいのむき]
+    といい、
+    正の向きと逆の向きを
+    \term{負の向き}[negative orientation]{負の向き!ベクトル空間---}[ふのむき]
+    という。
+\end{definition}
+
+$\R^r$には標準的な向きが存在する。
+
+\begin{definition}[標準的な向き]
+    $r \in \Z_{\ge 1}$とする。
+    $\R^r$の標準基底により定まる向きを$\R^r$の
+    \term{標準的な向き}[standard orientation]{標準的な向き}[ひょうじゅんてきなむき]
+    という。
+\end{definition}
+
+\begin{definition}[向きを保つ線型写像]
+    $(V, O), (V', O')$を向きづけられた1次元以上のベクトル空間とする。
+    線型写像$f \colon V \to V'$がベクトル空間の
+    \term{向きを保つ}[orientation-preserving]{向きを保つ!---線型写像}[むきをたもつ]
+    とは、
+    順序基底$B \in O, \; B' \in O'$をひとつずつ選んだとき
+    $f$の$B, B'$に関する行列表示の行列式が正であることをいう。
+    これは$B, B'$の選び方によらず well-defined である。
+
+    同様に、行列式が負になるとき
+    \term{向きを反転する}[orientation-reversing]{向きを反転する!---線型写像}[むきをはんてんする]
+    という。
+\end{definition}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{ベクトル束の向き}
+
+ベクトル束の向きを定義する。
+ベクトル束の向きとは、各ファイバーへの"連続的"な向きの割り当てに他ならない。
+
+\begin{definition}[ベクトル束の向き\footnote{
+    この定義は [MS74] に依った。
+}]
+    $r \in \Z_{\ge 1}$、
+    $E \to M$をランク$r$のベクトル束とする。
+    $E$のベクトル束としての
+    \term{向き}[orientation]{向き!ベクトル束---}[むき]とは、
+    各$x \in M$に対し$E_x$の (ベクトル空間としての) 向き
+    $O_x$を割り当てる対応$O$であって
+    次をみたすものをいう:
+    \begin{enumerate}
+        \item 各$x \in M$に対し、
+            $x$のある開近傍$U \opensubset M$と
+            $U$上の$E$のある局所自明化$\varphi \colon E|_U \to U \times \R^r$が存在して、
+            各$x' \in U$に対し
+            線型写像$\varphi(x') \colon E_{x'} \to \{ x' \} \times \R^r$は
+            向きを保つ。
+            ただし$E_{x'}$は$O_{x'}$で向きづけられているとし、
+            右辺は$\R^r$の標準的な向きを考える。
+    \end{enumerate}
+    $E$の向き$O, O'$が
+    すべての$x \in M$に対し$E_x$の同じ向きを割り当てるとき、
+    $O, O'$は
+    \term{同じ向き}{同じ向き!ベクトル束---}[おなじむき]であるといい、
+    同じ向きでないとき
+    \term{異なる向き}{異なる向き!ベクトル束---}[ことなるむき]であるという。
+\end{definition}
+
+各ファイバーの向きを保つ局所自明化を
+整合的であるという。
+
+\begin{definition}[整合的な局所自明化]
+    $r \in \Z_{\ge 1}$、
+    $E \to M$をランク$r$のベクトル束、
+    $O$を$E$の向きとする。
+    局所自明化$(U, \varphi)$が向き$O$と
+    \term{整合的}{整合的}[せいごうてき]
+    であるとは、
+    すべての$x \in U$に対し
+    線型写像$\varphi(x) \colon E_{x} \to \{ x \} \times \R^r$が
+    向きを保つことをいう。
+    ただし$E_{x}$は$O_{x}$で向きづけられているとし、
+    右辺は$\R^r$の標準的な向きを考える。
+\end{definition}
+
+ベクトル空間の場合と異なり、
+一般にベクトル束は向きを持つとは限らない。
+
+\begin{definition}[ベクトル束の向きづけ可能性]
+    $r \in \Z_{\ge 1}$、
+    $E \to M$をランク$r$のベクトル束とする。
+    $E$がベクトル束として
+    \term{向きづけ可能}[orientable]{向きづけ可能!ベクトル束---}[むきづけかのう]であるとは、
+    $E$のベクトル束としての向きが少なくともひとつ存在することをいう。
+    $E$が向きづけ可能でないとき、
+    $E$は
+    \term{向きづけ不可能}[nonorientable]{向きづけ不可能!ベクトル束---}[むきづけふかのう]
+    であるという。
+\end{definition}
+
+\begin{definition}[向きづけられたベクトル束]
+    $r \in \Z_{\ge 1}$、
+    $E \to M$をランク$r$のベクトル束とする。
+    $E$が\term{向き付けられた}[oriented]{向き付けられた}[むきづけられた]
+    ベクトル束であるとは、
+    $E$の向きがひとつ与えられていることをいう。
+\end{definition}
+
+$E$の向きづけ可能性は様々な方法で特徴付けることができる。
+
+\begin{theorem}[ベクトル束の向きづけ可能性の特徴付け]
+    \label[theorem]{thm:vector-bundle-orientability-characterization}
+    $r \in \Z_{\ge 1}$、
+    $M$をパラコンパクトな多様体、
+    $\pi \colon E \to M$をランク$r$ベクトル束とする。
+    このとき次は同値である:
+    \begin{enumerate}
+        \item $E$はベクトル束として向きづけ可能である。
+        \item $\bigcup U_\alpha = M$なる$E$の局所自明化の族
+            $\{ (U_\alpha, \varphi_\alpha) \}_{\alpha \in A}$が存在し、
+            これにより定まる変換関数$\{ \varphi_{\alpha\beta} \}$について
+            \begin{equation}
+                \forall \alpha, \beta \in A
+                \quad \text{に対し} \quad
+                \det \varphi_{\alpha\beta} > 0
+                \quad (\text{on } U_\alpha \cap U_\beta)
+            \end{equation}
+            が成り立つ。
+        \item $\bigwedge^r E$は自明束である\footnote{
+            最高次の外冪束$\bigwedge^r E$は
+            \term{行列式直線束}[determinant line bundle]
+            {行列式直線束}[ぎょうれつしきちょくせんそく]
+            と呼ばれる。
+            cf. \cref{problem:geometry3-2.2.11}
+        }。
+        \item $\bigwedge^r E^*$は自明束である。
+        \item nonvanishing な$\bigwedge^r E^*$の大域切断が存在する。
+    \end{enumerate}
+    ただし切断$\omega$が
+    \term{nonvanishing}{nonvanishing}であるとは、
+    定義域の各点$x$に対し「$\omega_x$は零写像でない」が成り立つことをいう。
+\end{theorem}
+
+\begin{proof}
+    \uline{(1) \Rightarrow (2)} \quad
+    明らか。
+
+    \uline{(2) \Rightarrow (1)} \quad
+    各$x \in M$に対し、
+    $x$の属するチャート$(U_\alpha, \varphi_\alpha)$をひとつ選んで
+    線型写像$\varphi(x)^{-1} \colon \{ x \} \times \R^r \to E_x$が
+    向きを保つように$E_x$の向きを定めればよい。
+    これは$(U_\alpha, \varphi_\alpha)$の選び方によらず
+    well-defined である。
+
+    \uline{(3) $\Rightarrow$ (2)} \quad
+    \TODO{書き直す}
+    %$\bigwedge^r E$は自明束であるとする。
+    %大域自明化
+    %\begin{equation}
+    %    \tau \colon \bigwedge^r E \to M \times \R
+    %\end{equation}
+    %をひとつ選び、$\bigwedge^r E$の大域切断$\sigma$を
+    %\begin{equation}
+    %    \sigma(x) \coloneqq \tau^{-1}(x, 1)
+    %        \quad (x \in M)
+    %\end{equation}
+    %で定める。
+    %また、$\bigcup U_\alpha = M$なる$E$の局所自明化の族
+    %$\{ (U_\alpha, \varphi_\alpha) \}_{\alpha \in A}$
+    %であって各$U_\alpha$が連結であるものを
+    %ひとつ選び、これにより定まる変換関数を
+    %$\{ \varphi_{\alpha\beta} \}$とおく。
+
+    %さて、$E$の局所自明化の族
+    %$\calU' = \{ (U'_\alpha, \varphi'_\alpha) \}$
+    %を定義する。
+    %まず$U'_\alpha = U_\alpha$とおく。
+    %つぎに$(e_{\alpha 1}, \dots, e_{\alpha r})$を
+    %$\varphi_\alpha$により定まる$U'_\alpha$上の$E$のフレームとおくと、
+    %$e_{\alpha 1} \wedge \dots \wedge e_{\alpha r}$は
+    %$U'_\alpha$上の$\bigwedge^r E$のフレームであるから、
+    %\begin{equation}
+    %    \sigma = f_\alpha \, e_{\alpha 1} \wedge \dots \wedge e_{\alpha r}
+    %        \quad
+    %        (f_\alpha \in \smooth(U'_\alpha))
+    %\end{equation}
+    %と一意的に表せる。
+    %このとき、$\sigma$の定義より$f_\alpha$は
+    %$U'_\alpha$上 nonvanishing である。
+    %したがって、$U'_\alpha$の連結性より
+    %$f_\alpha$の値は$U'_\alpha$上つねに正またはつねに負である。
+    %そこで$\varphi'_\alpha$を次のように定める:
+    %\begin{itemize}
+    %    \item $f_\alpha > 0$なら$\varphi'_\alpha = \varphi_\alpha$とおく。
+    %    \item $f_\alpha < 0$なら
+    %        \begin{equation}
+    %            \varphi_\alpha(x, v) = (x, v_1, \dots, v_r)
+    %                \quad
+    %                ((x, v) \in \pi^{-1}(U_\alpha))
+    %        \end{equation}
+    %        と表して
+    %        \begin{equation}
+    %            \varphi'_\alpha(x, v) = (x, -v_1, v_2, \dots, v_r)
+    %                \quad
+    %                ((x, v) \in \pi^{-1}(U'_\alpha))
+    %        \end{equation}
+    %        と定める。
+    %\end{itemize}
+    %これで$\calU'$が定まった。
+    %$\calU'$から定まる変換関数を$\{ \varphi'_{\alpha\beta} \}$とおく。
+
+    %各$\alpha \in A$に対し、行列$B_\alpha \in M_r(\R)$を
+    %\begin{equation}
+    %    B_\alpha \coloneqq \begin{cases}
+    %        I_r & (f_\alpha > 0) \\
+    %        \mathrm{diag} (-1, 1, \dots, 1) & (f_\alpha < 0)
+    %    \end{cases}
+    %\end{equation}
+    %で定める。
+    %このとき明らかに
+    %\begin{equation}
+    %    \det B_\alpha
+    %        \coloneqq \begin{cases}
+    %            1 & (f_\alpha > 0) \\
+    %            -1 & (f_\alpha < 0)
+    %        \end{cases}
+    %\end{equation}
+    %が成り立っている。
+    %また、$\varphi'_\alpha$の定め方から
+    %各$\alpha, \beta \in A$に対し
+    %\begin{equation}
+    %    \varphi'_{\alpha\beta}(x)
+    %        = B_\alpha \, \varphi_{\alpha\beta}(x) \, B_\beta
+    %        \quad
+    %        (x \in U_\alpha \cap U_\beta)
+    %\end{equation}
+    %が成り立つ。
+    %よって
+    %\begin{equation}
+    %    \det \varphi'_{\alpha\beta}
+    %        = \begin{cases}
+    %            \det \varphi_{\alpha\beta} & (f_\alpha / f_\beta > 0) \\
+    %            - \det \varphi_{\alpha\beta} & (f_\alpha / f_\beta < 0)
+    %        \end{cases}
+    %\end{equation}
+    %となる。
+    %いま$\det \varphi_{\alpha\beta} = f_\alpha / f_\beta$である。
+    %\begin{innerproof}
+    %    $\varphi_{\alpha\beta}$は
+    %    フレーム$(e_{\alpha i})_i$から$(e_{\beta j})_j$への
+    %    変換の行列である。
+    %    実際、
+    %    $\varphi_{\alpha\beta} = (a_{ij})_{i, j}$とおけば
+    %    各$x \in U_\alpha \cap U_\beta$に対し
+    %    \begin{alignat}{1}
+    %        e_{\beta j}(x)
+    %            &= \varphi_\beta^{-1}(x) (E_j)
+    %                \quad (E_j \; (j = 1, \dots, r) \text{ は$\R^r$の標準基底}) \\
+    %            &= \varphi_\alpha^{-1} (x)
+    %                ( \varphi_{\alpha\beta} (x) (E_j) ) \\
+    %            &= \varphi_\alpha^{-1} (x) \left(
+    %                \sum_{i = 1}^r a_{ij} E_i
+    %            \right) \\
+    %            &= \sum_{i = 1}^r a_{ij} e_{\alpha i}(x)
+    %    \end{alignat}
+    %    が成り立つ。
+    %    よって
+    %    \begin{alignat}{1}
+    %        e_{\beta 1} \wedge \dots \wedge e_{\beta r}
+    %            &= \left(\sum_{i_1} a_{i_1 1} e_{\alpha i_1}\right)
+    %                \wedge \dots \wedge
+    %                \left(\sum_{i_r} a_{i_r r} e_{\alpha i_r}\right) \\
+    %            &= \sum_{i_1, \dots, i_r}
+    %                a_{i_1 1} \dots a_{i_r r}
+    %                \, e_{\alpha i_1} \wedge \dots \wedge e_{\alpha i_r} \\
+    %            &= \sum_{s \in \calS_r}
+    %                a_{s(1) 1} \dots a_{s(r) r}
+    %                \, e_{\alpha s(1)} \wedge \dots \wedge e_{\alpha s(r)} \\
+    %            &= \sum_{s \in \calS_r}
+    %                \sgn(s) \,
+    %                a_{s(1) 1} \dots a_{s(r) r}
+    %                \, e_{\alpha 1} \wedge \dots \wedge e_{\alpha r} \\
+    %            &= (\det (a_{ij})) \,
+    %                e_{\alpha 1} \wedge \dots \wedge e_{\alpha r} \\
+    %            &= (\det \varphi_{\alpha\beta}) \,
+    %                e_{\alpha 1} \wedge \dots \wedge e_{\alpha r}
+    %    \end{alignat}
+    %    が成り立つ。
+    %    よって
+    %    \begin{alignat}{1}
+    %        f_\alpha \, e_{\alpha 1} \wedge \dots \wedge e_{\alpha r}
+    %            &= f_\beta \, e_{\beta 1} \wedge \dots \wedge e_{\beta r} \\
+    %            &= f_\beta \cdot (\det \varphi_{\alpha\beta}) \,
+    %                e_{\alpha 1} \wedge \dots \wedge e_{\alpha r}
+    %    \end{alignat}
+    %    の両辺の係数を比較して
+    %    $f_\alpha = f_\beta \cdot (\det \varphi_{\alpha\beta})$
+    %    したがって
+    %    $f_\alpha / f_\beta = \det \varphi_{\alpha\beta}$
+    %    を得る。
+    %\end{innerproof}
+    %したがって$\det \varphi'_{\alpha\beta} > 0$が成り立つ。
+    %よって$\calU'$は$E$に向きを定める。
+
+    \uline{(2) $\Rightarrow$ (3)} \quad
+    \TODO{ここでパラコンパクト性を用いる}
+
+    \uline{(3) $\Leftrightarrow$ (4)} \quad
+    $\bigwedge^r E$が自明であることと
+    $\bigwedge^r E^*$が自明であることとは同値である。
+    \TODO{本当に？}
+
+    \uline{(4) $\Leftrightarrow$ (5)} \quad
+    nonvanishing な$\bigwedge^r E^*$の大域切断は
+    $\bigwedge^r E^*$の大域フレームに他ならない。
+    したがって、そのような大域切断が存在することは
+    $\bigwedge^r E^*$が自明束であることと同値である。
+    
+    \TODO{}
+\end{proof}
+
+\cref{thm:vector-bundle-orientability-characterization}
+の証明によれば、局所自明化の族を与えることで
+ベクトル束を向きづけできることがわかる。
+
+\begin{definition}[局所自明化の族が定める向き]
+    局所自明化の族
+    $\calU = \{ (U_\alpha, \varphi_\alpha) \}_{\alpha \in A}$
+    が
+    \cref{thm:vector-bundle-orientability-characterization}
+    の (2) の条件をみたすとき、
+    $\calU$は$E$に
+    \term{向きを定める}{向きを定める}[むきをさだめる]
+    という。
+    さらにこのとき、
+    \cref{thm:vector-bundle-orientability-characterization}
+    の (2) の証明のようにして定まる$E$の向きを
+    \term{$\calU$の定める$E$の向き}
+        {向き!局所自明化の族の定める---}[むき]
+    という。
+
+    \TODO{self-contained に書く}
+\end{definition}
+
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{多様体の向き}
+
+多様体の向きは接束のベクトル束としての向きとして定義される。
+
+\begin{definition}[多様体の向き]
+    $M$を多様体とする。
+    $TM$の向きを$M$の多様体としての
+    \term{向き}[orientation]{向き!多様体---}[むき]
+    という。
+    $M$の多様体としての向きに関する用語は
+    $TM$のベクトル束としての向きに関する用語を援用して定義する。
+\end{definition}
+
+多様体に向きが定まると、
+それぞれのチャートが多様体の向きと整合的かどうかという概念が定義できる。
+
+\begin{definition}[整合的なチャート]
+    \label[definition]{definition:compatible-chart}
+    $M$を$r$次元多様体、
+    $O$を$TM$の向きとする。
+    $M$のチャート$(U, \varphi)$が向き$O$と
+    \term{整合的}{整合的}[せいごうてき]
+    であるとは、
+    各$x \in U$に対し
+    線型写像$d\varphi_x \colon T_{x}M \to \{ x \} \times \R^r$が
+    向きを保つことをいう。
+    ただし$T_{x}M$は$O_{x}$で向きづけられているとし、
+    右辺は$\R^r$の標準的な向きを考える。
+\end{definition}
+
+多様体の向きづけ可能性は
+座標変換の Jacobi 行列を用いて特徴付けることができる。
+
+\begin{proposition}[多様体の向きづけ可能性の特徴付け]
+    $M$を多様体とする。
+    次は同値である:
+    \begin{enumerate}
+        \item $M$は多様体として向きづけ可能である。
+        \item $M$のあるアトラス$\{ (U_\alpha, \varphi_\alpha) \}_{\alpha \in A}$が存在して、
+            これにより定まる変換関数$\{ \varphi_{\alpha\beta} \}$について
+            \begin{equation}
+                \forall \alpha, \beta \in A
+                \quad \text{に対し} \quad
+                \det D \varphi_{\alpha\beta} > 0
+                \quad \text{on } \varphi_\alpha(U_\alpha \cap U_\beta)
+            \end{equation}
+            が成り立つ。
+    \end{enumerate}
+\end{proposition}
+
+\begin{proof}
+    $M$のアトラスと$TM$の局所自明化の族の対応から明らか。
+\end{proof}
+
+ベクトル束の場合と同様に、
+上の命題のようなアトラスを与えることで多様体を向きづけできることがわかる。
+
+\begin{definition}[アトラスが定める向き]
+    アトラス
+    $\calU = \{ (U_\alpha, \varphi_\alpha) \}_{\alpha \in A}$
+    が上の命題の (2) の条件をみたすとき、
+    $\calU$は$M$に
+    \term{向きを定める}{向きを定める}[むきをさだめる]
+    という。
+    さらにこのとき、上の命題の証明のようにして定まる$M$の向きを
+    \term{$\calU$の定める$M$の向き}
+        {向き!アトラスの定める---}[むき]
+    という。
+\end{definition}
+
+また、体積形式とよばれる微分形式でも多様体を向きづけることができる。
+
+\begin{definition}[体積形式]
+    \idxsym{volume form}{$d\vol, \vol$}{体積形式}
+    $M$を向きづけられた多様体とする。
+    $M$上の nonvanishing な最高次形式を
+    $M$の\term{体積形式}[volume form]{体積形式}[たいせきけいしき]といい、
+    $d\vol$や$\vol$と書く。
+\end{definition}
+
+\begin{definition}[体積形式が定める向き]
+    $M$を向きづけ可能な$n$次元多様体、
+    $\omega$を$M$の体積形式とする。
+    このとき、次のようにして$M$に向きを定めることができる。
+
+    各$U_\alpha$が連結であるような$TM$の局所自明化の族
+    $\{ (U_\alpha, \varphi_\alpha) \}_{\alpha \in A}$
+    をひとつ選び、
+    $(E_{\alpha 1}, \dots, E_{\alpha n})$を
+    $\varphi_\alpha$により定まる
+    $TM$の局所フレームとする。
+    このとき、連結性より各$U_\alpha$上で
+    $s_\alpha \coloneqq \omega(E_{\alpha 1}, \dots, E_{\alpha n})$の値は
+    つねに正またはつねに負である。
+    そこで
+    \begin{equation}
+        (B_{\alpha 1}, \dots, B_{\alpha n})
+            \coloneqq \begin{cases}
+                (E_{\alpha 1}, E_{\alpha 2}, \dots, E_{\alpha n}) & (s_\alpha > 0) \\
+                (-E_{\alpha 1}, E_{\alpha 2}, \dots, E_{\alpha n}) & (s_\alpha < 0)
+            \end{cases}
+    \end{equation}
+    とおき、各$x \in U_\alpha$に対し
+    $E_x$の順序基底
+    $(B_{\alpha 1}(x), \dots, B_{\alpha n}(x))$
+    により定まる向きを割り当てることで
+    $TM$に向きを定める。
+    これで$M$の多様体としての向きが定まった。
+    この向きは局所自明化の族$\{ (U_\alpha, \varphi_\alpha) \}$の
+    選び方によらず well-defined である。
+
+    このように定まる$M$の向きを
+    \term{$\omega$の定める$M$の向き}
+        {向き!体積形式の定める---}[むき]
+    という。
+\end{definition}
+
+微分が全単射な{\smooth}写像は
+接空間の基底を基底に写すから、
+向きを保つ{\smooth}写像という概念が定義できる。
+
+\begin{definition}[向きを保つはめ込み]
+    $r \in \Z_{\ge 1}$、
+    $M, N$を向きづけられた$r$次元多様体、
+    $f \colon M \to N$をはめ込みとする。
+    \begin{itemize}
+        \item $f$が
+            \term{向きを保つ}[orientation-preserving]
+                {向きを保つ!---はめ込み}[むきをたもつ]
+            とは、
+            各$p \in M$に対し
+            線型写像$df_p \colon T_pM \to T_{f(p)}N$が
+            向きを保つことをいう。
+        \item $f$が
+            \term{向きを反転する}[orientation-reversing]
+                {向きを反転する!---はめ込み}[むきをはんてんする]
+            とは、
+            各$p \in M$に対し
+            線型写像$df_p \colon T_pM \to T_{f(p)}N$が
+            向きを反転することをいう。
+    \end{itemize}
+\end{definition}
+
+開部分多様体など、余次元$0$の部分多様体には
+自然に向きが定まる。
+
+\begin{definition}[余次元$0$の部分多様体に自然に定まる向き]
+    \TODO{}
+\end{definition}
+
+境界付き多様体の境界には
+自然なやり方で向きが定まる。
+
+\begin{definition}[境界としての向き]
+    $M$を$n$次元境界付き多様体とし、
+    $M$はアトラス
+    $\calU = \{ (U_\alpha, \varphi_\alpha) \}_{\alpha \in A}$
+    により向きづけられているとする。
+    \begin{enumerate}
+        \item $\R^n_-$の標準的な座標を$x = (x^1, \dots, x^n)$とおく。
+            このとき、$\del\R^n_-$のアトラス
+            $\{ (\del\R^n_-, \; (x^2, \dots, x^n)) \}$は
+            $\del\R^n_-$に向きを定める。
+            この向きを
+            \term{$\R^n_-$の境界としての$\del\R^n_-$の向き}
+            {境界としての向き!$\R^n_-$の---}[きょうかいとしてのむき]という。
+        \item
+            $\del M$のアトラス$\{ (V_\alpha, \psi_\alpha) \}$を
+            \begin{alignat}{1}
+                V_\alpha &\coloneqq
+                    \varphi_\alpha^{-1}(\varphi_\alpha(U_\alpha) \cap \del\R^n_-) \\
+                \psi_\alpha &\coloneqq
+                    \varphi_\alpha |_{V_\alpha}
+            \end{alignat}
+            で定めると、これは$\del M$に向きを定める。
+            これを
+            \term{$M$の境界としての$\del M$の向き}
+            {境界としての向き!多様体の---}[きょうかいとしてのむき]
+            という。
+    \end{enumerate}
+\end{definition}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\newpage
+\section{演習問題}
+
+\begin{problem}[幾何学III 問4.1.6]
+    次を示せ:
+    \begin{enumerate}
+        \item 自明束はベクトル束として向きづけ可能である。
+        \item $\pi \colon E \to S^1$を M\"{o}bius 束とするとき
+            $E$は向きづけ不可能であることを示せ。
+    \end{enumerate}
+\end{problem}
+
+\begin{answer}
+    \uline{(1)} \quad
+    $E \to M$を自明束とすると
+    大域自明化$\varphi \colon E \to M \times \R^r$が存在する。
+    $\varphi \circ \varphi^{-1} \colon M \times \R^r \to M \times \R^r$は
+    恒等写像だから、各$p \in M$に対し
+    $\det (\varphi \circ \varphi^{-1}(p)) = \det I_r = 1 > 0$
+    が成り立つ。
+    したがって$E$は向きづけ可能である。
+
+    \uline{(2)} \quad
+    $E$が向きづけ可能であったとすると、
+    $E$はランク1ゆえに自明束となるから
+    $S^1 \times \R$と微分同相、とくに同相となり
+    位相空間の一般論に矛盾する。
+\end{answer}
+
+\begin{problem}[幾何学III 問4.1.7]
+    ベクトル束$\pi \colon E \to M$が向きづけ可能ならば
+    双対束$\pi^* \colon E^* \to M$も向きづけ可能であることを示せ。
+\end{problem}
+
+\begin{answer}
+    \TODO{}
+\end{answer}
+
+\begin{problem}[幾何学III 問5.2.6]
+    $M$を多様体とする。
+    $M$が連結かつ向きづけ可能ならば
+    向きはちょうど2通りあることを示せ。
+\end{problem}
+
+\begin{answer}
+    \TODO{}
+\end{answer}
+
+\begin{problem}[幾何学III 演習問題2 1.2]
+    $M, N$を次元の等しい多様体とし、
+    いずれも向きづけられているとする。
+    はめ込み$f \colon M \to N$が向きを保つことと、
+    任意の$p \in M$について$p$の周りの
+    $M$の向きと整合的なチャート$(U, \varphi)$を
+    $f|_U$が埋め込みであるように選んだとき、
+    $f(p)$の周りの座標近傍$(f(U), \varphi \circ f^{-1}|_{f(U)})$が
+    $N$の向きと整合的であることは同値であることを示せ。
+\end{problem}
+
+\begin{answer}
+    \uline{(\Rightarrow)} \quad
+    $f(x) \in f(U)$とする。
+    $d(\varphi \circ f^{-1}|_{f(U)})_{f(x)}
+        = d\varphi_x \circ d(f^{-1}|_{f(U)})_{f(x)}$
+    であるが、
+    $(U, \varphi)$が$M$に与えられた向きと整合的であることから
+    $d\varphi_x$は向きを保ち、
+    また$f$が向きを保つはめ込みであることから
+    $d(f^{-1}|_{f(U)})_{f(x)} = (df_x)^{-1}$も向きを保つので
+    $d(\varphi \circ f^{-1}|_{f(U)})_{f(x)}$は向きを保つ。
+    したがって$(f(U), \varphi \circ f^{-1}|_{f(U)})$は
+    $N$の向きと整合的である。
+
+    \uline{(\Leftarrow)} \quad
+    $p \in M$とし、
+    $M$に与えられた向きと整合的なチャート$(U, \varphi)$をひとつ選ぶ。
+    $f$ははめ込みだから$df_p$は単射であるが、
+    いま$\dim M = \dim N$だから$df_p$は全単射である。
+    したがって逆関数定理 (\cref{thm:inverse-function-theorem}) より
+    $f$は局所微分同相である。
+    そこで必要ならば$U$を小さくとりなおして
+    $f|_U \colon U \to f(U)$は微分同相であるとしてよい。
+    このとき$(f(U), \varphi \circ f^{-1}|_{f(U)})$は
+    $N$のチャートとなるが、問題の仮定よりこれは$N$に与えられた向きと整合的である。
+    したがって
+    $d(\varphi \circ f^{-1}|_{f(U)})_{f(p)}
+        = d\varphi_p \circ d(f^{-1}|_{f(U)})_{f(p)}$
+    は向きを保つ。
+    このことと$d\varphi_p$が向きを保つ
+    (\because $(U, \varphi)$は$M$の向きと整合的)
+    ことから$(df_p)^{-1} = d(f^{-1}|_{f(U)})_{f(p)}$は向きを保ち、
+    したがって$df_p$は向きを保つ。
+    よって$f$は向きを保つ。
+\end{answer}
+
+\begin{problem}[東大数理 2006B]
+    3次元ユークリッド空間内の単位球面を考える。
+    単位球面上の円全体の集合を$M$とする。
+    ただし、単位球面上の円とは、3次元ユークリッド空間内の平面と単位球面との共通部分で、
+    空集合でも1点でもないものである。
+    以下、$n$次元実射影空間を$\R P^n$であらわす。
+    \begin{enumerate}
+        \item $M$から2次元実射影空間$\R P^2$への全射を具体的に一つ構成せよ。全射であることも示せ。
+        \item $M$から3次元実射影空間$\R P^3$への単射で、
+            像が$\R P^3$の開集合となるものを具体的に一つ構成せよ。
+            単射で、像が開集合であることも示せ。
+        \item $M$に(2)の対応で与えられる$\R P^3$の開集合としての微分可能多様体の構造を考える。
+            $M$は向き付け可能であるかどうか理由とともに述べよ。 
+    \end{enumerate}
+\end{problem}
+
+\begin{answer}
+    \TODO{}
+\end{answer}
+
+
+
+% ============================================================
+%
+% ============================================================
+\chapter{多様体上の積分}
+
+多様体上の積分を定義する。
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{積分}
+
+多様体上での積分として、
+コンパクト台をもつ最高次形式の積分を定義する。
+
+\subsection{積分の定義と基本性質}
+
+まず Euclid 空間における最高次形式の積分を定義する。
+これが一般の多様体における積分の定義の基礎となる。
+
+\begin{definition}[コンパクト台を持つ最高次形式の積分 (Euclid 空間)]
+    $\R^n$の標準的な座標を$x = (x_1, \dots, x_n)$、
+    $\omega$をコンパクト台を持つ$\R^n$上の最高次形式とする。
+    このとき$\omega$は
+    \begin{equation}
+        \omega = f \, dx_1 \wedge \dots \wedge dx_n
+            \quad
+            (f \in \smooth(\R^n))
+    \end{equation}
+    の形に一意的に表せる。
+    さて、
+    $\supp \omega
+        \subset [a_1, b_1] \times \dots \times [a_n, b_n]
+        \eqqcolon I$
+    なる多重有界閉区間$I \subset \R^n$をひとつ選び、
+    $\omega$の$\R^n$上の
+    \term{積分}[integration]{積分}[せきぶん]を
+    \begin{equation}
+        \int_{\R^n} \omega
+            \coloneqq
+            \int_I f(x_1, \dots, x_n) \, dx_1 \dots dx_n
+    \end{equation}
+    で定義する。
+    ただし、右辺は$\R^n$の Lebesgue 測度に関する積分である。
+    このとき$\int_{\R^n} \omega$の値は
+    $I$の選び方によらず well-defined に定まる (このあと示す)。
+\end{definition}
+
+\TODO{Lebesgue 積分で定義するなら
+    わざわざ多重有界閉区間を持ち出さずとも
+    可測集合$\supp \omega$上の積分で定義すればよいのでは？}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+Euclid 空間の最高次形式の積分は
+向きを保つ/反転する微分同相に関し次の性質を持つ。
+
+\begin{proposition}
+    \label[proposition]{prop:orientation-and-sign-of-integration}
+    $U, V \opensubset \R^n$、
+    $\omega$を$V$上のコンパクト台をもつ最高次形式とする。
+    このとき、
+    $G \colon U \to V$を向きを保つ微分同相とすると
+    \begin{equation}
+        \int_V \omega = \int_U G^* \omega
+    \end{equation}
+    が成り立ち、$G \colon U \to V$を向きを反転する微分同相とすると
+    \begin{equation}
+        \int_V \omega = - \int_U G^* \omega
+    \end{equation}
+    が成り立つ。
+\end{proposition}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+Euclid 空間の最高次形式の積分を用いて
+多様体上の最高次形式の積分を定義する。
+
+\begin{definition}[コンパクト台を持つ最高次形式の積分 (多様体)]
+    \label[definition]{definition:integration-on-manifold}
+    $M$を向きづけられた$n$次元多様体、
+    $\omega$をコンパクト台を持つ$M$上の最高次形式とする。
+    さて、
+    $M$の向きと整合的な有限個のチャートの族
+    $\calU = \{ (U_i, \varphi_i) \}_{i}$であって
+    $\supp \omega = \bigcup_{i} U_i$なるものを
+    ひとつ選び、
+    さらに$\calU$に従属する1の分割$\{ \rho_i \}_{i}$を
+    ひとつ選ぶ。
+    $\omega$の$M$上の
+    \term{積分}[integration]{積分}[せきぶん]を
+    \begin{equation}
+        \int_M \omega
+            \coloneqq \sum_{i}
+                \int_{\R^n} (\varphi_i^{-1})^* (\rho_i \omega)
+    \end{equation}
+    で定義する。
+    ただし、$(\varphi_i^{-1})^* (\rho_i \omega)$は
+    定義域の外での値を$0$とおくことで$\R^n$上まで拡張する。
+    このとき、$\int_M \omega$の値は
+    $\calU$や$\{ \rho_i \}$の選び方によらず well-defined に定まる
+    (このあと示す)。
+\end{definition}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+最高次形式の積分は次の性質を持つ。
+
+\begin{proposition}[積分の基本性質]
+    $M, N$を向きづけられた$n$次元多様体、
+    $\omega, \eta$を$M$上のコンパクト台をもつ最高次形式とする。
+    このとき次が成り立つ:
+    \begin{enumerate}
+        \item (線型性)
+            $a, b \in \R$に対し
+            \begin{equation}
+                \int_M (a \omega + b \eta)
+                    = a \int_M \omega + b \int_M \eta
+            \end{equation}
+            が成り立つ。
+        \item (向きの反転)
+            $M$と反対の向きを持つ多様体を$-M$と書くことにすれば
+            \begin{equation}
+                \int_{-M} \omega = - \int_M \omega
+            \end{equation}
+            が成り立つ。
+        \item (正値性)
+            $\omega$が常に正の向きの体積形式\TODO{とは？}ならば
+            \begin{equation}
+                \int_M \omega > 0
+            \end{equation}
+            が成り立つ。
+        \item (微分同相不変性; Diffeomorphism Invariance)
+            $F \colon N \to M$を向きを保つ微分同相とすると
+            \begin{equation}
+                \int_M \omega = \int_N F^* \omega
+            \end{equation}
+            が成り立ち、$F \colon N \to M$を向きを反転する微分同相とすると
+            \begin{equation}
+                \int_M \omega = - \int_N F^* \omega
+            \end{equation}
+            が成り立つ。
+    \end{enumerate}
+\end{proposition}
+
+\begin{proof}
+    \TODO{}
+
+    \uline{(4)} \quad
+    $F \colon N \to M$を向きを保つ微分同相とする。
+    まず$\supp \omega$が
+    $M$の向きと整合的な
+    ひとつのチャート$(U, \varphi)$に含まれる場合を考えておく。
+    このとき$(F^{-1}(U), \varphi \circ F)$は
+    $N$の向きと整合的なチャートである。
+    \begin{innerproof}
+        実際、
+        各$x \in F^{-1}(U)$に対し
+        $d(\varphi \circ F)_x = d\varphi_{F(x)} \circ dF_x$は
+        向きを保つ。
+        なぜならば、
+        $\varphi$が$M$の向きと整合的なチャートゆえに
+        $d\varphi_{F(x)}$は向きを保ち、
+        また$F$が向きを保つ微分同相ゆえに$dF_x$も向きを保つからである。
+    \end{innerproof}
+    また$\supp F^* \omega \subset F^{-1}(U)$である。
+    \begin{innerproof}
+        $x \notin F^{-1}(U)
+            \implies F(x) \notin U
+            \implies F(x) \notin \supp \omega
+            \implies \omega_{F(x)} = 0
+            \implies (F^* \omega)_x = 0$
+    \end{innerproof}
+    よって
+    \begin{alignat}{1}
+        \int_{F^{-1}(U)} F^* \omega
+            &= \int_{\R^n} ((\varphi \circ F)^{-1})^* F^* \omega
+                \quad (\because \text{\TODO{1の分割をどうとった?}})
+                \locallabel{eq:1} \\
+            &= \int_{\R^n} (\varphi^{-1})^* (F^{-1})^* F^* \omega \\
+            &= \int_{\R^n} (\varphi^{-1})^* \omega \\
+            &= \int_U \omega
+                \quad (\because \text{\TODO{1の分割をどうとった?}})
+    \end{alignat}
+    が成り立つ。
+
+    さて、$M$の向きと整合的な有限個のチャートの族
+    $\calU = \{ (U_i, \varphi_i) \}_{i}$であって
+    $\supp \omega = \bigcup_{i} U_i$なるものを
+    ひとつ選び、
+    さらに$\calU$に従属する1の分割$\{ \rho_i \}_{i}$を
+    ひとつ選ぶ。
+    すると
+    \begin{alignat}{1}
+        \int_M \omega
+            &= \sum_{i} \int_{\R^n} (\varphi_i^{-1})^* (\rho_i \omega)
+                \quad (\because \cref{definition:integration-on-manifold}) \\
+            &= \sum_{i} \int_{U_i} \rho_i \omega
+                \quad (\because \cref{definition:integration-on-manifold}) \\
+            &= \sum_{i} \int_{F^{-1}(U_i)} F^* (\rho_i \omega)
+                \quad (\because \text{前段落の議論}) \\
+            &= \sum_{i} \int_{F^{-1}(U_i)} \rho_i \circ F \, F^* \omega
+                \quad (\because \text{引き戻しの定義}) \\
+            &= \int_N F^* \omega
+                \quad (\because \cref{definition:integration-on-manifold})
+    \end{alignat}
+    を得る。
+    ただし最後の式変形では
+    $\{ \rho_i \circ F \}_i$が
+    $\supp F^* \omega$の開被覆$\{ F^{-1}(U_i) \}_i$に従属する
+    1の分割であることを用いた。
+
+    $F$が向きを反転する場合は、
+    $\sigma \colon \R^n \to \R^n$を向きを反転する微分同相として
+    $(F^{-1}(U), \sigma \circ \varphi \circ F)$
+    が$N$の向きと整合的なチャートとなるから、
+    \cref{prop:orientation-and-sign-of-integration}
+    より式\localcref{eq:1}の部分で符号が反転して
+    最終的に$\int_m \omega = - \int_N F^* \omega$が得られる。
+\end{proof}
+
+\begin{proposition}[Integration Over Parametrizations]
+    \label[proposition]{prop:integration-over-parametrizations}
+    \TODO{}
+\end{proposition}
+
+\begin{proof}
+    省略
+\end{proof}
+
+\begin{example}[積分計算の例]
+    \TODO{cf. [Lee] p.409}
+\end{example}
+
+\subsection{線積分}
+
+線積分は$\R$の有界閉区間上の微分形式の積分である。
+
+\begin{definition}[線積分]
+    \TODO{直接の場合と曲線で引き戻した場合}
+\end{definition}
+
+\begin{definition}[区分的に{\smooth}な曲線]
+    $M$を多様体、
+    $J = [a, b], \; a, b \in \R$、
+    $\gamma \colon J \to M$を連続写像とする。
+    $\gamma$が
+    \term{区分的に{\smooth}な曲線}[piecewise smooth curve]
+    {区分的に{\smooth}な曲線}[くぶんてきに C infinity なきょくせん]
+    であるとは、
+    $a = t_0 < t_1 < \dots < t_k = b$なる
+    $t_0, t_1, \dots, t_k \in \R, \; k \in \Z_{\ge 1}$と
+    {\smooth}曲線$\gamma_i \colon [t_{i-1}, t_i] \to M \; (1 \le i \le k)$
+    が存在し
+    \begin{equation}
+        \gamma(t) = \begin{cases}
+            \gamma_1(t) & (t \in [t_0, t_1]) \\
+            \gamma_2(t) & (t \in [t_1, t_2]) \\
+            \cdots \\
+            \gamma_k(t) & (t \in [t_{k-1}, t_k])
+        \end{cases}
+    \end{equation}
+    が成り立つことをいう。
+\end{definition}
+
+\subsection{関数の積分}
+
+体積形式を用いれば、
+多様体上で関数の積分ができるようになる。
+
+\begin{definition}[体積形式による積分]
+    \TODO{}
+\end{definition}
+
+\begin{definition}[体積]
+    \idxsym{volume of a manifold}{$\vol_\mu(M)$}{体積形式$\mu$に関する$M$の体積}
+    $M$を連結な$n$次元閉多様体で向きづけられているものとし、
+    $\mu \in \Omega^n(M)$を体積形式とする。
+    このとき、$\mu$に関する$M$の\term{体積}[volume]{体積}[たいせき]を
+    \begin{equation}
+        \vol_\mu(M) \coloneqq \int_M \mu
+    \end{equation}
+    で定める。
+\end{definition}
+
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{Poincar\'{e} の補題}
+
+\begin{definition}[閉形式と完全形式]
+    $M$を多様体、
+    $\omega \in A^p(M)$とする。
+    \begin{itemize}
+        \item $\omega$が$d\omega = 0$をみたすとき、
+            $\omega$は\term{閉}[closed]{閉形式}[へいけいしき]であるという。
+        \item $M$上の$(p - 1)$-形式$\theta$が存在して
+            $\omega = d\theta$と書けるとき、
+            $\omega$は\term{完全}[exact]{完全形式}[かんぜんけいしき]であるという。
+    \end{itemize}
+    外微分作用素の性質により$dd\theta = 0$だから、完全形式は閉形式である。
+\end{definition}
+
+\begin{lemma}[ホモトピー作用素$K$]
+    $M$を多様体とし、単位区間$I$を境界をもつ多様体とみなす。
+    写像$j_0, j_1$を
+    \begin{alignat}{1}
+        j_0 &\colon M \to I \times M, \quad x \mapsto (0, x) \\
+        j_1 &\colon M \to I \times M, \quad x \mapsto (1, x)
+    \end{alignat}
+    とおく。
+    各$p \in \Z_{\ge 0}$に対し
+    写像$K \colon A^{p + 1}(I \times M) \to A^p(M)$を
+    次のように定める:
+    \begin{enumerate}
+        \item $I \times M$の局所座標を$(t, x^1, \dots, x^n)$とおく
+        \footnote{
+            もう少し正確には、
+            $I$の chart $t \colon U_I \to \R_{-}$と
+            $M$の chart $\varphi = (x^1, \dots, x^n) \colon U_M \to \R^n$を用いた
+            $I \times M$の chart
+            $t \times \varphi = (\tau, y^1, \dots, y^n) \colon U_I \times U_M \to \R^{1 + n}$
+            を、同じ記号で$(\tau, y^1, \dots, y^n) = (t, x^1, \dots, x^n)$と書いたものである。
+        }
+        。
+        \item $\omega \in A^{p + 1}(I \times M)$は、
+            いずれも$dt$を含まない$(p + 1)$-形式$\omega_1$と
+            $p$-形式$\omega_2$により
+            \begin{equation}
+                \omega = \omega_1 + dt \wedge \omega_2
+            \end{equation}
+            と一意的に表せる。
+        \item $K\omega$を
+            \begin{equation}
+                K\omega \coloneqq \int_0^1 dt \, \omega_2
+            \end{equation}
+            で定める。すなわち、$\omega_2$を
+            \begin{equation}
+                \omega_2 = \sum_{i_1 < \dots < i_p}
+                    a_{i_1 \dots i_p} (t, x) \, dx^{i_1} \wedge \dots \wedge dx^{i_p}
+            \end{equation}
+            と表したとき
+            \begin{equation}
+                K\omega \coloneqq \sum_{i_1 < \dots < i_p}
+                    \biggr( \int_0^1 a_{i_1 \dots i_p} (t, x) \, dt \biggl)
+                    \, dx^{i_1} \wedge \dots \wedge dx^{i_p}
+            \end{equation}
+            と定める
+            \footnote{
+                積分$\int_0^1 a(t, x) \, dt$は微分形式$a(t, x) \, dt$の積分であるが、
+                $I$の chart $t \colon U_I \to \R$として普通の包含写像をとれば
+                Euclid 空間での普通の積分とみなすことができる。
+            }
+            。
+    \end{enumerate}
+    このとき
+    \begin{equation}
+        K(d\omega) + d(K\omega) = j_1^* \omega - j_0^* \omega
+        \quad
+        (\omega \in A^{p + 1}(I \times M), \; p \ge 0)
+    \end{equation}
+    が成り立つ
+    \footnote{
+        補題のような$K$を
+        チェイン写像$j_0^*, j_1^* \colon A^*(M) \to A^*(M)$の間の
+        \term{チェインホモトピー}[chain homotopy]{チェインホモトピー}[ちぇいんほもとぴー]
+        という。
+    }
+    。
+\end{lemma}
+
+\begin{proof}
+    添字を簡素化して
+    \begin{alignat}{1}
+        \omega
+            &= \sum_{j_1 < \dots < j_{p + 1}}
+                a_{j_1 \dots j_{p + 1}}(t, x) \, dx^{j_1} \wedge \dots \wedge dx^{j_{p + 1}}
+                + \sum_{h_1 < \dots < h_p}
+                a_{h_1 \dots h_p}(t, x) \, dt \wedge dx^{h_1} \wedge \dots \wedge dx^{h_p} \\
+            &= \sum_{J} a_J(t, x) \, dx^J
+                + \sum_{H} a_H(t, x) \, dt \wedge dx^H
+    \end{alignat}
+    と書く (第1項、第2項をそれぞれ$\omega_1, \, dt \wedge \omega_2$とおく)。
+    $K$の$\R$-線型性より
+    \begin{alignat}{1}
+        K(d\omega)
+            &= K \myparen{
+                \sum_{J} da_J \wedge dx^J
+                + \sum_{H} da_H \wedge dt \wedge dx^H
+            } \\
+            &= K \myparen{
+                \sum_{J} \deldel[a_J]{t} \, dt \wedge dx^J
+                + \sum_{J} \sum_{i = 1}^n \deldel[a_J]{x^i} \, dx^i \wedge dx^J
+                - \sum_{H} \sum_{i = 1}^n \deldel[a_H]{x^i} \, dt \wedge dx^i \wedge dx^H
+            } \\
+            &= \sum_{J} a_J(1, x) \, dx^J - \sum_{J} a_J(0, x) \, dx^J
+                - \sum_{H} \sum_{i = 1}^n \myparen{
+                    \int_0^1 \deldel[a_H]{x^i} \, dt
+                } \, dx^i \wedge dx^H
+    \end{alignat}
+    および
+    \begin{alignat}{1}
+        d(K\omega)
+            &= d \myparen{
+                \sum_{H} \biggl( \int_0^1 a_H(t, x) \, dt \biggr) \, dx^H
+            } \\
+            &= \sum_{H} d \myparen{
+                \int_0^1 a_H(t, x) \, dt
+            } \wedge dx^H \\
+            &= \sum_{H} \sum_{i = 1}^n \myparen{
+                \int_0^1 \deldel[a_H]{x^i} \, dt
+            } \, dx^i \wedge dx^H
+    \end{alignat}
+    が成り立つ。したがって
+    \begin{alignat}{1}
+        K(d\omega) + d(K\omega)
+            &= \sum_{J} a_J(1, x) \, dx^J - \sum_{J} a_J(0, x) \, dx^J \\
+            &= j_1^* \omega_1 - j_0^* \omega_1 \\
+            &= j_1^* \omega - j_0^* \omega
+    \end{alignat}
+    である。
+    \begin{innerproof}
+        $j_0^* \omega$について
+        \begin{alignat}{1}
+            j_0^* \omega
+                &= j_0^* \omega_1 + \underbrace{
+                        d(j_0^* t)
+                    }_{
+                        \mathclap{j_0^* t = t \circ j_0 = \text{const.} \text{ より } 0}
+                    }
+                    \wedge j_0^* \omega_2 \\
+                &= j_0^* \omega_1 \\
+                &= \sum_{j_1 < \dots < j_{p + 1}} a_{j_1 \dots j_{p + 1}}(0, x)
+                    \, d(j_0^* x^1) \wedge \dots \wedge d(j_0^* x^n) \\
+                &= \sum_{j_1 < \dots < j_{p + 1}} a_{j_1 \dots j_{p + 1}}(0, x)
+                    \, dx^1 \wedge \dots \wedge dx^n
+        \end{alignat}
+        ただし最後の変形では$I \times M$上の関数としての$x^j$を
+        $M$上の関数としての$x^j$に引き戻した。
+        $j_1^* \omega$も同様。
+    \end{innerproof}
+\end{proof}
+
+\begin{theorem}[Poincar\'{e} の補題]
+    $U \opensubset \R^n$を可縮とする。
+    $U$上の閉形式は完全形式である。
+    すなわち、
+    $\omega \in A^{p + 1}(U)$が
+    $d\omega = 0$をみたすならば、
+    或る$\theta \in A^p(U)$が存在して$\omega = d\theta$が成り立つ。
+\end{theorem}
+
+\begin{proof}
+    可縮性より、(連続) ホモトピー
+    $\varphi \colon I \times U \to U$と1点$x_0 \in U$が存在して
+    \begin{equation}
+        \varphi(1, x) = x,
+        \quad
+        \varphi(0, x) = x_0
+    \end{equation}
+    が成り立つ。図式で書けば
+    \begin{equation}
+        \begin{tikzcd}[row sep=large]
+            U \ar[shift left]{r}{j_1}
+                \ar[shift right]{r}[swap]{j_0}
+                \ar[bend left=60]{rr}{\id_U}
+                \ar[bend right=60]{rr}[swap]{c_{x_0}}
+                & I \times U \ar{r}{\varphi}
+                & U
+        \end{tikzcd}
+    \end{equation}
+    である。
+    このとき、$\varphi$は{\smooth}であるとしてよい
+    \footnote{
+        $U$内の{\smooth}なホモトピーがとれることの証明には
+        Whitney の近似定理を用いる。
+        cf. [Lee p.142]
+    }
+    。
+    よって
+    \begin{alignat}{1}
+        j_1^* \varphi^* \omega
+            &= (\varphi \circ j_1)^* \omega
+            = (\id_U)^* \omega
+            = \omega \\
+        j_0^* \varphi^* \omega
+            &= (\varphi \circ j_0)^* \omega
+            = (c_{x_0})^* \omega
+            = 0
+    \end{alignat}
+    である。
+    \begin{innerproof}
+        $x \in U$と$v_1, \dots, v_{p + 1} \in T_xU$に対し
+        \begin{alignat}{1}
+            ((\id_U)^* \omega)_x (v_1, \dots, v_{p + 1})
+                &= \omega_{x} ((\id_U)_{*x} (v_1), \dots) \\
+                &= \omega_{x} (\id_{T_xU} (v_1), \dots) \\
+                &= \omega_{x} (v_1, \dots) \\
+            ((c_{x_0})^* \omega)_x (v_1, \dots, v_{p + 1})
+                &= \omega_{x} ((c_{x_0})_{*x} (v_1), \dots) \\
+                &= \omega_{x} (0, \dots) \\
+                &= 0
+        \end{alignat}
+        より成り立つ。
+    \end{innerproof}
+    補題より
+    \begin{equation}
+        K d(\varphi^* \omega) + d(K \varphi^* \omega) = \omega
+    \end{equation}
+    であるが、いま$d\omega = 0$の仮定より$d(\varphi^* \omega) = \varphi^* d\omega = 0$
+    だから、$K$の$\R$-線型性より$K d(\varphi^* \omega) = 0$である。
+    したがって
+    \begin{equation}
+        d(\underbrace{K \varphi^* \omega}_{\theta}) = \omega
+    \end{equation}
+    が成り立つ。
+\end{proof}
+
+\begin{corollary}[Poincar\'{e} の補題 (星型領域の場合)]
+    $U \opensubset \R^n$を星型領域とする。
+    $\omega \in A^{p + 1}(U)$が閉形式ならば
+    Poincar\'{e} の補題より
+    $d\theta = \omega$なる$\theta \in A^p(U)$が上の証明のように構成できるが、
+    $\theta$は
+    \begin{equation}
+        \theta =
+            \frac{1}{p!} \sum_{i_0, \dots, i_p}
+            \myparen{
+                \int_0^1 a_{i_0 \dots i_p}(tx)
+                t^p \, dt
+            }
+            x^{i_0}
+            \, dx^{i_1} \wedge \dots \wedge dx^{i_p}
+    \end{equation}
+    と具体的に書ける。
+    ただし、$\omega$の局所座標表示を
+    \begin{equation}
+        \omega = \frac{1}{(p + 1)!}
+            \sum_{i_0, \dots, i_p} a_{i_0 \dots i_p}(x)
+            \, dx^{i_0} \wedge \dots \wedge dx^{i_p}
+    \end{equation}
+    とした。
+\end{corollary}
+
+\begin{proof}
+    $\theta = K(\varphi^* \omega)$なので右辺を計算すればよい。
+    まず$U$は星型だから、定理の証明の$\varphi \colon I \times U \to U$として
+    \begin{equation}
+        \varphi(t, x) = tx
+    \end{equation}
+    がとれる。これは明らかに{\smooth}である。
+    引き戻しの局所座標表示の公式から
+    \begin{alignat}{1}
+        \varphi^* \omega
+            &= \frac{1}{(p + 1)!}
+                \sum_{i_0, \dots, i_p} a_{i_0 \dots i_p}(tx)
+                \bigwedge_{k = 0}^p d(\varphi^* x^{i_k})
+            \label[equation]{eq:poincare-cor-1}
+    \end{alignat}
+    である。ここで、外積の各項について
+    \begin{equation}
+        d(\varphi^* x^i) = d(x^i \circ \varphi) = d(t x^i) = t dx^i + x^i dt
+    \end{equation}
+    だから、$dt \wedge dt = 0$に注意すれば
+    \begin{alignat}{1}
+        \bigwedge_{k = 0}^p d(\varphi^* dx^{i_k})
+            &= t dx^{i_0} \wedge \dots \wedge t dx^{i_p} \\[-2.2ex]
+            & \quad + x^{i_0} dt \wedge \dots \wedge t dx^{i_p} \\
+            & \quad + \cdots \\
+            & \quad + t dx^{i_0} \wedge \dots \wedge x^{i_p} dt
+    \end{alignat}
+    と展開できる。そこで
+    \begin{alignat}{1}
+        (\cref{eq:poincare-cor-1})
+            &= \frac{1}{(p + 1)!}
+                \sum_{i_0, \dots, i_p} a_{i_0 \dots i_p}(tx)
+                t^{p + 1} \, dx^{i_0} \wedge \dots \wedge dx^{i_p} \\
+            & \quad + \frac{1}{(p + 1)!}
+                \sum_{k = 0}^p
+                \sum_{i_0, \dots, i_p} a_{i_0 \dots i_p}(tx)
+                t^p x^{i_k} \, dx^{i_0} \wedge \dots \wedge 
+                \overset{\stackrel{k}{\smile}}{dt}
+                \wedge \dots \wedge dx^{i_p} \\
+            \intertext{$dt$を左に移動し、さらに$a_{i_0 \dots i_p}$の交代性を用いて}
+            &= (\text{第1項}) \\
+            & \quad + \frac{1}{(p + 1)!}
+                \sum_{k = 0}^p
+                \sum_{i_0, \dots, i_p}
+                a_{i_k i_0 \dots \what{i_k} \dots i_p}(tx)
+                t^p x^{i_k} \,
+                dt \wedge dx^{i_0} \wedge \dots \wedge 
+                \what{dx^{i_k}}
+                \wedge \dots \wedge dx^{i_p} \\
+            \intertext{内側の総和について添字を取り替えて}
+            &= (\text{第1項}) \\
+            & \quad + \frac{1}{(p + 1)!}
+                \sum_{k = 0}^p
+                \sum_{j_0, \dots, j_p}
+                a_{j_0 \dots j_p}(tx)
+                t^p x^{j_0} \,
+                dt \wedge dx^{j_1} \wedge \dots \wedge dx^{j_p} \\
+            &= (\text{第1項}) \\
+            & \quad + \frac{1}{p!}
+                \sum_{j_0, \dots, j_p}
+                a_{j_0 \dots j_p}(tx)
+                t^p x^{j_0} \,
+                dt \wedge dx^{j_1} \wedge \dots \wedge dx^{j_p}
+    \end{alignat}
+    となる。したがって$K$の定義より
+    \begin{equation}
+        \theta = K(\varphi^* \omega)
+            = \frac{1}{p!}
+                \sum_{j_0, \dots, j_p}
+                \biggl( \int_0^1 a_{j_0 \dots j_p}(tx) t^p \, dt \biggr)
+                x^{j_0} \, dx^{j_1} \wedge \dots \wedge dx^{j_p}
+    \end{equation}
+    を得る。
+\end{proof}
+
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{Stokes の定理}
+
+\begin{theorem}
+    $M$をコンパクトかつ向きづけられた$n$次元多様体、
+    $\iota \colon \del M \to M$を包含写像とし、
+    $\del M$には$M$の境界としての向きを入れる。
+    このとき、任意の$\omega \in \Omega^{n - 1}(M)$に対し
+    \begin{equation}
+        \int_{\del M} \iota^* \omega = \int_M d\omega
+    \end{equation}
+    が成り立つ。
+\end{theorem}
+
+\begin{remark}
+    Stokes の定理は$\del M = \emptyset$の場合も成り立つ。
+\end{remark}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+\begin{proposition}[閉形式の積分の{\smooth}ホモトピー不変性]
+    $M$を多様体、
+    $\eta$を$M$上の$k$次閉形式、
+    $K$をコンパクトかつ向きづけられた$k$次元多様体、
+    $\varphi \colon K \to M, \; \psi \colon K \to M$を
+    互いに{\smooth}ホモトピックな{\smooth}写像とする。
+    このとき
+    $\int_K \varphi^* \eta = \int_K \psi^* \eta$
+    が成り立つ。
+\end{proposition}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{演習問題}
+
+\begin{problem}[{[Lee] 16-2}]
+    $T^2 \coloneqq S^1 \times S^1 = \{ (w, x, y, z) \in \R^4\ \colon w^2 + x^2 = y^2 + z^2 = 1 \}$
+    を考える。
+    $T^2$には$S^1$の標準的な向きから定まる product orientation が入っているとする。
+    次の$\omega$に対し$\int_{T^2} \omega$を計算せよ。
+    \begin{equation}
+        \omega = xyz dw \wedge dy
+    \end{equation}
+\end{problem}
+
+\begin{answer}
+    $D \coloneqq (0, 2\pi) \times (0, 2\pi)$とおき、
+    $F \colon \wb{D} \to T^2$を
+    \begin{equation}
+        F(\theta, \phi) \coloneqq (\cos\theta, \sin\theta, \cos\phi, \sin\phi)
+    \end{equation}
+    で定める。$F|_D$は$D$から$F(D)$への向きを保つ微分同相であり、
+    $\supp \omega \subset \wb{F(D)} = T^2$をみたす。
+    よって
+    \begin{equation}
+        \int_{T^2} \omega = \int_{D} F^* \omega
+    \end{equation}
+    が成り立つ。ここで
+    \begin{alignat}{1}
+        F^* \omega
+            &= \sin\theta \cos\phi \sin\phi \, d(w \circ F) \wedge d(y \circ F)
+                \quad (\because \text{ \cref{prop:exterior-derivative-wedge-product-properties}}) \\
+            &= \sin\theta \cos\phi \sin\phi \, (- \sin\theta \,d\theta) \wedge (- \sin\phi \,d\phi)
+                \quad (\because \text{ 関数の微分}) \\
+            &= \sin^2\theta \cos\phi \sin^2\phi \, d\theta \wedge d\phi
+                \quad (\because \text{テンソル場の$\smooth(M)$-多重線型性})
+    \end{alignat}
+    だから
+    \begin{alignat}{1}
+        \int_D F^* \omega
+            &= \int_D \sin^2\theta \cos\phi \sin^2\phi\; d\theta d\phi \\
+            &= \int_0^{2\pi} \sin^2\theta
+                \left( \int_0^{2\pi} \cos\phi \sin^2\phi\; d\phi \right) d\theta \\
+            &= 0
+    \end{alignat}
+    である。
+\end{answer}
+
+\begin{problem}[幾何学III 演習問題2 2.3]
+    $M$を向きづけられた$n$次元多様体、
+    $\varphi \colon I \to I$を微分同相写像とする。
+    \TODO{}
+\end{problem}
+
+\begin{answer}
+    \TODO{}
+\end{answer}
+
+\begin{problem}
+    $(x, y, z)$を$\R^3$の標準的な座標とする。
+    また、$\R^3$には標準的な向きを入れる。
+    さて、$D \subset \R^3$を
+    \begin{equation}
+        D \coloneqq \{
+            (x, y, z) \in \R^3
+            \mid
+            (x - 1)^2 + (y - 2)^2 + (z - 3)^2 \leq 100
+        \}
+    \end{equation}
+    と定める。
+    $D$には$\R^3$の向きから自然に定まる向きを入れる。
+    また、$\del D$には$D$の境界としての向きを入れる。
+    $\R^3 \setminus \{ (0, 0, 0) \}$上の2形式$\omega$を
+    \begin{equation}
+        \omega \coloneqq
+            \frac{1}{(x^2 + y^2 + z^2)^{3/2}}
+            x \, dy \wedge dz
+            + y \, dz \wedge dx
+            + z \, dx \wedge dy
+    \end{equation}
+    により定めるとき、$\int_{\del D} \omega$を求めよ。
+\end{problem}
+
+\begin{answer}
+    \TODO{}
+\end{answer}
+
+
+
+
+% ============================================================
+%
+% ============================================================
+\chapter{de Rham コホモロジーと \v{C}ech コホモロジー}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{de Rham コホモロジー}
+\label[section]{section:de-Rham-cohomology}
+
+de Rham コホモロジーを定義する。
+
+\begin{definition}[de Rham コホモロジー群]
+    \idxsym{space of closed p-forms}{$Z^p(M)$}{$M$上の閉$p$形式全体の空間}
+    \idxsym{space of exact p-forms}{$B^p(M)$}{$M$上の完全$p$形式全体の空間}
+    \idxsym{de Rham cohomology group}{$H^p(M)$}{$M$の$p$次元 de Rham コホモロジー群}
+    $p \in \Z_{\ge 1}$、$M$を多様体とし、$M$上の$p$-形式を考える。
+    \begin{itemize}
+        \item 閉じた$p$-形式全体のなす$\R$-ベクトル空間$\Ker d^p$を$Z^p(M)$と書く。
+        \item 完全な$p$-形式全体のなす$\R$-ベクトル空間$\Im d^{p - 1}$を$B^p(M)$と書く。
+        \item 商ベクトル空間$H^p(M) \coloneqq Z^p(M) / B^p(M)$を
+            $M$の$p$次の
+            \term{de Rham コホモロジー群}[de Rham cohomology group]
+            {de Rham コホモロジー群}[de Rham こほもろじーぐん]という。
+    \end{itemize}
+\end{definition}
+
+\begin{remark}
+    de Rham コホモロジーの言葉で Poincar\'{e}の補題を言い換えると
+    \begin{quotation}
+        $U \opensubset \R^n$が可縮ならば
+        $H^p(U) = 0 \; (p \ge 1)$である。
+    \end{quotation}
+    となる。
+\end{remark}
+
+\begin{proposition}[$0$次 de Rham コホモロジーと連結成分]
+    $M$を$k$個の連結成分をもつ$n$次元多様体とする。
+    このとき$H_\dR^0(M) \cong \R^k$が成り立つ。
+\end{proposition}
+
+\begin{proof}
+    $\omega \in Z_\dR^0(M) = H_\dR^0(M)$とする。
+    $\omega$は$d\omega = 0$なる$\Omega^0(M) = \smooth(M)$の元である。
+    局所座標で表せば
+    \begin{equation}
+        0 = d\omega = \sum_{i = 1}^n \deldel[\omega]{x^i} dx^i
+    \end{equation}
+    より$\deldel[\omega]{x^i} = 0 \; (i = 1, \dots, n)$が従う。
+    したがって$\omega$は局所定数である。
+    よって$\omega$は$M$の各連結成分上で定数であり、
+    $H_\dR^0(M)$から$\R^k$への全単射、より強く$\R$-線型同型を得る。
+\end{proof}
+
+\begin{definition}[de Rham コホモロジー環]
+    \idxsym{space of differential forms}{$A(M)$}{$M$上の微分形式全体の空間}
+    \idxsym{space of closed forms}{$Z(M)$}{$M$上の閉形式全体の空間}
+    \idxsym{space of exact forms}{$B(M)$}{$M$上の完全形式全体の空間}
+    上の定義の状況を引き継ぐ。
+    \begin{itemize}
+        \item 直和ベクトル空間
+            \begin{equation}
+                A(M) \coloneqq \bigoplus_{p \ge 0} A^p(M)
+            \end{equation}
+            には積を外積$\wedge$、単位元を定値写像$1 \in A^0(M)$として
+            環の構造が入り、$\R$-代数となる。
+        \item 直和ベクトル空間
+            \begin{equation}
+                Z(M) \coloneqq \bigoplus_{p \ge 0} Z^p(M)
+            \end{equation}
+            は外微分と外積の関係
+            $d(\omega \wedge \eta) = d\omega \wedge \eta \pm \omega \wedge d\eta$
+            から明らかに$A(M)$の部分環となる。
+        \item 直和ベクトル空間
+            \begin{equation}
+                B(M) \coloneqq \bigoplus_{p \ge 0} B^p(M)
+            \end{equation}
+            は$Z(M)$の両側イデアルとなる。実際、同じ公式から
+            \begin{equation}
+                \omega = d\theta \in B(M), \; \eta \in Z(M)
+                \quad \implies \quad
+                \omega \wedge \eta
+                    = d\theta \wedge \eta
+                    = d(\theta \wedge \eta) \mp \theta \wedge \cancelto{0}{d\eta}
+            \end{equation}
+            が成り立つ (左からの積も同様)。
+        \item 以上により得られる$\R$-多元環
+            \begin{equation}
+                H(M) \coloneqq Z(M) / B(M)
+            \end{equation}
+            を\term{de Rham コホモロジー環}[de Rham cohomology ring]
+            {de Rham コホモロジー環}[de Rham こほもろじーかん]という。
+        \item $H(M)$に誘導される積を
+            \begin{equation}
+                \alpha \cup \beta \coloneqq [\omega \wedge \eta]
+                    \quad
+                    (\alpha = [\omega], \; \beta = [\eta] \in H(M))
+            \end{equation}
+            と書いて、$\alpha, \beta$の
+            \term{カップ積}[cup product]{カップ積}[かっぷせき]という。
+    \end{itemize}
+\end{definition}
+
+\subsection{コンパクト台の de Rham コホモロジー}
+
+コンパクト台の de Rham コホモロジーを定義する。
+
+\begin{definition}[コンパクト台の de Rham コホモロジー]
+    $M$を多様体とする。各$p \ge 0$に対し
+    \begin{equation}
+        \Omega^p_c(M) \coloneqq \{
+            \omega \in \Omega^p(M)
+            \mid \supp \omega \text{ はコンパクト}
+        \}
+    \end{equation}
+    とおくと、
+    $(\Omega^p_c(M), d)$はチェイン複体となる。
+    このチェイン複体に関するホモロジー群を
+    $H^p_{\dR, c}(M)$と書き、$M$の
+    \term{コンパクト台の de Rham コホモロジー}[de Rham cohomology with compact support]
+        {de Rham コホモロジー群!コンパクト台の---}[de Rham こほもろじーぐん]
+    という。
+\end{definition}
+
+\begin{proposition}
+    $M$は連結かつ境界をもたない$n$次元多様体で向きづけられているものとする。
+    このとき自然な$\R$-線型写像
+    \begin{equation}
+        \int_M \colon H^n_{\dR, c}(M) \to \R,
+        \quad
+        [\omega] \mapsto \int_M \omega
+    \end{equation}
+    が定まり、さらにこれは同型である。
+\end{proposition}
+
+\begin{proof}
+    well-defined 性は Stokes の定理から従う。
+    \TODO{全単射性は2つの補題を用いる}
+\end{proof}
+
+\begin{proposition}[0次 de Rham コホモロジー (コンパクト台 ver.)]
+    $M$を連結かつ境界を持たない$n$次元多様体で向きづけられているものとする。
+    このとき次が成り立つ:
+    \begin{enumerate}
+        \item $M$がコンパクトならば$H_c^0(M) \cong \R$
+        \item $M$がコンパクトでないならば$H_c^0(M) = 0$
+    \end{enumerate}
+\end{proposition}
+
+\begin{proof}
+    (1) は通常の de Rham コホモロジーの0次の場合である。
+
+    (2) を示す。$\omega \in \Omega_c^0(M), \; d\omega = 0$とする。
+    $\omega$は局所定数だから、$M$の連結性より$\omega$は$M$上定数である。
+    一方$\supp\omega$はコンパクトだから$\omega$の値が$0$である点が存在しなければならない。
+    したがって$\omega = 0$である。
+\end{proof}
+
+\subsection{基本コホモロジー類}
+
+\begin{definition}[基本コホモロジー類]
+    \idxsym{fundamental cohomology class}{$[M]$}{$M$の基本コホモロジー類}
+    $M$を連結な$n$次元閉多様体で向きづけられているものとし、
+    体積形式$\mu \in \Omega^n(M)$をひとつえらんで
+    \begin{equation}
+        [M] \coloneqq \frac{1}{\vol_\mu(M)} [\mu] \in H^n(M)
+    \end{equation}
+    と定め、これを$M$の
+    \term{基本コホモロジー類}{基本コホモロジー類}[きほんこほもろじーるい]
+    という。
+\end{definition}
+
+\begin{lemma}
+    $M$を連結な$n$次元閉多様体で向きづけられているものとする。
+    このとき、
+    $\langle \cdot, \, \cdot \rangle \colon H^{n - p}(M) \times H^p(M) \to \R$を
+    $\langle [\omega], [\alpha] \rangle \coloneqq \int_M \omega \wedge \alpha$
+    で定めると
+    $\langle [M], 1 \rangle = 1$が成り立つ。
+\end{lemma}
+
+\begin{proof}
+    基本コホモロジー類の定義より明らか。
+\end{proof}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{\v{C}ech コホモロジー}
+
+\v{C}ech コホモロジーを定義する。
+本節で述べる de Rham の定理は、
+\v{C}ech コホモロジーが de Rham コホモロジーと同型であることを主張する
+驚くべき定理である。
+de Rham コホモロジーは大域的なデータ (= 微分形式) により定義されるため
+具体的な計算には不便であるが、
+\v{C}ech コホモロジーは局所的なデータにより定義されるため
+計算しやすいという利点がある。
+この意味で、de Rham の定理は de Rham コホモロジーの具体的計算のために
+重要な役割を果たす。
+
+\begin{definition}[\v{C}ech コホモロジー]
+    \idxsym{p-simplex}{$U_{\alpha_0 \dots \alpha_p}$}{$p$次元単体}
+    \idxsym{space of p-cochains}{$C^p(\frakU, \R)$}{$p$次元双対鎖全体の空間}
+    \idxsym{coboundary operator}{$\delta$}{双対境界作用素}
+    $p \in \Z_{\ge 0}$、$X$を位相空間とし、$X$は局所有限で可縮な開被覆
+    $\frakU = \{U_\alpha\}_{\alpha \in A}$を持つとする
+    \footnote{
+        開被覆$\frakU = \{ U_\alpha \}_{\alpha \in A}$が
+        \term{可縮}[contractible]{可縮!開被覆が--}[かしゅく]であるとは、
+        $\frakU$の任意の有限個の元$U_{\alpha_0}, \dots, U_{\alpha_p}$の交わりが
+        空または可縮であることをいう。
+        可縮な開被覆を\term{good cover}{good cover}ともいう。
+        パラコンパクトな多様体は可縮な開被覆を持つことが知られているらしい。
+        \TODO{局所有限「かつ」可縮にとれるか？}
+    }
+    。
+    \begin{itemize}
+        \item $U_{\alpha_0} \cap \dots \cap U_{\alpha_p} \neq \emptyset$のとき、
+            順序組$(\alpha_0, \dots, \alpha_p)$を
+            \v{C}ech の\term{$p$-次元単体}[$p$-simplex]{単体}[たんたい]と呼ぶ。
+        \item 順序組$(\alpha_0, \dots, \alpha_p)$を
+            実数$c_{\alpha_0 \dots \alpha_p}$に対応させる写像$c$
+            であって交代性
+            \begin{equation}
+                c_{\alpha_0 \dots \alpha_i \dots \alpha_j \dots \alpha_p}
+                    = - c_{\alpha_0 \dots \alpha_j \dots \alpha_i \dots \alpha_p}
+            \end{equation}
+            をみたすものを
+            \v{C}ech の\term{$p$-次元双対鎖}[$p$-cochain]{双対鎖}[そうついさ]と呼ぶ。
+        \item 各$p \ge 0$に対し、$p$-cochain の全体の集合は
+            普通の和とスカラー倍を演算、零写像を零ベクトルとして
+            $\R$-ベクトル空間となる。これを
+            \begin{equation}
+                C^p(\frakU, \R)
+            \end{equation}
+            と書く。
+        \item 写像$\delta = \delta^{p}
+            \colon C^p(\frakU, \R) \to C^{p+1}(\frakU, \R)$を
+            \begin{equation}
+                (\delta c)_{\alpha_0 \dots \alpha_{p + 1}}
+                    \coloneqq \sum_{j = 0}^{p + 1}
+                    (-1)^j c_{\alpha_0 \dots \what{\alpha}_j \dots \alpha_{p + 1}}
+            \end{equation}
+            と定め、これを
+            \term{双対境界作用素}[coboundary operator]{双対境界作用素}[そうついきょうかいさようそ]
+            という。
+            これは明らかに$\R$-線型写像であり、
+            また具体的計算により$\delta \circ \delta = 0$をみたすこともわかる。
+        \item 商ベクトル空間
+            \begin{equation}
+                H^p(\frakU, \R)
+                    \coloneqq \begin{cases}
+                        \Ker \delta^{p} / \Im \delta^{p - 1} & (p \ge 1) \\
+                        \Ker \delta^{p} & (p = 0)
+                    \end{cases}
+            \end{equation}
+            を被覆$\frakU$に関する
+            \term{\v{C}ech コホモロジー群}[\v{C}ech cohomology group]
+            {\v{C}ech コホモロジー群}[\v{C}ech こほもろじーぐん]という。
+    \end{itemize}
+\end{definition}
+
+
+\begin{definition}
+    $q \in \Z_{\ge 0}$とする。
+    上の定義で
+    $c_{\alpha_0 \dots \alpha_p}$を
+    $U_{\alpha_0} \cap \dots \cap U_{\alpha_p}$上の
+    $q$-形式$\omega_{\alpha_0 \dots \alpha_p}$に取り替えたものを考え、
+    $C^q(\frakU, \R), \; H^q(\frakU, \R)$のかわりに
+    $C^q(\frakU, \scrA^q), \; H^q(\frakU, \scrA^q)$と書く
+    (ここでは$\scrA^q$自体には特に意味はない
+    \footnote{
+        $\scrA^q$は
+        $X$上のアーベル群の層である。
+    }
+    )。
+    $H^q(\frakU, \scrA^q)$を
+    被覆$\frakU$に関する
+    \term{層$\scrA^q$を係数にもつ \v{C}ech コホモロジー群}
+    [\v{C}ech cohomology groups with sheaf coefficients $\scrA^q$]
+    {層を係数にもつ \v{C}ech コホモロジー群}[そうをけいすうにもつCechこほもろじーぐん]
+    という。
+\end{definition}
+
+\begin{lemma}
+    $p \in \Z_{\ge 1}, \; q \in \Z_{\ge 0}$、
+    $M$を多様体とする。
+    $M$は局所有限な開被覆$\frakU = \{U_\alpha\}_{\alpha \in A}$を持つとし、
+    $\{ \rho_\alpha \}$をそれに対応する1の分割とする。
+    写像$L \colon C^p(\frakU, \scrA^q) \to C^{p - 1}(M, \scrA^q)$を
+    \begin{equation}
+        (L\omega)_{\alpha_0 \dots \alpha_{p - 1}}
+            \coloneqq
+            \sum_{\alpha \in A}
+            \rho_\alpha
+            \omega_{\alpha \alpha_0 \dots \alpha_{p - 1}}
+            \quad
+            (\omega = (\omega_{\alpha_0 \dots \alpha_p})
+            \in C^p(\frakU, \scrA^q))
+    \end{equation}
+    と定める。ただし各$\rho_\alpha \omega_{\alpha \alpha_0 \dots \alpha_{p - 1}}$は
+    定義域外での値を$0$と定めて
+    $U_{\alpha_0 \dots \alpha_{p - 1}}$上の微分形式と考える。
+    このとき
+    \begin{equation}
+        \delta(L \omega) + L(\delta \omega) = \omega
+            \quad
+            (\omega = (\omega_{\alpha_0 \dots \alpha_p})
+            \in C^p(\frakU, \scrA^q))
+    \end{equation}
+    が成り立つ。
+\end{lemma}
+
+\begin{remark}
+    この議論は$\scrA^q$を$\R$に取り替えた場合に対しては適用できない。
+    それは$\rho_\alpha c_{\alpha \alpha_0 \dots \alpha_{p - 1}}$が
+    もはや定数ではないからである。
+\end{remark}
+
+\begin{proof}
+    省略。定義に従って計算すればよい。
+\end{proof}
+
+次の補題により、
+層係数 \v{C}ech コホモロジーは
+微分形式の空間$A(M)$と関連付けられる。
+
+\begin{lemma}
+    \label[lemma]{lem:cech-exact-sequence}
+    $M$を多様体とし、
+    $M$は局所有限な開被覆$\frakU$を持つとする。
+    このとき各$q \in \Z_{\ge 0}$に対し
+    \begin{equation}
+        H^p(\frakU, \scrA^q)
+            = \begin{cases}
+                0 & (p \ge 1) \\
+                A^q(M) & (p = 0)
+            \end{cases}
+    \end{equation}
+    が成り立つ。
+\end{lemma}
+
+\begin{proof}
+    $q \in \Z_{\ge 0}$とする。
+
+    \uline{$p \ge 1$のとき} \quad
+    $\omega \in \Ker \delta^p$とする。
+    すると$\delta \omega = 0$だから
+    上の補題より$\delta(L\omega) = \omega$となる。
+    よって$\omega \in \Im \delta^{p - 1}$である。
+    したがって$\Ker \delta^p = \Im \delta^{p - 1}$、
+    よって$H^p(\frakU, \scrA^q) = 0$である。
+
+    \uline{$p = 0$のとき} \quad
+    $\omega \in H^0(\frakU, \scrA^q) \; (= \Ker \delta_0)$とする。
+    すると$\delta \omega = 0$である。
+    すなわち任意の$\alpha_0, \alpha_1 \in A, \;
+    U_{\alpha_0} \cap U_{\alpha_1} \ne \emptyset$に対し
+    \begin{equation}
+        0 = (\delta \omega)_{\alpha_0 \alpha_1}
+            = \omega_{\alpha_1} - \omega_{\alpha_0}
+            \quad \text{i.e.} \quad
+            \omega_{\alpha_0} = \omega_{\alpha_1}
+            \quad \text{on} \quad
+            U_{\alpha_0} \cap U_{\alpha_1}
+    \end{equation}
+    が成り立つ。
+    したがって、$\omega_\alpha \; (\alpha \in A)$は互いに貼りあって
+    $M$上の$q$-形式を定める。
+    この対応は$\R$-ベクトル空間の同型
+    $H^0(\frakU, \scrA^q) \cong A^q(M)$
+    を与える。
+\end{proof}
+
+\begin{theorem}[de Rham の定理]
+    $p \in \Z_{\ge 0}$、
+    $M$を多様体とし、$M$は局所有限で可縮な開被覆
+    $\frakU = \{ U_\alpha \}_{\alpha \in A}$をもつとする。
+    このとき、
+    \v{C}ech コホモロジー群$H^p(\frakU, \R)$と
+    de Rham コホモロジー群$H^p(M)$の間に自然な
+    \footnote{
+        自然とは？
+    }
+    同型対応が存在する。
+\end{theorem}
+
+\begin{proof}[A. Weil の証明のスケッチ.]
+    \begin{equation}
+        \begin{tikzcd}
+            C^{p + 1}(\frakU, \R)
+                \ar{r}{i}
+                & C^{p + 1}(\frakU, \scrA^0)
+                \ar{r}{d}
+                & C^{p + 1}(\frakU, \scrA^1)
+                \ar{r}{d}
+                & ~ \\
+            C^{p}(\frakU, \R)
+                \ar{r}{i} \ar{u}{\delta}
+                & C^{p}(\frakU, \scrA^0)
+                \ar{r}{d} \ar{u}{\delta}
+                & C^{p}(\frakU, \scrA^1)
+                \ar{r}{d} \ar{u}{\delta}
+                & ~ \\
+            C^{p - 1}(\frakU, \R)
+                \ar{r}{i} \ar{u}{\delta}
+                & C^{p - 1}(\frakU, \scrA^0)
+                \ar{r}{d} \ar{u}{\delta}
+                & C^{p - 1}(\frakU, \scrA^1)
+                \ar{r}{d} \ar{u}{\delta}
+                & ~ \\
+            \vdots
+                \ar{u}{\delta}
+                & \vdots
+                \ar{u}{\delta}
+                & \vdots
+                \ar{u}{\delta}
+                & ~
+                & ~ \\
+            C^{0}(\frakU, \R)
+                \ar{r}{i} \ar{u}{\delta}
+                & C^{0}(\frakU, \scrA^0)
+                \ar{r}{d} \ar{u}{\delta}
+                & C^{0}(\frakU, \scrA^1)
+                \ar{r}{d} \ar{u}{\delta}
+                & \cdots
+                \ar{r}{d}
+                & C^{0}(\frakU, \scrA^{p})
+                \ar{u}{\delta}
+        \end{tikzcd}
+    \end{equation}
+    ($i$は実数を定値写像とみなす写像)
+
+    $p \ge 0$とする。
+    同型写像$H^p(\frakU, \R) \to H^p(M)$を構成する。
+    そこで
+    \begin{equation}
+        [c] \in H^p(\frakU, \R),
+        \quad
+        c \in Z^p(\frakU, \R)
+    \end{equation}
+    とする。$c$から始めて
+    \begin{equation}
+        \begin{tikzcd}
+            \cdot \ar{r}{i \text{ or } d} & \cdot \ar{d}{\cref{lem:cech-exact-sequence}} \\
+            & \cdot
+        \end{tikzcd}
+    \end{equation}
+    の向きに順繰りに元を選んでいくと、
+    最終的に$\omega^{(0, p)} \in C^0(M, \scrA^p)$が得られる。
+    $\omega^{(0, p)}$は$Z^p(M)$の元と同一視できる。
+    このようにして、
+    $[c] \in H^p(\frakU, \R)$を$[\omega^{(0, p)}] \in H^p(M)$に対応させる。
+    この写像は well-defined で、準同型になっている。
+    \cref{lem:cech-exact-sequence}を使うところで
+    $\frakU$の局所有限性を用いた。
+    逆写像の構成は以下のように行う。まず
+    \begin{equation}
+        [\omega] \in H^p(M),
+        \quad
+        \omega \in Z^p(M)
+    \end{equation}
+    とする。$\omega$は$C^0(\frakU, \scrA^p)$の元と同一視できる。
+    $\omega$から始めて
+    \begin{equation}
+        \begin{tikzcd}
+            \cdot \\
+            \cdot \ar{u}{\delta} & \cdot \ar{l}{\text{Poincar\'{e}}}
+        \end{tikzcd}
+    \end{equation}
+    の向きに順繰りに元を選んでいくと、
+    最終的に$c \in C^p(\frakU, \R)$が得られる。
+    このようにして、
+    $[\omega] \in H^p(M)$を$[c] \in H^p(\frakU, \R)$に対応させる。
+    Poincar\'{e} の補題を使うところで
+    $\frakU$の可縮性を用いた。
+\end{proof}
+
+上で de Rham コホモロジーと \v{C}ech コホモロジーの間の同型対応をみたが、
+実は de Rham コホモロジーと$\\smooth$特異コホモロジーの間にも同型が成り立つ。
+
+\begin{remark}[de Rham コホモロジーと特異コホモロジー]
+    $M$をパラコンパクトな多様体とする。
+    $p$次元{\smooth}特異単体$\sigma \colon \Delta^p \to M$と
+    $\omega \in A^p(M)$に対し
+    \begin{equation}
+        \int_{\sigma} \omega \coloneqq \int_{\Delta^p} \sigma^* \omega
+    \end{equation}
+    と定義する。
+    これにより$\R$-双線型写像
+    \begin{equation}
+        Z_{\mathrm{dR}}^p(M) \times Z_{\mathrm{sing}, p}(M) \to \R
+    \end{equation}
+    が定まる (定義域を単体からチェインへ$\R$-線型に拡張した後、サイクルに制限した)。
+    すなわち
+    \begin{equation}
+        Z_{\mathrm{dR}}^p(M) \to \Hom_{\R}(Z_{\mathrm{sing}, p}(M), \R)
+    \end{equation}
+    が定まる。
+    このとき Stokes の定理を用いて
+    \begin{equation}
+        H_{\mathrm{dR}}^p(M)
+            \to \Hom_{\R}(H_{\mathrm{sing}, p}(M), \R)
+            = H_{\mathrm{sing}}^p(M)
+    \end{equation}
+    が誘導され、これは$\R$-ベクトル空間の同型を与える (cf. [Lee p.480])。
+\end{remark}
+
+
+
+
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\newpage
+\section{演習問題}
+
+\begin{problem}[幾何学III 問2.3.6]
+    \label[problem]{problem:geometry3-2.3.6}
+    $M, N$を多様体、$f \colon M \to N$を{\smooth}写像とし、
+    $g$を$N$の計量とする。
+    \begin{enumerate}
+        \item $f^* g$が$M$の計量ならば$\dim M \le \dim N$であることを示せ。
+        \item 逆は成り立たないことを示せ。
+        \item $f$が diffeo ならば、$f^* g$は$M$の計量であって、
+            $\sgn f^* g$が定まり$\sgn f^* g = \sgn g$となることを示せ。
+    \end{enumerate}
+\end{problem}
+
+\begin{answer}
+    \uline{(1)} \quad
+    対偶を示す。$m \coloneqq \dim M, \; n \coloneqq \dim N$とおき、
+    $m > n$と仮定する。
+    $p \in M$とし、
+    $p$のまわりの$M$の局所座標$x^1, \dots, x^m$と
+    $f(p)$のまわりの$N$の局所座標$y^1, \dots, y^n$をとる。
+    \begin{alignat}{1}
+        (f^* g)_p \left(
+            \deldel{x^i}, \deldel{x^j}
+        \right)
+            &= g_{f(p)} \left(
+                f_* \deldel{x^i}, f_* \deldel{x^j}
+            \right) \\
+            &= g_{f(p)} \left(
+                \deldel[f^k]{x^i}(p) \deldel{y^k},
+                \deldel[f^l]{x^j}(p) \deldel{y^l}
+            \right) \\
+            &= \deldel[f^k]{x^i}(p) \;
+                g_{f(p)} \left(
+                    \deldel{y^k}, \deldel{y^l}
+                \right)
+                \deldel[f^l]{x^j}(p)
+    \end{alignat}
+    より
+    \begin{equation}
+        \left(
+            (f^* g)_p \left(
+                \deldel{x^i}, \deldel{x^j}
+            \right)
+        \right)_{i, j}
+            = \up{t} \left(
+                \deldel[f^k]{x^i}(p)
+            \right)_{k, i}
+            \left(
+                g_{f(p)} \left(
+                    \deldel{y^k}, \deldel{y^l}
+                \right)
+            \right)_{k, l}
+            \left(
+                \deldel[f^l]{x^j}(p)
+            \right)_{l, j}
+    \end{equation}
+    だから、左辺の階数は$\le n < m$である。
+    よって$(f^* g)_p$は非退化でなく、
+    したがって$f^* g$は$M$の計量でない。
+    これで対偶がいえた。
+
+    \uline{(2)} \quad
+    反例を挙げる。$M = \R, \; N = \R^2$とし、
+    $g$は$\R^2$の Euclid 計量、
+    $f \colon M \to N, \; x \mapsto 0$とすれば
+    $f^* g = 0$だから$(f^* g)$は$M$の計量でない。
+
+    \uline{(3)} \quad
+    (1) の記号を用いて
+    \begin{equation}
+        \left(
+            (f^* g)_p \left(
+                \deldel{x^i}, \deldel{x^j}
+            \right)
+        \right)_{i, j}
+            = \up{t} \left(
+                \deldel[f^k]{x^i}(p)
+            \right)_{k, i}
+            \left(
+                g_{f(p)} \left(
+                    \deldel{y^k}, \deldel{y^l}
+                \right)
+            \right)_{k, l}
+            \left(
+                \deldel[f^l]{x^j}(p)
+            \right)_{l, j}
+    \end{equation}
+    だから、$f$が diffeo であることより
+    右辺に現れる3つの行列はすべて正則だから
+    左辺も正則である。
+    したがって$f^* g$は$M$の計量である。
+    さらに Sylvester の慣性法則より
+    $\sgn f^* g = \sgn g$である。
+\end{answer}
+
+
+% ============================================================
+%
+% ============================================================
+\newpage
+\chapter{Lie 群}
+
+この章では Lie 群とその Lie 代数について述べる。
+物理学では Lie 群は多様体へ作用する変換の集合としてよく現れる。
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{Lie 群の基本概念}
+
+\begin{definition}[Lie 群]
+    多様体$G$が次をみたすとき、
+    $G$を\term{Lie 群}[lie group]{Lie 群}[Lieぐん]という。
+    \begin{enumerate}
+        \item $G$は群である。
+        \item 積$\mu \colon G \times G \to G$と逆元$i \colon G \to G$は
+            {\smooth}である。
+    \end{enumerate}
+\end{definition}
+
+\begin{example}[Lie 群の例]
+    \TODO{}
+\end{example}
+
+\begin{definition}[Lie 群準同型]
+    $G, H$を Lie 群とする。
+    {\smooth}写像$f \colon G \to H$が群準同型でもあるとき、
+    $f$を\term{Lie 群準同型}[Lie group homomorphism]
+    {Lie 群準同型}[Lieぐんじゅんどうけい]という。
+\end{definition}
+
+\begin{example}[Lie 群準同型の例]
+    \TODO{}
+\end{example}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{Lie 群の作用}
+
+\subsection{Lie 群の作用}
+
+位相空間への位相群の連続作用が考えられるのと同様に、
+多様体への Lie 群の{\smooth}作用が考えられる。
+
+\begin{definition}[{\smooth}作用]
+    $M$を多様体、$G$を Lie 群とする。
+    $G$の$M$への左からの群作用が
+    \term{{\smooth}作用}[smooth action]{{\smooth}作用}[C infinity さよう]
+    であるとは、写像
+    \begin{equation}
+        G \times M \to M,
+        \quad
+        (g, x) \mapsto gx
+    \end{equation}
+    が{\smooth}であることをいう\footnote{
+        {\smooth}作用の定義を
+        表現$G \to \Aut(M)$が{\smooth}であることとする流儀もあるが、
+        その場合$\Aut(M)$の多様体構造を考えなければならず、
+        無限次元の場合に面倒である。
+    }。
+    右作用についても同様に定義される。
+\end{definition}
+
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{Lie 群の接束}
+
+Lie 群の接束について考える。
+とくに Lie 群の単位元における接空間は重要である。
+
+\subsection{左不変性}
+
+ベクトル場の左不変性を定義する。
+
+\begin{definition}[左不変ベクトル場]
+    $G$を Lie 群とする。
+    ベクトル場$X \in \frakX(G)$が
+    \term{左不変}[left-invariant]{左不変}[ひだりふへん]
+    であるとは、すべての$g \in G$に対し図式
+    \begin{equation}
+        \begin{tikzcd}
+            TG \ar{r}{d(L_g)} & TG \\
+            G \ar{u}{X} \ar{r}[swap]{L_g} & G \ar{u}[swap]{X}
+        \end{tikzcd}
+    \end{equation}
+    が可換となることをいう。
+\end{definition}
+
+共変テンソル場にも左不変性を定義することができる。
+
+\begin{definition}[左不変共変テンソル場]
+    $G$を Lie 群とする。
+    $G$上の共変テンソル場$A$が
+    \term{左不変}[left-invariant]{左不変}[ひだりふへん]
+    であるとは、すべての$g \in G$に対し
+    \begin{equation}
+        L_g^* A = A
+    \end{equation}
+    が成り立つことをいう。
+\end{definition}
+
+\begin{lemma}
+    $G$を Lie 群とする。
+    $X, Y \in \frakX(G)$を左不変ベクトル場とすると、
+    次が成り立つ:
+    \begin{enumerate}
+        \item 各$a, b \in \R$に対し$aX + bY$は左不変ベクトル場である。
+        \item $[X, Y]$は左不変ベクトル場である。
+    \end{enumerate}
+\end{lemma}
+
+\begin{proof}
+    幾何学Iで扱ったので省略。
+\end{proof}
+
+
+\begin{proposition}[$TG$は Lie 群]
+    $G$を Lie 群とし、積と逆元をそれぞれ$\mu \colon G \times G \to G,\; \iota \colon G \to G$とする。
+    $TG$は$d\mu \colon TG \times TG \to TG,\; d\iota \colon TG \to TG$によって Lie 群となる。
+    ただし、$d\mu$の定義域について$T(G \times G) \cong TG \times TG$の同一視をしている。
+\end{proposition}
+
+\begin{proof}
+    省略
+\end{proof}
+
+\begin{remark}
+    上の命題の状況で、
+    $G, \frakg$はいずれも$TG$の部分群\TODO{Lie部分群？}と同一視できることに注意する。
+    実際、$G$は zero section $g \mapsto (g, 0)$により$TG$に埋め込まれ、
+    $\frakg$は $A \mapsto (e, A_e)$により$TG$に埋め込まれる。
+\end{remark}
+
+\begin{proposition}[$TG$上の演算]
+    $G$を Lie 群とし、積と逆元をそれぞれ$\mu, \iota$とする。
+    このとき、各$p, q \in G$と$u \in T_pG,\; v \in T_qG$に対し
+    \begin{alignat}{1}
+        (d\mu)_{(p, q)}(u, v)
+            &= (dR_q)_p(u) + (dL_p)_q(v) \\
+        (d\iota)_p(u)
+            &= - (dR_{p^{-1}})_{1} (dL_{p^{-1}})_p(u)
+    \end{alignat}
+    が成り立つ。
+\end{proposition}
+
+\begin{proof}
+    省略
+\end{proof}
+
+\begin{corollary}[$T_1G$上の演算]
+    上の命題の状況で、各$u, v \in T_1G$に対し
+    \begin{alignat}{1}
+        (d\mu)_{(1, 1)}(u, v) &= u + v \\
+        (d\iota)_1(u) &= - u
+    \end{alignat}
+    が成り立つ。
+\end{corollary}
+
+\begin{proof}
+    明らか。
+\end{proof}
+
+
+\subsection{Lie 代数}
+
+多様体の接空間は、多様体の"線型モデル"であった。
+同様に、Lie 群の Lie 代数は Lie 群の"線型モデル"である。
+
+\TODO{単位元以外のところでも線型モデルになっているのか？}
+
+\TODO{一般的な Lie 代数の定義}
+
+\begin{definition}[Lie 群の Lie 代数]
+    $G$を Lie 群とする。
+    $G$上の左不変ベクトル場全体の集合に
+    交換子括弧を入れたものは Lie 代数となる。
+    これを$\Lie(G)$と書き、
+    \term{$G$の Lie 代数}[Lie algebra of $G$]{Lie 代数!$G$の---}[Lieだいすう]と呼ぶ。
+\end{definition}
+
+次の命題により、
+$\Lie(G)$は$G$の単位元における接空間$T_e G$と同一視できる。
+
+\begin{proposition}[$\Lie(G)$は$T_e G$と同型]
+    $G$を Lie 群とする。
+    評価写像$\eps \colon \Lie(G) \to T_eG$は
+    ベクトル空間の同型である。
+\end{proposition}
+
+\begin{proof}
+    cf. [Lee] p.191
+\end{proof}
+
+\begin{example}[Lie 群の Lie 代数の例]
+    \TODO{}
+\end{example}
+
+
+\subsection{Maurer-Cartan 形式}
+
+\TODO{どういうモチベーション？}
+
+Maurer-Cartan 形式を定義する。
+
+\begin{definition}[Maurer-Cartan 形式]
+    $G$を Lie 群とする。
+    $G$上の$\frakg$値の1次微分形式$\theta$を
+    \begin{equation}
+        \theta_s(u) = s^{-1}u
+        \quad (s \in G,\; u \in T_sG)
+    \end{equation}
+    で定義する。
+    $\theta$を
+    \term{Maurer-Cartan 形式}[Maurer-Cartan form]
+    {Maurer-Cartan 形式}[Maurer-Cartanけいしき]という。
+\end{definition}
+
+Maurer-Cartan 形式は左不変である。
+
+\begin{proposition}[Maurer-Cartan 形式の左不変性]
+    $G$を Lie 群とし、積と逆元をそれぞれ$\mu, \iota$とする。
+    Maurer-Cartan 形式$\theta$は左不変である。
+\end{proposition}
+
+\begin{proof}
+    $g, s \in G,\; u \in T_sG$とする。
+    まず
+    \begin{alignat}{1}
+        \theta_s(u)
+            &= s^{-1}u \\
+            &= (s, 0)^{-1} (s, u) \\
+            &= (s^{-1}, 0) (s, u) \\
+            &= (1, (dR_s)_{s^{-1}}(0) + (dL_{s^{-1}})_s(u)) \\
+            &= (1, (dL_{s^{-1}})_s(u))
+    \end{alignat}
+    である。また、$L_g$による引き戻しは
+    \begin{alignat}{1}
+        (L_g^* \theta)_s (u)
+            &= \theta_{gs} ((dL_g)_s(u)) \\
+            &= (gs)^{-1} (dL_g)_s(u) \\
+            &= (gs, 0)^{-1} (gs, (dL_g)_s(u)) \\
+            &= ((gs)^{-1}, 0) (gs, (dL_g)_s(u)) \\
+            &= (1, (dR_{gs})_{(gs)^{-1}}(0) + (dL_{(gs)^{-1}})_{gs}((dL_g)_s(u))) \\
+            &= (1, (dL_{(gs)^{-1}})_{gs}(dL_g)_s(u)) \\
+            &= (1, (dL_{s^{-1}})_s(u))
+    \end{alignat}
+    をみたす。
+    したがって$L_g^* \theta = \theta$だから$\theta$は左不変である。
+\end{proof}
+
+実は逆も成り立つ。
+すなわち、$\frakg$値の左不変1形式は Maurer-Cartan 形式である。
+
+\begin{proposition}
+    \TODO{}
+\end{proposition}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+
+\subsection{随伴表現}
+
+\TODO{なぜここに書いてある？}
+
+\begin{definition}[随伴表現]
+    $G$を Lie 群とする。
+    \begin{itemize}
+        \item $g \in G$の共役作用$G \to G$を$c_g$とおくとき、
+            単位元$e$における$c_g$の微分$(d(c_g))_e \colon \frakg \to \frakg$を
+            $\Ad(g)$と書く。
+            このとき、$\Ad \colon \frakg \to \GL(\frakg)$を
+            \term{$G$の随伴表現}[adjoint representation of $G$]
+            {随伴表現}[ずいはんひょうげん]という。
+        \item 写像$\ad(X) \colon \frakg \to \frakg$を
+            \begin{equation}
+                \ad(X)Y \coloneqq [X, Y]
+            \end{equation}
+            で定める。このとき、
+            $\ad \colon \frakg \to \mathfrak{gl}(\frakg)$を
+            \term{$\frakg$の随伴表現}[adjoint representation of $\frakg$]
+            {随伴表現}[ずいはんひょうげん]という。
+    \end{itemize}
+\end{definition}
+
+
+\subsection{接束上に誘導される作用}
+
+Lie 群の作用 (とくに Lie 群の演算も含む) から誘導される
+接束上の作用を具体的に計算するために便利な公式を与えておく。
+
+\begin{lemma}["全微分"の公式]
+    $M, G$を多様体とし、
+    {\smooth}写像$\alpha \colon M \times G \to M$が
+    与えられているとし、各$x \in M, \; g \in G$に対し
+    \begin{alignat}{1}
+        L_x \colon G \to M, \quad g \mapsto \alpha(x, g) \\
+        R_g \colon M \to M, \quad x \mapsto \alpha(x, g)
+    \end{alignat}
+    と定める。
+    このとき、$d\alpha \colon TM \times TG \to TM$は
+    \begin{equation}
+        d\alpha((x, u), (g, v))
+            = (\alpha(x, g), d(L_x) v + d(R_g) u)
+            \quad
+            ((x, u) \in TM, \; (g, v) \in TG)
+    \end{equation}
+    をみたす。
+    ただし、$TM \times TG \cong T(M \times G)$の同一視のもとで
+    $d\alpha$は$TM \times TG$上の写像とみなしており、
+    また本来$d(L_x)_g$などと書くべきところを添字を省略して
+    $d(L_x)$などと書いている。
+\end{lemma}
+
+\begin{proof}
+    $(x, u) \in TM, \; (g, v) \in TG$とする。
+    $M, G$内のある{\smooth}曲線$\gamma, \beta$が存在して
+    \begin{align}
+        \gamma(0) &= x, \quad [\gamma] = u \\
+        \beta(0) &= g, \quad [\beta] = v
+    \end{align}
+    が成り立つ ($[ \, ]$は曲線の類を表す)。
+    さて、示すべき式の左辺を変形すると
+    \begin{alignat}{1}
+        d\alpha((x, u), (g, v))
+            &= d\alpha((x, [\gamma]), (g, [\beta])) \\
+            &= d\alpha((x, [\gamma]), (g, 0))
+                + d\alpha((x, 0), (g, [\beta]))
+    \end{alignat}
+    となる。
+    ここで$M, G$内で定値$x, g$をとる曲線をそれぞれ$c_x, c_g$とおけば
+    \begin{equation}
+        [c_x] = 0_{T_xM}, \quad [c_g] = 0_{T_gG}
+    \end{equation}
+    となる。よって
+    \begin{align}
+        d\alpha((x, [\gamma]), (g, 0))
+            &= d\alpha((x, [\gamma]), (g, [c_g])) \\
+            &= \left(
+                \alpha(x, g), \;
+                \dd{t} \alpha(\gamma(t), c_g(t)) \Big|_{t = 0}
+            \right) \\
+            &= \left(
+                \alpha(x, g), \;
+                \dd{t} \alpha(\gamma(t), g) \Big|_{t = 0}
+            \right) \\
+            &= \left(
+                \alpha(x, g), \;
+                \dd{t} R_g(\gamma(t)) \Big|_{t = 0}
+            \right) \\
+            &= (
+                \alpha(x, g), \;
+                d(R_g) [\gamma]
+            ) \\
+            &= (\alpha(x, g), d(R_g) u)
+    \end{align}
+    を得る。同様にして
+    \begin{equation}
+        d\alpha((x, 0), (g, [\beta]))
+            = (\alpha(x, g), d(L_x) v)
+    \end{equation}
+    を得る。したがって
+    \begin{equation}
+        d\alpha((x, u), (g, v))
+            = (\alpha(x, g), d(L_x) v + d(R_g) u)
+    \end{equation}
+    がいえた。
+\end{proof}
+
+\begin{lemma}[$TG$の Lie 群構造]
+    $G$を Lie 群とし、
+    積と逆元をそれぞれ$\mu \colon G \times G \to G, \; \iota \colon G \to G$とおく。
+    $TG$は$d\mu \colon TG \times TG \to TG$を積、
+    $(1, 0) \in TG$を単位元として Lie 群となり、
+    逆元は$d\iota \colon TG \to TG$で与えられる。
+\end{lemma}
+
+\begin{proof}
+    $TG$が多様体であることと、$d\mu, d\iota$が{\smooth}であることは明らか。
+    あとは$d\mu$が群の演算の公理を満たすことと、
+    $d\iota$が逆元を与えることを示せばよい。
+    
+    \uline{結合律} \quad
+    $(g, u), (h, v), (i, w) \in TG$とする。
+    表記の簡略化のため$d\mu$による二項演算を
+    $\, \cdot \,$で書くことにすれば、
+    \begin{alignat}{1}
+        &\quad ((g, u) \cdot (h, v)) \cdot (i, w) \\
+        &= (gh, d(L_g) v + d(R_h) u) \cdot (i, w) \\
+        &= (ghi, d(L_{gh}) w + d(R_i) (d(L_g) v + d(R_h) u)) \\
+        &= (ghi, d(L_{gh}) w + d(L_g) d(R_i) v + d(R_{hi}) u)
+    \end{alignat}
+    であり (合成の順序を交換するところで$G$の乗法の結合律を用いた)、一方
+    \begin{alignat}{1}
+        &\quad (g, u) \cdot ((h, v) \cdot (i, w)) \\
+        &= (g, u) \cdot (hi, d(L_h) w + d(R_i) v) \\
+        &= (ghi, d(L_g) (d(L_h) w + d(R_i) v) + d(R_{hi}) u) \\
+        &= (ghi, d(L_{gh}) w + d(L_g) d(R_i) v + d(R_{hi}) u)
+    \end{alignat}
+    となるから結合則がいえた。
+
+    \uline{単位元} \quad
+    $(g, u) \in TG$に対し
+    \begin{alignat}{1}
+        (g, u) \cdot (1, 0)
+            &= (g, d(L_g) 0 + d(R_1) u) \\
+            &= (g, u) \\
+        (1, 0) \cdot (g, u)
+            &= (g, d(L_1) u + d(R_g) 0) \\
+            &= (g, u)
+    \end{alignat}
+    より$(1, 0)$は単位元である。
+
+    \uline{逆元} \quad
+    $(g, [\gamma]) \in TG$に対し
+    \begin{alignat}{1}
+        (g, [\gamma]) \cdot d\iota(g, [\gamma])
+            &= (g, [\gamma]) \cdot (g^{-1}, d\iota [\gamma]) \\
+            &= (g, [\gamma]) \cdot (g^{-1}, [\iota \circ \gamma]) \\
+            &= \left(
+                1, \;
+                \dd{t} \mu(\gamma(t), \iota \circ \gamma(t)) \Big|_{t = 0}
+            \right) \\
+            &= \left(
+                1, \;
+                \dd{t} 1 \Big|_{t = 0}
+            \right) \\
+            &= (1, 0)
+    \end{alignat}
+    となる。左右逆の積についても同様。
+    したがって$d\iota$が逆元を与える。
+\end{proof}
+
+上の補題により
+$TG$が Lie 群となることがわかったが、
+群としての具体的な構造は次の命題で与えられる。
+
+\begin{proposition}[$TG$の群構造]
+    $G$を Lie 群とし、$\frakg \coloneqq \Lie(G)$とおく。
+    さらに各$a \in G$に対し内部自己同型
+    \begin{equation}
+        G \to G,
+        \quad
+        g \mapsto a g a^{-1}
+        = L_a \circ R_{a^{-1}} (g)
+    \end{equation}
+    の微分を$\Ad_a$とおく。
+    上の補題より$TG$は群だから\TODO{どういうこと？}、
+    写像$\Ad \colon G \to \Aut(TG)$は群の表現となる\footnote{
+        表現$\Ad$を
+        \term{随伴表現}[adjoint representation]{随伴表現}[ずいはんひょうげん]
+        という。
+        \TODO{定義が重複してる？}
+    }。
+    このとき、$TG$は半直積群$G \ltimes_{\Ad} \frakg$と群同型であり、
+    群同型写像は
+    \begin{equation}
+        G \ltimes_{Ad} \frakg \to TG,
+        \quad
+        (a, X) \mapsto (a, d(R_a) X)
+    \end{equation}
+    で与えられる。
+\end{proposition}
+
+\begin{proof}
+    %半直積群の定義から、$G \ltimes_{\Ad} \frakg$の演算は
+    %\begin{equation}
+    %    (a, X) (b, Y) = (ab, X + \Ad_a Y)
+    %\end{equation}
+    %で与えられている。
+    長いので省略。
+    cf. \url{https://math.stackexchange.com/a/3585581/1026040}
+\end{proof}
+
+Lie 群の接束に群構造が誘導されるのと同様に、
+主$G$束の接束には群作用が誘導される。
+
+\begin{lemma}
+    $M$を多様体、
+    $P \to M$を主$G$束とし、
+    $G$の$P$への{\smooth}右作用を
+    $\alpha \colon P \times G \to P$とおく。
+    このとき、
+    $d\alpha \colon TP \times TG \to TP$は
+    Lie 群$TG$の$TP$への{\smooth}右作用を定める。
+\end{lemma}
+
+\begin{proof}
+    $d\alpha$が{\smooth}であることは明らか。
+    あとは$d\alpha$が群作用の公理をみたすことを確かめればよいが、
+    これは$TG$が Lie 群となることの証明と同様なので省略。
+\end{proof}
+
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{誘導準同型}
+
+\begin{definition}[誘導準同型]
+    $G, H$を Lie 群とする。
+    さらに$F \colon G \to H$を Lie 群準同型とする。
+    このとき、任意の$X \in \Lie(G)$に対し、図式
+    \begin{equation}
+        \begin{tikzcd}[row sep=large]
+            TG \ar{r}{dF} & TH \\
+            G \ar{u}{X} \ar{r}[swap]{F} & H \ar[dashed]{u}[swap]{F_*X}
+        \end{tikzcd}
+    \end{equation}
+    を可換にする$F_*X \in \Lie(H)$がただひとつ存在する。
+    $F_* \colon \Lie(G) \to \Lie(H)$を
+    \term{誘導された Lie 代数準同型}[induced Lie algebra homomorphism]
+    {Lie 代数準同型}[Lieだいすうじゅんどうけい]という。
+\end{definition}
+
+\begin{remark}[$\Lie(\square)$の関手性]
+    対応付け$G \mapsto \Lie(G)$、$F \mapsto F_*$は
+    Lie 群の圏$\CatLie$から
+    有限次元 Lie 代数の圏$\Catlie$への共変関手である。
+\end{remark}
+
+
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{基本ベクトル場}
+
+基本ベクトル場を定義する。
+基本ベクトル場の概念は主ファイバー束の接続の定義に利用される。
+以下では Lie 群を接束へ埋め込んで同一視した議論が行われるから、
+埋め込み方について補題を述べておく。
+
+\begin{lemma}
+    $G$を Lie 群とすると、ゼロ切断
+    \begin{equation}
+        G \to TG,
+        \quad
+        p \mapsto (p, 0)
+    \end{equation}
+    は Lie 群の埋め込みである。
+    この同一視により$G \subset TG$とみなす。
+    \qed
+\end{lemma}
+
+\begin{proof}
+    幾何学I演習で扱ったので省略。
+\end{proof}
+
+\begin{lemma}
+    $G$を Lie 群とすると、
+    \begin{equation}
+        \Lie(G) \to T_1G,
+        \quad
+        X \mapsto (1, X_1)
+    \end{equation}
+    は Lie 代数として同型である。
+    この同一視により$\Lie(G) = T_1G \subset TG$とみなす。
+    \qed
+\end{lemma}
+
+\begin{proof}
+    幾何学I演習で扱ったので省略。
+\end{proof}
+
+基本ベクトル場を定義する。
+
+\begin{definition}[基本ベクトル場]
+    $M$を多様体、$P \to M$を主$G$束、
+    $A \in \Lie(G)$とする。
+    上の補題より、$P$上のベクトル場$A^* \in \frakX(P)$を
+    \begin{equation}
+        A^*_u \coloneqq u . A = (u, 0) . (1, A_1) = (u, d(L_u) A_1)
+        \quad (u \in P)
+    \end{equation}
+    で定めることができる\footnote{
+        ここでの$L_u$は$G \to G$でなく$G \to P$の写像であることに注意。
+        したがって "$A$の左不変性より$d(L_u) A_1 = A_u$" という議論は誤りである。
+    }。
+    $A^*$を$A$に対応する\term{基本ベクトル場}[fundamental vector field]
+    {基本ベクトル場}[きほんべくとるば]
+    という。
+\end{definition}
+
+\begin{lemma}[左不変ベクトル場は完備]
+    Lie 群$G$の左不変ベクトル場は完備である。
+\end{lemma}
+
+\begin{proof}[証明のスケッチ.]
+    $X$を左不変ベクトル場とすると、
+    単位元$1$のまわりで積分曲線の定義域に
+    $(-\eps, \eps), \; \eps > 0$が含まれ、
+    左不変性よりすべての$g \in G$のまわりで
+    $(-\eps, \eps)$が積分曲線の定義域に含まれる。
+    あとはコンパクト台をもつベクトル場が完備であることの証明と
+    同様の流れで示せる。
+    詳しくは [Lee] p.216 を参照。
+\end{proof}
+
+\begin{definition}[1助変数部分群]
+    $M$を多様体、$P \to M$を主$G$束、
+    $A \in \Lie(G)$とする。
+    上の補題より$A$は完備なので、
+    $A$の生成するフローは
+    {\smooth}写像$\R \times G \to G$であり、
+    さらにこれは$G$への{\smooth}左作用を定める。
+    そこで、とくに単位元$1 \in G$を通る軌道$\R \to G$を
+    $e^{tA}$あるいは$\exp tA$と書くことにする。
+    この曲線$e^{tA} \colon \R \to G$を、
+    $A$によって生成される
+    \term{1助変数部分群}[one-parameter subgroup]{1助変数部分群}[1じょへんすうぶぶんぐん]
+    という。
+\end{definition}
+
+\begin{proposition}[基本ベクトル場の幾何学的意味]
+    上の定義の状況で、
+    $A$に対応する基本ベクトル場$A^*$の$u \in P$での値は、
+    $P$内の曲線
+    \begin{equation}
+        \R \to P, \quad
+        t \mapsto u . e^{tA}
+    \end{equation}
+    の$u$での接ベクトルに等しい。すなわち
+    \begin{equation}
+        A^*_u = \dd{t}\Big|_{t = 0} u . e^{tA}
+    \end{equation}
+    が成り立つ。
+\end{proposition}
+
+\begin{proof}
+    $e^{tA}$が$A$の積分曲線であることに注意して
+    \begin{alignat}{1}
+        \dd{t}\Big|_{t = 0} u . e^{tA}
+            &= \dd{t}\Big|_{t = 0} L_u \circ e^{tA} \\
+            &= \left(
+                \dd{t}\Big|_{t = 0} e^{tA}
+            \right) (L_u) \\
+            &= A_1 (L_u) \\
+            &= d(L_u) A_1 \\
+            &= A^*_u
+    \end{alignat}
+    を得る。
+\end{proof}
+
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{構造方程式}
+
+\TODO{Maurer-Cartan 形式との関連性？}
+
+\begin{proposition}
+    $\frakg^*$は左不変1-形式の空間である。
+    \TODO{}
+\end{proposition}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+\begin{definition}[Lie 群の構造方程式]
+    \label[definition]{def:lie-group-structure-equation}
+    $B_1, \dots, B_m$を$\frakg$の基底、
+    $\theta^1, \dots, \theta^m$をその双対基底とする。
+    \begin{equation}
+        [B_j, B_k] = \sum c^i_{jk} B_i
+    \end{equation}
+    で\term{構造定数}[structure constant]{構造定数}[こうぞうていすう]
+    $c^i_{jk} \in \R$を定める。
+    すると
+    \begin{equation}
+        d\theta^i = - \sum c^i_{jk} \theta^j \wedge \theta^k
+    \end{equation}
+    が成り立つ。
+    これを$G$の
+    \term{構造方程式}[structure equation]{構造方程式}[こうぞうほうていしき]
+    という。
+    \begin{equation}
+        d\theta = - [\theta, \theta]
+    \end{equation}
+    と書くこともある。\TODO{どういう意味？}
+\end{definition}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+
+
+\end{document}

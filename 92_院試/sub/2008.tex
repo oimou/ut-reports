@@ -1,0 +1,224 @@
+\documentclass[report]{jlreq}
+\usepackage{global}
+\usepackage{./local}
+\subfiletrue
+\def\assetspath{../}
+%\makeindex
+\chead{2008}
+\begin{document}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{A}
+
+\begin{problem}[第1問]
+    $3$次の実正方行列全体を$M_3(\R)$と表し、これを自然に$\R$上のベクトル空間とみなす。
+    実数$a, b, c$に対して
+    \[
+        A = \begin{pmatrix}
+            1 & 0 & c \\
+            0 & 1 & b \\
+            c & b & a
+        \end{pmatrix}
+    \]
+    とおく。以下の問に答えよ。
+    \begin{enumerate}
+        \item $A$と可換な行列全体からなる$M_3(\R)$の部分集合$W$は、
+            $M_3(\R)$の部分ベクトル空間をなすことを示せ。
+        \item $W$の$\R$上のベクトル空間としての次元を求めよ。
+    \end{enumerate}
+\end{problem}
+
+\begin{answer}
+    \TODO{}
+\end{answer}
+
+\begin{problem}[第2問]
+    $g(x, y) = y^4 - y^6 - 3(x^2 + x^4)$とおく。以下の問に答えよ。
+    \begin{enumerate}
+        \item $S = \{(x, y) \in \R^2 \mid g(x, y) = g_x(x, y) = g_y(x, y) = 0\}$を求めよ。
+        \item 曲線$C = \{(x, y) \in \R^2 \setminus S \mid g(x, y) = 0, y > 0\}$上で
+            $f(x, y) = x^2 + y^2$が極値をとる点をすべて求め、その値が極大であるか極小であるかを判定せよ。
+    \end{enumerate}
+\end{problem}
+
+\begin{answer}
+    \TODO{概形を書くと$(0, 1)$しかなさそう？}
+\end{answer}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{B}
+
+\begin{problem}[第8問]
+    $M_2(\R)$を2次の実正方行列全体とする。対応
+    \[
+        \begin{pmatrix}
+            x & z \\
+            y & w
+        \end{pmatrix}
+            \mapsto
+            (x, y, z, w)
+    \]
+    により$M_2(\R)$を$\R^4$と同一視し、
+    これによって$M_2(\R)$上に座標$x, y, z, w$と
+    標準的なリーマン計量$\langle,\rangle$を与える。
+    2次の実対称行列全体を$H$とし、
+    写像$F\colon M_2(\R) \to H$を$F(A) = \up{t}A A$により定める。
+    ただし$\up{t}A$は$A$の転置行列である。
+    このとき以下の問に答えよ。
+    \begin{enumerate}
+        \item 写像$F$の$A \in M_2(\R)$における微分$(dF)_A$を求め、
+            $F$の正則点全体の集合を決定せよ。
+        \item $A \in M_2(\R)$における$M_2(\R)$の接ベクトル$X_A$を
+            \[
+                X_A = \frac{d}{dt}(R_t A) \Bigg|_{t=0} \in T_AM_2(\R)
+            \]
+            ただし$R_t = \begin{pmatrix}
+                \cos t & -\sin t \\
+                \sin t & \cos t
+            \end{pmatrix}$と定める。
+            さらに、開部分多様体$P = \{A \in M_2(\R) \mid \det A > 0 \}$上の
+            1次微分形式$\theta$を、すべての$A \in M_2(\R)$について
+            次の条件(a),(b)が満たされるように定める:
+            \begin{enumerate}[label=(\alph*)]
+                \item $\theta(X_A) = 1$
+                \item $\langle X_A, V \rangle = 0$ならば$\theta(V) = 0$である。
+            \end{enumerate}
+            ここに、$V$は$A$における$M_2(\R)$の接ベクトルであり、
+            $\langle,\rangle$は上で定めたリーマン計量である。
+            このとき、微分形式$\theta$を座標$x,y,z,w$を用いて表せ。
+        \item 写像$F \colon M_{2}(\R) \to H$を
+            $P$へ制限して得られる写像を$\pi \colon P \to B$とする。
+            ただし、$B = F(P)$である。
+            このとき、(2)で定めた微分形式$\theta$の外微分$d\theta$は、
+            像$B$上のある微分形式$\omega$の$\pi$による引き戻し
+            $\pi^*\omega$に等しいことを証明せよ。
+    \end{enumerate}
+\end{problem}
+
+\begin{answer}
+    \uline{(1)} \quad
+    $(dF)_A$をチャートに関する行列表示で表す。
+    $A$の属する$M_2(\R)$のチャートとして
+    \begin{equation}
+        \varphi \colon M_2(\R) \to \R,
+            \quad
+            \begin{bmatrix}
+                x & z \\
+                y & w
+            \end{bmatrix}
+            \mapsto
+            (x, y, z, w)
+    \end{equation}
+    を考え、
+    $F(A)$の属する$H$のチャートとして
+    \begin{equation}
+        \psi \colon H \to \R,
+            \quad
+            \begin{bmatrix}
+                a & b \\
+                b & c
+            \end{bmatrix}
+            \mapsto
+            (a, b, c)
+    \end{equation}
+    を考える。
+    これらのチャートに関する$F$の座標表示
+    $\what{F} = \psi \circ F \circ \varphi^{-1}$は
+    $\what{F} \colon \R^4 \to \R^3, \;
+        (x, y, z, w) \mapsto (x^2 + y^2, xz + yw, z^2 + w^2)$
+    である。
+    したがって$(dF)_A$は、
+    チャート$\varphi, \psi$に関する行列表示が
+    $\what{F}$の Jacobi 行列
+    \begin{equation}
+        \begin{bmatrix}
+            2x & 2y & 0 & 0 \\
+            z & w & x & y \\
+            0 & 0 & 2z & 2w
+        \end{bmatrix}
+    \end{equation}
+    となるような$\R$-線型写像$T_AM_2(\R) \to T_{F(A)}H$である。
+
+    次に$F$の正則点全体の集合を決定する。
+    $A = \begin{bmatrix}
+        x & z \\
+        y & w
+    \end{bmatrix} \in M_2(\R)$に関し、
+    点$A$が$F$の正則点であるための必要十分条件は、
+    $(J\what{F})_{(x, y, z, w)}$がフルランクとなることである。
+    ここで、
+    $(J\what{F})_{(x, y, z, w)}$がフルランクでないための必要十分条件、
+    すなわち
+    $(J\what{F})_{(x, y, z, w)}$の3個の行ベクトルが
+    $\R$上1次従属となるための必要十分条件は
+    \begin{equation}
+        \exists \; s, t \in \R
+            \quad \text{s.t.} \quad
+            (x, y) = s(z, w), \; (z, w) = t(x, y)
+    \end{equation}
+    である。
+    これは$\det A = 0$と同値である。
+    したがって、
+    $F$の正則点全体の集合は
+    $\{ A \in M_2(\R) \mid \det A \neq 0 \}$である。
+
+    \uline{(2)} \quad
+    まず各$A = \begin{bmatrix}
+        x & z \\
+        y & w
+    \end{bmatrix} \in M_2(\R)$に対し
+    \begin{equation}
+        X_A
+            = \frac{d}{dt}(R_tA) \Bigg|_{t=0}
+            = \frac{d}{dt}R_t \Bigg|_{t=0} A
+            = \begin{bmatrix}
+                0 & -1 \\
+                1 & 0
+            \end{bmatrix} A
+            = \begin{bmatrix}
+                -y & -w \\
+                x & z
+            \end{bmatrix}
+    \end{equation}
+    である。
+    $\theta$の成分表示を求める。
+    そこで計量$\langle,\rangle$に関する
+    $T_AM_2(\R)$の直交分解
+    $T_AM_2(\R) = \R X_A \oplus (\R X_A)^{\perp}$
+    を考え、
+    $\R X_A$の基底$X_A$と
+    $(\R X_A)^{\perp}$の基底$b_i \; (i = 1, \dots, 3)$をあわせた
+    $T_AM_2(\R)$の基底$X_A, b_i \; (i = 1, \dots, 3)$をひとつ選ぶ。
+    すると条件(a), (b)より
+    \begin{alignat}{2}
+        \langle X_A, \cdot \rangle &\colon
+            X_A \mapsto \| X_A \|^2,
+            \quad
+            &&b_i \mapsto 0 \quad (i = 1, \dots, 3) \\
+        \theta_A &\colon
+            X_A \mapsto 1,
+            \quad
+            &&b_i \mapsto 0 \quad (i = 1, \dots, 3)
+    \end{alignat}
+    が成り立つから
+    $\theta_A = \langle X_A, \cdot \rangle / \| X_A \|^2$
+    である。
+    したがって、$\theta$を座標$x, y, z, w$を用いて表すと
+    \begin{equation}
+        \theta
+            = \frac{1}{x^2 + y^2 + z^2 + w^2}
+                \myparen{
+                    -y \, dx + x \, dy - w \, dz + z \, dw
+                }
+    \end{equation}
+    となる。
+
+    \uline{(3)} \quad
+    \TODO{よくわからない}
+\end{answer}
+
+\end{document}

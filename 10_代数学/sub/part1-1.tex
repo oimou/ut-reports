@@ -1,0 +1,4667 @@
+\documentclass[report]{jlreq}
+\usepackage{global}
+\usepackage{./local}
+\subfiletrue
+%\makeindex
+\begin{document}
+
+% ============================================================
+%
+% ============================================================
+\chapter{環}
+
+環の基礎事項について述べる。
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{環}
+
+\begin{definition}[環]
+    \idxsym{A}{$A$}{一般の環}
+    \idxsym{R}{$R$}{可換環}
+    組$(A, +, \cdot, 0, 1)$が\term{環}[ring]{環}[かん]であるとは、
+    次が成り立つことをいう\footnote{
+        文献によっては環の定義に単位元の存在を仮定しない立場もある。
+    }:
+    \begin{description}
+        \item[(R1)] $(A, +, 0)$がアーベル群
+        \item[(R2)] $(A, \cdot, 1)$がモノイド
+        \item[(R3) 分配律]
+            $\forall x, y, z \in A$に対し次が成り立つ:
+            \begin{equation}
+                \begin{cases}
+                    x \cdot (y + z) = x \cdot y + x \cdot z \\
+                    (x + y) \cdot z = x \cdot z + y \cdot z
+                \end{cases}
+            \end{equation}
+    \end{description}
+    さらに
+    \begin{itemize}
+        \item $0$を$A$の\term{零元}[zero element]{零元}[れいげん]といい、
+            $0_A$とも書く。
+        \item $1$を$A$の\term{単位元}[unit element]{単位元}[たんいげん]といい、
+            $1_A$とも書く。
+    \end{itemize}
+\end{definition}
+
+\begin{remark}
+    環の元が乗法に関する左逆元を持つとしても
+    右逆元を持つとは限らない。
+\end{remark}
+
+\begin{example}[可換環の例]
+    ~
+    \begin{itemize}
+        \item (零環) 1点集合$\{0\}$には環構造が一意に定まる。これを
+            \term{零環}[zero ring]{零環}[れいかん]という。
+            環$A$が零環であることと$0_A = 1_A$であることとは同値である。
+        \item (整数環) 有理整数環$\Z$や Gauss 整数環$\Z[i]$は可換環である。
+        \item (関数環) 位相空間$X$上の$\C$値連続関数全体のなす環$C(X)$は
+            点ごとの和と積を演算として可換環となる。
+    \end{itemize}
+\end{example}
+
+\begin{example}[非可換環の例]
+    \idxsym{ring of endomorphisms}{$\End(A)$}{アーベル群$A$の自己準同型環}
+    ~
+    \begin{itemize}
+        \item (全行列環) 環$A$の全行列環$M_n(A)$は一般に非可換である。
+        \item (自己準同型環) アーベル群$A$ (より一般に環上の加群) の自己準同型環$\End(A)$は
+            点ごとの和と写像の合成を演算として環となる。
+            これは一般に非可換である。
+    \end{itemize}
+\end{example}
+
+\begin{remark}
+    一般の環を$A$、可換環を$R$で書くことが多い。
+\end{remark}
+
+\begin{example}[測度論との関連]
+    \TODO{ring of sets などの話をしたい}
+\end{example}
+
+\subsection{反転環}
+
+反転環を定義する。
+
+\begin{definition}[反転環]
+    \idxsym{Opposite Ring}{$A^\OP$}{反転環}
+    $(A, +, \cdot)$を環とする。
+    集合$A^\OP$を$A^\OP \coloneqq A$とおき、
+    アーベル群$(A^\OP, +)$に乗法$\cdot'$を
+    \begin{equation}
+        a \cdot' b \coloneqq b \cdot a
+        \quad (a, b \in A^\OP)
+    \end{equation}
+    で定めると、$(A^\OP, +, \cdot')$は環をなす。
+    この環を$A$の\term{反転環}[opposite ring]{反転環}[はんてんかん]という。
+\end{definition}
+
+\begin{example}[反転環の例]
+    ~
+    \begin{itemize}
+        \item $R$を可換環とすると、写像
+            \begin{equation}
+                M_n(R) \to M_n(R)^\OP,
+                \quad X \mapsto {}^t\!X
+            \end{equation}
+            は環同型となる。
+    \end{itemize}
+\end{example}
+
+\subsection{零因子と整域}
+
+零因子と、零因子を用いて定義される整域の概念を導入する。
+
+\begin{definition}[零因子と整域]
+    $A$を環とする。
+    $a \in A, a \neq 0$が次をみたすとき、
+    $a$は$A$の\term{零因子}[zero divisor]{零因子}[れいいんし]であるという:
+    \begin{equation}
+        \exists x \in A, x \neq 0
+        \quad \text{s.t.} \quad
+        ax = 0 \text{ or } xa = 0
+    \end{equation}
+    また、$A$が次のすべてをみたすとき、
+    $A$を\term{整域}[integral domain]{整域}[せいいき]という:
+    \begin{description}
+        \item[(I1)] $A$は零環でない。
+        \item[(I2)] $A$は可換環である。
+        \item[(I3)] 零因子を持たない。
+    \end{description}
+\end{definition}
+
+\begin{example}[零因子と整域の例]
+    ~
+    \begin{itemize}
+        \item $\Z$は整域である。
+        \item $\Z \times \Z$は整域でない ((I1), (I2) をみたすが (I3) をみたさない)。
+            零因子の例のひとつは
+            \begin{equation}
+                (1, 0) \cdot (0, 1) = (0, 0)
+            \end{equation}
+            である。
+        \item Hamilton の四元数環$\H$は整域でない ((I1), (I3) をみたすが (I2) をみたさない)。
+    \end{itemize}
+\end{example}
+
+\subsection{可除環と体}
+
+可除環を定義する。
+
+\begin{definition}[乗法群]
+    \TODO{}
+\end{definition}
+
+\begin{definition}[可除環]
+    $A$を環とする。
+    $A^\times = A \setminus \{0\}$であるとき、
+    $A$を\term{可除環}[division ring]{可除環}[かじょかん]あるいは
+    \term{斜体}[skew field]{斜体}[しゃたい]という。
+    可換な可除環を
+    \term{体}[field]{体}[たい]という。
+\end{definition}
+
+\begin{example}[可除環の例]
+    ~
+    \begin{itemize}
+        \item 零環$A = \{ 0 \}$は
+            $A^\times = \{ 0 \} \neq \emptyset = A \setminus \{ 0 \}$
+            より可除環ではない。
+        \item Hamilton の四元数環$\H$は可除環である。
+            しかし非可換なので体でも整域でもない。
+        \item $\R$や$\C$は可除環である。さらに可換なので体でもある。
+    \end{itemize}
+\end{example}
+
+可除環に対する次の性質は基本的である。
+
+\begin{proposition}
+    可除環は零因子を持たない。
+\end{proposition}
+
+\begin{proof}
+    可除環$A$が零因子$x \neq 0$を持ったとすると、
+    ある$y \in A - \{ 0 \}$が存在して$xy = 0$が成り立つ。
+    一方$A$は可換環だからある$x' \in A$が存在して$x'x = 1$が成り立つ。
+    よって$y = 1y = x'xy = x'0 = 0$となり
+    $y \neq 0$に矛盾。
+    したがって$A$は零因子を持たない。
+\end{proof}
+
+\subsection{冪等元}
+
+\begin{definition}[冪等元]
+    $A$を環とする。
+    $e \in A$が$e^2 = e$を満たすとき、
+    $e$を$A$の\term{冪等元}[idempotent]{冪等元}[べきとうげん]という。
+    $A$の中心に属する冪等元をとくに
+    \term{中心冪等元}[central idempotent]{中心冪等元}[ちゅうしんべきとうげん]という。
+\end{definition}
+
+\begin{proposition}[中心冪等元により生成される環]
+    $A$を環とする。
+    $e \in A$が$A$の中心冪等元であるとき、
+    $Ae$は$A$の両側イデアルとなり、さらに$e$を単位元とする環となる。
+\end{proposition}
+
+\begin{proof}
+    省略
+\end{proof}
+
+\begin{definition}[環準同型]
+    \TODO{}
+\end{definition}
+
+
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{イデアルと商環}
+
+イデアルの概念を導入する。
+
+\begin{definition}[可換環のイデアル]
+    $R$を可換環とする。
+    $I \subset R$が$R$の\term{イデアル}[ideal]{イデアル}[いである]であるとは、
+    \begin{description}
+        \item[(I1)] $I$は$R$の加法部分群
+        \item[(I2)] $a \in R,\; b \in I$ならば$ab \in I$
+    \end{description}
+    をみたすことをいう。
+\end{definition}
+
+一般の環においては
+イデアルに左/右/両側の区別がある。
+
+\begin{definition}[一般の環のイデアル]
+    $A$を環とする。
+    $I \subset R$が$R$の
+    \term{左イデアル}[left ideal]{左イデアル}[ひだりいである]であるとは、
+    上の (I1) と
+    \begin{description}
+        \item[(LI2)] $a \in A,\; b \in I$ならば$ab \in I$
+    \end{description}
+    をみたすことをいう。
+    \term{右イデアル}[right ideal]{右イデアル}[みぎいである]も
+    同様に定義される。
+    $A$の左かつ右イデアルを
+    \term{両側イデアル}[two-sided ideal]{両側イデアル}[りょうがわいである]
+    という。
+    明らかに可換環のイデアルは左かつ右かつ両側イデアルである。
+\end{definition}
+
+\begin{definition}[固有イデアル]
+    $A$を環、
+    $I \subset A$を左/右/両側イデアルとする。
+    $I$が\term{固有}[proper]{固有}[こゆう]であるとは、
+    $I \neq A$であることをいう。
+\end{definition}
+
+環準同型とイデアルの間には次の関係がある。
+
+\begin{theorem}[環準同型とイデアル]
+    \label[theorem]{thm:ring-hom-and-ideals}
+    $A, B$を環、
+    $f \colon A \to B$を環準同型とする。
+    \begin{enumerate}
+        \item $J$が$B$の両側イデアルならば、
+            $f^{-1}(J)$は$A$の両側イデアルである。
+        \item $f$が全射で$I$が$A$の両側イデアルならば、
+            $f(I)$は$B$の両側イデアルである。
+        \item $\Ker f$は$A$の両側イデアルである。
+        \item $f$が全射ならば、$\Im f$は$B$の両側イデアルである。
+        \item $\Im f$は$B$の部分環である。
+    \end{enumerate}
+\end{theorem}
+
+\begin{proof}
+    \uline{(1), (2)} \quad
+    \TODO{}
+
+    \uline{(3), (4)} \quad
+    (1), (2) の特別な場合である。
+
+    \uline{(5)} \quad
+    \TODO{}
+\end{proof}
+
+環を両側イデアルで割った商は環をなす。
+
+\begin{definition}[商環]
+    \TODO{}
+\end{definition}
+
+環の両側イデアルは商環の両側イデアルと次の定理のように対応する。
+\TODO{束の同型？}
+
+\begin{theorem}[両側イデアルの対応原理]
+    \label[theorem]{thm:ideal-correspondence-principle}
+    $A$を環、$I \subset A$を両側イデアルとする。
+    \begin{alignat}{1}
+        \scrI_I(A) &\coloneqq \{
+            J \colon \text{$J$は$I$を含む$A$の両側イデアル}
+        \} \\
+        \scrI(A/I) &\coloneqq \{
+            J \colon \text{$J$は$A/I$の両側イデアル}
+        \}
+    \end{alignat}
+    とおくと、
+    \begin{equation}
+        \wt{p} \colon \scrI_I(A) \to \scrI(A/I),
+        \quad J \mapsto p(J)
+    \end{equation}
+    は包含関係を保つ全単射であり、
+    $\wt{p}$の逆写像$q$は
+    \begin{equation}
+        q \colon \scrI(A / I) \to \scrI_I(A),
+        \quad J' \mapsto p^{-1}(J')
+    \end{equation}
+    で与えられる。
+\end{theorem}
+
+\begin{remark}
+    定理より、$A / I$の両側イデアルは
+    $I$を含む$A$の両側イデアル$J$を用いて
+    $J / I$の形に一意的に書けて、
+    さらに$A$の両側イデアル$J, J'$に関し
+    \begin{equation}
+        J' \subset J
+        \quad \iff \quad
+        J' / I \subset J / I
+    \end{equation}
+    が成り立つことがわかる。
+    さらに、包含関係を保つことと$JJ' / I = (J / I)(J' / I)$より、
+    素イデアルは素イデアルと、極大イデアルは極大イデアルと
+    それぞれ対応することもわかる。
+\end{remark}
+
+\begin{proof}
+    $q$が well-defined であることを示す。
+    $A / I$の両側イデアル$J'$に対し
+    $p^{-1}(J')$が$A$の両側イデアルであることは
+    \cref{thm:ring-hom-and-ideals}より成り立ち、
+    また$I = p^{-1}(0) \subset p^{-1}(J')$も成り立つ。
+    よって$q$は well-defined である。
+
+    $q$が$\wt{p}$の逆写像であることを示す。
+    $J' \in \scrI(A / I)$に対し
+    $p(p^{-1}(J')) = J'$であることは
+    $p$の全射性より従う。
+    $J \in \scrI_I(A)$に対し
+    $p^{-1}(p(J)) = J$であることを示す。
+    "$\supset$"は集合の一般論より成り立つ。
+    逆に$x \in p^{-1}(p(J))$とすると、
+    ある$j \in J$が存在して$p(x) = p(j)$となる。
+    よって$p(x - j) = 0$だから
+    $x - j \in p^{-1}(0) = I \subset J$である。
+    したがって$x = (x - j) + j \in J$が成り立つから
+    "$\subset$"もいえた。
+    よって$q$は$\wt{p}$の逆写像である。
+
+    $\wt{p}$が包含を保つことは
+    写像による部分集合の像と逆像が包含を保つことから従う。
+    以上で定理の主張が示された。
+\end{proof}
+
+イデアルの演算について述べる。
+
+\begin{definition}[加法部分群の和と積]
+    \idxsym{I+J}{$I + J$}{加法部分群の和}
+    \idxsym{IJ}{$IJ$}{加法部分群の積}
+    $A$を環、
+    $I, J \subset A$を加法部分群とする。
+    \begin{alignat}{1}
+        I + J \coloneqq \{ a + b
+            \mid
+            a \in I, \;
+            b \in J
+        \} \\
+        IJ \coloneqq \left\{
+            \sum_{i=1}^n a_i b_i
+            \mid
+            n \in \Z_{\ge 1}, \;
+            a_i \in I, \;
+            b_i \in J
+        \right\}
+    \end{alignat}
+    と書く。
+\end{definition}
+
+\begin{proposition}[イデアルの和と積]
+    $A$を環とする。
+    \begin{enumerate}
+        \item $A$の任意の左 (resp. 右, 両側) イデアル$I, J \subset A$に対し、
+            $I + J$は$A$の左 (resp. 右, 両側) イデアルである。
+        \item $A$の任意の両側イデアル$I, J \subset A$に対し、
+            $I + J$は$A$の両側イデアルである。
+    \end{enumerate}
+\end{proposition}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+\begin{proposition}
+    $A$を環、
+    $I \subset J$を$A$の両側イデアルとする。
+    このとき、環の同型
+    \begin{equation}
+        \frac{A / I}{J / I} \cong \frac{A}{J}
+    \end{equation}
+    が成り立つ。
+\end{proposition}
+
+\begin{proof}
+    図式
+    \begin{equation}
+        \begin{tikzcd}
+            A
+                \ar{r}{\pi}
+                \ar{d}[swap]{p}
+                & A / I
+                    \ar{d}{q} \\
+            A / J
+                \ar[dashed]{r}[swap]{f}
+                & \frac{A / I}{J / I}
+        \end{tikzcd}
+    \end{equation}
+    を可換にする環の同型が誘導されることを示せばよく、
+    そのためには$J = \Ker q \circ \pi$をいえばよい。
+    $j \in J$とすると
+    $j + I \in J + I$だから
+    $q \circ \pi(j) = q(j + I) = 0$である。
+    よって$J \subset \Ker q \circ \pi$である。
+    逆に$q \circ \pi(a) = 0 \; (a \in A)$とすると
+    $\pi(a) \in J / I$だから、
+    両側イデアルの対応原理 (\cref{thm:ideal-correspondence-principle})
+    より$a \in \pi^{-1}(J / I) = J$である。
+    したがって$J = \Ker q \circ \pi$がいえた。
+    準同型定理より上の図式を可換にする環の同型$f$が誘導されて
+    証明が完成した。
+\end{proof}
+
+\begin{proposition}[直積環のイデアル]
+    $A, B$を環とする。
+    $A \times B$の任意の左 (resp. 右/両側) イデアル$J$は
+    $A, B$のある左 (resp. 右/両側) イデアル$J_A, J_B$を用いて
+    $J = J_A \times J_B$の形に書ける。
+\end{proposition}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+部分集合により生成されるイデアルについて述べる。
+\TODO{$Ax$とかの記法は？}
+
+\begin{definition}[生成されたイデアル]
+    $R$を可換環、
+    $n \in \Z_{\ge 1}$とする。
+    \begin{itemize}
+        \item $a_1, \dots, a_n \in A$に対し
+            \begin{equation}
+                (a_1, \dots, a_n) \coloneqq \{
+                    b_1 a_1 + \dots + b_n a_n
+                    \colon b_1, \dots, b_n \in R
+                \}
+            \end{equation}
+            は$R$のイデアルである。これを$a_1, \dots, a_n$で
+            \term{生成されたイデアル}{生成されたイデアル}[せいせいされたいである]という。
+        \item イデアル$I \subset R$が
+            有限個の元により生成されたイデアルであるとき、
+            $I$は\term{有限生成}[finitely generated]
+            {有限生成!イデアルとして---}[ゆうげんせいせい]であるという。
+            とくに$I$が1個の元により生成されるとき、
+            $I$を\term{単項イデアル}[principal ideal]{単項イデアル}[たんこういである]という。
+    \end{itemize}
+\end{definition}
+
+\begin{proposition}[生成されたイデアルの特徴付け]
+    \label[proposition]{prop:generated-ideal-characterization}
+    \TODO{}
+\end{proposition}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{中国剰余定理}
+
+中国剰余定理はイデアルの性質に関する定理であり、
+環論において最も重要かつ基本的な定理のひとつである。
+
+\begin{theorem}[中国剰余定理]
+    \label[theorem]{thm:chinese-remainder-theorem}
+    $A$を環、
+    $I_1, \dots, I_n$を$A$の両側イデアルとする。
+    $I_i$らは\term{互いに素}{互いに素}[たがいにそ]、
+    すなわち$I_i + I_j = A \; (I \neq j)$をみたすとする。
+    このとき、準同型定理によって図式
+    \begin{equation}
+        \begin{tikzcd}
+            A \ar{d} \ar{r} & A / I_1 \times \cdots \times A / I_n \\
+            A / (I_1 \cap \cdots \cap I_n) \ar[dashed]{ru}
+        \end{tikzcd}
+    \end{equation}
+    の破線部に誘導される環準同型は環の同型を与える。
+\end{theorem}
+
+\begin{proof}
+    次のように写像に名前をつける:
+    \begin{equation}
+        \begin{tikzcd}
+            A \ar{d} \ar{r}{p = p_1 \times \dots \times p_n}
+                & A / I_1 \times \cdots \times A / I_n \\
+            A / (I_1 \cap \cdots \cap I_n) \ar[dashed]{ru}[swap]{\wb{p}}
+        \end{tikzcd}
+    \end{equation}
+    $\Ker \wb{p} = I_1 \cap \cdots \cap I_n$より
+    $\wb{p}$の単射性は明らか。
+    $\wb{p}$の全射性を$n$に関する帰納法によって示す。
+    $n = 2$の場合を考える。
+    \begin{align}
+        e_1 &\coloneqq (1, 0) \in A / I_1 \times A / I_2 \\
+        e_2 &\coloneqq (0, 1) \in A / I_1 \times A / I_2
+    \end{align}
+    とおき、$e_1, e_2 \in \Im \wb{p}$をいえばよい。
+    $I_1, I_2$は互いに素ゆえに
+    $x + y = 1$なる$x \in I_1, \; y \in I_2$が存在する。
+    このとき
+    \begin{alignat}{1}
+        p_1(x) &= 0 \\
+        p_2(x) &= p_2(1 - y) = p_2(1) = 1
+    \end{alignat}
+    よって
+    \begin{equation}
+        p(x) = (p_1(x), p_2(x)) = (0, 1) = e_2 \in \Im \wb{p}
+    \end{equation}
+    が成り立つ。
+    同様に$e_1 \in \Im \wb{p}$も成り立つ。
+    \TODO{}
+\end{proof}
+
+さらに環が可換の場合は次が成り立つ。
+
+\begin{theorem}
+    $R$を可換環とし、$I_1, \dots, I_n$をイデアルとする。
+    $I_i$らは互いに素、すなわち$I_i + I_j = A \; (I \neq j)$をみたすとする。
+    このとき、
+    \begin{equation}
+        I_1 \cap \cdots \cap I_n = I_1 \cdots I_n
+    \end{equation}
+    が成り立つ。
+\end{theorem}
+
+\begin{proof}
+    cf. \cref{problem:algebra-2.31}
+\end{proof}
+
+
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{極大イデアル}
+
+極大イデアルを定義する。
+
+\begin{definition}[極大イデアル]
+    $A$を環、$I \subset A$を左イデアルとする。
+    $I$が
+    \term{極大左イデアル}[maximal left ideal]{極大左イデアル}[きょくだいひだりいである]
+    であるとは、
+    $I$が$A$の固有左イデアルのうち包含関係に関し極大であることをいう。
+    極大右イデアルおよび極大両側イデアルも同様に定義される。
+    左/右/両側が文脈から明らかな場合は省略して
+    \term{極大イデアル}[maximal ideal]{極大イデアル}[きょくだいいである]
+    ということがある。
+\end{definition}
+
+\begin{theorem}[Krull の定理]
+    \label[theorem]{thm:krull}
+    $A \neq 0$を環、
+    $I \subset A$を固有両側 (resp. 左, 右) イデアルとする。
+    このとき、$I$を含む極大両側 (resp. 左, 右) イデアルが存在する。
+\end{theorem}
+
+\begin{proof}
+    Zorn の補題を用いる。
+    \TODO{}
+\end{proof}
+
+極大イデアルによって定義される環のクラスのうち
+最も素朴なものが単純環である。
+単純環については
+\cref{chapter:semisimple-module-and-semisimple-ring}
+でより詳しく調べる。
+
+\begin{definition}[単純環]
+    $(0)$が極大両側イデアルとなる環を
+    \term{単純環}[simple ring]{単純環}[たんじゅうかん]という。
+\end{definition}
+
+\begin{example}[単純環の例]
+    \label[example]{example:simple-ring}
+    ~
+    \begin{itemize}
+        \item division ring は単純環である。
+        \item 単純環の部分環は単純であるとは限らない。
+            例えば、$\Z \subset \Q$は単純環でないし、
+            $\Z[i, j, k] \subset \H$も単純環でない。
+    \end{itemize}
+\end{example}
+
+\TODO{森田同値の現れ？}
+
+\begin{theorem}[単純環の全行列環は単純環]
+    $A$が単純環のとき、$M_n(A)$も単純環である。
+\end{theorem}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+極大イデアルは商環により特徴付けられる。
+
+\begin{theorem}[極大イデアルと商環]
+    $A$を環とする。
+    このとき、$A$の両側イデアル$I$に関し
+    $I$が極大両側イデアルであることと、
+    $A/I$が単純環であることとは同値である。
+\end{theorem}
+
+\begin{proof}
+    両側イデアルの対応原理 (\cref{thm:ideal-correspondence-principle})
+    より明らか。
+\end{proof}
+
+極大両側イデアルは極大左/右イデアルとは限らないが、
+商環が可除となる場合には次のように特徴づけることができる。
+
+\begin{theorem}[極大イデアルと可除環]
+    $A$を環とする。
+    $A$の両側イデアル$I$に関して次は同値である:
+    \begin{enumerate}
+        \item $I$は極大左イデアルである。
+        \item $I$は極大右イデアルである。
+        \item $A/I$は可除環である。
+    \end{enumerate}
+\end{theorem}
+
+\begin{proof}
+    \uline{(1) \Rightarrow (3)} \quad
+    $A$の両側イデアル$I$が
+    極大左イデアルであるとする。
+    $A / I$の零でない元は$a + I \; (a \in A - I)$と表せて、
+    $A$の左イデアル$Aa + I$は極大左イデアル$I$を真に含むから
+    $Aa + I = A$である。
+    よって$(b + I)(a + I) = ba + I = 1 + I$なるある$b \in A - I$が存在する。
+    $A$の左イデアル$Ab + I$は極大左イデアル$I$を真に含むから
+    $Ab + I = A$である。
+    よって$(c + I)(b + I) = cb + I = 1 + I$なるある$c \in A - I$が存在する。
+    したがって$b + I \in (A / I)^\times$であり、
+    とくに$a + I$は$b + I$の逆元となるから
+    $a + I \in (A / I)^\times$が従う。
+    いま$a + I$は$A / I$の零でない任意の元であったから、
+    $A / I$は可除環であることがいえた。
+
+    \uline{(3) \Rightarrow (1)} \quad
+    $A / I$を可除環とする。
+    $J \supset I$を左イデアルとする。
+    $I \subsetneq J$よりある$j \in J - I$が存在する。
+    いま$A / I$は可除環だから
+    $1 + I = (a + I)(j + I) = aj + I$なるある$a \in A$が存在する。
+    よって$1 - aj = i$なるある$i \in I \subset J$が存在する。
+    $J$が左イデアルゆえに$aj \in J$であることとあわせて
+    $1 = aj + i \in J$が従う。
+    よって$J = A$となり、
+    $I$が極大左イデアルであることがいえた。
+
+    \uline{(2) \Leftrightarrow (3)} \quad
+    (1) \Leftrightarrow (3) の議論と同様。
+\end{proof}
+
+\begin{corollary}
+    可換環$R$と$R$のイデアル$I$について、
+    $I$が極大イデアルであることと、
+    $R/I$が体であることとは同値である。
+    \qed
+\end{corollary}
+
+
+
+
+
+
+% ============================================================
+%
+% ============================================================
+\chapter{代数}
+
+可換環上の代数の基礎事項について述べる。
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{代数}
+
+代数とは、
+和と積とスカラー倍について閉じている代数系のことである。
+代数の定義にはいくつかのやり方があるが、
+ここでは特別な環としての定義を採用する。
+
+\begin{definition}[代数]
+    \idxsym{$R$-alg homomorphisms}{$\Hom_R^\al(A, B)$}
+        {$R$-代数準同型$A \to B$全体の集合}
+    $A$を環、
+    $R$を可換環とする。
+    \begin{itemize}
+        \item 環$A$と環準同型$\varphi \colon R \to Z(A)$の組
+            $(A, \varphi)$を
+            \term{$R$-代数}[$R$-algebra]{代数}[だいすう]
+            あるいは
+            \term{$R$-多元環}[$R$-algebra]{多元環}[たげんかん]という\footnote{
+                文献によっては代数にスカラー倍の結合性を仮定しない立場もある。
+                翻って本稿における代数の定義では結合性が自動で導かれる。
+                結合性を仮定するという立場を明確にするために
+                \term{結合的代数}[associative algebra]{結合的代数}[けつごうてきだいすう]
+                と呼ばれることもある。
+            }。
+            記号の濫用で
+            $A$における$x \in R$の像も$x$と書くことがある。
+        \item $(A, \varphi), (B, \psi)$を$R$-代数とする。
+            環準同型$f \colon A \to B$が図式
+            \begin{equation}
+                \begin{tikzcd}
+                    & R \ar{ld}[swap]{\phi} \ar{rd}{\psi} \\
+                    A \ar{rr}[swap]{f} && B
+                \end{tikzcd}
+            \end{equation}
+            を可換にするとき、$f$は
+            \term{$R$-代数準同型}[$R$-algebra homomorphism]
+            {代数準同型}[だいすうじゅんどうけい]
+            であるという。
+        \item $A \to B$なる$R$-代数準同型全体の集合を
+            $\Hom_R^{\mathrm{al}} (A, B)$と書く。
+    \end{itemize}
+\end{definition}
+
+\begin{example}[代数の例]
+    ~
+    \begin{itemize}
+        \item $A$を環とする。
+            $A$は環準同型
+            \begin{equation}
+                \Z \to A,
+                \quad
+                n \mapsto \underbrace{1 + \cdots + 1}_{n \text{ times}}
+            \end{equation}
+            により$\Z$-代数となる。
+        \item 可換環$R$上の$n$次正方行列の全体$M_n(R)$は、
+            環準同型$R \to Z(M_n(R)),\lambda \mapsto \lambda I_n$により
+            $R$-代数となる。
+            これは非可換な$R$-代数の例となっている。
+        \item 環$\C$は、環準同型$\R \to \C, x \mapsto x$により$\R$-代数となる。
+        \item 環$\C \times \C$は、
+            環準同型$\C \to \C \times \C, z \mapsto (z, z)$により$\C$-代数となる。
+        \item 位相空間$X$上の$\C$値連続関数全体のなす環$C(X)$は、環準同型$\C \to C(X),$
+            \begin{equation}
+                \lambda \mapsto (x \mapsto \lambda)
+            \end{equation}
+            により$\C$-代数となる。
+    \end{itemize}
+\end{example}
+
+\begin{definition}[$R$-部分代数]
+    $R$を可換環、
+    $(A, \varphi)$を$R$-代数とする。
+    $A$の部分環$B$が$\varphi$により$R$-代数となるとき、
+    $B$を$A$の\term{$R$-部分代数}[$R$-subalgebra]{$R$-部分代数}[ぶぶんだいすう]
+    という。
+\end{definition}
+
+体上の代数には体が埋め込まれているとみなせる。
+
+\begin{proposition}[代数への体の埋め込み]
+    \label[proposition]{prop:embedding-of-field-into-algebra}
+    $K$を体とする。
+    このとき、$0$でない任意の$K$-代数$(A, \varphi)$に対し
+    $\varphi$は単射である。
+\end{proposition}
+
+\begin{proof}
+    $\varphi$は環準同型$K \to Z(A)$だから、
+    $K$が体であることより
+    $\Ker \varphi = K$または$\Ker \varphi = 0$である。
+    $\Ker \varphi = K$であったとすると
+    $1_A = \varphi(1_K) = 0_A$より
+    $A = 0$となり矛盾。
+    したがって$\varphi = 0$、すなわち$\varphi$は単射である。
+\end{proof}
+
+
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{モノイド代数と群環}
+
+モノイド代数と群環を定義する。
+モノイド代数は後で定義する多項式環の一般化である。
+
+\begin{definition}[モノイド代数]
+    \idxsym{RM}{$R[M]$}{$R$上の$M$のモノイド代数}
+    \idxsym{finite sum}{$\fsum$}{形式的実質的有限和}
+    $M$をモノイド、
+    $R \neq 0$を可換環とする。
+    集合$R[M]$を
+    \begin{equation}
+        R[M] \coloneqq \left\{
+            \fsum_{m \in M} a_m \cdot m
+            \; \bigm\vert \;
+            a_m \in R
+        \right\}
+    \end{equation}
+    とおく。ただし$\fsum$は
+    \term{形式的実質的有限和}[formal essential finite sum]
+    {形式的実質的有限和}[けいしきてきじっしつてきゆうげんわ]
+    といい、有限個の$m$を除いて$a_m = 0$となる和である。
+    $R[M]$に加法と乗法を
+    \begin{alignat}{1}
+        \left( \fsum_{m \in M} a_m \cdot m \right)
+            + \left( \fsum_{m \in M} b_m \cdot m \right)
+            &\coloneqq \fsum_{m \in M} (a_m + b_m) \cdot m \\
+        \left( \fsum_{m \in M} a_m \cdot m \right)
+            \cdot \left( \fsum_{m \in M} b_m \cdot m \right)
+            &\coloneqq \fsum_{m \in M} \left(
+                \fsum_{\substack{x, y \in M \\ xy = m}} a_x b_y
+            \right) \cdot m
+    \end{alignat}
+    で定めると、
+    $\left( R[M], +, \cdot, \fsum_{m \in M} 0 \cdot m, 1 \cdot 1_M \right)$
+    は環となる (このあと示す)。
+    さらに環準同型
+    \begin{equation}
+        R \to R[M],
+        \quad
+        r \mapsto r \cdot 1_M
+    \end{equation}
+    により$R$-代数の構造が入る (このあと示す)。
+    $R$-代数$R[M]$を$R$上の$M$の
+    \term{モノイド代数}[monoid algebra]{モノイド代数}[ものいどだいすう]
+    という。
+\end{definition}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+\begin{definition}[群代数]
+    \idxsym{RG}{$R[G]$}{$R$上の$G$の群環}
+    $G$を群、
+    $R \neq 0$を可換環とする。
+    モノイド代数$R[G]$を
+    $R$上の$G$の
+    \term{群代数}[group algebra]{群代数}[ぐんだいすう]
+    あるいは
+    \term{群環}[group ring]{群環}[ぐんかん]
+    という。
+\end{definition}
+
+$R, M$から$R[M]$への自然な埋め込みが次のように定まる。
+
+\begin{proposition}[モノイド代数への埋め込み]
+    $R \neq 0$を可換環、
+    $M$をモノイドとする。
+    このとき、写像
+    \begin{alignat}{1}
+        M \to R[M],
+            \quad
+            &x \mapsto 1_R \cdot x \\
+        R \to R[M],
+            \quad
+            &r \mapsto r \cdot 1_M \\
+    \end{alignat}
+    はそれぞれ (乗法的) モノイド準同型、$R$-代数準同型となる。
+\end{proposition}
+
+\begin{proof}
+    省略
+\end{proof}
+
+\begin{proposition}[モノイド代数の加群構造]
+    $R \neq 0$を可換環、
+    $M$をモノイドとする。
+    このとき、
+    $R[M]$は$M$を基底とする$R$上の自由$R$-加群である。
+\end{proposition}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+モノイド代数は次の普遍性を持つ。
+
+\begin{theorem}[モノイド代数の普遍性]
+    $R \neq 0$を可換環、
+    $M$をモノイドとする。
+    このとき次が成り立つ:
+    \begin{alignat}{1}
+        &\forall \; A
+            \colon \text{ $R$-代数} \\
+        &\forall \; \varphi \colon M \to A
+            \colon \text{ (乗法的) モノイド準同型} \\
+        &\exists! \; \wb{\varphi} \colon R[M] \to A
+            \colon \text{ $R$-代数準同型}
+            \quad \text{s.t.} \quad \\
+        &\quad
+            \begin{tikzcd}[ampersand replacement=\&]
+                R[M]
+                    \ar[dashed]{r}{\varphi}
+                    \& A \\
+                M
+                    \ar{u}
+                    \ar{ur}[swap]{\wb{\varphi}}
+            \end{tikzcd}
+    \end{alignat}
+\end{theorem}
+
+\begin{proof}
+    $\varphi$がモノイド準同型であることより
+    $\wb{\varphi}$は
+    \begin{equation}
+        \wb{\varphi}\left(
+            \fsum_{m \in M} a_m \cdot m
+        \right)
+            = \fsum_{m \in M} a_m \cdot \varphi(m)
+            \quad
+            (a_m \in R)
+    \end{equation}
+    をみたさなければならないが、
+    上の命題より$M$は$R[M]$の$R$-加群としての基底だから、
+    このような$R$-加群準同型$\wb{\varphi}$は一意に存在する。
+    あとは$\wb{\varphi}$が$R$-代数準同型であることを示せばよい。
+    \TODO{cf. \cite[p.5]{Pie82}}
+\end{proof}
+
+\begin{corollary}[群代数の普遍性]
+    $R \neq 0$を可換環、
+    $G, G'$を群、
+    $\varphi \colon G \to G'$を群準同型とする。
+    このとき、$R$-代数準同型$h \colon R[G] \to R[G']$であって
+    次をみたすものが一意に存在する：
+    \begin{alignat}{1}
+        h(x) = \varphi(x) \quad (\forall x \in G) \\
+        h(a) = a \quad (\forall a \in R)
+    \end{alignat}
+    \qed
+\end{corollary}
+
+
+
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{多項式環}
+
+多項式環を定義する。
+多項式環は可換環の重要な例のひとつである。
+
+\begin{definition}[多項式環]
+    \idxsym{Polynomial ring}{$R[X_1, \dots, X_n]$}{$R$係数多項式環}
+    $R$を可換環、
+    $X_1, \dots, X_n$を形式的記号とする。
+    形式的に
+    \begin{equation}
+        X_1^{k_1} \dots X_n^{k_n}
+        \quad
+        ((k_1, \dots, k_n) \in \Z_{\ge 0}^n)
+    \end{equation}
+    というものを考え、
+    これを\term{単項式}[monomial]{単項式}[たんこうしき]と呼ぶ。
+    ここで集合
+    \begin{equation}
+        M_n \coloneqq \{
+            X_1^{k_1} \dots X_n^{k_n}
+            \colon
+            (k_1, \dots, k_n) \in \Z_{\ge 0}^n
+        \}
+    \end{equation}
+    を定め、普通の方法で積を入れて可換モノイドにする。
+    モノイド代数$R[M_n]$を
+    $R[X_1, \dots, X_n]$と書き、
+    \term{$R$-係数$n$変数多項式環}[polynomial ring]{多項式環}[たこうしきかん]
+    と呼ぶ。
+\end{definition}
+
+\begin{definition}[多項式関数]
+    \TODO{}
+\end{definition}
+
+\begin{proposition}[多項式の表示の一意性]
+    $R$を可換環とする。
+    $R[X_1, \dots, X_n]$の元の
+    \begin{equation}
+        \fsum_{k_1, \dots, k_n \ge 0} a_{k_1, \dots, k_n} X_1^{k_1} \dots X_n^{k_n}
+    \end{equation}
+    の形での表示は一意である。
+\end{proposition}
+
+\begin{proof}
+    \TODO{形式的実質的有限和を写像$M \to R$とみれば一意性は明らか？}
+\end{proof}
+
+\begin{theorem}[除法定理]
+    \label[theorem]{thm:division-theorem-of-polynomial-ring}
+    $R$を可換環とする。
+    このとき、
+    任意の$f \in R[X]$および
+    最高次係数が単元であるような
+    任意の$g \in R[X]$に対し
+    \begin{equation}
+        \exists!\; q, r \in R[X]
+        \quad \text{s.t.} \quad
+        f = g q + r,
+        \; \deg r < \deg g
+    \end{equation}
+    が成り立つ。
+\end{theorem}
+
+\begin{proof}
+    $m \coloneqq \deg f,\; n \coloneqq \deg g \ge 0$とおく。
+    題意の$q, r \in R[X]$の存在を$m$に関する帰納法で示す。
+    $m < n$ならば$q(X) = 0, r(X) = f(X)$とおけばよい。
+    $m \ge n$とし、$f, g$の最高次係数をそれぞれ$a_m, b_n$とおく。
+    ここで
+    \begin{equation}
+        h(X) \coloneqq f(X) - g(X) a_m b_n^{-1} X^{m - n}
+    \end{equation}
+    とおくと$\deg h < \deg f$であるから、
+    帰納法の仮定より
+    \begin{equation}
+        \exists q_1, r_1 \in R[X]
+        \quad \text{s.t.} \quad
+        h = gq_1 + r_1,
+        \; \deg r_1 < \deg g
+    \end{equation}
+    が成り立つ。
+    そこで
+    \begin{equation}
+        q(X) \coloneqq q_1(X) + a_m b_n^{-1} X^{m - n},
+        \quad
+        r(X) \coloneqq r_1(X)
+    \end{equation}
+    とおけばよい。
+    つぎに一意性を示す。$q^*, r^* \in R[X]$が
+    \begin{equation}
+        f = g q^* + r^*,
+        \; \deg r^* < \deg g
+    \end{equation}
+    をみたすとする。$f = gq + r$と差をとって
+    \begin{equation}
+        (q^* - q) g = r^* - r
+    \end{equation}
+    が成り立つ。よって、もし$q^* - q \neq 0$ならば
+    \begin{alignat}{1}
+        \deg ((q^* - q) g)
+            &= \deg (q^* - q) + \deg g \quad (\because \text{ $g$の最高次係数は可逆元}) \\
+            &\ge \deg g
+    \end{alignat}
+    が成り立つが、これは
+    \begin{alignat}{1}
+        \deg (r^* - r)
+            &\le \max \{ \deg r^*, \deg r \} \\
+            &< \deg g
+    \end{alignat}
+    に矛盾する。
+    よって$q^* = q$、したがって$r^* = r$である。
+    これで一意性がいえた。
+\end{proof}
+
+\begin{remark}[除法定理が成り立たない例]
+    最高次係数が可逆元でない例を考える。
+    $R = \Z$のとき、$X, 2X \in \Z[X]$に対し
+    \begin{equation}
+        X = 2X \cdot q(X) + r(X),\;
+        \deg r < \deg (2X) = 1
+    \end{equation}
+    なる$q, r \in \Z[X]$は存在しない。
+\end{remark}
+
+\TODO{「割り切る」の概念が未定義}
+
+\begin{corollary}[剰余定理]
+    $R$を可換環とし、$\alpha \in R$とする。
+    このとき
+    \begin{equation}
+        \exists! \; q \in R[X]
+        \quad \text{s.t.} \quad
+        f(X) = (X - \alpha) q(X) + f(\alpha)
+    \end{equation}
+    が成り立つ。とくに
+    \begin{equation}
+        \text{$X - \alpha$が$f$を割り切る}
+        \quad \iff \quad
+        f(\alpha) = 0
+    \end{equation}
+    が成り立つ。
+\end{corollary}
+
+\begin{proof}
+    省略
+\end{proof}
+
+1変数多項式環においては、次の意味で
+代入が定義できる。
+
+\begin{theorem}[1変数多項式環の普遍性]
+    $R$を可換環、
+    $A$を$R$-代数とする。
+    このとき、任意の$a \in A$に対し
+    $R$-代数準同型$\ev_a \colon R[X] \to A$であって
+    \begin{equation}
+        \ev_a(X) = a
+    \end{equation}
+    をみたすものがただひとつ存在する。
+\end{theorem}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+多変数多項式環でも代入を定義できるが、
+多変数の場合は可換性が必要である。
+
+\begin{theorem}[多変数多項式環の普遍性]
+    \label[theorem]{thm:multivariate-polynomial-ring-universality}
+    $R$を可換環、
+    $A$を\highlight{可換}$R$-代数とする。
+    このとき、任意の$a_1, \dots, a_n \in A$に対し
+    $R$-代数準同型
+    $\ev_{(a_1, \dots, a_n)} \colon R[X_1, \dots, X_n] \to A$
+    であって
+    \begin{equation}
+        \ev_{(a_1, \dots, a_n)}(X_i) = a_i \quad (i = 1, \dots, n)
+    \end{equation}
+    をみたすものがただひとつ存在する。
+\end{theorem}
+
+\begin{proof}
+    \TODO{cf. [雪江 p.16]}
+\end{proof}
+
+\begin{theorem}[多項式環の特徴付け]
+    \TODO{}
+\end{theorem}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+\begin{corollary}[多変数多項式環の自然な同型]
+    \label[corollary]{corollary:polynomial-ring-isomorphism}
+    \begin{equation}
+        \ev_{(X_1, \dots, X_n)} \colon
+            R[X_1, \dots, X_n] \to (R[X_1, \dots, X_{n - 1}])[X_n]
+    \end{equation}
+    は$R$-代数の同型である。
+    \TODO{}
+\end{corollary}
+
+\begin{definition}[次数]
+    \TODO{}
+\end{definition}
+
+多項式環からその係数環への
+評価準同型は簡単な形の$\Ker$を持っている。
+
+\begin{proposition}[多項式環の評価準同型の核]
+    \label[proposition]{prop:ev-kernel}
+    $R$を可換環、
+    $\alpha_1, \dots, \alpha_n \in R$とする。
+    このとき、評価準同型
+    $\ev_{(\alpha_1, \dots, \alpha_n)} \colon R[X_1, \dots, X_n] \to R$
+    の核は
+    \begin{equation}
+        \Ker(\ev_{(\alpha_1, \dots, \alpha_n)})
+            = (X_1 - \alpha_1, \dots, X_n - \alpha_n)
+    \end{equation}
+    の形である。
+\end{proposition}
+
+\begin{proof}
+    "$\supset$"は明らかに成り立つ。
+    "$\subset$"を$n$についての帰納法で示す。
+    $n = 1$のときは剰余定理
+    (\cref{thm:division-theorem-of-polynomial-ring})
+    からただちに従う。
+    $n \in \Z_{\ge 2}$とし、
+    $n - 1$で成立を仮定して$n$での成立を示す。
+    そこで
+    $f(X_1, \dots, X_n) \in \Ker(\ev_{(\alpha_1, \dots, \alpha_n)})$
+    とする。
+    \cref{corollary:polynomial-ring-isomorphism}より
+    $R[X_1, \dots, X_n] \cong (R[X_1, \dots, X_{n - 1}])[X_n]$だから
+    \begin{align}
+        f(X_1, \dots, X_n)
+            = \sum_{i = 0}^k f_i(X_1, \dots, X_{n - 1}) X_n^i \\
+        \qquad (
+            f_i \in R[X_1, \dots, X_{n - 1}], \;
+            f_k \neq 0_{R[X_1, \dots, X_{n - 1}]}
+        )
+    \end{align}
+    の形に一意に表せる。
+    ここで各$0 \le i \le k$に対し
+    \begin{equation}
+        h_i(X_1, \dots, X_{n - 1})
+            \coloneqq f_i(X_1, \dots, X_{n - 1})
+            - f_i(\alpha_1, \dots, \alpha_{n - 1})
+    \end{equation}
+    とおくと、
+    定め方から$h_i(\alpha_1, \dots, \alpha_{n - 1}) = 0$だから、
+    帰納法の仮定より
+    \begin{alignat}{1}
+        h_i(X_1, \dots, X_{n - 1})
+            &\in \Ker(\ev_{(\alpha_1, \dots, \alpha_{n - 1})}) \\
+            &= (X_1 - \alpha_1, \dots, X_{n - 1} - \alpha_{n - 1}) \\
+            &\subset
+                (X_1 - \alpha_1, \dots, X_{n - 1} - \alpha_{n - 1}, X_n - \alpha_n)
+    \end{alignat}
+    となる。
+    また、
+    $\sum_{i = 0}^k
+        f_i(\alpha_1, \dots, \alpha_{n - 1})
+        \alpha_n^i
+        = f(\alpha_1, \dots, \alpha_n)
+        = 0$
+    と剰余定理
+    (\cref{thm:division-theorem-of-polynomial-ring})
+    から
+    $\sum_{i = 0}^k
+        f_i(\alpha_1, \dots, \alpha_{n - 1})
+        X_n^i
+        \in (X_n - \alpha_n)$
+    が成り立つ。
+    よって
+    \begin{alignat}{1}
+        f(X_1, \dots, X_n)
+            &= \sum_{i = 0}^k
+                \bigl(
+                    h_i(X_1, \dots, X_{n - 1})
+                    + f_i(\alpha_1, \dots, \alpha_{n - 1})
+                \bigr)
+                X_n^i \\
+            &= \underbrace{
+                    \sum_{i = 0}^k
+                    h_i(X_1, \dots, X_{n - 1})
+                    X_n^i
+                }_{\in (X_1 - \alpha_1, \dots, X_n - \alpha_n)}
+                + \underbrace{
+                    \sum_{i = 0}^k
+                    f_i(\alpha_1, \dots, \alpha_{n - 1})
+                    X_n^i
+                }_{\in (X_n - \alpha_n)} \\
+            &\in (X_1 - \alpha_1, \dots, X_n - \alpha_n)
+    \end{alignat}
+    となり、$n$での成立がいえた。
+    帰納法より命題の主張が示せた。
+\end{proof}
+
+
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{自由代数}
+
+自由代数を定義する。
+
+\begin{definition}[自由$R$-代数]
+    \idxsym{W(S)}{$W(S)$}{word 全体の集合}
+    \idxsym{R[W(S)]}{$R[W(S)]$}{自由$R$代数}
+
+    $S$を集合、
+    $R \neq 0$を可換環とする。
+    $S$の元$s_1, \dots, s_n$を形式的に$s_1 \dots s_n$と並べた
+    \term{語}[word]{語}[ご] の全体を
+    \begin{equation}
+        W(S) \coloneqq \{ \text{$S$の元からなる語} \}
+            \cup \{ \emptyset \}
+    \end{equation}
+    と定める。$\emptyset$を$1$と書き、乗法を
+    \begin{alignat}{1}
+        (s_1 \dots s_n) (s_1' \dots s_m') &= s_1 \dots s_n s_1' \dots s_m' \\
+        1 (s_1 \dots s_n) &= (s_1 \dots s_n) 1 = s_1 \dots s_n
+    \end{alignat}
+    で定めてモノイド構造を入れる。
+    モノイド代数$R[W(S)]$を
+    $S$により生成される
+    \term{自由$R$-代数}[free $R$-algebra]{自由代数}[じゆうだいすう]
+    という。
+\end{definition}
+
+\begin{proposition}[自由代数の普遍性]
+    \TODO{}
+\end{proposition}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{生成された部分代数}
+
+部分集合によって部分代数を生成することができる。
+
+\begin{definition}[部分集合により生成された部分代数]
+    \idxsym{RS}{$R \langle S \rangle$}{集合$S$により生成された$R$-部分代数}
+    $R \neq 0$を可換環、
+    $A$を$R$-代数、
+    $S \subset A$とする。
+    このとき、標準包含$\iota \colon S \hookrightarrow A$
+    により誘導される$R$-代数準同型$\wb{\iota} \colon R[W(S)] \to A$
+    の像$\Im \wb{\iota}$を$R\langle S \rangle$と書き、
+    \term{$S$で生成された$A$の$R$-部分代数}[$R$-subalgebra generated by $S$]
+        {生成された部分代数}[せいせいされたぶぶんだいすう]
+    という。
+    とくに$S$が有限集合ならば、$A$は$R$-代数として
+    \term{有限生成}[finitely generated]{有限生成!代数として---}[ゆうげんせいせい]
+    であるという。
+\end{definition}
+
+%生成された代数は次の意味で普遍性を持つ。
+%標語的に言えば「準同型が生成元で決まる」ということである。
+%
+%\begin{theorem}[生成された代数の普遍性]
+%    \TODO{これは誤り？}
+%    $R \neq 0$を可換環、
+%    $A$を$R$-代数、
+%    $S \subset A$とする。
+%    このとき、
+%    $S$により生成される$A$の$R$-部分代数$R\langle S \rangle$に対し
+%    次が成り立つ:
+%    \begin{alignat}{1}
+%        &\forall \; B
+%            \colon \text{ $R$-代数} \\
+%        &\forall \; \varphi \colon S \to B
+%            \colon \text{ 写像} \\
+%        &\exists! \; \wb{\varphi} \colon R\langle S \rangle \to B
+%            \colon \text{ $R$-代数準同型}
+%            \quad \text{s.t.} \quad \\
+%        &\quad
+%            \begin{tikzcd}[ampersand replacement=\&, row sep=large]
+%                R\langle S \rangle
+%                    \ar[dashed]{rr}{\wb{\varphi}}
+%                    \& \& B \\
+%                \& S
+%                    \ar{ul}
+%                    \ar{ur}[swap]{\varphi}
+%            \end{tikzcd}
+%    \end{alignat}
+%\end{theorem}
+%
+%\begin{proof}
+%    \TODO{}
+%\end{proof}
+
+生成された代数は自由代数と同様の普遍性を持つわけではないことに注意すべきである。
+
+\begin{remark}
+    $\Z$上$S \coloneqq \{ 1/2 \}$により生成された
+    $\Q$の$\Z$-部分代数$\Z\langle S \rangle$
+    を考える。
+    $\Z$上$S$により生成された$\Z$-部分代数が
+    自由代数の場合と同様の "普遍性" を持ったとすると、
+    写像$f \colon S \to \Z[X], \; f(1/2) \coloneqq X$に対し
+    \begin{equation}
+        \begin{tikzcd}
+            \Z\langle S \rangle
+                \ar[dashed]{r}{g}
+                & \Z[X] \\
+            S
+                \ar[hook]{u}
+                \ar{ru}[swap]{f}
+        \end{tikzcd}
+    \end{equation}
+    を可換にする$\Z$-代数準同型$g$が一意に存在する。
+    図式の可換性より
+    $g(1/2) = X$だから
+    $g(1) = g(2 \cdot 1/2) = 2g(1/2) = 2X$であるが、
+    一方$g$は環準同型だから$g(1) = 1 \neq 2X$であり矛盾を得る。
+\end{remark}
+
+\begin{example}[多項式環は有限生成代数]
+    $R \neq 0$を可換環とする。
+    $R$-係数多項式環$R[X_1, \dots, X_n]$は
+    有限集合$\{ X_1, \dots, X_n \} \subset R[X_1, \dots, X_n]$により
+    生成される$R$-代数だから、$R$-代数として有限生成である。
+\end{example}
+
+生成された部分代数は次のように特徴付けられる。
+これは生成されたイデアルの特徴付け
+(\cref{prop:generated-ideal-characterization})
+の類似である。
+
+\begin{proposition}[生成された部分代数の特徴付け]
+    $R \neq 0$を可換環、
+    $A$を$R$-代数、
+    $S \subset A$とする。
+    このとき
+    \begin{equation}
+        R\langle S \rangle
+            = \bigcap_{\substack{
+                B \subset A \text{ : $R$-部分代数} \\
+                B \supset S
+            }} B
+    \end{equation}
+    が成り立つ。
+\end{proposition}
+
+\begin{proof}
+    $R\langle S \rangle$は$S$を含む$A$の$R$-部分代数ゆえに
+    右辺の項として現れるから "$\supset$" が成り立つ。
+
+    "$\subset$" を示す。
+    そこで$B \subset A$を$S$を含む$A$の$R$-部分代数とする。
+    また
+    $\Phi \colon S \to R[W(S)]$を標準射、
+    \begin{equation}
+        \iota_S^A \colon S \to A, \quad
+        \iota_S^B \colon S \to B, \quad
+        \iota_B^A \colon B \to A
+    \end{equation}
+    をそれぞれ標準包含とする。
+    すると$R$上$S$により生成された自由代数の普遍性より
+    図式
+    \begin{equation}
+        \begin{tikzcd}
+            S
+                \ar{d}[swap]{\Phi}
+                \ar[hook]{r}{\iota_S^A}
+                & A \\
+            R[W(S)]
+                \ar[dashed]{ru}[swap]{\wb{\iota}_S^A}
+        \end{tikzcd}
+        \qquad
+        \begin{tikzcd}
+            S
+                \ar{d}[swap]{\Phi}
+                \ar[hook]{rd}{\iota_S^B} \\
+            R[W(S)]
+                \ar[dashed]{r}[swap]{\wb{\iota}_S^B}
+                & B
+        \end{tikzcd}
+    \end{equation}
+    を可換にする$R$-代数準同型
+    $\wb{\iota}_S^A, \; \wb{\iota}_S^B$が
+    一意に存在する。
+    ここで各$s \in S$に対し
+    $\iota_B^A \circ \wb{\iota}_S^B \circ \Phi(s)
+        = \iota_B^A \circ \iota_S^B(s)
+        = \iota_S^A(s)
+        = \wb{\iota}_S^A \circ \Phi(s)$
+    が成り立つから、一意性より
+    $\iota_B^A \circ \wb{\iota}_S^B = \wb{\iota}_S^A$である。
+    したがって
+    $R\langle S \rangle
+        = \Im \wb{\iota}_S^A
+        = \Im \iota_B^A \circ \wb{\iota}_S^B
+        = \iota_B^A \circ \wb{\iota}_S^B (R[W(S)])
+        \subset \iota_B^A(B)
+        = B$
+    である。
+    よって "$\subset$" が示せた。
+\end{proof}
+
+有限生成可換$R$-代数は
+次のように特徴付けることができる。
+
+\begin{proposition}[有限生成可換$R$-代数の特徴付け]
+    $R \neq 0$を可換環、
+    $A$を可換$R$-代数、
+    $S \subset A$とする。
+    このとき、次は同値である:
+    \begin{enumerate}
+        \item $A$は有限生成$R$-代数である。
+        \item ある$n \in \Z_{\ge 1}$と
+            全射$R$-代数準同型$f \colon R[X_1, \dots, X_n] \to A$
+            が存在する。
+    \end{enumerate}
+\end{proposition}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+
+
+
+% ============================================================
+%
+% ============================================================
+\chapter{可換環}
+
+可換環についてより詳しく調べる。
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{素イデアル}
+
+素イデアルを定義する。
+この章では非可換環の素イデアルを扱うことはないが、
+議論のまとまりのために素イデアルの定義は非可換環の場合も含めて与えておく。
+
+\begin{definition}[素イデアル]
+    $A$を環、
+    $P$を$A$の固有両側イデアルとする。
+    \begin{enumerate}
+        \item $P$が$A$の
+            \term{素イデアル}[prime ideal]{素イデアル}[そいである]
+            であるとは、
+            $A$の任意の固有両側イデアル$I, J$であって
+            $IJ \subset P$をみたすものに対して
+            $I \subset P$または$J \subset P$が成り立つことをいう。
+        \item $P$が$A$の
+            \term{完全素イデアル}[completely prime ideal]{完全素イデアル}[かんぜんそいである]
+            であるとは、
+            任意の$x, y \in A$であって$xy \in P$をみたすものに対して
+            $x \in P$または$y \in P$が成り立つことをいう。
+    \end{enumerate}
+\end{definition}
+
+\begin{definition}[素イデアル全体の集合]
+    \idxsym{Spec}{$\Spec$}{素イデアル全体の集合}
+    $R$を可換環とする。
+    $R$の素イデアル全体の集合を
+    \begin{equation}
+        \Spec(R) \coloneqq \{
+            \frakp \subset R \colon \text{$\frakp$は素イデアル}
+        \}
+    \end{equation}
+    と書く。
+\end{definition}
+
+可換環における
+素イデアルの特徴付けを与える。
+
+\begin{proposition}[素イデアルの特徴付け]
+    $R$を可換環とする。
+    $R$の固有イデアル$\frakp \subset R$に関し
+    次は同値である:
+    \begin{enumerate}
+        \item $\frakp$は$R$の素イデアルである。
+        \item $\frakp$は$R$の完全素イデアルである。
+        \item $R / \frakp$は整域である。
+    \end{enumerate}
+\end{proposition}
+
+\begin{proof}
+    \uline{(2) \Rightarrow (1)} \quad
+    cf. \cref{problem:algebra2-2.36}
+
+    \TODO{}
+\end{proof}
+
+\begin{example}[素イデアルの例]
+    ~
+    \begin{itemize}
+        \item 素イデアルは極大イデアルとは限らない。
+            実際、$\Z \cong \Z / (0)$は整域だが体でないので、
+            $(0)$は$\Z$の素イデアルだが極大イデアルではない。
+            しかし、可換アルティン環においては素イデアルは極大イデアルとなる
+            (\cref{problem:algebra2-5.75})。
+    \end{itemize}
+\end{example}
+
+根基と準素イデアルを定義する。
+これらの概念は冪零元と深い関わりを持つ。
+
+\begin{definition}[根基]
+    \idxsym{radical}{$\sqrt{I}$}{$I$の根基}
+    $R$を可換環、
+    $I$を$R$の固有イデアルとする。
+    このとき
+    \begin{equation}
+        \sqrt{I} \coloneqq \{
+            r \in R
+            \mid
+            r^n \in I \; (\exists n \in \Z_{\ge 1})
+        \}
+    \end{equation}
+    は$R$の固有イデアルとなり (このあと示す)、
+    $\sqrt{I}$を$I$の
+    \term{根基}[radical]{根基}[こんき]という。
+    とくに$(0)$の根基$\sqrt{(0)}$を
+    $R$の\term{冪零根基}[nilradical]{冪零根基}[べきれいこんき]という。
+\end{definition}
+
+\begin{proof}
+    cf. \cref{problem:algebra2-2.29}
+\end{proof}
+
+\begin{proposition}[根基の特徴付け]
+    $R$を可換環、$I$を$R$の固有イデアルとする。
+    このとき、$I = \sqrt{I}$となることは
+    $R / I$の$0$でない冪零元が存在しないための必要十分条件である。
+\end{proposition}
+
+\begin{proof}
+    cf. \cref{problem:algebra2-5.65}
+\end{proof}
+
+\begin{definition}[準素イデアル]
+    $R$を可換環とする。
+    $R$の固有イデアル$I$が
+    \term{準素イデアル}[primary ideal]{準素イデアル}[じゅんそいである]
+    であるとは、
+    $x, y \in R$に関し
+    \begin{equation}
+        (xy \in I \land x \not\in I)
+        \quad \implies \quad
+        y \in \sqrt{I}
+    \end{equation}
+    が成り立つことをいう。
+\end{definition}
+
+\begin{proposition}[準素イデアルの特徴付け]
+    \label[proposition]{prop:primary-ideal-characterization}
+    $R$を可換環、$I$を$R$の固有イデアルとする。
+    このとき、$I$が準素イデアルであることは
+    $R / I$の零因子がすべて冪零元になるための
+    必要十分条件である。
+\end{proposition}
+
+\begin{proof}
+    cf. \cref{problem:algebra2-5.66}
+\end{proof}
+
+\begin{proposition}[準素イデアルの根基]
+    \label[proposition]{prop:primary-ideal-radical}
+    $R$を可換環、$I$を$R$の準素イデアルとする。
+    このとき$\sqrt{I}$は$I$を含む最小の素イデアルである。
+\end{proposition}
+
+\begin{proof}
+    cf. \cref{problem:algebra2-6.78}
+\end{proof}
+
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{素元と既約元}
+
+倍元と約元の概念を定義する。
+
+\begin{definition}[倍元と約元]
+    $R$を可換環、
+    $a, b \in R$とする。
+    $a$が$b$の\term{倍元}[multiple]{倍元}[ばいげん]、
+    あるいは$b$が$a$の\term{約元}[divisor]{約元}[やくげん]であるとは、
+    ある$r \in R$が存在して$a = rb$が成り立つことをいい、
+    このことを$b \mid a$と書いて表す。
+    $b \mid a$であるとき
+    \term{$b$は$a$を割り切る}[$b$ divides $a$]{割り切る}[わりきる]、
+    あるいは
+    \term{$a$は$b$で割り切れる}[$a$ is divisible by $b$]{割り切れる}[わりきれる]
+    という。
+\end{definition}
+
+\begin{definition}[同伴元]
+    $R$を可換環、
+    $a \in R$とする。
+    $b \in R$が$a | b$かつ$b | a$をみたすとき、
+    $a$は$b$の\term{同伴元}[associate]{同伴元}[どうはんげん]であるという。
+    明らかにこのとき$b$は$a$の同伴元である。
+\end{definition}
+
+\begin{theorem}[整域における同伴元の特徴付け]
+    $R$を整域とする。
+    $a, b \in R$に関し、
+    $a, b$が互いに同伴元であるための必要十分条件は、
+    ある$u \in R^\times$が存在して
+    $a = ub$が成り立つことである。
+\end{theorem}
+
+\begin{proof}
+    十分性は明らか。
+
+    \TODO{}
+\end{proof}
+
+最大公約元の概念を定義する。
+
+\begin{definition}[最大公約元]
+    $R$を可換環、
+    $a_1, \dots, a_n \in R, \; g \in R$とする。
+    $g$が$a_1, \dots, a_n$の
+    \term{最大公約元}[greatest common divisor]{最大公約元}[さいだいこうやくげん]
+    であるとは、
+    $g$が次をみたすことをいう:
+    \begin{enumerate}
+        \item $g$は$a_1, \dots, a_n$を割り切る。
+        \item $a_1, \dots, a_n$を割り切る任意の$g' \in R$に対し
+            $g'$は$g$を割り切る。
+    \end{enumerate}
+\end{definition}
+
+素元と既約元を定義する。
+既約元は非自明な分解を持たない元のことである。
+
+\begin{definition}[素元と既約元]
+    $R$を可換環とする。
+    \begin{itemize}
+        \item $a \in R - \{0\}$が
+            \term{素元}[prime element]{素元}[そげん]であるとは、
+            $(a) \in \Spec(R)$であることをいう。
+        \item $a \in R - \{0\}$が
+            \term{既約元}[irreducible element]{既約元}[きやくげん]であるとは、
+            \begin{enumerate}
+                \item $a \not\in R^\times$
+                \item $\forall a, b \in R$に対し、
+                    \begin{equation}
+                        a = bc
+                        \quad \implies \quad
+                        (b \in R^\times \lor c \in R^\times)
+                    \end{equation}
+            \end{enumerate}
+            をみたすことをいう。
+    \end{itemize}
+\end{definition}
+
+\begin{example}[既約元は素元とは限らない]
+    cf. \cref{problem:algebra2-3.38}
+    \TODO{}
+    $\Z[\sqrt{-5}]$において$6 = 2 \cdot 3 = (q + \sqrt{-5})(1 - \sqrt{-5})$
+    を考える。
+
+    ただし、後でみるようにUFDでは既約元が素元となる。
+\end{example}
+
+\begin{example}[素元は既約元とは限らない]
+    $K$を体とし、可換環$K \times K$を考える。
+    $(K \times K) / ((1, 0)) \cong K$ゆえに
+    $(1, 0)$は素元である。
+    一方、$(1, 0) = (1, 0) (1, 0)$と可逆でない2元の積に書けることから
+    $(1, 0)$は既約元ではない。
+\end{example}
+
+整域においては素元は既約元でもある。
+既約元の判定はしばしば難しく、
+素元の判定は比較的簡単なことがあるため、
+この定理は既約元の判定の足がかりとなる。
+
+\begin{theorem}[整域では素元は既約元]
+    $R$を整域とする。
+    $R$の素元は既約元である。
+\end{theorem}
+
+\begin{proof}
+    $x \in R - \{ 0 \}$を素元とする。
+    $x = ab, \; a, b \in R$とすると
+    $x$が素元ゆえに$(x)$が素イデアルであることから
+    $a \in (x)$または$b \in (x)$である。
+    $a \in (x)$の場合を考える。
+    $a = rx \; (r \in R)$と表せるから
+    よって$x = rxb = rbx$である。
+    いま$R$は整域だから$1 = rb$が成り立つ。
+    したがって$b \in R^\times$である。
+    同様に$b \in (x)$ならば$a \in R^\times$である。
+    したがって$x$は$R$の既約元である。
+\end{proof}
+
+
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{UFD}
+
+UFDを定義する。
+UFDは既約元分解が次の意味で一意的に存在する整域である。
+
+\begin{definition}[UFD]
+    整域$R$が
+    \term{一意分解整域}[unique factorization domain]{一意分解整域}[いちいぶんかいせいいき]、
+    あるいは略して\term{UFD}{UFD}であるとは、
+    $R$が次をみたすことをいう:
+    \begin{enumerate}
+        \item (既約元分解の存在)
+            $0$でも単元でもない$r \in R$は
+            既約元の積$r = p_1 \dots p_m$の形に表せる。
+            各$p_i$を$r$の
+            \term{素因子}[prime factor]{素因子}[そいんし]
+            という。
+        \item (既約元分解の一意性)
+            既約元$p_1, \dots, p_m, q_1, \dots, q_n \in R$が
+            $p_1 \dots p_m = q_1 \dots q_n$をみたすならば、
+            $m = n$が成り立ち、かつ
+            ある置換$\sigma \in S_n$が存在して
+            $p_i$と$q_{\sigma(i)}$は互いに同伴元となる。
+    \end{enumerate}
+\end{definition}
+
+異なる概念として定義された素元と既約元だが、
+整域においては素元は既約元となるのであった。
+さらにUFDではこの逆も成り立つ。
+したがってUFDでは既約元分解は素元分解と考えても同じことである。
+
+\begin{proposition}[UFDの既約元は素元]
+    UFDの既約元は素元である。
+    したがってUFDの零でない元が
+    既約元であることと素元であることは同値である。
+\end{proposition}
+
+\begin{proof}[証明\footnote{
+    PIDにおける別証明は\cref{problem:algebra2-3.39}を参照。
+}.]
+    $R$をUFD、$p \in R - \{ 0 \}$を既約元とする。
+    $(p)$が素イデアルとなることを示せばよい。
+    $ab \in (p)$とすると
+    $ab = rp \; (r \in R)$と表せる。
+    $p$は既約元だから、左辺の既約元分解には$p$の同伴元が含まれる。
+    したがって既約元分解の一意性より、$a, b$の少なくとも一方の既約元分解に
+    $p$の同伴元が含まれる。
+    よって$a \in (p)$または$b \in (p)$が成り立つ。
+    したがって$(p)$は素イデアルである。
+    よって$p$は$R$の素元である。
+\end{proof}
+
+UFDは最大公約元を持つ。
+
+\begin{proposition}[UFDは最大公約元を持つ]
+    $R$をUFDとする。
+    任意の$a_1, \dots, a_n \in R$に対し$a_1, \dots, a_n$の最大公約元が存在する。
+\end{proposition}
+
+\begin{proof}
+    \TODO{cf. \cite[p.107]{Rot15}}
+\end{proof}
+
+上の命題により次の定義が可能となる。
+
+\begin{definition}[互いに素]
+    $R$をUFD、
+    $a_1, \dots, a_n \in R$とする。
+    $a_1, \dots, a_n$が
+    \term{互いに素}[relatively prime]{互いに素}[たがいにそ]
+    であるとは、
+    $a_1, \dots, a_n$の最大公約元が単元のみであることをいう。
+\end{definition}
+
+\begin{proposition}[互いに素な元と互いに素なイデアル]
+    \begin{equation}
+        (a) + (b) = R
+    \end{equation}
+    \TODO{}
+\end{proposition}
+
+\begin{proof}
+    \TODO{素イデアルが極大イデアルになることや
+        同伴元と単項イデアルの関係を使って示すべき？}
+\end{proof}
+
+体上の多項式環はUFDである。
+
+\begin{theorem}
+    体上の多項式環はUFDである。
+\end{theorem}
+
+\begin{proof}
+    \cite[p.111]{Rot15}
+\end{proof}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{PID}
+
+PIDについて述べる。
+PIDの概念は\cref{chapter:linear-algebra}で述べる単因子論の基礎となる。
+
+\begin{definition}[PID]
+    任意のイデアルが単項イデアルとなる整域を
+    \term{単項イデアル整域}[principal ideal domain]{単項イデアル整域}[たんこういであるせいいき]
+    、あるいは略して\term{PID}{PID}という。
+\end{definition}
+
+単項イデアルの生成元は次の意味で一意である。
+
+\begin{theorem}[単項イデアルの生成元の一意性]
+    $R$を整域とする。
+    $a, b \in R$に対し次は同値である:
+    \begin{enumerate}
+        \item $(a) = (b)$
+        \item $\exists r \in A^\times \quad \text{s.t.} \quad ra = b$
+    \end{enumerate}
+\end{theorem}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+\begin{theorem}[PIDの$0$でない素イデアルは極大イデアル]
+    PIDの$0$でない素イデアルは極大イデアルである。
+\end{theorem}
+
+\begin{proof}
+    $(x) \neq 0$を素イデアルとし、
+    $(y) \supsetneq (x)$をイデアルとする。
+    $x \in (y)$だから$x = yz$と書ける。
+    よって$yz \in (x)$である。
+    したがって$y \in (x) \lor z \in (x)$だが、
+    いま$(y) \supsetneq (x)$だから$y \notin (x)$、
+    したがって$z \in (x)$である。
+    よって$z = wx$と書ける。
+    したがって$x = yz = ywx$である。
+    よって$1 = yw$ゆえに$y$は単元だから$(y) = (1)$である。
+\end{proof}
+
+\begin{proposition}
+    PIDにおいて、既約元の生成する単項イデアルは極大イデアルである。
+\end{proposition}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+\begin{theorem}
+    \label[theorem]{thm:PID-is-UFD}
+    $R$をPIDとする。
+    \begin{enumerate}
+        \item $R$はUFDである。
+        \item $a \in R - R^\times$に対し
+            $\bigcap_{n \ge 1} (a^n) = 0$が成り立つ。
+    \end{enumerate}
+\end{theorem}
+
+\begin{proof}
+    \uline{(1)} \quad
+    \TODO{}
+
+    \uline{(2)} \quad
+    $a = 0$の場合は明らかに成り立つ。
+    $a \neq 0$とすると、$R$がUFDであることより
+    $a$は単元と$k_a \in \Z_{\ge 1}$個の既約元の積に分解できる。
+    $x \in \bigcap_{n \ge 1} (a^n)$とする。
+    $x \in R^\times$であったとすると
+    $x \in (a)$より$a$も単元となり矛盾。
+    したがって$x \notin R^\times$である。
+    $x \neq 0$と仮定し矛盾を導く。
+    $x \notin R^\times, \; x \neq 0$より
+    $x$は単元と$k_x \in \Z_{\ge 1}$個の既約元の積に分解できる。
+    $x \in \bigcap_{n \ge 1} (a^n)$より
+    すべての$n \in \Z_{\ge 1}$に対し
+    $x \in (a^n)$だから
+    $x = r_n a^n \; (r_n \in R)$と表せるが、
+    両辺の既約元分解に現れる既約元の個数は
+    左辺にちょうど$k_x$個、右辺に$nk_a$個以上だから、
+    十分大きな$n$に対しては等しくなりえず、矛盾が従う。
+    よって$x = 0$であり、(2)の主張が示された。
+\end{proof}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{Euclid 整域}
+
+Euclid 整域について述べる。
+
+\begin{definition}[Euclid 整域]
+    $R$を整域とする。
+    $R$が\term{Euclid 整域}[Euclidean domain]{Euclid 整域}[Euclid せいいき]であるとは、
+    次をみたす写像$\delta \colon R \to \Z_{\ge 0} \cup \{-\infty\}$が
+    存在することをいう:
+    \begin{itemize}
+        \item $\delta(R - \{0\}) \subset \Z_{\ge 0}$
+        \item $\delta(0) = -\infty$
+        \item (割り算原理)
+            $\forall a \in R$と$\forall h \in R - \{0\}$に対し
+            \begin{equation}
+                \exists q, r \in R \quad \text{s.t.} \quad
+                a = hq + r \quad \text{and} \quad
+                \delta(r) < \delta(h)
+            \end{equation}
+    \end{itemize}
+\end{definition}
+
+Euclid 整域は PID である。
+
+\begin{theorem}
+    Euclid 整域は PID である。
+\end{theorem}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+体上の1変数多項式環は Euclid 整域となる。
+
+\begin{theorem}
+    体上の1変数多項式環は Euclid 整域である。
+\end{theorem}
+
+\begin{proof}
+    cf. \cref{problem:algebra2-2.20}
+\end{proof}
+
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{局所環}
+
+極大イデアルによって定義される可換環のクラスのうち
+最も重要なもののひとつが局所環である。
+
+\begin{definition}[局所環]
+    極大イデアルをただひとつ持つ可換環を
+    \term{局所環}[local ring]{局所環}[きょくしょかん]という。
+\end{definition}
+
+\begin{example}[単純環と局所環の例]
+    ~
+    \begin{itemize}
+        \item 可換な単純環は$(0)$を唯一の極大イデアルとする局所環である。
+        \item 体は単純環かつ局所環である。
+    \end{itemize}
+\end{example}
+
+局所環$R$の極大イデアル$\frakm$は具体的に表せる。
+すなわち$\frakm$は$R$の非単元全体の集合である。
+
+\begin{theorem}[局所環の乗法群による特徴付け]
+    $R$を可換環とする。
+    次は同値である:
+    \begin{enumerate}
+        \item $R$は局所環である。
+        \item $R - R^\times$は$R$の極大イデアルである。
+    \end{enumerate}
+\end{theorem}
+
+\begin{proof}
+    (2) \Rightarrow (1) は明らかだから
+    (1) \Rightarrow (2) を示す。
+    $\frakm$を$R$の唯一の極大イデアルとする。
+    $R^\times \cap \frakm = \emptyset$であることは
+    $\frakm$が固有イデアルであることから明らか。
+    $x \in R - R^\times$とすると
+    $(x)$は固有イデアルだから
+    \cref{thm:krull} より$(x)$を含む極大イデアルが存在するが、
+    いま$R$は局所環だからそれは$\frakm$である。
+    したがって$x \in \frakm$が成り立つ。
+\end{proof}
+
+\begin{corollary}
+    可換な単純環は体である。
+    \qed
+\end{corollary}
+
+
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{局所化と商体}
+
+局所化について述べる。
+
+\begin{definition}[局所化]
+    \idxsym{localization}{$S^{-1}R$}{$R$の$S$による局所化}
+    $R$を可換環とする。
+    \begin{itemize}
+        \item $R$の乗法に関する部分モノイドを
+            $R$の\term{積閉集合}[multiplicative set]{積閉集合}[せきへいしゅうごう]
+            という。
+        \item $S \subset R$を$R$の積閉集合とする。
+            $R \times S$上の同値関係$\sim$を
+            \begin{equation}
+                (r_1, s_1) \sim (r_2, s_2)
+                    \quad \iff \quad
+                    \exists \; s \in S
+                    \; \text{s.t.} \;
+                    (r_1 s_2 - r_2 s_1) s = 0
+            \end{equation}
+            で定める (ことができる)。
+            この同値関係による商集合を
+            $S^{-1}R \coloneqq (R \times S) / \sim$とおき、
+            $(r, s)$の属する類を$\frac{r}{s}$と書く。
+            $S^{-1}R$には自然な加法と乗法が入り、
+            $\frac{0}{1}$を零元、$\frac{1}{1}$を単位元として環となる。
+            $S^{-1}R$を$R$の$S$による
+            \term{局所化}[localization]{局所化}[きょくしょか]という。
+    \end{itemize}
+\end{definition}
+
+\begin{remark}[局所化は局所環とは限らない]
+    局所化は局所環とは限らない。
+\end{remark}
+
+局所化は次の普遍性を持つ。
+
+\begin{theorem}[局所化の普遍性]
+    $R$を可換環、
+    $S \subset R$を$R$の積閉集合、
+    標準射$R \to S^{-1}R$を$f$とおく。
+    このとき、$S$の元を可換環$B$の単元に写すような
+    任意の環準同型$g \colon R \to B$に対し、
+    ある環準同型$h \colon S^{-1}R \to B$であって
+    \begin{equation}
+        \begin{tikzcd}
+            S^{-1}R
+                \ar[dashed]{rr}{h}
+                && B \\
+            & R
+                \ar{lu}{f}
+                \ar{ru}[swap]{g}
+        \end{tikzcd}
+    \end{equation}
+    を可換にするものが一意に存在する。
+\end{theorem}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+局所化は次の性質を持つ。
+局所化によって$S$の元は分数の分母のところに置けて
+単元になるというイメージである。
+
+\begin{proposition}[局所化の性質]
+    \begin{enumerate}
+        \item $s \in S$に対し$f(s)$は$S^{-1}R$の単元である。
+        \item $f(r) = 0$ならばある$s \in S$が存在して$rs = 0$である。
+        \item $S^{-1}R$の任意の元は
+            ある$r \in R$と$s \in S$により
+            $f(r)f(s)^{-1}$の形に表せる。
+    \end{enumerate}
+    \TODO{}
+\end{proposition}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+\begin{definition}[saturation]
+    \TODO{}
+\end{definition}
+
+\begin{definition}[extension]
+    \TODO{}
+\end{definition}
+
+\begin{proposition}[局所化のイデアル]
+    \TODO{}
+\end{proposition}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+\begin{theorem}[局所化の素イデアルの対応原理]
+    \TODO{}
+\end{theorem}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+
+
+% ============================================================
+%
+% ============================================================
+\chapter{基本的な環}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{整数}
+
+\TODO{初等整数論を展開する}
+
+\begin{theorem}[Euclid の互除法]
+    \TODO{}
+\end{theorem}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{有理数}
+
+\begin{lemma}[有理数の表示]
+    任意の$q \in \Q$は
+    $q = k / l, \; k \in \Z, \; l \in \Z_{\ge 1}, \; \gcd(k, l) = 1$
+    の形に一意的に表せる。
+\end{lemma}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{全行列環}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{多項式環}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{形式的冪級数環}
+
+\begin{definition}
+    \TODO{$R[[X]]$}
+\end{definition}
+
+\begin{proposition}
+    $K$を体とする。
+    $K[[X]]$のイデアルは
+    \begin{equation}
+        (0), (X^d)\; (d \in \Z_{\ge 0})
+    \end{equation}
+    で尽くされる。
+    とくに$K[[X]]$は局所環かつPIDである。
+\end{proposition}
+
+\begin{proof}
+    cf. \cref{problem:algebra2-2.30}
+\end{proof}
+
+
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{Weyl 代数}
+
+\begin{definition}[Weyl 代数]
+    \idxsym{Weyl algebra}{$\C[x; \del]$}{Weyl 代数}
+    商$\C$-代数
+    \begin{equation}
+        \C[x; \del] \coloneqq \C[W(\{ \wt{x}, \wt{\del} \})]
+            \; \big/ \; (\wt{\del} \wt{x} - \wt{x} \wt{\del} - 1)
+    \end{equation}
+    を\term{Weyl 代数}[Weyl algebra]{Weyl 代数}[Weylだいすう]という。
+    $\wt{x}, \wt{\del}$の像をそれぞれ$x, \del$と書く。
+    より一般に
+    \begin{equation}
+        \C[x_1, \dots, x_n; \; \del_1, \dots, \del_n]
+            \coloneqq \C[
+                W(\{ \wt{x}_1, \dots, \wt{x}_n, \wt{\del}_1, \dots, \wt{\del}_n \})
+            ] \; \big/ \; I
+    \end{equation}
+    も Weyl 代数と呼ぶ。ただし、$I$は次の元たちから生成されるイデアルである:
+    \begin{equation}
+        \begin{cases}
+            \wt{\del}_i \wt{x}_j - \wt{x}_j \wt{\del}_i - \delta_{ij} \\
+            \wt{x}_i \wt{\del}_j - \wt{\del}_j \wt{x}_i \\
+            \wt{\del}_i \wt{\del}_j - \wt{\del}_j \wt{\del}_i
+        \end{cases}
+    \end{equation}
+\end{definition}
+
+\begin{definition}[標準基底と標準形]
+    cf. \cref{problem:algebra2-3.49}
+    \TODO{}
+\end{definition}
+
+\begin{proposition}[次数]
+    \TODO{}
+\end{proposition}
+
+\begin{proposition}
+    Weyl 代数$\C[x : \del]$は単純環である。
+\end{proposition}
+
+\begin{proof}
+    cf. \cref{problem:algebra2-3.50}
+\end{proof}
+
+
+
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\newpage
+\section{演習問題}
+
+\subsection{Problem set 1}
+
+\begin{problem}[代数学II 1.1]
+    $\End(\Z)$を求めよ。
+\end{problem}
+
+\begin{answer}
+    \TODO{}
+\end{answer}
+
+\begin{problem}[代数学II 1.2]
+    $\mu_2$を2次巡回群とする。
+    群環$\C[\mu_2]$は$\C \times \C$と
+    $\C$-algebra として同型であることを示せ。
+\end{problem}
+
+\begin{answer}
+    まず、$\C[\mu_2]$および$\C \times \C$はそれぞれ環準同型
+    \begin{alignat}{1}
+        \varphi \colon \C \to \C[\mu_2], &\quad z \mapsto z \wb{0} \\
+        \psi \colon \C \to \C \times \C, &\quad z \mapsto (z, z)
+    \end{alignat}
+    により$\C$-alg となっている。
+    写像$f \colon \C \times \C \to \C[\mu_2]$を
+    \begin{equation}
+        (a, b) \mapsto \frac{a + b}{2} \wb{0} + \frac{a - b}{2} \wb{1}
+    \end{equation}
+    で定める。$f$が$\C$-alg 準同型であることを示す。
+    加法について
+    \begin{alignat}{1}
+        f((a, b) + (a', b'))
+            &= f(a + a', b + b') \\
+            &= \frac{a + a' + b + b'}{2} \wb{0} + \frac{a + a' - b - b'}{2} \wb{1} \\
+            &= \frac{a + b}{2} \wb{0} + \frac{a - b}{2} \wb{1}
+                + \frac{a' + b'}{2} \wb{0} + \frac{a' - b'}{2} \wb{1} \\
+            &= f(a, b) + f(a', b')
+    \end{alignat}
+    乗法について
+    \begin{alignat}{1}
+        f(a, b) \cdot f(a', b')
+            &= \left(
+                    \frac{a + b}{2} \wb{0} + \frac{a - b}{2} \wb{1}
+                \right)
+                \cdot
+                \left(
+                    \frac{a' + b'}{2} \wb{0} + \frac{a' - b'}{2} \wb{1}
+                \right) \\
+            &= \frac{1}{4}
+                \left((a + b)(a' + b') + (a - b)(a' - b')\right) \wb{0} \\
+            &\quad +
+                \frac{1}{4}
+                \left((a - b)(a' + b') + (a + b)(a' - b')\right) \wb{1} \\
+            &= \frac{aa' + bb'}{2} \wb{0} + \frac{aa' - bb'}{2} \wb{1} \\
+            &= f(aa', bb') \\
+            &= f((a, b) \cdot (a', b'))
+    \end{alignat}
+    単位元について
+    \begin{equation}
+        f(1, 1)
+            = \frac{1 + 1}{2} \wb{0} + \frac{1 - 1}{2} \wb{1}
+            = 1 \wb{0}
+    \end{equation}
+    が成り立つから、$f$は環準同型である。
+    また、図式
+    \begin{equation}
+        \begin{tikzcd}
+            \C \times \C \ar{rr}{f} && \C[\mu_2] \\
+            & \C \ar{ul}{\psi} \ar{ur}[swap]{\varphi}
+        \end{tikzcd}
+    \end{equation}
+    が可換となることは
+    \begin{equation}
+        f \circ \psi(z)
+            = f(z, z)
+            = z \wb{0}
+            = \varphi(z)
+    \end{equation}
+    よりわかる。
+    したがって$f$は$\C$-alg 準同型である。
+    $f$の定義より明らかに$\Ker f = 0$だから、$f$は単射である。
+    また、再び$f$の定義から明らかに$f$は全射である。
+    よって$f$は全単射、したがって$\C$-alg 同型である。
+\end{answer}
+
+\begin{problem}[代数学II 1.3]
+    $A, B$を零環でない環、$f \colon A \to B$を単射とする。
+    さらに任意の$x, y \in A$に対して
+    \begin{equation}
+        f(x + y) = f(x) + f(y), \quad f(xy) = f(x) f(y)
+    \end{equation}
+    が成り立つとする。
+    このとき$f$は環準同型となるか？
+\end{problem}
+
+\begin{answer}
+    反例を挙げる。
+    $A \coloneqq \left\{
+        \begin{bmatrix}
+            a & 0 \\
+            0 & a
+        \end{bmatrix} \in M_2(\Z)
+        \mid
+        a \in \Z
+    \right\}, \; B \coloneqq M_2(\Z)$とおき、
+    写像$f \colon A \to B$を
+    \begin{equation}
+        f \colon \begin{bmatrix}
+            a & 0 \\
+            0 & a
+        \end{bmatrix}
+            \mapsto
+            \begin{bmatrix}
+                a & 0 \\
+                0 & 0
+            \end{bmatrix}
+    \end{equation}
+    で定める。
+    $f$は明らかに単射で、また行列の演算の性質から
+    $f(x + y) = f(x) + f(y), \; f(xy) = f(x) f(y)$も成り立つ。
+    しかし
+    \begin{equation}
+        f \colon 1_A = \begin{bmatrix}
+            1 & 0 \\
+            0 & 1
+        \end{bmatrix}
+            \mapsto
+            \begin{bmatrix}
+                1 & 0 \\
+                0 & 0
+            \end{bmatrix}
+            \neq 1_B
+    \end{equation}
+    だから$f$は環準同型ではない。
+\end{answer}
+
+\begin{problem}[代数学II 1.4]
+    可換環の2つの冪零元の和は冪零元になることを示せ。
+    また非可換環の場合は同じことが成り立つか？
+\end{problem}
+
+\begin{answer}
+    $a, b$が冪零元であるとし、
+    $a^m = 0, b^n = 0\; (m, n \in \Z_{>0})$とする。
+    $l = m + n$とおくと、
+    \begin{equation}
+        (a + b)^l = \sum_{k = 0}^l \binom{l}{k} a^{l - k} b^k
+            = 0
+    \end{equation}
+    が成り立つ。
+    ただし、
+    最初の等号では$a, b$が可換であることを用い、
+    最後の等号では
+    \begin{itemize}
+        \item $k \ge m$のとき$a^k = 0$
+        \item $k < m$のとき$l - k > l - m = n$より$b^{l - k} = 0$
+    \end{itemize}
+    であることを用いた。
+    したがって$a + b$も冪零元である。
+
+    非可換環の場合の反例として
+    \begin{equation}
+        A = \begin{bmatrix}
+            0 & 1 \\
+            0 & 0
+        \end{bmatrix},\;
+        B = \begin{bmatrix}
+            0 & 0 \\
+            1 & 0
+        \end{bmatrix}
+        \in M_2(\Z)
+    \end{equation}
+    を考える。
+    \begin{equation}
+        A^2 = 0, B^2 = 0
+    \end{equation}
+    だからこれらは冪零元である。一方、
+    \begin{equation}
+        A + B = \begin{bmatrix}
+            0 & 1 \\
+            1 & 0
+        \end{bmatrix}
+    \end{equation}
+    ゆえに
+    \begin{equation}
+        (A + B)^2 = I_2
+    \end{equation}
+    だから、$(A + B)^n = 0$なる正整数$n$があったとすると
+    \begin{equation}
+        I_2
+            = (A + B)^{2n}
+            = 0
+    \end{equation}
+    となり矛盾。
+\end{answer}
+
+
+\begin{problem}[代数学II 1.5]
+    $A$を環、$u \in A^\times$とし、$n \in A$を冪零元として
+    $un = nu$であるとする。
+    このとき$u + n \in A^\times$を示せ。
+\end{problem}
+
+\begin{answer}
+    $n^{k - 1} \neq 0, n^k = 0, k \in \Z_{>0}$とする。
+    $u + n$の逆元を発見する手立てとして、等比数列の公式を思い出して形式的に
+    \begin{equation}
+        (u + n)^{-1}
+            \stackrel{?}{=} \frac{1}{u + n}
+            \stackrel{?}{=} u^{-1} \frac{1}{1 + nu^{-1}}
+            \stackrel{?}{=} u^{-1} \sum_{i = 0}^{\infty} (-nu^{-1})^i
+    \end{equation}
+    と書いてみると、
+    \begin{equation}
+        u^{-1} \sum_{i = 0}^{k - 1} (-1)^i u^{-i} n^{i}
+    \end{equation}
+    が$u + n$の逆元になりそうだと気づく。そして実際、
+    \begin{alignat}{1}
+        (u + n) u^{-1} \sum_{i = 0}^{k - 1} (-1)^i u^{-i} n^{i}
+            &= (u + n) \sum_{i = 0}^{k - 1} (-1)^i u^{-i - 1} n^{i} \\
+            &= u \sum_{i = 0}^{k - 1} (-1)^i u^{-i - 1} n^{i}
+                + n \sum_{i = 0}^{k - 1} (-1)^i u^{-i - 1} n^{i} \\
+            \intertext{$un = nu$より$u^{-1}n = nu^{-1}$であることに注意して}
+            &= \sum_{i = 0}^{k - 1} (-1)^i u^{-i} n^{i}
+                + \sum_{i = 0}^{k - 1} (-1)^i u^{-i - 1} n^{i + 1} \\
+            &= \sum_{i = 0}^{k - 1} (-1)^i u^{-i} n^{i}
+                + \sum_{i = 0}^{k - 2} (-1)^i u^{-i - 1} n^{i + 1} \\
+            &= \sum_{i = 0}^{k - 1} (-1)^i u^{-i} n^{i}
+                + \sum_{i = 1}^{k - 1} (-1)^{i - 1} u^{-i} n^{i} \\
+            &= 1
+    \end{alignat}
+    となる。
+    したがって$u + n \in A^\times$である。
+\end{answer}
+
+
+\begin{problem}[代数学II 1.6]
+    $S$を index set とし、$\{A_i\}_{i \in S}$を環の族とする。
+    $(B, \{ q_i \colon B \to A_i \}_{i \in S})$が
+    $\{ A_i \}_{i \in S}$の圏論的直積であるとは、
+    $\{ q_i \colon B \to A_i \}_{i \in S}$は環準同型の族であって
+    任意の環準同型の族$\{ f_i \colon C \to A_i \}_{i \in S}$に対して
+    図式
+    \begin{equation}
+        \begin{tikzcd}
+            C \ar{rd}[swap]{f_i} \ar{rr}{F} && B \ar{ld}{q_i} \\
+            & A_i
+        \end{tikzcd}
+    \end{equation}
+    を可換にするような環準同型$F \colon C \to B$が一意に存在することをいう。
+    \begin{enumerate}[label=(\alph*)]
+        \item 直積環$(\prod_{i \in S} A_i,
+            \{ p_i \colon \prod_{i \in S} A_i \to A_i \}_{i \in S})$は
+            $\{ A_i \}_{i \in S}$の圏論的直積であることを示せ。
+            ここで$p_i$は標準射影である。
+        \item 任意の$\{ A_i \}_{i \in S}$の圏論的直積
+            $(B, \{ q_i \colon B \to A_i \}_{i \in S})$
+            に対して、
+            \begin{equation}
+                \begin{tikzcd}
+                    \prod_{i \in S} A_i
+                        \ar{rd}[swap]{p_i} \ar{rr}{\Psi}
+                        && B \ar{ld}{q_i} \\
+                    & A_i
+                \end{tikzcd}
+            \end{equation}
+            を可換にするような環の同型写像
+            $\Psi \colon \prod_{i \in S} A_i \to B$が一意に存在することを示せ。
+    \end{enumerate}
+\end{problem}
+
+\begin{answer}
+    \TODO{}
+\end{answer}
+
+
+\begin{problem}[代数学II 1.7]
+    $R$を環とする。全行列環$M_n(R)$の中心$Z(M_n(R))$を求めよ。
+\end{problem}
+
+\begin{answer}
+    $A = (a_{ij}) \in M_n(R)$とする。
+    $(i, j)$成分が$1$の行列単位を$E_{ij}$と書くことにする。
+    まず
+    \begin{equation}
+        \begin{bmatrix}
+            0 & \dots & 0 \\
+            \vdots & & \vdots \\
+            a_{i1} & \dots & a_{in} \\
+            \vdots & & \vdots \\
+            0 & \dots & 0
+        \end{bmatrix}
+            = E_{ii} A
+            = A E_{ii}
+            = \begin{bmatrix}
+                0 & \dots & a_{1i} & \dots & 0 \\
+                \vdots & & \vdots & & \vdots \\
+                0 & \dots & a_{ni} & \dots & 0
+            \end{bmatrix}
+    \end{equation}
+    より$A$は対角行列である。
+    つぎに
+    \begin{equation}
+        a_{jj} E_{ij} = E_{ij} A = A E_{ij} = a_{ii} E_{ij}
+    \end{equation}
+    より$a_{jj} = a_{ii}$であるから、$A$はスカラー行列である。
+    そこで$A = a I_n, a \in R$とおく。
+    任意の$b \in R$に対し
+    \begin{equation}
+        ab I_n = A (b I_n) = (b I_n) A = ba I_n
+    \end{equation}
+    したがって$ab = ba$が成り立つ。
+    よって$a \in Z(R)$である。
+    逆に対角成分が$Z(R)$の元であるようなスカラー行列は明らかに$Z(M_n(R))$に属する。
+    したがって$Z(M_n(R))$は
+    対角成分が$Z(R)$の元であるようなスカラー行列の全体である。
+\end{answer}
+
+
+\begin{problem}[代数学II 1.8]
+    $(A, +, \cdot, 0)$が
+    \term{nonunital ring}{nonunital ring} であるとは、
+    \begin{itemize}
+        \item $(A, +, 0)$がアーベル群かつ
+        \item $(A, \cdot)$が半群で
+        \item 分配法則をみたすもの
+    \end{itemize}
+    とする。$f \colon A \to B$が nonunital ring の準同型であるとは、
+    \begin{itemize}
+        \item 任意の$x, y \in A$に対して
+            $f(x + y) = f(x) + f(y)$かつ
+            $f(xy) = f(x) f(y)$が成り立つこと
+    \end{itemize}
+    とする。
+    さて、任意の nonunital ring $A$に対して、
+    環$A_1$と nonunital ring の準同型$\iota \colon A \to A_1$であって
+    次の条件を満たすものが存在することを示せ:
+    \begin{description}
+        \item[(条件)]
+            任意の環$B$と nonunital ring の準同型$f \colon A \to B$に対して
+            図式
+            \begin{equation}
+                \begin{tikzcd}[row sep=large]
+                    A \ar{d}[swap]{f} \ar{r}{\iota}
+                        & A_1 \ar[dashed]{ld}{f_1} \\
+                    B
+                \end{tikzcd}
+            \end{equation}
+            を可換にするような環準同型$f_1 \colon A_1 \to B$が
+            一意に存在する。
+    \end{description}
+\end{problem}
+
+\begin{answer}
+    \TODO{}
+\end{answer}
+
+
+\begin{problem}[代数学II 1.9]
+    \label[problem]{problem:algebra2-1.9}
+    $C(\R)$を$\R$上の$\C$値連続関数全体のなす$\C$-alg とする。
+    $C(\R)$の零因子を求めよ。
+\end{problem}
+
+\begin{answer}
+    $f \in C(\R)$が$C(\R)$の零因子であることが次と同値であることを示す:
+    \begin{equation}
+        f \neq 0
+        \quad \text{and} \quad
+        \exists U \opensubset \R
+        \quad \text{s.t.} \quad 
+        \forall x \in U
+        \quad \text{に対し} \quad 
+        f(x) = 0
+    \end{equation}
+
+    ($\Leftarrow$) \quad
+    $U$は$\R$の開集合だから、
+    或る開区間$(x_0 - \eps, x_0 + \eps),\; x_0 \in \R, \eps > 0$を含む。
+    そこで
+    \begin{equation}
+        g(x) \coloneqq \begin{cases}
+            x - (x_0 - \eps / 2) & x \in (x_0 - \eps / 2, x_0) \\
+            - x + (x_0 + \eps / 2) & x \in (x_0, x_0 + \eps / 2) \\
+            0 & \text{otherwise}
+        \end{cases}
+    \end{equation}
+    と定めれば$g \in C(\R), g \neq 0$であり、
+    $f|_U = 0$の仮定から$f \cdot g = 0$が従う。
+    $f \neq 0, g \neq 0$だから$f$は$C(\R)$の零因子である。
+
+    ($\Rightarrow$) \quad
+    $f$は$C(\R)$の零因子であるとする。
+    零因子の定義から$f \neq 0$である。
+    背理法のため
+    \begin{equation}
+        \forall U \opensubset \R
+        \quad \text{に対し} \quad
+        \exists x \in U
+        \quad \text{s.t.} \quad
+        f(x) \neq 0
+    \end{equation}
+    を仮定する。
+    いま$f$が$C(\R)$の零因子であることから
+    \begin{equation}
+        \exists g \in C(\R), g \neq 0
+        \quad \text{s.t.} \quad
+        f \cdot g = 0
+    \end{equation}
+    である。
+    このとき、$g \neq 0$より
+    \begin{equation}
+        \exists x_0 \in \R
+        \quad \text{s.t.} \quad
+        g(x_0) \neq 0
+    \end{equation}
+    である。
+    このことと$g$の点$x_0$における連続性より
+    \begin{equation}
+        \exists U \colon \text{$x_0$の開近傍}
+        \quad \text{s.t.} \quad
+        \forall x \in U
+        \quad \text{に対し} \quad
+        g(x) \neq 0
+    \end{equation}
+    が成り立つ。
+    ここで、この$U$に対して背理法の仮定を用いると
+    \begin{equation}
+        \exists x_1 \in U
+        \quad \text{s.t.} \quad
+        f(x_1) \neq 0
+    \end{equation}
+    である。よって
+    \begin{equation}
+        (f \cdot g)(x_1) = f(x_1) g(x_1) \neq 0
+    \end{equation}
+    が成り立つ。
+    これは$f \cdot g = 0$に矛盾。
+\end{answer}
+
+
+\begin{problem}[代数学II 1.10]
+    $A$を$1 < \dim_\C A < \infty$なる$\C$-alg とする。
+    このとき$A$は零因子を持つことを示せ。
+\end{problem}
+
+\begin{answer}
+    $\dim_\C A > 1$だから$\C$-線型独立な$v_1, v_2 \in A$がとれる。
+    $A$が零因子を持たないとして矛盾を導く。
+    $a \in A \setminus \{0\}$とし、2つの写像
+    \begin{equation}
+        L_a \colon A \to A, \quad x \mapsto ax, \quad
+        R_a \colon A \to A, \quad x \mapsto xa
+    \end{equation}
+    を考える。これらは明らかに$\C$-線型であり、
+    $A$が零因子を持たないという仮定から$\Ker$は自明、したがって単射である。
+    $\dim_\C < \infty$であることとあわせて、
+    $L_a, R_a$の全射性が従う。
+    よって
+    \begin{equation}
+        \begin{cases}
+            \exists x \in A \quad \text{s.t.} \quad ax = 1 \\
+            \exists y \in A \quad \text{s.t.} \quad ya = 1
+        \end{cases}
+    \end{equation}
+    であり、逆元の一意性から$x = y$が従う。
+    よって$a$は$A$の可逆元である。
+    さて、$a \in A \setminus \{0\}$は任意であったから、
+    とくに$v_1, v_2$も$A$の可逆元である。
+    そこで$w \coloneqq v_2 v_1^{-1}\; (\neq 0)$とおき、
+    $\C$-線型写像$L_w$の特性多項式\footnotemark を$\Phi(X)$とおく。
+    Cayley-Hamilton の定理より
+    $\Phi(L_w) = 0$が成り立つから、
+    \begin{equation}
+        0 = (\Phi(L_w))(v_1)
+            = \Phi(w) v_1
+    \end{equation}
+    であり、$A$が零因子を持たないという仮定から
+    $\Phi(w) = 0$が従う。
+    ここで、$\C$は代数的閉体だから$\Phi(X)$は1次式の積に分解し
+    \begin{equation}
+        \Phi(X) = (X - \mu_1) (X - \mu_2) \cdots (X - \mu_n)
+    \end{equation}
+    の形に書ける。ただし$\mu_i$らは$L_w$の固有値である。
+    したがって、$\Phi(w) = 0$であることと、
+    $A$が零因子を持たないという仮定をあわせて
+    \begin{equation}
+        w - \mu_k \cdot 1_A = 0 \quad (\exists k = 1, \dots, n)
+    \end{equation}
+    が成り立ち、$w$の定義とあわせて
+    \begin{equation}
+        v_2 = w v_1 = \mu_k \cdot v_1
+    \end{equation}
+    が従う。これは$v_1, v_2$の$\C$-線型独立性に矛盾する。
+    よって$A$が零因子を持たないとした仮定は偽で、題意の主張が示せた。
+\end{answer}
+
+\footnotetext{
+    有限次元線型空間の自己準同型$f$に対し、
+    適当な基底による行列表現$B$の特性多項式$\det(XI_n - B)$を
+    $f$の\term{特性多項式}[characteristic polynomial]{特性多項式}[とくせいたこうしき]という。
+}
+
+
+\begin{problem}[代数学II 1.11]
+    $A$を環とする。
+    ある零環でない環$B, C$が存在して$A \cong B \times C$となるための必要十分条件は
+    $0, 1 \neq e$なる冪等元$e \in Z(A)$が存在することであることを示せ。
+\end{problem}
+
+\begin{answer}
+    ($\Rightarrow$) \quad
+    $B \times C$において
+    $(1_B, 0) \neq 1_{B \times C}, 0_{B \times C}$は
+    \begin{equation}
+        (1_B, 0)^2 = (1_B, 0)
+    \end{equation}
+    をみたすから冪等元であり、また明らかに$B \times C$の中心に属する。
+    そこで、これを同型によって$A$に写したものが求める$e$となる。
+
+    ($\Leftarrow$) \quad
+    $e, 1 - e$は$A$の中心冪等元だから、
+    \begin{equation}
+        B \coloneqq A e, \quad
+        C \coloneqq A (1 - e)
+    \end{equation}
+    はそれぞれ$e, 1 - e$を単位元として環をなす。
+    そこで写像$A \to B \times C$を
+    \begin{equation}
+        x \mapsto (xe, x(1 - e))
+    \end{equation}
+    で定めれば、これが環同型$A \cong B \times C$を与える。
+    定義より$B, C$は零環でないから、これらが求めるものである。
+\end{answer}
+
+
+\begin{problem}[代数学II 1.12 Hamilton's Quaternions]
+    $M_2(\C)$を実ベクトル空間と考え、
+    \begin{equation}
+        \begin{bmatrix}
+            1 & 0 \\
+            0 & 1
+        \end{bmatrix},
+        \begin{bmatrix}
+            i & 0 \\
+            0 & -i
+        \end{bmatrix},
+        \begin{bmatrix}
+            0 & 1 \\
+            -1 & 0
+        \end{bmatrix},
+        \begin{bmatrix}
+            0 & i \\
+            i & 0
+        \end{bmatrix}
+    \end{equation}
+    で生成される$4$次元実部分空間を$\H$とおく。
+    $\H$は$M_2(\C)$の部分環となり、さらに division algebra となることを示せ。
+\end{problem}
+
+\begin{answer}
+    所与の行列を左から順に$1, I, J, K$と書くことにする。
+    乗積表は
+    \begin{center}
+        \begin{tabular}{R|RRRR}
+              & 1 & I & J & K \\ \hline
+            1 & 1 & I & J & K \\
+            I & I & -1 & K & -J \\
+            J & J & -K & -1 & I \\
+            K & K & J & -I & -1
+        \end{tabular}
+    \end{center}
+    となる。
+    よって
+    \begin{alignat*}{1}
+        (a1 + bI + cJ + dK)(a'1 + b'I + c'J + d'K)
+            &= aa'1 + bb'I + cc'J + dd'K \\
+            &+ ba'I - bb'1 + bc'K - bd'J \\
+            &+ ca'J - cb'K - cc'1 + cd'I \\
+            &+ da'K + db'J - dc'I - dd'1
+    \end{alignat*}
+    である。そこで
+    \begin{equation}
+        a' = a,\quad
+        b' = -b,\quad
+        c' = -c,\quad
+        d' = -d
+    \end{equation}
+    とおけば
+    \begin{equation}
+        (a1 + bI + cJ + dK)(a1 - bI - cJ - dK)
+            = (a^2 + b^2 + c^2 + d^2) 1
+    \end{equation}
+    となる。
+    したがって$a^2 + b^2 + c^2 + d^2 \neq 0$のとき、
+    すなわち$a1 + bI + cJ + dK \in \H \setminus \{0\}$のとき
+    $a1 + bI + cJ + dK$の乗法逆元が
+    \begin{equation}
+        \frac{1}{a^2 + b^2 + c^2 + d^2}
+            (a1 - bI - cJ - dK)
+    \end{equation}
+    で与えられることがわかる。
+    よって$\H \setminus \{0\} \subset \H^\times$である。
+    逆向きの包含も明らかに成り立つ。
+    よって$\H \setminus \{0\} = \H^\times$、
+    したがって$\H$は division algebra である。
+\end{answer}
+
+
+\begin{problem}[代数学II 1.13]
+    \label[problem]{problem:algebra-1.13}
+    $\{x \in \H \mid x^2 = -1\}$は無限集合であることを示せ。
+\end{problem}
+
+\begin{answer}
+    $x = a + bi + cj + dk \in \H$とおくと
+    \begin{alignat}{1}
+        x^2
+            &= (a + bi + cj + dk)^2 \\
+            &= aa + abi + acj + adk \\
+            &+ bai -bb + bck - bdj \\
+            &+ caj -cbk - cc + cdi \\
+            &+ dak + dbj - dci - dd \\
+            &= a^2 - b^2 - c^2 - d^2
+                + 2abi + 2acj + 2adk
+    \end{alignat}
+    だから、これが$-1$に一致する条件は
+    \begin{equation}
+        \begin{cases}
+            a^2 - b^2 - c^2 - d^2 = -1 \\
+            ab = ac = ad = 0
+        \end{cases}
+    \end{equation}
+    すなわち
+    \begin{equation}
+        a = 0 \wedge b^2 + c^2 + d^2 = 1
+    \end{equation}
+    である。
+    よって
+    \begin{alignat}{1}
+        \{ x \in \H \mid x^2 = -1 \}
+            &= \{ bi + cj + dk \mid b^2 + c^2 + d^2 = 1 \} \\
+            &= \{
+                (\sin\theta_1 \sin\theta_2) i
+                + (\sin\theta_1 \cos\theta_2) j
+                + (\cos\theta_1) k
+                \mid 
+                \theta_1, \theta_2 \in \R
+            \}
+    \end{alignat}
+    が成り立つ。右辺は無限集合だから、左辺もそうであり、
+    したがって題意の主張が示せた。
+\end{answer}
+
+
+\begin{problem}[代数学II 1.14]
+    非可換$3$次元$\C$-alg は$0$でない冪零元をもつことを示せ。
+\end{problem}
+
+\begin{answer}
+    \TODO{1.10を使えば零因子の存在はいえるが…？}
+    cf. \url{http://doi.org/10.5169/seals-46956}
+\end{answer}
+
+
+\begin{problem}[代数学II 1.15]
+    $M_n(\C)$の$\C$-alg としての自己同型写像をすべて求めよ。
+\end{problem}
+
+\begin{answer}
+    \TODO{}
+\end{answer}
+
+
+\begin{problem}[代数学II 1.16]
+    任意の巡回群を考えその演算を加法とみなす。
+    すると環の構造を与える乗法が一意に定まることを示せ。
+\end{problem}
+
+\begin{answer}
+    \TODO{環同型を除いて？}
+    巡回群は$\Z$あるいは$\Z/n\Z$に群同型だから、
+    $\Z, \Z/n\Z$について考えれば十分。
+    そこで、まず$\Z$について考える。
+    $\Z$の通常の加法、乗法をそれぞれ$+, \times$で表すことにし、
+    さらに$\Z$に乗法$\odot$が与えられたとする。
+    乗法$\odot$に関する単位元を$e$とおく。
+    このとき$e = 0$なら
+    \begin{alignat}{1}
+        1
+            &= e \odot 1 \\
+            &= 0 \odot 1 \\
+            &= 0
+    \end{alignat}
+    となり矛盾だから、$e \neq 0$である。
+    $e > 0$の場合
+    \begin{alignat}{1}
+        1
+            &= e \odot 1 \\
+            &= (\underbrace{1 + \dots + 1}_{\text{$e$ times}}) \odot 1 \\
+            &= \underbrace{1 \odot 1 + \dots + 1 \odot 1}_{\text{$e$ times}} \\
+            &= e \times (1 \odot 1)
+    \end{alignat}
+    ゆえに$e$は乗法$\times$に関し可逆だから$e = \pm 1$である。
+    いま$e > 0$であったから$e = 1$である。
+    すると$1 \odot 1 = e \odot e = e = 1$だから、
+    各$a, b \in \Z$に対し
+    \begin{alignat}{1}
+        a \odot b
+            &= a \times b \times (1 \odot 1) \\
+            &= a \times b \times 1 \\
+            &= a \times b
+    \end{alignat}
+    が成り立つ。
+\end{answer}
+
+
+\begin{problem}[代数学II 1.17]
+    $2$次元$\C$-alg を同型を除いて分類せよ。
+\end{problem}
+
+\begin{answer}
+    \TODO{}
+\end{answer}
+
+
+\begin{problem}[代数学II 1.18]
+    $\Z[\sqrt{2}] = \{ n + \sqrt{2}m \mid n, m \in \Z \}$は
+    $\C$の部分環になることを示せ。
+    また次を示し$\Z[\sqrt{2}]^\times$が無限群であることを示せ:
+    \begin{equation}
+        \Z[\sqrt{2}]^\times
+            = \{ n + \sqrt{2}m \mid n, m \in \Z, n^2 - 2m^2 = \pm 1 \}
+    \end{equation}
+\end{problem}
+
+\begin{answer}
+    $\Z[\sqrt{2}]$が$\C$の加法部分群であることと$1$を含むことは明らか。
+    乗法について閉じていることは
+    \begin{alignat}{1}
+        (n + \sqrt{2} m) (a + \sqrt{2} b)
+            &= na + 2mb + \sqrt{2} (nb + ma)
+    \end{alignat}
+    よりわかる。
+    したがって$\Z[\sqrt{2}]$は$\C$の部分環である。
+    乗法群$\Z[\sqrt{2}]^\times$が題意のように表されることを示す。
+    "$\subset$"はモノイド準同型
+    \begin{equation}
+        N \colon \Z[\sqrt{2}]^\times \to \Z,
+        \quad n + \sqrt{2} m \mapsto n^2 - 2m^2
+    \end{equation}
+    を用いて示せる。
+    \begin{innerproof}
+        $(n + \sqrt{2} m) (a + \sqrt{2} b) = 1$であるとすれば、
+        両辺を$N$で写して
+        \begin{equation}
+            (n^2 - 2m^2) (a^2 - 2b^2) = 1
+        \end{equation}
+        よって$n^2 - 2m^2 = \pm 1$を得る。
+    \end{innerproof}
+    "$\supset$"は、$n^2 - 2m^2 = \pm 1$のとき
+    $n + \sqrt{2} m$の逆元が$\pm (n - \sqrt{2} m)$となることから明らか。
+    最後に$\Z[\sqrt{2}]^\times$が無限群であることは、
+    ひとつの解$n + \sqrt{2} m$から
+    新たな解として$(n^2 + 2m^2) + 2 \sqrt{2} nm$を構成できることからわかる。
+    \begin{innerproof}
+        実際、
+        \begin{alignat}{1}
+            (n^2 + 2m^2)^2 - 2 (2nm)^2
+                &= (n^2 - 2m^2)^2 \\
+                &= 1
+        \end{alignat}
+        である。
+        新たな解の実部$n^2 + 2m^2$はもとの解より大きいから、
+        この構成で得られる無限個の解たちはすべて相異なる。
+    \end{innerproof}
+\end{answer}
+
+\subsection{Problem set 2}
+
+\begin{problem}[代数学II 2.19]
+    次数が$k$である$n$変数単項式の個数を$d_n(k)$とおく。
+    \begin{equation}
+        \frac{1}{(1 - t)^n}
+            = \sum_{k = 0}^\infty d_n(k) t^k
+            \quad (|t| < 1)
+    \end{equation}
+    を示せ。また$d_n(k)$を求めよ。
+\end{problem}
+
+\begin{answer}
+    \TODO{}
+    まず$n \in \Z_{\ge 1}, k \in \Z_{\ge 0}$に対し
+    \begin{equation}
+        d_n(k) = \binom{k + n - 1}{n - 1}
+    \end{equation}
+    である (区別のある$n$個の箱に区別のない$k$個の玉を入れることを考える)。
+    つぎに、$n \in \Z_{\ge 0}$に対し
+    \begin{alignat}{1}
+        \frac{d^n}{dt^n} \frac{t^n}{1 - t}
+            &= \frac{d^n}{dt^n} \sum_{k = 0}^\infty t^{k + n} \\
+            &= \sum_{k = 0}^\infty \frac{d^n}{dt^n} t^{k + n} \\
+            &= \sum_{k = 0}^\infty (k + n) \dots (k + 1) t^k
+    \end{alignat}
+    が成り立つ。一方、
+    \begin{alignat}{1}
+        \frac{d^n}{dt^n} \frac{t^n}{1 - t}
+            &= \frac{d^n}{dt^n} \left(
+                - (t^{n-1} + \dots + t + 1) + \frac{1}{1 - t}
+            \right) \\
+            &= \frac{d^n}{dt^n} \frac{1}{1 - t} \\
+            &= n! \frac{1}{(1 - t)^{n+1}}
+    \end{alignat}
+    が成り立つ。
+    したがって
+    \begin{alignat}{1}
+        \frac{1}{(1 - t)^{n+1}}
+            &= \frac{1}{n!} \frac{d^n}{dt^n} \frac{t^n}{1 - t} \\
+            &= \frac{1}{n!} \sum_{k = 0}^\infty (k + n) \dots (k + 1) t^k \\
+            &= \sum_{k = 0}^\infty \binom{k + n}{n}  t^k \\
+            &= \sum_{k = 0}^\infty d_{n + 1}(k)  t^k
+    \end{alignat}
+    である。
+\end{answer}
+
+
+\begin{problem}[代数学II 2.20]
+    \label[problem]{problem:algebra2-2.20}
+    体$K$上の1変数多項式環$K[X]$は Euclid 整域であることを示せ。
+\end{problem}
+
+\begin{answer}
+    $K[X]$が Euclid 整域であることを示す。
+    まず$K[X]$が整域であることは、任意の$f, g \in K[X] - \{0\}$について
+    \begin{alignat}{1}
+        f(X) &= \sum_{i=0}^{\deg(f)} a_i X^i, \quad a_{\deg(f)} \neq 0 \\
+        g(X) &= \sum_{i=0}^{\deg(g)} b_i X^i, \quad b_{\deg(g)} \neq 0
+    \end{alignat}
+    と表したときに、これらの積
+    \begin{equation}
+        f(X) \cdot g(X)
+            = \sum_{i=0}^{\deg(f) + \deg(g)}
+                \sum_{j=0}^i a_j b_{i-j} X^i
+    \end{equation}
+    の最高次係数$a_{\deg(f)} b_{\deg(g)}$が$0$でない
+    ($\because$ $K$は整域) ことから従う。
+    さらに写像$\deg \colon K[X] \to \Z_{\ge 0} \cup \{-\infty\}$は
+    次をみたす:
+    \begin{enumerate}
+        \item $\deg(K[X] - \{0\}) \subset \Z_{\ge 0}$
+        \item $\deg(0) = -\infty$
+        \item $\forall f \in K[X]$と$\forall g \in K[X] - \{0\}$に対し、
+            $K$が体ゆえに$g$の最高次係数は単元だから、
+            多項式環の除法定理
+            (\cref{thm:division-theorem-of-polynomial-ring})
+            より$\exists q, r \in K[X]$が存在して
+            \begin{equation}
+                f = g \cdot q + r,\quad \deg(r) < \deg(g)
+            \end{equation}
+            が成り立つ。
+    \end{enumerate}
+    したがって$K[X]$は Euclid 整域である。
+\end{answer}
+
+
+\begin{problem}[代数学II 2.21]
+    \label[problem]{problem:algebra-2.21}
+    $K$を体、$f \in K[X], f \neq 0$で$f$の次数を$n$とする。
+    このとき$\{ a \in K \colon f(a) = 0 \}$の濃度は
+    $n$以下であることを示せ。
+\end{problem}
+
+\begin{remark}
+    この問題の主張は$K$が整域ならば成り立つが、
+    $K$が division algebra の場合は成り立たない (\cref{problem:algebra-1.13})。
+    一般的に、可換性を要する命題の証明では、その過程で根の個数の不等式を利用することがよくある。
+\end{remark}
+
+\begin{answer}
+    $n$に関する帰納法で示す。
+    $n = 0$の場合は$f$の根は存在しないから主張が成り立つ。
+    $n \ge 1$とし、すべての$k = 0, 1, \dots, n - 1$に対し
+    主張の成立を仮定する。
+    $f$が根を持たなければただちに主張が成り立つから、
+    $f$は少なくとも1つの根$\alpha_0 \in K$を持つとする。
+    剰余定理より
+    \begin{equation}
+        \exists g \in K[X]
+        \quad \text{s.t.} \quad
+        f(X) = (X - \alpha_0) g(X)
+    \end{equation}
+    が成り立つ。いま$K$は体、とくに整域だから
+    $\alpha_0$以外の$f$の根は$g$の根でもある。
+    さらに$\deg g = \deg f - 1 = n - 1$であることとあわせて、
+    帰納法の仮定より
+    \begin{alignat}{1}
+        |\{ a \in K \colon f(a) = 0 \}|
+            &\le |\{ a \in K \colon g(a) = 0 \} \cup \{ \alpha_0 \}| \\
+            &\le |\{ a \in K \colon g(a) = 0 \}| + 1 \\
+            &\le n
+    \end{alignat}
+    が成り立つ。
+\end{answer}
+
+
+\begin{problem}[代数学II 2.22]
+    $K$を体とする。
+    乗法群$K^\times$の任意の有限部分群は巡回群になることを示せ。
+\end{problem}
+
+\begin{answer}
+    \TODO{トーシェント関数についてどこかに書きたい}
+
+    Euler のトーシェント関数を$\varphi$とおく。
+    すなわち
+    \begin{equation}
+        \varphi(n) = (\text{$n$と互いに素な$n$以下の正整数の個数})
+        \quad (n \in \Z_{\ge 1})
+    \end{equation}
+    とおく。
+    一般に、任意の巡回群$G$に対し
+    \begin{equation}
+        \label[equation]{eq:algebra-2.22-1}
+        \sharp \{ x \in G \colon \text{$x$は$G$の生成元} \}
+        = \varphi(|G|)
+    \end{equation}
+    が成り立つ。
+    \begin{innerproof}
+        $d = |G|$とおき、$G$の生成元$g_0$をひとつ固定する。
+        $g \in G$を$G$の生成元とすると、
+        ある$1 \le d' \le d$がただひとつ存在して
+        $g = g_0^{d'}$が成り立つ。
+        このとき$\gcd(d', d) = 1$である。
+        実際、$g$が生成元であることより、ある$1 \le k \le d$が存在して
+        \begin{equation}
+            g_0 = g^k = g_0^{d'k}
+        \end{equation}
+        が成り立つ。
+        よって、ある$l \in \Z$が存在して
+        \begin{equation}
+            1 = d'k + dl
+        \end{equation}
+        が成り立つ。よって$\gcd(d', d) = 1$である。
+        逆に$1 \le d'' \le d$が$\gcd(d'', d) = 1$をみたすとすれば
+        ある$k', l' \in \Z$が存在して
+        \begin{equation}
+            1 = d''k' + dl'
+        \end{equation}
+        が成り立つから、
+        \begin{equation}
+            g_0 = g_0^{d''k'}
+        \end{equation}
+        となり、したがって$g_0^{d''}$は$G$の生成元である。
+        以上より全単射
+        \begin{equation}
+            \{ x \in G \colon \text{$x$は$G$の生成元} \}
+            \leftrightarrow
+            \{ k \in \{ 1, \dots, d \} \colon \gcd(k, d) = 1 \}
+        \end{equation}
+        が存在するから、求める主張が従う。
+    \end{innerproof}
+    また、一般に任意の正整数$n$に対し
+    \begin{equation}
+        \label[equation]{eq:algebra-2.22-2}
+        n = \sum_{d | n} \varphi(d)
+    \end{equation}
+    が成り立つ。
+    \begin{innerproof}
+        巡回群$\Z / n\Z$を考える。
+        各$d \in \Z_{\ge 1},\; d | n$に対し、
+        $\Z / n\Z$の位数$d$の巡回部分群$H_d$はただひとつ存在する
+        (ちなみにそれは$H_d = \biggl\langle \frac{n}{d} + n\Z \biggr\rangle$である)
+        から、
+        \begin{alignat}{1}
+            \Z / n\Z
+                &= \bigsqcup_{d | n} \{
+                    x \in \Z / n\Z \colon \text{$x$の位数は$d$}
+                \} \\
+                &= \bigsqcup_{d | n} \{
+                    x \in \Z / n\Z \colon \text{$x$は$H_d$の生成元}
+                \}
+        \end{alignat}
+        が成り立つ。
+        よって
+        \begin{alignat}{1}
+            n
+                &= \sum_{d | n} \sharp \{
+                    x \in \Z / n\Z \colon \text{$x$は$H_d$の生成元}
+                \} \\
+                &= \sum_{d | n} \varphi(d)
+        \end{alignat}
+        である。
+    \end{innerproof}
+    さて、$H \subset K^\times$を有限部分群とし、$H$が巡回群であることを示す。
+    $n \coloneqq |H|$とおくと
+    \begin{equation}
+        H = \bigsqcup_{d | n} \{
+            x \in H \colon \text{$x$の位数は$d$}
+        \}
+    \end{equation}
+    が成り立つ。
+    $d \in \Z_{\ge 1},\; d | n$とし、
+    $H$の位数$d$の元$x_0$が存在したとする。
+    すると
+    \begin{equation}
+        \langle x_0 \rangle
+            \subset \{ x \in H \colon x^d = 1 \}
+    \end{equation}
+    が成り立つが、いま$H$は体$K$の部分集合であったから
+    右辺の集合の濃度は$d$以下である (\cref{problem:algebra-2.21})。
+    このことと、左辺の集合の濃度が$d$であることをあわせて
+    \begin{equation}
+        \langle x_0 \rangle
+            = \{ x \in H \colon x^d = 1 \}
+    \end{equation}
+    が成り立つ。
+    よって$x_0$は巡回群$\{ x \in H \colon x^d = 1 \}$の生成元である。
+    したがって、各$d \in \Z_{\ge 1},\; d | n$に対し
+    \begin{equation}
+        H_d \coloneqq \{ x \in H \colon x^d = 1 \}
+    \end{equation}
+    とおけば
+    \begin{equation}
+        \{
+            x \in H \colon \text{$x$の位数は$d$}
+        \}
+            = \begin{cases}
+                \{
+                    x \in H \colon \text{$x$は$H_d$の生成元}
+                \} \quad & (\text{$H$が位数$d$の元をもつ}) \\
+                \emptyset \quad & (\text{otherwise})
+            \end{cases}
+    \end{equation}
+    が成り立つ。
+    したがって
+    \begin{alignat}{1}
+        n
+            &= |H| \\
+            &= \sum_{d | n} \sharp \{
+                x \in H \colon \text{$x$の位数は$d$}
+            \} \\
+            &\le \sum_{d | n} \sharp \{
+                x \in H \colon \text{$x$は$H_d$の生成元}
+            \} \\
+            &= \sum_{d | n} \varphi(d)
+            \quad (\because \cref{eq:algebra-2.22-1}) \\
+            &= n
+            \quad (\because \cref{eq:algebra-2.22-2})
+    \end{alignat}
+    が成り立つ。
+    よってとくに集合$\{ x \in H \colon \text{$x$の位数は$d$} \}$は空でなく、
+    $H$は位数$n$の元をもつ。
+    したがって$H$は巡回群である。
+\end{answer}
+
+
+\begin{problem}[代数学II 2.23]
+    Gauss 整数環$\Z[i] = \{ m + ni \colon m, n \in \Z \}$は
+    Euclid 整域であることを示せ。
+\end{problem}
+
+\begin{answer}
+    写像$N \colon \Z[i] \to \Z$を
+    \begin{equation}
+        N(m + ni) \coloneqq m^2 + n^2
+    \end{equation}
+    で定める。$\C$における絶対値の性質から明らかに
+    \begin{equation}
+        N(\alpha \beta) = N(\alpha) N(\beta)
+        \quad (\forall \alpha, \beta \in \Z[i])
+    \end{equation}
+    が成り立つ。さて、$\alpha, \beta \in \Z[i],\; \beta \neq 0$に対し
+    \begin{equation}
+        \exists \gamma, \delta \in \Z[i]
+        \quad \text{s.t.} \quad
+        \alpha = \beta \gamma + \delta,\quad N(\delta) < N(\beta)
+    \end{equation}
+    を示す。目標の式から逆算して形式的に変形してみると
+    \begin{equation}
+        \frac{\alpha}{\beta} - \gamma = \frac{\delta}{\beta}
+    \end{equation}
+    を得る。右辺の絶対値をできるだけ小さくすればうまくいきそうである。
+    そこで$\alpha / \beta$に最も近い Gauss 整数のひとつを$\gamma \in \Z[i]$とおき、
+    $\delta \coloneqq \alpha - \beta \gamma \in \Z[i]$とおく。
+    あとは$N(\delta) < N(\beta)$を示せばよい。
+    $\gamma$の定め方から明らかに
+    \begin{equation}
+        \left| \gamma - \frac{\alpha}{\beta} \right| < 1
+    \end{equation}
+    なので
+    \begin{alignat}{1}
+        1 > N\left(\frac{\delta}{\beta}\right)
+            = \frac{N(\delta)}{N(\beta)}
+    \end{alignat}
+    よって$N(\delta) < N(\beta)$が成り立つ。
+    そこで写像$N' \colon \Z[i] \to \Z_{\ge 0} \cup \{ -\infty \}$を
+    \begin{equation}
+        N'(\alpha) \coloneqq \begin{cases}
+            N(\alpha) - 1 & (\alpha \neq 0) \\
+            -\infty & (\alpha = 0)
+        \end{cases}
+    \end{equation}
+    と定めれば$N'$は
+    \begin{enumerate}
+        \item $N'(\Z[i] - \{0\}) \subset \Z_{\ge 0}$
+        \item $N'(0) = -\infty$
+        \item $\forall \alpha \in \Z[i]$と$\beta \in \Z[i] - \{0\}$に対し、
+            $\exists \gamma, \delta \in \Z[i]$が存在して
+            \begin{equation}
+                \alpha = \beta \gamma + \delta,\quad N'(r) < N'(g)
+            \end{equation}
+            が成り立つ (除法定理)。
+    \end{enumerate}
+    をみたすから、$\Z[i]$は Euclid 整域である。
+\end{answer}
+
+
+\begin{problem}[代数学II 2.24]
+    \label[problem]{problem:algebra-2.24}
+    $K$を無限個の元を持つ体とする。
+    このとき$\mathrm{Map}(K^n, K)$で
+    $K^n$から$K$への写像全体のなす集合とする。
+    $K$上の$n$変数多項式環$K[X_1, \dots, X_n]$から$\mathrm{Map}(K^n, K)$への写像$F$を
+    $K[X_1, \dots, X_n]$の元を対応する多項式関数に写すことで与える。
+    このとき$F$は単射であることを示せ。
+\end{problem}
+
+\begin{answer}
+    各$n \in \Z_{\ge 1}$に対し$F$を$F_n$と書くことにし、
+    $\mathrm{Map}(K^n, K)$には$K$上の和と積から自然に環構造を入れる。
+    すると各$F_n$は環準同型である。
+    よって、$F_n$の単射性を示すには$\Ker F_n = \{ 0_{K[X_1, \dots, K_n]} \}$を
+    示せばよい。
+    これを$n$に関する数学的帰納法で示す。
+
+    \uline{[1]} \quad
+    $\Ker F_1 \subset \{ 0_{K[X_1]} \}$を示す。
+    そこで$f \in K[X_1]$について$f \neq 0_{K[X_1]}$とすると、
+    $K$が体であることから$f$の根は有限個である。
+    一方、問題の仮定より$K$は無限個の元を持つから、
+    或る$b_1 \in K$が存在して$f(b_1) \neq 0$が成り立つ。
+    よって$F_1(f) \neq 0_{\mathrm{Map}(K^1, K)}$である。
+    したがって$\Ker F_1 \subset \{ 0_{K[X_1]} \}$である。
+    逆の包含は明らかだから$\Ker F_1 = \{ 0_{K[X_1]} \}$が成り立つ。
+
+    \uline{[2]} \quad
+    $n - 1$のとき成立を仮定し、
+    $\Ker F_n \subset \{ 0_{K[X_1, \dots, X_n]} \}$を示す。
+    そこで$f \in K[X_1, \dots, X_n]$とする。
+    $f$は
+    \begin{equation}
+        f = \sum_{\substack{0 \le i_1 \le d_1 \\ \cdots \\ 0 \le i_n \le d_n}}
+            a_{i_1 \dots i_n} X_1^{i_1} \cdots X_n^{i_n}
+            \quad (a_{i_1 \dots i_n} \in K)
+    \end{equation}
+    と表せる。
+    ここで$f \neq 0_{K[X_1, \dots, X_n]}$とすると、
+    或る$0 \le \exists k_j \le d_j \; (j = 1, \dots, n)$が存在して
+    \begin{equation}
+        a_{k_1 \dots k_n} \neq 0
+    \end{equation}
+    が成り立つ。
+    さて、$F_n(f) \neq 0_{\mathrm{Map}(K^n, K)}$を示したい。
+    ここで$(K[X_1, \dots, X_{n - 1}])[X_n]$の元
+    \begin{equation}
+        \sum_{i_n} \left(
+            \sum_{i_1, \dots, i_{n - 1}}
+                a_{i_1 \dots i_n} X_1^{i_1} \cdots X_{n - 1}^{i_{n - 1}}
+        \right) X_n^{i_n}
+    \end{equation}
+    を考えると、
+    $a_{k_1 \dots k_n} \neq 0$より
+    $k_n$次の係数は
+    \begin{equation}
+        \sum_{i_1, \dots, i_{n - 1}}
+            a_{i_1 \dots i_{n - 1} k_n} X_1^{i_1} \cdots X_{n - 1}^{i_{n - 1}}
+            \neq 0_{K[X_1, \dots, X_{n - 1}]}
+    \end{equation}
+    をみたす。したがって帰納法の仮定より
+    \begin{equation}
+        F_{n - 1} \left(
+            \sum_{i_1, \dots, i_{n - 1}}
+            a_{i_1 \dots i_{n - 1} k_n} X_1^{i_1} \cdots X_{n - 1}^{i_{n - 1}}
+        \right) \neq 0_{\mathrm{Map}(K^{n - 1}, K)}
+    \end{equation}
+    である。よって、或る$(b_1, \dots, b_{n - 1}) \in K^{n - 1}$が存在して
+    \begin{equation}
+        \sum_{i_1, \dots, i_{n - 1}}
+            a_{i_1 \dots i_{n - 1} k_n} b_1^{i_1} \cdots b_{n - 1}^{i_{n - 1}}
+            \neq 0
+    \end{equation}
+    が成り立つ。
+    そこで$K[X_n]$の元
+    \begin{equation}
+        \sum_{i_n} \left(
+            \sum_{i_1, \dots, i_{n - 1}}
+                a_{i_1 \dots i_n} b_1^{i_1} \cdots b_{n - 1}^{i_{n - 1}}
+        \right) X_n^{i_n}
+    \end{equation}
+    を考えると、これは$k_n$次の係数が$0$でないから
+    $\neq 0_{K[X_n]}$となる。
+    よって、$n = 1$の場合と同様の議論により、
+    或る$b_n \in K$が存在して
+    \begin{equation}
+        \sum_{i_n} \left(
+            \sum_{i_1, \dots, i_{n - 1}}
+                a_{i_1 \dots i_n} b_1^{i_1} \cdots b_{n - 1}^{i_{n - 1}}
+        \right) b_n^{i_n}
+        \neq 0
+    \end{equation}
+    が成り立つ。
+    よって
+    \begin{alignat}{1}
+        F_n(f) (b_1, \dots, b_n)
+            &= \sum_{i_1, \dots, i_n}
+                a_{i_1 \dots i_n} b_1^{i_1} \cdots b_n^{i_n} \\
+            &= \sum_{i_n} \left(
+                \sum_{i_1, \dots, i_{n - 1}}
+                    a_{i_1 \dots i_n} b_1^{i_1} \cdots b_{n - 1}^{i_{n - 1}}
+            \right) b_n^{i_n} \\
+            &\neq 0
+    \end{alignat}
+    である。したがって
+    \begin{equation}
+        F_n(f) \neq 0_{\mathrm{Map}(K^n, K)}
+    \end{equation}
+    である。
+    これで$\Ker F_n \subset \{ 0_{K[X_1, \dots, X_n]} \}$がいえた。
+    逆の包含は明らかだから$\Ker F_n = \{ 0_{K[X_1, \dots, X_n]} \}$、
+    したがって$F_n$は単射である。
+    帰納法より、すべての$n \in \Z_{\ge 1}$に対して
+    $F_n$が単射であることが示せた。
+\end{answer}
+
+
+\begin{problem}[代数学II 2.25]
+    $K$を有限個の元からなる体とする。
+    \cref{problem:algebra-2.24}のような写像
+    $F \colon K[X_1, \dots, X_n] \to \mathrm{Map}(K^n, K)$を考えると
+    $F$は全射であることを示せ。
+\end{problem}
+
+\begin{answer}
+    各$(a_1, \dots, a_n) \in K^n$に対し、
+    多項式$\delta_{a_1 \dots a_n}$を
+    \begin{equation}
+        \delta_{a_1 \dots a_n}(X_1, \dots, X_n)
+            \coloneqq \prod_{i = 1}^n \prod_{\substack{t \in K \\ t \neq a_i}}
+            (a_i - t)^{-1} (X_i - t)
+    \end{equation}
+    で定めると、
+    $K$が有限個の元からなることから右辺は有限積となり
+    $\delta_{a_1 \dots a_n}$は well-defined である。
+    $\delta_{a_1 \dots a_n}$は$(t_1, \dots, t_n) \in K^n$に対し
+    \begin{equation}
+        \delta_{a_1 \dots a_n}(t_1, \dots, t_n)
+            = \begin{cases}
+                1 & (t_1, \dots, t_n) = (a_1, \dots, a_n) \\
+                0 & \text{otherwise}
+            \end{cases}
+    \end{equation}
+    をみたす。
+    そこで$f \in \mathrm{Map}(K^n, K)$に対し
+    多項式$g \in K[X_1, \dots, X_n]$を
+    \begin{equation}
+        g(X_1, \dots, X_n) \coloneqq \sum_{(a_1, \dots, a_n) \in K^n}
+            f(a_1, \dots, a_n) \delta_{a_1 \dots a_n}(X_1, \dots, X_n)
+    \end{equation}
+    で定めると、
+    $K$、したがって$K^n$が有限個の元からなることから
+    右辺は有限和となり$g$は well-defined である。
+    $g$は$(t_1, \dots, t_n) \in K^n$に対し
+    \begin{equation}
+        F(g)(t_1, \dots, t_n) = f(t_1, \dots, t_n)
+    \end{equation}
+    をみたす。よって$F$は全射である。
+\end{answer}
+
+
+\begin{problem}[代数学II 2.26]
+    加法群が巡回群になるような環を
+    同型を除いてすべて決定せよ。
+\end{problem}
+
+\begin{answer}
+    \TODO{}
+\end{answer}
+
+
+\begin{problem}[代数学II 2.27]
+    1つの元で$\C$上生成される$\C$-代数で零因子を持たないものを
+    同型を除いてすべて決定せよ。
+\end{problem}
+
+\begin{answer}
+    $A$を1つの元$s \in A$で$\C$上生成される$\C$-代数とする。
+    このとき評価準同型$\ev_s \colon \C[X] \to A$は全射だから、
+    準同型定理より$A \cong \C[X] / \Ker \ev_s$が成り立つ。
+    ここで$\C[X]$のイデアルは$(0), (1), (X^m) \; (m \in \Z_{\ge 1})$で尽くされるから
+    $\Ker \ev_s$はこれらのいずれかに一致する。
+    $\Ker \ev_s = (0)$なら$A \cong \C[X] / (0) \cong \C[X]$であり、
+    これは整域だから零因子をもたない。
+    $\Ker \ev_s = (1)$なら$A \cong \C[X] / (1) = 0$であり、
+    これは零因子をもたない。
+    $\Ker \ev_s = (X)$なら$A \cong \C[X] / (X)$であり、
+    $(X)$は素イデアルだから$\C[X] / (X)$は整域で零因子をもたない。
+    $\Ker \ev_s = (X^m) \; (m \in \Z_{\ge 2})$なら
+    $A \cong \C[X] / (X^m)$は$s \neq 0, \; s^m = 0$となり
+    $s$が零因子となる。
+    よって$A$は
+    $(0), \C[X], \C[X] / (X)$のいずれかであり、
+    逆にこれらはそれぞれ$0, X, X + (X)$により
+    $\C$上生成される$\C$-代数で零因子を持たない。
+    したがって求めるものは
+    $(0), \C[X], \C[X] / (X)$である。
+\end{answer}
+
+
+\begin{problem}[代数学II 2.28]
+    $\C[X]^\times \cong \C^\times$および
+    $(\C[X] / (X^{n + 1}))^\times \cong \C^\times \times \C^n$を示せ。
+    ただし$\C^n$は$\C$を加法群とみたものの$n$個のコピーの直積である。
+\end{problem}
+
+\begin{answer}
+    \TODO{}
+\end{answer}
+
+
+\begin{problem}[代数学II 2.29]
+    \label[problem]{problem:algebra2-2.29}
+    $R$を可換環、$I$を$R$の固有イデアルとする。
+    このとき
+    \begin{equation}
+        \sqrt{I} \coloneqq \{
+            a \in R \colon a^n \in I \; (\exists n \in \Z_{\ge 1})
+        \}
+    \end{equation}
+    とおくと、$\sqrt{I}$は$R$の固有イデアルとなることを示せ。
+\end{problem}
+
+\begin{answer}
+    $\sqrt{I}$が$R$のイデアルであるとは
+    \begin{enumerate}
+        \item $\sqrt{I}$は$R$の加法部分群である。
+        \item $p \in R, \; q \in \sqrt{I}$ならば$pq \in \sqrt{I}$である。
+    \end{enumerate}
+    が成り立つことであった。
+
+    まず(1)を示す。
+    $a, b \in \sqrt{I}$をとる。
+    $a + b \in \sqrt{I}$を示す。
+    このとき
+    \begin{equation}
+        \exists \; m, n \ge 1
+        \quad \text{s.t.} \quad
+        a^m \in I, \; b^n \in I
+    \end{equation}
+    が成り立つ。
+    このとき
+    \begin{equation}
+        (a + b)^{m + n}
+            = \underbrace{a^{m + n}}_{\in I}
+            + \binom{m + n}{1} \underbrace{a^{m + n - 1} b}_{\in I}
+            + \dots
+            + \binom{m + n}{m + n - 1} \underbrace{a b^{m + n - 1}}_{\in I}
+            + \underbrace{b^{m + n}}_{\in I}
+    \end{equation}
+    となる。
+    よって$a + b \in \sqrt{I}$となる。
+    よって$\sqrt{I}$は加法について閉じている。
+    また、$\sqrt{I}$は加法の単位元$0$を含む。
+    なぜなら$0 = 0^1 \in I$だからである。
+    つぎに$a \in \sqrt{I}$をとる。
+    $-a \in \sqrt{I}$を示す。
+    $a \in \sqrt{I}$より
+    \begin{equation}
+        \exists \; m \ge 1
+        \quad \text{s.t.} \quad
+        a^m \in I
+    \end{equation}
+    である。
+    このとき$(-1)^m a^m \in I$なので、
+    $R$が可換であることより$(-a)^m \in I$である。
+    したがって$-a \in \sqrt{I}$となる。
+    以上より$\sqrt{I}$は$R$の加法部分群である。
+
+    (2)を示す。
+    $p \in R, \; q \in \sqrt{I}$をとる。
+    $pq \in \sqrt{I}$を示す。
+    $q \in \sqrt{I}$より
+    \begin{equation}
+        \exists \; m \ge 1
+        \quad \text{s.t.} \quad
+        q^m \in I
+    \end{equation}
+    となる。
+    これと$p^m \in R$より$p^m q^m \in I$となる。
+    $R$が可換であることより$(pq)^m \in I$である。
+    よって$pq \in \sqrt{I}$となる。
+\end{answer}
+
+
+\begin{problem}[代数学II 2.30]
+    \label[problem]{problem:algebra2-2.30}
+    体$K$上の1変数形式的べき級数環$K[[X]]$のイデアルをすべて求め
+    $K[[X]]$が局所環かつPIDであることを示せ。
+\end{problem}
+
+\begin{answer}
+    $K[[X]]$のイデアルが
+    \begin{equation}
+        (0), (X^d)\; (d \in \Z_{\ge 0})
+    \end{equation}
+    で尽くされることを示せばよく、
+    このときイデアルの形から明らかに$K[[X]]$は局所環かつPIDである。
+    各$f = \sum_{i \in \Z_{\ge 0}} a_i X^i \in K[[X]]$に対し、
+    係数が単元である次数の最小値を$\deg^-(f)$と表すことにする。すなわち、
+    \begin{equation}
+        \deg^-(f) \coloneqq \min (\{
+            i \in \Z_{\ge 0} \colon a_i \in K^\times
+        \} \cup \{ \infty \})
+    \end{equation}
+    とおく。
+    $I \subset K[[X]]$を$I \neq (0)$なるイデアルとする。ここで
+    \begin{equation}
+        d \coloneqq \min \{ \deg^-(f) \colon f \in I \}
+    \end{equation}
+    とおくと、$I \neq (0)$より$d \in \Z_{\ge 0}$である。
+    $I = (X^d)$を示せばよい。
+    ここで、$d$の定め方から
+    $\deg^-(f_0) = d$なる$f_0 \in I$が存在し、
+    $\deg^-$の定義から
+    \begin{equation}
+        \exists g = \sum_{i \in \Z_{\ge 0}} a_i X^i \in K[[X]]
+        \quad \text{s.t.} \quad
+        a_0 \in K^\times,\;
+        f_0(X) = g(X) X^d
+    \end{equation}
+    が成り立つ。
+    このとき、$a_0 \in K^\times$より$g \in K[[X]]^\times$である。
+    \begin{innerproof}
+        $a_0 \in K^\times$より
+        \begin{alignat}{1}
+            g(X) = a_0 \bigg(
+                1 - \underbrace{
+                    \bigg(- \sum_{i \in \Z_{\ge 0}} a_0^{-1} a_{i + 1} X^i \bigg)
+                }_{\eqqcolon h(X)}
+                X
+            \bigg)
+                = a_0 (1 - h(X) X)
+        \end{alignat}
+        であり、
+        \begin{equation}
+            (1 - h(X) X) \sum_{i \in \Z_{\ge 0}} h(X)^i X^i = 1
+        \end{equation}
+        より
+        \begin{equation}
+            g(X) a_0^{-1} \sum_{i \in \Z_{\ge 0}} h(X)^i X^i = 1
+        \end{equation}
+        が成り立つ。よって$g \in K[[X]]^\times$である。
+    \end{innerproof}
+    したがって
+    \begin{equation}
+        X^d = g(X)^{-1} f_0(X) \in I
+    \end{equation}
+    より$(X^d) \subset I$である。
+    また、$d$の定め方から逆向きの包含も成り立つ。
+    したがって$I = (X^d)$である。
+    これが示したいことであった。
+\end{answer}
+
+
+\begin{problem}[代数学II 2.31]
+    \label[problem]{problem:algebra-2.31}
+    (\term{中国剰余定理}[Chinese Remainder Theorem]{中国剰余定理}[ちゅうごくじょうよていり])
+    $R$を可換環とし、$I_1, \dots, I_n$をその固有イデアルとする。
+    さらに$i \neq j$なる$1 \le i, j \le n$に対し$I_i + I_j = R$をみたすとする。
+    このとき、
+    \begin{equation}
+        I_1 \cap \dots \cap I_n = I_1 \cdots I_n
+    \end{equation}
+    となることを示せ。
+\end{problem}
+
+\begin{answer}
+    $(\supset)$は明らかだから$(\subset)$を示す。
+    $n$に関する帰納法で示す。$n = 1$のときは明らかだから、$n \ge 2$とし、
+    $a \in I_1 \cap \dots \cap I_n$とする。
+    ここで、各$i = 1, \dots, n$に対し
+    或る$c_i \in I_i$と$d_i \in \bigcap_{j \neq i} I_j$が存在して
+    \begin{equation}
+        c_i + d_i = 1
+    \end{equation}
+    が成り立つ。
+    \begin{innerproof}
+        $R = I_i + \bigcap_{j \neq i} I_j$を示せばよい。
+        各$j \neq i$に対し、
+        問題の仮定$I_i + I_j = R$より
+        或る$a_j \in I_i$と$b_j \in I_j$が存在して
+        \begin{equation}
+            a_j + b_j = 1
+        \end{equation}
+        が成り立つ。このとき$\prod_{j \neq i} (a_j + b_j) = 1$であり、
+        左辺を展開すると$a_j \in I_i \; (j \neq i)$を含む項と
+        $\prod_{j \neq i} b_j \in \bigcap_{j \neq i} I_j$との和の形になるから、
+        整理して
+        \begin{equation}
+            1 - \prod_{j \neq i} b_j \in I_i
+        \end{equation}
+        を得る。よって
+        \begin{alignat}{1}
+            1 &= \bigg( 1 - \prod_{j \neq i} b_j \bigg) + \prod_{j \neq i} b_j \\
+                &\in I_i + \bigcap_{j \neq i} I_j
+        \end{alignat}
+        が成り立つ。したがって$R = I_i + \bigcap_{j \neq i} I_j$がいえた。
+    \end{innerproof}
+    このとき
+    \begin{equation}
+        \prod_{i = 1}^n (c_i + d_i) = 1
+        \quad \therefore \quad
+        a \prod_{i = 1}^n (c_i + d_i) = a
+    \end{equation}
+    が成り立つ。左辺は
+    \begin{equation}
+        ad_i \in I_i \bigcap_{j \neq i} I_j
+            \overbrace{=}^{
+                \substack{\text{帰納法} \\ \text{の仮定}}
+            } I_1 \cdots I_n
+        \quad (i = 1, \dots, n)
+    \end{equation}
+    を含む項と
+    \begin{equation}
+        a \prod_{i = 1}^n c_i \in I_1 \cdots I_n
+    \end{equation}
+    との和の形になるから$a \in I_1 \cdots I_n$である。
+    よって$I_1 \cap \dots \cap I_n = I_1 \cdots I_n$がいえた。
+\end{answer}
+
+
+\begin{problem}[代数学II 2.32]
+    (\term{Frobenius 準同型}{Frobenius 準同型}[Frobenius じゅんどうけい])
+    $R$を可換環、$p$を素数とする。
+    さらに$\iota \colon \Z \to R$を一意的にきまる環準同型とし
+    $\Ker(\iota) = (p)$であると仮定する。
+    このとき写像$F \colon R \to R$を$F(x) = x^p$で定めると
+    これは環準同型になることを示せ。
+\end{problem}
+
+\begin{answer}
+    二項係数$\binom{p}{i} \; (1 \le \forall i \le p - 1)$は$p$で割り切れるから、
+    $x, y \in R$に対し
+    \begin{alignat}{1}
+        F(x + y)
+            &= (x + y)^p \\
+            &= \sum_{i = 0}^{p} \binom{p}{i} x^i y^{p - i}
+                \quad (\because \text{ $R$は可換環}) \\
+            &= x^p + y^p + \sum_{i = 1}^{p - 1} \binom{p}{i} x^i y^{p - i} \\
+            &= x^p + y^p + \sum_{i = 1}^{p - 1}
+                \iota\left(\binom{p}{i}\right) x^i y^{p - i} \\
+            &= x^p + y^p
+                \quad (\because \text{ $\Ker(\iota) = (p)$}) \\
+            &= F(x) + F(y)
+    \end{alignat}
+    が成り立つ。
+    また
+    \begin{alignat}{1}
+        F(xy) 
+            &= (xy)^p \\
+            &= x^p y^p \quad (\because \text{ $R$は可換環}) \\
+            &= F(x) F(y)
+    \end{alignat}
+    と
+    \begin{equation}
+        F(1_R) = 1_R^p = 1_R
+    \end{equation}
+    も成り立つ。よって$F$は環準同型である。
+\end{answer}
+
+
+\begin{problem}[代数学II 2.33]
+    $\Z$を加法群とみたときの群環$\C[\Z]$のイデアル
+    および素イデアルをすべて求めよ。
+\end{problem}
+
+\begin{answer}
+    \TODO{}
+\end{answer}
+
+
+\begin{problem}[代数学II 2.34]
+    $p$を素数とするとき
+    $\Z / (p^{k + 1})$の乗法群を求めよ。
+\end{problem}
+
+\begin{answer}
+    \TODO{}
+\end{answer}
+
+\begin{problem}[代数学II 2.35]
+    極大両側イデアルは素イデアルになることを示せ。
+\end{problem}
+
+\begin{answer}
+    \TODO{}
+\end{answer}
+
+
+\begin{problem}[代数学II 2.36]
+    \label[problem]{problem:algebra2-2.36}
+    完全素イデアルは素イデアルになることを示せ。
+    また、逆は成り立つか？
+\end{problem}
+
+\begin{answer}
+    $A$を環とし、$P \subset A$を完全素イデアルとする。
+    $A$の固有両側イデアル$I, J$が$IJ \subset P$をみたすとし、
+    さらに$I \not\subset P$を仮定する。
+    仮定より或る$i_0 \in I \setminus P$が存在する。
+    このとき、任意の$j \in J$に対し$j \in P$が成り立つ。
+    実際、$i_0 j \in IJ \subset P$だから
+    $P$が完全素イデアルであることより$i_0 \in P$または$j \in P$であるが、
+    いま$i_0 \not\in P$であったから$j \in P$である。
+    したがって$J \subset P$である。
+    よって$P$は素イデアルである。
+
+    逆が成り立たないことを反例によって示す。
+    $\R$上の$2$次の全行列環$M_2(\R)$と、その零イデアル$(0)$を考える。
+    まず、$(0)$は素イデアルであることを示したい。
+    そのために$M_2(\R)$の両側イデアルが自明なものしかないことを示しておく。
+    $I \subset M_2(\R)$を$I \neq (0)$なる両側イデアルとする。
+    $I \neq (0)$より或る$B_0 \in I, B_0 \neq 0$が存在する。
+    このとき$\rank B_0 > 0$だから、或る正則行列$Q, R \in M_2(\R)$が存在して
+    \begin{equation}
+        QB_0R = \begin{bmatrix}
+            1 & 0 \\
+            0 & *
+        \end{bmatrix}
+    \end{equation}
+    が成り立つ。
+    $I$は両側イデアルであったから
+    \begin{equation}
+        \begin{bmatrix}
+            1 & 0 \\
+            0 & *
+        \end{bmatrix} \in I
+    \end{equation}
+    が成り立つ。
+    さらに
+    \begin{alignat}{1}
+        \begin{bmatrix}
+            1 & 0 \\
+            0 & 0
+        \end{bmatrix}
+        =
+        \begin{bmatrix}
+            1 & 0 \\
+            0 & *
+        \end{bmatrix}
+        \begin{bmatrix}
+            1 & 0 \\
+            0 & 0
+        \end{bmatrix}
+        \in I,
+        \quad
+        \begin{bmatrix}
+            0 & 0 \\
+            0 & 1
+        \end{bmatrix}
+        =
+        \begin{bmatrix}
+            0 & 0 \\
+            1 & 0
+        \end{bmatrix}
+        \begin{bmatrix}
+            1 & 0 \\
+            0 & *
+        \end{bmatrix}
+        \begin{bmatrix}
+            0 & 1 \\
+            0 & 0
+        \end{bmatrix}
+        \in I
+    \end{alignat}
+    も成り立つ。
+    よって
+    \begin{equation}
+        1_{M_2(\R)}
+            = \begin{bmatrix}
+                1 & 0 \\
+                0 & 0
+            \end{bmatrix}
+            + \begin{bmatrix}
+                0 & 0 \\
+                0 & 1
+            \end{bmatrix}
+            \in I
+    \end{equation}
+    である。したがって$I = M_2(\R)$となる。
+    よって$M_2(\R)$の両側イデアルは自明なものしかないことがいえた。
+    よって、明らかに$(0)$は素イデアルである。
+    ところが、$(0)$は完全素イデアルではない。
+    実際、$M_2(\R) / (0) \cong M_2(\R)$は零因子を持つ。
+\end{answer}
+
+
+\begin{problem}[代数学II 期末問題候補]
+    $R$を可換環、$A$を$R$-alg とし、$S \subset A$とする。
+    \begin{equation}
+        \calS_S
+            \coloneqq \{ B \subset A \colon \text{$B$は$R$-subalg かつ$S \subset B$} \}
+    \end{equation}
+    とおくとき
+    \begin{equation}
+        R \langle S \rangle = \bigcap_{B \in \calS_S} B
+    \end{equation}
+    となることを示せ。
+\end{problem}
+
+\begin{answer}
+    \TODO{}
+\end{answer}
+
+\subsection{Problem set 3}
+
+
+\begin{problem}[代数学II 3.37]
+    \TODO{}
+\end{problem}
+
+\begin{answer}
+    \TODO{}
+\end{answer}
+
+
+\begin{problem}[代数学II 3.38]
+    \label[problem]{problem:algebra2-3.38}
+    $k$を正整数、$X, Y$を不定元として
+    $A = \C[X, Y] / (X^2 - Y^{2k + 1})$とおく。
+    $x \in A$を標準射影による$X$の像としたとき、
+    $x$は既約元であるが素元ではないことを示せ。
+\end{problem}
+
+\begin{answer}
+    $Z$を不定元とする多項式環$\C[Z]$を考える。
+    部分集合$\{ Z^{2k + 1}, Z^2 \} \subset \C[Z]$
+    により$\C$上生成される$\C[Z]$の部分$\C$-代数
+    $\C\langle \{ Z^{2k + 1}, Z^2 \} \rangle$
+    を$B$とおく。
+    $A$は$B$と$\C$-代数として同型であることを示す。
+    多項式環の普遍性より、
+    $\C$-代数準同型$\varphi \colon \C[X, Y] \to \C[Z]$であって
+    \begin{equation}
+        X \mapsto Z^{2k + 1}, \quad Y \mapsto Z^2
+    \end{equation}
+    をみたすものが存在する。
+    このとき、$\Im \varphi = B$である。
+    \begin{innerproof}
+        両辺とも$Z^{2k + 1}, Z^2 \in \C[Z]$の
+        和、積および$\C$の元によるスカラー倍の有限回の組み合わせで
+        表せる元全体の集合だから、たしかに一致する。
+    \end{innerproof}
+    また、$\Ker \varphi = (X^2 - Y^{2k + 1})$である。
+    \begin{innerproof}
+        ($\supset$) は$\varphi$の定義より明らかだから、
+        ($\subset$) を示す。
+        $f \in \Ker \varphi$とする。
+        $f$と$X^2 - Y^{2k + 1}$を ($\C$-代数としての) 同型$\C[X, Y] \cong (\C[Y])[X]$により
+        $(\C[Y])[X]$の元とみなすと、
+        $X^2 - Y^{2k + 1}$の最高次係数$1$は$\C[X, Y]$の単元だから、
+        除法定理より
+        或る$g(X, Y) \in  (\C[Y])[X]$と$r_1, r_0 \in \C[Y]$が存在して
+        \begin{equation}
+            f(X, Y) = (X^2 - Y^{2k + 1}) g(X, Y)
+                + r_1(Y) X + r_0(Y)
+        \end{equation}
+        が成り立つ。
+        いま$f \in \Ker \varphi$ゆえに$f(Z^{2k + 1}, Z^2) = 0$だから
+        \begin{equation}
+            r_1(Z^2) Z^{2k + 1} + r_0(Z^2) = 0
+        \end{equation}
+        である。左辺の第1項は奇数次の項しかなく、第2項は偶数次の項しかないから、
+        右辺と係数を比較して$r_1 = 0, r_0 = 0$となる。
+        よって
+        \begin{equation}
+            f(X, Y) = (X^2 - Y^{2k + 1}) g(X, Y)
+                \in (X^2 - Y^{2k + 1})
+        \end{equation}
+        が成り立つから$\Ker \varphi \subset (X^2 - Y^{2k + 1})$である。
+        したがって$\Ker \varphi = (X^2 - Y^{2k + 1})$である。
+    \end{innerproof}
+    したがって、準同型定理より$\C$-代数の同型
+    $\wb{\varphi} \colon B \to A$が誘導される。
+    $\wb{\varphi}$により$x \in A$と対応する元は$Z^{2k + 1} \in B$だから、
+    $Z^{2k + 1}$が$B$の既約元であって素元でないことを示せばよい。
+    まず、$Z^{2k + 1}$は$B$の既約元である。
+    \begin{innerproof}
+        背理法を用いる。すなわち$Z^{2k + 1}$が$B$の既約元でないと仮定して矛盾を導く。
+        まず$\deg Z^{2k + 1} \neq 0$より$Z^{2k + 1}$は$B$の単元でない。
+        よって、背理法の仮定から$Z^{2k + 1}$は$B$の単元でない2元$f, g$の積で
+        $Z^{2k + 1} = f(Z) g(Z)$と表せる。
+        すると$\C[Z]$が整域であることとあわせて
+        \begin{equation}
+            \deg f \ge 1, \quad \deg g \ge 1,
+            \quad
+            \deg f + \deg g = 2k + 1
+        \end{equation}
+        が成り立ち、とくに
+        \begin{equation}
+            1 \le \deg f \le 2k, \quad 1 \le \deg g \le 2k
+        \end{equation}
+        が成り立つ。
+        このことと$f, g \in B$であることから、
+        $f, g$は$Z^2$の和、積および$\C$の元によるスカラー倍の
+        有限回の組み合わせで表せる。
+        よって$f, g$の次数は偶数であり、$\deg f + \deg g = 2k + 1$に矛盾する。
+        背理法より$Z^{2k + 1}$は$B$の既約元である。
+    \end{innerproof}
+    さらに、$Z^{2k + 1}$は$B$の素元でない。
+    \begin{innerproof}
+        $Z^{2k + 1}$により生成される$B$の単項イデアルを$J$とおく
+        ($\C[Z]$でなく$B$のイデアルだから、たとえば$Z^{2k + 2}$は$J$には属さない)。
+        すると
+        \begin{equation}
+            Z^{4k} Z^2 = (Z^{2k + 1})^2 \in J,
+            \quad Z^{4k}, Z^2 \not\in J
+        \end{equation}
+        だから$J$は$B$の素イデアルでない。
+        よって$Z^{2k + 1}$は$B$の素元でない。
+    \end{innerproof}
+    以上より、$x$は$A$の既約元だが素元ではないことが示せた。
+\end{answer}
+
+
+\begin{problem}[代数学II 3.39]
+    \label[problem]{problem:algebra2-3.39}
+    PIDにおいて既約元は素元になることを示せ。
+\end{problem}
+
+\begin{answer}
+    $R$をPIDとし、$r \in R$が既約元であるとする。
+    まず$(r)$は極大イデアルである。
+    \begin{innerproof}
+        $(r)$を含む任意の固有イデアルは、
+        $R$がPIDであることからある$a \in R$を用いて$(a)$の形に書ける。
+        すると$r \in (r) \subset (a)$より
+        $r = ab \; (\exists b \in R)$と書ける。
+        いま$(a)$は固有イデアルゆえに$a$は単元でないから、
+        $r$が既約元であることとあわせて$b$は単元となる。
+        よって$a = rb^{-1} \in (r)$だから$(a) \subset (r)$である。
+        よって$(r) = (a)$である。
+        したがって$(r)$は極大イデアルである。
+    \end{innerproof}
+    極大イデアルは素イデアルだから$(r)$は素イデアルである。
+    よって$r$は素元である。
+\end{answer}
+
+
+\begin{problem}[代数学II 3.40]
+    \label[problem]{problem:algebra2-3.40}
+    $A$を可換$\C$-代数で$d = \dim_\C A$としたとき$0 < d < \infty$であるとする。
+    このとき$A$は高々$d$個しか極大イデアルを持たないことを示せ。
+\end{problem}
+
+\begin{answer}
+    \TODO{可換性いつ使う？}
+    $A$の相異なる$r > d$個の極大イデアル
+    $\frakm_1, \dots, \frakm_r$がとれたとして矛盾を導く。
+    CRT より
+    \begin{equation}
+        \begin{tikzcd}
+            A \ar{d} \ar{r}
+                & A / \frakm_1 \times \cdots \times A / \frakm_r
+                = A / \frakm_1 \oplus \cdots \oplus A / \frakm_r \\
+            A / (\frakm_1 \cap \cdots \cap \frakm_r)
+                \ar[dashed, end anchor=south west]{ru}[swap]{\cong}
+        \end{tikzcd}
+    \end{equation}
+    を可換にする環の同型が誘導されるから、
+    図式の上側の射 (これは$\C$-代数準同型である) は全射である。
+    よって
+    \begin{equation}
+        \dim_C A
+            \ge \dim_C (
+                A / \frakm_1 \oplus \cdots \oplus A / \frakm_r
+            )
+            \ge r
+            > d
+    \end{equation}
+    となり矛盾が従う。
+    \begin{innerproof}
+        各$A / \frakm_i$は$0$でない$\C$-代数だから
+        $\C$上の次元が$1$以上の$\C$-ベクトル空間である。
+        よって
+        \begin{equation}
+            \dim_C (
+                A / \frakm_1 \oplus \cdots \oplus A / \frakm_r
+            ) \ge r
+        \end{equation}
+        である。
+    \end{innerproof}
+    よって$A$の極大イデアルは$d$個以下である。
+\end{answer}
+
+
+\begin{problem}[代数学II 3.41]
+    $A$を可換$\C$-代数で$d = \dim_\C A$としたとき$0 < d < \infty$であるとする。
+    $A$が$0$でない冪零元を持たないならば、
+    $A$は$d$個の複素数体の直積と同型になることを示せ。
+\end{problem}
+
+\begin{answer}
+    \cref{problem:algebra2-3.40}より
+    $A$の極大イデアルは$d$個以下である。
+    そこで$A$の相異なる極大イデアルのすべてを
+    \begin{equation}
+        \frakm_1, \dots, \frakm_{r}
+        \quad (1 \le r \le d)
+    \end{equation}
+    とおく。
+    すると CRT より
+    \begin{equation}
+        \begin{tikzcd}
+            A \ar{d} \ar{r}
+                & A / \frakm_1 \times \cdots \times A / \frakm_r
+                = A / \frakm_1 \oplus \cdots \oplus A / \frakm_r \\
+            A / (\frakm_1 \cap \cdots \cap \frakm_r)
+                \ar[dashed, end anchor=south west]{ru}[swap]{\cong}
+        \end{tikzcd}
+    \end{equation}
+    を可換にする環の同型が誘導される。
+    ここで各$A / \frakm_i$は
+    極大イデアルによる商だから体であり、
+    また$\C$上の次元は$d$以下である。
+    よって Dixmier の定理より$A / \frakm_i \cong \C$が成り立ち、
+    上の図式より
+    \begin{equation}
+        \begin{tikzcd}
+            A \ar{d} \ar{r}
+                & \C^r \\
+            A / (\frakm_1 \cap \cdots \cap \frakm_r)
+                \ar[end anchor=south west]{ru}[swap]{\cong}
+        \end{tikzcd}
+    \end{equation}
+    が成り立つ。
+    さて、$A$は$0$でない冪零元を持たないとする。
+    いま$A$は可換アルティン環だから、
+    \TODO{アルティンとは仮定されてない}
+    $A$の素イデアルは極大イデアルでもある。
+    よって$\frakm_1 \cap \cdots \cap \frakm_r$は
+    $A$の素イデアル全部の交わり、
+    すなわち$A$の冪零根基である。
+    いま$A$は$0$でない冪零元を持たないから
+    $\frakm_1 \cap \cdots \cap \frakm_r = 0$である。
+    よって図式から
+    $A \cong \C^r$が従う。
+    $\C$上の次元を比較して$r = d$でなければならず、
+    $A \cong \C^d$がいえた。
+    \TODO{初等的に示せるか？}
+\end{answer}
+
+
+\begin{definition}[derivation]
+    $K$を体、$A$を$K$-代数とする。
+    $K$-線型写像$D \colon A \to A$が
+    $A$上の\term{derivation}{derivation}であるとは、
+    任意の$a, b \in A$に対して
+    \begin{equation}
+        D(ab) = D(a) b + a D(b)
+    \end{equation}
+    が成り立つことをいう。
+\end{definition}
+
+\begin{problem}[代数学II 3.43]
+    複素数体上の$n$変数多項式環$\C[X_1, \dots, X_n]$上の
+    derivation をすべて求めよ。
+\end{problem}
+
+\begin{answer}
+    \TODO{monomial について議論すればよい}
+\end{answer}
+
+
+\begin{definition}[$G$-gradation]
+    $G$を加法群、$K$を体、$A$を$K$-代数とする。
+    $A$の\term{$G$-gradation}{$G$-gradation}[G-gradation]とは、
+    $G$を添字集合とする$A$の$K$-部分ベクトル空間の族による
+    $A$の$K$-ベクトル空間としての直和分解
+    \begin{equation}
+        A = \bigoplus_{g \in G} A(g)
+    \end{equation}
+    であって、任意の$x, y \in G, \; a \in A(x), \; b \in A(y)$に対して
+    $ab \in A(x + y)$をみたすものをいう。
+\end{definition}
+
+\begin{problem}[代数学II 3.44]
+    $K$を体、$A$を$K$-代数とする。
+    $K$を加法群とみなしたときの$A$の$K$-gradation
+    \begin{equation}
+        A = \bigoplus_{z \in K} A(z)
+    \end{equation}
+    が与えられていたとする。
+    このとき$K$-線型写像$D \colon A \to A$を
+    $z \in K, \; a \in A(z)$に対して$D(a) = za$となるように定める。
+    このとき$D$は derivation になることを示せ。
+\end{problem}
+
+\begin{answer}
+    $a, b \in A$とする。
+    $A$は所与の$K$-gradation のような直和分解を持つから、
+    或る$x, y \in K$が存在して
+    \begin{equation}
+        a \in A(x), \quad b \in A(y)
+    \end{equation}
+    が成り立つ。
+    このとき、$K$-gradation の定義より
+    $ab \in A(x + y)$だから
+    $D(ab) = (x + y) ab$である。
+    よって
+    \begin{alignat}{1}
+        D(a) b + a D(b)
+            &= (xa) b + a (yb) \\
+            &= xab + yab \\
+            &= (x + y) ab \\
+            &= D(ab)
+    \end{alignat}
+    が成り立つ。
+    したがって$D$は$A$上の derivation である。
+\end{answer}
+
+
+\begin{problem}[代数学II 3.46]
+    単純環の中心は体になることを示せ。
+\end{problem}
+
+\begin{remark}
+    単純環の部分環が単純であるとは限らないことに注意せよ (\cref{example:simple-ring})。
+\end{remark}
+
+\begin{answer}
+    $A$を単純環とし、$Z(A)$が体であることを示す。
+    中心の定義から$Z(A)$が可換環であることは明らかだから、
+    あとは$Z(A)$の$0$でない任意の元が$Z(A)$に逆元を持つことを示せばよい。
+    $x \in Z(A), \; x \neq 0$とすると、
+    $Ax$は$A$の左イデアルであり、$(0)$を真に含む。
+    いま$A$は単純環ゆえに$(0)$は$A$の極大イデアルなので、
+    $A = Ax$である。
+    よって、或る$x' \in A$が存在して
+    \begin{alignat}{1}
+        1 &= x' x \quad (\because A = Ax) \\
+            &= x x' \quad (\because x \in Z(A))
+    \end{alignat}
+    が成り立つ。このとき
+    \begin{equation}
+        x' y = x' y x x' = x' x y x' = y x'
+        \quad (\forall y \in A)
+    \end{equation}
+    が成り立つから$x' \in Z(A)$である。
+    よって、$x$は$Z(A)$の可逆元である。
+    したがって$Z(A)$は体である。
+\end{answer}
+
+\begin{problem}[代数学II 3.47]
+    有限体の元の個数はある素数の冪になることを示せ。
+\end{problem}
+
+\begin{proof}
+    cf. \cref{thm:cardinality-of-finite-field}
+\end{proof}
+
+\begin{problem}[代数学II 3.49]
+    \label[problem]{problem:algebra2-3.49}
+    Weyl 代数$\C[x : \del]$は$\C$-ベクトル空間としての基底
+    $\{ x^i \del^j \mid i, j \in \Z_{\ge 0}$
+    をもつことを示せ。
+\end{problem}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+\begin{problem}[代数学II 3.50]
+    \label[problem]{problem:algebra2-3.50}
+    Weyl 代数$\C[x : \del]$は単純環であることを示せ。
+\end{problem}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+\subsection{Problem set 5}
+
+\begin{problem}[代数学II 5.64]
+    \label[problem]{problem:algebra2-5.64}
+    $R$を可換環、$n$を正整数、$\frakm$を$R$の極大イデアルとする。
+    このとき$R / \frakm^n$は局所環であることを示せ。
+\end{problem}
+
+\begin{answer}
+    イデアルの対応原理より、
+    $\frakm / \frakm^n$は
+    $R / \frakm^n$の極大イデアルである。
+    これが唯一の極大イデアルであることを示せばよい。
+    そこで$J / \frakm^n$を$R / \frakm^n$の極大イデアルとする。
+    すると$J$は$R$の極大イデアルであって$\frakm^n$を含む。
+    ここで$J$は$R$の素イデアルでもあるから、
+    $J$は$\frakm$を含む。
+    よって、$\frakm$が$R$の極大イデアルであることより
+    $J = \frakm$である。
+    したがって$J / \frakm^n = \frakm / \frakm^n$である。
+    これで唯一性がいえた。
+\end{answer}
+
+
+\begin{problem}[代数学II 5.65]
+    \label[problem]{problem:algebra2-5.65}
+    $R$を可換環、$I$を$R$の固有イデアルとする。
+    このとき$I = \sqrt{I}$となることは
+    $R / I$の$0$でない冪零元が存在しないための必要十分条件であることを示せ。
+\end{problem}
+
+\begin{answer}
+    $R / I$の$0$でない冪零元$a + I \; (a \in R - I)$が存在したとすると、
+    ある$n \in \Z_{\ge 1}$が存在して
+    $a^n + I = (a + I)^n = 0 + I$より$a^n \in I$、
+    したがって$a \in \sqrt{I}$が成り立つ。
+    よって$I \neq \sqrt{I}$である。
+    逆に$I \neq \sqrt{I}$とすると$I \subsetneq \sqrt{I}$であるから、
+    ある$b \in \sqrt{I} - I$がとれる。
+    このとき
+    \begin{itemize}
+        \item $b \in \sqrt{I}$よりある$n \in \Z_{\ge 1}$が存在して
+            $(b + I)^n = b^n + I = 0 + I$
+        \item $b \not\in I$より$b + I \neq 0 + I$
+    \end{itemize}
+    したがって$b + I$は$R / I$の$0$でない冪零元である。
+\end{answer}
+
+
+\begin{problem}[代数学II 5.66]
+    \label[problem]{problem:algebra2-5.66}
+    $R$を可換環、$I$を$R$の固有イデアルとする。
+    このとき$I$が準素イデアルであることは
+    $R / I$の零因子がすべて冪零元になるための
+    必要十分条件であることを示せ。
+\end{problem}
+
+\begin{answer}
+    $I$を準素イデアルであるとする。
+    $r + I \in R / I$を零因子とすると
+    \begin{equation}
+        (s + I)(r + I) = 0 + I \quad (\exists s \in R - I)
+    \end{equation}
+    が成り立つ。よって
+    \begin{equation}
+        sr \in I, \quad s \not\in I
+    \end{equation}
+    だから、$I$が準素イデアルであることより
+    $r \in \sqrt{I}$である。
+    よって$r + I$は$R / I$の冪零元である。
+    逆に、$R / I$の零因子はすべて冪零元であるとする。
+    $x, y \in R$について、$xy \in I$かつ$x \neq I$であるとする。
+    $y \in I$の場合は$y \in I \subset \sqrt{I}$である。
+    $y \not\in I$の場合は
+    \begin{align}
+        (x + I)(y + I) = xy + I = 0 + I \\
+        x + I \neq 0 + I, \quad y + I \neq 0 + I
+    \end{align}
+    より$y + I$は零因子、したがって冪零元だから
+    $y \in \sqrt{I}$が成り立つ。
+    よって$I$は準素イデアルである。
+\end{answer}
+
+\begin{problem}[代数学II 5.67]
+    $R$を可換環、$\frakp$を$R$の素イデアル、
+    $n$を正整数とする。
+    このとき$\frakp^n$は準素イデアルであることを示せ。
+    また、任意の準素イデアルはこのような形に書けるか？
+    正しければ証明を、誤りならば反例を与えよ。
+\end{problem}
+
+\begin{answer}
+    \TODO{問題の前半は誤植。反例がある。\url{https://math.stackexchange.com/questions/93478/is-each-power-of-a-prime-ideal-a-primary-ideal}}
+
+    $\C[X, Y]$のイデアル$I = (X, Y^2)$を考える。
+    準素イデアルの特徴付け (\cref{prop:primary-ideal-characterization})
+    を用いて$I$が$\C[X, Y]$の準素イデアルであることを示す。
+    ここで$\C[X, Y] / I \cong \C[Y] / (Y^2)$である。
+    $f + (Y^2), \; g + (Y^2) \neq 0 + (Y^2), \;
+        fg + (Y^2) = 0 + (Y^2)$とすると、
+    $f, g$は$Y$の倍元でなければならないから
+    $f^2 + (Y^2) = 0 + (Y^2), \; g^2 + (Y^2) = 0 + (Y^2)$である。
+    したがって$\C[X, Y] / I \cong \C[Y] / (Y^2)$の
+    零因子はすべて冪零元である。
+    特徴付けより$I$は準素イデアルである。
+
+    一方、$I$は素イデアルの冪でないことを示す。
+    $I$は準素イデアルだから、
+    \cref{prop:primary-ideal-radical}より
+    $\sqrt{I}$は$I$を含む最小の素イデアルである。
+    ここで$I$が素イデアルの冪$I = \frakp^n$の形に表せたとする。
+    すると$I = \frakp^n \subset \frakp$だから
+    $\sqrt{I}$の最小性より
+    $\frakp^n = I \subset \sqrt{I} \subset \frakp$
+    が成り立つ。
+    さらに$\sqrt{I}$は素イデアルだから
+    $\frakp^n \subset \sqrt{I}$より
+    $\frakp \subset \sqrt{I}$が成り立つ。
+    よって$\frakp \subset \sqrt{I} \subset \frakp$、
+    したがって$\sqrt{I} = \frakp$が従う。
+    $\sqrt{I}$を具体的に求める。
+    同型$\C[X, Y] / I \cong \C[Y] / (Y^2)$を再び用いる。
+    $\C[Y]$がPIDゆえに$\C[Y]$の素イデアルは極大イデアルでもあることに注意すると、
+    \cref{problem:algebra2-5.64}より
+    $\C[Y] / (Y^2)$の素イデアルは$(Y) / (Y^2)$ただひとつであるから、
+    同型で写して$\C[X, Y] / I$の素イデアルは
+    $(X, Y) / I$ただひとつである。
+    したがって$\C[X, Y]$の$I$を含む素イデアルは
+    $(X, Y)$ただひとつであり、$\frakp = \sqrt{I} = (X, Y)$が従う。
+    すると
+    $\frakp^2 = (X, Y)^2 \subsetneq I = (X, Y^2) \subsetneq (X, Y) = \frakp$
+    が成り立つ
+    (左の不等号は$X \notin (X, Y)^2$より従い、
+    右の不等号は$Y \notin (X, Y^2)$より従う)。
+    これは$I = \frakp^n$に矛盾。
+    したがって$I$は素イデアルの冪でない。
+\end{answer}
+
+\subsection{Problem set 6}
+
+\begin{problem}[代数学II 6.78]
+    \label[problem]{problem:algebra2-6.78}
+    $R$を可換環、$I$を$R$の準素イデアルとすると
+    $\sqrt{I}$は$I$を含む最小の素イデアルであることを示せ。
+\end{problem}
+
+\begin{answer}
+    $\sqrt{I}$が素イデアルであることを示す。
+    $ab \in \sqrt{I}, \; (a, b \in R), \;
+        a \notin \sqrt{I}$
+    とし、$b \in \sqrt{I}$を示す。
+    $ab \in \sqrt{I}$より、ある$n \in \Z_{\ge 1}$が存在して
+    $a^n b^n \in I$が成り立つ。
+    このとき$a \notin \sqrt{I}$より$a^n \notin I$だから、
+    $I$が準素イデアルであることより
+    ある$m \in \Z_{\ge 1}$が存在して$b^{nm} \in I$が成り立つ。
+    したがって$b \in \sqrt{I}$である。
+    よって$\sqrt{I}$は素イデアルである。
+    \TODO{冪零根基の特徴付けを使うべき？}
+
+    $\frakp$を$I$を含む素イデアルとし、
+    $\sqrt{I} \subset \frakp$を示す。
+    $x \in \sqrt{I}$とすると、
+    ある$n \in \Z_{\ge 1}$が存在して$x^n \in I$が成り立つ。
+    このとき$x^n \in I \subset \frakp$だから、
+    $\frakp$が素イデアルであることより
+    $x \in \frakp$となる。
+    したがって$\sqrt{I} \subset \frakp$である。
+\end{answer}
+
+\subsection{Problem set 12}
+
+\begin{problem}[代数学II 12.151]
+    $\C[X, Y, Z] / (XYZ - 1)$はPIDでないことを示せ。
+\end{problem}
+
+\begin{answer}
+    $R \coloneqq \C[X, Y]$とおき、
+    $R$の部分集合$S$を
+    $S \coloneqq \{ X^k Y^k \mid k \in \Z_{\ge 0} \}$で定めると
+    $S$は$R$の積閉集合であり、
+    環の同型$\C[X, Y, Z] / (XYZ - 1) \cong S^{-1}R$が成り立つ。
+    \begin{innerproof}
+        \TODO{}
+    \end{innerproof}
+    そこで$S^{-1}R$がPIDでないことを示せばよい。
+    $S^{-1}R$のイデアル$\left(\frac{X - 1}{1}, \frac{Y - 1}{1}\right)$を$J$とおく。
+    $J$が単項イデアルでないことを示す。
+    背理法のため、ある$f \in R$が存在して
+    $\left(\frac{f}{1}\right) = J$
+    と表せたとする。
+    このとき$J = S^{-1}R$である。
+    \begin{innerproof}
+        $f/1 \in J$より
+        ある$g, h \in R$および$m, n \in \Z_{\ge 0}$が存在して
+        \begin{equation}
+            \begin{cases}
+                \frac{X - 1}{1} &= \frac{g}{X^m Y^m} \frac{f}{1} \vspace{1em} \\
+                \frac{Y - 1}{1} &= \frac{h}{X^n Y^n} \frac{f}{1}
+            \end{cases}
+        \end{equation}
+        が成り立つ。必要ならば$g, h$をそれぞれ
+        $g X^n Y^n, h X^m Y^m$に置き換えることで
+        $m = n$であるとしてよい。
+        $R$は整域かつ$S \not\ni 0$だから通分して
+        \begin{equation}
+            \label[equation]{eq:12.151.1}
+            \begin{cases}
+                X^m Y^m (X - 1) &= fg \\
+                X^m Y^m (Y - 1) &= fh
+            \end{cases}
+        \end{equation}
+        が成り立つ。
+        よって$X^m Y^m (X - 1) h = fgh = X^m Y^m (Y - 1) g$であり、
+        $X^m Y^m$を払って
+        $(X - 1) h = (Y - 1) g$が成り立つ。
+        $X - 1, Y - 1$は互いに素だから、
+        \TODO{説明不足}
+        $R$が体上の多項式環ゆえにUFDであることより
+        ある$g' \in R$が存在して
+        $g = g' (X - 1)$と表せる。
+        したがって\cref{eq:12.151.1}の第1式より
+        \begin{equation}
+            X^m Y^m (X - 1) = fg' (X - 1)
+            \quad
+            \therefore
+            \quad
+            X^m Y^m = fg'
+        \end{equation}
+        を得る。
+        よって
+        $\frac{1}{1}
+            = \frac{g'}{X^m Y^m} \frac{f}{1}
+            \in \left(\frac{f}{1}\right) = J$
+        だから$J = S^{-1}R$がいえた。
+    \end{innerproof}
+    よって$(X - 1, Y - 1) \cap S \neq \emptyset$である。
+    \begin{innerproof}
+        $I \coloneqq (X - 1, Y - 1)$とおき、
+        標準射$R \to S^{-1}R, \; r \mapsto r / 1$を$\varphi$とおく。
+        明らかに$J = \left(\frac{X - 1}{1}, \frac{Y - 1}{1}\right)
+            = S^{-1} \varphi(I)$
+        であることに注意する。
+        いま$J = S^{-1}R$だから$\varphi^{-1}(J) = \varphi^{-1}(S^{-1}R) = R$である。
+        よって$1 \in \varphi^{-1}(J) = \varphi^{-1}(S^{-1} \varphi(I))$だから、
+        ある$i \in I, \; s \in S$が存在して
+        $\frac{1}{1} = \frac{i}{s}$と表せる。
+        通分して$s = i$だから$I \cap S \neq \emptyset$がいえた。
+    \end{innerproof}
+    よってある$m \in \Z_{\ge 0}$が存在して
+    $X^m Y^m \in (X - 1, Y - 1)$、
+    したがって
+    \begin{equation}
+        X^m Y^m = u (X - 1) + v (Y - 1)
+            \quad
+            (\exists u, v \in R)
+    \end{equation}
+    となるが、両辺に$X = 1, Y = 1$を代入すると
+    $1 = 0$となり矛盾が従う。
+    背理法より$J$は単項イデアルでない。
+    したがって$S^{-1}R$、ひいては$\C[X, Y, Z] / (XYZ - 1)$がPIDでないことが示せた。
+\end{answer}
+
+
+\end{document}

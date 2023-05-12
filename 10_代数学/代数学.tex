@@ -1,0 +1,104 @@
+\documentclass[report, notitlepage]{jlreq}
+\usepackage{docmute}
+\usepackage{global}
+\usepackage{./sub/local}
+
+\makeindex
+\makeglossaries
+
+\title{代数学}
+\author{Yahata}
+\date{}
+
+\begin{document}
+
+\maketitle
+\begin{abstract}
+    代数学とは…何？
+
+    第1部では群について述べる。
+    第2部では環と加群について整理する。
+    第3部では環と加群に関する種々の主題として
+    線型代数、外積代数、代数幾何学、有限群の表現論に触れる。
+    第4部では体について述べる。
+\end{abstract}
+
+% ============================================================
+%
+% ============================================================
+\tableofcontents
+\markboth{\contentsname}{}
+
+% ============================================================
+%
+% ============================================================
+\part{群}
+\input{sub/part0}
+
+\part{環と加群}
+\input{sub/part1-1}
+\input{sub/part1-2}
+\input{sub/part1-3}
+
+\input{sub/part2}
+
+\part{体}
+\input{sub/part3}
+
+% ============================================================
+%
+% ============================================================
+\newpage
+\phantomsection
+\addcontentsline{toc}{part}{演習問題の解答}
+\part*{演習問題の解答}
+
+\includecollection{answers}
+
+% ============================================================
+%
+% ============================================================
+\newpage
+\phantomsection
+\addcontentsline{toc}{part}{参考文献}
+\renewcommand{\bibname}{参考文献}
+\markboth{\bibname}{}
+\part*{参考文献}
+
+群、環、加群、体についてひととおり知るには
+\cite{松坂76}や\cite{Lan02}がよいと思う。
+\cite{松坂76}では初等整数論についても触れられている。
+\cite{AB95}には群の表現について簡潔にまとまっている。
+可換環論の本は\cite{AM69}が有名である。
+非可換環論の本は\cite{AF92}がある。
+結合的代数については\cite{Pie82}がよいと思う。
+\cite{Rot15}にはテンソル代数などの話題も載っている。
+
+{
+    \renewcommand{\bibsection}{}
+    \bibliographystyle{amsalpha}
+    \bibliography{../mybibliography}
+}
+
+% ============================================================
+%
+% ============================================================
+\newpage
+\phantomsection
+\addcontentsline{toc}{part}{記号一覧}
+\part*{記号一覧}
+
+{
+    \renewcommand{\glossarysection}[2][]{}
+    \printglossary[title={記号一覧}]
+}
+
+% ============================================================
+%
+% ============================================================
+\newpage
+\phantomsection
+\addcontentsline{toc}{part}{索引}
+\printindex
+
+\end{document}

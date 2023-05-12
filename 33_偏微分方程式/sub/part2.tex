@@ -1,0 +1,427 @@
+\documentclass[report]{jlreq}
+\usepackage{../../global}
+\usepackage{./local}
+\subfiletrue
+\begin{document}
+
+この部では2階偏微分方程式を扱う。
+
+% ============================================================
+%
+% ============================================================
+\chapter{Laplace 方程式}
+
+あらゆる偏微分方程式のうち最も重要なものが Laplace 方程式である。
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{基本解}
+
+\begin{definition}[Laplace 方程式]
+    $U \opensubset \R^n$とする。
+    未知関数$u \colon \wb{U} \to \R$に対し、式
+    \begin{equation}
+        \Delta u = 0 \quad (x \in U)
+    \end{equation}
+    を\term{Laplace 方程式}[Laplace's equation]{Laplace 方程式}[Laplace ほうていしき]という。
+\end{definition}
+
+\begin{definition}[調和関数]
+    Laplace 方程式をみたす$C^2$関数を
+    \term{調和関数}[harmonic function]{調和関数}[ちょうわかんすう]という。
+\end{definition}
+
+\begin{definition}[Poisson 方程式]
+    $U \opensubset \R^n$とし、$f \colon U \to \R$を写像とする。
+    未知関数$u \colon \wb{U} \to \R$に対し、式
+    \begin{equation}
+        - \Delta u = f \quad (x \in U)
+    \end{equation}
+    を\term{Poisson 方程式}[Poisson's equation]{Poisson 方程式}[Poisson ほうていしき]という。
+\end{definition}
+
+一般に偏微分方程式の解を求めるとき、
+或る種の対称性を持った関数のクラスから始めるとよい場合が多い。
+いま Laplace 方程式は回転不変性を持つ (\cref{prob:laplace-rotation-invariance})から、
+解が
+\begin{equation}
+    u(x) = v(r), \quad r = |x|
+\end{equation}
+の形に書けると仮定して$v$を求める。
+すると$r > 0$のとき
+\begin{equation}
+    v(r) = \begin{cases}
+        b \log r + c &\quad (n = 2) \\
+        \frac{b}{r^{n-2}} + c &\quad (n \ge 3)
+    \end{cases}
+\end{equation}
+($b, c$は定数) が解となることがわかる。
+そこで次のように定義する\footnote{
+    これは超関数に関する Malgrange–Ehrenpreis の定理の具体例の一つである。
+}:
+
+\begin{definition}[基本解]
+    関数$\Phi \colon \R^n \setminus \{0\} \to \R,$
+    \begin{equation}
+        \Phi(x) \coloneqq \begin{cases}
+            - \frac{1}{2\pi} \log |x| &\quad (n = 2) \\
+            \frac{1}{n(n-2)\alpha(n)} \frac{1}{|x|^{n-2}} &\quad (n \ge 3)
+        \end{cases}
+    \end{equation}
+    を Laplace 方程式の\term{基本解}[fundamental solution]{基本解}[きほんかい]という。
+    ただし、$\alpha(n)$は$\R^n$の単位球の体積である。
+\end{definition}
+
+\begin{example}[基本解の例]
+    ~
+    \begin{itemize}
+        \item $n = 3$のときの基本解は
+            \begin{equation}
+                \Phi(x) = \frac{1}{4\pi \sqrt{x^2 + y^2 + z^2}}
+            \end{equation}
+            で与えられる。
+    \end{itemize}
+\end{example}
+
+Poisson 方程式の非斉次項$f$の属するクラスを$C_c^2(\R^2)$に制限すれば、
+基本解と$f$の畳み込みで Poisson 方程式の解が得られる。
+
+\begin{theorem}[Poisson 方程式の解]
+    $f \in C_c^2(\R^n)$とし、
+    $u \coloneqq \Phi * f$とする。
+    このとき
+    \begin{enumerate}
+        \item $u \in C^2(\R^n)$
+        \item $- \Delta u = f$ in $\R^n$
+    \end{enumerate}
+    が成り立つ。
+\end{theorem}
+
+\begin{proof}
+    cf. [Evans] p.23
+\end{proof}
+
+\begin{problem}[Laplace 方程式の回転不変性]
+    \label[problem]{prob:laplace-rotation-invariance}
+    $u$が Laplace 方程式の解ならば、
+    直交行列$A$に対し$v(x) \coloneqq u(Ax)$も解であることを示せ。
+\end{problem}
+
+\begin{answer}
+    $A = (a_{ij})_{i,j}$とおく。
+    \begin{equation}
+        y_k \coloneqq \sum_{i_k} a_{i_k k} x_{i_n}
+        \quad
+        (k = 1, \dots, n)
+    \end{equation}
+    とおくと
+    \begin{equation}
+        v(x) = u(Ax) = u(y)
+    \end{equation}
+    だから
+    \begin{equation}
+        \deldel{x_k} \deldel{x_k} v(x)
+            = \sum_{i} \sum_{j}
+            a_{ki} a_{kj} \deldel{x_i} \deldel{x_j} u(y)
+            \quad (k = 1, \dots, n)
+    \end{equation}
+    が成り立つ。
+    よって
+    \begin{alignat}{1}
+        \sum_{k} \deldel{x_k} \deldel{x_k} v(x)
+            &= \sum_{k} \sum_{i} \sum_{j}
+                a_{ki} a_{kj} \deldel{x_i} \deldel{x_j} u(y) \\
+            &= \sum_{i} \sum_{j}
+                \underbrace{ \sum_{k} a_{ki} a_{kj} }_{\delta_{ij}}
+                \deldel{x_i} \deldel{x_j} u(y) \\
+            &= \sum_{i} \deldel{x_i} \deldel{x_i} u(y) \\
+            &= 0
+    \end{alignat}
+    が成り立つ。
+\end{answer}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{Mean-Value Formulas}
+
+\begin{definition}[平均値の記法]
+    $D \subset \R^n$上の$f$の値の平均値を
+    \begin{equation}
+        \dashint_D f(x) dx \coloneqq \frac{1}{\mu(D)} \int_D f(x) dx
+    \end{equation}
+    と書くことにする。
+\end{definition}
+
+\begin{theorem}[Gauss の平均値定理]
+    $u$を$U \opensubset \R^n$上の調和関数とする。
+    このとき、任意の球$B(x, r) \subset U$に対し
+    \begin{equation}
+        u(x) = \dashint_{\partial B(x, r)} u(y) \,dV(y)
+            = \dashint_{B(x, r)} u(y) \,dV(y)
+    \end{equation}
+    が成り立つ。
+    ただし第2, 3項の積分は体積形式の積分である。
+\end{theorem}
+
+\begin{proof}
+    第1の等号について示す。
+    関数$\varphi(r)$を
+    \begin{equation}
+        \varphi(r)
+            \coloneqq \dashint_{\partial B(x, r)} u(y) \,dV(y)
+    \end{equation}
+    と定める。変数変換により
+    \begin{equation}
+        \varphi(r)
+            = \dashint_{\partial B(0, 1)} u(x + rz) \,dV(z)
+    \end{equation}
+    が成り立つことに注意する。
+    $\varphi(r)$が定数$u(x)$であることを示す。
+    そこで$\varphi'(r)$を計算すると
+    \begin{alignat}{1}
+        \varphi'(r)
+            &= \dashint_{\partial B(0, 1)} \dd{r} u(x + rz) \,dV(z) \\
+            &= \dashint_{\partial B(0, 1)}
+                \sum_{i} \deldel{y^i} u(x + rz) z^i \,dV(z) \\
+            &= \dashint_{\partial B(x, r)}
+                \sum_{i} \deldel{y^i} u(y) \frac{y^i - x^i}{r} \,dV(y) \\
+            &= \dashint_{\partial B(x, r)}
+                \bigg\langle
+                    \grad u,
+                    \underbrace{\sum_i \frac{y^i - x^i}{r} \deldel{x^i}}_{\deldel{n} \text{ とおく}}
+                \bigg\rangle_g \,dV(y) \\
+            &= \frac{1}{\mu(\partial B(x, r))} \int_{\partial B(x, r)}
+                \bigg\langle
+                    \grad u, \deldel{n}
+                \bigg\rangle_g \,dV(y) \\
+            &= \frac{1}{\mu(\partial B(x, r))} \int_{B(x, r)}
+                \div \grad u \,dV(y)
+                \quad (\text{発散定理}) \\
+            &= 0
+    \end{alignat}
+    となる。ただし、$g$は$B(x, r)$上の誘導計量である。
+    したがって$\varphi(r)$は定数であるが、
+    \begin{equation}
+        \lim_{r \to 0} \varphi(r)
+            = \lim_{r \to 0} \dashint_{\partial B(x, r)} u(y) \,dV(y)
+            = u(x)
+    \end{equation}
+    だから$\varphi(r) = u(x)$を得る。
+    \TODO{第2の等式}
+\end{proof}
+
+
+\begin{theorem}[平均値定理の逆]
+    \TODO{}
+\end{theorem}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+\begin{theorem}[最大値原理]
+    \TODO{}
+\end{theorem}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+\begin{theorem}[最小値原理]
+    \TODO{}
+\end{theorem}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+\begin{theorem}[境界値問題の一意性]
+    $U \opensubset \R^n$とし、
+    $g \in C^0(\partial U), f \in C^0(U)$とする。
+    このとき、次の境界値問題の解$u \in C^2(U) \cap C^0(\wb{U})$は一意に定まる：
+    \begin{alignat}{2}
+        - \Delta u &= f &&\quad \text{in} \quad U \\
+        u &= g &&\quad \text{on} \quad \partial U
+    \end{alignat}
+\end{theorem}
+
+\begin{proof}
+    $u, \tilde{u}$が定理の境界値問題の解であるとする。
+    このとき$u - \tilde{u}$は$U$上調和で
+    $\partial U$上で恒等的に$0$だから、
+    最大値原理および最小値原理より
+    $\max_{x \in \wb{U}} (u(x) - \tilde{u}(x)) = \min_{x \in \wb{U}} (u(x) - \tilde{u}(x)) = 0$
+    が成り立つ。
+    したがって$u, \tilde{u}$は$\wb{U}$上恒等的に一致する。
+\end{proof}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{解の滑らかさ}
+
+\begin{theorem}[正則性]
+    \TODO{}
+\end{theorem}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+\begin{theorem}[導関数の評価]
+    \TODO{}
+\end{theorem}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+\begin{theorem}[解析性]
+    $U \opensubset \R^n$とする。
+    $u$を$U$上の調和関数ならば、$u$は$U$上解析的である。
+\end{theorem}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+\begin{theorem}[Liouville の定理]
+    $u \colon \R^n \to \R$が有界な調和関数ならば、$u$は定数関数である。
+\end{theorem}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+\begin{theorem}[積分表示]
+    \TODO{}
+\end{theorem}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+\begin{theorem}[Harnack の不等式]
+    \TODO{}
+\end{theorem}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{Poisson 方程式}
+
+簡単な形をした有界領域では、
+Green 関数が具体的に構成でき、
+それを用いて Poisson 方程式を解くことができる。
+
+\TODO{以下の定義や定理では$U$は有界か？}
+
+\begin{definition}[Green 関数]
+    $U \opensubset \R^n$を領域、$x \in U$とし、境界値問題
+    \begin{alignat}{2}
+        \Delta \phi^x &= 0 &&\quad \text{in} \quad U \\
+        \phi^x &= \Phi(y - x) &&\quad \text{on} \quad \partial U
+    \end{alignat}
+    の解を$\phi^x$とする。関数
+    \begin{equation}
+        G(x, y) \coloneqq \Phi(x - y) - \phi^x(y) \quad x, y \in U,\; x \neq y
+    \end{equation}
+    を領域$U$に対する\term{Green 関数}[Green function]{Green 関数}[Greenかんすう]という。
+\end{definition}
+
+\begin{theorem}[Poisson 方程式の境界値問題の解]
+    $U \opensubset \R^n$を領域とし、
+    $U$に対する Green 関数を$G$とする。
+    \TODO{}
+\end{theorem}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{固有値問題}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{Dirichlet 問題と Neumann 問題}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{2階楕円型方程式}
+
+一般の2階楕円型方程式では偏微分方程式を直接扱う必要がある。
+
+\begin{definition}[弱解]
+    \TODO{}
+\end{definition}
+
+一般の2階楕円型方程式について古典解の存在を示すのは難しいが、
+弱解の存在は Lax-Milgram の定理により簡単に示せる。
+
+\begin{theorem}[Lax-Milgram の定理]
+    \TODO{}
+\end{theorem}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+
+% ============================================================
+%
+% ============================================================
+\chapter{熱伝導方程式}
+
+\begin{example}[同次1次元熱伝導方程式]
+    \TODO{}
+\end{example}
+
+\begin{example}[非同次1次元熱伝導方程式]
+    \TODO{}
+\end{example}
+
+\section{Fundamental Solutions}
+
+\section{Mean-Value Formula}
+
+\section{Properties of Solutions}
+
+\section{Method of Fourier Series Expansion}
+
+
+
+% ============================================================
+%
+% ============================================================
+\chapter{波動方程式}
+
+\begin{example}[1次元波動方程式]
+    
+\end{example}
+
+\begin{example}[2次元波動方程式]
+    
+\end{example}
+
+\begin{example}[Huygens の原理]
+    cf. [Evans] p.80
+\end{example}
+
+\section{Solution by Spherical Means}
+
+$n = 1, 2, 3$の場合をそれぞれみる。
+
+
+
+\end{document}

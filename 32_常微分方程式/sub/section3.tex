@@ -1,0 +1,399 @@
+\documentclass[report]{jlreq}
+\usepackage{../../global}
+\usepackage{./local}
+\subfiletrue
+\def\assetspath{../}
+%\makeindex
+\begin{document}
+
+
+\chapter{定数係数線型常微分方程式}
+
+定数係数という節見出しだが、以下の「3.1 定義と基本性質」の内容だけは変数係数の場合も含んでいる。
+なお、係数だけでなく非斉次項も定数ならば、
+$y$を定数関数とおいて解けば特殊解がひとつ得られる。
+
+\section{定義と基本性質}
+
+\begin{definition}[3.1.1 線型]
+    \,
+    \begin{enumerate}
+        \item $n$階常微分方程式が\textbf{線型}であるとは
+            \begin{equation}
+                y^{(n)} + a_{n-1}(x) y^{(n-1)} + \cdots + a_1(x) y' + a_0(x) y = f(x)
+            \end{equation}
+            という形をしていること。
+        \item $n$個の未知関数を持つ連立1階常微分方程式が\textbf{線型}であるとは
+            \begin{equation}
+                \by' = A(x) \by + \bm{b}(x)
+            \end{equation}
+            という形をしていること。
+    \end{enumerate}
+\end{definition}
+
+(1)は(2)の形に書き直せる。
+
+\subsection{$b(x) \equiv 0$のとき}
+$\by' = A(x) \by$の解全体の集合$V$は線型空間をなす。
+
+\begin{theorem}[3.1.2]
+    $\{ \bbeta_i \coloneqq \by_i(\alpha) \}_{1 \le i \le n}\, (\alpha \in \R)$が$\R^n$の基底であるとき、
+    $\{ \by_i \}_{1 \le i \le n}$は$V$の基底である。
+\end{theorem}
+
+\begin{proof}
+    線型独立性は明らかなので、$V = \Span \{ \by_i \}_{1 \le i \le n}$を示そう。
+    $\by \in V$を任意にとる。$\by(\alpha) \eqqcolon \bbeta \in \R^n$とおくと、
+    $\{ \bbeta_i \}_{1 \le i \le n}$が$\R^n$の基底であることから
+    \begin{equation}
+        \bbeta = c_1 \bbeta_1 + \cdots + c_n \bbeta_n
+    \end{equation}
+    と書ける。このとき、$\by(x)$と$c_1 \by_1(x) + \cdots c_n \by_n(x)$はいずれも初期値問題
+    \begin{equation}
+        \by' = A(x) \by,\quad \by(\alpha) = \bbeta
+    \end{equation}
+    の解なので、解の一意性により
+    \begin{equation}
+        \by(x) = c_1 \by_1(x) + \cdots c_n \by_n(x)
+    \end{equation}
+    が成り立つ。
+    したがって$V = \Span \{ \by_i \}_{1 \le i \le n}$がいえた。
+\end{proof}
+
+\begin{definition}[3.1.3]
+    $V$の基底を与える解の組を\textbf{基本解}という。
+\end{definition}
+
+
+\subsection{$b(x) \not\equiv 0$のとき}
+解全体の集合を$\tilde{V}$とおく。
+
+\begin{theorem}[3.1.4]
+    $\varphi(x)$をひとつの解とすると、
+    \begin{equation}
+        y(x) \in \tilde{V} \iff y(x) - \varphi(x) \in V
+    \end{equation}
+    である。
+\end{theorem}
+
+
+
+
+
+
+\section{定数係数$n$階線型常微分方程式}
+
+定数係数$n$階線型常微分方程式
+\begin{equation}
+    y^{(n)} + a_{n-1} y^{(n-1)} + \cdots + a_0 y = f(y) \tag{(1)}
+\end{equation}
+を考える。
+
+\subsection{同次の場合}
+
+\begin{definition}[特性多項式]
+    微分演算子を$D \coloneqq \dd{x}$とおくと、$(1)$は
+    \begin{equation}
+        (D^n + a_{n-1} D^{n-1} + \cdots + a_1 D + a_0) y = 0
+    \end{equation}
+    と書ける。ここで
+    \begin{equation}
+        \Phi(t) \coloneqq t^n + a_{n-1} t^{n-1} + \cdots + a_1 t + a_0
+    \end{equation}
+    を$(1)$の\textbf{特性多項式}という。
+\end{definition}
+
+以下、特性多項式の因数分解
+\begin{equation}
+    \Phi(t) = \prod_{i=1}^r (t - \lambda_i)^{n_i}
+\end{equation}
+が重要である。この因数分解に応じて(1)は
+\begin{equation}
+    \prod_{i=1}^r (D - \lambda_i)^{n_i} y = 0 \tag{(3)}
+\end{equation}
+と書ける。
+
+\begin{lemma}[3.2.1]
+    $e^{-\lambda x} (D - \lambda) g = D (e^{-\lambda x} g)$
+\end{lemma}
+
+\begin{proof}
+    簡単なので省略。
+\end{proof}
+
+\begin{theorem}[3.2.2]
+    $\{ x^j e^{\lambda_i x} \mid 1 \le i \le r,\, 0 \le j \le n_i - 1 \}$は
+    (3)の基本解である。
+\end{theorem}
+
+\begin{proof}
+    任意の解が所与の関数系の線型結合で書けることを示せばよい。
+    $r = 1$すなわち特性多項式の根がひとつしかない場合は、補題3.2.1から簡単な計算によりわかる。
+    $r > 1$の場合は$r$に関する帰納法によって示す。
+\end{proof}
+
+同次の場合の解法は至ってシンプルである。
+すなわち、定理3.2.2によって特性多項式の根に対応する基本解がただちに得られる。
+
+\begin{problem}[3.2.4]
+    $y''' - y'' - y' + y = 0$を解け。
+
+    解答：
+    \begin{equation}
+        y(x) = C_1 e^x + C_2 x e^x + C_3 e^{-x}
+    \end{equation}
+\end{problem}
+
+\begin{problem}[教科書例題3.4]
+    $y'' + \omega^2 y = 0\; (\omega > 0)$の一般解を実数値関数として求めよ。
+    定理3.2.2から得られる基底$e^{i\omega x},\, e^{-i\omega x}$は複素数値関数なので、
+    これらの線型結合によって基底を$\cos \omega x,\, \sin \omega x$と取り直せば
+    実数値関数としての一般解が得られる。
+
+    解答：$y = C_1 \cos \omega x + C_2 \sin \omega x$
+\end{problem}
+
+\begin{problem}
+    教科書の問3.1, 問3.2, 問3.3, 問3.4を読者の演習問題とする。
+\end{problem}
+
+
+\subsection{非同次の場合}
+
+非同次の場合は\textbf{演算子法}によって解く。
+これは兎にも角にもひとつの解$\varphi(x)$を求めるのが基本的である。
+そこで特性多項式を$\Phi(t) = (t - \lambda_1) \Psi(t)$と変形すると、
+補題3.2.1より
+\begin{equation}
+    \begin{split}
+        \Phi(D) \varphi = f(x)
+            &\iff e^{-\lambda_1 x} (D - \lambda_1) \Psi(D) \varphi = e^{-\lambda_1 x} f(x) \\
+            &\iff \Psi(D) \varphi = e^{\lambda_1 x} \int e^{-\lambda_1 x} f(x) dx
+    \end{split}
+\end{equation}
+となり、階数のひとつ小さい微分方程式が得られる\footnote{
+    イメージとしては、$(D - \lambda_1) \Psi(D) \phai = f(x)$を見たら
+    右辺の式から$e^{\lambda_1 x}$を「引き剥がして」おいて残りを積分するという感じ。
+}。これを繰り返して$\varphi(x)$を求める。
+あとは$\varphi(x)$に同次の一般解を足し合わせれば、それが非同次の解となる。
+
+また、非斉次項が特別な形の場合は\textbf{未定係数法}も利用できる。
+
+\begin{problem}[3.2.4]
+    $y'' + 3y' + 2y = e^x$を解け。
+\end{problem}
+
+まず$\varphi$を求めると
+\begin{equation}
+    \begin{split}
+        (D + 1)(D + 2) \varphi &= e^x \\
+        (D + 2) \varphi &= \frac{1}{2} e^x \\
+        \varphi &= \frac{1}{6} e^x \\
+    \end{split}
+\end{equation}
+なので、一般解は
+\begin{equation}
+    y(x) = \frac{1}{6} e^x + C_1 e^{-x} + C_2 e^{-2x}
+\end{equation}
+である。
+
+\begin{problem}
+    教科書の問3.5を読者の演習問題とする。
+\end{problem}
+
+
+
+
+
+
+\section{定数係数連立1階線型常微分方程式}
+
+以下では定数係数の連立1階型を考える。
+これは一見すると$n$階型を行列の言葉で言い換えただけに過ぎないようにも見えるが、
+同次形の初期値問題が簡単に解けるという利点がある。
+
+\begin{proposition}[3.3.1 行列の指数関数]
+    \begin{enumerate}
+        \item $n$次正方行列$A$に対し
+            \begin{equation}
+                \sum_{n=0}^\infty \frac{1}{n!} A^n \eqqcolon e^{A}
+            \end{equation}
+            は収束する。
+        \item $AB = BA$ならば$e^A e^B = e^{A+B}$が成り立つ。
+        \item 行列値関数$e^{xA}$は$C^1$級（実は{\smooth}級）で
+            \begin{equation}
+                \dd{x} e^{xA} = A e^{xA}
+            \end{equation}
+            が成り立つ。
+    \end{enumerate}
+\end{proposition}
+
+\begin{proof}
+    (1) コーシーの収束条件を使えば示せる。
+
+    (2), (3) 省略
+\end{proof}
+
+\begin{theorem}[3.3.2 非同次形の一般解]
+    $\bm{y}' = A\bm{y} + \bm{b}(x)$の解は
+    \begin{equation}
+        \bm{y}(x) = e^{xA} \left( \int^x e^{-tA} \bm{b}(t)\, dt + \bm{C} \right)
+    \end{equation}
+    である。
+\end{theorem}
+
+\begin{corollary}[3.3.3 非同次形の初期値問題]
+    さらに初期条件$\bm{y}(\alpha) = \bm{\beta}$をみたす解は
+    \begin{equation}
+        \bm{y}(x) = e^{xA} \left( \int_\alpha^x e^{-tA} \bm{b}(t)\, dt + e^{-\alpha A} \bm{\beta} \right)
+    \end{equation}
+    である。
+\end{corollary}
+
+\begin{corollary}[3.3.4 同次形の一般解と初期値問題]
+    $\bm{y}' = A\bm{y}$の解は
+    \begin{equation}
+        \bm{y}(x) = e^{xA} \bm{C}
+    \end{equation}
+    であり、さらに初期条件$\bm{y}(\alpha) = \bm{\beta}$をみたす解は
+    \begin{equation}
+        \bm{y}(x) = e^{(x - \alpha)A} \bm{\beta}
+    \end{equation}
+    である。
+\end{corollary}
+
+この系3.3.4により、同次形の場合は初期値に指数関数$e^{xA}$を作用させるだけで
+解が求まることがわかった。
+$e^{xA}$の計算には\textbf{Jordan 標準形}を用いる。
+Jordan 標準形とは、通常の対角化における固有値問題$(A - \alpha I)\, \bm{x} = \bm{o}$を
+$(A - \alpha I)^n\, \bm{x} = \bm{o}$へ拡張したものに対応する。
+Jordan 標準形の求め方は以下の通りである。
+\begin{enumerate}
+    \item 特性方程式を解き、
+    \item 固有値の重複度ぶんだけ
+        \begin{equation}
+            \begin{split}
+                (A - \alpha I)\, \bm{p}_{1} &= \bm{o} \\
+                (A - \alpha I)\, \bm{p}_{2} &= \bm{p}_1 \\
+                &\vdots
+            \end{split}
+        \end{equation}
+        という計算を繰り返して広義固有ベクトルを求めていく。
+\end{enumerate}
+これより$e^{xA}$は Jordan 標準形$J$と対角化$\!{}^\text{?}\!$行列$P$を用いて
+\begin{equation}
+    e^{xA} = P e^{xJ} P^{-1}
+\end{equation}
+と求まる。このとき、$P$の成分にできるだけ$0$が現れるようにしたほうが後の計算が楽になる。
+また、固有値$\alpha$に対応する$m$次の Jordan 細胞$J(\alpha, m)$は
+\begin{equation}
+    e^{x J(\alpha, m)}
+        = \begin{bmatrix}
+            e^{\alpha x} & xe^{\alpha x} & \cdots & \tfrac{x^{m-1}}{(m-1)!} e^{\alpha x} \\
+             & e^{\alpha x} & & \vdots \\
+             & & \ddots & \vdots \\
+             & & & e^{\alpha x}
+        \end{bmatrix}
+\end{equation}
+をみたす。この形は記憶しておいたほうがよい。
+
+\begin{problem}[3.3.6]
+    次の微分方程式の解を2通りの方法で求めよ。
+    \begin{equation}
+        \bm{y}' = A\bm{y},\quad
+        A = \begin{bmatrix}
+            -1 & 2 \\
+            -4 & 5
+        \end{bmatrix}
+    \end{equation}
+
+    1つ目の方法は、素直に$A$の Jordan 標準形を用いるものである。
+
+    2つ目の方法は、$e^{xA}$の各列がそれぞれ初期値$\bm{y}(0) = {}^t (1, 0),\, {}^t (0, 1)$に対応する
+    特殊解であることを利用するものである。
+    すなわち、$A$の固有多項式の根に対応する基本解（定理3.2.2）の線型結合で
+    これら特殊解$\bm{y}(x)$の各成分を表し、
+    続いて微分方程式と初期条件から係数を決めるという方法である\footnote{
+        板書の注3.3.5を参照
+    }。
+
+    解答：
+    \begin{equation}
+        \bm{y} = \begin{bmatrix}
+            2e^x - e^{3x} & -e^x + e^{3x} \\
+            2e^x - 2e^{3x} & -e^x + 2e^{3x}
+        \end{bmatrix}
+        \begin{bmatrix}
+            C_1 \\
+            C_2
+        \end{bmatrix}
+    \end{equation}
+\end{problem}
+
+\begin{problem}[3.3.7]
+    次の微分方程式の解を2通りの方法で求めよ。
+    \begin{equation}
+        y' = Ay,\quad
+        A = \begin{bmatrix}
+            1 & 1 \\
+            -1 & 3
+        \end{bmatrix}
+    \end{equation}
+
+    解答：
+    \begin{equation}
+        \bm{y} = \begin{bmatrix}
+            (1-x) e^{2x} & x e^{2x} \\
+            -x e^{2x} & (1+x) e^{2x}
+        \end{bmatrix}
+        \begin{bmatrix}
+            C_1 \\
+            C_2
+        \end{bmatrix}
+    \end{equation}
+\end{problem}
+
+\begin{problem}[小テスト8]
+    次の微分方程式の解を2通りの方法で求めよ。
+    \begin{equation}
+        y' = Ay
+        + \begin{bmatrix}
+            1 \\
+            -1
+        \end{bmatrix},\quad
+        A = \begin{bmatrix}
+            2 & -3 \\
+            1 & -2
+        \end{bmatrix}
+    \end{equation}
+    この微分方程式は係数も非斉次項も定数なので、定数関数を解に持つ。
+
+    解答：
+    \begin{equation}
+        \bm{y} = \begin{bmatrix}
+            -5 \\
+            -3
+        \end{bmatrix}
+        + \frac{1}{2} \begin{bmatrix}
+            3 e^{x} - e^{-x} & -3 e^{x} + 3e^{-x} \\
+            e^{x} - e^{-x} & -e^x + 3e^{-x}
+        \end{bmatrix}
+        \begin{bmatrix}
+            C_1 \\
+            C_2
+        \end{bmatrix}
+    \end{equation}
+\end{problem}
+
+\begin{problem}
+    教科書の問3.7を読者の演習問題とする。
+\end{problem}
+
+\begin{problem}
+    \cite{寺坂10} 第4章例題1-5を読者の演習問題とする。
+\end{problem}
+\begin{problem}
+    \cite{寺坂10} 第4章例題16-17を読者の演習問題とする。
+\end{problem}
+
+\end{document}

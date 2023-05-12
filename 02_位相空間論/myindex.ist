@@ -1,0 +1,8 @@
+lethead_flag 1
+letter_head  1
+lethead_prefix "\\myindexgroupheader{"
+lethead_suffix "}"
+
+delim_0 "\\dotfill "
+delim_1 "\\dotfill "
+delim_2 "\\dotfill "

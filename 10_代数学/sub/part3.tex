@@ -1,0 +1,752 @@
+\documentclass[report]{jlreq}
+\usepackage{global}
+\usepackage{./local}
+\subfiletrue
+%\makeindex
+\begin{document}
+
+
+
+
+% ============================================================
+%
+% ============================================================
+\chapter{体}
+
+体について述べる。
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{体}
+
+\begin{definition}[素体]
+    $k$を体とする。
+    $k$の部分体すべての共通部分を$k$の
+    \term{素体}[prime field]{素体}[そたい]という。
+\end{definition}
+
+\begin{definition}[標数]
+    $k$を体とし、
+    環準同型$\Z \to k, \; n \mapsto n1_k$を$\phi$とおく。
+    $1_k = \phi(1) \in \Im\phi$ゆえに$\Im\phi \neq 0$であり、
+    また$\Im\phi$は整域だから、
+    準同型定理より$\Ker\phi$は$\Z$の素イデアルである。
+    よって$\Ker\phi = (p) \; (\text{$p$は$0$または素数})$と表せる。
+    $p$を$k$の\term{標数}[characteristic]{標数}[ひょうすう]という。
+\end{definition}
+
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{有限体}
+
+\begin{definition}[有限体]
+    濃度が有限の体を
+    \term{有限体}[finite field]{有限体}[ゆうげんたい]という。
+\end{definition}
+
+\begin{theorem}[有限体の濃度]
+    \label[theorem]{thm:cardinality-of-finite-field}
+    有限体の濃度は素数の冪である。
+\end{theorem}
+
+\begin{proof}
+    $k$を有限体とし、
+    $k$の標数を$p$とおく。
+    $p = 0$だとすると$k$が$\Z$と同型な部分環を含むことになり
+    $k$の濃度が有限であることに反するから、
+    $p$は素数である。
+    よって$k$は$\Z / p\Z$と同型な部分環、
+    より強く部分体をもつ。
+    $k$を左正則加群とみなせば、
+    係数制限により$k$は$\Z / p\Z$上のベクトル空間となり、
+    いま$k$の濃度は有限だから
+    $\dim_{\Z / p\Z} k \eqqcolon n \in \Z_{\ge 1}$である。
+    よって$k$の濃度は$\sharp k = p^n$である。
+\end{proof}
+
+
+
+% ============================================================
+%
+% ============================================================
+\chapter{体の拡大}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{体の拡大}
+
+多角形の対称変換と多項式の Galois 群との関連は次のように整理できる：
+
+\TODO{なぜここに書いてある？}
+
+\begin{figure}[h]
+    \centering
+    \begin{tabular}{ll}
+        多角形$P$ & 多項式$f(x) \in F[x]$ \\
+        平面 & $f(x)$の分離体$E$ \\
+        頂点$\Vert(P) = \{v_1, \dots, v_n\}$ & 根$\alpha_1, \dots, \alpha_n$ \\
+        線型変換 & $E$の自己同型 \\
+        直交変換 & $F$を固定する$E$の自己同型 \\
+        $P$を固定する直交変換の群 & Galois 群$\Gal(f) = \Gal(E/F)$ \\
+        正多角形 & 既約多項式
+    \end{tabular}
+\end{figure}
+
+\begin{definition}[体の拡大]
+    \idxsym{degree of field extension}{$[L : K]$}{$L$の$K$上の拡大次数}
+    $L$を体とする。
+    $L$の部分環$K$が体であるとき、
+    $K$を$L$の\term{部分体}[subfield]{部分体}[ぶぶんたい]といい、
+    $L$を$K$の\term{拡大体}[extension field]{拡大体}[かくだいたい]という。
+    \emph{$L/K$は体の拡大である}ともいう。
+    $L$の$K$-ベクトル空間としての次元を$[L : K]$と書き、
+    $L$の$K$上の
+    \term{拡大次数}[degree of field extensioni]{拡大次数}[かくだいじすう]という。
+\end{definition}
+
+\begin{example}[拡大体の例]
+    ~
+    \begin{itemize}
+        \item $\R$は$\Q$の拡大体である。
+        \item $\C$は$\R$の拡大体である。
+            $\C$は$\R$-ベクトル空間として基底$\{1, \sqrt{-1}\}$がとれるので
+            $[\C \colon \R] = 2$である。
+            したがって$\C$は$\R$の2次拡大である。
+        \item $d \neq 1$を square-free な整数とする（e.g. $d = 6$）。
+            $L = \Q[\sqrt{d}] = \{ a + b\sqrt{d} \in \Q \colon a, b \in \Q \}$は
+            $\C$の部分体である
+            （実際、$\Q[\sqrt{d}] \cong \Q[x]/(x^2 - d)$であり、
+            $x^2 - d$は$\Q[x]$の既約元
+            （$\because$ $L$は$\C$の部分環ゆえに整域）
+            だから、$\Q$が体であることと併せて$\Q[x]/(x^2 - d)$は体である）。
+            $\sqrt{d} \not\in \Q$ゆえに$[L \colon \Q] \ge 2$である。
+            $L$は$\Q$-ベクトル空間として基底$\{1, \sqrt{d}\}$がとれるので
+            $[L \colon \Q] = 2$である。
+        \item $K$を体とする。$A = K[x_1, \dots, x_n]$を$n$変数多項式環、
+            $L = K(x_1, \dots, x_n)$を$n$変数有理関数体とする。
+            $A$の$K$-ベクトル空間としての次元は$\infty$である。
+            さらに$A$は整域なので、その商体$K(x_1, \dots, x_n)$への自然な準同型は単射、
+            したがって$A$は$K(x_1, \dots, x_n)$に含まれる。
+            よって$K(x_1, \dots, x_n)/K$は無限次拡大である。
+    \end{itemize}
+\end{example}
+
+\begin{definition}[代数体]
+    $\Q$の有限次拡大体を
+    \term{代数体}[algebraic field]{代数体}[だいすうたい]という。
+\end{definition}
+
+\begin{definition}[合成体]
+    $L$を体とし、$M_1, M_2$を$L$の部分体とする。
+    \TODO{}
+\end{definition}
+
+\begin{proposition}[体の準同型]
+    \label[proposition]{prop:field-homomorphism}
+    $K$を体とし、$L, M$を$K$の拡大体とする。
+    \begin{enumerate}
+        \item $S \subset L$に対し包含写像$\begin{tikzcd}
+                S \ar[hook]{r} & K(S)
+            \end{tikzcd}$は$K$の拡大体の圏のエピ射である。
+            \begin{equation}
+                \begin{tikzcd}
+                    S \ar[hook]{r}
+                        & K(S) \ar[shift left]{r} \ar[shift right]{r}
+                        & \bullet
+                \end{tikzcd}
+            \end{equation}
+            すなわち、$K$の拡大体の間の準同型$K(S) \to \bullet$は$S$上の値で決まる。
+        \item \TODO{}
+    \end{enumerate}
+\end{proposition}
+
+\begin{proof}
+    cf. [雪江] p.163
+\end{proof}
+
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{添加}
+
+\begin{definition}[添加]
+    $L/K$を体の拡大、$S \subset L$を部分集合とする。
+    \begin{itemize}
+        \item $S$が有限集合$S = \{\alpha_1, \dots, \alpha_n\}$なら
+            \begin{equation}
+                K(S) \coloneqq \left\{
+                    \frac{f(\alpha_1, \dots, \alpha_n)}{g(\alpha_1, \dots, \alpha_n)} \in L
+                    \colon
+                    \frac{f(x_1, \dots, x_n)}{g(x_1, \dots, x_n)} \text{ は$K$係数有理式},\;
+                    g(\alpha_1, \dots, \alpha_n) \neq 0
+                \right\}
+            \end{equation}
+        \item $S$が無限集合なら
+            \begin{equation}
+                K(S) \coloneqq \bigcup_{\substack{S' \subset S \\ |S'| < \infty}} K(S')
+            \end{equation}
+    \end{itemize}
+    と定義する。
+    $K(S)$を$K$に$S$を
+    \term{添加}[adjunction]{添加}[てんか]した体という。
+    \begin{itemize}
+        \item $S$が有限集合ならば
+            $K(S)$は$K$上
+            \term{有限生成}[finitely-generated]{有限生成}[ゆうげんせいせい]
+            といい、
+        \item $S$が1元集合ならば
+            $K(S)$は$K$の
+            \term{単拡大}{単拡大}[たんかくだい]
+            であるという。
+    \end{itemize}
+\end{definition}
+
+\begin{example}[有限生成だが有限次拡大でない例]
+    $K$を体とする。
+    $K$上の1変数有理関数体$K(x)$は$K$上有限生成である。
+    しかし拡大次数は$\infty$である。
+\end{example}
+
+\begin{definition}[代数拡大と超越拡大]
+    $L/K$を体の拡大、$x \in L$とする。
+    $a_0, \dots, a_n \in K$、少なくともひとつは$0$でない、が存在して
+    \begin{equation}
+        a_n x^n + a_{n-1} x^{n-1} + \dots + a_0 = 0
+    \end{equation}
+    が成り立つとき、
+    $x$は$K$上
+    \term{代数的}[algebraic]{代数的}[だいすうてき]
+    であるといい、
+    そうでなければ$x$は$K$上
+    \term{超越的}[trancendental]{超越的}[ちょうえつてき]
+    であるという。
+    $L$のすべての元が$K$上代数的ならば、
+    $L/K$は
+    \term{代数拡大}[algebraic extension]{代数拡大}[だいすうかくだい]
+    といい、
+    そうでなければ$L/K$は
+    \term{超越拡大}[trancendental extension]{超越拡大}[ちょうえつかくだい]
+    という。
+\end{definition}
+
+\begin{example}[有限生成と代数拡大]
+    ~
+    \begin{itemize}
+        \item $\Q(\pi)/\Q$は有限生成だが代数拡大でない。
+        \item $\Q(\{ \sqrt[n]{2} \colon n = 1, 2, \dots \})$は
+            代数拡大だが有限生成でない。
+    \end{itemize}
+\end{example}
+
+\begin{proposition}[有限次拡大は代数拡大]
+    体の拡大$L/K$が有限次拡大ならば、$L/K$は代数拡大である。
+\end{proposition}
+
+\begin{proof}
+    省略
+\end{proof}
+
+\begin{proposition}[有限群の Lagrange の定理の類似]
+    $L/M, M/K$を体の有限次拡大とする。
+    このとき、$L/K$も有限次拡大で
+    \begin{equation}
+        [L \colon K] = [L \colon M] [M \colon K]
+    \end{equation}
+    が成り立つ。
+\end{proposition}
+
+\begin{proof}
+    省略
+\end{proof}
+
+\begin{definition}[最小多項式]
+    $L/K$を体の代数拡大とし、$\alpha \in L$とする。
+    $K$上の$0$でないモニック多項式$f$で$f(\alpha) = 0$をみたすもののうち
+    $\deg f(x)$が最小となるものが一意に存在する（証明略）。
+    これを$\alpha$の$K$上の
+    \term{最小多項式}[minimal polynomial]{最小多項式}[さいしょうたこうしき]
+    という。
+\end{definition}
+
+\begin{definition}[共役]
+    $L, M$を$K$の拡大体、$\alpha \in L$とする。
+    $\alpha$の$K$上の最小多項式を$f$とするとき、
+    $f$の根で$M$に属するものを、
+    $\alpha$の$M$における$K$上の
+    \term{共役}[conjugate]{共役}[きょうやく]、
+    あるいは単に$K$上の共役という。
+    \begin{equation}
+        \begin{tikzcd}
+            \alpha && \\[-4ex]
+            \rotatebox[origin=c]{-90}{\in} && \\[-4ex]
+            L && M \\
+            & K \ar[dash]{lu} \ar[dash]{ru}
+        \end{tikzcd}
+    \end{equation}
+\end{definition}
+
+\begin{example}[共役の例]
+    \label[example]{ex:conjugate}
+    $d \neq 1$を square-free な整数とする (e.g. $d = 6$)。
+    $\sqrt{d}$の$\Q$上の最小多項式は
+    $x^2 - d = (x - \sqrt{d})(x + \sqrt{d})$なので、
+    $\sqrt{d}$の$\Q$上の共役は$\pm \sqrt{d}$である。
+    \begin{equation}
+        \begin{tikzcd}
+            \sqrt{d} && -\sqrt{d} \\[-4ex]
+            \rotatebox[origin=c]{-90}{\in} && \rotatebox[origin=c]{-90}{\in} \\[-4ex]
+            \Q[\sqrt{d}] && \Q[\sqrt{d}] \\
+            & \Q \ar[dash]{lu} \ar[dash]{ru}
+        \end{tikzcd}
+    \end{equation}
+\end{example}
+
+\begin{proposition}[共役は$K$準同型で保たれる]
+    \label[proposition]{prop:conjugate-preserved-under-morphism}
+    $L/K$を代数拡大、$F/K$を拡大とする。
+    各$\alpha \in L$と$\phi \in \Hom_K^\al (L, F)$に対し、
+    $\phi(\alpha)$は$\alpha$の共役である。
+    \begin{equation}
+        \begin{tikzcd}
+            \alpha \ar[mapsto]{rr} && \phi(\alpha) \\[-4ex]
+            \rotatebox[origin=c]{-90}{\in} && \rotatebox[origin=c]{-90}{\in} \\[-4ex]
+            L \ar{rr}{\phi} && F \\
+            & K \ar[dash]{lu} \ar[dash]{ru}
+        \end{tikzcd}
+    \end{equation}
+\end{proposition}
+
+\begin{proof}
+    cf. [雪江] p.167
+\end{proof}
+
+
+
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{代数閉包}
+
+\begin{definition}[代数閉包]
+    $K$を体とする。
+    $L/K$が代数拡大であり$L$が代数的閉体であるとき、
+    $L$を$K$の
+    \term{代数閉包}[algebraic closure]{代数閉包}[だいすうへいほう]
+    という。
+\end{definition}
+
+\begin{theorem}[代数閉包の存在 (Steinitz)]
+    \TODO{}
+\end{theorem}
+
+\begin{proof}
+    省略
+\end{proof}
+
+
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{分離拡大}
+
+\begin{definition}[分離拡大]
+    ~
+    \begin{itemize}
+        \item $f(x) \in K[x], \alpha \in \wb{K}$で、
+            $f(x)$が$\wb{K}[x]$で$(x - \alpha)^2$で割り切れるとき、
+            $\alpha$を$f(x)$の
+            \term{重根}[multiple root]{重根}[じゅうこん]
+            という。
+        \item $f(x)$が$\wb{K}$に重根を持たないとき、
+            $f(x)$を
+            \term{分離多項式}[separable polynomial]{分離多項式}[ぶんりたこうしき]
+            という。
+        \item $\alpha \in \wb{K}$の$K$上の最小多項式が分離多項式であるとき、
+            $\alpha$は$K$上
+            \term{分離的}[separable]{分離的}[ぶんりてき]
+            であるといい、
+            そうでなければ
+            \term{非分離的}[inseparable]{非分離的}[ひぶんりてき]
+            であるという。
+        \item $K$の代数拡大$L$のすべての元が$K$上分離的であるとき、
+            $L$を$K$の
+            \term{分離拡大}[separable extension]{分離拡大}[ぶんりかくだい]
+            といい、
+            そうでなければ
+            \term{非分離拡大}[inseparable extension]{非分離拡大}[ひぶんりかくだい]
+            であるという。
+        \item $K$の任意の代数拡大が$K$の分離拡大ならば、
+            $K$を
+            \term{完全体}[perfect field]{完全体}[かんぜんたい]
+            という。
+    \end{itemize}
+\end{definition}
+
+多項式が分離多項式かどうかは、微分をみて判定することができる。
+
+\begin{proposition}[分離多項式と微分]
+    $K$を体とし、$f(x) \in K[x]$とする。
+    このとき、次は同値である：
+    \begin{enumerate}
+        \item $f(x)$は分離多項式である。
+        \item $f(x)$と$f'(x)$は互いに素である。
+    \end{enumerate}
+\end{proposition}
+
+\begin{proof}
+    省略
+\end{proof}
+
+\begin{example}[分離的な元]
+    $p$を素数、$K$を標数$p$の体とする。
+    $a \in K, f(x) = x^p - x - a$とおく。
+    $\alpha \in \wb{K}$が$f(x)$の根なら、
+    $f'(x) = -1$なので、
+    $\alpha$は$K$上分離的である
+    （実際、
+    もし$\alpha$が$K$上分離的でなかったとすれば、
+    $\alpha$の$K$上の最小多項式$g(x)$は$\wb{K}$に重根を持つ。
+    よって、いま$f(\alpha) = 0$ゆえに$f$は$g$で割り切れることから、
+    $f$は$\wb{K}$に重根を持つ。
+    一方、$f(x)$と$f'(x)$は互いに素だから、
+    $f(x)$は$\wb{K}$に重根を持たず、矛盾
+    ）。
+\end{example}
+
+\begin{example}[非分離拡大の例]
+    \TODO{}
+\end{example}
+
+代数拡大が分離拡大かどうかを考えるとき、
+もとの体が完全体ならば話は簡単である。
+次の命題は体が完全体であるための十分条件を与える。
+
+\begin{proposition}[完全体であるための十分条件]
+    \label[proposition]{prop:perfect-field}
+    標数$0$の体と有限体は完全体である。
+\end{proposition}
+
+\begin{proof}
+    省略
+\end{proof}
+
+\begin{definition}[分離閉包]
+    $L/K$を代数拡大とする。
+    $L$の元で$K$上分離的なもの全体の集合を$L_s$と書き、
+    $L$における$K$の
+    \term{分離閉包}[separable closure]{分離閉包}[ぶんりへいほう]
+    という。
+    また、$\wb{K}$における$K$の分離閉包を$K^s$と書き、
+    $K$の\emph{分離閉包}という。
+\end{definition}
+
+\begin{definition}[分離次数]
+    $L/K$を有限次拡大とする。
+    \begin{itemize}
+        \item $[L_s \colon K]$を
+            $L$の$K$上の
+            \term{分離次数}[separable degree]{分離次数}[ぶんりじすう]
+            といい、
+            $[L \colon K]_s$と書く。
+        \item $[L \colon L_s]$を$L$の$K$上の
+            \term{非分離次数}[inseparable degree]{非分離次数}[ひぶんりじすう]
+            といい、
+            $[L \colon K]_i$と書く。
+    \end{itemize}
+\end{definition}
+
+\begin{proposition}[分離次数とホムセットの濃度]
+    \label[proposition]{prop:separable-degree-homset-cardinality}
+    $L/K$を有限次拡大とする。
+    \begin{enumerate}
+        \item \TODO{}
+        \item $[L \colon K]_s = |\Hom_K^\al (L, \wb{K})|$
+    \end{enumerate}
+\end{proposition}
+
+\begin{proof}
+    cf. [雪江] p.183
+\end{proof}
+
+\begin{example}[$\Q(\sqrt{d})$のホムセット]
+    \label[example]{ex:q-sqrt-d-homset}
+    $d \neq 1$を square-free な整数とし (e.g. $d = 6$)、$L = \Q(\sqrt{d})$とする。
+    $\ch L = 0$なので、$L/\Q$は分離拡大である (\cref{prop:perfect-field})。
+    よって$|\Hom_\Q^\al (L, \wb{\Q})| = 2$である
+    (\cref{prop:separable-degree-homset-cardinality})\TODO{?}。
+    $\sigma \in \Hom_\Q^\al (L, \wb{\Q})$とすると、
+    $L$が$\Q$の代数拡大であることから、\cref{prop:conjugate-preserved-under-morphism}より
+    $\sigma(\sqrt{d})$は$\sqrt{d}$の$\Q$上の共役、
+    すなわち$\sigma(\sqrt{d}) = \pm \sqrt{d}$である (\cref{ex:conjugate})。
+    $L$は$\Q$上$\sqrt{d}$で生成されるので、
+    $\sigma$は$\sqrt{d}$での値で定まる (\cref{prop:field-homomorphism})。
+    $\sigma$はちょうど2通りあるので、両方の可能性が起きなければならない。
+    そこで$\sigma$を$\sigma(\sqrt{d}) = -\sqrt{d}$なるものとすれば、
+    $\Hom_\Q^\al (L, \wb{\Q}) = \{ \id_L, \sigma \}$と決まる。
+\end{example}
+
+
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{正規拡大}
+
+\begin{definition}[正規拡大]
+    $L/K$を代数拡大とする。
+    すべての$\alpha \in L$に対し
+    $\alpha$の$K$上の最小多項式が$L$上で1次式の積になるとき、
+    $L/K$を
+    \term{正規拡大}[normal extension]{正規拡大}[せいきかくだい]
+    という。
+\end{definition}
+
+次の定理により、正規拡大かどうかはホムセットをみることで判定できる。
+
+\begin{theorem}[正規拡大とホムセット]
+    \label[theorem]{thm:normal-extension-homset}
+    $L/K$を体の有限次拡大とする。
+    このとき、次は同値である：
+    \begin{enumerate}
+        \item $L/K$は正規拡大である。
+        \item $\Hom_K^\al (L, \wb{K})$の元は$L$の元を固定する。
+    \end{enumerate}
+\end{theorem}
+
+\begin{proof}
+    cf. [雪江] p.185
+\end{proof}
+
+正規拡大のうちとくに重要なのは、
+ホムセットが自己同型となる場合である。
+
+\begin{proposition}[ホムセットが自己同型群となる場合]
+    \label[proposition]{prop:homset-automorphism}
+    $L/K$を正規代数拡大とする。
+    このとき$\Hom_K^\al (L, L) = \Aut_K^\al L$である。
+\end{proposition}
+
+\begin{proof}
+    cf. [雪江] p.185
+\end{proof}
+
+\begin{example}[正規拡大の例]
+    \label[example]{ex:normal-extension}
+    $d \neq 1$を square-free な整数とする (e.g. $d = 6$)。
+    \cref{ex:q-sqrt-d-homset}より各$\phi \in \Hom_K^\al (L, \wb{K})$は
+    $\phi(\Q(\sqrt{d})) \subset \Q(\sqrt{d})$をみたすから、
+    \cref{thm:normal-extension-homset}より
+    $\Q(\sqrt{d})/\Q$は正規拡大である。
+\end{example}
+
+\begin{definition}[最小分解体]
+    $K$を体とし、$f(x) \in K[x]$とする。$f(x)$を
+    \begin{equation}
+        f(x) = a_0 (x - \alpha_1) \dots (x - \alpha_n)
+        \quad (a_0 \in K^\times,\; \alpha_i \in \wb{K})
+    \end{equation}
+    と表すとき、
+    $K(\alpha_1, \dots, \alpha_n)$を$f$の$K$上の
+    \term{最小分解体}[splitting field]{最小分解体}[さいしょうぶんかいたい]
+    という。
+\end{definition}
+
+\begin{example}[最小分解体の例]
+    \TODO{cf. [雪江] p.186}
+\end{example}
+
+
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{Galois 拡大}
+
+\TODO{キーワード:
+    Galois の基本定理、円分体、有限体、Kummer 理論、Artin-Schreier 理論、可解性、作図}
+
+分離性と正規性を兼ね備えた拡大が Galois 拡大である。
+
+\begin{definition}[Galois 拡大]
+    $L/K$を代数拡大とする。
+    \begin{itemize}
+        \item $L/K$が分離拡大かつ正規拡大なら
+        \term{Galois 拡大}[Galois extension]{Galois 拡大}[Galoisかくだい]
+        という。
+    \end{itemize}
+    $L/K$をさらにガロア拡大とする。
+    \begin{itemize}
+        \item $\Aut_K^\al L$を$\Gal(L/K)$と書き、
+            $L$の$K$上の
+            \term{Galois 群}[Galois group]{Galois 群}[Galoisぐん]という。
+        \item $\Gal(L/K)$がアーベル群なら、$L/K$を
+            \term{アーベル拡大}[abelian extension]{アーベル拡大}[あーべるかくだい]という。
+        \item $\Gal(L/K)$が巡回群なら、$L/K$を
+            \term{巡回拡大}[cyclic extension]{巡回拡大}[じゅんかいかくだい]という。
+    \end{itemize}
+\end{definition}
+
+\begin{definition}[多項式の Galois 群]
+    $K$を体、$f(x) \in K[x]$とし、
+    $L$を$f(x)$の$K$上の最小分解体とする。
+    $\Gal(L/K)$を$f(x)$の$K$上の
+    \term{Galois 群}[Galois group]{Galois 群}[Galoisぐん]という。
+\end{definition}
+
+次の例より、Galois 群の元は複素共役の一般化とみなせることがわかる。
+
+\begin{example}[Galois 拡大の例1]
+    体の拡大$\C/\R$は
+    \cref{prop:perfect-field}と\cref{thm:normal-extension-homset}により
+    分離拡大かつ正規拡大だから、Galois 拡大である。
+    \cref{ex:q-sqrt-d-homset}と同様の議論により
+    $|\Hom_\R^\al(\C, \C)| = 2$であるから、
+    \cref{prop:homset-automorphism}より
+    $|\Gal(\C/\R)| = |\Aut_\R^\al(\C)| = 2$である。
+    したがって$\Gal(\C/\R) \cong \Z/2\Z$である。
+\end{example}
+
+\begin{example}[Galois 拡大の例2]
+    $d \neq 1$は square-free な整数とする（e.g. $d = 6$）。
+    \cref{ex:q-sqrt-d-homset}と\cref{ex:normal-extension}により、
+    代数拡大$\Q(\sqrt{d})$は分離拡大かつ正規拡大だから、
+    Galois 拡大である。
+    \cref{prop:homset-automorphism}より$\Gal(\Q(\sqrt{d})/\Q) \cong \Z/2\Z$が従う。
+\end{example}
+
+\begin{theorem}[Galois 群は対称群の部分群]
+    $K$を体とし、$f(x) \in K[x]$を$\deg f(x) = n$なる分離多項式とする。
+    このとき、$f(x)$の$K$上の Galois 群は
+    対称群$S_n$の部分群と同型である。
+\end{theorem}
+
+\begin{proof}
+    $f(x)$の相異なる$n$個の根を$\alpha_1, \dots, \alpha_n \in \wb{K}$とおくと、
+    $f(x)$の$K$上の Galois 群は$L \coloneqq K(\alpha_1, \dots, \alpha_n)$と表せる。
+    $\sigma \in \Gal(L/K)$は$\sigma$の
+    $A \coloneqq \{\alpha_1, \dots, \alpha_n\}$上での値で決まるから、
+    \begin{equation}
+        \Gal(L/K) \to S_n,
+        \quad \sigma \mapsto \sigma|_A
+    \end{equation}
+    は単射準同型である。
+\end{proof}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{不変体と Artin の定理}
+
+\begin{definition}[不変体]
+    \label[definition]{def:fixed-field}
+    $L$を体、$G$を有限群とし、
+    $G$は$L$に忠実に作用しているとする。
+    このとき、
+    \begin{equation}
+        L^G \coloneqq \{ \alpha \in L \colon g \cdot \alpha = \alpha \; (\forall g \in G) \}
+    \end{equation}
+    を$G$の
+    \term{不変体}[fixed field]{不変体}[ふへんたい]という。
+\end{definition}
+
+\begin{proposition}[Artin の定理]
+    \cref{def:fixed-field}の設定のもとで、
+    $L/L^G$は Galois 拡大であり、$\Gal(L/L^G) \cong G$が成り立つ。
+\end{proposition}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{Galois 理論の基本定理}
+
+\begin{proposition}[中間体の束]
+    $L/K$を体の拡大とする。
+    $\Lat(L/K)$を$L/K$の中間体全体の集合とし、
+    $\Lat(L/K)$上に半順序$\preceq$を
+    \begin{equation}
+        B \preceq C \quad \Leftrightarrow \quad B \subset C
+    \end{equation}
+    で定めると、$(\Lat(L/K), \preceq)$は
+    共通部分を交わり、合成体を結びとして束となる。
+\end{proposition}
+
+\begin{proof}
+    省略
+\end{proof}
+
+次の補題は Galois 拡大の分離性と正規性を利用するもので、
+Galois 理論の基本定理の証明に重要な役割を果たす。
+
+\begin{lemma}[中間体と Galois 拡大]
+    $L/K$を有限次 Galois 拡大とし、
+    $M \in \Lat(L/K)$とする。
+    このとき、$L/M$は Galois 拡大である。
+\end{lemma}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+\begin{theorem}[Galois 理論の基本定理]
+    $L/K$を有限次 Galois 拡大とし、Galois 群を$G = \Gal(L/K)$とする。
+    \begin{enumerate}
+        \item 写像$\gamma \colon \Sub(G) \to \Lat(L/K),$
+            \begin{equation}
+                H \mapsto L^H
+            \end{equation}
+            は order-reversing な全単射であり、逆写像は
+            \begin{equation}
+                \Gal(L/M) \mapsfrom M
+            \end{equation}
+            で与えられる。
+        \item $M \in \Lat(L/K)$に関し
+            \begin{equation}
+                M/K \text{ が Galois 拡大}
+                \Longleftrightarrow
+                \Gal(L/M) \text{ が } G \text{ の正規部分群}
+            \end{equation}
+            が成り立つ。
+    \end{enumerate}
+\end{theorem}
+
+\begin{proof}
+    不変体の定義から order-reversing であることは明らか。
+    \TODO{}
+\end{proof}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{Hilbert の定理90}
+
+\begin{proof}
+    cf. [雪江] p.197
+\end{proof}
+
+\begin{theorem}[Galois 拡大の推進定理]
+    \TODO{cf. [雪江] p.219}
+\end{theorem}
+
+\begin{definition}[Galois コホモロジー]
+    \TODO{}
+\end{definition}
+
+\begin{theorem}[Hilbert の定理90]
+    \TODO{}
+\end{theorem}
+
+
+
+
+
+
+
+
+\end{document}

@@ -1,0 +1,606 @@
+\documentclass[report, notitlepage]{jlreq}
+\usepackage{docmute}
+\usepackage{../../global}
+\usepackage{../sub/local}
+\def\assetspath{./}
+%\makeindex
+%\makeglossaries
+
+\begin{document}
+
+\begin{problem}[問1]
+    $M$を境界のない多様体とし、
+    $\omega \in \Omega^1(M), \; \alpha \in \Omega^2(M)$とする。
+    $\omega$は$0$をとらない ($M$上至るところ$0$でない) とし、
+    また$\omega \wedge \alpha = 0$とする。
+    \begin{enumerate}
+        \item $M = \R^n$とする。
+            このとき、$\beta \in \Omega^1(\R^n)$が存在して
+            $\alpha = \omega \wedge \beta$が成り立つことを示せ。
+        \item $M$が一般の場合に、
+            $\beta \in \Omega^1(\R^n)$が存在して
+            $\alpha = \omega \wedge \beta$が成り立つことを示せ。
+    \end{enumerate}
+\end{problem}
+
+\begin{answer}
+    \uline{(1), (2)} \quad
+    $p \in M$とし、
+    $p$のまわりのチャート$U \opensubset M$とその上の
+    局所座標$x^1, \dots, x^n$に関し座標表示を
+    $\omega = \sum_i \omega_i dx^i, \;
+        \alpha = \sum_{i < j} \alpha_{ij} dx^i \wedge dx^j$
+    とおく。
+    いま$\omega \neq 0$だからある添字$i_0$が存在して
+    $\omega_{i_0} \neq 0$である。
+    そこで必要ならば$U$を小さくとりなおして
+    $\omega_{i_0}$は$U$上つねに非零であるとしてよい。
+    いま$0 = \omega \wedge \alpha$より
+    \begin{alignat}{1}
+        0 = \omega \wedge \alpha
+            &= \left(
+                \sum_{i} \omega_i dx^i
+            \right)
+            \wedge \left(
+                \sum_{i < j} \alpha_{ij} dx^i \wedge dx^j
+            \right) \\
+            &= \sum_{i_1 < i_2 < i_3}
+                \underbrace{\left(
+                    \omega_{i_1} \alpha_{i_2 i_3}
+                    - \omega_{i_2} \alpha_{i_1 i_3}
+                    + \omega_{i_3} \alpha_{i_1 i_2}
+                \right)}_{(*)}
+                dx^{i_1} \wedge dx^{i_2} \wedge dx^{i_3}
+    \end{alignat}
+    が成り立ち、$(*)$の部分は$U$上つねに0である。
+    ここで$U$上の1形式$\beta$を
+    $\beta = \sum_{i} \beta_i dx^i$とおくと
+    \begin{equation}
+        \omega \wedge \beta
+            = \det \begin{bmatrix}
+                \omega_i & \beta_i \\
+                \omega_j & \beta_j
+            \end{bmatrix}
+            dx^i \wedge dx^j
+    \end{equation}
+    だから、
+    $U$上で$\omega \wedge \beta = \alpha$が成り立つ条件は
+    \begin{equation}
+        \det \begin{bmatrix}
+            \omega_i & \beta_i \\
+            \omega_j & \beta_j
+        \end{bmatrix}
+        = \alpha_{ij}
+        \quad
+        (i < j)
+        \label[equation]{eq:1-1}
+    \end{equation}
+    である。
+    考察として、添字に$i_0$を含まない$\alpha_{ij}$は
+    関係式(*)により添字に$i_0$を含む$\alpha_{ij}$により決定される。
+    そこでまず$i < j$のいずれかが$i_0$である場合に限って
+    \cref{eq:1-1}を$\beta_1, \dots, \beta_n$に関し解くことを考える。
+    これは実際解けて、まず$\beta_{i_0} = 0$とおき、
+    各$i < i_0$に対し$\beta_i = - \alpha_{i i_0} / \omega_{i_0}$とおき、
+    各$j > i_0$に対し$\beta_j = \alpha_{i_0 j} / \omega_{i_0}$とおけばよい。
+    こうして得られた$\beta$は
+    添字に$i_0$を含まない$\alpha_{ij}$についても
+    \cref{eq:1-1}をみたす。
+    実際、$i_0 < i < j$なら(*)より
+    \begin{alignat}{1}
+        \alpha_{ij}
+            &= \frac{1}{\omega_{i_0}}
+                (\omega_i \alpha_{i_0 j} - \omega_j \alpha_{i_0 i}) \\
+            &= \frac{1}{\omega_{i_0}}
+                \left(
+                    \omega_i (\omega_{i_0} \beta_j - \omega_j \beta_{i_0})
+                    - \omega_j (\omega_{i_0} \beta_i - \omega_i \beta_{i_0})
+                \right) \\
+            &= \omega_i \beta_j - \omega_j \beta_i \\
+            &= \det \begin{bmatrix}
+                \omega_i & \beta_i \\
+                \omega_j & \beta_j
+            \end{bmatrix}
+    \end{alignat}
+    である。
+    $i < i_0 < j$や$i < j < i_0$の場合も同様に成り立つ。
+    したがって$\beta$は
+    $U$上で$\omega \wedge \beta = \alpha$をみたす。
+
+    各$p \in M$に対し
+    以上のように$U_p = U$を選んで$U_p$上で$\beta_p = \beta$を構成すると、
+    いま$M$は第2可算だから開被覆$\{ U_p \}_{p \in M}$に
+    従属する1の分割$\{ \rho_p \}_{p \in M}$が存在する。
+    そこで$M$上の1形式$\beta$を
+    $\beta = \sum_p \rho_p \beta_p$で定義すれば
+    \begin{equation}
+        \omega \wedge \beta
+            = \omega \wedge \sum_p \rho_p \beta_p
+            = \sum_p \rho_p \omega \wedge \beta_p
+            = \sum_p \rho_p \alpha|_{U_p}
+            = \alpha
+    \end{equation}
+    を得る。
+\end{answer}
+
+\begin{problem}[問2]
+    $(x, y)$を$\R^2$の標準的な座標とする。
+    $M = \R^2 \setminus \{ (0, 0) \}$とし、
+    $\R^2$の向きから定まる向きを入れる。
+    また、$M$上の Riemann 計量$g$を
+    \begin{equation}
+        g_{(x, y)} = \frac{dx \otimes dx + dy \otimes dy}{x^2 + y^2}
+    \end{equation}
+    により定め、
+    $g$により定まる$M$の体積形式を$\mu$とする。
+    最後に、
+    $\mathrm{CO}_2 = \{
+        A \in M_2(\R)
+        \mid
+        \exists r > 0, \; B \in \mathrm{O}_2, \; A = rB
+    \}$と書く。
+    \begin{enumerate}
+        \item $g$により定まる$M$の体積形式を求めよ。
+        \item $A \in \mathrm{CO}_2$とし、
+            $\varphi \colon M \to M$を
+            $\varphi(x, y) = A \begin{bmatrix}
+                x \\
+                y
+            \end{bmatrix}$により定める (値は列ベクトルだが行ベクトルとみなす)。
+            $\varphi^* g = g$が成り立つことを示せ。
+            また、$\varphi^* \mu = \mu$が成り立つことを示せ。
+        \item $0 < r \le R$とし、
+            $D = \{ (x, y) \in M \mid r^2 \le x^2 + y^2 \le R^2 \}$とおく。
+            $\int_D \mu$を求めよ。
+    \end{enumerate}
+\end{problem}
+
+\begin{answer}
+    \uline{(1)} \quad
+    $\mu = \sqrt{|\det g|} dx \wedge dy = \frac{1}{x^2 + y^2} dx \wedge dy$.
+
+    \uline{(2)} \quad
+    $A = (a_{ij})_{i, j} = rB, \; 
+        r > 0, \;
+        B = (b_{ij})_{i, j} \in \mathrm{O}_2$
+    とおく。
+    $\varphi$の定義より形式的に
+    $\varphi_*
+        \left(
+            \deldel{x}, \deldel{y}
+        \right)
+        =
+        \left(
+            \deldel{x}, \deldel{y}
+        \right)
+        A$
+    が成り立つから
+    \begin{alignat}{1}
+        (\varphi^* g)_{(x, y)} \left( \deldel{x}, \deldel{x} \right)
+            &= g_{\varphi(x, y)}
+                \left( \varphi_* \deldel{x}, \varphi_* \deldel{x} \right) \\
+            &= g_{\varphi(x, y)}
+                \left(
+                    a_{11} \deldel{x} + a_{21} \deldel{y}, \;
+                    a_{11} \deldel{x} + a_{21} \deldel{y}
+                \right) \\
+            &= a_{11}^2 g_{\varphi(x, y)}
+                \left( \deldel{x}, \deldel{x} \right)
+                + a_{21}^2 g_{\varphi(x, y)}
+                \left( \deldel{y}, \deldel{y} \right) \\
+            &= \frac{a_{11}^2 + a_{21}^2}{r^2 (x^2 + y^2)} \\
+            &= \frac{1}{x^2 + y^2}
+    \end{alignat}
+    同様にして
+    \begin{equation}
+        (\varphi^* g)_{(x, y)} \left( \deldel{y}, \deldel{y} \right)
+            = \frac{1}{x^2 + y^2},
+        \quad
+        (\varphi^* g)_{(x, y)} \left( \deldel{x}, \deldel{y} \right)
+            = 0,
+        \quad
+        (\varphi^* g)_{(x, y)} \left( \deldel{y}, \deldel{x} \right)
+            = 0
+    \end{equation}
+    となり$\varphi^* g = g$が成り立つ。
+
+    $\varphi^* \mu = \mu$を示す。
+    $\varphi = (\varphi^1, \varphi^2)$とおけば
+    \begin{alignat}{1}
+        \varphi^* (dx \wedge dy)
+            &= d(\varphi^* x) \wedge d(\varphi^* y) \\
+            &= d\varphi^1 \wedge d\varphi^2 \\
+            &= (a_{11} dx + a_{21} dy) \wedge (a_{12} dx + a_{22} dy) \\
+            &= (a_{11} a_{22} - a_{12} a_{21}) dx \wedge dy \\
+            &= r^2 \, dx \wedge dy
+    \end{alignat}
+    だから
+    \begin{equation}
+        (\varphi^* \mu)_{(x, y)}
+            = \frac{1}{r^2 (x^2 + y^2)} \varphi^* (dx \wedge dy)
+            = \frac{1}{x^2 + y^2}
+            = \mu_{(x, y)}
+    \end{equation}
+    を得る。
+
+    \uline{(3)} \quad
+    $D$には$\R^2$の標準的な向きから定まる向きが入っているものと考える。
+    \begin{alignat}{1}
+        \int_D \mu
+            &= \int_D \frac{1}{x^2 + y^2} dx \wedge dy \\
+            &= \int_D \frac{1}{x^2 + y^2} dx dy \\
+            &= \int_r^R \int_0^{2\pi} \frac{1}{\rho} d\rho d\theta \\
+            &= 2 \pi (\log R - \log r)
+    \end{alignat}
+    である。
+\end{answer}
+
+\begin{problem}[問3]
+\end{problem}
+
+\begin{answer}
+    \uline{(1)} \quad
+    直接計算により
+    \begin{alignat}{1}
+        d\left(
+            \frac{x}{(x^2 + y^2 + z^2)^{3/2}} dy \wedge dz
+        \right)
+            &= \frac{x^2 + y^2 + z^2 - 3x^2}{(x^2 + y^2 + z^2)^{5/2}}
+                dx \wedge dy \wedge dz \\
+        d\left(
+            \frac{y}{(x^2 + y^2 + z^2)^{3/2}} dz \wedge dx
+        \right)
+            &= \frac{x^2 + y^2 + z^2 - 3y^2}{(x^2 + y^2 + z^2)^{5/2}}
+                dx \wedge dy \wedge dz \\
+        d\left(
+            \frac{z}{(x^2 + y^2 + z^2)^{3/2}} dx \wedge dy
+        \right)
+            &= \frac{x^2 + y^2 + z^2 - 3z^2}{(x^2 + y^2 + z^2)^{5/2}}
+                dx \wedge dy \wedge dz
+    \end{alignat}
+    だから$d\omega = 0$、したがって$\omega$は閉形式である。
+
+    \uline{(2)} \quad
+    単位閉球$D^3 \subset \R^3$に$\R^3$から定まる自然な向きを入れ、
+    $S^2 = \del D^3$には境界としての向きを入れる。
+    包含写像$S^2 \to M$を$\iota$とおく。
+    $d\omega = 0$が$M$上で成り立つから
+    原点での値を$0$として$d\omega$を$\R^3$上、
+    とくに$D^3$上に拡張できる。
+    Stokes の定理より$\int_{S^2} \iota^* \omega = \int_{D^3} d\omega = 0$
+    が成り立つ。
+
+    一方$\int_{S^2} \iota^* \omega$を直接計算すると
+    値が$0$にならないことを示す。
+    $S^2$上で$\iota^* (x^2 + y^2 + z^2) = 1$だから
+    \begin{equation}
+        \iota^* \omega
+            = x \, dy \wedge dz + y \, dz \wedge dx + z \, dx \wedge dy
+    \end{equation}
+    である。ただし右辺の$x, y, z$は
+    $\R^3$の座標$x, y, z$を$\iota$で引き戻したものを
+    記号の濫用で同じ文字を使っている。
+    そこで$\R^3$上の2-形式$\mu$を
+    \begin{equation}
+        \mu = x \, dy \wedge dz + y \, dz \wedge dx + z \, dx \wedge dy
+    \end{equation}
+    で定めると$\iota^* \omega = \iota^* \mu$が成り立つ。
+    $d\mu = 3 \, dx \wedge dy \wedge dz$だから
+    \begin{alignat}{1}
+        \int_{S^2} \iota^* \omega
+            &= \int_{\del D^3} \iota^* \omega \\
+            &= \int_{\del D^3} \iota^* \mu \\
+            &= \int_{D^3} d\mu
+                \quad (\text{Stokes の定理}) \\
+            &= \int_{D^3} 3 \, dx \wedge dy \wedge dz \\
+            &= 4 \pi
+    \end{alignat}
+    を得る。
+    これは$\int_{S^2} \iota^* \omega = 0$に矛盾。
+    したがって$\omega$は完全形式でない。
+
+    %$A \coloneqq [0, \pi] \times [0, 2\pi] \subset \R^2$とおき
+    %\begin{equation}
+    %    F \colon A \to S^2,
+    %    \quad
+    %    (s, t) \mapsto (\sin s \cos t, \sin s \sin t, \cos s)
+    %\end{equation}
+    %と定める。
+    %$A$の$\R^2$における内部$\mathring{A}$への$F$の制限は
+    %向きを保つ微分同相写像であり、
+    %$\Cl F(\mathring{A}) = S^2$が成り立つ。
+    %また、$F$の Jacobi 行列は
+    %\begin{equation}
+    %    \begin{bmatrix}
+    %        \cos s \cos t & -\sin s \sin t \\
+    %        \cos s \sin t & \sin s \cos t \\
+    %        -\sin s & 0
+    %    \end{bmatrix}
+    %\end{equation}
+    %だから
+    %\begin{alignat}{1}
+    %    dy \wedge dz
+    %        &= \sin^2 s \cos t \, ds \wedge dt \\
+    %    dz \wedge dx
+    %        &= \sin^2 s \sin t \, ds \wedge dt \\
+    %    dx \wedge dy
+    %        &= \sin s \cos t \, ds \wedge dt
+    %\end{alignat}
+    %である。
+    %よって
+    %\begin{alignat}{1}
+    %    \int_{S^2} \omega
+    %        &= \int_A \left(
+    %            \sin s \cos t \cdot \sin^2 s \cos t
+    %            + \sin s \sin t \cdot \sin^2 s \sin t
+    %            + \cos s \cdot \sin s \cos s
+    %        \right) \, ds \wedge dt \\
+    %        &= \int_{s = 0}^\pi \int_{t = 0}^{2\pi}
+    %            \sin s \cos^2 s \, ds dt \\
+    %        &= \frac{4}{3} \pi
+    %\end{alignat}
+    %を得る。
+    %これは$\int_{S^2} \omega = 0$に矛盾。
+    %したがって$\omega$は完全形式でない。
+
+    \uline{(3)} \quad
+    \TODO{書き直す}
+    $A \coloneqq [0, \pi] \times [0, 2\pi] \subset \R^2$とおき
+    \begin{equation}
+        G \colon A \to S,
+        \quad
+        (s, t) \mapsto (
+            10 \sin s \cos t + 1,
+            10 \sin s \sin t + 2,
+            10 \cos s + 3
+        )
+    \end{equation}
+    と定めると、
+    $A$の$\R^2$における内部$\mathring{A}$への$G$の制限は
+    向きを保つ微分同相写像であり、
+    $\Cl G(\mathring{A}) = S$が成り立つ。
+    よって、(2) での計算結果も用いれば
+    \begin{alignat}{1}
+        \int_S \omega
+            &= \int_A \big(
+                (10 \sin s \cos t + 1) \cdot 100 \sin^2 s \cos t \\
+            &\qquad + (10 \sin s \sin t + 2) \cdot 100 \sin^2 s \sin t \\
+            &\qquad + (10 \cos s + 3) \cdot 100 \sin s \cos s
+                \big) \, ds \wedge dt \\
+            &= 4000 \pi
+                + 100 \int_A \left(
+                    \sin^2 s \cos t
+                    + 2 \sin^2 s \sin t
+                    + 3 \sin s \cos s
+                \right) \, ds \wedge dt \\
+            &= 4000 \pi
+                + 600 \pi \underbrace{\int_0^{\pi} \sin s \cos s \, ds}_{= 0} \\
+            &= 4000 \pi
+    \end{alignat}
+    を得る。
+\end{answer}
+
+\begin{problem}[問4]
+\end{problem}
+
+\begin{answer}
+    \uline{(1)} \quad
+    $(a, b, c) \in \R^3$とする。
+    $z$が関数$\R^3 \to \R$であることに注意して
+    初期値問題
+    \begin{alignat}{1}
+        1 &= dz(X_{(a, b, c)})
+            = \dd{t}\bigg|_{t = 0} z \circ \varphi_t(a, b, c) \\
+        z \circ \varphi_0(a, b, c)
+            &= c
+    \end{alignat}
+    を考えると
+    $z \circ \varphi_t(a, b, c) = c + t \; (t \in \R)$
+    は解のひとつであり、
+    解の一意性よりこれが唯一の解である。
+    よって$z \circ \varphi_{-c}(a, b, c) = c - c = 0$だから
+    $\varphi_{-c}(a, b, c) \in \R^2$である。
+
+    \uline{(2)} \quad
+    (2-a) \Rightarrow (2-b): \quad
+    \begin{alignat}{1}
+        \pi \circ \varphi_t(x, y, z)
+            &= \varphi_{- z \circ \varphi_t(x, y, z)}(\varphi_t(x, y, z)) \\
+            &= \varphi_{- t - z}(\varphi_t(x, y, z)) \\
+            &= \varphi_{-z} \circ \varphi_{-t} \circ \varphi_t(x, y, z) \\
+            &= \varphi_{-z} (x, y, z) \\
+            &= \pi(x, y, z)
+    \end{alignat}
+    だから
+    $\varphi_t^* \omega
+        = \varphi_t^* \pi^* \alpha
+        = (\pi \circ \varphi_t)^* \alpha
+        = \pi^* \alpha
+        = \omega$
+    である。
+
+    (2-b) \Rightarrow (2-a): \quad
+
+    \TODO{わからない}
+
+    \uline{(3)} \quad
+    (2-b) との同値を示す。
+
+    (2-b) \Rightarrow (3): \quad
+    $p = (x, y, z) \in \R^3$とする。
+    Lie 微分の定義より
+    \begin{equation}
+        (L_X \omega)_p
+            = \dd{t}\bigg|_{t = 0}
+                (\varphi_t^* \omega)_p
+            = \lim_{t \to 0}
+                \frac{(\varphi_t^* \omega)_p - \omega_p}{t}
+            = 0
+    \end{equation}
+    である。
+
+    (3) \Rightarrow (2-b): \quad
+    $p = (x, y, z) \in \R^3$とする。
+    一般に次が成り立つ。
+    \begin{equation}
+        \dd{t}\bigg|_{t = t_0} (\varphi_t^* \omega)_p
+            = (\varphi_{t_0}^* (L_X \omega))_p
+            \quad
+            (\forall t_0 \in \R)
+    \end{equation}
+    実際、変数変換$s = t - t_0$により
+    \begin{alignat}{1}
+        \dd{t}\bigg|_{t = t_0} (\varphi_t^* \omega)_p
+            &= \dd{s}\bigg|_{s = 0}
+                (\varphi_{s + t_0}^* \omega)_p \\
+            &= \dd{s}\bigg|_{s = 0}
+                (
+                    \varphi_{t_0}^*
+                    \varphi_{s}^*
+                    \omega
+                )_p \\
+            &= \dd{s}\bigg|_{s = 0}
+                (d(\varphi_{t_0})_p)^*
+                (
+                    \varphi_{s}^*
+                    \omega
+                )_{\varphi_{t_0} (p)} \\
+            &= \dd{s}\bigg|_{s = 0}
+                (d(\varphi_{t_0})_p)^*
+                (d(\varphi_{s})_{\varphi_{t_0} (p)})^*
+                \omega_{\varphi_s \varphi_{t_0} (p)} \\
+            &= (d(\varphi_{t_0})_p)^*
+                \left(
+                    \dd{s}\bigg|_{s = 0}
+                    (d(\varphi_{s})_{\varphi_{t_0} (p)})^*
+                    \omega_{\varphi_s \varphi_{t_0} (p)}
+                \right)
+                \quad
+                (\text{連続性}) \\
+            &= (d(\varphi_{t_0})_p)^*
+                \left(
+                    \dd{s}\bigg|_{s = 0}
+                    (\varphi_s^* \omega)_{\varphi_{t_0} (p)}
+                \right) \\
+            &= (d(\varphi_{t_0})_p)^*
+                (L_X \omega)_{\varphi_{t_0} (p)} \\
+            &= (\varphi_{t_0}^* (L_X \omega))_p
+    \end{alignat}
+    だからである。
+    よって$L_X \omega = 0$なら
+    $\dd{t}\bigg|_{t = t_0} (\varphi_t^* \omega)_p = 0$
+    だから
+    $(\varphi_t^* \omega)_p$は$t$によらず一定で、
+    したがって$(\varphi_t^* \omega)_p = \omega_p$を得る。
+
+    \uline{(4)} \quad
+    (3) との同値を示す。
+
+    (4) \Rightarrow (3): \quad
+    Cartan のホモトピー公式
+    $L_X \omega = d \iota_X \omega + \iota_X d \omega$
+    より明らか。
+
+    (3) \Rightarrow (4): \quad
+
+    \TODO{わからない}
+\end{answer}
+
+\begin{problem}[問5]
+\end{problem}
+
+\begin{answer}
+    \uline{(1)} \quad
+    $E$が向きづけ可能なら
+    $\bigwedge^1 E = E$が自明束だから
+    大域自明化が存在する。
+
+    \uline{(2-i, ii)} \quad
+    $[0, 1] \times \R$上の同値関係$\sim$を
+    $(0, y) \sim (1, -y)$により生成されるものとして定め、
+    $E \coloneqq ([0, 1] \times \R) / \sim$とおき、
+    商写像を$p$とおく。
+    ベクトル束
+    \begin{alignat}{1}
+        \pi \colon E \to S^1, \quad p(x, y) \mapsto e^{2\pi ix}
+    \end{alignat}
+    は向きづけ不可能であることを示す。
+    $E$が向きづけ可能であったとすると
+    $E$はベクトル束として$S^1 \times \R$と同型だから
+    とくに同相写像$\varphi \colon E \to S^1 \times \R$が存在する。
+    $K \coloneqq S^1 \times \{ 0 \} \subset S^1 \times \R$、
+    $L \coloneqq \varphi^{-1}(K)$とおく。
+    $K$はコンパクトだから$L$もコンパクトである。
+    このとき$p^{-1}(L)$は$[0, 1] \times \R$の有界閉集合である。
+    よってある$a > 0$が存在して
+    $[0, 1] \times [-a, a] \supset p^{-1}(L)$、
+    したがって$L' \coloneqq p([0, 1] \times [-a, a]) \supset L$となる。
+    $L'$はコンパクトだから
+    $K' \coloneqq \varphi(L')$もコンパクトである。
+    したがって
+    ある$b > 0$が存在して
+    $S^1 \times (-b, b) \supset K' \supset K$をみたす。
+    よって$(S^1 \times \R) \setminus K'$は連結でない。
+    一方$E \setminus L'$は連結である。
+    これで矛盾がいえた。
+\end{answer}
+
+\begin{problem}[問6]
+\end{problem}
+
+\begin{answer}
+    \uline{(1)} \quad
+    同型$H_\dR^0(S^1) \cong \R$は
+    $c \in \R$と定数関数$S^1 \to \R, z \mapsto c$を対応させることで定める。
+    \begin{equation}
+        \begin{tikzcd}
+            \R
+                \ar{r}
+                & H_\dR^0(S^1)
+                    \ar{r}{f_n^*}
+                & H_\dR^0(S^1)
+                    \ar{r}
+                & \R \\
+            1
+                \ar[mapsto]{r}
+                & {[1]}
+                    \ar[mapsto]{r}
+                & f_n^*{[1]} = [1 \circ f_n] = [1]
+                    \ar[mapsto]{r}
+                & 1
+        \end{tikzcd}
+    \end{equation}
+    より$f_n^*$は恒等写像である。
+
+    \uline{(2)} \quad
+    $S^1$には単位閉円板$D^2$の境界としての向きが入っているとする。
+    $S^1$の極座標を$\theta$とおくと$d\theta$は$S^1$の体積形式である。
+    $d\theta$に関する$S^1$の体積は$\int_{S^1} d\theta = 2\pi$だから
+    基本コホモロジー類は$[S^1] = \frac{1}{2\pi} [d\theta]$である。
+    同型$H_\dR^1(S^1) \cong \R$は
+    $1 \in \R$と$[S^1]$を対応させることで定める。
+    \begin{equation}
+        \begin{tikzcd}
+            \R
+                \ar{r}
+                & H_\dR^1(S^1)
+                    \ar{r}{f_n^*}
+                & H_\dR^1(S^1)
+                    \ar{r}
+                & \R \\
+            1
+                \ar[mapsto]{r}
+                & {[S^1]}
+                    \ar[mapsto]{r}
+                & f_n^*{[S^1]}
+                    = \frac{1}{2\pi}[d(\theta \circ f_n)]
+                    = n [S^1]
+                    \ar[mapsto]{r}
+                & n
+        \end{tikzcd}
+    \end{equation}
+    より$f_n^*$は$n$倍写像である。
+\end{answer}
+
+
+\end{document}

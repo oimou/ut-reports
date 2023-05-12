@@ -1,0 +1,849 @@
+\documentclass[report]{jlreq}
+\usepackage{global}
+\usepackage{./local}
+\subfiletrue
+\begin{document}
+
+第2部では、関数解析へのつながりを念頭に、
+G\^ateaux 微分と Fr\'echet 微分の導入から始める。
+関数解析とは、一言で言えば線型代数の無限次元版である\cite{河東_1522262179753645952}。
+しかし単に線型空間を無限次元にしただけでは議論の手がかりに乏しい。
+そこで関数解析では空間の位相も合わせて考える。
+これが通常の線型代数との大きな違いである。
+まず微分の基本的な性質について整理した後、
+第1部で導入した種々の積分との関連を見る。
+とくに微分積分学の基本定理は、
+具体的な積分計算を実行するために欠かせないものである。
+
+% ============================================================
+%
+% ============================================================
+\chapter{微分}
+
+微分は局所凸位相ベクトル空間上の写像に対し定義される。
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{オーダー記法}
+
+位相ベクトル空間上の写像の極限を扱う際には、
+オーダー記法が便利である。
+
+\begin{definition}[オーダー記法]
+    $X$を位相空間、
+    $Y$を$\R$上の位相ベクトル空間、
+    $f \colon X \to Y$を写像、
+    $g \colon X \to \R$を写像、
+    $a \in X$とする。
+    $a$の$X$におけるある近傍$U$が存在して
+    $U \setminus \{a\}$上$g(x) \neq 0$が成り立ち、
+    さらに
+    \begin{equation}
+        \lim_{\substack{x \to a \\ x \neq a}} \frac{f(x)}{g(x)} = 0
+    \end{equation}
+    が成り立つとき、
+    \begin{equation}
+        f(x) = o(g(x)) \quad (x \to a, \; x \neq a)
+    \end{equation}
+    と記す。
+\end{definition}
+
+
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{Gateaux 微分と Fr\'echet 微分}
+
+位相ベクトル空間上では
+「方向微分」として Gateaux 微分が定義できる。
+
+\begin{definition}[Gateaux 微分]
+    \idxsym{Gateaux 微分}{$D_hf(c)$}{$f$の$c$での$h$方向の Gateaux 微分}
+    $X, Y$を位相ベクトル空間、
+    $U \opensubset X$を開部分集合、
+    $f \colon U \to Y$を写像、
+    $c \in U, \; h \in X$とする。
+    $f$が$c$で$h$方向に
+    \term{Gateaux 微分可能}[Gateaux differentiable]
+        {Gateaux 微分可能}[Gateaux びぶんかのう]
+    であるとは、
+    ある連続線型写像$T \colon X \to Y$が存在して
+    \begin{equation}
+        f(c + th) - f(c) - T(th) = o(t)
+            \quad (t \to 0, \; t \in \R \setminus \{ 0 \})
+    \end{equation}
+    が成り立つことをいい、
+    このとき$T$を
+    $f$の$c$での$h$方向の
+    \term{Gateaux 微分}[Gateaux differential]
+        {Gateaux 微分}[Gateaux びぶん]
+    といい、
+    $D_hf(c)$と記す。
+\end{definition}
+
+さらにノルム空間上では
+「全微分」として Fr\'echet 微分が定義できる。
+
+\begin{definition}[Fr\'echet 微分]
+    \idxsym{Frechet 微分}{$Df(c)$}{$f$の$c$での Fr\'echet 微分}
+    $(X, \| \cdot \|_X), (Y, \| \cdot \|_Y)$をノルム空間、
+    $U \opensubset X$を開部分集合、
+    $f \colon U \to Y$を写像、
+    $c \in U$とする。
+    $f$が$c$で
+    \term{Fr\'echet 微分可能}[Fr\'echet differentiable]
+        {Fr\'echet 微分可能}[Fr\'echet びぶんかのう]
+    であるとは、
+    ある連続線型写像$T \colon X \to Y$が存在して
+    \begin{equation}
+        \| f(c + h) - f(c) - T(h) \|_Y = o(\| h \|_X)
+            \quad (h \to 0, \; h \in X \setminus \{ 0 \})
+    \end{equation}
+    が成り立つことをいい、
+    このとき$T$を
+    $f$の$c$での
+    \term{Fr\'echet 微分}[Fr\'echet differential]
+        {Fr\'echet 微分}[Fr\'echet びぶん]
+    といい、
+    $Df(c)$と記す。
+\end{definition}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{チェインルール}
+
+\TODO{}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{Taylor の定理}
+
+平均値の定理は
+1次近似の最も基本的な形を与えるものである (?)。
+
+\begin{theorem}[平均値の定理]
+    \TODO{}
+\end{theorem}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+\begin{theorem}[Taylor の定理]
+    \TODO{}
+\end{theorem}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+
+
+% ============================================================
+%
+% ============================================================
+\chapter{逆関数定理}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{陰関数定理}
+
+方程式$f(x, y) = 0$が$y$について解けるための十分条件を与えるのが陰関数定理です。
+定理の主張を標語的に言えば「（$y$での）微分が消えないならば（$y$を）陰関数で書ける」ということです。
+まずは2次元の場合から示します。
+
+\begin{theorem}[2次元版の陰関数定理]
+    $\Omega$は$\R^2$の空でない開集合とし、
+    $f$を$\Omega$上の$C^1$級$\R$値関数、$(x_0, y_0) \in \Omega$とする。
+    \begin{equation}
+        f(x_0, y_0) = 0,\quad f_y(x_0, y_0) \neq 0
+    \end{equation}
+    ならば、$\exists \delta, \rho > 0\quad$s.t.
+    \begin{enumerate}
+        \item $I \coloneqq B(x_0, \delta),\,
+            J \coloneqq B(y_0, \rho)$とおくと
+            $\overline{I} \times \overline{J} \subset \Omega$
+        \item $\forall x \in I,\, \exists! y \in J$\quad s.t. \quad
+            $f(x, y) = 0$
+            \quad（このような$y$を$\phai(x)$と書くことにする）
+        \item $\phai$は$I$上の$C^1$級関数かつ
+            $\phai'(x) = - f_y(x, \phai(x))^{-1}\, f_x(x, \phai(x))$
+        \item $f$が$\Omega$上$C^k$級ならば$\phai$も$I$上$C^k$級
+    \end{enumerate}
+\end{theorem}
+
+\begin{proof}
+    $f_y$の連続性より、点$(x_0, y_0)$の充分近くでは$f_y$の符号は一定である。
+    よって、必要ならば$f$を$-f$に取り替えて$f_y > 0$としても議論の一般性を失わない。
+
+    \underline{Step 1:} 最初に(1), (2)を示そう。
+    $f_y$の連続性と$f_y(x_0, y_0) > 0$から、
+    点$(x_0, y_0)$を中心とするある長方形
+    \begin{equation}
+        I \times J
+            \coloneqq (x_0 - \delta, x_0 + \delta) \times (y_0 - \rho, y_0 + \rho)
+    \end{equation}
+    が存在して
+    \begin{equation}
+        \left\{\begin{alignedat}{3}
+            &\; \overline{I} \times \overline{J} \subset \Omega \\
+            &\; f_y(x, y) > 0
+                \quad &&\text{for $\forall (x, y) \in \overline{I} \times \overline{J}$}
+                \quad &&\cdots \text{(1)} \\
+            &\; f(x, y_0 - \rho) < 0,\, f(x, y_0 + \rho) > 0
+                \quad &&\text{for $\forall x \in \overline{I}$}
+                \quad &&\cdots \text{(2)}
+        \end{alignedat}\right.
+    \end{equation}
+    が成り立つ。
+    (1) より、$x \in \overline{I}$を固定するごとに$f$は$y$に関して$\overline{J}$上狭義単調増加なので、
+    (2) と中間値の定理も用いれば
+    \begin{equation}
+        \exists! y \in J \quad \text{s.t.} \quad f(x, y) = 0
+        \label{6:eq:1}
+    \end{equation}
+    である。このような$y$を$\phai(x)$とおく。これで(1), (2)がいえた\footnote{
+        Step 1 でやったことは、換言すれば高さ$f(x, y) = 0$の等高線がグラフになるような領域の存在を示したということです。
+        そのために使った武器は狭義単調性と中間値の定理でした。
+        実は$n$次元版の証明でも同様の議論を行いますが、そちらで使う武器は不動点定理に変わります。
+        だったら2次元版でも不動点定理を使えばいいんじゃないかという気もしますが、
+        狭義単調性と中間値の定理による証明方法にもそれなりにメリットはあるようです\cite{杉浦85}。
+    }。
+
+    \underline{Step 2:} 次に(3)を示していきたいのだが、
+    Step 2 ではひとまず$\phai$が連続であることを示そう。
+    すなわち、$s_0 \in I$を固定して、$\forall \eps > 0$に対し$\exists \eta > 0$\, s.t.
+    \begin{equation}
+        \phai(B(s_0, \eta)) \subset B(\phai(s_0), \eps)
+    \end{equation}
+    を示す。ただし$\eps > 0$が充分小さな場合だけ考えればよいから、
+    $B(\phai(s_0), \eps)$が$J$に含まれるように$\forall \eps > 0$をとる。
+    すると、点$(s_0, \phai(s_0))$において$f = 0,\, f_y > 0$であることから
+    \begin{equation}
+        f(s_0, \phai(s_0) + \eps) > 0,\quad
+        f(s_0, \phai(s_0) - \eps) < 0
+    \end{equation}
+    が成り立つ。このことと$f$の連続性から、
+    \begin{enumerate}
+        \item 点$(s_0, \phai(s_0) + \eps)$の充分近くでは常に$f > 0$であり、
+        \item 点$(s_0, \phai(s_0) - \eps)$の充分近くでは常に$f < 0$である。
+    \end{enumerate}
+    したがって、（$B(s_0, \eta)$が$I$に含まれるような）
+    充分小さな$\eta > 0$が存在して、$\forall x \in B(s_0, \eta)$に対し
+    \begin{equation}
+        f(x, \phai(s_0) + \eps) > 0,\quad
+        f(x, \phai(s_0) - \eps) < 0
+    \end{equation}
+    よって
+    \begin{equation}
+        \phai(x) \in B(\phai(s_0), \eps)
+    \end{equation}
+    である（$f_y > 0$と(\ref{6:eq:1})を用いた）。
+    $x \in B(s_0, \eta)$は任意であったから
+    \begin{equation}
+        \phai(B(s_0, \eta)) \subset B(\phai(s_0), \eps)
+    \end{equation}
+    がいえた。これで Step 2 が完了した。
+
+    \underline{Step 3:}
+    $\phai$が$I$上$C^1$級であることを示す。
+    そこで$s_0 \in I$を任意にとり、
+    $\phai$の増分を$k(h) \coloneqq \phai(s_0 + h) - \phai(s_0)$とおく。
+    $\lim_{h \to 0} k(h)/h$を求めるのが目下の目標である。
+    そのために$s_0 + h \in I$なる$h \neq 0$を固定し、
+    \begin{equation}
+        g(t) \coloneqq f(s_0 + th, \phai(s_0) + t k(h))
+    \end{equation}
+    とおく。すると
+    \begin{equation}
+        \begin{split}
+            g(0) &= f(s_0, \phai(s_0)) = 0 \\
+            g(1) &= f(s_0 + h, \phai(s_0) + k(h)) = f(s_0 + h, \phai(s_0 + h)) = 0
+        \end{split}
+    \end{equation}
+    なので、平均値定理より$\exists \theta \in (0, 1)$\, s.t.
+    \begin{equation}
+        \begin{split}
+            0 &= g'(\theta) \\
+                &= f_x(s_0 + \theta h, \phai(s_0) + \theta k(h))\, h
+                + f_y(s_0 + \theta h, \phai(s_0) + \theta k(h))\, k(h)
+        \end{split}
+        \label{6:eq:2}
+    \end{equation}
+    が成り立つ。
+    ここで$h$のとり方と$k(h)$の定義から明らかに
+    点$(s_0 + \theta h, \phai(s_0) + \theta k(h))$は$I \times J$に属するので、
+    この点において$f_y > 0$である。
+    したがって(\ref{6:eq:2})を変形して
+    \begin{equation}
+        \frac{k(h)}{h}
+            = - \frac{f_x(s_0 + \theta h, \phai(s_0) + \theta k(h))}
+            {f_y(s_0 + \theta h, \phai(s_0) + \theta k(h))}
+    \end{equation}
+    を得る。
+    よって
+    \begin{equation}
+        \phai'(s_0) = \lim_{h \to 0} \frac{k(h)}{h} = - \frac{f_x(s_0, \phai(s_0))}{f_y(s_0, \phai(s_0))}
+        \label{6:eq:3}
+    \end{equation}
+    であり、右辺は$s_0$に関して連続なので$\phai$は$C^1$級である。
+    これで(3)がいえた。
+
+    \underline{Step 4:}
+    (\ref{6:eq:3})から、$f \in C^k \Rightarrow \phai \in C^k$も明らかである。
+    これで(4)がいえた。
+\end{proof}
+
+
+
+さて、次に$n$次元版の陰関数定理を示していきます。
+ここでは不動点定理を用いて証明を行うので、そのためにいくつか補題を示しておきます。
+
+\begin{definition}[縮小写像]
+    写像$F \colon X \to X$が$X$上の\textbf{縮小写像}であるとは、
+    ある$k \in [0, 1)$が存在して、$\forall x, y \in X$に対し
+    \begin{equation}
+        |F(x) - F(y)| \le k |x - y|
+    \end{equation}
+    が成り立つことをいう。
+\end{definition}
+
+\begin{theorem}[Banachの縮小写像の原理]
+    $\OOmega$は$\R^n$の空でない閉集合とする。
+    $T \colon \OOmega \to \OOmega$が$\OOmega$上の縮小写像であるならば、
+    $T$の不動点がただひとつ存在する。
+    \label{6:thm:2}
+\end{theorem}
+
+\begin{proof}
+    次の規則により$\OOmega$の点列$\{ \bm{x}_n \}_{n \in \N}$を定める。
+    \begin{equation}
+        \begin{split}
+            \bm{x}_1 &\in \OOmega \\
+            \bm{x}_{n+1} &\coloneqq T(\bm{x}_n) \quad (\text{$\forall \N$})
+        \end{split}
+    \end{equation}
+    $\{ \bm{x}_n \}_{n \in \N}$は$\OOmega$の Cauchy 点列になっている。
+    実際、縮小写像の性質より$\exists \rho \in [0, 1)$\, s.t.
+    \begin{equation}
+        \begin{split}
+            |\bm{x}_{n+1} - \bm{x}_n|
+                &= |T(\bm{x}_{n}) - T(\bm{x}_{n-1})| \\
+                &\le \rho |\bm{x}_{n} - \bm{x}_{n-1}| \\
+                &\le \cdots \\
+                &\le \rho^{n-1} |\bm{x}_{2} - \bm{x}_{1}| \\
+        \end{split}
+    \end{equation}
+    である。
+    したがって、$\R^n$の完備性により$\{ \bm{x}_n \}_{n \in \N}$は
+    極限$\bm{x}_\infty \in \R^n$を持ち、
+    $\OOmega$が閉集合であることから$\bm{x}_\infty \in \OOmega$である。
+    さらに
+    \begin{equation}
+        \begin{split}
+            |T(\bm{x}_\infty) - \bm{x}_\infty|
+                &\le |T(\bm{x}_\infty) - T(\bm{x}_n)|
+                    + |T(\bm{x}_n) - T(\bm{x}_{n+1})|
+                    + |T(\bm{x}_{n+1}) - \bm{x}_\infty| \\
+                &\le \rho |\bm{x}_\infty - \bm{x}_n|
+                    + |\bm{x}_{n+1} - \bm{x}_{n+2}|
+                    + |\bm{x}_{n+2} - \bm{x}_\infty| \\
+                &\to 0 \quad (n \to \infty)
+        \end{split}
+    \end{equation}
+    より$T(\bm{x}_\infty) = \bm{x}_\infty$、すなわち$\bm{x}_\infty$は$T$の不動点である。
+    また、$T$の不動点$\bm{x}_\infty, \bm{x}_\infty'$に対し
+    \begin{equation}
+        |\bm{x}_\infty - \bm{x}_\infty'| = |T(\bm{x}_\infty) - T(\bm{x}_\infty')|
+            \le \rho |\bm{x}_\infty - \bm{x}_\infty'|
+    \end{equation}
+    ゆえに$\bm{x}_\infty = \bm{x}_\infty'$が成り立つので不動点の一意性も示せた。
+\end{proof}
+
+
+\begin{lemma}
+    $A$を$n$次行列とする。
+    $\| I - A \| < 1$ならば、$A$は逆行列を持つ。
+    ただし$\| \cdot \|$は作用素ノルム$\| A \| \coloneqq \sup_{|x| \le 1} |Ax|$である。
+    \label{6:lem:1}
+\end{lemma}
+
+\begin{proof}
+    $A\bm{x} = 0 \Rightarrow \bm{x} = 0$を示せばよい。
+    $A\bm{x} = 0$とすると、$\bm{x} = (I - A)\bm{x}$が成り立つので
+    \begin{equation}
+        |\bm{x}| \le |(I - A) \bm{x}| \le \| I - A \|\, |\bm{x}|
+    \end{equation}
+    よって$\| I - A \| < 1$ならば$\bm{x} = 0$である。
+\end{proof}
+
+
+\begin{theorem}[一般次元での陰関数定理]
+    $\Omega$は$\textcolor{red}{\R^{m+n}}$の空でない開集合とし、
+    $f$を$\Omega$上の$C^1$級$\R^n$値関数、$(x_0, y_0) \in \Omega$とする。
+    \begin{equation}
+        f(x_0, y_0) = 0,\quad \textcolor{red}{\det D_y f(x_0, y_0)} \neq 0
+    \end{equation}
+    ならば、$\exists \delta, \rho > 0\quad$s.t.
+    \begin{enumerate}
+        \item $I \coloneqq B(x_0, \delta),\,
+            J \coloneqq B(y_0, \rho)$とおくと
+            $\overline{I} \times \overline{J} \subset \Omega$
+        \item $\forall x \in I,\, \exists! y \in J$\quad s.t. \quad
+            $f(x, y) = 0$
+            \quad（このような$y$を$\phai(x)$と書くことにする）
+        \item $\phai$は$I$上の$C^1$級関数かつ
+            $\textcolor{red}{D \phai(x) = - D_y f(x, \phai(x))^{-1}\, f_x(x, \phai(x))}$
+        \item $f$が$\Omega$上$C^k$級ならば$\phai$も$I$上$C^k$級
+    \end{enumerate}
+    \label{6:thm:3}
+\end{theorem}
+
+以下では行列のノルムとして作用素ノルム$\| A \|$と
+最大値ノルム$\| A \|_\infty \coloneqq \max \{ a_{ij} \}$を使います。
+\textbf{ノルムの同値性}より、両者の値は行列によらない定数倍で抑えられることが知られています\footnote{
+    参考文献\cite[p.66]{齋藤} を参照。
+}。すなわち、ある定数$C_0, C_1 > 0$が存在して、任意の行列$A$に対し
+\begin{equation}
+    C_0 \| A \|_\infty \le \| A \| \le C_1 \| A \|_\infty
+\end{equation}
+が成り立ちます。ただし、証明内で使いやすいように、
+必要ならば$C_1 > 1$ととりなおしておきます。
+
+\begin{proof}[\cref{6:thm:3}の証明.]
+    \underline{Step 1:}
+    まずは陰関数の存在を示そう。
+    Step 1 の方針は、適当な縮小写像を持ち出して不動点定理によって陰関数を構成するというものである。
+    そこで、写像$T \colon \Omega \to \R^n$を
+    \begin{equation}
+        T(x, y) \coloneqq y - (D_y f(x_0, y_0))^{-1} f(x, y)
+        \label{6:eq:8}
+    \end{equation}
+    と定義する。これは
+    \begin{equation}
+        \begin{split}
+            T(x_0, y_0) &= y_0 \\
+            D_y T(x_0, y_0) &= I - (D_y f(x_0, y_0))^{-1} D_y f(x_0, y_0) = I - I = O
+        \end{split}
+    \end{equation}
+    をみたす。したがって、$T, D_y T$の連続性から、充分小さい$\exists \delta, \rho > 0$\, s.t.
+    \begin{itemize}
+        \item $\overline{B}(x_0, \delta) \times \overline{B}(y_0, \rho) \subset \Omega$
+        \item $\| D_y T(x, y) \|_\infty \le \frac{1}{2C_1}$
+            \quad for $\forall (x, y) \in B(x_0, \delta) \times B(y_0, \rho)$
+        \item $|T(x, y_0) - y_0| \le \frac{\rho}{3}$ \quad for $\forall x \in B(x_0, \delta)$
+    \end{itemize}
+    が成り立つ。
+    よって、$T$は$\overline{B}(y_0, \rho)$上の縮小写像である。
+    実際、$\forall y, y' \in \overline{B}(y_0, \rho)$に対し
+    \begin{equation}
+        \begin{split}
+            |T(x, y) - T(x, y')|
+                &= |D_y T(x, (1-t)y + ty')\, (y - y')| \quad \text{for $\exists t \in (0, 1)$} \\
+                &\le \| D_y T(x, (1-t)y + ty') \|\, |y - y'| \\
+                &\le C_1 \| D_y T(x, (1-t)y + ty') \|_\infty\, |y - y'| \\
+                &\le \frac{1}{2} |y - y'|
+        \end{split}
+    \end{equation}
+    であり、$\forall y \in \overline{B}(y_0, \rho)$に対し
+    \begin{equation}
+        \begin{split}
+            |T(x, y) - y_0|
+                &\le |T(x, y) - T(x, y_0)| + |T(x, y_0) - y_0| \\
+                &\le \frac{1}{2} |y - y_0| + \frac{\rho}{3} \\
+                &\le \frac{\rho}{2} + \frac{\rho}{3} \\
+                &< \rho
+        \end{split}
+    \end{equation}
+    である。
+    したがって、不動点定理(\cref{6:thm:2})により$T$はただひとつの不動点を持つ。
+    すなわち、$\exists! y \in \overline{B}(y_0, \rho)$\, s.t.
+    \begin{equation}
+        \begin{split}
+            T(x, y) = y
+            \quad &\text{i.e.} \quad
+            y - (D_y f(x_0, y_0))^{-1} f(x, y) = y \\
+            \quad &\text{i.e.} \quad
+            f(x, y) = 0
+        \end{split}
+        \label{6:eq:5}
+    \end{equation}
+    が成り立つ。
+    よって、$\rho > 0$を少し大きくとりなおせば
+    $\exists \delta, \rho > 0$\, s.t.\,
+    \begin{enumerate}
+        \item[(1)] $I \coloneqq B(x_0, \delta),\,
+            J \coloneqq B(y_0, \rho)$とおくと
+            $\overline{I} \times \overline{J} \subset \Omega$
+        \item[(2)] $\forall x \in I,\, \exists! y \in J$\quad s.t. \quad
+            $f(x, y) = 0$
+    \end{enumerate}
+    が成り立つ。
+    このような$y$を$\phai(x)$と書くことにする。これで定理の(1), (2)がいえた。
+
+    \underline{Step 2:}
+    次に(3)を示していきたいのだが、
+    Step 2 ではひとまず$\phai$が連続であることを示そう。
+    $s_0, s_0 + h \in I$を任意にとると
+    \begin{equation}
+        \begin{split}
+            |\phai(s_0 + h) - \phai(s_0)|
+                &= |T(s_0 + h, \phai(s_0 + h)) - T(s_0, \phai(s_0))| \\
+                &\le |T(s_0 + h, \phai(s_0 + h)) - T(s_0 + h, \phai(s_0))| \\
+                &\hspace{6em} + |T(s_0 + h, \phai(s_0)) - T(s_0, \phai(s_0))| \\
+                &\le \frac{1}{2C_1} |\phai(s_0 + h) - \phai(s_0)| \\
+                &\hspace{6em} + |T(s_0 + h, \phai(s_0)) - T(s_0, \phai(s_0))|
+        \end{split}
+    \end{equation}
+    整理して
+    \begin{equation}
+        |\phai(s_0 + h) - \phai(s_0)|
+            \le \frac{2C_1}{2C_1 - 1} |T(s_0 + h, \phai(s_0)) - T(s_0, \phai(s_0))|
+    \end{equation}
+    を得る。
+    $T$の連続性より、右辺は$|h| \to 0$で$0$に収束する。
+    したがって$\phai$は点$s_0$で連続である。これで Step 2 が完了した。
+
+    \underline{Step 3:}
+    $\phai$が$I$上$C^1$級であることを示そう。
+    そこで$s_0 \in I$を任意にとり、
+    $\phai$の増分を$k(h) \coloneqq \phai(s_0 + h) - \phai(s_0)$とおく。
+    $\lim_{h \to 0} k(h) / |h|$を求めるのが目下の目標である。
+    そのために$s_0 + h \in I$なる$h \neq 0$を固定しておく。
+    ただし、以下必要に応じて$|h|$は充分小さいものとしてよい。
+    $k(h)$を変形すると
+    \begin{equation}
+        \begin{split}
+            k(h) &= \phai(s_0 + h) - \phai(s_0) \\
+                &= T(s_0 + h, \phai(s_0 + h)) - T(s_0 , \phai(s_0))
+                    \quad (\because \text{(\ref{6:eq:5})}) \\
+                &= T(s_0 + h, \phai(s_0) + k(h)) - T(s_0 , \phai(s_0)) \\
+                &= \underbrace{D_x T(s_0, \phai(s_0))}_{L \text{とおく}} h
+                    + \underbrace{D_y T(s_0, \phai(s_0))}_{M \text{とおく}} k(h)
+                    + R(h, k(h))
+        \end{split}
+    \end{equation}
+    となる。ただし、右辺第3項の$R(h, k)$は
+    \begin{equation}
+        \lim_{(h, k) \to 0} \frac{R(h, k)}{|(h, k)|} = 0
+        \label{6:eq:6}
+    \end{equation}
+    なる関数である。
+    これより
+    \begin{equation}
+        (I - M) k(h) = Lh + R(h, k(h))
+        \label{6:eq:4}
+    \end{equation}
+    が成り立つが、ここで
+    \begin{equation}
+        \| I - (I - M) \| = \| M \| = \| D_y T(s_0, \phai(s_0)) \| \le \frac{1}{2 C^1} < 1
+    \end{equation}
+    なので、\cref{6:lem:1}より行列$I - M$は正則である。したがって式(\ref{6:eq:4})は
+    \begin{equation}
+        k(h) = (I - M)^{-1} (Lh + R(h, k(h)))
+        \label{6:eq:7}
+    \end{equation}
+    と変形できる。
+    さて、$\phai$の微分可能性を示すためには、右辺の$R(h, k(h))$が$o(|h|)$になってほしいのだが、
+    $(h, k) \to 0$で$\frac{R(h, k)}{|(h, k)|} \to 0$だからといって
+    $h \to 0$で$\frac{R(h, k(h))}{|h|} \to 0$とは限らない。
+    そこで、まず$h \to 0$における$k(h)$の挙動を評価しよう。
+    表記の簡略化のために
+    \begin{equation}
+        \eps(h) \coloneqq \frac{R(h, k(h))}{|h| + |k(h)|}
+    \end{equation}
+    を導入しておくと、$R$の定義(\ref{6:eq:6})に注意すれば$|h| \to 0$で$\eps(h) \to 0$である。
+    この$\eps(h)$を用いて$|k(h)|$を変形すれば
+    \begin{equation}
+        \begin{split}
+            |k(h)|
+                &= |(I - M)^{-1} (Lh + R(h, k(h)))| \\
+                &= |(I - M)^{-1} (Lh + \eps(h) (|h| + |k(h)|))| \\
+                &\le \| (I - M)^{-1} \| \{ \|L\| |h| + |\eps(h)| (|h| + |k(h)|) \}
+        \end{split}
+    \end{equation}
+    であるが、$|h|$を充分小さくとれば$\| (I - M)^{-1} \| |\eps(h)| < 1/2$なので、
+    \begin{equation}
+        \text{（右辺）}
+        < \| (I - M)^{-1} \| \{ \|L\| + |\eps(h)| \} |h| + \frac{1}{2} |k(h)|
+    \end{equation}
+    整理して
+    \begin{equation}
+        \frac{1}{2} |k(h)| \le \| (I - M)^{-1} \| \{ \|L\| + |\eps(h)| \} |h|
+    \end{equation}
+    が成り立つ。
+    これは$|k(h)| = O(|h|) \; (h \to 0)$を表している。
+    したがって
+    \begin{equation}
+        \begin{split}
+            \frac{R(h, k(h))}{|h|}
+                &= \frac{R(h, k(h))}{\sqrt{|h|^2 + |k(h)|^2}}
+                    \frac{\sqrt{|h|^2 + |k(h)|^2}}{|h|} \\
+                &= \frac{R(h, k(h))}{\sqrt{|h|^2 + |k(h)|^2}}
+                    \sqrt{1 + \left(\frac{|k(h)|}{|h|}\right)^2} \\
+                &\to 0 \quad (h \to 0)
+        \end{split}
+    \end{equation}
+    すなわち$R(h, k(h)) = o(|h|)$がいえた。
+    よって式(\ref{6:eq:7})より
+    \begin{equation}
+        \phai(s_0 + h) - \phai(s_0)
+            = (I - M)^{-1} Lh + o(|h|)
+    \end{equation}
+    すなわち$\phai$の点$s_0$における微分可能性がいえて
+    \begin{equation}
+        \begin{split}
+            D \phai(s_0)
+                &= (I - M)^{-1} Lh \\
+                &= \textcolor{red}{(I - D_y T(s_0, \phai(s_0)))^{-1}}
+                    \textcolor{blue}{D_x T(s_0, \phai(s_0))}
+        \end{split}
+    \end{equation}
+    を得る。ここで、$T$の定義(\ref{6:eq:8})および点$(x_0, y_0)$の近傍で
+    $\det D_y f(x, y) \neq 0$であることに注意すれば
+    \begin{equation}
+        \begin{split}
+            \textcolor{red}{(I - D_y T(s_0, \phai(s_0)))^{-1}}
+                &= (D_y f(s_0, \phai(s_0)))^{-1} D_y f(x_0, y_0) \\
+            \textcolor{blue}{D_x T(s_0, \phai(s_0))}
+                &= - (D_y f(x_0, y_0))^{-1} D_x f(s_0, \phai(s_0))
+        \end{split}
+    \end{equation}
+    なので
+    \begin{equation}
+        D \phai(s_0) = - (D_y f(s_0, \phai(s_0)))^{-1} D_x f(s_0, \phai(s_0))
+        \label{6:eq:9}
+    \end{equation}
+    が成り立つ。$f$は$C^1$級なのでこれは点$s_0$で連続である。これで定理の(3)がいえた。
+
+    \underline{Step 4:}
+    (\ref{6:eq:9})から、$f \in C^k \Rightarrow \phai \in C^k$も明らかである。
+    これで(4)がいえた。
+\end{proof}
+
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{逆写像定理}
+
+次の逆写像定理は、陰関数定理を用いて比較的簡単に示すことができます。
+
+\begin{theorem}[逆写像定理]
+    $\Omega$を$\R^n$の空でない開集合とし、
+    $f$を$\Omega$上の$C^1$級$\R^n$値関数、$x_0 \in \Omega$とする。
+    \begin{equation}
+        \det D f(x_0) \neq 0
+    \end{equation}
+    ならば、$x_0, f(x_0)$の開近傍$U, V$が存在して
+    \begin{enumerate}
+        \item $f \colon U \to V$は全単射
+        \item $f^{-1} \in C^1(V; U)$かつ$\forall y \in V$に対し
+            \begin{equation}
+                Df^{-1}(y) = Df(x)^{-1},\quad x = f^{-1}(y)
+            \end{equation}
+        \item $f$が$\Omega$上$C^k$級ならば$f^{-1}$も$V$上$C^k$級
+    \end{enumerate}
+\end{theorem}
+
+\begin{proof}
+    証明の方針は、方程式$f(x) - y = 0$に陰関数定理を適用して得られる陰関数を用いて
+    逆関数を構成するというものである。
+    $F \colon \Omega \times \R^n \to \R^n$を
+    \begin{equation}
+        F(x, y) \coloneqq f(x) - y
+    \end{equation}
+    とおき、$y_0 \coloneqq f(x_0)$とおく。
+    すると
+    \begin{equation}
+        F(x_0, y_0) = 0,\quad
+        \det D_x F(x_0, y_0) = \det Df(x_0) \neq 0
+    \end{equation}
+    なので、陰関数定理より$\exists \delta, \rho > 0$\, s.t.
+    \begin{enumerate}
+        \item[(a)] $B(y_0, \delta) \times B(x_0, \rho) \subset \R^n \times \Omega$
+        \item[(b)] $\forall y \in B(y_0, \delta),\, \exists! x \in B(x_0, \rho)$\; s.t.
+            \begin{equation}
+                F(x, y) = 0 \quad \text{i.e.} \quad y = f(x)
+                \quad \text{（このような$x$を$\phai(y)$とおく）}
+            \end{equation}
+    \end{enumerate}
+    が成り立つ。
+    ここで$f$の連続性と$Df$の連続性より、上で得られた$\delta$に対し
+    \begin{enumerate}
+        \item[(i)] $B(x_0, \rho') \subset \Omega$
+        \item[(ii)] $B(x_0, \rho') \subset \phai(B(y_0, \delta))$
+            \quad （$f$の連続性を使った）
+        \item[(iii)] $\det Df(x) \neq 0 \quad (\forall x \in B(x_0, \rho'))$
+            \quad （$Df$の連続性を使った）
+    \end{enumerate}
+    が成り立つように$0 < \rho' < \rho$なる$\rho'$をとることができ、
+    \begin{equation}
+        U \coloneqq B(x_0, \rho'),\quad V \coloneqq \phai^{-1}(U)
+    \end{equation}
+    とおけば、$\phai$の連続性から$V$は開集合である（もちろん$U$も開集合である）\footnote{
+        参考文献\cite[第4章 \S{1}]{松坂76}を参照。
+    }。
+    したがって、$f$の制限$f\big|_U \colon U \to V$を
+    同じ記号$f$で書くことにすれば、$f$は全単射で$f^{-1} = \phai$である。
+    実際、$y \in V$に対しある$x \in U$が存在して$\phai(y) = x$すなわち$y = f(x)$なので全射性が従い、
+    $x, z \in U,\, f(x) = f(z) = y$ならば$x = \phai(y) = z$なので単射性、
+    そして$f^{-1} = \phai$が従う。
+    これで定理の(1)がいえた。
+
+    さて、陰関数定理によれば$\phai$は$V$上$C^1$級で
+    \begin{equation}
+        F(\phai(y), y) = 0
+        \quad \text{i.e.} \quad
+        f(\phai(y)) = y
+    \end{equation}
+    なので、$y$で微分して
+    \begin{equation}
+        Df(\phai(y)) D\phai(y) = I
+    \end{equation}
+    を得る。よって、(iii)にも注意すれば
+    \begin{equation}
+        D\phai(y) = Df(\phai(y))^{-1}
+        \quad \text{i.e.} \quad
+        Df^{-1}(y) = Df(f^{-1}(y))^{-1}
+    \end{equation}
+    が成り立つ。これで定理の(2)がいえた。
+
+    また、$f$が$\Omega$上$C^k$級ならば$F$も$\Omega \times \R^n$上$C^k$級なので、
+    $f^{-1} = \phai$も$V$上$C^k$級である。
+    これで定理の(3)がいえた。
+\end{proof}
+
+
+
+% ============================================================
+%
+% ============================================================
+\chapter{微分と積分の関係}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{微分積分学の基本定理}
+
+\begin{theorem}[微分積分学の第1基本定理]
+    \TODO{}
+\end{theorem}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+\begin{theorem}[微分積分学の第2基本定理]
+    \TODO{}
+\end{theorem}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+\begin{theorem}[Leibniz integral rule]
+    \TODO{}
+    \begin{equation}
+        \dd{x} \int_a^x f(x, t) \, dt
+            = f(x, x) + \int_a^x \deldel{x} f(x, t) \, dt
+    \end{equation}
+\end{theorem}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{積分記号下での微分}
+
+本節では積分記号下の微分について論じる。
+まず Riemann 積分バージョンについて述べる。
+
+\begin{theorem}[積分記号下の微分 (Riemann 積分)]
+    $A$を$\R^n$の Jordan 可測な有界閉集合、
+    $a, b \in \R, \; a < b$、
+    $f \colon A \times (a, b) \to \R$を写像とする。
+    このとき、$f$が条件
+    \begin{enumerate}[label=(A-\arabic*)]
+        \item $f$は$A \times (a, b)$上連続
+    \end{enumerate}
+    をみたすならば、
+    $J \colon (a, b) \to \R, \; t \mapsto \int_A f(x, t) \, dx$は
+    連続である。
+
+    \TODO{}
+\end{theorem}
+
+\begin{remark}
+    上の命題の「Jordan 可測な有界閉集合」の部分は、
+    「有界閉集合はすべて Jordan 可測なのではないか？」と
+    一見冗長に思えるかもしれないが、そうではない。
+    実際、太った Cantor 集合は有界閉集合だが Jordan 可測ではない\TODO{why?}。
+\end{remark}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+つぎに Lebesgue 積分バージョンについて述べる。
+
+\begin{theorem}[積分記号下の微分 (Lebesgue 積分)]
+    $A$を可測空間、$\mu$を$A$上の測度、
+    $a, b \in \R, \; a < b$、
+    $f \colon A \times (a, b) \to \R$を写像とする。
+    このとき、$f$が条件
+    \begin{enumerate}[label=(A-\arabic*)]
+        \item a.e.$x \in A$に対し、
+            $t \mapsto f(x, t)$は$(a, b)$上連続
+        \item $A$上可積分なある関数$\Phi \colon A \to \R$が存在して、
+            すべての$t \in (a, b)$に対し
+            $|f(x, t)| \le \Phi(x) \; \text{a.e.$x$}$
+            をみたす。
+    \end{enumerate}
+    をみたすならば、
+    $J \colon (a, b) \to \R, \; t \mapsto \int_A f(x, t) \, \mu(dx)$は
+    連続である。
+    さらに$f$が条件
+    \begin{enumerate}[label=(B-\arabic*)]
+        \item a.e.$x \in A$に対し、
+            $t \mapsto f(x, t)$は$(a, b)$上微分可能
+        \item $A$上可積分なある関数$\Phi \colon A \to \R$が存在して、
+            すべての$t \in (a, b)$に対し
+            $\left|\deldel[f]{t}(x, t)\right| \le \Phi(x) \; \text{a.e.$x$}$
+            をみたす。
+    \end{enumerate}
+    もみたすならば、
+    $J \colon (a, b) \to \R, \; t \mapsto \int_A f(x, t) \, \mu(dx)$は
+    微分可能であり、
+    $J'(t) = \int_A \deldel[f]{t}(x, t) \, \mu(dx)$が成り立つ。
+\end{theorem}
+
+\begin{remark}
+    (A-2)の優関数の存在の仮定は、
+    「すべての$t$に対し$x \mapsto f(x, t)$は$A$上可積分」
+    よりも強い条件であることに注意すべきである
+    ((B-2)も同様)。
+
+    一見すると、
+    $f$に課される条件が Riemann 積分バージョンよりも
+    複雑になったようにも見えるが、
+    実は Riemann 積分バージョンよりもかなり弱い条件になっている。
+    たとえば、$f$の定義域全体での連続性はもはや不要となっている。
+
+    \TODO{優関数の存在を仮定するようになったのは、前提が厳しくなっていないか？}
+\end{remark}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+
+\end{document}

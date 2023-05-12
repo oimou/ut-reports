@@ -1,0 +1,2656 @@
+\documentclass[report]{jlreq}
+\usepackage{global}
+\usepackage{./local}
+\subfiletrue
+\begin{document}
+
+% ============================================================
+%
+% ============================================================
+\chapter{関数列と関数項級数}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{関数列}
+
+関数列の収束について基礎的な事項を整理する。
+
+\TODO{関数族の場合も含めてネットで定義する}
+
+\begin{definition}[各点収束と一様収束、広義一様収束]
+    $I \subset \R$、
+    $f, f_n \; (n \in \N)$を$I$上の実数値関数とする。
+    \begin{enumerate}
+        \item 関数列$\{ f_n \}_{n \in \N}$が
+            $f$に
+            \term{$I$上各点収束}[converge pointwise on $I$]
+                {各点収束}[かくてんしゅうそく]
+            するとは、
+            $\forall \eps > 0$と
+            $\forall x \in I$に対し、
+            $\exists N \in \R$が存在し、
+            $\forall n \ge N$に対し
+            \begin{equation}
+                |f_n(x) - f(x)| < \eps
+            \end{equation}
+            が成り立つことをいう。
+        \item 関数列$\{ f_n \}_{n \in \N}$が
+            $f$に
+            \term{$I$上一様収束}[converge uniformly on $I$]
+                {一様収束}[いちようしゅうそく]
+            するとは、
+            $\forall \eps > 0$に対し、
+            $\exists N \in \R$が存在し、
+            $\forall x \in I$と
+            $\forall n \ge N$に対し
+            \begin{equation}
+                |f_n(x) - f(x)| < \eps
+            \end{equation}
+            が成り立つことをいう。
+        \item 関数列$\{ f_n \}_{n \in \N}$が
+            $I$の任意のコンパクト部分集合上で一様収束するとき、
+            関数列$\{ f_n \}_{n \in \N}$は
+            $f$に
+            \term{$I$上広義一様収束する}[converge compactly on $I$]
+                {広義一様収束}[こうぎいちようしゅうそく]
+            という。
+    \end{enumerate}
+\end{definition}
+
+\begin{proposition}[一様 Cauchy 条件]
+    $I \subset \R$、
+    $f_n,\, f \colon I \to \R$とする。
+    このとき、次の条件は同値である。
+    \begin{enumerate}
+        \item $f_n \to f \;\text{in}\; C(I) \;\text{as}\; n \to \infty$
+        \item $\| f_n - f \| \to 0 \;\text{as}\; n \to \infty$
+        \item $\forall \eps > 0$に対し、
+            $\exists N \in \N$が存在し、
+            $\forall n, m \ge N$に対し
+            \begin{equation}
+                \forall x \in I,\, |f_n(x) - f_m(x)| < \eps
+            \end{equation}
+            が成り立ち、
+            $f_n(x)$の$n \to \infty$での各点収束の極限は$f(x)$である
+    \end{enumerate}
+\end{proposition}
+
+\begin{proof}
+    \underline{(1) \Leftrightarrow (2)}\, 一様収束の定義から明らか。
+
+    \underline{(1) \Rightarrow (3)}\,
+    $\forall \eps > 0$をとる。ある$N \in \N$が存在して、
+    $\forall n \ge N$に対し
+    \begin{equation}
+        \forall x \in I,\, |f_n(x) - f(x)| \le \eps / 2
+    \end{equation}
+    なので、$\forall n, m \ge N$に対し
+    \begin{equation}
+        \forall x \in I,\, |f_n(x) - f_m(x)| \le |f_n(x) - f(x)| + |f_m(x) - f(x)| \le \eps
+    \end{equation}
+    である。
+
+    \underline{(3) \Rightarrow (1)}\,
+    $x$ごとに$\{ f_n(x) \}_{n \in \N}$は Cauchy 列なので、
+    実数の完備性より確かに
+    $\lim_{n \to \infty} f_n(x) \eqqcolon f(x) \cdots$ (1) が$\forall x \in I$に対し存在する。
+    (3)より、$\forall \eps > 0$に対しある$N \in \N$が存在して、
+    \begin{equation}
+        \forall n, m \ge N,\, \forall x \in I,\, |f_n(x) - f_m(x)| < \eps / 2
+    \end{equation}
+    すなわち\footnote{
+        混乱の恐れがなければ、以降の議論をすっ飛ばして単に
+        「$m \to \infty$とすれば$\forall n \ge N, \forall x \in I, |f_n(x) - f(x)| < \eps$」
+        と言ってしまう手もあります。
+        次の\cref{1:prop:2}や第4回の\cref{4:lemma:1}でも
+        これと似たような内容の論証を少しずつ異なる言い回しで試みているので、ぜひ見比べてみてください。
+    }
+    \begin{equation}
+        \forall n \ge N,\, \forall x \in I,\, \forall m \ge N,\, |f_n(x) - f_m(x)| < \eps / 2
+    \end{equation}
+    である。よって、$\forall n \ge N,\, \forall x \in I$をとって、(1)から定まる$N'$ s.t.
+    \begin{equation}
+        \forall m \ge N',\, |f_m(x) - f(x)| < \eps / 2
+    \end{equation}
+    に対し$m \ge \max\{N, N'\}$をひとつ選べば
+    \begin{equation}
+        |f_n(x) - f(x)| \le |f_n(x) - f_m(x)| + |f_m(x) - f(x)| \le \eps
+    \end{equation}
+    である。
+\end{proof}
+
+\begin{proposition}
+    $I$を任意の区間とする。
+    $I$上の連続関数列$\{ f_n \}_{n \in \N}$が$f$に$I$上広義一様収束するならば、
+    $f$も$I$上の連続関数である。
+    \label{1:prop:2}
+\end{proposition}
+
+もちろん、$I$は有界や閉区間でなくてもかまいません。
+
+\begin{proof}
+    $I$がコンパクトでない場合は
+    点$x \in I$を含む$I$のコンパクト部分集合をとりなおせばよいから、
+    以下では$I$がコンパクトの場合のみ示す。
+
+    $x' \in I$を固定し、$f$が$x'$で連続であることを示そう。
+    広義一様収束の仮定から、$\forall \eps > 0$に対し$\exists N \in \N$\, s.t.
+    \begin{equation}
+        n \ge N \Rightarrow \| f_n - f \| < \eps / 3
+    \end{equation}
+    である。$f_N$は$x'$で連続だから、$x'$のある近傍$U$が存在して
+    \begin{equation}
+        x \in U \cap I \Rightarrow |f_N(x') - f_N(x)| < \eps / 3
+    \end{equation}
+    が成り立つ。よって$\forall x \in U$に対し
+    \begin{equation}
+        \begin{split}
+            |f(x) - f(x')|
+                &\le |f(x) - f_N(x)| + |f_N(x) - f_N(x')| + |f_N(x') - f(x')| \\
+                &\le \| f - f_N \| + \eps / 3 + \| f_N - f \| \\
+                &< \eps
+        \end{split}
+    \end{equation}
+    である。したがって$f$は$x'$で連続である。
+\end{proof}
+
+\begin{theorem}[項別積分]
+    $I \coloneqq [a, b]$上の連続関数列$\{ f_n \}_{n \in \N}$が
+    $n \to \infty$のとき$f$に$I$上一様収束するならば
+    \begin{equation}
+        \lim_{n \to \infty} \int_a^b f_n(x)\, dx = \int_a^b f(x)\, dx
+    \end{equation}
+\end{theorem}
+
+\begin{proof}
+    一様性があるので積分を外から抑えられます。
+\end{proof}
+
+\begin{theorem}[項別微分]
+    $I$を任意の区間とする。このとき
+    \begin{enumerate}
+        \item $\{ f_n \}_{n \in \N} \subset C^1(I)$が
+            $n \to \infty$で$f$に各点収束
+        \item $\{ f_n' \}_{n \in \N} \subset C(I)$が
+            $n \to \infty$で$g$に$I$上広義一様収束
+    \end{enumerate}
+    ならば
+    \begin{enumerate}
+        \item $\{ f_n \}_{n \in \N} \subset C^1(I)$が
+            $n \to \infty$で$f$に$I$上一様収束し$C^1$級
+        \item $I$の各点で$g(x) = f'(x)$
+    \end{enumerate}
+\end{theorem}
+
+\begin{proof}
+    $I$が有界閉区間の場合を以下の流れに沿って示した後、
+    一般の区間$I$に対しては各点$x$を含む有界閉区間がとれることを用いて示します。
+    $x$ごとに微積分学の基本定理を使って一様収束を示します。
+    $f$の微分可能性は積分の平均値定理を使って示します。
+\end{proof}
+
+
+
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{関数項級数}
+
+関数項級数の収束について基礎的な事項を整理します。
+
+\begin{definition}[関数項級数の収束]
+    簡単なので省略
+\end{definition}
+
+\begin{proposition}[関数項級数の項別積分]
+    $I \coloneqq [a, b]$上の連続関数列$\{ f_n \}_{n \in \N}$による関数項級数
+    $\sum_{k \in \N} f_k(x)$が$I$上一様収束であるとき
+    \begin{enumerate}
+        \item $\sum_{k \in \N} f_k(x)$も連続関数
+        \item $\sum_{k \in \N} \int_a^b f_k(x) dx = \int_a^b \sum_{k \in N} f_k(x) dx$
+    \end{enumerate}
+\end{proposition}
+
+\begin{proof}
+    関数列の場合と同様なので省略
+\end{proof}
+
+\begin{proposition}[関数項級数の項別微分]
+    $I$を\textcolor{red}{任意の区間}とし、$\{ f_n \}_{n \in \N} \subset C^1(I)$とする。このとき
+    \begin{enumerate}
+        \item $\sum_{k \in \N} f_k(x)$が
+            $n \to \infty$で各点収束
+        \item $\sum_{k \in \N} f_k'(x)$が
+            $n \to \infty$で$I$上広義一様収束
+    \end{enumerate}
+    ならば
+    \begin{enumerate}
+        \item $\sum_{k \in \N} f_k(x)$が
+            $n \to \infty$で$I$上一様収束し$C^1$級
+        \item $I$の各点で$\dd{x} \sum_{k \in \N} f_k(x) = \sum_{k \in \N} f_k'(x)$
+    \end{enumerate}
+\end{proposition}
+
+\begin{proof}
+    関数列の場合と同様なので省略
+\end{proof}
+
+\begin{theorem}[Weierstrass のMテスト]
+    $a<b,\, I=[a,b]$とし、$f_n: I\to\R\,(\forall n \in \N)$とする。
+    ある実数列$\{M_n\}_{n\in\N}$が存在して次を満たすと仮定する：
+    \begin{enumerate}
+        \item 十分大きな$\forall n\in\N$に対し$\| f_n \| \le M_n$
+        \item 級数$\sum_{k\in\N} M_k$は収束する
+    \end{enumerate}
+    このとき、級数$\sum_{k\in\N} f_k$は$I$上一様収束する。
+\end{theorem}
+
+この定理は$f_n,\, f$が多変数関数の場合にも拡張できます。
+
+\begin{proof}
+    一様 Cauchy 条件に帰着させて示します。
+\end{proof}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\newpage
+\section{演習問題}
+
+\begin{problem}[東大数理 2006A]
+    ~
+    \begin{enumerate}
+        \item 正の整数$n$に対し、
+            定積分$I_n = \int_0^{\pi / 2} \cos^n \theta \, d\theta$
+            の値を求めよ。
+        \item $\R$上の関数
+            \begin{equation}
+                f(x) = \int_0^{\pi / 2} \cos(x \cos \theta) \, d\theta
+            \end{equation}
+            を$x = 0$を中心として Taylor 展開し、
+            その$n + 1$次以上の項を無視して得られる多項式を
+            $p_n(x)$とする。$p_n(x)$を求めよ。
+        \item $K$を$\R$の有界な部分集合とする。
+            $n \to \infty$のとき
+            $p_n(x)$は$f(x)$に
+            $K$上一様収束することを示せ。
+    \end{enumerate}
+\end{problem}
+
+\begin{proof}
+    \uline{(1)} \quad
+    $n \ge 2$のとき、
+    $\cos^n \theta = \cos^{n - 2} \theta (1 - \sin^2 \theta)$
+    に注意すると
+    \begin{alignat}{1}
+        I_n
+            &= \underbrace{
+                \int_0^{\pi / 2} \cos^{n - 2} \theta \, d\theta
+            }_{= I_{n - 2}}
+                + \int_0^{\pi / 2} \cos^{n - 2} \theta \sin^2 \theta \, d\theta
+    \end{alignat}
+    である。右辺第2項は部分積分により
+    \begin{alignat}{1}
+        \mybracket{
+            - \frac{1}{n - 1} \cos^{n - 1} \theta \sin \theta
+        }_0^{\pi / 2}
+            + \frac{1}{n - 1}
+            \int_0^{\pi / 2} \cos^{n - 1} \theta \cos \theta \, d\theta
+            &= \frac{1}{n - 1} \int_0^{\pi / 2} \cos^n \theta \, d\theta \\
+            &= \frac{1}{n - 1} I_n
+    \end{alignat}
+    と変形される。したがって
+    $I_n = I_{n - 2} + \frac{1}{n - 1} I_n$となり、
+    整理して
+    $I_n = \frac{n - 1}{n} I_{n - 2}$を得る。
+    具体的計算により$I_0 = \frac{\pi}{2}, \; I_1 = 1$だから、
+    求める答えは
+    \begin{equation}
+        I_n = \begin{cases}
+            \frac{n - 1}{n} \frac{n - 3}{n - 2} \cdots \frac{1}{2} \frac{\pi}{2}
+                & (\text{$n$が偶数}) \\[1ex]
+            \frac{n - 1}{n} \frac{n - 3}{n - 2} \cdots \frac{2}{3}
+                & (\text{$n$が奇数})
+        \end{cases}
+    \end{equation}
+    である。
+
+    \uline{(2)} \quad
+    \begin{equation}
+        p_n(x) = \sum_{0 \le k \le n/2}
+            \frac{(-1)^k}{k!} I_{2k} x^k
+    \end{equation}
+    \TODO{}
+
+    \uline{(3)} \quad
+    Taylor 展開の剰余項を
+    $R_n(x) \coloneqq f(x) - p_n(x)$とおく。
+    $R_n(x)$が$n \to \infty$で$K$上$0$に一様収束することをいえばよい。
+    いま$K$は有界だから、
+    ある$R > 0$が存在して、
+    すべての$x \in K$に対して$|x| < R$が成り立つ。
+    また(1)の結果より、
+    すべての$k \in \Z_{\ge 0}$に対し
+    $I_{2k} < \frac{\pi}{2}$が成り立つ。
+    したがって
+    \begin{alignat}{1}
+        |R_n(x)|
+            &\le \sum_{k > n/2} \frac{1}{k!} I_{2k} |x|^k \\
+            &\le \frac{\pi}{2} \sum_{k > n/2} \frac{1}{k!} R^k \\
+            &= \frac{\pi}{2} \myparen{
+                e^R - \sum_{0 \le k \le n/2} \frac{1}{k!} R^k
+            } \\
+            &\to 0 \quad (\text{$n \to \infty$})
+    \end{alignat}
+    を得る。
+    すなわち$R_n(x)$は$K$上$0$に一様収束する。
+    これが示したいことであった。
+\end{proof}
+
+
+
+% ============================================================
+%
+% ============================================================
+\chapter{Fourier 級数と Fourier 変換}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{熱方程式に対するフーリエの方法}
+
+偏微分方程式
+\begin{equation}
+    \deldel[u]{t}(x, t) = \frac{k}{c} \frac{\del^2 u}{\del x^2}(x, t)
+\end{equation}
+を\textbf{熱方程式}と呼びます。以下、簡単のため$c = k = 1$とします。
+これに
+\begin{equation}
+    \begin{split}
+        &\text{境界条件}\quad u(0, t) = 0,\, u(1, t) = 0 \\
+        &\text{初期条件}\quad u(x, 0) = a(x) \not\equiv 0 \quad \text{for}\, x \in [0, 1]
+            \quad \left(\text{ただし } \int_0^1 a(x)^2 dx < \infty \right)
+    \end{split}
+\end{equation}
+を付け加えた問題を考えてみます。
+求解の方針は次の3ステップです。
+\begin{enumerate}
+    \item 解の形を変数分離形$u(x, t) = \phai(x) \eta(t)$に仮定し、
+    \item 境界条件から$\phai_n(x)$と$\eta_n(t)$を順に求め、
+    \item $\phai_n(x) \eta_n(t)$の無限個の重ね合わせをとり、初期条件をみたす係数を求める。
+\end{enumerate}
+(3)の無限和の収束性に一旦目をつぶれば、"解"は
+\begin{equation}
+    u(x, t) = \sum_{n = 1}^\infty c_n e^{-(n\pi)^2 t} \sin (n\pi x),\quad
+    c_n = 2 \int_0^1 a(x) \sin(n\pi x) dx
+    \label{eq:1:1}
+\end{equation}
+と求まります\footnote{
+    $c_n$の式の先頭に現れる$2$は$\int_0^1 \sin^2(n\pi x) dx = \frac{1}{2}$に由来します。
+}。
+そして、実はこの級数はきちんと収束します。
+
+
+\begin{proposition}
+    フーリエの方法で求めた解(\ref{eq:1:1})は$[0, 1] \times (0, \infty)$上広義一様収束する。
+\end{proposition}
+
+\begin{proof}
+    $[0, 1] \times [\tau, T],\, 0 < \tau < T$を任意にとる。
+    Weierstrass の定理を用いて示す。
+    充分大きな任意の$n$に対し
+    \begin{equation}
+        \begin{split}
+            |c_n u_n(x, t)|
+                &\le |c_n|\, e^{-(n\pi)^2 \tau} \sin (n\pi x) \\
+                &\le |c_n|\, e^{-(n\pi)^2 \tau} \\
+                &\le \frac{|c_n|}{(n\pi)^2 \tau} (n\pi)^2 \tau\, e^{-(n\pi)^2 \tau} \\[0.5em]
+            \therefore\quad |c_n u_n(x, t)|
+                &= O\left(\frac{|c_n|}{n^2}\right) \quad (n \to \infty)
+        \end{split}
+    \end{equation}
+    であり、
+    \begin{equation}
+        \begin{split}
+            \sum_{n = 1}^\infty \frac{|c_n|}{n^2}
+                &\le \left(\sum_{n = 1}^\infty |c_n|^2\right)^{1/2}
+                    \left(\sum_{n = 1}^\infty \frac{1}{n^4} \right)^{1/2} \\
+                &= \left(2 \int_0^1 a(x)^2 dx\right)^{1/2}
+                    \left(\sum_{n = 1}^\infty \frac{1}{n^4} \right)^{1/2} \\
+                &< \infty
+        \end{split}
+    \end{equation}
+    なので、(\ref{eq:1:1})の級数は$[0, 1] \times [\tau, T]$上一様収束、
+    したがって$[0, 1] \times (0, \infty)$上広義一様収束する。
+\end{proof}
+
+
+
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{フーリエ級数展開}
+
+周期$2\pi$の関数$f: \R \to \R$に対し、
+同じく周期$2\pi$の関数からなる関数系
+$\{ \textcolor{red}{1 \big/\! \sqrt{\mathstrut 2}},\, \cos nx,\, \sin nx \}\, (n = 1, 2, \dots)$
+による展開\footnote{
+    関数系$\{ 1 \big/\! \sqrt{\mathstrut 2},\, \cos nx,\, \sin nx \}$は
+    内積$\langle f, g \rangle = \textcolor{red}{\frac{1}{\pi}} \int_{-\pi}^{\pi} f\, g\, dx$のもとで
+    正規直交関数系となっています。
+}
+\begin{equation}
+    \frac{1}{2} a_0 + \sum_{n=1}^\infty (a_n \cos(nx) + b_n \sin(nx))
+\end{equation}
+を$f$の\textbf{フーリエ級数展開}と呼び、
+\begin{equation}
+    S_N[f](x) := \frac{1}{2} a_0 + \sum_{n=1}^N (a_n \cos(nx) + b_n \sin(nx))
+\end{equation}
+を$f$の\textbf{第$N$フーリエ部分和}と呼びます。
+フーリエ級数展開が$f$に一致するかどうかはまだわかりませんが、
+一致すると仮定すれば、三角関数の直交性から\textbf{フーリエ係数}$a_n, b_n$は
+\begin{equation}
+    \begin{split}
+        a_n &= \frac{1}{\pi} \int_{-\pi}^{\pi} f(x) \cos(nx) dx \\
+        b_n &= \frac{1}{\pi} \int_{-\pi}^{\pi} f(x) \sin(nx) dx
+    \end{split}
+\end{equation}
+と表せることがわかります\footnote{
+    $f$が偶関数ならば$a_n = \frac{2}{\pi} \int_0^\pi,\, b_n = 0$に、
+    奇関数ならば$a_n = 0,\, b_n = \frac{2}{\pi} \int_0^\pi$になります。
+}。
+そこで、フーリエ級数展開が$f$に一致するという仮定は一旦忘れて、
+$a_n, b_n$を上のように定義して議論をスタートします。
+
+ここからは、フーリエ級数展開が収束するかどうか、するとしたらどこに収束するか、ということを考えていきます。
+まずはフーリエ級数展開が一様収束するための条件をいくつか確認しておきます。
+
+\begin{theorem}
+    $f$が$C^2$級の$2\pi$周期関数であるとき、$S_N[f]$は$\R$上一様収束する。
+\end{theorem}
+
+\begin{proof}
+    フーリエ係数$a_n$に対して
+    \begin{alignat}{1}
+        a_n &= \frac{1}{\pi} \int_{-\pi}^{\pi} f(x) \cos(nx) dx \\
+            &= - \frac{1}{\pi} \int_{-\pi}^{\pi} f'(x) \sin(nx) dx \quad (\text{\because\, 部分積分}) \\
+            &= - \frac{1}{n^2\pi} \int_{-\pi}^{\pi} f''(x) \cos(nx) dx \quad (\text{\because\, 部分積分}) \\
+            &= O\left(\frac{1}{n^2}\right) \quad (n \to \infty)
+    \end{alignat}
+    である。
+    よって
+    \begin{equation}
+        |a_n \cos(nx) + b_n \sin(nx)| \le |a_n| + |b_n| = O\left(\frac{1}{n^2}\right) \quad (n \to \infty)
+    \end{equation}
+    なので、Weierstrassの定理により、$S_N[f]$は$\R$上一様収束する。
+\end{proof}
+
+
+
+\begin{theorem}
+    $f$が$C^{\textcolor{red}{1}}$級の$2\pi$周期関数であるとき、$S_N[f]$は$\R$上一様収束する。
+\end{theorem}
+
+\begin{proof}
+    $m > n > 0$なる自然数$m, n$を任意にとると
+    \begin{alignat}{1}
+        \sum_{k=n}^m |a_k|
+            &= \sum_{k=n}^m \left| \frac{1}{\pi} \int_{-\pi}^{\pi} f(x) \cos(kx) dx \right| \quad (\text{\because\, 定義}) \\
+            &= \frac{1}{\pi} \sum_{k=n}^m \left| \frac{1}{k} \int_{-\pi}^{\pi} f'(x) \cos(kx) dx \right| \quad (\text{\because\, 部分積分}) \\
+            &\le \frac{1}{\pi}
+                \left\{ \sum_{k=n}^m \frac{1}{k^2} \right\}^{1/2}
+                \left\{ \sum_{k=n}^m \left( \int_{-\pi}^{\pi} f'(x) \cos(kx) dx \right)^2 \right\}^{1/2}
+                \quad (\text{\because\, Schwartzの不等式}) \\
+            &\le \frac{1}{\pi}
+                \left\{ \sum_{k=n}^m \frac{1}{k^2} \right\}^{1/2}
+                \cdot \left\{ \frac{1}{\pi} \int_{-\pi}^{\pi} f'(x)^2 dx \right\}^{1/2}
+                \quad (\text{\because\, Parsevalの等式}) \\
+            &< \infty
+    \end{alignat}
+    なので、Cauchy の収束条件により級数$\sum |a_n|$は収束する。
+    同様にして$\sum |b_n|$も収束する。
+    したがって
+    \begin{equation}
+        |a_n \cos(nx) + b_n \sin(nx)| \le |a_n| + |b_n|
+    \end{equation}
+    の右辺は収束するから、Weierstrassの定理により、$S_N[f]$は$\R$上一様収束する。
+\end{proof}
+
+さて、フーリエ級数展開が一様収束するための条件はいくつか確認できたので、
+次は肝心の「どこに収束するか？」を考えていきます。
+そのためには各点収束の極限を考えればよいのですが、その前にいくつかの補題を準備しておきます。
+
+\begin{lemma}
+    フーリエの部分和は
+    \begin{equation}
+        S_N[f](x) = \frac{1}{2\pi}
+            \int_{-\pi}^{\pi} f(x+y) \frac{\sin\left(N+\frac{1}{2}\right)y}{\sin\frac{1}{2}y} dy
+    \end{equation}
+    と書ける。
+    \label{3:lemma1}
+\end{lemma}
+
+\begin{proof}
+    三角数列の和の公式
+    \begin{equation}
+        \cos\alpha + \cos 2\alpha + \cdots + \cos n\alpha
+            = \frac{\cos\left(\frac{n+1}{2}\alpha\right) \sin\left(\frac{n}{2}\alpha\right)}{\sin\frac{\alpha}{2}}
+    \end{equation}
+    と、$f$の周期性を利用した置換を用いて示します。
+\end{proof}
+
+    \begin{lemma}
+        区間$[-\pi, \pi]$上で区分的に連続な関数$g$に対して次が成り立つ：
+        \begin{equation}
+            \lim_{n\to\infty} \frac{1}{\pi} \int_{-\pi}^{\pi} g(x) \sin\left(N + \frac{1}{2}\right) x dx = 0
+        \end{equation}
+        \label{3:lemma2}
+    \end{lemma}
+
+\begin{proof}
+    リーマン・ルベーグの定理\footnote{
+        リーマン・ルベーグの定理の主張は以下のとおりです。証明は参考文献\cite[第3章 例題3.3]{杉浦+89}を参照。
+        有界閉区間$I=[a,b]$上で関数$f$が可積分であるとき、
+        $\lim_{t\to\infty} \int_a^b f(x) \sin(tx) dx = 0$
+        および
+        $\lim_{t\to\infty} \int_a^b f(x) \cos(tx) dx = 0$
+        が成り立つ。
+    }
+    より明らか。
+\end{proof}
+
+\begin{lemma}
+    $f$を$\R$上の区分的$C^1$級関数とし、
+    $x \in \R$を任意にとる。このとき
+    \begin{gather}
+        y \mapsto \dfrac{f(x + y) - f(x - 0)}{\sin(y/2)}
+            \;\text{は}\; -\pi \le y \le 0 \text{ で、} \label{eq:lem3:a} \\[+1em]
+        y \mapsto \dfrac{f(x + y) - f(x + 0)}{\sin(y/2)}
+            \;\text{は}\; 0 \le y \le \pi \text{ で、} \label{eq:lem3:b}
+    \end{gather}
+    それぞれ区分的に連続である。
+    \label{3:lemma3}
+\end{lemma}
+
+\begin{proof}
+    $x \in \R$を任意に固定する。$x$は$f$の不連続点であってもよい。
+    $y \neq 0$のときは(\ref{eq:lem3:a}), (\ref{eq:lem3:b})の分母は$0$でないから、
+    $f$の区分的連続性により定理の主張が成り立つ。
+    したがって$y \to 0$のときを考えればよく、
+    以下$y \to -0$の場合を示す。$y \to +0$の場合も同様にして示せる。
+    \begin{equation}
+        \alpha(y) \coloneqq \dfrac{f(x + y) - f(x - 0)}{\sin(y/2)}
+    \end{equation}
+    とおくと
+    \begin{equation}
+        \begin{split}
+            \alpha(y)
+                &= \frac{f(x + y) - \lim_{\eps \to +0} f(x - \eps)}{\sin(y/2)} \\
+                &= 2\, \frac{f(x + y) - \lim_{\eps \to +0} f(x - \eps)}{y} \frac{y/2}{\sin(y/2)} \\
+                &= 2 \lim_{\eps \to +0} \frac{f(x - \eps + y) - f(x - \eps)}{y} \frac{y/2}{\sin(y/2)}
+        \end{split}
+    \end{equation}
+    である。ただし、最後の式変形では$|y|$が充分小さいとき$f$が点$x + y$で連続であることを用いた。
+    $\lim_{\eps \to +0}$の部分を$\eps$-$\delta$論法で書き直すと、
+    $\forall \eta > 0$に対し$\exists \eps_\eta > 0\;$ s.t. $\; 0 < \forall \eps < \eps_\eta$に対し
+    \begin{equation}
+        \alpha(y) - \eta
+            < 2\, \frac{f(x - \eps + y) - f(x - \eps)}{y} \frac{y/2}{\sin(y/2)}
+            < \alpha(y) + \eta
+            \label{eq:lem3:2}
+    \end{equation}
+    である。
+    $\eps$を充分小さくとれば$f$は点$x - \eps$で微分可能、とくに左微分可能なので、
+    式(\ref{eq:lem3:2})の第~2辺には$y \to -0$の極限が存在するが、
+    それはとくに下極限と一致するから、
+    式(\ref{eq:lem3:2})の各辺の$y \to -0$の下極限をとって
+    \begin{equation}
+        \liminf_{y \to -0} \alpha(y) - \eta \le 2 f'(x - \eps) \le \liminf_{y \to -0} \alpha(y) + \eta
+    \end{equation}
+    を得る。
+    ふたたび$\eps$-$\delta$論法による極限の定義を思い出せば
+    \begin{equation}
+        2 f'(x - 0) = \liminf_{y \to -0} \alpha(y)
+    \end{equation}
+    を得る。
+    同様の議論により
+    \begin{equation}
+        2 f'(x - 0) = \limsup_{y \to -0} \alpha(y)
+    \end{equation}
+    も示せる。$f$は区分的$C^1$級なので$f'(x - 0)$が存在し、したがって
+    \begin{equation}
+        \lim_{y \to -0} \alpha(y)
+            = \liminf_{y \to -0} \alpha(y)
+            = \limsup_{y \to -0} \alpha(y)
+            = 2 f'(x - 0)
+            \in \R
+    \end{equation}
+    である。
+\end{proof}
+
+\begin{theorem}
+    $f$が区分的に$C^1$級の$2\pi$周期関数であるとき、任意の$x \in [-\pi, \pi]$に対して
+    \begin{equation}
+        S_N[f](x) \to \frac{f(x+0) - f(x-0)}{2} \quad (N \to \infty)
+    \end{equation}
+    が成り立つ。
+\end{theorem}
+
+この定理は、$f$のフーリエ級数展開が
+\begin{itemize}
+    \item $x$が連続点のときは$f(x)$に
+    \item $x$が不連続点のときはそこでの "跳躍" の中央に
+\end{itemize}
+各点で収束するということを主張しています。
+
+\begin{proof}
+    \cref{3:lemma1}より、
+    \begin{equation}
+        S_N[f](x) = \frac{1}{2\pi}
+            \int_{-\pi}^{\pi} f(y+x)\frac{\sin\left(N+\frac{1}{2}\right)y}{\sin\frac{1}{2}y} dy
+    \end{equation}
+    である。さらに
+    \begin{equation}
+        \int_{-\pi}^{0} \frac{\sin\left(N+\frac{1}{2}\right)y}{\sin\frac{1}{2}y} dy
+        = \int_{0}^{\pi} \frac{\sin\left(N+\frac{1}{2}\right)y}{\sin\frac{1}{2}y} dy
+        = \pi
+    \end{equation}
+    である。よって
+    \begin{alignat}{2}
+        &&&S_N[f](x) - \frac{f(x-0) + f(x+0)}{2} \\
+        &=&&\frac{1}{2\pi} \int_{-\pi}^0 f(y+x) \frac{\sin\left(N+\frac{1}{2}\right)y}{\sin\frac{1}{2}y} dy
+            -\frac{f(x-0)}{2} \nonumber \\
+        &&+\,&\frac{1}{2\pi} \int_0^\pi f(y+x) \frac{\sin\left(N+\frac{1}{2}\right)y}{\sin\frac{1}{2}y} dy
+            -\frac{f(x+0)}{2} \\
+        &=&&\frac{1}{2\pi} \int_{-\pi}^0 f(y+x) \frac{\sin\left(N+\frac{1}{2}\right)y}{\sin\frac{1}{2}y} dy
+            -\frac{1}{2\pi} \int_{-\pi}^0 f(x-0) \frac{\sin\left(N+\frac{1}{2}\right)y}{\sin\frac{1}{2}y} dy \nonumber \\
+        &&+\,&\frac{1}{2\pi} \int_0^\pi f(y+x) \frac{\sin\left(N+\frac{1}{2}\right)y}{\sin\frac{1}{2}y} dy
+            -\frac{1}{2\pi} \int_0^\pi f(x+0) \frac{\sin\left(N+\frac{1}{2}\right)y}{\sin\frac{1}{2}y} dy \\
+        &=&&\frac{1}{2\pi}
+            \int_{-\pi}^0 \frac{f(y+x) - f(x-0)}{\sin\frac{1}{2}y} \sin\left(N+\frac{1}{2}\right)y dy \nonumber \\
+        &&+\,&\frac{1}{2\pi}
+            \int_0^\pi \frac{f(y+x) - f(x+0)}{\sin\frac{1}{2}y} \sin\left(N+\frac{1}{2}\right)y dy \label{eq:thm3:1}
+    \end{alignat}
+    である。ここで
+    \begin{equation}
+        g(y) = \begin{cases}
+            \displaystyle \frac{f(y+x) - f(x-0)}{\sin\frac{1}{2}y} & (-\pi \le y \le 0) \\[+1em]
+            \displaystyle \frac{f(y+x) - f(x+0)}{\sin\frac{1}{2}y} & (0 < y \le \pi)
+        \end{cases}
+    \end{equation}
+    とおけば、\cref{3:lemma3}により$g$は区間$[-\pi, \pi]$で区分的に連続である。
+    したがって、\cref{3:lemma2}により
+    \begin{equation}
+        \text{(式(\ref{eq:thm3:1})) }
+            = \frac{1}{2\pi} \int_{-\pi}^\pi g(y) \sin\left(N+\frac{1}{2}\right)y dy
+            \to 0 \quad (N\to\infty)
+    \end{equation}
+    である。
+    すなわち
+    \begin{equation}
+        S_N[f](x) \to \frac{f(x+0) - f(x-0)}{2} \quad (N \to \infty)
+    \end{equation}
+    がいえた。
+\end{proof}
+
+\begin{theorem}
+    $f$が区分的な周期関数で$\int_{-\pi}^{\pi} f(x)^2 dx < \infty\,(f \in L^2(-\pi, \pi))$ならば
+    \begin{equation}
+        \int_{-\pi}^{\pi} (f(x) - S_N[f])^2 dx \to 0 \quad (N \to \infty)
+    \end{equation}
+    が成り立つ。
+\end{theorem}
+
+\begin{proof}
+    難しいので省略\footnote{
+        参考文献\cite[定理8.2.1]{吉田21}を参照
+    }
+\end{proof}
+
+
+
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{複素フーリエ級数展開}
+周期$2\pi l,\, l > 0$の複素数値関数$f: \R \to \C$に対し、
+\begin{equation}
+    \sum_{n = -\infty}^\infty c_n e^{i \frac{n}{l} x}
+\end{equation}
+を$f$の\textbf{複素フーリエ級数展開}と呼びます。
+フーリエ係数$c_n$は、指数関数の直交性から
+\begin{equation}
+    c_n = \frac{1}{2\pi l} \int_{-l\pi}^{l\pi} f(x) e^{-i\frac{n}{l}x} dx
+\end{equation}
+と表せることがわかります。
+
+
+
+
+
+
+
+
+
+
+
+\begin{problem}
+    関数列
+    \begin{equation}
+        f_n(x) = \frac{e^{nx} - e^{-nx}}{e^{nx} + e^{-nx}}
+    \end{equation}
+    の極限$(n \to \infty)$を求めよ。
+
+    解答：
+    \begin{equation}
+        f_n(x) \to \left\{\begin{alignedat}{2}
+            \,&1 \quad &(x > 0) \\
+            &0 \quad &(x = 0) \\
+            &-1 \quad &(x < 0)
+        \end{alignedat}
+        \right.
+    \end{equation}
+\end{problem}
+
+\begin{problem}
+    $I = [0, 1],\, f_n(x) = x^n\, (n \in \N)$とおく。
+    関数列$\{f_n\}_n$は各点収束するが一様収束しないことを示せ。
+\end{problem}
+
+\begin{problem}
+    $I = [0, 2]$、
+    \begin{equation}
+        f_n(x) \coloneqq \begin{cases}
+            n^2 x &(x \in [0, 1/n]) \\
+            -n^2 (x - 2/n) &(x \in [1/n, 2/n]) \\
+            0 &(\text{otherwise})
+        \end{cases}
+    \end{equation}
+    とおく。
+    関数列$\{f_n\}_n$は各点収束するが一様収束しないことを示せ。
+    また、項別積分が一致しないことを確かめよ。
+\end{problem}
+
+\begin{problem}
+    $I = [0, \infty),\, f_n(x) \coloneqq \frac{x}{nx + 1}$
+    とおく。
+    関数列$\{f_n\}_n$は$I$上一様収束することを示せ。
+\end{problem}
+
+\begin{problem}
+    $I = [0, 1]$上の関数$f_n(x) \coloneqq \frac{x}{nx + 1}$は
+    $n \to \infty$で$I$上一様収束することを示せ。
+    また、項別積分が一致することを確かめよ。
+\end{problem}
+
+\begin{problem}
+    $I = [-R, R]\, (R > 0)$上の関数項級数
+    \begin{equation}
+        \sum_{k \in \N} \frac{1}{x^2 + k^2}
+    \end{equation}
+    が一様収束することを示せ。
+\end{problem}
+
+\begin{problem}
+    $I = [0, 2]$上の関数項級数
+    \begin{equation}
+        \sum_{k \in \N} \frac{1}{x^2 + k^2}
+    \end{equation}
+    が一様収束することを示せ。
+\end{problem}
+
+\begin{problem}
+    \,
+    \begin{itemize}
+        \item \cite[第III章 例題6.1.1]{杉浦+89}
+        \item \cite[第III章 問6.1.2 (2)]{杉浦+89}
+        \item \cite[第III章 例題6.2.1]{杉浦+89}
+        \item \cite[第III章 問6.2.1 (1),(2)]{杉浦+89}
+    \end{itemize}
+    を読者の演習問題とする。
+\end{problem}
+
+\begin{problem}
+    次の初期値・境界値問題の解を求めよ。
+    \begin{equation}
+        \begin{split}
+            &u_t(x, t) - u_{xx}(x, t) = 0 \quad \text{for $(x, t) \in (0, 1) \times (0, \infty)$} \\
+            &u(0, t) = u(1, t) = 0 \\
+            &u(x, 0) = 2 \sin(3\pi x) + 5 \sin(8\pi x) \quad \text{for $x \in [0, 1]$}
+        \end{split}
+    \end{equation}
+
+    解答：
+    \begin{equation}
+        u(x, t) = 2 e^{-(3\pi)^2 t} \sin(3\pi x) + 5 e^{-(8\pi)^2 t} \sin(8\pi x)
+    \end{equation}
+\end{problem}
+
+\begin{problem}
+    次の初期値・境界値問題の解を求めよ。
+    \begin{equation}
+        \begin{split}
+            &u_t(x, t) - u_{xx}(x, t) = 0 \quad \text{for $(x, t) \in (0, L) \times (0, \infty)$} \\
+            &u(0, t) = u(L, t) = 0 \\
+            &u(x, 0) = a(x) \quad \text{for $x \in [0, L]$}
+        \end{split}
+    \end{equation}
+    ただし$\int_0^L a(x)^2 dx < \infty$とする。
+
+    解答：
+    \begin{equation}
+        u(x, t) = \sum_{n=1}^\infty c_n \exp(-\lambda_n^2 t)\, \sin \frac{n\pi x}{L},\quad
+        \lambda = \frac{n\pi}{L},\quad
+        c_n = \frac{2}{L} \int_0^L a(x) \sin\frac{n\pi x}{L} dx
+    \end{equation}
+\end{problem}
+
+\begin{problem}
+    次の初期値・境界値問題の解を求めよ。
+    \begin{equation}
+        \begin{split}
+            &u_t(x, t) - \textcolor{red}{u(x, t)} - u_{xx}(x, t) = 0 \quad \text{for $(x, t) \in (0, 10) \times (0, \infty)$} \\
+            &u(0, t) = u(10, t) = 0 \\
+            &u(x, 0) = 3 \sin(2\pi x) - 7 \sin(4\pi x) \quad \text{for $x \in [0, 10]$}
+        \end{split}
+    \end{equation}
+
+    解答：
+    \begin{equation}
+        u(x, t) = e^t \left( 3 e^{-(2\pi)^2 t} \sin(2\pi x) - 7 e^{-(4\pi)^2 t} \sin(4\pi x) \right)
+    \end{equation}
+\end{problem}
+
+\begin{problem}
+    関数$x \mapsto \pi - |x| \quad(x \in [-\pi, \pi])$を$\R$全体に周期拡張した関数を$f$とおく。
+    $f$のフーリエ級数展開を求めよ。
+
+    解答：
+    \begin{equation}
+        f(x) \sim
+            \frac{\pi}{2} + \frac{4}{\pi} \sum_{n=1}^\infty \frac{\cos((2n-1)x)}{(2n-1)^2}
+    \end{equation}
+\end{problem}
+
+\begin{problem}
+    関数
+    \begin{equation}
+        x \mapsto \begin{cases}
+            1 &(0 < x \le \pi) \\
+            0 &(x = 0) \\
+            -1 &(-\pi < x < 0)
+        \end{cases}
+    \end{equation}
+    を$\R$全体に周期拡張した関数を$f$とおく。
+    $f$のフーリエ級数展開を求めよ。
+
+    解答：
+    \begin{equation}
+        f(x) \sim
+            \frac{\pi}{4} \sum_{n=1}^\infty \frac{\sin((2n-1)x)}{2n-1}
+    \end{equation}
+\end{problem}
+
+\begin{problem}
+    $0 \le x \le \pi$に対し$f(x) = -x (x - \pi)$とおく。
+    $f$の周期$2\pi$の奇関数拡張、偶関数拡張のフーリエ級数展開を求めよ。
+
+    解答：\\
+    奇関数拡張：$b_n = \frac{4}{n^3 \pi} (1 - (-1)^n)$\\[0.5em]
+    偶関数拡張：$\frac{1}{2} a_0 = \frac{1}{6} \pi^2,\, a_n = - \frac{2}{n^2} (1 + (-1)^n)$
+\end{problem}
+
+\begin{problem}
+    \,
+    \begin{itemize}
+        \item \cite[第III章 例題3.3]{杉浦+89}
+        \item \cite[第III章 問11.1 (1)-(4)]{杉浦+89}
+    \end{itemize}
+    を読者の演習問題とする。
+\end{problem}
+
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{パラメータを含む積分}
+
+ここからはパラメータを含む積分の一様収束性など基礎的な事項を整理します。
+
+以下では\mbox{2変数}関数$f(x, s)$が登場しますが、$x$の方がパラメータで、$s$は主変数です。
+$x$の変域$\Omega$はコンパクトの場合のみを考えます。
+一方で$s$の変域$I$は、まずコンパクトの場合を考えてから非有界区間の場合に拡張しますが、
+このときに積分の一様収束性が仮定に加わることになります。
+
+\begin{theorem}[$I$がコンパクトの場合]
+    $\R$上の有界閉区間$\Omega \coloneq [\alpha, \beta],\, I \coloneq [a, b]$をとる。
+    関数$f(x, s)$が$\Omega \times I$上連続ならば次が成り立つ。
+    \begin{enumerate}
+        \vspace{1em}
+        \item $x$の関数$\displaystyle \int_a^b f(x, s)\, ds$は$\Omega$上連続である。
+        \item $\displaystyle \int_\alpha^\beta \left( \int_a^b f(x, s)\, ds \right) dx \
+            = \int_a^b \left( \int_\alpha^\beta f(x, s)\, dx \right) ds$
+        \vspace{1em}
+    \end{enumerate}
+    さらに$\dfrac{\partial f}{\partial x}(x, s)$が存在して$\Omega \times I$上連続ならば次も成り立つ。
+    \begin{enumerate}
+        \setcounter{enumi}{2}
+        \vspace{1em}
+        \item $\displaystyle \dd{x} \int_a^b f(x, s)\, ds = \int_a^b \deldel[f]{x}(x, s)\, ds$
+            と書けて$\Omega$上連続
+    \end{enumerate}
+    \label{4:thm:1}
+\end{theorem}
+
+\begin{proof}
+    (1)
+    $f$はコンパクト集合$\Omega \times I$上連続なので、
+    $\Omega \times I$上一様連続でもある。
+    したがって$\eps > 0$を任意にとると、$\exists \delta > 0$\, s.t.
+    \begin{equation}
+        | (x, s) - (y, t) | < \delta
+        \quad \Rightarrow \quad
+        |f(x, s) - f(y, t)| < \eps / (b - a)
+    \end{equation}
+    とくに
+    \begin{equation}
+        |x - y| < \delta
+        \quad \Rightarrow \quad
+        |f(x, s) - f(y, s)| < \eps / (b - a) \quad (\forall s \in I)
+    \end{equation}
+    すなわち
+    \begin{equation}
+        |x - y| < \delta
+        \quad \Rightarrow \quad
+        \| f(x,\, \cdot) - f(y,\, \cdot) \| \le \eps / (b - a)
+    \end{equation}
+    である。そこで$|x - y| < \delta$のとき
+    \begin{equation}
+        \begin{split}
+            \left| \int_a^b f(x, s)\, ds - \int_a^b f(y, s)\, ds\right|
+                &\le \int_a^b | f(x, s) - f(y, s) |\, ds \\
+                &\le \| f(x,\, \cdot) - f(y,\, \cdot) \|\, (b - a) \\
+                &\le \eps
+        \end{split}
+    \end{equation}
+    である。
+    したがって、$\int_a^b f(x, s)\, ds$は$\Omega$上（一様）連続である。
+
+    (2) 長いので省略\footnote{\cite[第IV章 \S{7}]{杉浦80}}
+
+    (3)
+    $\deldel[f]{x}(x, s)$が連続ならば
+    (1) より$\int_a^b \deldel[f]{x}(x, s) ds$も連続である。
+    よって
+    \begin{equation}
+        \begin{split}
+            \int_\alpha^x \left\{ \int_a^b \deldel[f]{x}(\xi, s)\, ds \right\} d\xi
+                &= \int_a^b \left\{ \int_\alpha^x \deldel[f]{x}(\xi, s)\, d\xi \right\} ds \\
+                &= \int_a^b (f(x, s) - f(\alpha, s)) ds \\
+                &= \int_a^b f(x, s) ds - \underbrace{\int_a^b f(\alpha, s) ds}_{定数}
+        \end{split}
+    \end{equation}
+    この両辺を$x$で微分して定理の式を得る。
+\end{proof}
+
+    \begin{theorem}[$I$が非有界区間の場合]
+        $\R$上の有界閉区間$\Omega \coloneq [\alpha, \beta]$と
+        非有界区間$I \coloneq [a, \infty),\, a \in \R$をとる。
+        関数$f(x, s)$が$\Omega \times I$上連続で、
+        \textcolor{red}{広義積分$\displaystyle \int_a^\infty f(x, s)\, ds$
+        が$\Omega$上広義一様収束する}
+        ならば次が成り立つ。
+        \begin{enumerate}
+            \vspace{1em}
+            \item $x$の関数$\displaystyle \int_a^\infty f(x, s)\, ds$は$\Omega$上連続である。
+            \item $\displaystyle \int_\alpha^\beta \left( \int_a^\infty f(x, s)\, ds \right) dx \
+                = \int_a^\infty \left( \int_\alpha^\beta f(x, s)\, dx \right) ds$
+            \vspace{1em}
+        \end{enumerate}
+        さらに$\dfrac{\partial f}{\partial x}(x, s)$が存在して$\Omega \times I$上連続で、
+        \textcolor{red}{$\displaystyle \int_a^\infty \deldel[f]{x}(x, s)\, ds$
+        が$\Omega$上広義一様収束する}
+        ならば次も成り立つ。
+        \begin{enumerate}
+            \setcounter{enumi}{2}
+            \vspace{1em}
+            \item $\displaystyle \dd{x} \int_a^\infty f(x, s)\, ds = \int_a^\infty \deldel[f]{x}(x, s)\, ds$
+                と書けて$\Omega$上連続
+        \end{enumerate}
+    \end{theorem}
+
+実際は(3)だけを言いたいのであれば$\displaystyle \int_a^\infty f(x, s)\, ds$は各点収束でも問題ないのですが、
+ここではこのまま進めます。
+
+\begin{proof}
+    (1), (2) \cref{4:thm:1}と、連続関数の広義一様収束極限も連続関数であるという定理を用いれば示せます。
+
+    (3) \cref{4:thm:1}と同様の論法で示せます。
+\end{proof}
+
+さて、広義積分の一様収束性を判定する定理として、
+第2回で登場した関数項級数に関する Weierstrass のMテストの類似が成り立ちます。
+補題をひとつ提示してから定理を示します。
+
+    \begin{lemma}[連続関数全体の空間の完備性]
+        $\Omega \subset \R^n$とする。$\Omega$上の連続関数全体の集合に
+        $\sup$ノルムから誘導される距離を入れた空間$C(\Omega)$は完備である。
+        \label{4:lemma:1}
+    \end{lemma}
+
+\begin{proof}
+    $C(\Omega)$の完備性を示すには、$C(\Omega)$の任意の Cauchy 列が
+    $C(\Omega)$に極限を持つことをいえばよい。
+    そこで、$\Omega$上の連続関数列$\{ F_n \}_{n \in \N}$であって
+    \begin{equation}
+        \lim_{n, m \to \infty} \| F_n - F_m \| = 0
+        \label{4:eq:1}
+    \end{equation}
+    であるものを任意にとる。
+    すると、$x \in \Omega$ごとに$\{ F_n \}_{n \in \N}$は Cauchy 列なので、
+    $\R^n$の完備性より$\lim_{n \to \infty} F_n(x) \eqqcolon F(x) \cdots$ (1) が
+    $\forall x \in \Omega$に対し存在する。
+    よって、あとは$F \in C(\Omega)$を示せば定理がいえる。
+    そこで$x' \in \Omega$を固定し、$x'$での$F$の連続性を示そう。
+
+    (\ref{4:eq:1})より、$\forall \eps > 0$に対しある$N \in \N$が存在して
+    \begin{equation}
+        \forall n, m \ge N,\, \forall x \in \Omega,\, |F_n(x) - F_m(x)| < \eps / 3
+    \end{equation}
+    なので、$m \to \infty$として
+    \begin{equation}
+        \forall n \ge N,\, \forall x \in \Omega,\, |F_n(x) - F(x)| \le \eps / 3
+    \end{equation}
+    である。$F_n$の連続性より、$x'$の近傍$U$が存在して
+    \begin{equation}
+        x \in U \in \Omega \Rightarrow |F_n(x) - F_n(x')| < \eps / 3
+    \end{equation}
+    なので、$\forall x \in U$に対し
+    \begin{equation}
+        |F(x) - F(x')|
+            \le |F(x) - F_n(x)| + |F_n(x) - F_n(x')| + |F_n(x') - F(x')| < \eps
+    \end{equation}
+    である。したがって$F$は$x'$で連続である。
+\end{proof}
+
+\begin{theorem}[広義積分に関する Weierstrass のMテスト]
+    $\R$上の有界閉区間$\Omega \coloneq [\alpha, \beta]$と
+    非有界区間$I \coloneq [a, \infty),\, a \in \R$をとる。
+    与えられた連続関数$f \colon \Omega \times I \to \R$に対し、
+    ある関数$\varphi: I \to \R$が存在して次を満たすと仮定する：
+    \begin{enumerate}
+        \item 十分大きな$\forall s \in I$に対し$\| f(\,\cdot\, , s) \| \le \varphi(s)$
+        \item $\int_a^\infty \varphi(s)\, ds$が広義可積分
+    \end{enumerate}
+    このとき、広義積分$\int_a^\infty f(x, s)\, ds$は
+    $\Omega$上一様収束する。
+\end{theorem}
+
+\begin{proof}
+    $\int_a^\infty f(x, s)\, ds$に関する一様 Cauchy 条件の成立を、
+    $\int_a^\infty \varphi(s)\, ds$に関する Cauchy 条件を用いて示します。
+    極限関数の存在は、$\Omega$上の連続関数全体の空間が$\sup$ノルムに関して完備であることを用いて示します。
+\end{proof}
+
+
+
+
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{フーリエ変換}
+
+フーリエ級数展開は直交関数系$\{ e^{i\frac{n}{l} x} \}_{n \in \Z}$による展開でしたが、
+周期を持つとは限らない関数でも展開できるようにするため、関数系を非可算に拡張することを考えます。
+天下り的に定義を述べると、$\R$上の複素数値広義可積分関数$f: \R \to \C$に対し、
+\begin{equation}
+    \calF [f] (\xi) := \frac{1}{\sqrt{2\pi}} \int_\R f(x)\, e^{-i\xi x} dx
+    \label{eq:4:1:1}
+\end{equation}
+を$f$の\textbf{フーリエ変換}と呼び、
+\begin{equation}
+    \calF^{-1} [f] (x) := \frac{1}{\sqrt{2\pi}} \int_\R f(\xi)\, e^{i\xi x} d\xi
+    \label{eq:4:1:2}
+\end{equation}
+を$f$の\textbf{逆フーリエ変換}と呼びます\footnote{
+    係数の$1/\sqrt{2\pi}$は複素指数関数の周期$2\pi$に由来しており、
+    この係数が出てこないような関数系を用いる流儀も存在します。
+    なお、フーリエ変換も逆フーリエ変換も$\int_\R$が付いているのでどっちがどっちだかややこしいですが、
+    フーリエ変換は "展開係数" であり、
+    逆フーリエ変換は "重ね合わせ" にあたります。
+}。
+ここで、ある良い性質を持った$f$に対しては
+\begin{equation}
+    f(x) = \frac{1}{\sqrt{2\pi}} \int_\R \calF [f](\xi)\, e^{i\xi x} d\xi
+\end{equation}
+が成り立つことがわかっています。
+すなわち、非可算な関数系$\{ e^{i\xi x} \}_{\xi \in \R}$を用いて、
+$\{\calF [f](\xi)\}_{\xi \in \R}$を展開係数とした$f$の展開が得られるということです。
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{急減少関数空間}
+
+\begin{definition}
+    関数$f: \R \to \C$が\textbf{急減少関数}であるとは、$f$が次をみたすことをいう\footnotemark ：
+    \begin{enumerate}
+        \item $f \in C^{\infty}(\R)$
+        \item 任意の$m, n \in \N$に対し
+        \begin{equation}
+            |f|_{m,n} := \sup_{x \in \R} |x|^m |f^{(n)} (x)| < \infty
+        \end{equation}
+    \end{enumerate}
+    急減少関数全体の集合を$\calS = \calS(\R)$と書く。
+\end{definition}
+
+\footnotetext{
+    「微分して\quad $x$たちを\quad 掛けたとて\quad その絶対値\quad 限りありけり」 — 詠み人知らず
+}
+
+    \begin{theorem}
+        $f \in \calS(\R)$に対し$\calF [f],\, \calF^{-1} [f] \in \calS(\R)$
+    \end{theorem}
+
+\begin{proof}
+    ややこしいので省略\footnote{\cite[第VII章 定理6.7]{杉浦85}}
+\end{proof}
+
+    \begin{theorem}[反転公式]
+        $f \in \calS(\R)$とする。このとき、任意の$x \in \R$に対し\textbf{反転公式}
+        \begin{equation}
+            f(x) = \calF^{-1} \calF [f](x)
+        \end{equation}
+        が成り立つ。
+    \end{theorem}
+
+\begin{proof}
+    ややこしいので省略\footnote{\cite[第VII章 定理6.7]{杉浦85}}
+\end{proof}
+
+
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{フーリエ変換の性質}
+
+まず次の写像を準備しておきます：
+\begin{itemize}
+    \item 平行移動$\tau_h: x \mapsto x - h$
+    \item 拡大・縮小$d_t: x \mapsto tx \quad (t > 0)$
+    \item 反転$f^{\vee}(x) = f(-x)$
+\end{itemize}
+
+\begin{proposition}
+    $f \in \calS(\R)$とする。このとき次が成り立つ：
+    \begin{enumerate}
+        \item $f \circ \tau_h,\, f \circ d_t,\, f^{\vee} \in \calS(\R)$
+        \item $\calF [f \circ \tau_h](\xi) = e^{ih\xi} \calF [f](\xi)$
+        \item $\calF [f \circ d_t](\xi) = \frac{1}{t} \calF [f] \left(\dfrac{\xi}{t}\right)$
+        \item $\calF [f^{\vee}](\xi) = (\calF [f])^{\vee} (\xi) = \calF^{-1} [f](\xi)$
+    \end{enumerate}
+\end{proposition}
+
+\begin{proof}
+    (1) 簡単, (2) 自明, (4) 明らか
+
+    (3)
+    \vspace{-2em}\begin{equation}
+        \begin{split}
+            \calF[f \circ d_t](\xi)
+                &= \frac{1}{\sqrt{2\pi}} \int_\R f \circ d_t (x) e^{-i\xi x} dx \\
+                &= \frac{1}{\sqrt{2\pi}} \int_\R f(tx) e^{-i\xi x} dx \\
+                &= \frac{1}{t} \frac{1}{\sqrt{2\pi}} \int_\R f(x) e^{-i\xi x / t} dx \\
+                &= \frac{1}{t} \calF[f] (\xi / t)
+        \end{split}
+    \end{equation}
+\end{proof}
+
+\begin{theorem}
+    $f, g \in \calS(\R)$とする。このとき次が成り立つ：
+    \begin{itemize}
+        \item 線形性:
+            \begin{equation}
+                \calF (f + g) = \calF f + \calF g, \quad \calF (\alpha f) = \alpha \calF f
+                \tag{F1}
+            \end{equation}
+        \item 微分演算:
+            \begin{equation}
+                \calF \left[\dd{x} f\right] = i\xi\calF f,
+                \quad \calF^{-1}\left[\dd{\xi} g\right] = -ix\calF^{-1} g
+                \tag{F2}
+            \end{equation}
+        \item 掛け算:
+            \begin{equation}
+                \calF [xf] = i \dd{\xi} (\calF f)
+                \tag{F3}
+            \end{equation}
+        \item 畳み込み\footnotemark: $\displaystyle (f * g)(x) := \int_\R f(x - t) g(t) dt$とおくと
+            \begin{equation}
+                \calF (f * g) = \sqrt{2 \pi} (\calF f) (\calF g)
+                \tag{F4}
+            \end{equation}
+    \end{itemize}
+\end{theorem}
+
+\footnotetext{畳み込みは確率変数の和$X + Y$の確率分布を表すときに使ったりします。}
+
+\begin{proof}
+    (F1)は明らか。
+
+    (F2)について、
+    \begin{equation}
+        \begin{split}
+            \sqrt{2 \pi} \calF [f'](\xi)
+                &= \int_\R f'(x) e^{-i\xi x} dx \\
+                &= \left[ f(x) e^{-i\xi x} \right]_{x = -\infty}^\infty
+                    + i\xi \int_\R f(x) e^{-i\xi x} dx \\
+                &= i\xi \sqrt{2 \pi} \calF [f](\xi)
+        \end{split}
+    \end{equation}
+    である。ただし、$f$が急減少関数であることからとくに$\sup_{x \in \R} |x| |f(x)| < \infty$、したがって
+    \begin{equation}
+        \lim_{x \to \pm\infty} |f(x) e^{i\xi x}| = \lim_{x \to \pm\infty} |f(x)| = 0
+    \end{equation}
+    であることを用いた。$\calF^{-1}$についても同様に示せる。
+
+    (F3)について、
+    \begin{equation}
+        \begin{split}
+            \sqrt{2\pi} \calF [xf](\xi)
+                &= \int_\R xf(x) e^{-i\xi x} dx \\
+                &= \int_\R f(x) \left(-\frac{1}{i}\right) \frac{\partial}{\partial \xi} (e^{-i\xi x}) dx \\
+                &= \left(-\frac{1}{i}\right) \dd{\xi} \int_\R f(x) e^{-i\xi x} dx \\
+                &= i \sqrt{2\pi} \dd{\xi} (\calF f) (\xi)
+        \end{split}
+    \end{equation}
+    である。
+
+    (F4)について、
+    \begin{equation}
+        \begin{split}
+            \calF [f * g](\xi)
+                &= \frac{1}{\sqrt{2\pi}} \int_\R \left( \int_\R f(x - t)\, g(t) dt \right) e^{-i\xi x} dx \\
+                &= \frac{1}{\sqrt{2\pi}} \int_\R \int_\R f(x - t)\, e^{-i\xi (x - t)} g(t)\, e^{-i\xi t} dt dx \\
+                &= \frac{1}{\sqrt{2\pi}} \int_\R
+                    \left( \int_\R f(x - t)\, e^{-i\xi (x - t)} dx \right)
+                    g(t)\, e^{-i\xi t} dt \\
+                &= \frac{1}{\sqrt{2\pi}} \int_\R
+                    \left( \int_\R f(x)\, e^{-i\xi x} dx \right)
+                    g(t)\, e^{-i\xi t} dt \\
+                &= \frac{1}{\sqrt{2\pi}} \int_\R
+                    \sqrt{2\pi} (\calF f)(\xi)\,
+                    g(t)\, e^{-i\xi t} dt \\
+                &= \sqrt{2\pi} (\calF f)(\xi)
+                    \frac{1}{\sqrt{2\pi}} \int_\R g(t)\, e^{-i\xi t} dt \\
+                &= \sqrt{2\pi} (\calF f)(\xi) (\calF g)(\xi)
+        \end{split}
+    \end{equation}
+    である。
+\end{proof}
+
+
+
+
+
+\begin{problem}
+    $e^{-x^2} \in \calS$を確認せよ。
+\end{problem}
+
+\begin{problem}
+    $\frac{1}{1+x^2} \not\in \calS$を確認せよ。
+\end{problem}
+
+\begin{problem}[ポアソン核]
+    $f(x) = e^{-k|x|}\, (k > 0)$のフーリエ変換を求めよ。
+
+    解答：
+    \begin{equation}
+        \calF[f](\xi) = \sqrt{\frac{2}{\pi}} \frac{k}{\xi^2 + k^2}
+    \end{equation}
+\end{problem}
+
+\begin{problem}[ガウス核]
+    $f(x) = e^{-\alpha x^2}\, (\alpha > 0)$のフーリエ変換を求めよ。
+
+    解答：
+    \begin{equation}
+        \calF[f](\xi) = \sqrt{\frac{1}{2\alpha}} \exp\left(-\frac{\xi^2}{4\alpha}\right)
+    \end{equation}
+\end{problem}
+
+\begin{problem}[全空間上の熱方程式]
+    熱方程式の初期値問題
+    \begin{equation}
+        \begin{split}
+            &u_t = u_{xx} \quad (-\infty < x < \infty,\, t > 0) \\
+            &|u| \to 0 \quad (|x| \to \infty) \\
+            &u(x, 0) = a(x)
+        \end{split}
+    \end{equation}
+    の解を求めよ。
+
+    解答；
+    \begin{equation}
+        u(x, t) = \int_{-\infty}^\infty \frac{1}{\sqrt{4\pi t}} e^{-\frac{(x-z)^2}{4t}} a(z) dz
+    \end{equation}
+\end{problem}
+
+\begin{problem}
+    次の関数のフーリエ変換を求めよ。$\alpha > 0$に対して
+    \begin{equation}
+        f(x) = \begin{cases}
+            1 \quad (|x| \le \alpha) \\
+            0 \quad (|x| > \alpha)
+        \end{cases}
+    \end{equation}
+
+    解答：
+    \begin{equation}
+        \calF[f](\xi) = \sqrt{\frac{2}{\pi}} \frac{\sin(\alpha \xi)}{\xi}
+    \end{equation}
+\end{problem}
+
+\begin{problem}
+    次の関数のフーリエ変換を求めよ。$L > 0$に対して
+    \begin{equation}
+        f(x) = \begin{cases}
+            x \quad (0 \le x \le L) \\
+            0 \quad (\text{otherwise})
+        \end{cases}
+    \end{equation}
+
+    解答：
+    \begin{equation}
+        \calF[f](\xi) = \frac{1}{\sqrt{2\pi}} \frac{\exp(-iL\xi)\, (1 + iL\xi) - 1}{\xi^2}
+    \end{equation}
+\end{problem}
+
+\begin{problem}
+    次の関数のフーリエ変換を求めよ。
+    \begin{equation}
+        f(x) = \frac{1}{\sqrt{|x|}}
+    \end{equation}
+    ただし次のことは用いてよい。
+    \begin{equation}
+        \int_0^\infty \sin x^2 dx = \int_0^\infty \cos x^2 dx = \sqrt{\frac{\pi}{8}}
+    \end{equation}
+
+    解答：
+    \begin{equation}
+        \calF[f](\xi) = \sqrt{\frac{1}{|\xi|}}
+    \end{equation}
+\end{problem}
+
+\begin{problem}
+    次の積分を計算せよ。
+    \begin{equation}
+        F(x) = \int_0^\infty e^{-t^2} \cos(xt) dt
+    \end{equation}
+
+    解答： $\frac{\sqrt{\pi}}{2} \exp\frac{-x^2}{4}$
+\end{problem}
+
+\begin{problem}
+    連続関数$a(x)$は定数$A > 0$に対して$|a(x)| \le A\, (x \in \R)$をみたすものとし、
+    $(x, t) \in \R \times [0, \infty)$で定義された関数
+    \begin{equation}
+        u(x, t) = \int_{-\infty}^\infty
+            \frac{1}{2\sqrt{\pi t}} \exp\left\{ - \frac{(x - y)^2}{4t} \right\} a(y)\, dy
+    \end{equation}
+    を考える。
+    このとき、$u_x(x, t)$は$\R \times (0, \infty)$上連続で
+    \begin{equation}
+        u_x(x, t) = \int_{-\infty}^\infty
+            \frac{-1}{2\sqrt{\pi t}}
+            \frac{x - y}{2t}
+            \exp\left\{ - \frac{(x - y)^2}{4t} \right\} a(y)\, dy
+    \end{equation}
+    と表せることを示せ。
+\end{problem}
+
+\begin{problem}
+    \,
+    \begin{itemize}
+        \item \cite[第VII章{\S}6 問題1)]{杉浦85}
+        \item \cite[第III章 問7.1 (1)]{杉浦+89}
+        \item \cite[第III章 問7.2 (1)]{杉浦+89}
+    \end{itemize}
+    を読者の演習問題とする。
+\end{problem}
+
+
+
+
+% ============================================================
+%
+% ============================================================
+\chapter{Lagrange の未定乗数法}
+
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{条件付き極値問題}
+
+ここでは$U$を$\R^n$の空でない開集合とし、$f \colon U \to \R,\, \bm{g} \colon U \to \R^m$を$C^1$級とします。
+さらに
+\begin{equation}
+    S_g \coloneqq \{ \bm{x} \in U \mid \bm{g}(\bm{x}) = 0 \}
+\end{equation}
+とおきます。さて、$S_g$は拘束条件$\bm{g}(\bm{x}) = 0$をみたす零点集合ですが、
+$\bm{x}$がこの集合に沿って動くときの$f(\bm{x})$の極値を求めたいというのが
+Lagrange の未定乗数法のモチベーションです。
+
+\begin{definition}
+    $\bm{x_0} \in S_g$とする。$\exists r > 0$\quad s.t.
+    \begin{equation}
+        f(\bm{x}) \le f(\bm{x_0}) \quad \text{for $\forall \bm{x} \in B_r(\bm{x_0}) \cap S_g$}
+    \end{equation}
+    が成り立つとき、$f$は\textbf{$\bm{x_0}$において$S_g$上の極大値をとる}という。
+\end{definition}
+
+$\bm{x}$が$S_g$に沿って動くときの$f(\bm{x})$の極値を求めるには、
+素朴なアイディアとしては$\bm{x}$が$S_g$に沿って動くときの$f$の方向微分を考えればよさそうです。
+しかし、そのような条件をきちんと考慮するのは結構面倒です。
+そこで登場するのが、方向微分など持ち出さずとも単なる勾配$\nabla f$を考えればよいことを保証してくれる次の定理です。
+
+\begin{theorem}
+    $U, f, \bm{g}$と$\bm{a} \in S_g$に対し
+    \begin{enumerate}
+        \item $\bm{a}$において$f$は$S_g$上の極値をとる
+        \item $\rank D\bm{g}(\bm{a}) = m$
+            \quad ただし$D\bm{g}(\bm{a})
+                = \left( g_{i x_j}(\bm{a}) \right)_{\substack{1 \le i \le m \\ 1 \le j \le n}}$
+    \end{enumerate}
+    が成り立つならば、$\exists \bm{\lambda} = (\lambda_1, \dots, \lambda_m) \in \R^m$\quad s.t.
+    \begin{equation}
+        \nabla f(\bm{a}) = \bm{\lambda} D\bm{g}(\bm{a})
+            \quad\text{i.e.}\quad f_{x_j}(\bm{a}) = \sum_{i=1}^m \lambda_i g_{i x_j}(\bm{a})
+    \end{equation}
+\end{theorem}
+
+\begin{proof}
+    $\rank D\bm{g}(\bm{a}) = m$なので$n \ge m$であり、
+    $\rank$の性質より行列$D\bm{g}(\bm{a})$の$0$でない小行列式の最大次数が$m$である。
+    そこで、議論の一般性を失うことなく、必要ならば$x_j$の番号を取り替えて
+    \begin{equation}
+        \deldel[(g_1, \dots, g_m)]{(x_{n-m+1}, \dots, x_{n})} \neq 0
+    \end{equation}
+    とできる。
+    要するに行列$D\bm{g}(\bm{a})$の "右側" が正則となるように並び替えるわけである。
+    ここで、行列$D\bm{g}(\bm{a})$を "右側" と "左側" に分けたのにあわせて、
+    定理で与えられたベクトルも成分を書き分けておく。すなわち
+    \begin{equation}
+        \bm{x} \coloneqq \begin{pmatrix}
+            \bm{y} \\
+            \bm{z}
+        \end{pmatrix},
+        \quad
+        \bm{y} \coloneqq \begin{pmatrix}
+            x_1 \\
+            \vdots \\
+            x_{n-m}
+        \end{pmatrix},
+        \quad
+        \bm{z} \coloneqq \begin{pmatrix}
+            x_{n-m+1} \\
+            \vdots \\
+            x_{n}
+        \end{pmatrix},
+        \quad
+        \bm{a} \coloneqq \begin{pmatrix}
+            \bm{b} \\
+            \bm{c}
+        \end{pmatrix}
+    \end{equation}
+    とおく。
+    陰関数定理より、方程式$\bm{g}(\bm{y}, \bm{z}) = 0$は点$\bm{a}$の近傍で
+    $\bm{z} = \phai(\bm{y})$と解ける。
+    ここで$F \colon V \to \R,$
+    \begin{equation}
+        F(\bm{y}) \coloneqq f(\bm{y}, \phai(\bm{y}))
+    \end{equation}
+    とおくと、これは$f(\bm{x})$を点$\bm{x}$が$S_g$に沿って動くようにしたものとみなせる。
+    よって$F$は$\bm{y} = \bm{b}$で極値をとる。
+    すなわち$\nabla F(\bm{b}) = 0$である。
+    一方、
+    \begin{equation}
+        \begin{alignedat}{2}
+            \nabla F(\bm{y})
+                &= \nabla_y f(\bm{y}, \phai(\bm{y}))
+                    + \nabla_z f(\bm{y}, \phai(\bm{y}))\, D \phai(\bm{y})
+                    &&\quad (\because\, \text{連鎖律}) \\
+                &= \nabla_y f(\bm{y}, \phai(\bm{y}))
+                    - \textcolor{blue}{
+                        \nabla_z f(\bm{y}, \phai(\bm{y}))\,
+                        D_z \bm{g}(\bm{y}, \phai(\bm{y}))^{-1}
+                    }
+                    D_y \bm{g}(\bm{y}, \phai(\bm{y}))
+                    &&\quad (\because\, \text{陰関数定理})
+        \end{alignedat}
+    \end{equation}
+    であるが、青文字の部分に$\bm{y} = \bm{b}$を代入したものを
+    \begin{equation}
+        \bm{\lambda} \coloneqq
+            \nabla_z f(\bm{b}, \phai(\bm{b}))\,
+            D_z \bm{g}(\bm{b}, \phai(\bm{b}))^{-1}
+    \end{equation}
+    とおけば、$\nabla F(\bm{b}) = 0$より
+    \begin{equation}
+        \begin{split}
+            \nabla_y f(\bm{b}, \phai(\bm{b})) &= \bm{\lambda} D_y \bm{g}(\bm{b}, \phai(\bm{b})) \\
+            \nabla_z f(\bm{b}, \phai(\bm{b})) &= \bm{\lambda} D_z \bm{g}(\bm{b}, \phai(\bm{b}))
+        \end{split}
+        \hspace{3em} \text{i.e.} \hspace{3em}
+        \begin{split}
+            \nabla_y f(\bm{a}) &= \bm{\lambda} D_y \bm{g}(\bm{a}) \\
+            \nabla_z f(\bm{a}) &= \bm{\lambda} D_z \bm{g}(\bm{a})
+        \end{split}
+    \end{equation}
+    すなわち
+    \begin{equation}
+        \nabla f(\bm{a}) = \bm{\lambda} D \bm{g}(\bm{a})
+    \end{equation}
+    を得る。
+\end{proof}
+
+\begin{corollary}[Lagrange の未定乗数法]
+    $U, f, \bm{g}$と$\bm{a} \in S_g$に対し、
+    \begin{enumerate}
+        \item $\bm{a}$において$f$は$S_g$上の極値をとる
+    \end{enumerate}
+    ならば、次のいずれか一方のみが成り立つ。
+    \begin{enumerate}
+        \item $F \colon \R^{n+m} \to \R,\;
+            F(\bm{x}, \bm{\lambda}) = f(\bm{x}) - \bm{\lambda} \cdot \bm{g}(\bm{x})$
+            に対し$\exists \bm{\lambda_0} \in \R^m$\, s.t.
+            \begin{equation}
+                \nabla F(\bm{a}, \bm{\lambda_0}) = 0
+            \end{equation}
+        \item $\rank D\bm{g}(\bm{a}) < m$
+    \end{enumerate}
+\end{corollary}
+
+\begin{proof}
+    簡単なので省略
+\end{proof}
+
+
+
+
+
+
+
+
+
+
+
+
+\begin{problem}
+    方程式
+    \begin{equation}
+        f(x, y, z) \coloneqq x^2 + (x - y^2 + 1) z - z^3 = 0
+    \end{equation}
+    を満たす点$(x, y, z)$が点$(0, 0, 1)$の近傍で$z = \phai(x, y)$と書けることを示せ。
+    また、この点における$\deldel[z]{x},\, \deldel[z]{y}$の値を求めよ。
+
+    解答：
+    \begin{equation}
+        \deldel[z]{x} = \frac{1}{2},\quad \deldel[z]{y} = 0
+    \end{equation}
+\end{problem}
+
+\begin{problem}
+    変数$x, y, z, u, v$が
+    \begin{equation}
+        \begin{cases}
+            &xy + uv = 0 \\
+            &x^2 + y^2 + z^2 = u^2 + v^2
+        \end{cases}
+    \end{equation}
+    を満たすとする。
+    点$(2, 0, 1, 0, \sqrt{5})$の近傍で$(u, v) = \phai(x, y, z)$と書けることを示せ。
+    また、点$(x, y, z) = (2, 0, 1)$における$\phai$のヤコビ行列を求めよ。
+
+    解答：
+    \begin{equation}
+        \frac{1}{\sqrt{5}} \begin{bmatrix}
+            0 & -2 & 0 \\
+            2 & 0 & 1
+        \end{bmatrix}
+    \end{equation}
+\end{problem}
+
+\begin{problem}
+    \cite[第II章 問6.2]{杉浦+89}
+    を読者の演習問題とする。
+\end{problem}
+
+
+
+\begin{problem}
+    写像$f: \R^3 \to \R^3,$
+    \begin{equation}
+        f(x_1, x_2, x_3) = \left( \sum_i x_i, \sum_i x_i^2, \sum_i x_i^3\right)
+    \end{equation}
+    が点$(a_1, a_2, a_3)$の近傍で一対一対応となるような$a_i$の条件を求めよ。
+\end{problem}
+
+\begin{problem}
+    変数$x = (x_1, x_2, x_3),\, u = (u_1, u_2, u_3),\, v = (v_1, v_2, v_3)$の間に
+    \begin{equation}
+        \begin{cases}
+            u_1 = x_1 + x_2 + x_3 \\
+            u_2 = x_1 x_2 + x_2 x_3 + x_3 x_1 \\
+            u_3 = x_1 x_2 x_3
+        \end{cases}
+        \quad
+        \begin{cases}
+            v_1 = x_1^2 + x_2^2 \\
+            v_2 = x_2^2 + x_3^2 \\
+            v_3 = x_3^2 + x_1^2
+        \end{cases}
+    \end{equation}
+    という関係があるとし、$a = (a_1, a_2, a_3)$とする。
+    $a_i \neq a_j\, (i \neq j)$のとき、
+    $x = a$の近傍で$v$は$u$の関数として表せることを示せ。
+    さらに$a_1 a_2 a_3 \neq 0$とし、
+    $x = a$に対し定まる$u$を$b$とおく。
+    このとき$x = a$の近傍で$u$は$v$の関数として表せることを示し、
+    写像$v \mapsto u$の点$b$におけるヤコビ行列式を求めよ。
+
+    解答：
+    \begin{equation}
+        \frac{(a_1 - a_2)(a_2 - a_3)(a_1 - a_3)}{16 a_1 a_2 a_3}
+    \end{equation}
+\end{problem}
+
+\begin{problem}
+    \cite[第II章 例題6.2]{杉浦+89}、
+    \cite[第II章 問6.3]{杉浦+89}
+    を読者の演習問題とする。
+\end{problem}
+
+
+\begin{problem}
+    $a \in \R^n\, (a \neq0),\, b \in \R$とし、
+    \begin{equation}
+        g(x) \coloneqq \sum_{i = 1}^n a_i x_i + b
+    \end{equation}
+    とおく。$S_g \coloneqq \{ x \in \R^n \mid g(x) = 0 \}$のもとで
+    \begin{equation}
+        f(x) \coloneqq |x|^2
+    \end{equation}
+    の最小値を求めよ。
+
+    解答：$\frac{b^2}{|a|^2}$
+\end{problem}
+
+
+\begin{problem}
+    $S_g \coloneqq \{(x, y, z) \mid g(x, y, z) = x^2 + y^2 + z^2 - 1 = 0\}$のもとで
+    \begin{equation}
+        f(x, y, z) \coloneqq x^2 + y^2 - z^2 + 4xz + 4yz
+    \end{equation}
+    の極値を求め、極大・極小を判定せよ。
+
+    解答：極小値$-3$、極大値$3$
+\end{problem}
+
+\begin{problem}
+    $(x, y) \in \R^2$で定義された関数$f(x, y) = xy (x^2 + y^2 - 1)$の極値を求めよ。
+
+    解答：極小値$f(\pm 1/2, \pm 1/2) = -1/8$、極大値$(\pm 1/2, \mp 1/2) = 1/8$
+\end{problem}
+
+\begin{problem}
+    $(x, y) \in \R^2$に対し
+    \begin{equation}
+        \begin{split}
+            f(x, y) &= x^4 + y^4 \\
+            g(x, y) &= xy - 4
+        \end{split}
+    \end{equation}
+    を考える。$M_g \coloneqq \{ (x, y) \mid g(x, y) = 0 \}$上での$f$の最大値、最小値を求めよ。
+
+    解答：最大値なし、最小値$32$
+\end{problem}
+
+\begin{problem}
+    \cite[第II章 問題7.1, 7.2, 7.4]{杉浦+89}を読者の演習問題とする。
+\end{problem}
+
+
+
+% ============================================================
+%
+% ============================================================
+\chapter{最小二乗法}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{最小二乗法}
+
+$n$個の点$(x_i, y_i)\, (i = 1, \dots, n)$が与えられたとします。
+$x_i, y_i$の間には、パラメータ$a, b \in \R$によって
+\begin{equation}
+    y_i = a x_i + b\quad (i = 1, \dots, n)
+\end{equation}
+の関係があると仮定します。このとき、誤差
+\begin{equation}
+    e_i \coloneqq y_i - (a x_i + b)\quad (i = 1, \dots, n)
+\end{equation}
+の2乗和
+\begin{equation}
+    J(a, b) \coloneqq \sum_{i=1}^n e_i^2 = \sum_{i=1}^n (y_i - a x_i - b)^2
+\end{equation}
+が最小となるような$(a, b)$を求めることを考えます。
+この問題は$J(a, b)$の極小値を求める問題に帰着されるので、以上の状況設定で充分といえば充分なのですが、
+多変数（すなわち各点が$(x_{i1}, \dots, x_{im}, y_i)$である場合）への拡張を見据えて
+もう少し一般性のある形に書き換えてみます。
+すなわち、
+\begin{equation}
+    \begin{split}
+        \bm{x} \coloneqq (x_1, \dots, x_n)^\tra,\quad
+        \bm{y} \coloneqq (y_1, \dots, y_n)^\tra \\
+        Q \coloneqq \begin{bmatrix}
+            x_1 & 1 \\
+            \vdots & \vdots \\
+            x_n & 1
+        \end{bmatrix},\quad
+        \bm{a} \coloneqq \begin{bmatrix}
+            a \\
+            b
+        \end{bmatrix},\quad
+        \bm{e} \coloneqq \bm{y} - Q \bm{a}
+    \end{split}
+\end{equation}
+とおきます。すると簡単な計算から
+\begin{equation}
+    J(a, b) = \|\bm{y}\|^2 + \langle Q^\tra Q \bm{a}, \bm{a} \rangle - \langle 2Q^\tra \bm{y}, \bm{a} \rangle
+\end{equation}
+が成り立つので、$J(a, b)$の最小化問題は
+\begin{equation}
+    F(\bm{v}) \coloneqq \langle Q^\tra Q \bm{v}, \bm{v} \rangle - \langle 2Q^\tra \bm{y}, \bm{v} \rangle
+\end{equation}
+の最小化問題に帰着されます。
+ここで、$J$が極値をとるための必要条件$\nabla J(a, b) = 0$は、少し計算すると
+\begin{equation}
+    Q^\tra Q \bm{a} = Q^\tra \bm{y}
+    \label{eq:10:1}
+\end{equation}
+と表せることがわかります。
+したがって、$Q^\tra Q$が正則ならば$\bm{a}$が一意に定まってくれて嬉しいのですが、
+次の命題によれば、実用上ほとんどの場合$Q^\tra Q$は正則だということがわかります。
+
+    \begin{proposition}
+        $Q$に対し次が成り立つ。
+        \begin{enumerate}
+            \item $Q^\tra Q$は非負定値対称行列である
+            \item $x_1 = \dots = x_n$ではないとすると、$Q^\tra Q$は正定値対称行列である。
+                したがって正則である。
+        \end{enumerate}
+    \end{proposition}
+
+\begin{proof}
+    (1)は内積を行列の積の形に書き直せばすぐわかります。
+
+    (2)は成分ごとの方程式を考えて矛盾をいえば示せます。
+\end{proof}
+
+(\ref{eq:10:1})をみたす$\bm{a}$が$J(a, b)$の最小化問題の一意的な解であることを
+明確に述べたのが次の定理です。
+
+\begin{theorem}
+    $x_1 = \dots = x_n$でなければ、(\ref{eq:10:1})をみたす$\bm{a}$は
+    \begin{equation}
+        F(\bm{a}) < F(\bm{v}) \quad (\bm{v} \in \R^2,\, \bm{v} \neq \bm{a})
+        \label{eq:10:2}
+    \end{equation}
+    をみたす。
+\end{theorem}
+
+\begin{proof}
+    $\bm{v} = \bm{a} + (\bm{v} - \bm{a})$と分解して
+    $F(\bm{v})$と$F(\bm{a})$の間の不等式を導けば示せます。
+    途中で$\bm{a}$が(\ref{eq:10:1})をみたすという性質を使って式を綺麗にします。
+\end{proof}
+
+上の定理は逆も成り立ちます。
+
+\begin{theorem}
+    (\ref{eq:10:2})をみたす$\bm{a}$は(\ref{eq:10:1})をみたす。
+\end{theorem}
+
+\begin{proof}
+    $f(t) \coloneqq F(\bm{a} + t\bm{w})$は$t$に関して下に凸な2次関数ですが、
+    $f(t)$が$t = 0$で極値をとることから$Q^\tra Q \bm{a} = Q^\tra \bm{y}$を導くことができます。
+\end{proof}
+
+
+
+% ============================================================
+%
+% ============================================================
+\chapter{Gamma 関数と Beta 関数}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{Gamma 関数とBeta 関数}
+
+ここでは\textbf{Gamma 関数}および\textbf{Beta 関数}という特殊関数を扱います。
+本題に入る前に、まず重積分の変数変換公式を確認しておきます。
+
+\begin{theorem}[変数変換公式]
+    $U, V$を$\R^n$の有界部分集合とし、
+    写像$\Phi \colon U \to V,$
+    \begin{equation}
+        \Phi(u) = (X_1(u), \dots, X_n(u))
+    \end{equation}
+    は全単射かつ$C^1$級であるとする。
+    さらに$\forall u \in U$に対し
+    \begin{equation}
+        \deldel[(X_1, \dots, X_n)]{(u_1, \dots, u_n)}(u) \neq 0
+    \end{equation}
+    とする。
+    このとき、$U$の任意の体積確定部分集合$U_1$と
+    $V_1 \coloneqq \Phi(U_1)$に対し
+    \begin{equation}
+        \int_{U_1} f(x) dx = \int_{V_1} f(\Phi(u))\, |\det J_\Phi(u)|\, du
+    \end{equation}
+    が成り立つ。
+\end{theorem}
+
+\begin{proof}
+    長いので省略\footnote{
+        参考文献\cite[第VII章 \S{4}]{杉浦85}を参照。
+    }
+\end{proof}
+
+\begin{example*}[$n$次元極座標変換]
+    $\R^n$の極座標変換は
+    \begin{equation}
+        \begin{cases}
+            x_1 &= r \cos \theta_1 \\
+            x_2 &= r \sin \theta_1 \cos \theta_2 \\
+            x_3 &= r \sin \theta_1 \sin \theta_2 \cos \theta_3 \\
+            \vdots \\
+            x_{n-1} &= r \sin \theta_1 \cdots \sin \theta_{n-2} \cos \theta_{n-1} \\
+            x_{n} &= r \sin \theta_1 \cdots \sin \theta_{n-2} \sin \theta_{n-1}
+        \end{cases}
+    \end{equation}
+    ただし
+    \begin{equation}
+        \begin{split}
+            &0 \le r < \infty \\
+            &0 \le \theta_i \le \pi \quad (i = 1, \dots, n - 2) \\
+            &0 \le \theta_{n-1} \le 2\pi
+        \end{split}
+    \end{equation}
+    で与えられます。ヤコビアンは
+    \begin{equation}
+        \det J_\Phi(r, \theta_1, \dots, \theta_{n-1})
+            = r^{n-1} \sin^{n-2} \theta_1 \sin^{n-3} \theta_2 \cdots \sin \theta_{n-2}
+    \end{equation}
+    です。
+\end{example*}
+
+\begin{theorem}
+    \begin{enumerate}
+        \item $x > 0$に対し、広義積分
+            \begin{equation}
+                \int_0^\infty e^{-t} t^{x - 1} dt
+            \end{equation}
+            は各点で絶対収束する。
+        \item $x, y > 0$に対し、広義積分
+            \begin{equation}
+                \int_0^1 t^{x - 1} (1 - t)^{y - 1} dt
+            \end{equation}
+            は各点で絶対収束する。
+    \end{enumerate}
+    \label{11:thm:1}
+\end{theorem}
+
+\begin{definition}
+    \cref{11:thm:1}の(1)で定義される関数$\Gamma(x)$を\textbf{Gamma 関数}、
+    (2)で定義される関数$B(x)$を\textbf{Beta 関数}という。
+\end{definition}
+
+見ての通り、$\Gamma(x)$や$B(x, y)$はパラメータを含む広義積分で定義された関数です。
+%実はもっと強く広義一様収束までいえるのですが、ここではとりあえず各点収束を示します。
+
+\begin{proof}[\cref{11:thm:1}の証明.]
+    (1)
+    $x > 0$を任意にとる。
+    積分範囲が非有界な$\int_1^\infty e^{-t} t^{x-1} dt$と
+    被積分関数が非有界な$\int_0^1 e^{-t} t^{x-1} dt$とに分けて収束性を考える。
+    まず$\int_1^\infty e^{-t} t^{x-1} dt$を考える。任意の正整数$n$に対し
+    \begin{equation}
+        e^{-t} = O(t^{-n})\quad (t \to \infty)
+    \end{equation}
+    なので、
+    \begin{equation}
+        e^{-t} t^{x-1} = O(t^{x-n-1})\quad (t \to \infty)
+    \end{equation}
+    である。$n > x$をひとつ選べば
+    \begin{equation}
+        \int_1^\infty t^{x-n-1} dt
+            = \left[ -\frac{1}{n-x} t^{-(n-x)} \right]_1^\infty
+            = \frac{1}{n - x}
+            \in \R
+    \end{equation}
+    なので、優関数の方法により
+    \begin{equation}
+        \int_1^\infty e^{-t} t^{x - 1} dt
+    \end{equation}
+    も絶対収束する。
+
+    つぎに$\int_0^1 e^{-t} t^{x-1} dt$を考える。
+    $e^{-t}$は$t = 0$の近傍で有界なので
+    \begin{equation}
+        e^{-t} t^{x-1} = O(t^{x-1})\quad (t \to +0)
+    \end{equation}
+    である。$0 < x < 1$のとき
+    \begin{equation}
+        \int_0^1 t^{x-1} dt
+            = \left[ \frac{1}{x} t^{x} \right]_0^1
+            = \frac{1}{x}
+            \in \R
+    \end{equation}
+    なので、優関数の方法により
+    \begin{equation}
+        \int_0^1 e^{-t} t^{x - 1} dt
+    \end{equation}
+    も絶対収束する。$x \ge 1$のときは$\int_0^1 e^{-t} t^{x-1} dt$は広義でない普通の積分である。
+
+    $x > 0$は任意であったから、$\int_0^\infty e^{-t} t^{x - 1} dt$は$x > 0$の各点で絶対収束する。
+    \\
+
+    (2) $x, y < 1$のときを考えれば充分です。(1)と同様に広義積分を分けて収束性を議論すれば示せます。
+\end{proof}
+
+\begin{proposition}[Gamma 関数と Beta 関数の基本性質]
+    $x, y > 0$に対し次が成り立つ。
+    \begin{enumerate}
+        \item $\Gamma(1) = 1, \Gamma(x + 1) = x \Gamma(x)$
+        \item $\Gamma(x + n) = (x + n - 1)(x + n - 2) \cdots x \Gamma(x)$
+            \quad とくに \quad
+            $\Gamma(n + 1) = n!$
+        \item $B(x, y) = B(y, x)$ \vspace{0.5em}
+        \item $B(x, y) = \frac{\Gamma(x)\, \Gamma(y)}{\Gamma(x + y)}$
+    \end{enumerate}
+\end{proposition}
+
+\begin{proof}
+    (1), (2), (3) は簡単です。
+
+    (4)
+    変数変換によって
+    \begin{equation}
+        \begin{split}
+            \Gamma(x) &= 2 \int_0^\infty e^{-u^2} u^{2x-1} du \\
+            B(x, y) &= 2 \int_0^{\pi/2} \sin^{2x-1} \theta \cos^{2y-1} \theta\, d\theta
+        \end{split}
+    \end{equation}
+    と書けることに注意する。
+    集合列$\{J_R\}_{R \in \N},\, \{I_R\}_{\R \in \N}$をそれぞれ
+    \begin{equation}
+        \begin{split}
+            J_R &\coloneqq [0, R] \times [0, R] \\
+            I_R &\coloneqq \{ (u, v) \in \R^2 \mid u^2 + v^2 \le R^2,\, u \ge 0,\, v \ge 0 \}
+        \end{split}
+    \end{equation}
+    と定めると、これらは$[0, \infty) \times [0, \infty)$のコンパクト近似列\footnote{
+        コンパクト近似列の定義は参考文献\cite[第VII章 \S{1}]{杉浦85}を参照。
+    }になっている。
+    \begin{alignat}{3}
+        \Gamma(x) \Gamma(y)
+            &= 4 \int_0^\infty e^{-u^2} u^{2x-1} du
+                \int_0^\infty e^{-v^2} v^{2y-1} dv \\
+            &= 4 \lim_{R \to \infty}
+                \int_0^R e^{-u^2} u^{2x-1} du
+                \int_0^R e^{-v^2} v^{2y-1} dv \\
+            &= 4 \lim_{R \to \infty}
+                \int_0^R \int_0^R e^{-(u^2 + v^2)} u^{2x-1} v^{2y-1} du\, dv \\
+            &= 4 \lim_{R \to \infty}
+                \iint_{J_R} e^{-(u^2 + v^2)} u^{2x-1} v^{2y-1} du\, dv \\
+        \intertext{広義重積分可能ならば近似列を交換できるから}
+            &= 4 \lim_{R \to \infty}
+                \iint_{I_R} e^{-(u^2 + v^2)} u^{2x-1} v^{2y-1} du\, dv \\
+            &= 4 \lim_{R \to \infty}
+                \int_0^{\pi/2} \int_0^R
+                    e^{-r^2} r^{2(x + y) - 1} \cos^{2x - 1} \theta \sin^{2y - 1} \theta dr\, d\theta \\
+            &= \lim_{R \to \infty}
+                2 \int_0^R e^{-r^2} r^{2(x + y) - 1} dr
+                \cdot 2 \int_0^{\pi/2} \cos^{2x - 1} \theta \sin^{2y - 1} \theta d\theta \\
+            &= 2 \int_0^\infty e^{-r^2} r^{2(x + y) - 1} dr
+                \cdot 2 \int_0^{\pi/2} \cos^{2x - 1} \theta \sin^{2y - 1} \theta d\theta \\
+            &= \Gamma(x + y) B(x, y)
+    \end{alignat}
+    より定理の式が成り立つ。
+\end{proof}
+
+
+\begin{proposition}
+    \begin{enumerate}
+        \item $\Gamma(x)$は$x > 0$上で{\smooth}級であり
+            \begin{equation}
+                \Gamma^{(n)}(x) = \int_0^\infty e^{-t} t^{x-1} (\log t)^n dt
+                \label{11:eq:2}
+            \end{equation}
+            である。
+        \item $\log \Gamma(x)$は$x > 0$上の凸関数である。
+    \end{enumerate}
+\end{proposition}
+
+(2)はすこし唐突な印象もありますが、
+実はこのあと出てくる Bohr-Mollerup の定理において重要な役割を果たします。
+
+\begin{proof}
+    (1)
+    $\forall n \in \N$に対し広義積分
+    \begin{equation}
+        \int_0^\infty e^{-t} t^{x-1} (\log t)^n dt
+        \label{11:eq:1}
+    \end{equation}
+    が$x > 0$上広義一様収束することさえ示せば
+    積分記号下の微分ができるので、
+    あとは数学的帰納法により (1) が示せる
+    （数学的帰納法の部分は簡単なのでここでは省略する）。
+    そこでまず$0 < \forall x_0 < \forall x_1 < \infty$を固定し、
+    $I \coloneqq [x_0, x_1]$上での一様収束性を示そう。
+    表記の簡略化のために
+    \begin{equation}
+        f_n(x, t) \coloneqq e^{-t} t^{x-1} (\log t)^n
+    \end{equation}
+    とおくと、$t \to +0$で
+    \begin{equation}
+        \begin{cases}
+            e^{-t} &= O(1) \\
+            t^{x-1} &= O(t^{x_0 - 1}) \\
+            \log t &= O(t^{-\alpha}) \qquad (\text{ただし$\alpha$は$0 < \alpha < x_0/n$なる適当な定数})
+        \end{cases}
+    \end{equation}
+    なので
+    \begin{equation}
+        f_n(x, t) = O(t^{x_0 - n\alpha - 1})
+    \end{equation}
+    である。$x_0 - n\alpha - 1 > -1$ゆえに
+    $\int_0^1 t^{\alpha - 1} dt$は収束するから、
+    Weierstrass の定理により広義積分
+    \begin{equation}
+        \int_0^1 f_n(x, t) dt
+    \end{equation}
+    は$I$上一様収束する。
+    一方、$t \to \infty$で
+    \begin{equation}
+        \begin{cases}
+            e^{-t} &= O(t^{- x_1 - n - 1}) \\
+            t^{x-1} &= O(t^{x_1 - 1}) \\
+            \log t &= O(t)
+        \end{cases}
+    \end{equation}
+    なので
+    \begin{equation}
+        f_n(x, t) = O(t^{-2})
+    \end{equation}
+    である。
+    $\int_1^\infty t^{-2} dt$は収束するから、
+    Weierstrass の定理により広義積分
+    \begin{equation}
+        \int_1^\infty f_n(x, t) dt
+    \end{equation}
+    は$I$上一様収束する。
+    以上より、広義積分(\ref{11:eq:1})は$x > 0$上広義一様収束する。
+
+    (2)
+    上で示した(\ref{11:eq:1})より、$\forall u \in \R$に対し
+    \begin{equation}
+        \begin{split}
+            \Gamma(x) u^2 + 2 \Gamma'(x) u + \Gamma''(x)
+                &= \int_0^\infty e^{-t} t^{x-1} (u + \log t)^2 dt \\
+                &\ge 0
+        \end{split}
+    \end{equation}
+    である。よって判別式は
+    \begin{equation}
+        D/4 = \Gamma'(x) - \Gamma(x) \Gamma''(x) \le 0
+    \end{equation}
+    をみたす。
+    したがって
+    \begin{equation}
+        \begin{split}
+            (\log \Gamma(x))''
+                &= \left(\frac{\Gamma'(x)}{\Gamma(x)}\right)' \\
+                &= \frac{\Gamma(x) \Gamma''(x) - \Gamma'(x) }{\Gamma(x)^2} \\
+                &\ge 0
+        \end{split}
+    \end{equation}
+    すなわち$\Gamma(x)$は$x > 0$上の凸関数である。
+\end{proof}
+
+
+
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{Bohr-Mollerup の定理}
+
+    \begin{theorem}[Bohr-Mollerup の定理、$\Gamma$関数の特徴付け]
+        $f \colon (0, \infty) \to \R$が
+        \begin{enumerate}
+            \item $f(x + 1) = x f(x)$
+            \item $f(x) > 0$かつ$\log f(x)$は凸関数
+            \item $f(1) = 1$
+        \end{enumerate}
+        をみたすとする。このとき、任意の$x > 0$に対し
+        \begin{equation}
+            f(x) = \Gamma(x) = \lim_{n \to \infty} \frac{n! n^x}{x(x + 1) \cdots (x + n)}
+            \quad (\text{ガウスの公式})
+            \label{eq:12:1}
+        \end{equation}
+        \label{11:thm:2}
+    \end{theorem}
+
+$f(x) = \Gamma(x)$の証明の際は、
+$\Gamma$の積分表式を持ち出すのではなく、
+$f$も$\Gamma$も式(\ref{eq:12:1})の極限式で書けるから一致するという論法で示します。
+
+\begin{proof}
+    条件(1)から、$\forall n \ge 1$に対し
+    \begin{equation}
+        f(x + n) = (x + n - 1) \cdots (x + 1) f(x)
+        \label{11:eq:5}
+    \end{equation}
+    である。さらに$x = 1$として条件(3)を用いれば
+    \begin{equation}
+        f(n + 1) = n!
+        \label{11:eq:6}
+    \end{equation}
+    が成り立つ。また、条件(2)より$g(x) \coloneqq \log f(x)$は凸関数であるから、
+    $0 < {}^\forall a < {}^\forall t < {}^\forall b$に対し
+    \begin{equation}
+        \frac{g(t) - g(a)}{t - a}
+            < \frac{g(b) - g(a)}{b - a}
+            < \frac{g(b) - g(t)}{b - t}
+        \label{11:eq:3}
+    \end{equation}
+    が成り立つ。
+
+    \underline{Step 1:}
+    さて、ひとまず$x \in (0, 1]$を固定して
+    ガウスの公式(\ref{eq:12:1})を示していこう。
+    ここで、任意の自然数$n \ge 2$に対し
+    \begin{equation}
+        \begin{split}
+            \log (n - 1)
+                &= \log f(n) - \log f(n - 1) \\
+                &\le \frac{\log f(n + 1) - \log f(n)}{x} \\
+                &\le \log f(n + 1) - \log f(n) \\
+                &= \log n
+        \end{split}
+        \label{11:eq:4}
+    \end{equation}
+    が成り立つ。
+    ただし、途中の不等式は$(a, t, b) = (n - 1, n, n + x),\, (n, n + x, n + 1)$に対し
+    不等式(\ref{11:eq:3})を適用したものである。
+    不等式(\ref{11:eq:4})の各辺に$x$を掛け、指数関数の値をとり、さらに$f(x)$を掛ければ
+    \begin{equation}
+        (n - 1)^x f(n) \le f(n + x) \le n^x f(n)
+    \end{equation}
+    を得る。これと式(\ref{11:eq:5})から
+    \begin{equation}
+        \frac{(n - 1)^x f(n)}{x (x + 1) \cdots (x + n - 1)}
+            \le f(x)
+            \le \frac{n^x f(n)}{x (x + 1) \cdots (x + n - 1)}
+    \end{equation}
+    であり、左の不等式だけ$n$を$n + 1$に置きなおして式(\ref{11:eq:6})を用いると
+    \begin{equation}
+        \underbrace{\frac{n! n^x}{x (x + 1) \cdots (x + n)}}_{\text{$a_n(x)$とおく}}
+            \le f(x)
+            \le \underbrace{\frac{n! n^x}{x (x + 1) \cdots (x + n)}}_{a_n(x)} \frac{x + n}{n}
+    \end{equation}
+    を得る。したがって、$n \to \infty$の極限を考えれば
+    \begin{equation}
+        f(x) = \lim_{n \to \infty} a_n(x)
+    \end{equation}
+    がいえる。
+    $x \in (0, 1]$は任意であったから、
+    $x \in (0, 1]$においてガウスの公式(\ref{eq:12:1})の成立がいえた。
+
+    \underline{Step 2:}
+    $x > 1$の場合は、
+    $x = y + m\, (0 < y \le 1,\, m \in \N)$とおけば、
+    $\forall n > m$に対し
+    \begin{equation}
+        \begin{split}
+            \frac{n! n^x}{x \cdots (x + n)}
+                &= \frac{n! n^y n^m}{(y + m) \cdots (y + m + n)} \\
+                &= \frac{n! n^y}{y \cdots (y + n)}
+                    \frac{n^m y \cdots (y + n)}{(y + m) \cdots (y + m + n)} \\
+                &= \frac{n! n^y}{y \cdots (y + n)}
+                    \frac{n^m y \cdots (y + m - 1) \cancel{(y + m) \cdots (y + n)}}
+                        {\cancel{(y + m) \cdots (y + n)} (y + n + 1) \cdots (y + n + m)} \\
+                &= \frac{n! n^y}{y \cdots (y + n)}
+                    \underbrace{\frac{n^m}{(y + n + 1) \cdots (y + n + m)}}_{\to 1\; (n \to \infty)}
+                    y \cdots (y + m - 1)
+        \end{split}
+    \end{equation}
+    が成り立つから、
+    \begin{equation}
+        \begin{split}
+            \lim_{n \to \infty} \frac{n! n^x}{x \cdots (x + n)}
+                &= y \cdots (y + m - 1) f(y) \\
+                &= f(y + m) \\
+                &= f(x)
+        \end{split}
+    \end{equation}
+    である。
+    したがって
+    $x > 1$においてもガウスの公式(\ref{eq:12:1})の成立がいえた。
+
+    \underline{Step 3:}
+    $\Gamma$も定理の仮定を満たすから、
+    $\Gamma$も$x > 0$でガウスの公式(\ref{eq:12:1})をみたす。
+    したがって$x > 0$で$f(x) = \Gamma(x)$である。
+\end{proof}
+
+    \begin{corollary}
+        上の定理の条件(3)を除くと
+        \begin{equation}
+            f(x) = f(1) \Gamma(x) \quad (x > 0)
+        \end{equation}
+        が成り立つ。
+        \label{11:cor:1}
+    \end{corollary}
+
+\begin{proof}
+    $h(x) \coloneqq f(x) / f(1)$が条件(1),(2),(3)をみたすことから直ちに成り立つ。
+\end{proof}
+
+    \begin{proposition}
+        $\forall x \in D \coloneqq \R - (- \N)$に対し
+        \begin{equation}
+            \lim_{n \to \infty} \frac{n! n^x}{x(x + 1) \cdots (x + n)} \in \R
+        \end{equation}
+        が存在する。
+        \label{11:prop:1}
+    \end{proposition}
+
+\begin{proof}
+    $x \in D$を任意にとる。$x > 0$の場合は成立がわかっているから$x < 0$の場合のみ考えればよい。
+    すると、ある$m \in \N$が存在して$y = x + m > 0$なので、
+    充分大きな任意の$n$に対し
+    \begin{equation}
+        \begin{split}
+            \frac{n! n^x}{x \cdots (x + n)}
+                &= \frac{n! n^y}{n^m (y - m) \cdots (y - m + n)} \\
+                &= \frac{1}{(y - m) \cdots (y - 1)}
+                    \underbrace{\frac{n! n^y}{y \cdots (y + n)}}_{\to \Gamma(y)\; (n \to \infty)}
+                    \underbrace{\frac{(y - m + n + 1) \cdots (y + n)}{n^m}}_{\to 1\; (n \to \infty)}
+        \end{split}
+    \end{equation}
+    が成り立つ。したがって
+    \begin{equation}
+        \lim_{n \to \infty} \frac{n! n^x}{x(x + 1) \cdots (x + n)} \in \R
+    \end{equation}
+    が存在する。
+\end{proof}
+
+\begin{definition}[$\Gamma$の極限式による定義]
+    $\forall x \in D \coloneqq \R - (- \N)$に対し
+    \begin{equation}
+        \lim_{n \to \infty} \frac{n! n^x}{x(x + 1) \cdots (x + n)} \in \R
+    \end{equation}
+    と定義する。
+\end{definition}
+
+\begin{proposition}
+    $\forall x \in D$に対し次が成り立つ。
+    \begin{enumerate}
+        \item \begin{equation}
+            \Gamma(x) \neq 0
+        \end{equation}
+        \item \begin{equation}
+            \mathrm{sign}\, \Gamma(x) = \begin{cases}
+                1 \quad &(x > 0) \\
+                (-1)^m \quad &(-m < x < -m+1,\, m \in \N)
+            \end{cases}
+        \end{equation}
+        \item \begin{equation}
+            \lim_{x \to -n} (x + n) \Gamma(x) = \frac{(-1)^n}{n!} \quad (n \in \N)
+        \end{equation}
+    \end{enumerate}
+\end{proposition}
+
+(3)は複素数に拡張された$\Gamma(x)$の点$-n$における留数を表しています。
+
+\begin{proof}
+    (1), (2) は\cref{11:prop:1}から明らか。
+
+    (3)
+    \begin{equation}
+        \begin{split}
+            (x + n) \Gamma(x)
+                &= \frac{(x + n) \cdots x \Gamma(x)}{(x + n - 1) \cdots x} \\
+                &= \frac{\Gamma(x + n - 1)}{(x + n - 1) \cdots x} \\
+                &\to \frac{\Gamma(1)}{(-1)(-2) \cdots (-n)} \quad (x \to -n) \\
+                &= \frac{(-1)^n}{n!}
+        \end{split}
+    \end{equation}
+\end{proof}
+
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{Stirling の公式}
+
+ここでは$x \to \infty$における$\Gamma$の挙動を漸近的に評価する方法を考えていきます。
+まず出発地点として$n!$の値を$\int_1^n \log x\, dx$で評価してみましょう。
+$\int_1^n \log x\, dx$の値を "短冊" で近似することを考えると
+\begin{equation}
+    \int_1^n \log x\, dx
+        = \log 2 + \cdots \log (n - 1) + \frac{1}{2} \log n + \delta_n
+\end{equation}
+が成り立ちます（ただし$\delta_n$は誤差）。
+すると、簡単な計算により
+\begin{equation}
+    \begin{split}
+        \log (n-1)! &= \left(n - \frac{1}{2}\right) \log n - n + 1 - \delta_n \\
+        \therefore \quad \Gamma(n) &= n^{n - \frac{1}{2}} e^{-n} e^{1-\delta_n}
+    \end{split}
+\end{equation}
+と表せることがわかります。
+そこで、$x > 0$に対しても何らかの関数$\mu(x)$によって
+\begin{equation}
+    f(x) \coloneqq x^{x - \frac{1}{2}} e^{-x} e^{\mu(x)}
+    \label{11:eq:7}
+\end{equation}
+を$\Gamma(x)$の定数倍に一致させられないだろうか？
+というのが Stirling の公式の基本的なアイディアです。
+ここで Bohr-Mollerup の定理（\cref{11:thm:2}）によれば、$f$が$x > 0$で条件
+\begin{enumerate}
+    \item $f(x + 1) = x f(x)$
+    \item $f(x) > 0$かつ$\log f(x)$は凸関数
+\end{enumerate}
+をみたしてくれれば目標達成です。以下、このことを確認していきます。
+
+\begin{lemma}
+    式(\ref{11:eq:7})で定義された関数$f$が$x > 0$で条件(1)をみたすには、
+    $\mu(x)$が
+    \begin{equation}
+        \mu(x) - \mu(x + 1)
+            = \underbrace{
+                \left(x + \frac{1}{2}\right) \log \left(1 + \frac{1}{x}\right) - 1
+            }_{\text{$g(x)$とおく}}
+    \end{equation}
+    をみたすことが必要十分である。
+    \label{11:lem:1}
+\end{lemma}
+
+\begin{proof}
+    $x > 0$とする。
+    $f$の定義式(\ref{11:eq:7})によれば
+    \begin{equation}
+        \frac{f(x + 1)}{f(x)} = x \left(1 + \frac{1}{2}\right)^{x + \frac{1}{2}} e^{\mu(x + 1) - \mu(x) - 1}
+    \end{equation}
+    なので、$f$が条件(1)、すなわち
+    \begin{equation}
+        \frac{f(x + 1)}{f(x)} = x
+    \end{equation}
+    をみたすには、$\mu$が
+    \begin{equation}
+        \left(1 + \frac{1}{2}\right) \log \left(1 + \frac{1}{x}\right) - 1 = \mu(x) - \mu(x + 1)
+    \end{equation}
+    をみたすことが必要十分である。
+\end{proof}
+
+    \begin{lemma}
+        級数$\sum_{n=0}^\infty g(x + n)$は$x > 0$上で各点収束し、
+        $x \to \infty$で$0$に収束する。
+    \end{lemma}
+
+\begin{proof}
+    関数$\frac{1}{2} \log \frac{1+y}{1-y}\; (= \artanh y)$は$|y| < 1$で
+    \begin{equation}
+        \frac{1}{2} \log \frac{1+y}{1-y}
+            = y + \frac{y^3}{3} + \frac{y^5}{5} + \cdots
+    \end{equation}
+    と収束級数に展開できる。
+    右辺に$y = \frac{1}{2x + 1}$を代入することで
+    \begin{equation}
+        \begin{split}
+            g(x)
+                &= \left(x + \frac{1}{2}\right) \log \left(1 + \frac{1}{x}\right) - 1 \\
+                &= (2x + 1) \frac{1}{2} \log \left(1 + \frac{1}{x}\right) - 1 \\
+                &= (2x + 1) \sum_{n=0}^\infty \frac{1}{(2n + 1) (2x + 1)^{2n + 1}} - 1 \\
+                &= \sum_{n=1}^\infty \frac{1}{(2n + 1) (2x + 1)^{2n}}
+        \end{split}
+    \end{equation}
+    を得る。したがって
+    \begin{equation}
+        \begin{split}
+            0 < g(x) &< \frac{1}{3} \sum_{n=1}^\infty \frac{1}{(2x + 1)^{2n}} \\
+                &= \frac{1}{3} \left(\frac{1}{2x + 1}\right)^2
+                    \frac{1}{1 - \left(\frac{1}{2x + 1}\right)^2} \\
+                &= \frac{1}{12x(x+1)} \\
+                &= \frac{1}{12x} - \frac{1}{12(x+1)}
+        \end{split}
+    \end{equation}
+    である。よって$\forall N \in \N$に対し
+    \begin{equation}
+        \begin{split}
+            0 < \sum_{n=0}^N g(x + n)
+                &< \sum_{n=0}^N \left\{ \frac{1}{12(x + n)} - \frac{1}{12(x+n+1)} \right\} \\
+                &\le \sum_{n=0}^\infty \left\{ \frac{1}{12(x + n)} - \frac{1}{12(x+n+1)} \right\} \\
+                &= \frac{1}{12x}
+        \end{split}
+    \end{equation}
+    である。したがって部分和$\sum_{n=0}^N g(x + n)$は上に有界な正数列なので
+    $\sum_{n=0}^\infty g(x + n)$は収束し、
+    上の不等式から$x \to \infty$で$0$に収束することも示せた。
+\end{proof}
+
+\begin{lemma}
+    $\mu$を以下のように定めれば\cref{11:lem:1}の条件が達成される。
+    \begin{equation}
+        \begin{split}
+            \mu(x) &= \sum_{k=0}^\infty g(x + k)
+        \end{split}
+    \end{equation}
+    \label{11:lem:2}
+\end{lemma}
+
+\begin{proof}
+    級数$\sum_{k=0}^\infty g(x + k)$が収束することから
+    \begin{equation}
+        \begin{split}
+            \mu(x) - \mu(x + 1)
+                &= \sum_{k=0}^\infty g(x + k) - \sum_{k=0}^\infty g(x + k + 1) \\
+                &= \sum_{k=0}^\infty (g(x + k) - g(x + k + 1)) \\
+                &= \lim_{N \to \infty} \sum_{k=0}^N (g(x + k) 0 g(x + k + 1)) \\
+                &= \lim_{N \to \infty} (g(x) - g(x + N + 1)) \\
+                &= g(x)
+        \end{split}
+    \end{equation}
+    である。
+\end{proof}
+
+\begin{lemma}
+    定義式(\ref{11:eq:7})と\cref{11:lem:2}の$\mu$によって定まる$f$は
+    条件(2)をみたす。
+    \label{11:lem:3}
+\end{lemma}
+
+\begin{proof}
+    $f$の定義式から明らかに$f(x) > 0$である。
+    また
+    \begin{equation}
+        \log f(x) = \left(x - \frac{1}{2}\right) \log x - x + \mu(x)
+    \end{equation}
+    であり、右辺の$\mu(x)$を除く項は凸であるから、
+    $\log f$が凸であることを示すには$\mu$が凸であることをいえばよい。
+    そのためには$g$が凸であることをいえば充分だが、
+    \begin{equation}
+        g''(x) = \frac{1}{2x^2 (x+1)^2} > 0
+    \end{equation}
+    なので$g$も$x > 0$で凸である。
+    したがって$f$は条件(2)をみたす。
+\end{proof}
+
+    \begin{lemma}[Wallis の公式]
+        \begin{equation}
+            \sqrt{\pi} = \lim_{n \to \infty} \frac{(2n)!!}{(2n - 1)!! \sqrt{n}}
+        \end{equation}
+    \end{lemma}
+
+\begin{proof}
+    長いので省略\footnote{
+        参考文献\cite[第IV章 定理15.6系]{杉浦80}を参照。
+    }
+\end{proof}
+
+    \begin{theorem}[Stirling の公式]
+        $x > 0$に対し
+        \begin{equation}
+            \Gamma(x) = \sqrt{2\pi} x^{x - \frac{1}{2}} e^{-x} e^{\mu(x)}
+        \end{equation}
+        が成り立つ。
+        ただし$\mu$は\cref{11:lem:2}で定めたものである。
+    \end{theorem}
+
+\begin{proof}
+    \cref{11:lem:2}と\cref{11:lem:3}より、
+    定義式(\ref{11:eq:7})と$\mu$によって定まる関数$f$は
+    Bohr-Mollerup の定理（\cref{11:thm:2}）の条件 (1), (2) をみたす。
+    したがって\cref{11:cor:1}より
+    \begin{equation}
+        \Gamma(x) = a f(x) \quad (x > 0)
+    \end{equation}
+    となる定数$a > 0$が存在する。$a$は Wallis の公式によって求めることができ、
+    $n! = \Gamma(n+1) = n\Gamma(n) = anf(n)$に注意すれば
+    \begin{equation}
+        \begin{split}
+            \sqrt{\pi}
+                &= \lim_{n \to \infty} \frac{(2n)!!}{(2n - 1)!! \sqrt{n}} \\
+                &= \lim_{n \to \infty} \frac{2^{2n} (n!)^2}{(2n)! \sqrt{n}} \\
+                &= \lim_{n \to \infty} \frac{2^{2n} (an f(n))^2}{a \cdot 2n f(2n) \sqrt{n}} \\
+                &= \lim_{n \to \infty} \frac{2^{2n} a^2 n^2 \left(n^{n-1/2} e^{-n} e^{\mu(n)}\right)^2}
+                    {2 an (2n)^{2n-1/2} e^{-2n} e^{\mu(2n)} \sqrt{n}} \\
+                &= \lim_{n \to \infty} \frac{a}{\sqrt{2}} \frac{e^{2\mu(n)}}{e^{\mu(2n)}} \\
+                &= \frac{a}{\sqrt{2}}
+        \end{split}
+    \end{equation}
+    よって$a = \sqrt{2\pi}$である。
+    以上より定理の主張が示せた。
+\end{proof}
+
+
+
+\begin{problem}
+    $\Gamma(1/2),\, \Gamma(n + 1/2)$の値を求めよ。
+
+    解答：
+    \begin{equation}
+        \Gamma(1/2) = \sqrt{\pi},\quad \Gamma(n + 1/2) = \frac{(2n - 1)!!}{2^n} \sqrt{\pi}
+    \end{equation}
+\end{problem}
+
+\begin{problem}
+    $p, q > -1$に対し
+    \begin{equation}
+        \int_0^{\pi/2} \cos^p \theta \sin^q \theta d\theta
+            = \frac{1}{2} B\!\left(\frac{p+1}{2}, \frac{q+1}{2}\right)
+    \end{equation}
+    を示せ。
+\end{problem}
+
+\begin{problem}
+    $n$次元球の体積と表面積を$\Gamma$を用いて表わせ。
+
+    解答：
+    \begin{equation}
+        |B_n(R)| = \frac{\sqrt{\pi} R^n}{\Gamma(n/2 + 1)},\quad
+        |\del B_n(R)| = \frac{2 \sqrt{\pi} R^{n-1}}{\Gamma(n/2)}
+    \end{equation}
+\end{problem}
+
+\begin{problem}
+    $0 < m+1 < n$とする。
+    \begin{equation}
+        I = \int_0^\infty \frac{x^m}{1 + x^n} dx
+    \end{equation}
+    を Gamma 関数、Beta 関数を用いて表わせ。
+
+    解答：
+    \begin{equation}
+        I = \frac{1}{n} B\left( \frac{m+1}{n}, 1 - \frac{m+1}{n} \right)
+            = \frac{1}{n} \Gamma\left(\frac{m+1}{n}\right) \Gamma\left(1 - \frac{m+1}{n}\right)
+    \end{equation}
+\end{problem}
+
+\begin{problem}
+    \begin{equation}
+        \int_0^\infty \frac{t^{y-1}}{1+t^x} dt \quad (x > y > 0)
+    \end{equation}
+    を$\Gamma$関数で表わせ。
+
+    解答：
+    \begin{equation}
+        \frac{1}{x} \Gamma\left(1 - \frac{y}{x}\right) \Gamma\left(\frac{y}{x}\right)
+    \end{equation}
+\end{problem}
+
+\begin{problem}
+    \begin{equation}
+        \int_0^{\pi/2} \frac{\cos^{2x-1} \theta \sin^{2y - 1} \theta}
+            {(a \cos^2\theta + b \sin^2\theta)^{x+y}} d\theta \quad (a, b, x, y > 0)
+    \end{equation}
+    を$\Gamma$関数で表わせ。
+
+    解答：
+    \begin{equation}
+        \frac{1}{2 a^x b^y} \frac{\Gamma(x) \Gamma(y)}{\Gamma(x + y)}
+    \end{equation}
+\end{problem}
+
+\begin{problem}
+    \begin{equation}
+        \left(\int_0^{\pi/2} \sqrt{\sin \theta} d\theta\right)
+        \left(\int_0^{\pi/2} \frac{d\theta}{\sqrt{\sin\theta}}\right)
+        = \pi
+    \end{equation}
+    を示せ。
+\end{problem}
+
+\begin{problem}[積分]
+    \,
+    \begin{itemize}
+        \item \cite[第III章 例題8.1]{杉浦+89}
+        \item \cite[第III章 問8.1 (1)-(6)]{杉浦+89}
+        \item \cite[第III章 問8.2 (1),(2)]{杉浦+89}
+        \item \cite[第III章 問8.3 (1)]{杉浦+89}
+    \end{itemize}
+    を読者の演習問題とする。
+\end{problem}
+
+\begin{problem}[Stirling の公式]
+    \,
+    \begin{itemize}
+        \item \cite[第III章 例題8.5]{杉浦+89}
+    \end{itemize}
+    を読者の演習問題とする。
+\end{problem}
+
+\end{document}

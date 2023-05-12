@@ -1,0 +1,3985 @@
+\documentclass[report]{jlreq}
+\usepackage{global}
+\usepackage{./local}
+\subfiletrue
+\def\assetspath{../}
+\begin{document}
+
+
+% ============================================================
+%
+% ============================================================
+\chapter{層}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{前層と層}
+
+\begin{definition}[前層]
+    $X$を位相空間とする。
+    $\calF$が$X$上の
+    \term{前層}[presheaf]{前層}[ぜんそう]
+    であるとは、
+    $\calF$が
+    $X$の開集合系$\calT$ (これは集合の包含関係を射として圏をなす) から
+    圏$\CatSet$への反変関手であることをいう。
+    圏$\CatSet$を$\CatRing$や$\lMod{R}$などに取り替えたものは
+    それぞれ
+    \termsilent{環の前層}[presheaf of rings]、
+    \termsilent{$R$-代数の前層}[presheaf of $R$-algebras]
+    などという。
+
+    各$U \opensubset X$に対し、
+    $\calF(U)$の元を
+    \term{$U$上の$\calF$の切断}[section of $\calF$ over $U$]
+        {切断!前層の---}[せつだん]
+    という。
+\end{definition}
+
+\begin{definition}[層]
+    $X$を位相空間とする。
+    $X$上の前層$\calF$が
+    \term{層}[sheaf]{層}[そう]であるとは、
+    $\calF$が次をみたすことをいう:
+    任意の$U \opensubset X$とその開被覆
+    $U = \bigcup_{i \in I} U_i \; (U_i \opensubset X)$に対し
+    \begin{enumerate}
+        \item 切断の族$s_i \in \calF(U_i), \; i \in I$であって
+            すべての$i, j \in I$に対し
+            $s_i = s_j \; \text{on} \; U_i \cap U_j$
+            をみたすものが与えられたならば、
+            切断$s \in \calF(U)$であって
+            すべての$i \in I$に対し
+            $s = s_i \; \text{on} \; U_i$をみたすものが一意に存在する。
+    \end{enumerate}
+    が成り立つ。
+\end{definition}
+
+\begin{definition}[芽と茎]
+    \TODO{}
+\end{definition}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{局所環付き空間}
+
+\begin{definition}[局所環付き空間]
+    位相空間$X$と
+    $X$上の可換$R$-代数の層$\calO_X$の組
+    $(X, \calO_X)$が
+    \term{局所$R$-環付き空間}[locally $R$-ringed space]
+        {局所環付き空間}[きょくしょかんつきくうかん]
+    であるとは、
+    各$x \in X$に対し
+    茎$\calO_{X, x}$が局所環であることをいう。
+\end{definition}
+
+
+% ============================================================
+%
+% ============================================================
+\newpage
+\chapter{多様体}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{位相多様体}
+
+本稿の主題は可微分多様体であるが、
+比較のために位相多様体の定義も与えておく。
+
+\begin{definition}[位相多様体]
+    \idxsym{dimension of a topological manifold}{$\dim M$}{位相多様体$M$の次元}
+    $n \in \Z_{\ge 0}$とする。
+    Hausdorff であって各点が$\R^n$の開集合と同相な
+    開近傍をもつ位相空間$M$を
+    \term{$n$次元位相多様体}[$n$-dimensional topological manifold]
+        {位相多様体}[いそうたようたい]
+    という。
+    $n$を$M$の\term{次元}[dimension]{次元}[じげん]といい
+    $\dim M = n$と書く。
+\end{definition}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{可微分多様体}
+
+可微分多様体を定義する。
+可微分多様体とは、位相多様体であって
+アトラスと呼ばれる付加構造を持つもののことである。
+\TODO{同値類ではなく？}
+
+\TODO{アトラスによる定義と局所環付き空間による定義の関係を書きたい}
+
+\begin{definition}[アトラス]
+    $n, r \in \Z_{\ge 0}$とする。
+    $M$を$n$次元位相多様体とする。
+    族$\{ (U_\lambda, \varphi_\lambda) \}_{\lambda \in \Lambda}$が
+    $M$の
+    \term{$C^r$級アトラス}[$C^r$ atlas]{アトラス}[あとらす]
+    であるとは、次が成り立つことをいう:
+    \begin{enumerate}
+        \item 各$\varphi_\lambda$は$M$の開集合$U_\lambda$から
+            $\R^n$の開集合の上への同相写像である。
+        \item $\{U_\lambda\}_\lambda$は$M$の開被覆になっている。
+        \item 任意の$\alpha, \beta \in \Lambda$に対し
+            合成写像$\varphi_\beta \circ \varphi_\alpha^{-1}
+                \colon \varphi_\alpha(U_\alpha \cap U_\beta)
+                \to \varphi_\beta(U_\alpha \cap U_\beta)$
+            は$C^r$級である。
+    \end{enumerate}
+    ここで
+    \begin{itemize}
+        \item アトラスの元を\term{チャート}[chart]{チャート}という。
+        \item $\varphi_\lambda$を
+            \term{局所座標写像}[local coordinate map]{局所座標写像}[きょくしょざひょうしゃぞう]
+            あるいは
+            \term{局所座標}[local coordinate]{局所座標}[きょくしょざひょう]
+            という。
+    \end{itemize}
+\end{definition}
+
+\begin{definition}[可微分構造]
+    \TODO{}
+\end{definition}
+
+\begin{definition}[可微分多様体]
+    $n, r \in \Z_{\ge 0}$とする。
+    $n$次元位相多様体$M$が
+    \term{$C^r$級可微分多様体}
+        [$C^r$ differentiable manifold]
+        {可微分多様体}[かびぶんたようたい]
+    あるいは単に
+    \term{$C^r$多様体}{可微分多様体}[かびぶんたようたい]
+    であるとは、$M$の$C^r$級アトラス
+    $\{ (U_\lambda, \varphi_\lambda) \}_{\lambda \in \Lambda}$
+    が与えられていることをいう\footnote{
+        文献によってはさらに第2可算性やパラコンパクト性を課す場合もある。
+    }。
+\end{definition}
+
+\begin{definition}[標準的な座標]
+    $n \in \Z_{\ge 0}$とする。
+    $\R^n$をアトラス$\{ (\R^n, \id) \}$により
+    可微分多様体とみなしたときの局所座標$\id = (x_1, \dots, x_n)$を
+    $\R^n$の
+    \term{標準的な座標}[standard coordinate]{標準的な座標}[ひょうじゅんてきなざひょう]
+    という。
+\end{definition}
+
+\begin{remark}
+    本稿では位相多様体や{\smooth}以外の可微分多様体を扱わないから、
+    以後\highlight{{\smooth}多様体や{\smooth}アトラスのことを
+    単に多様体やアトラスと呼ぶ}ことにする。
+\end{remark}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{基本的な多様体}
+
+基本的な多様体の例を挙げる。
+
+\TODO{}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{
+    \texorpdfstring{%
+        {\smooth}関数と{\smooth}写像%
+    }{%
+        C-infinity 関数と C-infty 写像%
+    }%
+}
+
+\TODO{$\R$値\smooth 関数は多様体を局所環付き空間と考えたとき
+        自然に付随するものであり、一方\smooth 写像は
+        多様体の射だから異なる概念？}
+
+\begin{definition}[\smooth 関数]
+    $M$を$n$次元多様体、$k \in \Z_{\ge 1}$とする。
+    写像$f \colon M \to \R^k$が
+    \term{\smooth 関数}[smooth function]{\smooth 関数}[C infinity かんすう]
+    であるとは、
+    任意の$p \in M$に対し、
+    $p$の属する$M$のチャート$(U, \varphi)$であって
+    $\varphi(U)$上$f \circ \varphi^{-1}$が
+    \smooth となるものが存在することをいう。
+\end{definition}
+
+\begin{definition}[{\smooth}写像]
+    \TODO{{\smooth}写像と diffeo}
+\end{definition}
+
+\smooth 写像の座標表示は
+具体的な計算を実行する上で不可欠の概念である。
+
+\begin{definition}[座標表示]
+    \idxsym{coordinate representation}{$\what{F}$}{$F$の座標表示}
+    $M, N$をそれぞれ次元$m, n$の多様体、
+    $F \colon M \to N$を (一般の) 写像とする。
+    このとき各$p \in M$と、
+    $p$の属する$M$の任意のチャート$(U, \varphi = (x^1, \dots, x^m))$、
+    および
+    $F(p)$の属する$N$の任意のチャート$(V, \psi = (y^1, \dots, y^n))$に対し、
+    合成
+    $\psi \circ F \circ \varphi^{-1}
+        \colon \varphi(U) \to \psi(V)$
+    をチャート$(U, \varphi), (V, \psi)$に関する
+    (あるいは座標$x^1, \dots, x^m; \; y^1, \dots, y^n$に関する)
+    $F$の
+    \term{座標表示}[coordinate representation]{座標表示}[ざひょうひょうじ]
+    という。
+    一般的な記号ではないが、本稿ではこれを$\what{F}$と書くことがある。
+    \begin{equation}
+        \begin{tikzcd}
+            U
+                \ar{r}{F}
+                \ar{d}[swap]{\varphi}
+                & V
+                    \ar{d}{\psi} \\
+            \varphi(U)
+                \ar{r}[swap]{\what{F}}
+                & \psi(V)
+        \end{tikzcd}
+    \end{equation}
+\end{definition}
+
+
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{接ベクトル}
+
+多様体の接ベクトルは
+Euclid 空間の幾何学的な接ベクトルの性質を一般化して定義されるが、
+その方法にはいくつかの流儀があり、
+どれを定義と考えてどれを性質と考えるかは文献により異なる。
+
+\begin{enumerate}
+    \item {\smooth}関数の導分としての定義。
+        \cite{Lee12}はこの定義を採用している。
+        同値類を扱わないので具体性が高いというメリットがある。
+        また、写像の微分などが座標によらないことがわかりやすい。
+        短所として、接ベクトルの局所的な性質を示すのに
+        bump 関数を使わなければならないため、
+        解析多様体を扱うには適さない。
+    \item {\smooth}関数の芽の導分としての定義。
+        \cite{Tu17}や\cite{松本88}はこの定義を採用している。
+        接ベクトルの局所的な性質を説明するのに便利だが、
+        定義の複雑さが増すという難点がある。
+    \item 曲線の同値類としての定義。
+        \cite{Wed16}はこの定義を採用している。
+        この定義では接ベクトルの局所的な性質が明らかである。
+        また、写像の微分の定義や具体的な計算が簡単になるというメリットもある。
+        短所として、接空間にベクトル空間構造が入ることを示すのが難しくなる。
+    \item タプルの同値類としての定義。
+        歴史的に最も古く、物理では今でもよく使われている。
+\end{enumerate}
+
+ここでは (1) の立場で接ベクトルを定義する。
+
+\begin{definition}[導分]
+    $n \in \Z_{\ge 1}$とする。
+    \begin{enumerate}
+        \item $p \in M$とする。
+            写像$D \colon \smooth(M) \to \R$が
+            \term{$p$での導分}[derivation at $p$]{導分!1点での---}[どうぶん]
+            であるとは、$D$が次をみたすことをいう:
+            \begin{enumerate}
+                \item $D$は$\R$-線型である。
+                \item 各$f, g \in \smooth(M)$に対し、
+                    \begin{equation}
+                        D(fg) = D(f)g(p) + f(p)D(g)
+                    \end{equation}
+                    が成り立つ。
+            \end{enumerate}
+        \item 写像$D \colon \smooth(M) \to \smooth(M)$が
+            \term{導分}[derivation]{導分}[どうぶん]
+            であるとは、$D$が次をみたすことをいう:
+            \begin{enumerate}
+                \item $D$は$\R$-線型である。
+                \item 各$f, g \in A$に対し、
+                    \begin{equation}
+                        D(fg) = D(f)g + fD(g)
+                    \end{equation}
+                    が成り立つ。
+            \end{enumerate}
+    \end{enumerate}
+\end{definition}
+
+\begin{definition}[多様体の接空間]
+    \idxsym{tangent space}{$T_pM$}{$M$の接空間}
+    $M$を多様体、$p \in M$とする。
+    $p$での導分全体のなす$\R$-ベクトル空間を
+    $T_pM$と書き、
+    $p$における$M$の
+    \term{接空間}[tangent space]{接空間}[せつくうかん]
+    と呼ぶ。
+\end{definition}
+
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{写像の微分}
+
+\smooth 写像の微分を定義する。
+
+\begin{definition}[\smooth 写像の微分]
+    $M, N$をそれぞれ次元$m, n$の多様体、
+    $F \colon M \to N$を\smooth 写像とする。
+    各$p \in M$に対し、
+    $p$における$F$の\term{微分}[differential]{微分}[びぶん]
+    $dF_p \colon T_pM \to T_{F(p)}N$を
+    \begin{equation}
+        dF_p(v)(f)
+            \coloneqq v(f \circ F)
+            \quad
+            (v \in T_pM, \; f \in \smooth(N))
+    \end{equation}
+    で定義する (well-defined 性はこのあと示す)。
+\end{definition}
+
+\begin{proof}[well-defined 性の証明.]
+    $dF_p(v)$が$F(p)$における導分であることを示せばよい。
+    \TODO{}
+\end{proof}
+
+\begin{proposition}[チェインルール]
+    \TODO{}
+\end{proposition}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+\subsection{ベクトル空間の接空間}
+
+ベクトル空間を多様体とみなせば、
+その接空間はもとのベクトル空間と自然に同型となる。
+
+\begin{proposition}[ベクトル空間とその接空間との自然な同型]
+    $V$を有限次元$\R$-ベクトル空間とし、
+    標準的な方法で多様体とみなす。
+    このとき各$a \in V$に対し、写像
+    \begin{alignat}{1}
+        &V \to T_aV,
+            \quad
+            v \mapsto D_v|_a \\
+        &D_v|_a(f)
+            \coloneqq \dd{t} f(a + tv) \Big|_{t = 0}
+            \quad (f \in \smooth(V))
+    \end{alignat}
+    は、任意の$\R$-ベクトル空間$W$と
+    $\R$-線型写像$L \colon V \to W$に対し図式
+    \begin{equation}
+        \begin{tikzcd}
+            V
+                \ar{r}{\cong}
+                \ar{d}[swap]{L}
+                & T_aV
+                    \ar{d}{dL_a} \\
+            W
+                \ar{r}[swap]{\cong}
+                & T_{L(a)}W
+        \end{tikzcd}
+    \end{equation}
+    を可換にする自然な$\R$-線型同型である。
+\end{proposition}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+\subsection{座標表示を用いた微分の計算}
+
+微分を具体的に計算するには座標表示を用いるのが便利である。
+
+\begin{proposition}
+    $M, N$をそれぞれ次元$m, n$の多様体、
+    $F \colon M \to N$を{\smooth}写像とする。
+    このとき、各$p \in M$と
+    $p$の属する$M$の任意のチャート$(U, \varphi = (x^1, \dots, x^m))$および
+    $F(p)$の属する$N$の任意のチャート$(V, \psi = (y^1, \dots, y^n))$に対し
+    \begin{equation}
+        dF_p \myparen{\deldel{x^i}_p}
+            = \deldel[\what{F}^j]{x^i}(\what{p})
+            \deldel{y^j}_{F(p)}
+    \end{equation}
+    が成り立つ。
+    ただし$\what{F}$はチャート$(U, \varphi), (V, \psi)$に関する
+    $F$の座標表示であり、
+    $\what{p} \coloneqq \varphi(p)$である。
+\end{proposition}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+
+\subsection{速度ベクトル}
+
+多様体内の{\smooth}曲線を
+{\smooth}写像の特別な場合とみなせば、
+その接ベクトルとして速度ベクトルの概念が定義できる。
+
+\begin{definition}[速度ベクトル]
+    \idxsym{velocity vector}{$\dd{t}\bigg|_{t = t_0} \gamma(t)$}
+        {曲線$\gamma$の$t = t_0$における速度ベクトル}
+    $M$を多様体、
+    $J$を$\R$の開区間、
+    $\gamma \colon J \to M$
+    を{\smooth}曲線とする。
+    各$t_0 \in J$に対し、
+    $\gamma$の$t = t_0$における
+    \term{速度ベクトル}[velocity vector]{速度ベクトル}[そくどべくとる]
+    を
+    \begin{equation}
+        \dd{t}\bigg|_{t = t_0} \gamma(t)
+            \coloneqq d\gamma\left(
+                \dd{t}\bigg|_{t = t_0}
+            \right)
+    \end{equation}
+    で定義する。ただし$\dd{t}\bigg|_{t = t_0}$は
+    $J \subset \R$の標準的な座標$t$
+    により定まる$T_{t_0}\R$の基底
+    $\deldel{t}_{t_0}$のことである。
+\end{definition}
+
+速度ベクトルを用いて
+微分の具体的な計算をすることができる。
+
+\begin{proposition}
+    $M, N$を多様体、$f \colon M \to N$を{\smooth}写像、
+    $J$を$\R$の開区間、
+    $\gamma \colon J \to M$を{\smooth}曲線とする。
+    各$t_0 \in J$に対し、
+    曲線$f \circ \gamma$の$t = t_0$における速度ベクトルは
+    \begin{equation}
+        \dd{t}\bigg|_{t = t_0} f \circ \gamma (t)
+            = df\left(\dd{t}\bigg|_{t = t_0} \gamma(t) \right)
+    \end{equation}
+    で与えられる。
+\end{proposition}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{埋め込み、はめ込み、沈め込み}
+
+本節では、写像の微分からもとの写像の性質を調べることを考える。
+微分の階数を利用した写像の分類として、
+はめ込みと埋め込み、沈め込みを定義する。
+はめ込みと埋め込みは部分多様体の理論と密接に関係している。
+また、沈め込みは位相空間論における商写像の
+多様体論における類似になっている。
+
+\begin{definition}[はめ込み]
+    {\smooth}写像$f \colon M \to N$が
+    \term{はめ込み}[immersioni]{はめ込み}[はめこみ]
+    であるとは、各$p \in M$に対し$df_p$が単射であることをいう。
+\end{definition}
+
+\begin{definition}[埋め込み]
+    {\smooth}写像$f \colon M \to N$が
+    \term{埋め込み}[embedding]{埋め込み}[うめこみ]
+    であるとは、次が成り立つことをいう:
+    \begin{enumerate}
+        \item $f$ははめ込みである。
+        \item $f$は中への同相写像である。
+    \end{enumerate}
+\end{definition}
+
+\begin{definition}[沈め込み]
+    {\smooth}写像$f \colon M \to N$が
+    \term{沈め込み}[submersion]{沈め込み}[しずめこみ]
+    であるとは、各$p \in M$に対し$df_p$が全射であることをいう。
+\end{definition}
+
+\begin{example}[単射はめ込みだが埋め込みでない例]
+    \TODO{8の字曲線}
+\end{example}
+
+\subsection{普遍性}
+
+\begin{theorem}[埋め込みの普遍性]
+    $i \colon A \to M$を埋め込みとする。
+    このとき次が成り立つ:
+    \begin{alignat}{1}
+        &\forall \; g \colon N \to M
+            \colon \text{ {\smooth} with $g(N) \subset A$} \\
+        &\exists! \; f \colon N \to A
+            \colon \smooth
+            \quad \text{s.t.} \quad \\
+        &\quad \begin{tikzcd}[ampersand replacement=\&]
+            N \ar[dashed]{rd}[swap]{f} \ar{r}{g} \& M \\
+            \& A \ar{u}[swap]{i}
+        \end{tikzcd}
+    \end{alignat}
+\end{theorem}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+\begin{theorem}[沈め込みの普遍性]
+    $q \colon M \to N$を全射かつ沈め込みとする。
+    このとき次が成り立つ:
+    \begin{alignat}{1}
+        &\forall \; g \colon M \to L
+            \colon \text{
+                {\smooth}
+                \; with \;
+                $q(x) = q(y) \Rightarrow g(x) = g(y)$
+            } \\
+        &\exists! \; f \colon N \to L
+            \colon \smooth
+            \quad \text{s.t.} \quad \\
+        &\quad \begin{tikzcd}[ampersand replacement=\&]
+            M \ar{d}[swap]{q} \ar{r}{g} \& L \\
+            L \ar[dashed]{ru}[swap]{f}
+        \end{tikzcd}
+    \end{alignat}
+\end{theorem}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+\subsection{逆関数定理}
+
+\begin{theorem}[逆関数定理]
+    \label[theorem]{thm:inverse-function-theorem}
+    $f \colon M \to N$を{\smooth}写像、
+    $p \in M$とする。
+    このとき$df_p$が全単射ならば、
+    $p$のある開近傍$U \opensubset M$と
+    $f(p)$のある開近傍$V \opensubset N$が存在して
+    $f|_U$は$U$から$V$の上への diffeo となる。
+\end{theorem}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+ランク定理により、行列の階数標準形の
+{\smooth}写像における類似が成り立つ。
+
+\begin{theorem}[ランク定理]
+    \TODO{}
+\end{theorem}
+
+
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{部分多様体}
+
+部分多様体について述べる。
+
+\begin{definition}[部分多様体]
+    $M$を多様体、$S \subset M$とする。
+    $S$が$M$の
+    \term{埋め込み部分多様体}[embedded submanifold]{埋め込み部分多様体}[うめこみぶぶんたようたい]
+    あるいは単に
+    \term{部分多様体}[submanifold]{部分多様体}[ぶぶんたようたい]
+    であるとは、
+    $S$が$M$の部分空間としての位相を持ち、
+    包含写像$S \hookrightarrow M$が埋め込みであるような
+    可微分構造を持つことをいう。
+    このとき、$\dim M - \dim S$を$S$の
+    \term{余次元}[codimension]{余次元}[よじげん]
+    という。
+\end{definition}
+
+\begin{proposition}[開部分多様体]
+    \TODO{}
+\end{proposition}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+\begin{proposition}[埋め込みの像は部分多様体]
+    $M, N$を多様体、
+    $F \colon N \to M$を埋め込み、
+    $S \coloneqq F(N)$とおく。
+    $S$に$M$の部分空間としての位相を入れると、
+    $F$が$N \to S$なる diffeo となるような
+    $S$の$M$の部分多様体としての可微分構造がただひとつ存在する。
+\end{proposition}
+
+\begin{proof}
+    $N$の atlas $\{ (U_\alpha, \varphi_\alpha) \}_{\alpha \in A}$をひとつ選ぶ。
+    $F$は埋め込みゆえに中への同相だから、
+    $\{ (F(U_\alpha), \varphi_\alpha \circ F^{-1}) \}$は
+    $S$の atlas となる。
+    このとき、$N$のチャート$(U, \varphi)$と
+    $S$のチャート$(F(U), \varphi \circ F^{-1})$に関する
+    $F$の座標表示は恒等写像となるから、
+    $F$は local diffeo である。
+    \begin{equation}
+        \begin{tikzcd}
+            U
+                \ar{r}{F}
+                \ar{d}[swap]{\varphi}
+                & F(U)
+                    \ar{d}{\varphi \circ F^{-1}} \\
+            \varphi(U)
+                \ar[equal]{r}
+                & \varphi(U)
+        \end{tikzcd}
+    \end{equation}
+    $F$が全単射であることとあわせて、$F$は diffeo である。
+    包含写像$S \hookrightarrow M$は
+    diffeo $S \to N$と埋め込み$N \to M$の合成だから埋め込みである。
+    よって$S$は$M$の部分多様体である。
+    一意性は$\id_S = F \circ F^{-1}$が diffeo となることから従う。
+\end{proof}
+
+\begin{definition}[defining map]
+    \TODO{}
+\end{definition}
+
+\subsection{部分多様体の接空間}
+
+部分多様体の接空間は、
+包含写像の微分によってもとの多様体の接空間の部分空間とみなす。
+
+\begin{definition}[部分多様体の接空間]
+    \begin{equation}
+        T_pM = d\iota_p(T_pM) \subset T_pN
+    \end{equation}
+    とみなす。
+    \TODO{}
+\end{definition}
+
+部分多様体の接空間はいくつかの方法で記述できる。
+
+\begin{proposition}[部分多様体の接空間の defining map による記述]
+    \begin{equation}
+        T_pS = \Ker (d\Phi)_p
+    \end{equation}
+    \TODO{}
+\end{proposition}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+\subsection{正則点と臨界点}
+
+正則点の概念は
+{\smooth}写像を用いて部分多様体を定義するために有用である。
+
+\begin{definition}[正則点と臨界点]
+    $M, N$を多様体、
+    $f \colon M \to N$を{\smooth}写像とする。
+    \begin{enumerate}
+        \item $p \in M$において
+            微分$df_p$が全射であるとき
+            $p$を$f$の\term{正則点}[regular point]{正則点}[せいそくてん]
+            といい、そうでないとき
+            \term{臨界点}[critical point]{臨界点}[りんかいてん]
+            という。
+        \item $q \in N$において
+            $f^{-1}(q)$上の点がすべて正則点であるとき
+            $q$を$f$の\term{正則値}[regular value]{正則値}[せいそくち]
+            といい、そうでないとき
+            \term{臨界値}[critical value]{臨界値}[りんかいち]
+            という。
+    \end{enumerate}
+\end{definition}
+
+\begin{theorem}[Regular Level Set Theorem]
+    $M, N$を多様体、
+    $f \colon M \to N$を{\smooth}写像とする。
+    $q \in N$が正則値ならば
+    $f^{-1}(q)$は$M$の部分多様体であり、
+    その余次元は$N$の次元に等しい。
+\end{theorem}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{境界付き多様体}
+
+\TODO{書く場所はここでいいか？}
+
+\TODO{mfd with corners も定義したい}
+
+\begin{definition}[境界付き多様体]
+    \idxsym{R^n minus}{$\R_{-}^n$}{境界付き多様体の座標空間}
+    \idxsym{boundary of R^n minus}{$\del \R_{-}^n$}{境界付き多様体の座標空間の境界}
+    \idxsym{boundary of a manifold}{$\del M$}{境界付き多様体の境界}
+    表記の簡略化のため
+    \begin{alignat}{1}
+        \R_{-}^n &\coloneqq \{ (x_1, \dots, x_n) \in \R^n \mid x_1 \le 0 \} \\
+        \del \R_{-}^n &\coloneqq \{ (x_1, \dots, x_n) \in \R^n \mid x_1 = 0 \}
+    \end{alignat}
+    と書くことにする。
+    位相空間$M$が
+    \term{$n$次元境界付き多様体}[manifold with boundary]
+    {境界付き多様体}[きょうかいつきたようたい]
+    であるとは、
+    次が成り立つことをいう:
+    \begin{enumerate}
+        \item $M$は Hausdorff である。
+        \item ($M$はチャートをもつ) $M$はチャートの族
+            $\{ (U_\lambda, \varphi_\lambda, V_\lambda) \}_\lambda$で被覆される。すなわち、
+            \begin{enumerate}
+                \item 各$\varphi_\lambda$は$M$の開集合$U_\lambda$から
+                    $\R_{-}^n$の開集合$V_\lambda$への同相写像であり、
+                \item $\{U_\lambda\}_\lambda$は$M$の開被覆になっている。
+            \end{enumerate}
+        \item (チャートは滑らかに貼りあう)
+            任意のチャート$(U_\alpha, \varphi_\alpha, V_\alpha), (U_\beta, \varphi_\beta, V_\beta)$に対し、
+            合成写像$\varphi_\beta \circ \varphi_\alpha^{-1}
+                \colon \varphi_\alpha(U_\alpha \cap U_\beta)
+                \to \varphi_\beta(U_\alpha \cap U_\beta)$
+            は{\smooth}である。
+            ただし、$\del \R_{-}^n$上では片側微分を考える。
+        \item $M$はパラコンパクトである。
+    \end{enumerate}
+    ここで
+    \begin{itemize}
+        \item 部分集合
+            \begin{equation}
+                \del M \coloneqq \bigcup_{\alpha} \varphi_{\alpha}^{-1} (\del \R_{-}^n)
+            \end{equation}
+            を$M$の\term{境界}[boundary]{境界}[きょうかい]
+            とよぶ。
+    \end{itemize}
+\end{definition}
+
+\begin{remark}[多様体の境界]
+    本稿では、基本的に多様体と境界付き多様体の両方を並行的に論じる。
+    そこで、以後とくに断らない限り、
+    \highlight{境界付き多様体のことも単に多様体と呼ぶ}ことがある。
+\end{remark}
+
+\begin{definition}[閉多様体]
+    $M$が\term{閉多様体}[closed manifold]{閉多様体}[へいたようたい]であるとは、
+    $M$が境界を持たないコンパクトな多様体であることをいう。
+\end{definition}
+
+\begin{proposition}[境界の多様体構造]
+    $M$を$n$次元境界付き多様体、
+    $\del M \neq \emptyset$、
+    $\{ (U_\alpha, \varphi_\alpha) \}$を$M$の atlas とする。
+    このとき$\del M$は
+    $\{ (U_\alpha \cap \del M, \varphi_\alpha|_{U_\alpha \cap \del M}) \}$を
+    atlas として$M$の境界を持たない$(n - 1)$次元部分多様体となる。
+\end{proposition}
+
+\begin{proof}
+    \TODO{局所座標写像が$\del \H^n = \R^{n - 1}$への写像となることと張り合わせの滑らかさ}
+\end{proof}
+
+\begin{definition}[境界付き多様体の接空間]
+    \TODO{}
+\end{definition}
+
+\begin{definition}[外向き接ベクトル]
+    \TODO{これは内在的な概念か？}
+    $M$を$n$次元境界付き多様体、$p \in \del M$とする。
+    $v \in T_pM$が\term{外向き}[outward]{外向き}[そとむき]
+    であるとは、
+    $p$の属するチャート$(U, \varphi)$および
+    $\varphi(U)$上の局所座標$(x_1, \dots, x_n)$をひとつずつ選んで
+    \begin{equation}
+        \varphi_{*p} v
+            = v_1 \deldel{x_1}_{\varphi(p)}
+            + \cdots
+            + v_n \deldel{x_n}_{\varphi(p)}
+            \quad (v_i \in \R)
+    \end{equation}
+    と表したとき$v_1 > 0$であることをいう。
+    $v$が外向きであるかどうかは well-defined に定まる (このあとすぐ示す)。
+\end{definition}
+
+\begin{proof}[定義の well-defined 性]
+    \TODO{}
+\end{proof}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{1の分割}
+
+1の分割について述べる。
+1の分割は、局所的な写像を大域的な写像に拡張するために必須の道具である。
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+\begin{definition}[1の分割]
+    $M$を多様体、
+    $\calU = (U_\alpha)_{\alpha \in A}$を$M$の開被覆とする。
+    \term{$\calU$に従属する1の分割}[partition of unity subordinate to $\calU$]
+        {1の分割}[1のぶんかつ]
+    とは、{\smooth}関数の族$(\rho_\alpha)_{\alpha \in A}$であって
+    次をみたすものをいう:
+    \begin{enumerate}
+        \item 各$\alpha \in A, \; x \in M$に対し
+            $0 \le \rho_\alpha(x) \le 1$が成り立つ。
+        \item 各$\alpha \in A$に対し
+            $\supp \rho_\alpha \subset U_\alpha$が成り立つ。
+        \item 族$(\supp \rho_\alpha)_{\alpha \in A}$は
+            局所有限である。
+        \item 各$x \in M$に対し
+            $\sum_{\alpha \in A} \rho_\alpha(x) = 1$が成り立つ。
+    \end{enumerate}
+\end{definition}
+
+\begin{theorem}[1の分割の存在]
+    $M$をパラコンパクトな多様体とする。
+    このとき、$M$の任意の開被覆$\calU$に対し、
+    $\calU$に従属する1の分割が存在する。
+\end{theorem}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+1の分割の応用について述べる。
+
+\begin{proposition}[bump 関数の存在]
+    \TODO{}
+\end{proposition}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\newpage
+\section{演習問題}
+
+\begin{problem}[幾何学III 問1.1.23]
+    \label[problem]{problem:geometry3-1.1.23}
+    $M$を$r$次元多様体とする。
+    このとき$TM$は$M$上のベクトル束であって
+    $TM$の階数は$r$となることを示せ。
+    また$(U, \varphi_\alpha = (x^1, \dots, x^r)), \;
+        (V, \varphi_\beta = (y^1, \dots, y^r))$
+    をチャートとするとき、
+    これらのチャートから定まる局所自明化の間の変換関数は
+    $D(\varphi_\alpha \circ \varphi_\beta^{-1})$で与えられることを示せ。
+\end{problem}
+
+\begin{answer}
+    $TM$の射影を$\pi$とおく。
+    $TM$が$M$上のランク$r$ベクトル束となることは
+    \cref{def:tangent-space-manifold-structure} を参照。
+
+    つぎに、
+    与えられたチャートにより定まる$U_\alpha, U_\beta$上の$TM$の局所自明化をそれぞれ
+    $\psi_\alpha, \psi_\beta$とおく。
+    状況を表した図式が次である:
+    \begin{equation}
+        \begin{tikzcd}[column sep=large, row sep=large]
+            (U_\alpha \cap U_\beta) \times \R^r \ar{rd}[swap]{\mathrm{pr}_1}
+                & \pi^{-1}(U_\alpha \cap U_\beta)
+                    \ar{l}[swap]{\psi_\alpha} \ar{d}{\pi} \ar{r}{\psi_\beta}
+                & (U_\alpha \cap U_\beta) \times \R^r \ar{ld}{\mathrm{pr}_1} \\
+            & U_\alpha \cap U_\beta
+        \end{tikzcd}
+    \end{equation}
+    各$p \in U_\alpha \cap U_\beta$に対し、
+    $\psi_\alpha, \psi_\beta$は
+    $\pi^{-1}(p) \to \R^r$の同型
+    \begin{equation}
+        v \mapsto ((dx^1)_p(v), \dots, (dx^r)_p(v)), \quad
+        v \mapsto ((dy^1)_p(v), \dots, (dy^r)_p(v))
+    \end{equation}
+    をそれぞれ与える。
+    よって、合成$\psi_{\alpha\beta} \coloneqq
+    \psi_\alpha(p) \circ \psi_\beta(p)^{-1} \colon \R^r \to \R^r$は
+    $\R^r$の標準基底を
+    \begin{equation}
+        e_i \mapsto \myparen{\deldel{y^i}}_p
+            = \deldel[x^j]{y^i}(p) \myparen{\deldel{x^j}}_p
+            \mapsto \deldel[x^j]{y^i}(p) e_j
+    \end{equation}
+    と写す。行列の形で形式的に書けば
+    \begin{equation}
+        \psi_{\alpha\beta}(p)
+        \begin{bmatrix}
+             e_1, \dots, e_r
+        \end{bmatrix}
+        =
+        \begin{bmatrix}
+             e_1, \dots, e_r
+        \end{bmatrix}
+        \begin{bmatrix}
+            \deldel[x^1]{y^1}(p)
+            &\cdots
+            &\deldel[x^1]{y^r}(p) \\
+            \vdots &\vdots &\vdots \\
+            \deldel[x^r]{y^1}(p)
+            &\cdots
+            &\deldel[x^r]{y^r}(p)
+        \end{bmatrix}
+    \end{equation}
+    となる。したがって、
+    座標変換$\varphi_\alpha \circ \varphi_\beta^{-1}$の Jacobi 行列
+    $D(\varphi_\alpha \circ \varphi_\beta^{-1})$が
+    変換関数となっていることがわかる。
+\end{answer}
+
+\begin{problem}[幾何学III 問1.1.30]
+    $M$を多様体、$U \opensubset M$とする。
+    \begin{enumerate}
+        \item $\smooth(U)$は自然に$\Gamma_U(U \times \R)$と同一視できることを示せ。
+        \item $\frakX(U)$は$\smooth(U)$-加群であることを示せ。
+    \end{enumerate}
+\end{problem}
+
+\begin{answer}
+    \cref{prop:section-of-product-bundle-and-smooth-map} および
+    \cref{prop:module-structure-of-space-of-sections} を参照。
+\end{answer}
+
+\begin{problem}[幾何学III 問1.1.31]
+    $M$を多様体、$\pi$を$TM$の射影とする。
+    $M$上のゼロ切断を$S$とおくとき、
+    像$S(M)$は$M$と diffeo であり、逆写像は$\pi$で与えられることを示せ。
+\end{problem}
+
+\begin{answer}
+    $\pi$が逆写像を与えることは明らか。
+    $n \coloneqq \dim M$とおく。
+    $(U, \varphi)$を$M$のチャート、
+    これにより定まる$TM$のチャートを$(\pi^{-1}(U), \psi)$とおく。
+    このとき、これらのチャートに関する$S$の局所表示は
+    \begin{equation}
+        \varphi(U) \to \psi(U) = \varphi(U) \times \R^n,
+        \quad
+        (x^1, \dots, x^n) \mapsto (x^1, \dots, x^n, 0, \dots, 0)
+    \end{equation}
+    となる。
+    よって Jacobi 行列$D(\psi \circ S \circ \varphi^{-1})$は
+    $\varphi(U)$上いたるところ列フルランクである。
+    したがって$S$の微分$S_*$は$U$上いたるところ単射である。
+    このことと、$S$が$\pi$を連続逆写像として
+    同相$M \to S(M)$を与えることから、
+    $S$は埋め込みである。
+    したがって$S(M)$は$M$と diffeo である。
+\end{answer}
+
+\begin{problem}[幾何学III 問1.1.32]
+    $M$を多様体、
+    $\pi \colon E \to M$をランク$r$ベクトル束、
+    $U \opensubset M$、
+    $\psi \colon \pi^{-1}(U) \to U \times \R^r$を$E$の局所自明化とする。
+    各$v \in \R^r$に対し
+    $\sigma_v \colon U \to E, \; p \mapsto \psi^{-1}(p, v)$は
+    $\Gamma_U(E)$に属することを示せ。
+\end{problem}
+
+\begin{answer}
+    \TODO{}
+\end{answer}
+
+\begin{problem}[幾何学III 問1.2.11]
+    $U \opensubset \R^n, \; V \opensubset \R^n$、
+    $f \colon U \to V$を{\smooth}写像、
+    $U$上の局所座標を$(x^1, \dots, x^n)$、
+    $V$上の局所座標を$(y^1, \dots, y^n)$とする。
+    このとき、これらの局所座標に関する
+    $f$の座標表示を$(f^1, \dots, f^n)$とおくと
+    \begin{equation}
+        f^* dy^i = \sum_{j = 1}^n \deldel[f^i]{x^j} dx^j
+    \end{equation}
+    が成り立つことを示せ。
+\end{problem}
+
+\begin{answer}
+    各$p \in U$に対し
+    \begin{alignat}{1}
+        (f^* dy^i)_p \left( \deldel{x^j}_p \right)
+            &= (dy^i)_{f(p)} \left(
+                f_* \left( \deldel{x^j}_p \right)
+            \right) \\
+            &= (dy^i)_{f(p)} \left(
+                \deldel[f^k]{x^j}(p) \deldel{y^k}_{f(p)}
+            \right) \\
+            &= \deldel[f^i]{x^j}(p)
+    \end{alignat}
+    が成り立つことから従う。
+\end{answer}
+
+\begin{problem}[幾何学III 問1.3.9]
+    $M$を境界付き多様体とする。
+    $\iota \colon \del M \to M$を包含写像とする。
+    このとき、$\del M$上のベクトル束$TM|_{\del M} / \iota_* T(\del M)$は
+    自明束であることを示せ。
+\end{problem}
+
+\begin{answer}
+    表記の簡略化のため$E \coloneqq TM|_{\del M} / \iota_* T(\del M)$とおく。
+    $E$が自明束であることを示すには$E$の大域フレームの存在をいえばよいが、
+    $E$はランク$1$だから、$M$上いたるところ非零な切断の存在を示せばよい。
+    $M$のチャート$\{ (U_\alpha, \varphi_\alpha) \}$をひとつ選び、
+    $\varphi_\alpha = (x_\alpha^1, \dots, x_\alpha^n)$とおく。
+    各$\alpha$に対し、$\deldel{x_\alpha^1}$は
+    $U_\alpha$上の外向きベクトル場である。
+    そこで$\del M$の開被覆$\{ U_\alpha \cap \del M \}$に従属する
+    1の分割$\{ \rho_\alpha \}$をひとつ選び
+    写像$X \colon \del M \to TM$を
+    \begin{equation}
+        X \coloneqq \sum \rho_\alpha \deldel{x_\alpha^1}
+    \end{equation}
+    で定めると、これは$\iota$に沿う$TM$の切断、
+    すなわち$TM|_{\del M}$の切断である。
+    ここで、各$p \in M$に対し$X_p$は外向きだから
+    $\iota_* T(\del M)$には属さない。
+    したがって$X$と標準射$TM|_{\del M} \to E$との合成は
+    $M$上いたるところ非零な$E$の大域切断である。
+\end{answer}
+
+
+
+
+
+% ============================================================
+%
+% ============================================================
+\chapter{ベクトル束}
+
+この章ではベクトル束について述べる。
+ベクトル束は、その名の通りベクトル空間を束ねたものである。
+多様体には接束と呼ばれるベクトル空間が付随しており、
+微分が関与するあらゆる場面で重要な役割を果たす。
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{ベクトル束}
+
+\begin{definition}[ベクトル束]
+    $M$を多様体とする。
+    集合$E$が$M$上の
+    \term{ランク}[rank]{ランク}[らんく] $r$の
+    \term{ベクトル束}[vector bundle]{ベクトル束}であるとは、
+    $E$が次をみたすことである：
+    \begin{enumerate}
+        \item $E$は多様体である。
+        \item (射影) {\smooth}全射$\pi \colon E \to M$が与えられている。
+        \item (ファイバー) 各$x \in M$に対し$E_x \coloneqq \pi^{-1}(x)$は$r$次元ベクトル空間である。
+        \item (局所自明化) 各$x \in M$に対し、$M$における$x$の或る近傍$U$がとれて
+            次が成り立つ：
+            \begin{enumerate}
+                \item diffeo $\varphi \colon \pi^{-1}(U) \to U \times \R^r$が存在する。
+                \item $\varphi(y) \coloneqq \varphi|_{E_y}
+                    \colon E_y \to \{y\} \times \R^r \cong \R^r$
+                    は線型写像である\footnote{
+                        より強く線型同型であることを必要とする流儀もあるが、
+                        同型であることは他の条件とあわせて導かれる。
+                    }。
+            \end{enumerate}
+    \end{enumerate}
+    ここで、
+    \begin{itemize}
+        \item $E$をこのベクトル束の
+            \term{全空間}[total space]{全空間}[ぜんくうかん]という。
+        \item $E_x$を$x$上の$\pi$の
+            \term{ファイバー}[fiber]{ファイバー}という。
+        \item $\varphi$を$E$の$U$上の
+            \term{局所自明化}[local trivialization]{局所自明化}[きょくしょじめいか]という。
+            とくに$M$上の局所自明化を
+            \term{大域自明化}[global trivialization]{大域自明化}[たいいきじめいか]という。
+    \end{itemize}
+\end{definition}
+
+\begin{proposition}
+    上の定義の状況で、図式
+    \begin{equation}
+        \begin{tikzcd}
+            \pi^{-1}(U) \ar{r}{\varphi} \ar{rd}[swap]{\pi}
+                & U \times \R^r \ar{d}{\mathrm{pr}_1} \\
+            & U
+        \end{tikzcd}
+    \end{equation}
+    は可換である。
+\end{proposition}
+
+\begin{proof}
+    $x \in M,\; v \in E_x = \pi^{-1}(x)$に対し
+    \begin{alignat}{1}
+        \mathrm{pr}_1 \circ \varphi (v)
+            &= \mathrm{pr}_1 \circ \varphi|_{E_x} (v) \\
+            &= \mathrm{pr}_1 (x, w) \quad (w \in \R^r) \\
+            &= x \\
+            &= \pi(v)
+    \end{alignat}
+    が成り立つ。
+\end{proof}
+
+\begin{definition}[自明な束]
+    $M$を多様体、$\pi \colon E \to M$を$M$上のベクトル束とする。
+    $E$が\term{自明束}[trivial bundle]{自明束}[じめいそく]
+    であるとは、$E$の大域自明化が存在することをいう。
+\end{definition}
+
+\begin{example}
+    \term{直積束}[product bundle]{直積束}[ちょくせきそく]
+    $E \coloneqq M \times \R^r$はベクトル束である。
+    直積束は$M$上の局所自明化として$\id_{M \times \R^r}$をとったものである。
+    したがって直積束は自明な束である。
+\end{example}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{束準同型}
+
+束準同型の概念を述べる。
+
+\begin{definition}[束準同型]
+    $M$を多様体、
+    $\pi \colon E \to M$および$\pi' \colon E' \to M$を
+    $M$上のベクトル束とする。
+    {\smooth}写像$F \colon E \to E'$が
+    $M$上の\term{束準同型}[bundle homomorphism]{束準同型}[そくじゅんどうけい]であるとは、
+    \begin{enumerate}
+        \item 次の図式が可換である:
+            \begin{equation}
+                \begin{tikzcd}
+                    E \ar{rr}{F} \ar{rd}[swap]{\pi} && E' \ar{ld}{\pi'} \\
+                    & M
+                \end{tikzcd}
+            \end{equation}
+        \item $F$の各ファイバーへの制限は$\R$-線型写像である。
+    \end{enumerate}
+    をみたすことをいう。
+    $F$が逆写像$F^{-1}$をもち$F^{-1}$も$M$上の束準同型であるとき、
+    $F$を\term{束同型}[bundle isomorphism]{束同型}[そくどうけい]という。
+\end{definition}
+
+\begin{theorem}[束準同型の特徴付け]
+    $M$を多様体、
+    $\pi \colon E \to M$および$\pi' \colon E' \to M$を
+    $M$上のベクトル束とする。
+    写像$\calF \colon \Gamma(E) \to \Gamma(E')$に関する
+    次の条件は同値である:
+    \begin{enumerate}
+        \item $\calF$は$\smooth(M)$-線型写像である。
+        \item ある束準同型$F \colon E \to E'$が存在して
+            $\calF = F_\sharp$が成り立つ。
+            ただし$F_\sharp(\sigma) \coloneqq F \circ \sigma \; (\sigma \in \Gamma(E))$
+            の意味である。
+    \end{enumerate}
+\end{theorem}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{切断とフレーム}
+
+\subsection{切断}
+
+切断の概念を定義する。
+
+\begin{definition}[切断]
+    \idxsym{space of sections}{$\Gamma_U(E), \Gamma(U; E)$}{$U$上の$E$の切断全体の空間}
+    $M$を多様体、
+    $U \opensubset M$、
+    $\pi \colon E \to M$をベクトル束とする。
+    \begin{itemize}
+        \item {\smooth}写像$\sigma \colon U \to E$が次の図式を可換にするとき、
+            $\sigma$を$E$の$U$上の\term{切断}[section]{切断}[せつだん]という:
+            \begin{equation}
+                \begin{tikzcd}
+                    & E \ar{d}{\pi} \\
+                    U \ar{ur}{\sigma} \ar{r}[swap]{\id} & U
+                \end{tikzcd}
+            \end{equation}
+        \item とくに$x \in U$に対し$0_{E_x} \in E_x$を対応させる切断を
+            \term{ゼロ切断}[zero section]{ゼロ切断}[ぜろせつだん]という。
+        \item $E$の$U$上の切断全体の集合を$\Gamma_U(E)$あるいは$\Gamma(U; E)$と書く。
+    \end{itemize}
+\end{definition}
+
+\begin{proposition}[$\Gamma_U(E)$の$\smooth(U)$-加群構造]
+    \label[proposition]{prop:module-structure-of-space-of-sections}
+    $M$を多様体、
+    $U \opensubset M$、
+    $E$を$U$上のベクトル束とする。
+    このとき$\Gamma_U(E)$は、
+    点ごとの和とスカラー倍により
+    ゼロ切断を零元として$\smooth(U)$-加群となる。
+\end{proposition}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+一般に切断全体の集合$\Gamma(E)$は$\smooth(M)$-加群として自由ではないが\footnote{
+    cf. \url{https://math.stackexchange.com/questions/4052994/smooth-vector-fields-over-the-2-sphere-is-not-a-free-module} \\
+    ただし、
+    \term{Serre-Swan の定理}[Serre-Swan theorem]{Serre-Swan の定理}[Serre-Swan のていり]
+    によれば$\Gamma(E)$は一般に$\smooth(M)$-加群として有限生成かつ射影的である。
+}、
+次の命題により、$E$が直積束の場合は$\Gamma(E)$は自由$\smooth(M)$-加群となることがわかる。
+
+\begin{proposition}[直積束の切断と{\smooth}写像の同一視]
+    \label[proposition]{prop:section-of-product-bundle-and-smooth-map}
+    $M$を多様体とする。
+    このとき、
+    $\smooth(M)$-加群の同型
+    $\Gamma(M \times \R^r) \cong \bigoplus_{i = 1}^r \smooth(M)$が成り立つ。
+    すなわち、直積束$E = M \times \R^r$の切断は、
+    $M$上の$\R^r$-値{\smooth}写像と同一視できる。
+\end{proposition}
+
+\begin{proof}
+    $E$の切断$\sigma \colon M \to M \times \R^r$は、
+    或る写像$f \colon M \to \R^r$を用いて
+    \begin{equation}
+        \sigma(x) = (x, f(x))
+    \end{equation}
+    と書ける。このとき
+    \begin{equation}
+        f = \mathrm{pr}_2 \circ \sigma
+    \end{equation}
+    が成り立ち、$\mathrm{pr}_2 \colon M \times \R^r \to \R^r$は
+    {\smooth}だから、$f$も{\smooth}である。
+    逆に$M$上の{\smooth}写像$f \colon M \to \R^r$が与えられたとき、
+    $\sigma \coloneqq \id \times f$とおけば
+    $\sigma$は$E$の切断である。
+\end{proof}
+
+写像に沿う切断を定義する。
+
+\begin{definition}[写像に沿う切断]
+    $M, N$を多様体、
+    $\pi \colon E \to M$をベクトル束、
+    $f \colon N \to M$を{\smooth}曲線とする。
+    {\smooth}写像$\xi \colon N \to E$が
+    \term{$f$に沿う$E$の切断}[section along a map]
+    {写像に沿う切断}[しゃぞうにそうせつだん]
+    であるとは、
+    \begin{equation}
+        \xi(x) \in E_{f(x)}
+            \quad
+            (\forall x \in N)
+    \end{equation}
+    が成り立つことをいう。
+    $\xi(x)$を$\xi_x$とも書く。
+    \begin{equation}
+        \begin{tikzcd}
+            & E \ar{d}{\pi} \\
+            N \ar{ru}{\xi} \ar{r}[swap]{f}
+                & M
+        \end{tikzcd}
+    \end{equation}
+\end{definition}
+
+\begin{example}
+    多様体$M$内の曲線$\gamma$の速度ベクトル場は、
+    曲線$\gamma$に沿う$TM$の切断である。
+\end{example}
+
+\subsection{フレーム}
+
+フレームの概念を定義する。
+
+\begin{definition}[フレーム]
+    $M$を多様体、$U \opensubset M$、
+    $\pi \colon E \to M$をランク$r$のベクトル束とする。
+    $U$上の$E$の切断の順序付き組$(\sigma_1, \dots, \sigma_r)$が
+    $U$上の$E$の
+    \term{フレーム}[frame]{フレーム}[ふれーむ]であるとは、
+    \begin{enumerate}
+        \item 写像$\rho \colon U \times \R^r \to \pi^{-1}(U),$
+            \begin{equation}
+                (x, (v_1, \dots, v_r)) \mapsto \sum v_i \sigma_i(x)
+            \end{equation}
+            (これは{\smooth}である) が全単射で、
+        \item $\rho^{-1}$が$U$上の局所自明化であること
+    \end{enumerate}
+    をいう。
+\end{definition}
+
+フレームの定義の条件 (2) は確かめるのが難しい。
+実はもう少し簡単な特徴付けがある。
+すなわち、フレームとは切断を局所的に$\smooth(M)$を成分として成分表示するための基底である。
+ここで (わかっている人には当たり前かもしれないが)、
+「局所的 (local)」というのは「座標依存 (coordinate-dependent)」
+を意味するわけではないことに注意すべきである。
+フレームの概念は、座標に依存しない (coordinate-free な) 形での
+具体的な計算や構成を可能にするための強力なツールである。
+
+\begin{proposition}[フレームの特徴付け]
+    上の定義の状況で、
+    $(\sigma_1, \dots, \sigma_r)$がフレームであることと、
+    各$x \in U$に対し
+    $\sigma_1(x), \dots, \sigma_r(x)$が$E_x$の基底となることは同値である。
+\end{proposition}
+
+\begin{proof}
+    長いので省略
+    \footnote{
+        cf. \cite[p.258]{Lee18}
+    }
+    。
+    証明には$\GL(n, \R)$において逆行列をとる写像が{\smooth}であることなどを用いる。
+\end{proof}
+
+\begin{remark}[局所自明化とフレームの対応]
+    $M$を多様体、$U \opensubset M$、
+    $\pi \colon E \to M$をランク$r$のベクトル束とする。
+    $\varphi$を$E$の$U$上の局所自明化とする。
+    切断$\sigma_1, \dots, \sigma_r \colon U \to \pi^{-1}(U)$を
+    \begin{equation}
+        \sigma_i(x) \coloneqq \varphi^{-1}(x, e_i) \quad (x \in U)
+    \end{equation}
+    で定めると、フレームの特徴付けより、$\sigma_1, \dots, \sigma_r$は
+    $E$の$U$上のフレームとなる。
+    逆に、$\sigma_1, \dots, \sigma_r$が$E$の$U$上のフレームならば、
+    フレームの定義より、$U$上の局所自明化$\varphi$を
+    \begin{equation}
+        \varphi\left(\sum_{i=1}^r a_i \sigma_i(x) \right)
+            \coloneqq \left(x, \sum_{i=1}^r a_i e_i \right)
+    \end{equation}
+    で定めることができる。
+\end{remark}
+
+\begin{definition}[フレームに関する成分表示]
+    $M$を多様体、$U \opensubset M$、
+    $\pi \colon E \to M$をランク$r$のベクトル束、
+    $(\sigma_1, \dots, \sigma_r)$を$U$上の$E$のフレームとする。
+    このときフレームの特徴づけより、$U$上の$E$の切断$\xi$は
+    $r$個の関数$\xi^i \colon U \to \R \; (i = 1, \dots, r)$により
+    \begin{equation}
+        \xi(x) = \sum_{i = 1}^r \xi^i(x) \sigma_i(x)
+            \quad
+            (x \in U)
+    \end{equation}
+    と表せる。
+    この表示を$\xi$のフレーム$(\sigma_1, \dots, \sigma_r)$に関する
+    \term{成分表示}[component representation]{成分表示}[せいぶんひょうじ]
+    といい、
+    $\xi^i$をフレーム$(\sigma_1, \dots, \sigma_r)$に関する
+    $\xi$の\term{成分関数}[component function]{成分関数}[せいぶんかんすう]
+    あるいは単に
+    \term{成分}[component]{成分}[せいぶん]
+    という。
+\end{definition}
+
+\begin{proposition}[成分関数の\smooth 性]
+    \TODO{}
+\end{proposition}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+\begin{proposition}[直積束ならばフレームがある]
+    $M$を多様体、
+    $E$を直積束$M \times \R^r$とする。
+    このとき、$E$の切断
+    \begin{equation}
+        \sigma_i(x) \coloneqq (x, e_i)
+        \quad (i = 1, \dots, r)
+    \end{equation}
+    は$M$上のフレームである。
+\end{proposition}
+
+\begin{proof}
+    $\sigma_i$らは、$M$上の局所自明化$\id_{M \times \R^r}$を用いて
+    上の注意のように定めた切断だから、
+    $M$上のフレームである。
+\end{proof}
+
+\begin{proposition}[フレームがあれば直積束]
+    $M$を多様体、$\pi \colon E \to M$をベクトル束とする。
+    $M$上のフレーム$\sigma_1, \dots, \sigma_r$が存在するならば、
+    $E$は直積束$M \times \R^r$に同型である。
+\end{proposition}
+
+\begin{proof}
+    上の注意のように$M$上の局所自明化$\varphi$を定めれば、
+    $\varphi$は$E \to M \times \R^r$の diffeo であり、
+    各$x \in M$に対し$\varphi(x) \colon E_x \to \{x\} \times \R^r$は
+    線型同型である。
+    よって$\varphi$はベクトル束の同型である。
+\end{proof}
+
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{変換関数}
+
+ベクトル束は、次で定義する変換関数によって与えることもできる。
+
+\begin{definition}[変換関数]
+    $M$を多様体、
+    $\pi \colon E \to M$をベクトル束とすると、
+    ベクトル束の定義より、$M$の open cover $\{U_\alpha\}$であって
+    各$\alpha$に対し$U_\alpha$上の局所自明化$\varphi_\alpha$が存在するものがとれる。
+    \begin{equation}
+        \begin{tikzcd}[column sep=large, row sep=large]
+            (U_\alpha \cap U_\beta) \times \R^r \ar{rd}[swap]{\mathrm{pr}_1}
+                & \pi^{-1}(U_\alpha \cap U_\beta)
+                    \ar{l}[swap]{\varphi_\alpha} \ar{d}{\pi} \ar{r}{\varphi_\beta}
+                & (U_\alpha \cap U_\beta) \times \R^r \ar{ld}{\mathrm{pr}_1} \\
+            & U_\alpha \cap U_\beta
+        \end{tikzcd}
+    \end{equation}
+    各$x \in U_\alpha \cap U_\beta$に対し
+    合成$\varphi_\alpha(x) \circ \varphi_\beta(x)^{-1} \colon \R^r \to \R^r$は
+    線型同型だから、{\smooth}写像
+    \begin{equation}
+        \psi_{\alpha\beta} \colon U_\alpha \cap U_\beta \to \GL(r; \R),
+        \quad
+        x \mapsto \varphi_\alpha(x) \circ \varphi_\beta(x)^{-1}
+    \end{equation}
+    が定まる。
+    写像族$\{ \psi_{\alpha\beta} \}$を、
+    局所自明化の族
+    $\{ \varphi_\alpha \colon \pi^{-1}(U_\alpha) \to U_\alpha \times \R^r \}$
+    に関するベクトル束$E$の
+    \term{変換関数}[transition function]{変換関数}[へんかんかんすう]という。
+    各要素$\psi_{\alpha\beta}$のことも変換関数という。
+\end{definition}
+
+\begin{proposition}[変換関数の基本性質]
+    上の定義の状況で次が成り立つ:
+    \begin{enumerate}
+        \item (コサイクル条件)
+            \begin{equation}
+                \psi_{\alpha\beta}(x) \circ \psi_{\beta\gamma}(x)
+                    = \psi_{\alpha\gamma}(x)
+                \quad (x \in U_\alpha \cap U_\beta \cap U_\gamma)
+            \end{equation}
+        \item
+            \begin{equation}
+                \psi_{\alpha\alpha}(x) = I_r
+            \end{equation}
+        \item
+            \begin{equation}
+                \psi_{\alpha\beta}(x) = \psi_{\beta\alpha}(x)^{-1}
+            \end{equation}
+    \end{enumerate}
+\end{proposition}
+
+\begin{proof}
+    $\underline{(1)}$ \quad
+    \begin{alignat}{1}
+        \psi_{\alpha\beta}(x) \circ \psi_{\beta\gamma}(x)
+            &= \varphi_\alpha(x) \circ \varphi_\beta(x)^{-1}
+                \circ \varphi_\beta(x) \circ \varphi_\gamma(x)^{-1} \\
+            &= \varphi_\alpha(x) \circ \varphi_\gamma(x)^{-1} \\
+            &= \psi_{\alpha\gamma}(x)
+    \end{alignat}
+
+    $\underline{(2)}$ \quad
+    (1)で$\alpha = \beta = \gamma$とおけばよい。
+
+    $\underline{(3)}$ \quad
+    (1)で$\alpha = \gamma$とおいて(2)を用いればよい。
+\end{proof}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{ベクトル束の構成法}
+
+ここでは与えられたファイバーの族からベクトル束を構成する方法を考える。
+素朴な方法としては、まず与えられたファイバーたちの
+disjoint union に位相と可微分構造を入れて、
+局所自明化を構成し、それらがベクトル束の
+公理を満たすことを確かめるというやり方がある。
+しかし、毎回このようなプロセスを繰り返すのは面倒である。
+実は以下に示すように、もっと簡単な方法でベクトル束を構成できる。
+
+まずひとつ補題を示す。
+
+\begin{lemma}[Smooth Manifold Chart Lemma]
+    \label[lemma]{lemma:smooth-manifold-chart-lemma}
+    $M$を\highlight{集合}とし、
+    $M$の部分集合上の写像の族
+    $\{ \varphi_\alpha \colon U_\alpha \to \R^n \}_{\alpha \in A}$であって
+    次をみたすものが与えられているとする:
+    \begin{enumerate}[label={(\roman*)}]
+        \item 各$\alpha \in A$に対し、
+            $\varphi_\alpha$は$U_\alpha$から
+            $\R^n$の開部分集合$\varphi_\alpha(U_\alpha)$への
+            全単射である。
+        \item 各$\alpha, \beta$に対し、
+            集合$\varphi_\alpha(U_\alpha \cap U_\beta)$および
+            $\varphi_\beta(U_\alpha \cap U_\beta)$は
+            $\R^n$の開部分集合である。
+        \item $U_\alpha \cap U_\beta \neq \emptyset$ならば、
+            写像
+            \begin{equation}
+                \varphi_\beta \circ \varphi_\alpha^{-1}
+                    \colon \varphi_\alpha(U_\alpha \cap U_\beta)
+                    \to \varphi_\beta(U_\alpha \cap U_\beta)
+            \end{equation}
+            は{\smooth}である。
+        \item 各$p, q \in M, \; p \neq q$に対し、
+            $p, q$の両方を含むような$U_\alpha$が存在するか、
+            または$p \in U_\alpha, \; q \in U_\beta$なる
+            disjoint な$U_\alpha, U_\beta$が存在する。
+    \end{enumerate}
+    このとき、$M$の多様体構造 (位相も含めて) であって、
+    $\{ (U_\alpha, \varphi_\alpha) \}_\alpha$を atlas とする
+    ものが一意に存在する。
+    さらに次の条件
+    \begin{enumerate}[label={(\roman*)}]
+        \setcounter{enumi}{4}
+        \item 可算個の$U_\alpha$で$M$が被覆される。
+    \end{enumerate}
+    が課されているならば、$M$はパラコンパクトとなる。
+\end{lemma}
+
+\begin{proof}[証明のスケッチ.]
+    一意性は明らか (位相は atlas を通して開基が構成できることから決まるし、
+    可微分構造は atlas が与えられていることから決まる)。
+    存在を示す。
+    まず位相を入れる。
+    $\varphi_\alpha^{-1}(V), \; \alpha \in A, \; V \opensubset \R^n$の形の集合全体を
+    開基として位相を入れる
+    (開基となることは (ii), (iii) から従う)。
+    (i) より$\varphi_\alpha$らは
+    $\R^n$の開部分集合との同相を与える。
+    (iv) より Hausdorff 性が従う。
+    (iii) より$\{ (U_\alpha, \varphi_\alpha) \}_\alpha$は atlas となる。
+    (v) より第2可算性、ひいてはパラコンパクト性が従う。
+    これで存在がいえた。
+    詳細は \cite[p.21]{Lee18} を参照。
+\end{proof}
+
+ベクトル束の構成法の1つ目として、
+局所自明化の族と変換関数を与えることで
+ベクトル束が構成できることを示す。
+
+\begin{lemma}[Vector Bundle Chart Lemma]
+    $M$を多様体、$r \in \Z_{\ge 0}$とし、
+    各$p$に対し$r$次元ベクトル空間$E_p$が与えられているとする。
+    集合$E$を
+    \begin{equation}
+        E \coloneqq \coprod_{p \in M} E_p
+    \end{equation}
+    とおき、$\pi \colon E \to M$は
+    $E_p$の元を$p$に写す写像とする。
+    さらに次のデータが与えられているとする:
+    \begin{enumerate}
+        \item $M$の open cover $\{U_\alpha\}_{\alpha \in A}$
+        \item 各$\alpha \in A$に対し、
+            全単射$\Phi_\alpha \colon \pi^{-1}(U_\alpha) \to U_\alpha \times \R^r$であって、
+            各$E_p$への制限がベクトル空間の同型写像$E_p \to \{ p \} \times \R^r \cong \R^r$
+            であるもの
+        \item $U_\alpha \cap U_\beta \neq \emptyset$なる
+            各$\alpha, \beta \in A$に対し、
+            {\smooth}写像
+            $\psi_{\alpha \beta} \colon U_\alpha \cap U_\beta \to \GL(r;\, \R)$であって
+            \begin{equation}
+                \Phi_\alpha \circ \Phi_\beta^{-1} (p, v)
+                    = (p, \psi_{\alpha \beta}(p) v)
+            \end{equation}
+            をみたすもの
+    \end{enumerate}
+    このとき、$E$は次をみたすような$M$上のベクトル束構造が一意に存在する:
+    \begin{itemize}
+        \item $E$は$M$上のランク$r$のベクトル束である。
+        \item 射影は$\pi$である。
+        \item $\{(U_\alpha, \Phi_\alpha)\}$は$E$の局所自明化の族であって、
+            変換関数は$\{ \psi_{\alpha \beta} \}$である。
+    \end{itemize}
+\end{lemma}
+
+\begin{remark}
+    この補題は、このあと述べる Vector Bundle Construction Theorem と比べると
+    ファイバーの形を先に指定できるという点で有用である。
+\end{remark}
+
+\begin{proof}[証明のスケッチ.]
+    まず$E$に多様体構造を入れる。
+    $\Phi_\alpha$らと$M$の atlas を用いて
+    $E$の atlas となるべき写像族を構成し、
+    Smooth Manifold Chart Lemma の条件を確かめればよい。
+    うまく構成することで条件 (i), (ii), (iii), (iv) はおのずと満たされる
+    \TODO{もうちょっとちゃんと書く}。
+    $M$の第2可算性から (v) も従う。
+    つぎにベクトル束構造を考える。
+    上で構成した atlas は、
+    $\Phi_\alpha$らの座標表示が恒等写像になるという条件も
+    みたしているとしてよい (最初からそのように構成する)。
+    このようにして$\Phi_\alpha$らは局所自明化となり、
+    $\pi$は{\smooth}となることが確認できる。
+    これで存在がいえた。
+    一意性は、与えられた$\Phi_\alpha$らが
+    diffeo であるという条件から従う。
+    詳細は [Lee] p.253 を参照。
+\end{proof}
+
+次に、上の補題の主張を強めて、
+コサイクル条件をみたす変換関数から
+ベクトル束を構成できることを示す。
+具体的には、局所的な直積束たちを、
+変換関数を用いて貼り合わせてベクトル束を構成する。
+
+\begin{theorem}[Vector Bundle Construction Theorem]
+    \label[proposition]{prop:construction-of-vector-bundle-from-transition-function}
+    $M$を多様体、
+    $\{U_\alpha\}_{\alpha \in A}$を$M$の open cover とし、
+    {\smooth}写像の族$\psi = \{ \psi_{\alpha\beta} \}_{\alpha, \beta \in A},$
+    \begin{equation}
+        \psi_{\alpha\beta} \colon U_\alpha \cap U_\beta \to \GL(r; \R)
+    \end{equation}
+    であってコサイクル条件
+    \begin{equation}
+        \psi_{\alpha\beta}(x) \circ \psi_{\beta\gamma}(x)
+            = \psi_{\alpha\gamma}(x)
+        \quad (x \in U_\alpha \cap U_\beta \cap U_\gamma)
+    \end{equation}
+    をみたすものが与えられているとする。
+    このとき、集合$\coprod_{\alpha} (U_\alpha \times \R^r_\alpha)$
+    \;($\R^r_\alpha$は$\R^r$のコピー) 上に
+    次のように同値関係を定めることができる:
+    \begin{equation}
+        (\alpha, (x, \xi)) \sim (\beta, (y, \eta))
+            \quad \logeq \quad
+            \begin{cases}
+                x = y \\
+                \xi = \psi_{\alpha\beta}(x) \eta
+            \end{cases}
+    \end{equation}
+    さらにこのとき、集合$E$を
+    \begin{equation}
+        E \coloneqq \left(\coprod_{\alpha} (U_\alpha \times \R^r_\alpha)\right)
+            \Big/\! \sim
+    \end{equation}
+    とおくと、
+    次を満たすような$M$上のベクトル束構造が一意に存在する:
+    \begin{itemize}
+        \item $E$は$M$上のランク$r$のベクトル束である。
+        \item 射影は$E \to M, \; [(x, \xi)] \mapsto x$である。
+        \item $E$のある局所自明化の族
+            $\{ \Phi_\alpha \colon \pi^{-1}(U_\alpha) \to U_\alpha \times \R^r \}$
+            が存在して、変換関数は
+            $\{ \psi_{\alpha\beta} \}$
+            である。
+    \end{itemize}
+\end{theorem}
+
+\begin{proof}
+    同値関係であることは変換関数の基本性質から明らか。
+    また、一意性は$\id \colon E \to E$がベクトル束の同型を与えることから明らか。
+    存在を示すために
+    Vector Bundle Chart Lemma の条件を確認する。
+
+    \underline{Step 1} \quad
+    写像$\pi \colon E \to M$を
+    \begin{equation}
+        [(\alpha, (x, \xi))] \mapsto x
+    \end{equation}
+    で定める。同値関係$\sim$の定義よりこれは well-defined である。
+
+    \underline{Step 2} \quad
+    各$p \in M$に対し$E_p \coloneqq \pi^{-1}(p)$とおく。
+    $E_p$に$r$次元ベクトル空間の構造を定義したい。
+    そこで、$p \in U_\alpha$なる$\alpha$をひとつ選んで$\alpha_p$とおく。
+    すると同値関係$\sim$の定義より明らかに、各$\xi \in E_p$に対し
+    \begin{equation}
+        \xi = [(\alpha_p, (p, v))]
+    \end{equation}
+    をみたす$v \in \R^r_{\alpha_p}$が一意に定まる。
+    これにより写像$E_p \to \R^r_{\alpha_p}$が定まる。
+    この写像は逆写像$v \mapsto [(\alpha_p, (p, v))]$を持つから全単射である。
+    そこで、この1:1対応$E_p \leftrightarrow \R^r_{\alpha_p}$を用いて、
+    $E_p$に$r$次元ベクトル空間の構造を定める。
+
+    \underline{Step 3} \quad
+    各$\alpha \in A$に対し、写像
+    $\Phi_\alpha \colon \pi^{-1}(U_\alpha) \to U_\alpha \times \R^r$
+    を次のように定める。
+    まず、各$\xi \in \pi^{-1}(U_\alpha)$に対し
+    $p \coloneqq \pi(\xi)$とおき、
+    さらに Step 2 で導入した全単射から
+    \begin{alignat}{8}
+        E_p \;
+            && \to & \; \R^r_{\alpha_p} \;
+            & \to & \; \R^r_\alpha \;
+            & \to & \; \R^r \\
+        \xi \;
+            && \mapsto & \; (\alpha_p, v) \;
+            & \mapsto & \; (\alpha, \psi_{\alpha\alpha_p}(p) v) \;
+            & \mapsto & \; \psi_{\alpha\alpha_p}(p) v
+    \end{alignat}
+    という1:1対応が得られることを用いて
+    $\Phi_\alpha(\xi) \coloneqq (p, \psi_{\alpha\alpha_p}(p) v)$と定める。
+    $\Phi_\alpha$は逆写像
+    \begin{equation}
+        U_\alpha \times \R^r \to \pi^{-1}(U_\alpha),
+        \quad
+        (p, w) \mapsto [(\alpha, (p, w))]
+    \end{equation}
+    を持つから全単射である。
+    また、各$p \in U_\alpha$に対し、$E_p$のベクトル空間の構造の定め方より、
+    $\Phi_\alpha$の$E_p$への制限は
+    $E_p \to \{p\} \times \R^r \cong \R^r$の線型同型である。
+
+    \underline{Step 4} \quad
+    各$\alpha, \beta \in A$と$(p, v) \in (U_\alpha \cap U_\beta) \times \R^r$に対し
+    \begin{alignat}{1}
+        \Phi_\alpha \circ \Phi_\beta^{-1}(p, v)
+            &= \Phi_\alpha [(\beta, (p, v))] \\
+            &= \Phi_\alpha [(\beta,
+                (p, \psi_{\beta\alpha}(p) \psi_{\alpha\beta} (p) v))] \\
+            &= \Phi_\alpha [(\alpha,
+                (p, \psi_{\alpha\beta}(p) v))] \\
+            &= (p, \psi_{\alpha\beta}(p) v)
+    \end{alignat}
+    が成り立つ。
+
+    \underline{Step 5} \quad
+    Vector Bundle Chart Lemma より、
+    $E$は次をみたすような$M$上のベクトル束構造をただひとつ持つ:
+    \begin{itemize}
+        \item $E$は$M$上のランク$r$のベクトル束である。
+        \item 射影は$\pi \colon E \to M, \; [(x, \xi)] \mapsto x$である。
+        \item $\{(U_\alpha, \Phi_\alpha)\}$は$E$の局所自明化の族である。
+    \end{itemize}
+    さらに Step 4 の議論より、
+    {\smooth}写像の族$\{ \psi_{\alpha\beta} \}$は
+    局所自明化の族$\{ (U_\alpha, \Phi_\alpha) \}$に対する
+    $E$の変換関数であることもわかる。
+\end{proof}
+
+\begin{example}[The M\"{o}bius Bundle]
+    \TODO{cf. [Lee] p.251}
+    \cref{prob:lee10-1}
+\end{example}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{代数的構成}
+
+\TODO{変換関数によらない構成でも定義したい cf. [Tu]}
+\TODO{直積もある？}
+
+\begin{definition}[部分ベクトル束]
+    $M$を多様体、
+    $\pi \colon E \to M,\; \pi' \colon E' \to M$をベクトル束とする。
+    $E'$が$E$の
+    \term{部分ベクトル束}[vector subbundle]{部分ベクトル束}[ぶぶんべくとるそく]
+    であるとは、
+    \begin{enumerate}
+        \item $E'$は$E$の部分多様体で、
+        \item $\pi' = \pi|_{E'}$で、
+        \item 各$x \in M$に対し$\pi'^{-1}(x)$が$\pi^{-1}(x)$の部分ベクトル空間
+    \end{enumerate}
+    が成り立つことである。
+    これは包含写像$E' \hookrightarrow E$が
+    $M$上の束準同型であることと同値である。
+\end{definition}
+
+\begin{definition}[商ベクトル束]
+    $M$を多様体、$\pi \colon E \to M$を$M$上のランク$r$のベクトル束、
+    $\pi' \colon E' \to M$を$E$のランク$s$の部分ベクトル束とする。
+    このとき、$M$の open cover $\{U_\alpha\}$であって、
+    各$\alpha$に対し$U_\alpha$上の$E$のフレーム$\sigma_1, \dots, \sigma_r$が
+    存在するようなものがとれる。
+    $\sigma_1, \dots, \sigma_s$は
+    $U_\alpha$上の$E'$のフレームであるとしてよい。
+    そこで、$\sigma_1, \dots, \sigma_r$から定まる
+    局所自明化を用いて変換関数$\{ \psi_{\alpha\beta} \}$を定義すると、
+    \begin{equation}
+        \psi_{\alpha\beta} = \begin{bmatrix}
+            \psi'_{\alpha\beta} & * \\
+            0 & \psi''_{\alpha\beta}
+        \end{bmatrix}
+    \end{equation}
+    の形になる。
+    そこで、open cover $\{U_\alpha\}$と
+    {\smooth}写像の族$\{ \psi''_{\alpha\beta} \}$により定まる$M$上のベクトル束を
+    $E/E'$と書き、
+    \term{商ベクトル束}[quotient vector bundle]{商ベクトル束}[しょうべくとるそく]
+    と呼ぶ。
+\end{definition}
+
+\begin{definition}[直交部分ベクトル束]
+    上の定義でさらに$E$に内積が与えられているとき、
+    Gram-Schmidt の直交化法により
+    変換関数を
+    \begin{equation}
+        \psi_{\alpha\beta} = \begin{bmatrix}
+            \psi'_{\alpha\beta} & 0 \\
+            0 & \psi''_{\alpha\beta}
+        \end{bmatrix}
+    \end{equation}
+    の形にすることができる。
+    そこで、open cover $\{U_\alpha\}$と
+    {\smooth}写像の族$\{ \psi''_{\alpha\beta} \}$により定まる$M$上のベクトル束を
+    $E'^{\perp}$と書き、
+    \term{直交部分ベクトル束}{直交部分ベクトル束}[ちょっこうぶぶんべくとるそく]
+    と呼ぶ。
+\end{definition}
+
+\begin{definition}[代数的構成]
+    $M$を多様体、$\pi \colon E \to M$および
+    $\pi' \colon E' \to M$を$M$上のランク$r$のベクトル束とする。
+    さらに、$\{\psi_{\alpha\beta}\},\; \{\psi'_{\alpha\beta}\}$を
+    それぞれ open cover $\{ U_\alpha \},\; \{ U'_\alpha \}$に対する
+    $E, E'$の変換関数とする。
+    各点$x \in M$上のファイバーをそれぞれ
+    \begin{equation}
+        E_x \oplus E'_x,\;
+        E_x \otimes E'_x,\;
+        E_x^*,\;
+        \Lambda^k E_x,\;
+        S^k E_x
+    \end{equation}
+    と定めた全空間をそれぞれ
+    \begin{equation}
+        E \oplus E',\;
+        E \otimes E',\;
+        E^*,\;
+        \Lambda^k E,\;
+        S^k E
+    \end{equation}
+    と表す。
+    このとき、次のように変換関数を与えることで、
+    上の全空間に$M$上のベクトル束の構造が入る:
+    \begin{itemize}
+        \item $E \oplus E'$の変換関数は
+            \begin{equation}
+                \psi_{\alpha\beta} \oplus \psi'_{\alpha\beta}
+                    = \begin{bmatrix}
+                        \psi_{\alpha\beta} & 0 \\
+                        0 & \psi'_{\alpha\beta}
+                    \end{bmatrix}
+            \end{equation}
+            で与えられる。
+        \item $E \otimes E'$の変換関数は
+            \begin{equation}
+                \psi_{\alpha\beta} \otimes \psi'_{\alpha\beta}
+                \quad (\text{Hadamard 積})
+            \end{equation}
+            で与えられる。
+        \item $E^*$の変換関数は$\{ {}^t\!\psi_{\alpha\beta}^{-1} \}$で与えられる。
+        \item $\Lambda^k E$の変換関数は$\{ \Lambda^k \psi_{\alpha\beta} \}$で与えられる。
+            $k = r$のときはとくに$\{ \det \psi_{\alpha\beta} \}$で与えられる。
+    \end{itemize}
+\end{definition}
+
+\begin{definition}[引き戻し束]
+    \idxsym{pullback bundle}{$f^*E, f^{-1}E$}{$E$の$f$による引き戻し束}
+    $M, M'$を多様体、
+    $\pi \colon E \to M$をランク$r$ベクトル束、
+    $f \colon M' \to M$を{\smooth}写像とする。
+    このとき
+    \begin{equation}
+        E' \coloneqq \{ (x', \xi) \in M' \times E \colon f(x') = \pi(\xi) \},
+        \quad
+        \pi'(x', \xi) \coloneqq x'
+    \end{equation}
+    とおくと、
+    $\pi' \colon E' \to M'$は$M'$上のランク$r$ベクトル束となる
+    (このあと示す)。
+    これを$E$の$f$による
+    \term{引き戻し束}[pullback bundle]{引き戻し束}[ひきもどしそく]
+    といい、$f^*E$あるいは$f^{-1}E$と書く。
+    \begin{equation}
+        \begin{tikzcd}
+            E' \ar{d}[swap]{\pi'} \ar{r}{\mathrm{pr}_2} & E \ar{d}{\pi} \\
+            M' \ar{r}[swap]{f} & M
+        \end{tikzcd}
+    \end{equation}
+    直感的には、$x' \in M'$上のファイバーとして
+    $f(x')$上の$E$のファイバーをとることで$E'$を構成するイメージである
+    (数式っぽく書けば$\coprod_{x' \in M'} E_{f(x')}$というイメージ)。
+\end{definition}
+
+\begin{proposition}[引き戻し束はベクトル束]
+    上の定義の状況で、
+    $f^* E$はランク$r$ベクトル束である。
+\end{proposition}
+
+\begin{proof}
+    $E' = f^* E$と書くことにする。
+    $E'$が$M' \times E$の部分多様体であることは認めることにする
+    \footnote{
+        cf. \url{https://math.stackexchange.com/questions/2194589/pullback-bundle-over-a-smooth-manifold}
+    }
+    。
+    すると$\pi'$は{\smooth}全射である。
+    つぎに局所自明性の条件を確かめる。
+    $E$は$U \opensubset M$上の局所自明化$\varphi$を持つとする。
+    \begin{equation}
+        \begin{tikzcd}
+            E \ar{r}{\varphi} \ar{rd}[swap]{\pi}
+                & U \times \R^r \ar{d}{\mathrm{pr}_1} \\
+            & U
+        \end{tikzcd}
+    \end{equation}
+    ここで、{\smooth}写像$\psi \colon E' \to f^{-1}(U) \times \R^r$を
+    \begin{equation}
+        (x', \xi) \mapsto (x', \mathrm{pr}_2 \circ \varphi (\xi))
+    \end{equation}
+    で定めると、これは$f^{-1}(U)$上の局所自明化である。実際、
+    \begin{equation}
+        f^{-1}(U) \times \R^r \to E',
+        \quad
+        (x', v) \mapsto (x', \varphi^{-1}(f(x'), v))
+    \end{equation}
+    が{\smooth}逆写像を与えるから$\psi$は diffeo であり、
+    また各$x' \in f^{-1}(U),\; \xi \in E'_{x'}$に対し
+    \begin{alignat}{2}
+        \psi(x') \colon
+            &(x', \xi)
+            &\quad \mapsto \quad
+            &(x', \mathrm{pr}_2 \circ \varphi(f(x')) (\xi)) \\
+        &(x', \varphi(f(x'))^{-1} (f(x'), v))
+            &\quad \mapsfrom \quad
+            &(x', v)
+    \end{alignat}
+    が線型同型を与えるから、$\psi$は$f^{-1}(U)$上の局所自明化である。
+    最後に、$\psi(x')$が$x'$によらず$\R^r$との線型同型を与えることから
+    $f^* E$のファイバーはすべて$r$次元ベクトル空間である。
+    したがってファイバーの条件もみたされることがわかった。
+\end{proof}
+
+\begin{theorem}[引き戻し束の普遍性]
+    \TODO{}
+\end{theorem}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+\begin{proposition}[写像に沿う切断と引き戻し束]
+    $M, N$を多様体、
+    $\pi \colon E \to M$をベクトル束、
+    $f \colon N \to M$を{\smooth}写像とする。
+    このとき、
+    引き戻し束$f^* E$の切断は
+    $f$に沿う$E$の切断に他ならない。
+\end{proposition}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+\begin{example}[法束]
+    $M \subset \R^{n+k}$を$n$次元部分多様体とする。
+    $\R^{n+k}$の接ベクトル束$T \R^{n+k}$は直積束
+    $T \R^{n+k} = \R^{n+k} \times \R^{n+k}$である。
+    包含写像$M \hookrightarrow \R^{n+k}$の微分により
+    \begin{equation}
+        TM \stackrel{\text{submfd}}{\subset} T\R^{n+k}|_M
+    \end{equation}
+    が成り立つ
+    \footnote{
+        cf. 幾何学I 補題6.9
+    }
+    から、
+    $TM$は$T\R^{n+k}|_M$の部分ベクトル束である。
+    その直交ベクトル束$T^{\perp}M$を
+    $M$の\term{法束}[normal bundle]{法束}[ほうそく]といい、
+    \begin{equation}
+        T\R^{n+k}|_M = TM \oplus T^{\perp}M
+    \end{equation}
+    が成り立つ。
+\end{example}
+
+\begin{example}[Gauss 写像]
+    $M$が$\R^{n+1}$の超曲面で、
+    $M$の単位法ベクトル場$\nu$がとれるとき、
+    $\nu$を$M \to S^n \subset \R^{n+1}$の{\smooth}写像と考えて、
+    これを\term{Gauss 写像}[Gauss map]{Gauss 写像}[Gauss しゃぞう]という。
+    このとき
+    \begin{equation}
+        TM = \nu^*(TS^n)
+    \end{equation}
+    が成り立つ。
+    直感的には、
+    $M$の接ベクトルとして$S^n$の接ベクトルを使うようなイメージである。
+\end{example}
+
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{対称積束と外積束}
+
+ベクトル束の対称積と外積を定義する。
+
+\TODO{他とのつながりを明確にしたい}
+
+\begin{definition}[対称積束と外積束]
+    \idxsym{symmetric product bundle}{$S^s(E)$}{ベクトル束の対称積}
+    \idxsym{exterior product bundle}{$A^s(E), \bigwedge^s(E)$}{ベクトル束の交代積}
+    $M$を多様体、$U \opensubset M$、$E$を$M$のベクトル束とする。
+    $s \in \Z_{\ge 1}$とする。
+    \begin{itemize}
+        \item 各$\alpha = \alpha_1 \otimes \dots \otimes \alpha_s \in E^{\otimes s}_p$
+            と$\sigma \in \frakS_s$に対し
+            \begin{equation}
+                \sigma \alpha
+                    \coloneqq \alpha_{\sigma(1)} \otimes \dots \otimes \alpha_{\sigma(s)}
+            \end{equation}
+            と定める。
+            一般の$\alpha$に対しては$\R$-線型に拡張する
+            \footnote{
+                成分関数の添字を取り替えるわけではないことに注意。
+                たとえば$\sigma = (1\; 2)$のとき
+                $\sigma (f_{12} dx^1 \otimes dx^2) = f_{\highlight{12}} dx^2 \otimes dx^1$
+                である。
+            }
+            。
+        \item 集合
+            \begin{alignat}{1}
+                S^s(E) \coloneqq \coprod_{p \in M}
+                    \{
+                        \alpha \in E^{\otimes s}_p
+                        \mid
+                        \forall \sigma \in \frakS_s \text{ に対し } \sigma \alpha = \alpha
+                    \}
+            \end{alignat}
+            にベクトル束の構造を入れたものを
+            $E$の$s$次の\term{対称積}[symmetric product]{対称積}[たいしょうせき]という。
+        \item $S^s(E)$の元を
+            \term{対称テンソル}[symmetric tensor]{対称テンソル}[たいしょうてんそる]といい、
+            $\Gamma_U(S^s(E))$の元を
+            \term{対称テンソル場}[symmetric tensor field]{対称テンソル場}[たいしょうてんそるば]
+            という。
+        \item 集合
+            \begin{alignat}{1}
+                A^s(E) \coloneqq \coprod_{p \in M}
+                    \{
+                        \alpha \in E^{\otimes s}_p
+                        \mid
+                        \forall \sigma \in \frakS_s
+                        \text{ に対し } \sigma \alpha = \sgn(\sigma) \alpha
+                    \}
+            \end{alignat}
+            にベクトル束の構造を入れたものを
+            $E$の$s$次の\term{交代積}[alternating product]{交代積}[こうたいせき]
+            あるいは
+            \term{外積}[exterior product]{外積}[がいせき]という。
+            という。
+            $A^s(E)$を$\bigwedge^s E$と書くこともある。
+        \item $A^s(E)$の元を
+            \term{交代テンソル}[alternating tensor]{交代テンソル}[こうたいてんそる]といい、
+            $\Gamma_U(A^s(E))$の元を
+            \term{交代テンソル場}[alternating tensor field]{交代テンソル場}[こうたいてんそるば]
+            という。
+    \end{itemize}
+\end{definition}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{テンソル場の縮約}
+\label[section]{section:contraction-of-tensor-fields}
+
+\begin{definition}[テンソル場の縮約]
+    $E \to M$をランク$r$ベクトル束、
+    $U \opensubset M$とする。
+    以下、切断の定義域はすべて$U$上で考える。
+    \begin{equation}
+        T^{p, q} E \coloneqq
+            \underbrace{E \otimes \dots \otimes E}_{p \text{ times}}
+            \otimes
+            \underbrace{E^* \otimes \dots \otimes E^*}_{q \text{ times}}
+            \quad
+            (p, q \in \Z_{\ge 0})
+    \end{equation}
+    と書くことにする。
+    $p, q \in \Z_{\ge 1}$とし、
+    各$0 \le k \le p, \; 0 \le l \le q$に対し
+    写像$\tr^k_l \colon \Gamma(T^{p, q} E) \to \Gamma(T^{p - 1, q - 1} E)$
+    を次のように定める:
+    $S \in \Gamma(T^{p, q}M)$が任意に与えられたとする。
+    $E$の局所フレーム$(e_1, \dots, e_r)$をとり、
+    双対フレームを$(e^1, \dots, e^r)$とする。
+    $S$を局所的に
+    \begin{equation}
+        S = \sum_{\substack{i_1 \dots i_p \\ j_1 \dots j_q}}
+            S^{i_1 \dots i_r}_{j_1 \dots j_s}
+            e_{i_1} \otimes \dots \otimes e_{i_r}
+            \otimes
+            e^{j_1} \otimes \dots \otimes e^{j_s}
+    \end{equation}
+    と表示し、
+    \begin{alignat}{1}
+        \tr^k_l S &\coloneqq
+            \sum_{
+                \substack{
+                    i_1 \dots \what{i}_k \dots i_p \\
+                    j_1 \dots \what{j}_l \dots j_q \\
+                    m
+                }
+            }
+            S^{
+                i_1 \dots \overset{\stackrel{k}{\smile}}{m} \dots i_r
+            }_{
+                j_1 \dots \underset{\stackrel{\frown}{l}}{m} \dots j_s
+            }
+            e_{i_1} \otimes \dots \otimes \what{e}_{i_k} \otimes \dots \otimes e_{i_r}
+            \otimes
+            e^{j_1} \otimes \dots \otimes \what{e}^{j_l} \otimes \dots \otimes e^{j_s} \\
+            &\in \Gamma(T^{p - 1, q - 1} E)
+    \end{alignat}
+    と定める。
+    この写像$\tr^k_l$を
+    テンソル場の\term{縮約}[contraction]{縮約}[しゅくやく]あるいは
+    \term{トレース}[trace]{トレース}という。
+    $k, l$の組が明らかな場合、添字を省略して単に$\tr$と書くことが多い。
+    $\tr$は定義から明らかに$\smooth(U)$-線型写像である。
+\end{definition}
+
+\begin{remark}
+    上の定義の状況で、とくに
+    $\omega \in \Gamma_U(E^*), \; \xi \in \Gamma_U(E)$
+    に対し
+    \begin{equation}
+        \tr (\omega \otimes \xi) = \langle \omega, \xi \rangle
+    \end{equation}
+    が成り立ち、$g \in \Gamma_U(E^* \otimes E^*), \; \xi, \eta \in \Gamma_U(E)$に対し
+    \begin{equation}
+        \tr \circ \tr (g \otimes \xi \otimes \eta) = g(\xi, \eta)
+    \end{equation}
+    が成り立つことが直接計算によりわかる。
+\end{remark}
+
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{接束}
+
+最も重要なベクトル束の例として接束を定義する。
+
+\begin{definition}[接束]
+    \label[definition]{def:tangent-space-manifold-structure}
+    \TODO{}
+\end{definition}
+
+\begin{example}[接束はベクトル束]
+    \label[example]{ex:tangent-bundle-is-vector-bundle}
+    $M$を$r$次元多様体、$\pi \colon TM \to M$を接ベクトル束とする。
+    $TM$がランク$r$の$M$上のベクトル束であることを確かめる。
+    ベクトル束の定義(1)-(3)は接ベクトル束の定義より明らかに満たされるから、
+    あとは局所自明化の条件を確かめればよい。
+    各$x \in M$に対し、
+    $x$の属する$M$のチャート$\varphi = (x^1, \dots, x^r) \colon U \to \R^r$をとる。
+    写像
+    \begin{equation}
+        \Phi \colon \pi^{-1}(U) \to U \times \R^r,
+        \quad
+        (p, v) \mapsto (p, (d\varphi)_p(v)) = (p, (dx^1)_p(v), \dots, (dx^r)_p(v))
+    \end{equation}
+    を考える。
+    $\Phi$が局所自明化の条件(4-b)をみたすことは明らかだから、(4-a)を確かめる。
+    $TM$のチャート$\widetilde{\varphi} \colon \pi^{-1}(U) \to \R^r,
+    (p, v) \mapsto (\varphi(p), (d\varphi)_p(v))$を使えば
+    \begin{equation}
+        \begin{tikzcd}[row sep=large]
+            & \varphi(U) \times \R^r \\
+            \pi^{-1}(U)
+                \ar{r}[swap]{\Phi}
+                \ar{ru}[swap]{\cong}{\widetilde{\varphi}}
+                & U \times \R^r
+                    \ar{u}{\cong}[swap]{\varphi \times \id}
+        \end{tikzcd}
+    \end{equation}
+    は可換だから、$\Phi$は diffeo である。よって(4-a)をみたす。
+\end{example}
+
+接束のフレームとして最も重要なのが
+座標により定まるフレームである。
+
+\begin{definition}[座標フレーム]
+    $M$を$r$次元多様体、
+    $U \opensubset M$、
+    $x^1, \dots, x^r$を$U$上の座標とする。
+    このとき、$U$上の$TM$のフレーム
+    $\deldel{x^1}, \dots, \deldel{x^r}$を
+    座標$x^1, \dots, x^r$に関する
+    \term{座標フレーム}[coordinate frame]{座標フレーム}
+    という。
+\end{definition}
+
+\begin{remark}[座標表示と座標フレームに関する成分表示]
+    ひとつ術語の用法に関する注意を述べておく。
+    本稿で「座標表示」といえば\smooth 写像を引き戻して
+    座標空間からの写像とみなしたものを指すのであった。
+    文献によっては、この意味での「座標表示」とはまた別に
+    「座標フレームに関する (ベクトル場などの) 成分表示」も
+    「座標表示」と呼んでいる場合がある。
+    しかしこれらは明確に異なる概念であるから、
+    混乱を避けるために本稿ではそれぞれ
+    「座標表示」「座標フレームに関する成分表示」
+    と呼び分けることにする。
+\end{remark}
+
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\newpage
+\section{演習問題}
+
+\begin{problem}[幾何学III 演習問題1 1.7]
+    $\C^2$の部分集合$E$を
+    \begin{equation}
+        E \coloneqq \{
+            (z, u) \in \C^2 \mid |z| = 1, \; u \in \R \sqrt{z}
+        \}
+    \end{equation}
+    で定め、部分多様体の構造を入れる
+    (\term{メビウスの帯}[M\"{o}bius band]{メビウスの帯}[めびうすのおび])。
+    さらに写像$\pi \colon E \to S^1$を
+    \begin{equation}
+        \pi(z, u) \coloneqq z
+    \end{equation}
+    で定める。
+    また、各$z \in S^1$に対し$S^1$の部分集合$U_z$を
+    \begin{equation}
+        U_z \coloneqq \{
+            w \in S^1
+            \mid
+            |\arg(w / z)| < \pi / 6
+        \}
+    \end{equation}
+    とおく。
+    このとき、写像$\psi_z \colon \pi^{-1}(U_z) \to U_z \times \R$
+    \begin{equation}
+        \psi_z(w, v) \coloneqq \biggl( w, \frac{v}{\sqrt{w}} \exp(\Re w) \biggr)
+    \end{equation}
+    は$U_z$上の局所自明化であることを示せ。
+    また、$\psi_z \circ \psi_{z'}^{-1}$を求めよ。
+\end{problem}
+
+\begin{answer}
+    $z \in S^1$とする。
+    $\psi_z$は定義より$\pi = \mathrm{pr}_1 \circ \psi_z$をみたし、
+    また$\pi^{U_z}$から$U_z \times \R$への{\smooth}写像である。
+    {\smooth}逆写像が
+    $U_z \times \R \to \pi^{-1}(U_z), \; (w, t) \mapsto t\sqrt{w} e^{-\Re w}$
+    により与えられるから
+    $\psi_z$は$\pi^{-1}(U_z) \to U_z \times \R$なる diffeo である。
+    $z, z' \in S^1$とし、
+    $U_z, U_{z'}$上の$\sqrt{\cdot}$の枝をそれぞれ$S, S'$とおく。
+    $w \in U_{zz'}, t \in \R$とすると
+    \begin{equation}
+        \psi_z \circ \psi_{z'}^{-1} (w, t)
+            = \psi_z (w, t S'(w) e^{-\Re w})
+            = (w, t S'(w) / S(w))
+    \end{equation}
+    となり、$U_{zz'}$上$S'(w) / S(w) = \pm 1$だから
+    各$w \in U_{zz'}$に対し
+    対応$(w, t) \mapsto (w, t S'(w) / S(w))$は$\R$-線型写像である。
+    以上より$\psi_z$は$U_z$上の$E$の局所自明化である。
+\end{answer}
+
+\begin{problem}[幾何学III 演習問題1 1.8]
+    $(x, y, z)$を$\R^3$の標準的な座標とし、
+    $\Sigma \subset \R^3$を
+    \begin{equation}
+        \Sigma \coloneqq \{
+            (x, y, z) \in \R^3
+            \mid
+            x^2 + y^2 - z^2 = 1
+        \}
+    \end{equation}
+    により定める。また、$(u, v)$を$\R^2$の標準的な座標、
+    $S^1 \subset \R^2$を単位円周とする。
+    最後に$\pi \colon \R^3 \to \R^2$を
+    \begin{equation}
+        \pi(x, y, z) \coloneqq \left(
+            \frac{x + yz}{1 + z^2},
+            \frac{y - xz}{1 + z^2}
+        \right)
+    \end{equation}
+    により定める。
+    \begin{enumerate}
+        \item $(x, y, z) \in \Sigma$ならば
+            $\pi(x, y, z) \in S^1$が成り立つことを示せ。
+        \item $(u, v) \in S^1$とする。
+            $F_{(u, v)} = \pi^{-1}(u, v)$とおくと
+            $F_{(u, v)} \subset \Sigma$であることを示せ。
+            また、$F_{(u, v)}$をなるべく簡潔に表せ。
+        \item $\pi$の$\Sigma$への制限を$\pi_\Sigma$とおく。
+            このとき、微分同相写像$\varphi \colon \Sigma \to S^1 \times \R$であって
+            図式
+            \begin{equation}
+                \begin{tikzcd}
+                    \Sigma
+                        \ar{r}{\varphi}
+                        \ar{d}[swap]{\pi_\Sigma}
+                        & S^1 \times \R
+                            \ar{d}{\mathrm{pr}_1} \\
+                    S^1
+                        \ar[equal]{r}
+                        & S^1
+                \end{tikzcd}
+            \end{equation}
+            が可換となるようなものをひとつ挙げよ。
+    \end{enumerate}
+\end{problem}
+
+\begin{answer}
+    \uline{(1)} \quad
+    簡単なので省略。
+
+    \uline{(2)} \quad
+    $(x, y, z) \in F_{(u, v)}$とすると
+    $\pi(x, y, z) = (u, v)$より
+    \begin{equation}
+        \frac{x + yz}{1 + z^2} = u,
+        \quad
+        \frac{y - xz}{1 + z^2} = v
+    \end{equation}
+    である。いま$u^2 + v^2 = 1$だから
+    \begin{equation}
+        1
+            = \left(\frac{x + yz}{1 + z^2}\right)^2
+            + \left(\frac{y - xz}{1 + z^2}\right)^2
+            = \frac{x^2 + y^2}{1 + z^2}
+    \end{equation}
+    ゆえに$x^2 + y^2 - z^2 = 1$が成り立つ。
+    したがって$(x, y, z) \in \Sigma$である。
+
+    $F_{(u, v)}$は
+    \begin{equation}
+        F_{(u, v)}
+            = \{
+                (
+                    u \mp \sqrt{r^2 - 1} v,
+                    \pm \sqrt{r^2 - 1} u + v,
+                    \pm \sqrt{r^2 - 1}
+                )
+                \in \Sigma
+                \mid
+                r \ge 1
+            \}
+            \quad
+            (\text{複号同順})
+    \end{equation}
+    と表せることを示す。
+
+    「$\supset$」は直接計算によりわかる。
+    「$\subset$」を示す。
+    $(x, y, z) \in F_{(u, v)} \; (\subset \Sigma)$とする。
+    $1 + z^2 \ge 1$だから
+    \begin{equation}
+        (x, y, z) = (x, y, \pm \sqrt{r^2 - 1})
+            \quad
+            (r \ge 1)
+    \end{equation}
+    と表せる。
+    $(x, y, z) \in F_{(u, v)}$より
+    \begin{equation}
+        \frac{1}{r^2} (x + yz, y - xz)
+            = \left(
+                \frac{x + yz}{1 + z^2},
+                \frac{y - xz}{1 + z^2}
+            \right)
+            = \pi(x, y, z)
+            = (u, v)
+    \end{equation}
+    だから
+    \begin{equation}
+        \begin{bmatrix}
+            1 & z \\
+            -z & 1
+        \end{bmatrix}
+        \begin{bmatrix}
+            x \\
+            y
+        \end{bmatrix}
+            = r^2
+            \begin{bmatrix}
+                u \\
+                v
+            \end{bmatrix}
+    \end{equation}
+    したがって
+    \begin{equation}
+        \begin{bmatrix}
+            x \\
+            y
+        \end{bmatrix}
+            = \frac{r^2}{1 + z^2}
+            \begin{bmatrix}
+                1 & -z \\
+                z & 1
+            \end{bmatrix}
+            \begin{bmatrix}
+                u \\
+                v
+            \end{bmatrix}
+            = \begin{bmatrix}
+                u \mp \sqrt{r^2 - 1} v \\
+                \pm \sqrt{r^2 - 1} u + v
+            \end{bmatrix}
+    \end{equation}
+    が成り立つ。
+    したがって「$\subset$」がいえた。
+
+    \uline{(3)} \quad
+    $\Sigma$は
+    {\smooth}写像$\R^3 \to \R, \; (x, y, z) \mapsto x^2 + y^2 - z^2 - 1$の
+    正則値$0$の逆像だから$\R^3$の部分多様体である。
+    また、$S^1$も$\R^2$の部分多様体である。
+    したがって$\pi_\Sigma$は$\Sigma \to S^1$なる
+    {\smooth}写像とみなせる。
+    したがって
+    \begin{alignat}{1}
+        \varphi &\colon \Sigma \to S^1 \times \R
+            \quad
+            (x, y, z) \mapsto (\pi_\Sigma(x, y, z), z) \\
+        \psi &\colon S^1 \times \R \to \Sigma
+            \quad
+            ((u, v), t) \mapsto (u - tv, tu + v, t)
+    \end{alignat}
+    はそれぞれ{\smooth}写像であり、
+    直接計算により互いに逆写像になっている。
+    したがって$\varphi$は diffeo である。
+    問題の図式の可換性は定義から明らかである。
+\end{answer}
+
+\begin{problem}[幾何学III 演習問題1.13]
+    \begin{enumerate}
+        \item $TS^1 \cong S^1 \times \R$を示せ。
+        \item $M$をメビウスの帯とする。$TM \not\cong M \times \R^2$を示せ。
+    \end{enumerate}
+\end{problem}
+
+\begin{answer}
+    \TODO{}
+\end{answer}
+
+
+
+
+% ============================================================
+%
+% ============================================================
+\newpage
+\chapter{ベクトル場と反変テンソル場}
+
+\TODO{pointwise に計算できるか否かをもっと丁寧に書きたい}
+
+接束の切断としてベクトル場を導入する。
+ベクトル場には Lie 括弧と呼ばれる演算が定まる。
+また、ベクトル場の一般化として反変テンソル場を定義する。
+反変テンソル場には押し出しと呼ばれる演算が定まる。
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{ベクトル場}
+
+ベクトル場は多様体の接束の切断である。
+
+\begin{definition}[ベクトル場]
+    \idxsym{space of vector fields}{$\frakX(U)$}{$U$上のベクトル場全体の空間}
+    $M$を多様体、$U \opensubset M$とする。
+    $\Gamma_U(TM)$の元を
+    $U$上の\term{ベクトル場}[vector field]{ベクトル場}[べくとるば]という。
+    $\Gamma_U(TM)$を$\frakX(U)$とも書く。
+\end{definition}
+
+$M$上のベクトル場は、次の定義のもとで
+$\R$-代数$\smooth(M)$上の導分と 1:1 に対応する。
+
+\begin{definition}[導分としてのベクトル場]
+    \TODO{}
+\end{definition}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{押し出し}
+
+微分同相写像によってベクトル場の押し出しが定義できる。
+
+\begin{definition}[押し出し]
+    $M, N$を多様体、
+    $X \in \frakX(M)$、
+    $F \colon M \to N$を微分同相写像とする。
+    このとき$N$上のベクトル場$F_* X$を
+    \begin{equation}
+        (F_* X)_q \coloneqq (F_*)_{F^{-q}(q)} X_{F^{-q}(q)}
+            \quad (q \in N)
+    \end{equation}
+    で定義することができる。
+    $F_* X$を$F$による$X$の
+    \term{押し出し}[pushforward]{押し出し}[おしだし]
+    という。
+\end{definition}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{Lie 括弧}
+
+Lie 括弧を定義する。
+
+\begin{definition}[Lie 括弧]
+    \idxsym{Lie bracket}{$[X, Y]$}{$X$と$Y$のLie 括弧}
+    $M$を多様体、
+    $X, Y \in \frakX(M)$とする。
+    $X$と$Y$の\term{Lie 括弧}[Lie bracket]{Lie 括弧}[Lie かっこ]
+    という作用素$[X, Y]$を
+    \begin{equation}
+        [X, Y] f
+            \coloneqq X(Yf) - Y(Xf)
+            \quad (f \in \smooth(M))
+    \end{equation}
+    で定める。
+    $[X, Y]$は$\frakX(M)$に属する (このあと示す)。
+\end{definition}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+Lie 括弧の座標フレームに関する成分表示を求めよう。
+この成分表示は直接計算しようとすると
+式変形の途中で2階導関数が現れるが、最終的にはキャンセルされる。
+そこで式変形の最終形を命題として述べておくことにする。
+
+\begin{proposition}[Lie 括弧の座標フレームに関する成分表示]
+    \begin{equation}
+        [X, Y] = \left(
+            X^i \deldel[Y^j]{x^i}
+            - Y^i \deldel[X^j]{x^i}
+        \right)
+        \deldel{x^j}
+    \end{equation}
+    \TODO{}
+\end{proposition}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{積分曲線とフロー}
+
+ベクトル場を用いて積分曲線の概念を定義できる。
+
+\begin{definition}[積分曲線]
+    $M$を多様体、$X \in \frakX(M)$とする。
+    {\smooth}写像$c \colon (a, b) \to M$が
+    $X$の\term{積分曲線}[integral curve]{積分曲線}[せきぶんきょくせん]
+    であるとは、
+    すべての$t_0 \in (a, b)$に対し
+    \begin{equation}
+        \dd{t} c(t) \Big|_{t = t_0} = X_{c(t)}
+    \end{equation}
+    が成り立つことをいう。
+\end{definition}
+
+\begin{definition}[フロー]
+    \idxsym{flow with t fixed}{$\theta_t$}{$t$を固定したフロー}
+    $M$を多様体、$X \in \frakX(M)$とする。
+    \begin{itemize}
+        \item 部分集合$\calD \subset \R \times M$であって
+            \begin{equation}
+                \calD = \bigcup_{p \in M} (\text{$0$を含む開区間})
+            \end{equation}
+            の形であるものを
+            $M$の\term{フロードメイン}{flow domain}という。
+        \item $\calD \subset \R \times M$をフロードメインとする。
+            {\smooth}写像$\theta \colon \calD \to M$であって
+            次をみたすものを
+            $M$上の\term{フロー}{flow}という:
+            \begin{enumerate}
+                \item $\theta(0, p) = p \; (\forall p \in M)$
+                \item 定義される範囲で
+                    $\theta(t, \theta(s, p)) = \theta(t + s, p)$
+            \end{enumerate}
+            $t$を固定した写像$p \mapsto \theta(t, p)$を
+            $\theta_t$とも書く
+            \footnote{$\theta_t$は、多様体$M$全体を時刻$t$だけ "スライド" させる写像である。}
+            。
+        \item $\theta \colon \calD \to M$をフローとする。
+            $\dd{t} \theta(t, p) \,\Big|_{t = 0} = X_p \; (p \in M)$
+            が成り立つとき、$\theta$を
+            \term{$X$の生成するフロー}{フロー!ベクトル場の---}
+            あるいは単に
+            \term{$X$のフロー}{フロー!ベクトル場の---}
+            という\footnote{
+                $X$のフローは
+                \term{1パラメータ局所変換群}[1-parameter group of local transformation]
+                {1パラメータ局所変換群}[1ぱらめーたきょくしょへんかんぐん]
+                と呼ばれることもあるが、
+                $X$が完備でない限り群作用とはならないから
+                紛らわしい用語である。
+            }。
+    \end{itemize}
+\end{definition}
+
+ベクトル場の生成するフローは、
+時間微分に関する常微分方程式の初期値問題の解である。
+したがって、常微分方程式の初期値問題の解の一意存在定理が適用できる。
+
+\begin{theorem}[フローの基本定理]
+    \TODO{}
+\end{theorem}
+
+指数写像を導入する。
+まず予備的考察として、Lie 環$\mathfrak{gl}(n, \R) = M_n(\R)$から
+Lie 群$GL(n, \R)$への指数写像は、通常の冪級数$\exp$として定義される。
+これを一般の Lie 群に対し拡張したい。
+\TODO{どういうモチベーション？}
+
+\begin{definition}[指数写像]
+    \TODO{}
+\end{definition}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{反変テンソル場}
+
+\begin{definition}[反変テンソル場]
+    $M$を多様体、
+    $U \opensubset M$とする。
+    $U$上の$(TM)^{\otimes r}$の切断を
+    $U$上の
+    \term{反変テンソル場}[contravariant tensor field]{反変テンソル場}[はんぺんてんそるば]
+    という\footnote{
+        ここでの「反変」という語は
+        圏論的な「反変」とは全く関係がない。
+    }。
+\end{definition}
+
+反変テンソル場の座標フレームに関する成分表示は次のように書ける。
+
+\begin{proposition}[反変テンソル場の座標フレームに関する成分表示]
+    座標$x^1, \dots, x^m$のもとで
+    \begin{equation}
+        X = \sum_{i_1, \dots, i_s}
+            X^{i_1 \dots i_s} \,
+            \deldel{x^{i_1}} \otimes \dots \otimes \deldel{x^{i_s}}
+    \end{equation}
+    と表せる。
+    各$X^{i_1 \dots i_s}$を$X$の
+    \term{成分関数}[component function]{成分関数}[せいぶんかんすう]
+    という。
+\end{proposition}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\newpage
+\section{演習問題}
+
+\begin{problem}[東大数理 2006B]
+    $\R^2$の単位ベクトルを$e_1 = (0, 1)$, $e_2 = (1, 0)$として
+    $\Gamma = \{m e_1 + n e_2 \mid m,n \in \Z\}$とおく。
+    $T = \R^2/\Gamma$に商空間としての可微分多様体の構造を入れ、
+    $\omega = dx \wedge dy$を$T$上の微分形式とみなす。
+    ここで$(x, y)$は$\R^2$の座標である。
+    \begin{enumerate}
+        \item $T$上のベクトル場$X = \deldel{x}$について、
+            $T$上の滑らかな実数値関数$H$で、
+            すべての$T$上のベクトル場$Y$に対して
+            $\omega(X, Y) = dH(Y)$をみたすものは
+            存在しないことを示せ。
+        \item $T$上の滑らかなベクトル場
+            \begin{equation}
+                a(x, y) \deldel{x}
+                    + b(x, y) \deldel{y}
+            \end{equation}
+            の生成する1パラメータ変換群 (フロー) $\varphi_t$が、
+            $\varphi_t^* \omega = \omega$を満たすための条件を、
+            $a(x,y)$, $b(x,y)$で表せ。
+        \item 上の(2)の条件を満たす$T$上のベクトル場
+            $a(x, y) \deldel{x} + b(x, y) \deldel{y}$
+            で、$a(x, y), b(x, y)$が定数関数ではないものの例を挙げよ。
+    \end{enumerate}
+\end{problem}
+
+\begin{answer}
+    \uline{(2)} \quad
+    $L_X \omega = \myparen{\deldel[a]{x} + \deldel[b]{y}} \omega$であるが、
+    $\varphi_t^* \omega = \omega$なら$L_X \omega = 0$だから
+    $\deldel[a]{x} + \deldel[b]{y} = 0$である。
+    \TODO{}
+
+    \uline{(3)} \quad
+    \TODO{}
+\end{answer}
+
+
+
+% ============================================================
+%
+% ============================================================
+\newpage
+\chapter{コベクトル場と共変テンソル場}
+
+ベクトル場の双対概念としてコベクトル場を導入し、
+コベクトル場の一般化として共変テンソル場を定義する。
+共変テンソル場に対して定まる演算として
+引き戻しと内部積を導入する。
+共変テンソル場の特別な場合としては
+対称テンソル場と微分形式という重要な概念があるが、
+それらの解説はあとの章に回し、ここでは一般的な性質について述べる。
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{コベクトル場}
+
+\begin{definition}[余接束]
+    $M$を多様体とする。
+    $M$の\term{余接束}[cotangent bundle]{余接束}[よせつそく]とは、
+    $\coprod_{p \in M} T_p^* M$に"適当"\TODO{}にチャートを設定して
+    {\smooth}多様体にしたものをいう。
+\end{definition}
+
+\begin{definition}[コベクトル場]
+    $M$を多様体、
+    $U \opensubset M$とする。
+    $\Gamma_U(T^*M)$の元を
+    $U$上の\term{コベクトル場}[covector field]{コベクトル場}[こべくとるば]という。
+\end{definition}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{共変テンソル場}
+
+\begin{definition}[共変テンソル場]
+    \TODO{}
+\end{definition}
+
+共変テンソル場の座標フレームに関する成分表示は次のように書ける。
+
+\begin{proposition}[共変テンソル場の座標フレームに関する成分表示]
+    座標$x^1, \dots, x^m$のもとで
+    \begin{equation}
+        \omega = \sum_{i_1, \dots, i_s}
+            \omega_{i_1 \dots i_s} \,
+            dx^{i_1} \otimes \dots \otimes dx^{i_s}
+    \end{equation}
+    と表せる。
+\end{proposition}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{引き戻し}
+
+共変テンソル場には{\smooth}写像による引き戻しが定義できる。
+これは反変テンソル場にはない特徴である。
+
+\begin{definition}[共変テンソル場の引き戻し]
+    \idxsym{pointwise pullback}{$dF_p^* \alpha$}{共変テンソル$\alpha$の$F$による点ごとの引き戻し}
+    \idxsym{pullback}{$F^* \omega$}{共変テンソル場$\omega$の$F$による引き戻し}
+    $M, N$を多様体、
+    $F \colon M \to N$を{\smooth}写像とする。
+    \begin{itemize}
+        \item 各$p \in M, \; \alpha \in T_{F(p)}^{0, s} N$に対し、
+            $\alpha$の$F$による
+            \term{点ごとの引き戻し}[pointwise pullback]{点ごとの引き戻し}[てんごとのひきもどし]
+            $dF_p^* \alpha \in T_p^{0, s} M$を
+            \begin{equation}
+                dF_p^* \alpha (v_1, \dots, v_s)
+                    \coloneqq \alpha (dF_p (v_1), \dots, dF_p (v_s))
+                    \quad (v_1, \dots, v_s \in T_p M)
+            \end{equation}
+            で定める
+            \footnote{
+                点ごとの引き戻し$dF_p^* \alpha$は
+                線型写像$dF_p \colon T_pM \to T_{F(p)}N$の
+                双対写像$dF_p^* \colon T_{F(p)}^*N \to T_p^*M$によって
+                $\alpha$を写したかのような雰囲気だが、
+                一般に$\alpha$は$T_{F(p)}^*N$の元ではなく
+                $T_{F(p)}^{0, s}N$の元だから混同してはいけない。
+                ただし$s = 1$の場合はこれらの概念は一致する。
+            }
+            。
+        \item 各$\omega \in \Gamma(T^{0, s} N)$に対し、
+            $\omega$の$F$による
+            \term{引き戻し}[pullback]{引き戻し}[ひきもどし]
+            $F^* \omega \in \Gamma(T^{0, s} M)$を
+            \begin{equation}
+                (F^* \omega)_p
+                    \coloneqq dF_p^* (\omega_{F(p)})
+            \end{equation}
+            すなわち
+            \begin{equation}
+                (F^* \omega)_p (v_1, \dots, v_s)
+                    \coloneqq \omega_{F(p)} (dF_p (v_1), \dots, dF_p (v_s))
+                    \quad (v_1, \dots, v_s \in T_p M)
+            \end{equation}
+            で定める。
+    \end{itemize}
+\end{definition}
+
+\begin{proposition}[引き戻しの基本性質]
+    \label[proposition]{prop:tensor-pullback-properties}
+    $F \colon M \to N$と$G \colon N \to P$を{\smooth}写像、
+    $B$を$N$上の共変テンソル場、
+    $f \colon N \to \R$を実数値関数とする。
+    \begin{enumerate}[label=(\alph*)]
+        \item $F^*(fB) = (f \circ F) F^* B$
+        \item $(G \circ F)^* B = F^* (G^* B)$
+        \item $\id_N^* B = B$
+    \end{enumerate}
+    \TODO{}
+\end{proposition}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+共変テンソル場の引き戻しの座標フレームに関する成分表示は次の命題で与えられる。
+
+\begin{proposition}[引き戻しの座標フレームに関する成分表示]
+    $M, N$を多様体、
+    $F \colon M \to N$を{\smooth}写像とする。
+    $V \opensubset N$とし、
+    $U \coloneqq f^{-1}(V)$とおく。
+    $\omega \in \Gamma_V(T^{0, k}N)$の座標フレームに関する成分表示を
+    \begin{equation}
+        \omega
+            = \sum_{i_1 < \dots < i_k}
+            \omega_{i_1 \dots i_k} \,
+            dy^{i_1} \otimes \dots \otimes dy^{i_k}
+    \end{equation}
+    とすると、
+    $F^* \omega \in \Gamma_U(T^{0, k}M)$の成分表示は
+    \begin{equation}
+        F^* \omega
+            = \sum_{i_1 < \dots < i_k}
+            (\omega_{i_1 \dots i_k} \circ F) \,
+            d(y^{i_1} \circ F) \otimes \dots \otimes d(y^{i_k} \circ F)
+    \end{equation}
+    となる。
+\end{proposition}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{内部積}
+
+内部積を定義する。
+
+\begin{definition}[内部積]
+    \idxsym{internal product}{$\iota_v \omega$}{$v$と$\omega$の内部積}
+    $M$を多様体、$p \in M$とする。
+    $v \in T_pM, \; \alpha \in T_p^{0, s}M$に対し、
+    $v$と$\alpha$の
+    \term{内部積}[internal product]{内部積}[ないぶせき]
+    $\iota_v \alpha \in T_p^{0, s - 1}M$を
+    \begin{equation}
+        \iota_X \alpha (v_1, \dots, v_{s - 1})
+            \coloneqq \omega (v, v_1, \dots, v_{s - 1})
+            \quad (v_1, \dots, v_{s - 1} \in T_pM)
+    \end{equation}
+    で定める。
+    切断にたいしても同様に定める。
+    とくに$\alpha$が対称的 (resp. 交代的) ならば
+    $\iota_v \alpha$も対称的 (resp. 交代的) である。
+\end{definition}
+
+\begin{example}
+    $X = a \deldel{p} + b \deldel{q}, \; \omega = dp \wedge dq$のとき
+    \begin{equation}
+        \iota_X \omega = a \, dq - b \, dp
+    \end{equation}
+    \TODO{}
+\end{example}
+
+
+% ============================================================
+%
+% ============================================================
+\newpage
+\chapter{混合テンソル場}
+
+反変テンソル場と共変テンソル場を混合した混合テンソル場を考え、
+Lie 微分とよばれる演算を定義する。
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{混合テンソル場}
+
+\TODO{何に使う？}
+
+\begin{definition}[混合テンソル場]
+    \TODO{}
+\end{definition}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{Lie 微分}
+
+ベクトル場とそれにより生成されるフローについてはすでに定義した。
+フローを用いて、ベクトル場に沿うテンソル場の方向微分にあたる概念を導入しよう。
+すなわち、混合テンソル場に対する Lie 微分を定義する。
+\TODO{共変微分との関係？}
+
+\begin{definition}[Lie 微分]
+    \idxsym{Lie derivative}{$\calL_X \omega$}{$\omega$の$X$による Lie 微分}
+    \TODO{well-defined 性？}
+    $M$を多様体、
+    $X \in \frakX(M)$、
+    $\theta \colon \calD \to M$を$X$のフローとする。
+    各テンソル場$\omega \in \Gamma(T^{r, s} M)$に対し、
+    $\omega$の$X$による
+    \term{Lie 微分}[Lie derivative]{Lie 微分}[Lie びぶん]
+    $L_X \omega \in \Gamma(T^{r, s} M)$を
+    \begin{alignat}{1}
+        (L_X \omega)_p
+            &\coloneqq \lim_{t \to 0} \frac{(\theta_t^* \omega)_p - \omega_p}{t} \\
+            &= \dd{t} (\theta_t^* \omega)_p \Big|_{t = 0}
+    \end{alignat}
+    で定める。
+    ただし$(\theta_t^* \omega)_p$の意味は、
+    $T_p^{r, s} M$の基底に対し
+    \begin{align}
+        &(\theta_t^* (
+            v_1 \otimes \dots \otimes v_r \otimes \alpha_1 \otimes \dots \otimes \alpha_s
+        ))_p \\
+        &\qquad \coloneqq
+            d(\theta^{-1}_t)_p v_1 \otimes \dots \otimes d(\theta^{-1}_t)_p v_r
+            \otimes
+            d(\theta_t)_p^* \alpha_1 \otimes \dots \otimes d(\theta_t)_p^* \alpha_s
+    \end{align}
+    と定めて$\R$-線型に拡張したものである
+    \footnote{
+        $(\theta_t^* \omega)_p$は、
+        時刻$t$だけ先の接空間に住んでいる接ベクトルを
+        フローに沿って時刻$0$に戻してくることで
+        無理やり$\omega_p$と差をとれるようにしたものというイメージである。
+    }
+    。
+\end{definition}
+
+ベクトル場$X$による Lie 微分は定義に基づいて計算しようとすると
+$X$のフローを考えなければならないが、
+以下に挙げるようないくつかのケースではフローを持ち出すことなく、
+$X$自身や Lie 括弧を用いて Lie 微分を計算することができる。
+
+\begin{proposition}[関数やベクトル場の Lie 微分]
+    $M$を多様体、
+    $X \in \frakX(M)$とする。
+    \begin{enumerate}
+        \item $f \in C^{\infty}(M)$に対し
+            \begin{equation}
+                L_X(f) = X(f)
+            \end{equation}
+            が成り立つ。
+        \item $Y \in \frakX(M)$に対し
+            \begin{equation}
+                L_X(Y) = [X, Y] \; (= - L_Y(X))
+            \end{equation}
+            が成り立つ。
+    \end{enumerate}
+\end{proposition}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+\begin{proposition}[共変テンソル場の Lie 微分の計算公式]
+    \label[proposition]{prop:lie-derivative-of-covariant-tensor-field}
+    $M$を多様体、
+    $X \in \frakX(M)$とする。
+    $\omega \in \Gamma(T^{0, s} M), \; X_1, \dots, X_s \in \frakX(M)$に対し
+    \begin{alignat}{1}
+        (L_X \omega)(X_1, \dots, X_s)
+            &= X(\omega(X_1, \dots, X_s)) \\
+            &\qquad - \sum_{i = 1}^s
+                \omega(X_1, \dots, [X, X_i], \dots, X_s)
+    \end{alignat}
+    が成り立つ。同じことだが、上の命題より
+    \begin{alignat}{1}
+        (L_X \omega)(X_1, \dots, X_s)
+            &= L_X(\omega(X_1, \dots, X_s)) \\
+            &\qquad - \sum_{i = 1}^s
+                \omega(X_1, \dots, L_X(X_i), \dots, X_s)
+    \end{alignat}
+    とも書ける。
+\end{proposition}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+Lie 微分はテンソル積に関して導分の性質を持つ。
+
+\begin{proposition}[テンソル積に関する Lie 微分の導分性]
+    $M$を多様体、
+    $\omega, \mu$を$M$上のテンソル場とする。
+    このとき次が成り立つ:
+    \begin{enumerate}
+        \item $L_X (\omega \otimes \mu)
+            = (L_X \omega) \otimes \mu + \omega \otimes (L_X \mu)$
+    \end{enumerate}
+\end{proposition}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+\begin{proposition}
+    $M$を多様体、$X, Y \in \frakX(M), \; \omega \in \Gamma(T^{0, s} M)$とする。
+    次が成り立つ:
+    \begin{enumerate}
+        \item $\iota_{[X, Y]} \omega = [L_X, \iota_Y] \omega$
+        \item $L_{[X, Y]} \omega = [L_X, L_Y] \omega$
+    \end{enumerate}
+\end{proposition}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+\begin{definition}[フローに関する不変性]
+    \TODO{}
+\end{definition}
+
+
+
+% ============================================================
+%
+% ============================================================
+\newpage
+\chapter{対称テンソル場と計量}
+
+この章では対称テンソル場を定義し、
+その重要な応用として計量を導入する。
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{対称テンソル場}
+
+\begin{definition}[対称テンソル場]
+    \TODO{ベクトル束のところで定義したものを使えばよい？}
+\end{definition}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{対称積}
+
+対称積を定義する。
+
+\begin{definition}[対称テンソル場の対称積]
+    \idxsym{symmetric product of symmetric tensor fields}
+        {$\omega_1 \odot \cdots \odot \omega_k, \Sym(\omega_1, \cdots, \omega_k)$}
+        {対称テンソル場の対称積}
+    $M$を多様体、$U \opensubset M$とする。
+    $r_i \in \Z_{\ge 0} \; (1 \le i \le k), \; r = r_1 + \dots + r_k$とし、
+    $\omega_i \in \Gamma_U(S^{r_i}(T^*M)) \; (1 \le i \le k)$とする。
+    $U$上の$r$次対称テンソル場
+    \begin{equation}
+        (\omega_1 \odot \cdots \odot \omega_k)_p
+            \coloneqq \frac{1}{r!}
+            \sum_{\sigma \in \frakS_r}
+            \sigma(\omega_{1p} \otimes \cdots \otimes \omega_{kp})
+            \quad (p \in U)
+    \end{equation}
+    を$\omega_1, \dots, \omega_k$の
+    \term{対称積}[symmetric product]{対称積}[たいしょうせき]という。
+    $\omega_1 \odot \cdots \odot \omega_k$を
+    $\Sym(\omega_1, \dots, \omega_k)$と書くこともある。
+\end{definition}
+
+\begin{remark}
+    対称積は可換かつ結合的である (\cref{problem:geometry3-q2.2.5})。
+\end{remark}
+
+Lie 微分は対称積に関して導分の性質を持つ。
+
+\begin{proposition}[対称積に関する Lie 微分の導分性]
+    $M$を多様体、
+    $\omega, \mu$を$M$上の対称テンソル場とする。
+    このとき次が成り立つ:
+    \begin{enumerate}
+        \item $L_X (\omega \odot \mu)
+            = (L_X \omega) \odot \mu + \omega \odot (L_X \mu)$
+    \end{enumerate}
+\end{proposition}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{計量}
+\label[section]{section:metric}
+
+\begin{definition}[計量]
+    $M$を多様体、$E$を$M$上のベクトル束とする。
+    \begin{itemize}
+        \item $\Gamma_M(S^2(E^*))$の元を
+            $E$上の2次\term{対称形式}[symmetric form]{対称形式}[たいしょうけいしき]という。
+            $E = TM$の場合は
+            $M$上の2次対称形式ともいう。
+        \item $E$上の2次対称形式$g$について、
+            各$p \in M$に対し$g_p$が$E_p$上の対称双線型形式として
+            非退化であるとき、$g$は
+            \term{非退化}[non-degenerate]{非退化}[ひたいか]であるという。
+        \item $E$上の非退化2次対称形式を
+            $E$の\term{計量}[metric]{計量}[けいりょう]という。
+            $E = TM$の場合は
+            $M$の計量ともいう。
+        \item $g_p$の2次形式としての符号が$p \in M$によらず一定であるとき、
+            $p$をひとつ選んで
+            \begin{equation}
+                \sgn g \coloneqq \sgn g_p
+            \end{equation}
+            と定め、これを$g$の\term{符号}[sign]{符号}[ふごう]という。
+    \end{itemize}
+\end{definition}
+
+符号の様子にしたがっていくつかの計量には特別な名前がついている。
+
+\begin{definition}[計量の例]
+    $M$を多様体、$E$を$M$上のランク$r$ベクトル束とする。
+    \begin{itemize}
+        \item $\sgn g = (s, t), \; s + t = r$のとき、
+            $g$を\term{擬 Riemann 計量}[pseudo-Riemannian metric]
+            {擬 Riemann 計量}[ぎRiemannけいりょう]という。
+        \item $\sgn g = (r, 0)$のとき、
+            $g$を\term{Riemann 計量}[Riemannian metric]
+            {Riemann 計量}[Riemannけいりょう]という。
+        \item $\sgn g = (1, r - 1)$のとき、
+            $g$を\term{Lorentz 計量}[Lorentzian metric]
+            {Lorentz 計量}[Lorentzけいりょう]という。
+    \end{itemize}
+\end{definition}
+
+{\smooth}写像がはめ込みならば、計量の引き戻しもまた計量となる。
+計量の引き戻しが計量とならない例は
+\cref{problem:geometry3-2.3.6}で扱っている。
+
+\begin{proposition}[引き戻し計量]
+    $M, N$を多様体、$g$を$M$の計量とする。
+    {\smooth}写像$f \colon N \to (M, g)$がはめ込みであるとき、
+    引き戻し$f^* g$は$N$の計量となる。
+    これを$g$の$f$による
+    \term{引き戻し計量}[pullback metric]{引き戻し計量}[ひきもどしけいりょう]
+    という。
+\end{proposition}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+
+
+
+% ============================================================
+%
+% ============================================================
+\newpage
+\chapter{交代テンソル場と微分形式}
+
+\TODO{外積代数と Hodge 双対の話をどこかに書きたい。
+    内部積も結局外積代数上で使うことが目的？}
+
+この章では、
+微分幾何学に必要不可欠な概念のひとつである微分形式を導入する。
+身も蓋もない言い方をすれば、微分形式というのは交代テンソル場のことである。
+しかしこれだけでは微分形式の重要性は全く見えてこない。
+微分形式に基づいて多様体の向き付けや積分、de Rham コホモロジーなどの
+重要な理論が展開されることが徐々に明らかになるであろう。
+この章では微分形式に対する演算として
+外積と外微分を定義する。
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{微分形式}
+
+\begin{definition}[微分形式]
+    \idxsym{space of $s$-forms}{$\Omega^s(U)$}{$U$上の$s$-形式全体の空間}
+    $M$を$m$次元多様体、
+    $U \opensubset M$とする。
+    \begin{itemize}
+        \item $\Gamma_U(\bigwedge^s(T^*M))$の元を
+            $U$上の\term{微分$s$-形式}[differential $s$-form]{微分$s$形式}[びぶんsけいしき]
+            あるいは単に
+            \emph{$s$形式}
+            という。
+            $\Gamma_U(\bigwedge^s(T^*M))$を$\Omega^s(U)$とも書く。
+        \item $s = 0$のとき、形式的に$\Omega^0(U) \coloneqq \smooth(U)$
+            と定める。
+        \item $s = \dim M$のとき、$s$-形式を
+            \term{最高次形式}[top-degree form]{最高次形式}[さいこうじけいしき]
+            という。
+    \end{itemize}
+\end{definition}
+
+\begin{remark}
+    上で定義した微分形式は$\R$-値だが、これはベクトル値に一般化できる。
+    これについては \cref{sec:vector-valued-forms} で論じる。
+\end{remark}
+
+微分形式の座標フレームに関する成分表示は、
+交代性を用いて次のように書ける。
+
+\begin{proposition}[微分形式の座標フレームに関する成分表示]
+    座標$x^1, \dots, x^m$のもとで
+    \begin{equation}
+        \omega = \sum_{i_1, \dots, i_s}
+            \omega_{i_1 \dots i_s} \,
+            dx^{i_1} \wedge \cdots \wedge dx^{i_s},
+            \quad
+            \text{各$\omega_{i_1 \dots i_s}$は添字に関し交代的}
+    \end{equation}
+    あるいは
+    \begin{equation}
+        \omega = \sum_{i_1 < \cdots < i_s}
+            \omega_{i_1 \dots i_s} \,
+            dx^{i_1} \wedge \cdots \wedge dx^{i_s}
+    \end{equation}
+    の形に表せる。
+    \TODO{}
+\end{proposition}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{外積}
+
+微分形式に対して外積を定義する。
+
+\begin{definition}[微分形式の外積]
+    \idxsym{exterior product of differential forms}
+        {$\omega \wedge \mu$}{微分形式の外積}
+    $M$を多様体、$U \opensubset M$とする。
+    $\omega \in \Omega^r(U), \; \mu \in \Omega^s(U)$とする。
+    $U$上の$r + s$次微分形式
+    \begin{alignat}{1}
+        (\omega \wedge \mu)_p (v_1, \dots, v_{r + s})
+            &\coloneqq \frac{1}{r! s!}
+            \sum_{\sigma \in \frakS_{r + s}}
+            \sgn(\sigma)
+            \omega_p(v_{\sigma(1)}, \dots, v_{\sigma(r)})
+            \mu_p(v_{\sigma(r + 1)}, \dots, v_{\sigma(r + s)}) \\
+            &= \frac{1}{r! s!}
+            \sum_{\sigma \in \frakS_{r + s}}
+            \sgn(\sigma)
+            (\omega \otimes \mu)_p
+            (\sigma(v_1, \dots, v_{r + s}))
+    \end{alignat}
+    を$\omega$と$\mu$の\term{外積}[exterior product]{外積}[がいせき]
+    あるいは\term{wedge 積}[wedge product]{wedge 積}[wedge せき]
+    という。
+\end{definition}
+
+\begin{remark}
+    とくに$r = s = 1$の場合
+    \begin{equation}
+        \omega \wedge \eta (v_1, v_2)
+            = \omega(v_1) \eta(v_2) - \omega(v_2) \eta(v_1)
+    \end{equation}
+    となる。
+\end{remark}
+
+\begin{remark}
+    微分形式の外積の定義は対称積と似ているが、以下の点で異なる:
+    \begin{itemize}
+        \item 対称積は$k$項演算として定義されたが、
+            外積は2項演算として定義される。
+        \item 係数が$1 / (r + s)!$の形ではなく$1 / (r! s!)$の形である
+            (ただし、前者で定義する流儀もある)。
+        \item 置換$\sigma$の作用の仕方は$\sigma(\omega \otimes \mu)$の形ではなく、
+            引き戻し$\sigma^* (\omega \otimes \mu)$の形である。
+            \TODO{本質的に何が違う？}
+    \end{itemize}
+\end{remark}
+
+外積は次の性質を持つ。
+
+\begin{proposition}[外積の基本性質]
+    \label[proposition]{prop:exterior-product-basic-properties}
+    $M$を多様体、$U \opensubset M$とする。
+    \begin{enumerate}
+        \item $\omega \in \Omega^r(U), \; \mu \in \Omega^s(U)$に対し
+            \begin{equation}
+                \omega \wedge \eta = (-1)^{rs} \eta \wedge \omega
+            \end{equation}
+            が成り立つ。
+        \item $\omega_1, \dots, \omega_k \in \Omega^1(U)$に対し
+            \begin{equation}
+                \omega_1 \wedge \cdots \wedge \omega_k
+                    = \sum_{\sigma \in \frakS_k}
+                    \sgn(\sigma)
+                    \omega_{\sigma(1)} \otimes \cdots \otimes \omega_{\sigma(k)}
+            \end{equation}
+            が成り立つ。
+            したがって
+            \begin{equation}
+                (\omega_1 \wedge \cdots \wedge \omega_k)(v_1, \dots, v_k)
+                    = \det (\omega_i(v_j))
+            \end{equation}
+            である。
+    \end{enumerate}
+\end{proposition}
+
+\begin{proof}
+    cf. \cite[p.356]{Lee12}
+\end{proof}
+
+外積は、これまでに導入したテンソル場の演算と非常に相性が良い。
+まず引き戻しは外積と交換する。
+
+\begin{proposition}[引き戻しと外積の関係]
+    $F \colon M \to N$を{\smooth}写像とする。
+    微分形式$\omega, \eta$に対し
+    \begin{equation}
+        F^*(\omega \wedge \eta) = (F^*\omega) \wedge (F^* \eta)
+    \end{equation}
+    が成り立つ。
+    \TODO{定義域とかはどうなる？}
+\end{proposition}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+次に述べる最高次形式の引き戻し公式は、
+通常の積分における変数変換公式のようなものであり、
+積分を具体的に計算するための重要なツールのひとつである。
+
+\begin{proposition}[最高次形式の引き戻し公式]
+    \label[proposition]{prop:top-degree-form-pullback-formula}
+    $M, N$を$n$次元多様体、
+    $F \colon M \to N$を{\smooth}写像、
+    $(x^i), (y^j)$をそれぞれ$U \opensubset M, V \opensubset N$上の局所座標とする。
+    このとき、$V$上の任意の連続関数$u$に対し、
+    $U \cap F^{-1}(V)$上で
+    \begin{equation}
+        F^* (u \,dy^1 \wedge \dots \wedge dy^n)
+            = (u \circ F) (\det JF) \, dx^1 \wedge \dots \wedge dx^n
+    \end{equation}
+    が成り立つ。
+    \TODO{連続関数でいいのか？}
+\end{proposition}
+
+\begin{proof}
+    cf. \cite[p.361]{Lee12}
+\end{proof}
+
+内部積は外積に関して反導分の性質を持つ。
+
+\begin{proposition}[外積に関する内部積の反導分性]
+    $M$を多様体、
+    $p \in M, \; v \in T_pM$とする。
+    交代テンソル$\omega \in \bigwedge^r T_p^*M, \; \mu \in \bigwedge^s T_p^* M$
+    に対し
+    \begin{equation}
+        \iota_v (\omega \wedge \mu)
+            = (\iota_v \omega) \wedge \mu + (-1)^{r} \omega \wedge (\iota_v \mu)
+    \end{equation}
+    が成り立つ。
+\end{proposition}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+Lie 微分は外積に関して導分の性質を持つ (反導分ではないことに注意)。
+
+\begin{proposition}[外積に関する Lie 微分の導分性]
+    $M$を多様体、
+    $\omega, \mu$を$M$上の微分形式とする。
+    このとき次が成り立つ:
+    \begin{enumerate}
+        \item $L_X (\omega \wedge \mu)
+            = (L_X \omega) \wedge \mu + \omega \wedge (L_X \mu)$
+    \end{enumerate}
+\end{proposition}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{外微分}
+
+微分形式全体の空間$\Omega^*(M)$に外微分とよばれる演算を定義する。
+外微分を境界作用素として$\Omega^*(M)$は
+チェイン複体となるが\footnote{
+    より詳しくいえば、$\Omega^*(M)$は wedge 積により次数付き代数となり、
+    さらに外微分によりDG代数 (differential graded algebra) となる。
+    DG代数はチェイン複体の構造を持つから、
+    とくにチェイン複体となる。
+}、
+このことは \cref{section:de-Rham-cohomology} で詳しく論じる。
+
+\begin{definition}[外微分]
+    $M$を多様体とする。
+    次をみたす写像の族$d \colon \Omega^k(M) \to \Omega^{k+1}(M)\; (k \ge 0)$が
+    ただひとつ存在し（証明略）、$d$を\term{外微分}[exterior derivative]{外微分}[がいびぶん]という。
+    \begin{enumerate}
+        \item $d$は$\R$-線型写像である。
+        \item (anti-derivation 性)
+            $\omega \in \Omega^k(M)$と$\eta \in \Omega^l(M)$に対し
+            \begin{equation}
+                d(\omega \wedge \eta)
+                    \coloneqq d\omega \wedge \eta + (-1)^k \omega \wedge d\eta
+            \end{equation}
+            が成り立つ。
+        \item $d \circ d = 0$である。
+        \item $f \in \Omega^0(M) = \smooth(M)$に対し
+            $df$は$f$の微分に一致し、$df(X) = Xf$が成り立つ。
+    \end{enumerate}
+\end{definition}
+
+外微分の座標フレームに関する成分表示は次のようになる。
+
+\begin{proposition}[外微分の座標フレームに関する成分表示]
+    $M$を多様体、$\omega \in \Omega^k(M)$とする。
+    $\omega$の座標フレームに関する成分表示を
+    \begin{equation}
+        \omega = \sum_{i_1 < \dots < i_k}
+            \omega_{i_1 \dots i_k} dx^{i_1} \wedge \dots \wedge dx^{i_k}
+    \end{equation}
+    とすると、$d\omega$は
+    \begin{equation}
+        d\omega = \sum_{i_1 < \dots < i_k}
+            d\omega_{i_1 \dots i_k} \wedge dx^{i_1} \wedge \dots \wedge dx^{i_k}
+    \end{equation}
+    となる。
+\end{proposition}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+外微分はベクトル場と Lie 括弧で記述できる。
+共変テンソル場の Lie 微分の公式
+(\cref{prop:lie-derivative-of-covariant-tensor-field})
+と似ているが、外微分の場合は各項に符号が付くことに注意。
+
+\begin{proposition}[外微分とベクトル場の計算公式]
+    $M$を多様体、$\omega \in \Omega^r(M)$とする。
+    $X_0, \dots, X_r \in \frakX(M)$に対し
+    \begin{alignat}{1}
+        d\omega(X_0, \dots, X_r)
+            &= \sum_{i = 0}^r (-1)^i X_i (\omega(X_0, \dots, \hat{X}_i, \dots, X_r)) \\
+            &\qquad + \sum_{i < j} (-1)^{i+j}
+                \omega([X_i, X_j], X_0, \dots, \hat{X}_i, \dots, \hat{X}_j, \dots, X_r)
+    \end{alignat}
+    が成り立つ\footnote{
+        この関係式を$d\omega$の定義とする流儀もあるが、
+        その場合は$d\omega$が (ベクトル場ではなく) ベクトルをとるとは
+        どういうことなのか well-defined に定義する必要がある。
+    }。
+\end{proposition}
+
+\begin{remark}
+    \label[remark]{remark:exterior-derivative-and-vector-fields}
+    とくに$r = 1$のとき
+    \begin{equation}
+        d\omega(X, Y)
+            = X(\omega(Y)) - Y(\omega(X)) - \omega([X, Y])
+    \end{equation}
+    が成り立つ。
+\end{remark}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+外微分も、外積と同様にこれまでに導入したテンソル場の演算と非常に相性が良い。
+まず引き戻しは外積と交換する。
+
+\begin{proposition}[外微分と引き戻しの関係 (外微分の自然性)]
+    $F \colon M \to N$を{\smooth}写像とする。
+    このとき、$N$上の微分形式$\omega$に対し
+    \begin{equation}
+        F^* (d\omega) = d(F^* \omega)
+    \end{equation}
+    が成り立つ。
+\end{proposition}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+外微分と Lie 微分、内部積を関係付ける重要な公式が次の
+Cartan's Homotopy Formula である。
+
+\begin{theorem}[Cartan's Homotopy Formula]
+    $M$を多様体、$\omega \in \Omega^r(M)$とする。
+    このとき
+    \begin{equation}
+        L_X \omega
+            = (d \circ \iota_X + \iota_X \circ d) \omega
+    \end{equation}
+    が成り立つ。
+\end{theorem}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+上の定理から次の系が従う。
+すなわち、外微分と Lie 微分は互いに交換可能である。
+
+\begin{corollary}
+    上の命題の状況で
+    \begin{equation}
+        L_X \circ d (\omega) = d \circ L_X (\omega)
+    \end{equation}
+    が成り立つ。
+    \qed
+\end{corollary}
+
+\begin{corollary}
+    上の命題の状況で
+    さらに$\omega$が閉形式ならば、
+    $L_X \omega$は完全形式である。
+    \qed
+\end{corollary}
+
+
+
+
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\newpage
+\section{演習問題}
+
+\begin{problem}[{[Lee] 10-1}]
+    \label[problem]{prob:lee10-1}
+
+    $\pi \colon E \to S^1$を M\"{o}bius bundle とする。
+    \begin{enumerate}
+        \item $E$は商写像$q \colon \R^2 \to E$が smooth covering map となるような
+            smooth structure をただひとつ持つことを示せ。
+        \item $\pi \colon E \to S^1$は smooth rank-1 vector bundle であることを示せ。
+        \item $\pi \colon E \to S^1$は trivial bundle でないことを示せ。
+    \end{enumerate}
+\end{problem}
+
+\begin{answer}
+    (1) $E$はLie 群$\Z$の$\R^2$への{\smooth}作用が定める軌道空間$\R^2/\Z$であり、
+    $q$はその商写像である。
+    この作用は自由かつ固有不連続だから、
+    $E$は多様体となり、$q$は smooth covering map となる。
+    $E$に別の smooth structure を入れたものを$E'$とおけば、
+    恒等写像$E \to E'$が diffeomorphism となることから
+    smooth structure の一意性が従う。
+
+    (2)
+    \TODO{}
+\end{answer}
+
+\begin{problem}[幾何学III 演習問題1.2]
+    $f \colon M \to M$を微分同相写像とする。
+    このとき、$X \in \frakX(M)$について
+    $f_*X \in \frakX(M)$が
+    \begin{equation}
+        f_* X(p) = f_{*p} X(p)
+    \end{equation}
+    により定まることを示せ。
+\end{problem}
+
+\begin{answer}
+    \begin{equation}
+        \begin{tikzcd}
+            TM \ar{r}{f_*} & TM \\
+            M \ar{u}{X} \ar{r}[swap]{\id} & M \ar{u}[swap]{f_* X}
+        \end{tikzcd}
+    \end{equation}
+    \TODO{$f_*X(p) = f_{*f^{-1}(p)} X(f^{-1}(p))$ではないか？}
+\end{answer}
+
+\begin{problem}[幾何学III 問2.1.8]
+    $M$を多様体、
+    $\{ (U_\alpha, \psi_\alpha) \}$を$TM$の局所自明化の族とする。
+    このとき、
+    $\{ (U_\alpha, \psi_\alpha^{\otimes r} \otimes (\psi_\alpha^*)^{\otimes s}) \}$
+    は$T^{r, s} M$の局所自明化の族であって、
+    変換関数は$\rho_{\beta\alpha}^{\otimes r}
+    \otimes (\up{t} \rho_{\beta\alpha}^{-1})^{\otimes s}$
+    で与えられることを示せ。
+\end{problem}
+
+\begin{answer}
+    \TODO{}
+\end{answer}
+
+\begin{problem}[幾何学III 問2.2.5]
+    \label[problem]{problem:geometry3-q2.2.5}
+    $M$を多様体とし、$U \opensubset M$とする。
+    $\omega, \mu, \nu$を$U$上の対称テンソル場とするとき
+    \begin{equation}
+        \omega \odot \mu = \mu \odot \omega,
+        \quad
+        (\omega \odot \mu) \odot \nu = \omega \odot (\mu \odot \nu)
+    \end{equation}
+    が成り立つことを示せ。
+\end{problem}
+
+\begin{answer}
+    $\omega, \mu, \nu$をそれぞれ$s, t, u$次とする。
+    座標フレームに関する成分表示
+    \begin{alignat}{1}
+        \omega &= \sum_{i_1, \dots, i_s}
+            f_{i_1 \dots i_s} dx^{i_1} \otimes \cdots \otimes dx^{i_s}, \\
+        \mu &= \sum_{j_1, \dots, j_t}
+            g_{j_1 \dots j_t} dx^{j_1} \otimes \cdots \otimes dx^{j_t}, \\
+        \nu &= \sum_{k_1, \dots, k_u}
+            h_{k_1 \dots k_u} dx^{k_1} \otimes \cdots \otimes dx^{k_u}
+    \end{alignat}
+    を用いる。
+    表記の簡略化のため、添字をまとめて
+    \begin{equation}
+        \omega = \sum_I f_I dx^I, \quad
+        \mu = \sum_J g_J dx^J, \quad
+        \nu = \sum_K h_K dx^K
+    \end{equation}
+    と略記する。
+    問題の1つ目の等式は
+    \begin{alignat}{1}
+        \omega \odot \mu
+            &= \sum_{I, J} f_I g_J
+                \frac{1}{(s + t)!}
+                \sum_{\sigma \in \frakS_{s + t}}
+                \sigma(dx^I \otimes dx^J) \\
+            \intertext{$s + t$個の数字の先頭の$s$個と末尾の$t$個を入れ替える置換を
+                $\sigma_0$とおけば}
+            &= \sum_{I, J} f_I g_J
+                \frac{1}{(s + t)!}
+                \sum_{\sigma \in \frakS_{s + t}}
+                \sigma \circ \sigma_0 (dx^I \otimes dx^J) \\
+            &= \sum_{I, J} f_I g_J
+                \frac{1}{(s + t)!}
+                \sum_{\sigma \in \frakS_{s + t}}
+                \sigma (dx^J \otimes dx^I) \\
+            &= \mu \odot \omega
+    \end{alignat}
+    となり確かに成り立つ。
+    問題の2つ目の等式は
+    \begin{alignat}{1}
+        (\omega \odot \mu) \odot \nu
+            &= \biggl(
+                \sum_{I, J} f_I g_J
+                \frac{1}{(s + t)!}
+                \sum_{\sigma \in \frakS_{s + t}}
+                \sigma(dx^I \otimes dx^J)
+            \biggr) \odot \nu \\
+            &= \sum_{I, J, K} f_I g_J h_K
+                \frac{1}{(s + t)!}
+                \sum_{\sigma \in \frakS_{s + t}}
+                \frac{1}{(s + t + u)!}
+                \sum_{\tau \in \frakS_{s + t + u}}
+                \tau(\sigma(dx^I \otimes dx^J) \otimes dx^K) \\
+            \intertext{各$\sigma$に対し、
+                $s + t + u$個の数字の先頭の$s + t$個を$\sigma^{-1}$で置換し、
+                末尾の$u$個を固定するような置換を$\tau_\sigma$とおけば}
+            &= \sum_{I, J, K} f_I g_J h_K
+                \frac{1}{(s + t)!}
+                \sum_{\sigma \in \frakS_{s + t}}
+                \frac{1}{(s + t + u)!}
+                \sum_{\tau \in \frakS_{s + t + u}}
+                \tau \circ \tau_\sigma (\sigma(dx^I \otimes dx^J) \otimes dx^K) \\
+            &= \sum_{I, J, K} f_I g_J h_K
+                \frac{1}{(s + t)!}
+                \sum_{\sigma \in \frakS_{s + t}}
+                \frac{1}{(s + t + u)!}
+                \sum_{\tau \in \frakS_{s + t + u}}
+                \tau (dx^I \otimes dx^J \otimes dx^K) \\
+            \intertext{最も右側の総和はもはや$\sigma$にはよらないから}
+            &= \sum_{I, J, K} f_I g_J h_K
+                \frac{1}{(s + t + u)!}
+                \sum_{\tau \in \frakS_{s + t + u}}
+                \tau (dx^I \otimes dx^J \otimes dx^K)
+    \end{alignat}
+    となる。同様にして$\omega \odot (\mu \odot \nu)$も同じ式に変形できるから
+    \begin{equation}
+        (\omega \odot \mu) \odot \nu = \omega \odot (\mu \odot \nu)
+    \end{equation}
+    がいえた。
+\end{answer}
+
+\begin{problem}[幾何学III 問2.2.6]
+    $M$を多様体とし、$U \opensubset M$とする。
+    \begin{enumerate}
+        \item $U$上の$(0, k)$-テンソル場$\omega$に対し
+            \begin{equation}
+                \Sym(\Sym \omega) = \Sym \omega
+            \end{equation}
+            が成り立つことを示せ。
+        \item $U$上の対称テンソル場$\mu$に対し
+            \begin{equation}
+                \Sym \mu = \mu
+            \end{equation}
+            が成り立つことを示せ。
+    \end{enumerate}
+\end{problem}
+
+\begin{answer}
+    \uline{(1)} \quad
+    $\omega$を$(0, k)$-テンソル場とする。
+    $(0, 1)$-テンソル場のテンソル積で
+    $\omega = \omega_1 \otimes \cdots \otimes \omega_k$と表すと
+    \begin{alignat}{1}
+        \Sym \omega
+            &= \frac{1}{k!}
+                \sum_{\sigma \in \frakS_k}
+                \omega_{\sigma(1)} \otimes \cdots \otimes \omega_{\sigma(k)}
+    \end{alignat}
+    だから
+    \begin{alignat}{1}
+        \Sym(\Sym \omega)
+            &= \frac{1}{k!} \frac{1}{k!}
+                \sum_{\substack{
+                    \sigma \in \frakS_k \\
+                    \tau \in \frakS_k
+                }}
+                \omega_{\tau\sigma(1)} \otimes \cdots \otimes \omega_{\tau\sigma(k)} \\
+            &= \frac{1}{k!} \frac{1}{k!}
+                \sum_{\mu \in \frakS_k}
+                \sum_{\tau \sigma = \mu}
+                \omega_{\mu(1)} \otimes \cdots \otimes \omega_{\mu(k)}
+    \end{alignat}
+    である。
+    ここで$\tau\sigma = \mu$となる組$(\tau, \sigma)$の個数は
+    \begin{equation}
+        \sharp\{
+            (\tau, \sigma) \mid \tau \in \frakS_k, \; \sigma = \tau^{-1} \mu
+        \}
+            = \sharp \frakS_k
+            = k!
+    \end{equation}
+    だから、式変形を続けて
+    \begin{alignat}{1}
+        \Sym(\Sym \omega)
+            &= \frac{1}{k!}
+                \sum_{\mu \in \frakS_k}
+                \omega_{\mu(1)} \otimes \cdots \otimes \omega_{\mu(k)} \\
+            &= \Sym \omega
+    \end{alignat}
+    を得る。
+
+    \uline{(2)} \quad
+    $\omega$が$k$次対称テンソル場ならば
+    \begin{alignat}{1}
+        \Sym \omega
+            &= \frac{1}{k!}
+                \sum_{\sigma \in \frakS_k}
+                \sigma \omega \\
+            &= \frac{1}{k!}
+                \sum_{\sigma \in \frakS_k}
+                \omega \\
+            &= \omega
+    \end{alignat}
+    を得る。
+\end{answer}
+
+\begin{problem}[幾何学III 問2.2.10]
+    \label[problem]{problem:geometry3-2.2.10}
+    $M$を多様体とし、$U \opensubset M$とする。
+    $\omega_1, \dots, \omega_k \in \Omega^1(U)$に対し
+    \begin{equation}
+        \omega_1 \wedge \cdots \wedge \omega_k
+            = \sum_{\sigma \in \frakS_k}
+            \sgn(\sigma)
+            \omega_{\sigma(1)} \otimes \cdots \otimes \omega_{\sigma(k)}
+    \end{equation}
+    が成り立つことを示せ。
+\end{problem}
+
+\begin{answer}
+    \cref{prop:exterior-product-basic-properties} を参照。
+\end{answer}
+
+\begin{problem}[幾何学III 問2.2.11]
+    \label[problem]{problem:geometry3-2.2.11}
+    $M$を$n$次元多様体とする。
+    次を示せ:
+    \begin{enumerate}
+        \item $\rank \bigwedge^n T^* M = 1$である。
+        \item $\{ (U_\alpha, \varphi_\alpha) \}$を$M$の atlas とし、
+            $\varphi_\alpha(U_\alpha)$の座標を
+            $x_{\alpha 1}, \dots, x_{\alpha n}$とするとき、
+            $dx_{\alpha 1} \wedge \cdots \wedge dx_{\alpha n}$は
+            $U_\alpha$上の$\bigwedge^n T^* M$の自明化であって、
+            $U_\alpha$から$U_\beta$への変換関数は
+            $\det \rho_{\beta\alpha}^{-1}$で表される。
+    \end{enumerate}
+\end{problem}
+
+\begin{answer}
+    \uline{(1)} \quad
+    $\dim \left(\bigwedge^n T^* M\right)_p
+        = \dim \bigwedge^n T^*_p M
+        = \binom{n}{n}
+        = 1$
+    より明らか。
+
+    \uline{(2)} \quad
+    $dx_{\alpha 1} \wedge \cdots \wedge dx_{\alpha n}$は
+    $U_\alpha$上 nonvanishing だから
+    $U_\alpha$上の$\bigwedge^n T^* M$のフレームである。
+    したがって確かに局所自明化を定める。
+    また、各$p \in U_\alpha \cap U_\beta$に対し
+    \begin{alignat}{1}
+        \varphi_\beta \circ \varphi_\alpha^{-1}(p, 1)
+            &= \varphi_\beta((dx_{\alpha 1} \wedge \cdots \wedge dx_{\alpha n})_p) \\
+            &= \varphi_\beta\left(
+                \det\left(\deldel[\alpha_i]{\beta_j}\right)_{i, j}(p) \,
+                dx_{\beta 1} \wedge \cdots \wedge dx_{\beta n}
+            \right) \\
+            &= \left(
+                p,
+                \det\left(\deldel[\alpha_i]{\beta_j}\right)_{i, j}(p)
+            \right) \\
+            &= \left( p, \det \rho_{\alpha\beta}(p) \right) \\
+            &= \left( p, \det \rho_{\beta\alpha}(p)^{-1} \right)
+    \end{alignat}
+    が成り立つから、
+    $U_\alpha$から$U_\beta$への変換関数は
+    $\det \rho_{\beta\alpha}^{-1}$である。
+\end{answer}
+
+\begin{problem}[幾何学III 問3.3.3]
+    $M$を多様体、$U \opensubset M$とし、
+    $\omega \in \Gamma_U(S^r(T^*M)), \; \mu \in \Gamma_U(S^s(T^*M))$
+    とする。
+    このとき
+    \begin{equation}
+        \iota_v (\omega \odot \mu)
+            = \frac{1}{r + s}
+            (r (\iota_v \omega) \odot \mu + s \omega \odot (\iota_v \mu))
+            \quad
+            (v \in TM)
+    \end{equation}
+    が成り立つことを示せ。
+\end{problem}
+
+\begin{answer}
+    \TODO{}
+\end{answer}
+
+\begin{problem}[幾何学III 問3.4.1]
+    $M$を多様体とし、
+    $f, g \colon M \to M$を diffeo とする。
+    \begin{equation}
+        (g \circ f)^* \omega = f^* (g^* \omega)
+        \quad
+        (\omega \in T^{r, s}M)
+    \end{equation}
+    が成り立つことを示せ。
+\end{problem}
+
+\begin{answer}
+    \TODO{}
+\end{answer}
+
+\begin{problem}[幾何学III 問3.4.8]
+    $\K = \R$または$\K = \C$とする。
+    \begin{enumerate}
+        \item $A \in M_n(\K)$に対し
+            $\exp A \in \GL(n, \K)$が成り立つことを示せ。
+        \item $t, s \in \R, \; A, B \in M_n(\K)$に対し
+            $F(t, s) \coloneqq \exp(-sB) \exp(-tA) \exp(sB) \exp(tA)$
+            とおくとき
+            \begin{equation}
+                \deldel{t}\bigg|_{t = 0} \deldel{s}\bigg|_{s = 0} F(t, s),
+                \quad
+                \deldel{s}\bigg|_{s = 0} \deldel{t}\bigg|_{t = 0} F(t, s)
+            \end{equation}
+            を直接求め、
+            いずれも Lie 括弧積$[B, A]$に等しいことを示せ。
+    \end{enumerate}
+\end{problem}
+
+\begin{answer}
+    \TODO{}
+\end{answer}
+
+\begin{problem}[幾何学III 問3.4.10]
+    $M$を多様体、
+    $\omega \in \Omega^r(M)$とする。
+    $X_0, \dots, X_r \in \frakX(M)$に対し
+    \begin{equation}
+        d\omega(X_0, \dots, X_r)
+            = \sum_{k = 0}^r (-1)^k
+            L_{X_k} \omega(X_0, \dots, \what{X}_k, \dots, X_r)
+    \end{equation}
+    が成り立つことを示せ。
+\end{problem}
+
+\begin{answer}
+    \TODO{}
+\end{answer}
+
+
+
+
+
+\end{document}

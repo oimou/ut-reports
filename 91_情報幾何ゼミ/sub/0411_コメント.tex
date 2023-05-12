@@ -1,0 +1,31 @@
+\documentclass[report]{jlreq}
+\usepackage{global}
+\usepackage{./local}
+\subfiletrue
+\def\assetspath{../}
+%\makeindex
+\chead{2023/04/11}
+\begin{document}
+
+% ============================================================
+%
+% ============================================================
+
+発表時にコメントがあった命題などを整理する。
+
+\begin{fact}[確率測度の一致と確率密度関数の一致 (up to a positive scalar)]
+    $\calX$を可測空間、$\mu$を$\calX$上の$\sigma$-有限測度とする。
+    このとき、
+    $\mu$に関し絶対連続な$\calX$上の確率測度$p_1, p_2$に関し、
+    次は同値である:
+    \begin{enumerate}
+        \item $p_1 = p_2$
+        \item $\exists \; c > 0$ \quad s.t. \quad
+            $\mu$-a.e. $x \in \calX$に対し、
+            $\dd[p_1]{\mu}(x) = c \dd[p_2]{\mu}(x)$
+    \end{enumerate}
+    \qed
+\end{fact}
+
+
+\end{document}

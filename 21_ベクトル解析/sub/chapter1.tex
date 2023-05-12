@@ -1,0 +1,335 @@
+\documentclass[report]{jlreq}
+\usepackage{../../global}
+\usepackage{./local}
+\subfiletrue
+\def\assetspath{../}
+%\makeindex
+\begin{document}
+
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{微分形式}
+
+\subsection{引き戻し}
+
+\subsection{外微分}
+
+\subsection{閉形式・完全形式}
+
+
+
+\begin{problem}
+    \cite[問題8.1-8.9]{清水16}を読者の演習問題とする。
+\end{problem}
+
+\begin{problem}
+    \,
+    \begin{itemize}
+        \item \cite[第IV章 問8.1 (1)-(4)]{杉浦+89}
+        \item \cite[第IV章 問8.2 (1),(2)]{杉浦+89}
+        \item \cite[第IV章 問8.3]{杉浦+89}
+        \item \cite[第IV章 問8.4 (1)-(6)]{杉浦+89}
+        \item \cite[第IV章 問8.5 (1)-(3)]{杉浦+89}
+    \end{itemize}
+    を読者の演習問題とする。
+\end{problem}
+
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{線積分}
+
+\subsection{スカラー場の線積分}
+\begin{definition}[スカラー場の線積分]
+    スカラー場$f$に対し
+    \begin{equation}
+        \int_{\gamma} f(x) |dx|
+            \coloneqq \int_a^b f(\gamma(t)) \| D\gamma(t) \| dt
+    \end{equation}
+    を$f$の線積分という。
+\end{definition}
+
+\subsection{ベクトル場の線積分}
+
+ベクトル場の線積分は微分形式で表現することができる。
+
+\begin{definition}[ベクトル場の線積分]
+    ベクトル場
+    \begin{equation}
+        X = f^1 \del_1 + \cdots f^n \del_n
+    \end{equation}
+    に対し
+    \begin{equation}
+        \int_{\gamma} X(x) \cdot dx
+            \coloneqq \int_a^b \langle X(\gamma(t)) \mid D\gamma(t) \rangle dt
+    \end{equation}
+    を$X$の線積分という。
+\end{definition}
+
+\begin{definition}[微分形式による表現]
+    ベクトル場
+    \begin{equation}
+        X = f^1 \del_1 + \cdots + f^n \del_n
+    \end{equation}
+    に対応する1次微分形式
+    \begin{equation}
+        \omega = f_1 dx^1 + \cdots + f_n dx^n
+    \end{equation}
+    に対し
+    \begin{equation}
+        \int_{\gamma} \omega
+            \coloneqq \int_{\gamma} X(x) \cdot dx
+    \end{equation}
+    で$\omega$の線積分を定める。
+\end{definition}
+
+\begin{definition}[引き戻しの線積分]
+    $\gamma$による$\omega$の引き戻し$\gamma^* \omega$に対し
+    \begin{equation}
+        \int_a^b \gamma^* \omega
+            \coloneqq \int_\gamma \omega
+    \end{equation}
+    と定める。
+\end{definition}
+
+
+\begin{problem}[線積分]
+    \cite[第IV章 問題5.1 (1)-(10)]{杉浦+89}を読者の演習問題とする。
+\end{problem}
+
+
+
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{面積分}
+
+\subsection{曲面について}
+
+\begin{definition}[曲面片]
+    $\R^3$の有界閉集合$S$が\textbf{曲面片}であるとは、
+    三角形の内部でヤコビ行列が退化しないような
+    $S$の\textbf{パラメータ付け}$(\Delta, \psi)$が存在することをいう。
+\end{definition}
+
+\begin{definition}[座標近傍]
+    ...
+\end{definition}
+
+\begin{definition}[曲面の向き（座標近傍系）]
+    曲面$\Sigma$が座標近傍系$\{(U_\lambda, \phai_\lambda)\}_{\lambda \in \Lambda}$を持つとする。
+    どの座標近傍の対も共通部分で座標変換のヤコビアンが正であるとき、
+    $\{(U_\lambda, \phai_\lambda)\}_{\lambda \in \Lambda}$は
+    $\Sigma$に\textbf{向き}を定めるという。
+\end{definition}
+
+\begin{definition}[曲面の向き（曲面片）]
+    曲面$S$を曲面片とし、$(\Delta, \psi), (\Delta', \psi')$をパラメータ付けとする。
+    曲面片を経由した三角形どうしの変換$\psi'^{-1} \circ \psi$のヤコビアンが
+    三角形の内部で正であるとき、
+    $(\Delta, \psi), (\Delta', \psi')$は
+    $S$に\textbf{同じ向き}を定めるという。
+\end{definition}
+
+\begin{definition}[境界の向き]
+    ...
+\end{definition}
+
+
+\subsection{スカラー場の面積分}
+
+\begin{definition}[スカラー場の面積分（曲面片）]
+    パラメータ付け$(\Delta, \psi)$を持つ曲面片$S$に対し
+    \begin{equation}
+        \int_S f |dA| = \int_{\Delta} f(\psi(u))
+            \left\| \deldel[\psi]{u^1} (u) \times \deldel[\psi]{u^2} (u) \right\| du^1 du^2 
+    \end{equation}
+    で$f$の面積分を定める。
+\end{definition}
+
+\begin{definition}[スカラー場の面積分（座標近傍）]
+    座標近傍$(U, \phai)$に含まれる有界閉集合$K$に対し
+    \begin{equation}
+        \int_K f |dA| = \int_{\phai(K)} f(\psi(u))
+            \left\| \deldel[\psi]{u^1} (u) \times \deldel[\psi]{u^2} (u) \right\| du^1 du^2 
+    \end{equation}
+    で$f$の面積分を定める。
+    ただし$\psi = \phai^{-1}$
+\end{definition}
+
+\subsection{ベクトル場の面積分}
+
+ベクトル場の線積分の場合と同様に、微分形式による表現が可能である。
+
+\begin{definition}[ベクトル場の面積分（曲面片）]
+    パラメータ付け$(\Delta, \psi)$を持つ曲面片$S$に対し
+    \begin{equation}
+        \int_S X \cdot dA = \int_{\Delta} \left\langle X(\psi(u)) \,\middle|\,
+            \deldel[\psi]{u^1} (u) \times \deldel[\psi]{u^2} (u)
+            \right\rangle du^1 du^2
+    \end{equation}
+    で$X$の面積分を定める。
+\end{definition}
+
+\begin{definition}[ベクトル場の面積分（座標近傍）]
+    座標近傍$(U, \phai)$に含まれる有界閉集合$K$に対し
+    \begin{equation}
+        \int_K X \cdot dA = \int_{\phai(K)} \left\langle X(\psi(u)) \,\middle|\,
+            \deldel[\psi]{u^1} (u) \times \deldel[\psi]{u^2} (u)
+            \right\rangle du^1 du^2 
+    \end{equation}
+    で$X$の面積分を定める。
+    ただし$\psi = \phai^{-1}$
+\end{definition}
+
+\begin{definition}[微分形式による表現]
+    ベクトル場
+    \begin{equation}
+        X = f^1 \del_1 + f^2 \del_2 + f^3 \del_3
+    \end{equation}
+    に対応する2次微分形式
+    \begin{equation}
+        \omega
+            = f^1\, dx^2 \wedge dx^3
+            + f^2\, dx^3 \wedge dx^1
+            + f^3\, dx^1 \wedge dx^2
+    \end{equation}
+    に対し
+    \begin{equation}
+        \int_S \omega
+            \coloneqq \int_S X \cdot dA
+    \end{equation}
+    で$\omega$の面積分を定める。
+\end{definition}
+
+\begin{problem}[曲面片の表面積]
+    \cite[第IV章 問題6.1 (1)-(5)]{杉浦+89}を読者の演習問題とする。
+\end{problem}
+
+\begin{problem}[面積分]
+    \cite[第IV章 問題6.3 (1)-(10)]{杉浦+89}を読者の演習問題とする。
+\end{problem}
+
+
+
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{体積分}
+\subsection{微分形式の体積分}
+
+\begin{definition}[微分形式の体積分]
+    $\R^n$には向きが定まっているとし、$(x^1, \dots, x^n)$は向きと整合的な座標とする。
+    $\omega \coloneqq f\, dx^1 \wedge \cdots \wedge dx^n$と$K \subset \R^n$に対し
+    \begin{equation}
+        \int_K \omega
+            = \int_K f(x^1, \dots, x^n)\, dx^1 \cdots dx^n
+    \end{equation}
+    で$\omega$の積分を定める。
+    与えられた向きに関する体積要素を$d\vol = dx^1 \wedge \cdots \wedge dx^n$とも表す。
+\end{definition}
+
+
+
+
+
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{積分定理}
+
+\begin{definition}[勾配]
+    関数$f$に対し
+    \begin{equation}
+        \Grad f
+            = \deldel[f]{x^1} \del_1
+            + \deldel[f]{x^2} \del_2
+            + \deldel[f]{x^3} \del_3
+    \end{equation}
+    を$f$の\textbf{勾配ベクトル場}という。
+\end{definition}
+
+\begin{definition}[発散]
+    ベクトル場$X = f^1 \del_1 + f^2 \del_2 + f^3 \del_3$に対し
+    \begin{equation}
+        \Div X
+            = \deldel[f^1]{x^1}
+            + \deldel[f^2]{x^2}
+            + \deldel[f^3]{x^3}
+    \end{equation}
+    を$X$の\textbf{発散}という。
+\end{definition}
+
+\begin{definition}[回転]
+    ベクトル場$X = f^1 \del_1 + f^2 \del_2 + f^3 \del_3$に対し
+    \begin{equation}
+        \Rot X
+            = \left( \deldel[f^3]{x^2} - \deldel[f^2]{x^3} \right) \del_1
+            + \left( \deldel[f^1]{x^3} - \deldel[f^3]{x^1} \right) \del_2
+            + \left( \deldel[f^2]{x^1} - \deldel[f^1]{x^2} \right) \del_3
+    \end{equation}
+    を$X$の\textbf{回転}という。
+\end{definition}
+
+以下の積分定理はすべて統一的に理解できる。
+すなわち、標語的にいえば「縁での値は内側での微分を考えればよい」ということである。
+
+\begin{theorem}[勾配ベクトル場に関する積分定理]
+    $C^1$級曲線$\gamma$と
+    $C^1$級関数$f$に対し
+    \begin{equation}
+        \int_{\del \gamma} f
+            = \int_\gamma \Grad f(x) \cdot dx
+    \end{equation}
+    が成り立つ。
+\end{theorem}
+
+\begin{theorem}[グリーンの定理]
+    $D \subset \R^2$と
+    $C^1$級ベクトル場$X$に対し
+    \begin{equation}
+        \int_{\del D} X \cdot dx = \int_D r(X) d\vol
+    \end{equation}
+    が成り立つ。
+\end{theorem}
+
+\begin{theorem}[Gau\ss の発散定理]
+    $D \subset \R^3$と
+    $C^1$級ベクトル場$X$に対し
+    \begin{equation}
+        \int_{\del D} X \cdot dA = \int_D (\Div X) d\vol
+    \end{equation}
+    が成り立つ。
+\end{theorem}
+
+\begin{theorem}[ストークスの定理]
+    $\Sigma \subset \R^3$と
+    ベクトル場$X$に対し
+    \begin{equation}
+        \int_{\del \Sigma} X \cdot dx = \int_\Sigma (\Rot X) \cdot dA
+    \end{equation}
+    が成り立つ。
+\end{theorem}
+
+\begin{problem}[グリーンの定理]
+    \cite[第IV章 問題7.2 (1)-(5)]{杉浦+89}を読者の演習問題とする。
+\end{problem}
+
+\begin{problem}[ストークスの定理]
+    \cite[第IV章 問題7.7 (1)-(5)]{杉浦+89}を読者の演習問題とする。
+\end{problem}
+
+\begin{problem}[ガウスの発散定理]
+    \cite[第IV章 問題7.11 (1)-(5)]{杉浦+89}を読者の演習問題とする。
+\end{problem}
+
+
+
+
+\end{document}

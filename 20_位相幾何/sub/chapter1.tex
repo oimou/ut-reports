@@ -1,0 +1,1604 @@
+\documentclass[report]{jlreq}
+\usepackage{global}
+\usepackage{./local}
+\subfiletrue
+\def\assetspath{../}
+\begin{document}
+
+% ============================================================
+%
+% ============================================================
+\chapter{位相空間}
+
+代数的トポロジーでは位相空間内のパスを扱うから、
+必然的に実数体$\R$の位相を扱うことになる。
+そこで、代数的トポロジーでとくに重要な位相的性質について述べておくことにする。
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{連結空間}
+
+連結性について述べる。
+次の事実は次節で導入する弧状連結性の議論に必須である。
+
+\begin{proposition}[$\R$の区間は連結]
+    $\R$の空でない任意の区間$J$は連結である。
+\end{proposition}
+
+\begin{proof}
+    $J_1, J_2 \opensubset J, \;
+        J = J_1 \cup J_2, \;
+        J_1 \neq \emptyset, \;
+        J_2 \neq \emptyset, \;
+        J_1 \cap J_2 \neq \emptyset$
+    と表せたとして矛盾を導く。
+    $x_1 \in J_1, \; x_2 \in J_2$をひとつずつ選ぶ。
+    一般性を失うことなく$x_1 < x_2$としてよい。
+    \begin{equation}
+        c \coloneqq \sup \{
+            x \in \R
+            \mid
+            [x_1, x) \cap J \subset J_1
+        \}
+        \; (\ge x_1)
+    \end{equation}
+    とおく。
+    すると$c \le x_2$である。
+    実際、$c > x_2$とするといま$x_1 < x_2$であったから
+    $x_1 < x_2 < c$したがって$x_2 \in [x_1, c) \cap J \subset J_1$となり
+    $x_2 \notin J_1$に矛盾する。
+    よって$c \in J$である。
+    実際、$J$が区間であることより
+    $c \in [x_1, x_2] \subset J$だからである。
+    したがって上限の性質より$c \in \Cl_J J_1$である。
+    このことと$J_1 \; (= J \setminus J_2)$が closed in $J$であることから
+    $c \in J_1$である。
+    いま$c \in J_1 \opensubset J$ゆえに
+    ある$r > 0$が存在して
+    $c \in (c - r, c + r) \cap J \subset J_1$が成り立つ。
+    したがって$[x_1, c + r) \cap J \subset J_1$となり
+    $c$の定義に矛盾する。
+\end{proof}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{弧状連結空間}
+\label[section]{section:path-connected-space}
+
+弧状連結性を定義する。
+弧状連結性は基本群の定義に不可欠な要素である。
+
+\begin{definition}[パスとループ]
+    \idxsym{unit interval}{$I$}{$\R$の閉区間$I = [0, 1]$}
+    $X$を位相空間とする。
+    連続写像$f \colon [0, 1] \to X$を
+    $X$内で$f(0)$と$f(1)$をつなぐ\term{パス}[path]{パス}という。
+    さらに$f(0) = f(1)$のとき、$f$を\term{ループ}[loop]{ループ}といい、
+    点$f(0)$をループ$f$の\term{基点}[base point]{基点}[きてん]という。
+    今後は閉区間$[0, 1]$をよく使うので、$I \coloneqq [0, 1]$と書くことがある。
+\end{definition}
+
+\begin{definition}[弧状連結]
+    \TODO{}
+\end{definition}
+
+\begin{definition}[局所弧状連結]
+    \TODO{}
+\end{definition}
+
+弧状連結空間は連結である。
+
+\begin{proposition}[弧状連結ならば連結]
+    \TODO{}
+\end{proposition}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+逆に連結空間が弧状連結であるとは限らないが、
+ひとつ条件を加えれば弧状連結性が成り立つ。
+証明の流れは連結空間の特徴付けを用いる典型的なものである。
+
+\begin{proposition}[連結かつ局所弧状連結ならば弧状連結]
+    \label[proposition]{prop:cnd-and-loc-path-cnd-implies-path-cnd}
+    位相空間$X$が連結かつ局所弧状連結ならば
+    弧状連結である。
+\end{proposition}
+
+\begin{proof}
+    $X$は連結だから
+    $X \neq \emptyset$である。
+    $x_0 \in X$をひとつえらび、
+    $x_0$の属する弧状連結成分を$C$とおく。
+
+    まず、$C$が open in $X$であることを示す。
+    $X$は局所弧状連結だから、各$x \in C$に対し、
+    $x$の$X$での開近傍$U$であって弧状連結であるようなものがとれる。
+    このとき、$U$の点は$x$と$U$内のパスでつなぐことができ、
+    $x$は$C$の任意の点と$C$内のパスでつなぐことができるから、
+    $U$の点は$C$の任意の点とパスでつなぐことができる。
+    よって、弧状連結成分の定義より$U \subset C$である。
+    ゆえに$x$は$C$の$X$における内点である。
+    したがって$C$は open in $X$である。
+
+    次に、$C$が closed in $X$であることを示す。
+    $x \in \del C$とすると、
+    $x$の$X$での開近傍$U$であって弧状連結であるようなものがとれる。
+    このとき、$x \in \del C$であることより$C \cap U \neq \emptyset$である。
+    よって、或る$y \in C \cap U$がとれる。
+    $x$は$y$と$U$内のパスでつなぐことができ、
+    $y$は$C$の任意の点と$C$内のパスでつなぐことができるから、
+    $x$は$C$の任意の点とパスでつなぐことができる。
+    よって、弧状連結成分の定義より$x \in C$である。
+    ゆえに$\del C \in C$、したがって$C$は closed in $X$である。
+
+    以上より$C$は非空かつ clopen in $X$である。
+    いま$X$は連結であったから、$C = X$である。
+    したがって$X$は弧状連結である。
+\end{proof}
+
+\begin{definition}[弧状連結成分]
+    \TODO{}
+\end{definition}
+
+\begin{proposition}[clopen かつ弧状連結ならば弧状連結成分]
+    \label[proposition]{prop:clopen-path-cnd-implies-path-cnd-component}
+    位相空間の部分集合は、clopen かつ弧状連結ならば
+    弧状連結成分である。
+\end{proposition}
+
+\begin{proof}
+    $X$を位相空間とし、
+    $A \subset X$は clopen in $X$かつ弧状連結であるとする。
+    $A$は弧状連結ゆえに$A \neq \emptyset$だから或る$a \in A$がとれる。
+    $A$が$a$の属する$X$の弧状連結成分$P$に一致することを示す。
+    そのためには、$A$は$a$とパスでつなぐことのできる$X$の点全体からなることを示せばよい。
+    まず、$A$は弧状連結だから$A \subset P$である。
+    つぎに、$b \in P$とする。
+    $a, b$をつなぐパスを$\gamma \colon I \to X$とすると、
+    $\gamma^{-1}(A)$は非空かつ clopen in $I$だから、
+    $I$が連結であることとあわせて$I = \gamma^{-1}(A)$である。
+    よって$\gamma(I) \subset A$、とくに$b \in A$である。
+    したがって$P \subset A$である。
+    以上より$A = P$がいえた。
+\end{proof}
+
+
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\newpage
+\section{演習問題}
+
+\subsection{問題セット 1}
+
+\begin{problem}[幾何学II 1.1]
+    半開区間$(0, 1]$から開区間$(0, 1)$への
+    連続な全単射が存在するかどうか調べよ。
+\end{problem}
+
+\begin{answer}
+    連続全単射$f \colon (0, 1] \to (0, 1)$が存在したとして矛盾を導く。
+    $s \coloneqq f(1)$とおく。
+    制限$f|_{(0, 1)}$を$F$とおく。
+    $F$は$(0, 1)$から$(0, s) \cup (s, 1)$への連続全単射であり、
+    \begin{equation}
+        F^{-1}((0, s) \cup (s, 1))
+            = F^{-1}((0, s)) \cup F^{-1}((s, 1))
+            = (0, 1)
+    \end{equation}
+    をみたす。ここで、$F$の連続性より
+    $F^{-1}((0, s)), F^{-1}((s, 1))$は
+    disjoint open sets in $(0, 1)$ だから、
+    $(0, 1)$は連結でないことになり矛盾が従う。
+\end{answer}
+
+\begin{problem}[幾何学II 1.2]
+    $[0, 1]$から$[0, 1] \times [0, 1]$への
+    連続な全単射が存在するかどうか調べよ。
+\end{problem}
+
+\begin{answer}
+    連続全単射$f \colon [0, 1] \to [0, 1] \times [0, 1]$が存在するとして矛盾を導く。
+    $[0, 1]$のコンパクト性と$[0, 1] \times [0, 1]$の Hausdorff 性より、
+    $f$は同相写像である (\cref{thm:compact-to-Hausdorff})。
+    いま$[0, 1] \times [0, 1]$は3個以上の点を含むから、
+    $[0, 1] \times [0, 1]$の点$a$であって
+    $[0, 1]$の端点以外に対応するもの、すなわち
+    $f^{-1}(a) \in (0, 1)$なるものが存在する。
+    このとき制限$f|_{[0, 1] \setminus \{ f^{-1}(a) \}}$は
+    \begin{equation}
+        [0, 1] \setminus \{ f^{-1}(a) \}
+        \to
+        ([0, 1] \times [0, 1]) \setminus \{a\}
+    \end{equation}
+    の同相写像である。
+    ところが、左辺は弧状連結でなく、右辺は弧状連結だから、
+    弧状連結性の位相不変性に矛盾する。
+\end{answer}
+
+\begin{problem}[幾何学II 1.3]
+    直線$\R$から円周$S^1$への連続な全単射が存在するかどうか調べよ。
+\end{problem}
+
+\begin{answer}
+    題意の連続全単射$f \colon \R \to S^1$が存在するとして矛盾を導く。
+    合成
+    \begin{equation}
+        \begin{tikzcd}
+            \R \setminus \{0\} \ar{r}{f}
+                & S^1 \setminus \{f(0)\} \ar{r}{\approx}
+                & \R
+        \end{tikzcd}
+    \end{equation}
+    を$F$とおくと、$F$も連続全単射である。
+    連続単射であることより$F$は狭義単調であり、
+    必要ならばさらに同相写像$x \mapsto -x$を合成することで
+    $F$は狭義単調増加であるとしてよい。
+
+    ここで、空でない開区間$I$と狭義単調な連続写像$g \colon \R \to \R$に対し
+    $J \coloneqq g(I)$が$\R$の開区間であることを示す。
+    まず区間であることを示す。
+    いま$I$は区間ゆえに弧状連結だから、$g$の連続性より$J$も弧状連結である。
+    もし$J$が区間でないとすると、
+    $J$の或る2点$x < y$がとれて、$x$と$y$の間の点$c$で$J$に属さないようなものが存在する。
+    一方、$J$の弧状連結性により$x, y$をつなぐ$J$内のパス$\gamma$がとれて、
+    中間値定理より$\gamma$は$c$を通る。$c$は$J$に属さないから矛盾。
+    よって$J$は区間である。
+    つぎに$J$が開区間であることを示す。
+    $y \in J$を任意の点とすると、
+    $g^{-1}(y)$は開区間$I$の点だから、
+    或る$x, x' \in I$であって
+    $x < g^{-1}(y) < x'$であるものがとれる。
+    $g$の狭義単調性より$g(x) < y < g(x')$が成り立つ。
+    $g(x), g(x') \in J$だから、$y$は$J$の端点ではない。
+    したがって$J$は開区間であることがいえた。
+
+    上の段落の議論から$F((-\infty, 0)), F((0, \infty))$は開区間である。
+    したがって
+    \begin{equation}
+        \R = F(\R \setminus \{0\}) = F((-\infty, 0)) \cup F((0, \infty))
+    \end{equation}
+    は disjoint open intervals の和の形である。
+    これは$\R$の連結性に矛盾。
+\end{answer}
+
+\begin{problem}[幾何学II 1.4]
+    次の集合が互いに同相かどうか調べよ。
+    \begin{enumerate}
+        \item $\R^2 \setminus \{(0, 0)\}$
+        \item $\R^2 \setminus ([-1, 1] \times \{0\})$
+        \item $\R^2 \setminus \{(x, y) \colon x^2 + y^2 \le 1\}$
+    \end{enumerate}
+\end{problem}
+
+\begin{answer}
+    すべて互いに同相となることを示す。
+
+    $\underline{(1) \approx (2)}$\quad
+    写像$f \colon \R^2 \setminus \{(0, 0)\} \to \R^2 \setminus ([-1, 1] \times \{0\})$を
+    \begin{equation}
+        (x, y) \mapsto \left(\frac{1 + r}{r} x, \frac{\sqrt{r (2 + r)}}{r} y\right),
+        \quad r = \sqrt{x^2 + y^2}
+    \end{equation}
+    で定める。このとき$r > 0$であることに注意すれば$f$は連続である。
+    図形的には、点$(x, y)$は
+    焦点$\pm 1$、長半径$1 + r$の楕円上に写る
+    (短半径はこれらの情報から決まる)。
+    楕円の方程式を書いておくと
+    \begin{equation}
+        \left(\frac{p}{1 + r}\right)^2 + \left(\frac{q}{\sqrt{r (2 + r)}}\right)^2 = 1
+    \end{equation}
+    である。
+
+    念のため、連続写像の族$F_\alpha \colon X \to Y_\alpha\; (\alpha \in A)$の直積
+    $F \colon X \to \prod_{\alpha \in A} Y_\alpha$が連続写像であることを示しておく。
+    $V \opensubset \prod_{\alpha \in A} Y_\alpha$を任意の開集合とする。
+    積位相の準開基の定め方から
+    \begin{gather}
+        V = \bigcup_{\lambda \in \Lambda}
+            \bigcap_{\alpha \in A_\lambda}
+            \pi_\alpha^{-1}(V_\alpha) \\
+        A_\lambda \subset A \colon \text{finite}, \quad
+        V_\alpha \opensubset Y_\alpha
+    \end{gather}
+    と表せる。よって
+    \begin{alignat}{1}
+        F^{-1}(V)
+            &= \bigcup_{\lambda \in \Lambda}
+                \bigcap_{\alpha \in A_\lambda}
+                (\pi_\alpha \circ F)^{-1}(V_\alpha) \\
+            &= \bigcup_{\lambda \in \Lambda}
+                \bigcap_{\alpha \in A_\lambda}
+                \underbrace{F_\alpha^{-1}(V_\alpha)}_{\text{open}}
+    \end{alignat}
+    が成り立ち、これは open in $X$である。
+    よって$F$は連続であることがいえた。
+
+    さて、$f$の連続な逆写像を構成する。
+    連続写像$g \colon \R^2 \setminus ([-1, 1] \times \{0\}) \to \R^2 \setminus \{(0, 0)\}$を
+    \begin{equation}
+        (p, q) \mapsto \left(\frac{R}{1 + R} p, \frac{R}{\sqrt{R (2 + R)}} q\right),
+        \quad R = -1 + \frac{1}{2}\left(
+            \sqrt{(p - 1)^2 + q^2} + \sqrt{(p + 1)^2 + q^2}
+        \right)
+    \end{equation}
+    と定めることができる。
+    実際、図形的に考えて$R$の定義式の括弧内は$> 2$だから$R > 0$であり
+    (あるいは三角不等式を用いてもう少し厳密にも示せる)、
+    さらに$(p, q) \neq (0, 0)$も満たされている。
+
+    $g$が$f$の逆写像であることを示す。まず
+    \begin{alignat}{1}
+        f \circ g(p, q)
+            &= f\left(\frac{R}{1 + R} p, \frac{R}{\sqrt{R (2 + R)}} q\right)
+    \end{alignat}
+    である。ここで
+    \begin{alignat}{1}
+        r
+            &= \sqrt{
+                \left(\frac{R}{1 + R}\right)^2 p^2
+                +
+                \left(\frac{R}{\sqrt{R (2 + R)}}\right)^2 q^2
+            } \\
+            &= R \sqrt{
+                \left(\frac{p}{1 + R}\right)^2
+                +
+                \left(\frac{q}{\sqrt{R (2 + R)}}\right)^2
+            }
+    \end{alignat}
+    であるが、$R$の定義から
+    \begin{equation}
+        \sqrt{(p - 1)^2 + q^2} + \sqrt{(p + 1)^2 + q^2}
+            = 2 (R + 1)
+            = (1 + R - 1) + (1 + R + 1)
+    \end{equation}
+    なので、図形的に考えれば、点$(p, q)$は冒頭の楕円の方程式で
+    $r$を$R$に置き換えたものを満たす。
+    したがって
+    \begin{equation}
+        r = R
+    \end{equation}
+    を得る。よって
+    \begin{equation}
+        f \circ g(p, q)
+            = \left(
+                \frac{1 + r}{r} \frac{R}{1 + R} p,
+                \frac{\sqrt{r (2 + r)}}{r} \frac{R}{\sqrt{R (2 + R)}} q
+            \right)
+            = (p, q)
+    \end{equation}
+    である。
+
+    つぎに
+    \begin{equation}
+        g \circ f(x, y)
+            = g\left(
+                \frac{1 + r}{r} x,
+                \frac{\sqrt{r (2 + r)}}{r} y
+            \right)
+    \end{equation}
+    である。
+    ここで
+    \begin{alignat}{1}
+        R
+            &= -1 + \frac{1}{2}\left(
+                \sqrt{\left(\frac{1 + r}{r} x - 1\right)^2
+                    + \left(\frac{\sqrt{r (2 + r)}}{r} y\right)^2}
+                +
+                \sqrt{\left(\frac{1 + r}{r} x + 1\right)^2
+                    + \left(\frac{\sqrt{r (2 + r)}}{r} y\right)^2}
+            \right) \\
+            &= -1 + \frac{1}{2}\left(
+                \sqrt{\left( (1 + r) - \frac{x}{r} \right)^2}
+                +
+                \sqrt{\left( (1 + r) + \frac{x}{r} \right)^2}
+            \right) \quad (\because r = \sqrt{x^2 + y^2}) \\
+            &= -1 + \frac{1}{2}\left(
+                (1 + r) - \frac{x}{r} + (1 + r) + \frac{x}{r}
+            \right) \\
+            &= r
+    \end{alignat}
+    なので
+    \begin{equation}
+        g \circ f(x, y)
+            = \left(
+                \frac{R}{1 + R} \frac{1 + r}{r} x,
+                \frac{R}{\sqrt{R (2 + R)}} \frac{\sqrt{r (2 + r)}}{r} y
+            \right)
+            = (x, y)
+    \end{equation}
+    である。
+    よって$f$は$\R^2 \setminus \{(0, 0)\}$から
+    $\R^2 \setminus ([-1, 1] \times \{0\})$への同相写像であることがいえた。
+
+    $\underline{(1) \approx (3)}$\quad
+    写像$f \colon \R^2 \setminus \{(0, 0)\}
+    \to \R^2 \setminus \{ (x, y) \colon x^2 + y^2 \le 1 \}$を
+    \begin{equation}
+        (x, y) \mapsto \left(
+            \frac{1 + r}{r} x,
+            \frac{1 + r}{r} y
+        \right),
+        \quad r = \sqrt{x^2 + y^2}
+    \end{equation}
+    で定める。このとき$r > 0$であることに注意すれば$f$は連続である。
+    $f$の連続な逆写像は
+    \begin{equation}
+        (p, q) \mapsto \left(
+            \frac{R}{1 + R} p,
+            \frac{R}{1 + R} q,
+        \right),
+        \quad R = \sqrt{p^2 + q^2} - 1
+    \end{equation}
+    で与えられる。
+    よって$f$は$\R^2 \setminus \{(0, 0)\}$から
+    $\R^2 \setminus \{ (x, y) \colon x^2 + y^2 \le 1 \}$への同相写像であることがいえた。
+\end{answer}
+
+
+\begin{problem}[幾何学II 1.5]
+    次の集合が互いに同相かどうか調べよ。
+    \begin{enumerate}
+        \item $\{ (x, y) \in \R^2 \colon x^2 + y^2 = 1 \} \cup [-1, 1] \times \{0\}$
+        \item $\{ (x, y) \in \R^2 \colon (x + 1)^2 + y^2 = 1 \}
+            \cup \{ (x, y) \in \R^2 \colon (x - 1)^2 + y^2 = 1 \}$
+    \end{enumerate}
+\end{problem}
+
+\begin{answer}
+    集合$(1), (2)$をそれぞれ$A, B$とおく。
+    $A, B$が同相であるとすると、
+    $B$から点$(0, 0)$を抜いた集合は
+    $A$から1点を抜いた集合と同相である。
+    ところが、$B \setminus \{(0, 0)\}$は2個の弧状連結成分を持つのに対し、
+    $A$から1点を抜いた集合は1個しか弧状連結成分を持たない。矛盾。
+\end{answer}
+
+\begin{problem}[幾何学II 1.6]
+    次の集合が互いに同相かどうか調べよ。
+    \begin{enumerate}
+        \item $[0, 1]^2 \setminus ([0, 1] \times \{0\})$
+        \item $[0, 1]^2 \setminus ((0, 1) \times \{0\})$
+    \end{enumerate}
+\end{problem}
+
+\begin{answer}
+    (1) は局所コンパクトだが
+    (2) は点$(0, 0)$のコンパクトな近傍がとれないから
+    局所コンパクトでない。
+    したがって (1) と (2) は同相でない。
+\end{answer}
+
+
+\begin{problem}[幾何学II 1.8]
+    $\R^2$上の関係
+    \begin{equation}
+        (x, y) \sim (x', y') \quad \Leftrightarrow \quad
+            (x - x', y - y') \in \Z \times \Z
+    \end{equation}
+    は同値関係となる。
+    $\R^2/\sim \approx S^1 \times S^1$を示せ。
+\end{problem}
+
+\begin{answer}
+    商写像$\R^2 \to \R^2/~$を$\pi$とおく。
+    題意の同相を示すため、写像$f \colon \R^2 \to S^1 \times S^1,$
+    \begin{equation}
+        (x, y) \mapsto (e^{2\pi i x}, e^{2\pi i y})
+    \end{equation}
+    を考える。これは連続写像の積・合成・直積だから連続である。
+    また、
+    \begin{alignat}{1}
+        \pi(x, y) = \pi(x', y')
+            &\Rightarrow (x - x', y - y') \in \Z \times \Z \\
+            &\Rightarrow (e^{2\pi i x}, e^{2\pi i y}) = (e^{2\pi i x'}, e^{2\pi i y'}) \\
+            &\Rightarrow f(x, y) = f(x', y')
+    \end{alignat}
+    が成り立つから、商位相空間の普遍性より、図式
+    \begin{equation}
+        \begin{tikzcd}[row sep=large]
+            \R^2
+                \ar{r}{f} \ar{d}[swap]{\pi}
+                & S^1 \times S^1 \\
+            \R^2 / \sim
+                \ar{ru}[swap]{\wb{f}}
+        \end{tikzcd}
+    \end{equation}
+    を可換にする連続写像$\wb{f}$が誘導される。
+    $\wb{f}$は逆写像$g \colon S^1 \times S^1 \to \R^2/\sim,$
+    \begin{equation}
+        (e^{2\pi i x}, e^{2\pi i y}) \mapsto \pi(x, y)\quad
+        (x, y \in [0, 1))
+    \end{equation}
+    をもつ。実際、
+    \begin{alignat}{1}
+        \wb{f} \circ g(e^{2\pi i x}, e^{2\pi i y})
+            &= \wb{f}(\pi(x, y)) \\
+            &= f(x, y) \\
+            &= (e^{2\pi i x}, e^{2\pi i y}) \\
+        g \circ \wb{f}(\pi(x, y))
+            &= g(f(x, y)) \\
+            &= g(e^{2\pi i x}, e^{2\pi i y}) \\
+            &= g(e^{2\pi i (x - \lfloor x \rfloor)} e^{2\pi i \lfloor x \rfloor},
+                e^{2\pi i (y - \lfloor y \rfloor)} e^{2\pi i \lfloor y \rfloor}) \\
+            &= g(e^{2\pi i (x - \lfloor x \rfloor)},
+                e^{2\pi i (y - \lfloor y \rfloor)} \\
+            &= \pi(x - \lfloor x \rfloor, y - \lfloor y \rfloor) \\
+            &= \pi(x, y)
+    \end{alignat}
+    が成り立つ。
+    よって$\wb{f}$は$\R^2/\sim$から$S^1 \times S^1$への連続全単射である。
+    ここで$\R^2/\sim$はコンパクト空間$[0, 1] \times [0, 1]$の
+    連続写像$\pi$による像ゆえにコンパクトである。
+    一方、$S^1$は距離空間$\R^2$の部分空間だから Hausdorff である。
+    よって$S^1 \times S^1$は Hausdorff である。
+    したがって、$\wb{f}$はコンパクト空間から Hausdorff 空間への連続全単射だから
+    同相写像である。
+\end{answer}
+
+\begin{problem}[幾何学II 1.9]
+    写像$f \colon [0, \infty) \to \R^2,$
+    \begin{equation}
+        f(t) \coloneqq \begin{cases}
+            (t \cos(2\pi / t), t \sin(2\pi / t)) & (t > 0) \\
+            (0, 0) & (t = 0)
+        \end{cases}
+    \end{equation}
+    は部分集合$(0, \infty)$上連続である。
+    $f$が中への同相写像か調べよ。
+\end{problem}
+
+\begin{answer}
+    \TODO{より「集合と位相」的な議論で連続性を示したい}
+    $f$の像を$X \coloneqq f([0, \infty))$とおく。
+    $X$の概形は、$t = 1/n$のとき
+    $x$軸と$1/n$で交わるような
+    時計回りの渦巻きのような図形である。
+
+    まず、$f$が$t = 0$においても連続であることを示す。
+    そこで$\eps > 0$を任意とする。
+    $\delta \coloneqq \eps^2\; (> 0)$とおけば、
+    各$t \in [0, \delta)$に対し
+    \begin{alignat}{1}
+        |f(t) - f(0)|
+            &= |(t \cos(2\pi / t), t \sin(2\pi / t)) - (0, 0)| \\
+            &= \sqrt{t^2 \cos^2(2\pi / t) + t^2 \sin^2(2\pi / t)} \\
+            &= \sqrt{t} \\
+            &< \sqrt{\delta} \\
+            &= \eps
+    \end{alignat}
+    が成り立つ。したがって、$f$は$t = 0$において連続である。
+
+    また、連続写像$g \colon X \to [0, \infty),$
+    \begin{equation}
+        (x, y) \mapsto \sqrt{x^2 + y^2}
+    \end{equation}
+    が$f$の逆写像となる。
+    以上より、$f$は中への同相写像である。
+    ただし、$g$が$f$の逆写像であることは
+    \TODO{}
+\end{answer}
+
+\begin{problem}[幾何学II 1.10]
+    開区間$(-\pi, \pi)$の各点$t$に
+    平面上の点$(\sin t, \sin t \cos t) \in \R^2$を対応させる写像
+    $f \colon (-\pi, \pi) \to \R^2$は連続である。
+    写像$f$が中への同相写像かどうか調べよ。
+\end{problem}
+
+\begin{answer}
+    $f$は中への同相写像でないことを示す。
+    $f$の像を$X \coloneqq f([0, \infty))$とおく。
+    $X$の概形は、「$\infty$」のような図形であって、
+    原点から左上に出発して一筆書きをしながら原点に右下から帰ってくるようなものである。
+    $f$が中への同相写像であったとすると、
+    $X$から1点$(1/\sqrt{2}, 1/2) = f(\pi/4)$を抜いた集合
+    $X' \coloneqq X \setminus \{(1/\sqrt{2}, 1/2)\}$は
+    $(-\pi, \pi/4) \cup (\pi/4, \pi)$と同相である。
+    ここで、$X'$の2点$(0, 0), (1, 0)$は
+    $X'$内のパス
+    \begin{equation}
+        [\pi/2, \pi] \to X',\quad
+        t \mapsto (\sin t, \sin t \cos t)
+    \end{equation}
+    でつなぐことができるから、ひとつの弧状連結成分に属する。
+    一方、これら2点を$f$で引き戻した
+    $0, \pi/2 \in (-\pi, \pi/4) \cup (\pi/4, \pi)$は
+    それぞれ相異なる弧状連結成分に属する。矛盾。
+\end{answer}
+
+\subsection{幾何学II 練習問題}
+
+\begin{problem}[幾何学II 練習問題6]
+    \label[problem]{problem:geometry2-ex-6}
+    $\R^n \; (n \ge 2)$から余次元$2$の線型部分空間$V$を
+    除いて得られる集合$\R^n \setminus V$は弧状連結であることを示せ。
+\end{problem}
+
+\begin{remark}
+    この証明と同様の方法で
+    $\R^n \; (n \ge 3)$から余次元$3$の部分空間を除いた空間は
+    単連結であることが示せる。
+\end{remark}
+
+\begin{answer}
+    $x, y \in \R^n \setminus V$とする。
+    $x, y$の$V$の直交補空間$V^\perp$への射影をそれぞれ$x', y'$とする。
+    このとき$x$から$x'$への線分$\gamma_x$は$V$と交わりをもたない。
+    実際、ある$t \in I$に対し
+    $(1 - t) x + tx' = v \in V$であったとすると、
+    $V^\perp$への射影は
+    $x' = (1 - t) x' + tx' = 0$
+    となるから、
+    直和分解$V \oplus V^\perp$に沿って
+    $x$をそれぞれの空間の元の和に表すと
+    $x = (x - x') + x' = x - x' \in V$
+    が成り立ち矛盾。
+    同様に$y'$から$y$への線分$\gamma_y$も$V$と交わりをもたない。
+    また、同相
+    $V^\perp \setminus V = V^\perp \setminus \{ 0 \}$
+    は弧状連結空間$\R^2 \setminus \{ 0 \}$と同相だから
+    $x'$と$y'$をつなぐ$V^\perp \setminus V$内のパス$\gamma$が存在する。
+    以上をまとめると
+    パスの合成$\gamma_x \cdot \gamma \cdot \gamma_y$が
+    $x$と$y$をつなぐ$\R^n \setminus V$内のパスとなる。
+    よって$\R^n \setminus V$は弧状連結である。
+\end{answer}
+
+\begin{problem}[幾何学II 練習問題14]
+    \label[problem]{problem:geometry2-ex-14}
+    直線$\R$の部分集合$X$の部分集合$A$に対して、
+    $X$において$A$を1点に縮めて得られる空間$X / A$を考え、
+    商写像を$p \colon X \to X / A$とおく。
+    このとき$p(X) \setminus p(A)$は
+    $X \setminus A$と同相といえるか？
+\end{problem}
+
+\begin{answer}
+    反例を挙げる。
+    $X = [0, 2], \; A = \{ 0 \} \cup (1, 2]$とおく。
+    まず$p(X) = X / A$は$S^1$と同相である。
+    実際、写像
+    \begin{equation}
+        f \colon X \to S^1,
+        \quad
+        t \mapsto \begin{cases}
+            e^{2\pi it} & t \in [0, 1] \\
+            1 & t \in [1, 2]
+        \end{cases}
+    \end{equation}
+    を考えるとこれは全射で、
+    貼り合わせ補題より連続である。
+    $f$は$p$のファイバー上定値だから、
+    $p(X)$がコンパクト集合$X$の連続像ゆえにコンパクトで
+    $S^1$が Hausdorff であることとあわせて
+    同相$p(X) \to S^1$が誘導される。
+    よって$p(X) \setminus p(A)
+        \approx S^1 \setminus \{ 1 \}
+        \approx (0, 1)$である。
+    したがって$p(X) \setminus p(A) \approx (0, 1]$は
+    $X \setminus A \approx (0, 1)$と同相ではない。
+    \begin{innerproof}
+        同相であったとすると
+        $(0, 1]$から$1$を抜いた空間$(0, 1)$ (これは連結である) が
+        $(0, 1)$から1点を除いた空間 (これは連結でない) と同相になり矛盾する。
+    \end{innerproof}
+\end{answer}
+
+
+
+
+
+
+% ============================================================
+%
+% ============================================================
+\chapter{基本的な位相空間}
+
+この章ではいくつかの基本的な位相空間について調べる。
+まとまりを良くするために、ホモロジーなど現段階でまだ扱っていない概念も含めて述べておく。
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{球面}
+
+\begin{definition}
+    \TODO{}
+\end{definition}
+
+\begin{lemma}
+    \label[lemma]{lemma:disk-over-boundary-is-homeo-to-sphere}
+    $D^n / \del D^n$は$S^n$と同相である。
+\end{lemma}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+\begin{definition}[立体射影]
+    $S^n$の北極を$N = (0, \dots, 0, 1)$とおく。
+    連続写像
+    \begin{equation}
+        \begin{tikzcd}
+            S^n \setminus \{ N \}
+                \ar{r}
+                & \R^n \\
+            x = (x_1, \dots, x_n)
+                \ar[mapsto]{r}
+                & \left( \frac{x_1}{1-x_n}, \dots, \frac{x_n}{1-x_n} \right)
+        \end{tikzcd}
+    \end{equation}
+    は連続逆写像
+    \begin{equation}
+        \begin{tikzcd}
+            \R^n
+                \ar{r}
+                & S^n \setminus \{ N \} \\
+            y
+                \ar[mapsto]{r}
+                & \frac{\|y\|^2 - 1}{\|y\|^2 + 1} N + \frac{2}{\|y\|^2 + 1} y
+        \end{tikzcd}
+    \end{equation}
+    をもつ。したがって同相である。
+    これを\term{立体射影}[stereographic projection]{立体射影}[りったいしゃえい]という。
+\end{definition}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{線型空間}
+
+\begin{lemma}
+    \label[lemma]{lemma:codimension-2-space-path-connected}
+    $\R^n \; (n \ge 2)$から余次元$2$の線型部分空間$V$を
+    除いて得られる集合$\R^n \setminus V$は弧状連結である。
+\end{lemma}
+
+\begin{proof}
+    \cref{problem:geometry2-ex-6}を参照。
+\end{proof}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{行列の空間}
+
+実行列や複素行列は線型代数で慣れ親しんだ主題である。
+ここでは行列の空間とその位相的性質について調べる。
+
+\begin{definition}
+    $n \in \Z_{\ge 1}$とする。
+    全行列空間$M(n, \K)$は$\K^{n^2}$と同一視して位相が入っているとする。
+    \begin{enumerate}
+        \item
+            \term{一般線型群}[general linear group]{一般線型群}[いっぱんせんけいぐん]
+            \begin{equation}
+                \GL(n, \K)
+                    \coloneqq \{
+                        A \in M(n, \K) \mid \det A \neq 0
+                    \}
+            \end{equation}
+            \term{特殊線型群}[special linear group]{特殊線型群}[とくしゅせんけいぐん]
+            \begin{equation}
+                \SL(n, \K)
+                    \coloneqq \{
+                        A \in M(n, \K) \mid \det A = 1
+                    \}
+            \end{equation}
+    \end{enumerate}
+\end{definition}
+
+\begin{definition}[直交群とユニタリ群]
+    $n \in \Z_{\ge 1}$とする。
+    \begin{enumerate}
+        \item
+            \term{直交群}[orthogonal group]{直交群}[ちょっこうぐん]
+            \begin{equation}
+                \O(n)
+                    \coloneqq \{
+                        A \in \GL(n, \R) \mid A \up{t}A = I
+                    \}
+            \end{equation}
+            \term{特殊直交群}[special orthogonal group]{特殊直交群}[とくしゅちょっこうぐん]
+            あるいは
+            \term{回転群}[rotation group]{回転群}[かいてんぐん]
+            \begin{equation}
+                \SO(n)
+                    \coloneqq \{
+                        A \in \SL(n, \R) \mid A \up{t}A = I
+                    \}
+            \end{equation}
+        \item
+            \term{ユニタリ群}[unitary group]{ユニタリ群}[ユニタリぐん]
+            \begin{equation}
+                \U(n)
+                    \coloneqq \{
+                        A \in \GL(n, \C) \mid AA^* = I
+                    \}
+            \end{equation}
+            \term{特殊ユニタリ群}[special unitary group]{特殊ユニタリ群}[とくしゅユニタリぐん]
+            \begin{equation}
+                \SU(n)
+                    \coloneqq \{
+                        A \in \SL(n, \C) \mid AA^* = I
+                    \}
+            \end{equation}
+    \end{enumerate}
+\end{definition}
+
+線型代数的な種々の変形操作を利用して
+空間の性質を調べよう。
+次の命題では行列の基本変形を用いる。
+
+\begin{proposition}
+    $\GL(n, \C)$は弧状連結である。
+\end{proposition}
+
+\begin{proof}
+    基本変形によって示す。
+    $A \in \GL(n, \C)$とする。
+    $A$と$I_n$をつなぐ$\GL(n, \C)$内のパスの存在をいえばよい。
+    $A$は正則だから左右から有限個の基本行列を掛けることで
+    $I_n$が得られる。
+    そこで、それぞれの基本行列が
+    $\GL(n, \C)$内のパスで$I_n$とつながることをいえばよい。
+    第$i, j$行の入れ替えの基本行列は
+    \begin{equation}
+        t \mapsto \left[\begin{smallmatrix}
+            1 \\
+            & \ddots \\
+            & & 1 - t & \cdots & t \\
+            & & \vdots & & \vdots \\
+            & & t & \cdots & 1 - t \\
+            & & & & & & \ddots \\
+            & & & & & & & 1
+        \end{smallmatrix}\right]
+    \end{equation}
+    で$I_n$からのパスが得られる。
+    第$i$行に第$j$行の$m$倍を加える基本行列は
+    \begin{equation}
+        t \mapsto \left[\begin{smallmatrix}
+            1 \\
+            & \ddots \\
+            & & 1 \\
+            & & \vdots & \ddots \\
+            & & tm & \cdots & 1 \\
+            & & & & & & \ddots \\
+            & & & & & & & 1
+        \end{smallmatrix}\right]
+    \end{equation}
+    で$I_n$からのパスが得られる。
+    第$i$行を$m \; (m \neq 0)$倍する基本行列は
+    \begin{equation}
+        t \mapsto \left[\begin{smallmatrix}
+            1 \\
+            & \ddots \\
+            & & \beta_m(t) \\
+            & & & \ddots \\
+            & & & & 1
+        \end{smallmatrix}\right]
+    \end{equation}
+    で$I_n$からのパスが得られる。
+    ただし$\beta_m$は
+    $\C^\times$が弧状連結であることより存在する
+    $1$から$m$への$\C^\times$内のパスである。
+    以上で主張が示せた。
+\end{proof}
+
+逆行列をとる操作は連続である。
+
+\begin{proposition}[逆行列]
+    写像$\GL(n, \K) \mapsto \GL(n, \K), \; A \mapsto A^{-1}$は連続である。
+\end{proposition}
+
+\begin{proof}
+    Cramer の公式を用いる。
+
+    \TODO{}
+\end{proof}
+
+Gram-Schmidt の正規直交化は連続写像であり、
+より強く同相写像を与える。
+
+\begin{proposition}[Gram-Schmidt の正規直交化]
+    Gram-Schmidt の正規直交化は連続写像
+    \begin{enumerate}
+        \item $\GL(n, \R) \to \O(n) \times T(n, \R)$
+        \item $\GL(n, \C) \to \U(n) \times T(n, \C)$
+    \end{enumerate}
+    を与える。
+    さらにこれらはそれぞれ行列の積を逆写像として同相写像となる。
+\end{proposition}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+Gram-Schmidt の正規直交化を用いて次がわかる。
+
+\begin{proposition}[一般線型群の変形レトラクト]
+    \begin{enumerate}
+        \item $\GL(n, \R)$は$\O(n)$を変形レトラクトにもつ。
+        \item $\GL(n, \C)$は$\U(n)$を変形レトラクトにもつ。
+    \end{enumerate}
+\end{proposition}
+
+\begin{proof}
+    $T$が$\{ I_n \}$を変形レトラクトにもつことを使う。
+
+    \TODO{}
+\end{proof}
+
+$\SU(2)$は$S^3$と同相であることを示そう。
+$\SU(2)$は次のように表せることに注意しておく。
+
+\begin{lemma}
+    \begin{equation}
+        \SU(2) = \left\{
+            \begin{bmatrix}
+                a & b \\
+                - \wb{b} & \wb{a}
+            \end{bmatrix} \in M(2, \C)
+            \; \middle| \;
+            a, b \in \C, \;
+            |a|^2 + |b|^2 = 1
+        \right\}
+    \end{equation}
+    と表せる。
+\end{lemma}
+
+\begin{proof}
+    右辺が左辺に含まれることは明らか。逆の包含を示す。
+    $A = \begin{bmatrix}
+        a & b \\
+        c & d
+    \end{bmatrix} \in \SU(2)$とする。
+    $A A^* = I_2, \; \det A = 1$よりとくに次が成り立つ。
+    \begin{alignat}{1}
+        a \wb{a} + b \wb{b} &= 1 \label{eq:su2-representation-1} \\
+        %c \wb{c} + d \wb{d} &= 1 \label{eq:su2-representation-2} \\
+        a \wb{c} + b \wb{d} &= 0 \label{eq:su2-representation-3} \\
+        ad - bc &= 1 \label{eq:su2-representation-4}
+    \end{alignat}
+    \cref{eq:su2-representation-1}から$|a|^2 + |b|^2 = 1$を得る。
+    $a = 0$の場合、$|b| = 1$だから
+    \cref{eq:su2-representation-3}より$d = 0$を得て、
+    \cref{eq:su2-representation-4}より$c = -\wb{b}$を得る。
+    よって包含が成り立つ。
+
+    $a \neq 0$の場合、
+    \cref{eq:su2-representation-4}の両辺に$\wb{a}$を掛けて
+    $|a|^2 d - bc\wb{a} = \wb{a}$を得る。
+    \cref{eq:su2-representation-3}とあわせて
+    $(|a|^2 + |b|^2) d = \wb{a}$を得る。
+    さらに\cref{eq:su2-representation-1}とあわせて
+    $d = \wb{a}$を得る。
+    いま$a \neq 0$だから
+    \cref{eq:su2-representation-3}とあわせて
+    $c = -\wb{b}$を得る。
+    よって包含が成り立つ。
+\end{proof}
+
+\begin{proposition}
+    $\SU(2)$は$S^3$と同相である。
+\end{proposition}
+
+\begin{proof}
+    写像$\SU(2) \to S^3, \;
+        \begin{bmatrix}
+            a & b \\
+            - \wb{b} & \wb{a}
+        \end{bmatrix}
+        \mapsto (a, b)$
+    が同相を与える。
+\end{proof}
+
+$\SO(3)$は$\R P^3$と同相であることを示そう。
+
+\begin{proposition}
+    $\SO(3)$は$\R P^3$と同相である。
+\end{proposition}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{トーラス}
+
+\begin{definition}
+    \TODO{}
+\end{definition}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{M\"{o}bius の帯}
+
+M\"{o}bius の帯は
+ホモロジーから位相が決まらない例のひとつでもある。
+
+\begin{definition}[M\"{o}bius の帯]
+    ~
+    \begin{enumerate}
+        \item $[0, 1] \times [0, 1]$上の同値関係$\sim$を
+            $(0, y) \sim (1, 1 - y)$により生成されるものとして定める。
+            この同値関係に関する商空間を
+            \term{境界を持つ M\"{o}bius の帯}[M\"{o}bius band with boundary]
+                {M\"{o}bius の帯}[M\"{o}bius のおび]
+            という。
+        \item $[0, 1] \times (0, 1)$上の同値関係$\sim$を
+            $(0, y) \sim (1, 1 - y)$により生成されるものとして定める。
+            この同値関係に関する商空間を
+            \term{境界を持たない M\"{o}bius の帯}[M\"{o}bius band without boundary]
+                {M\"{o}bius の帯}[M\"{o}bius のおび]
+            という。
+    \end{enumerate}
+\end{definition}
+
+\begin{proposition}[境界を持つ M\"{o}bius の帯と円柱は同相でない]
+    境界を持つ M\"{o}bius の帯と境界を持つ円柱は同相でない。
+\end{proposition}
+
+\begin{proof}
+    $M$を境界を持つ M\"{o}bius の帯、$C$を境界を持つ円柱とする。
+    同相写像$\varphi \colon M \to C$が存在したとすると、
+    $\varphi$の制限により多様体としての境界$\del M$と$\del C$は同相となる。
+    $\del M$は弧状連結だが$\del C$は弧状連結でないから矛盾。
+\end{proof}
+
+\begin{proposition}[境界を持たない M\"{o}bius の帯と円柱は同相でない]
+    境界を持たない M\"{o}bius の帯と境界を持たない円柱は同相でない。
+\end{proposition}
+
+\begin{proof}
+    とくに同相写像$\varphi \colon E \to S^1 \times \R$が存在する。
+    $K \coloneqq S^1 \times \{ 0 \} \subset S^1 \times \R$、
+    $K' \coloneqq \varphi^{-1}(K)$とおく。
+    $K$はコンパクトだから$L$もコンパクトである。
+    このとき$p^{-1}(L)$は$[0, 1] \times \R$の有界閉集合である。
+    \begin{innerproof}
+        閉であることは明らか。
+        もし有界でなかったとすると
+        任意の$n \in \Z_{\ge 1}$に対し
+        $y_n > |n|$なる点$(x_n, y_n)$が$p^{-1}(K')$に含まれ、
+        したがって点$p(x_n, y_n)$が$K'$に含まれる。
+        すると$K'$の開被覆
+        $\{ p([0, 1] \times (-n, n)) \}_{n \in \Z_{\ge 1}}$
+        が有限部分被覆を持たないから
+        $K'$はコンパクトでないことになり矛盾。
+    \end{innerproof}
+    よってある$a > 0$が存在して
+    $[0, 1] \times [-a, a] \supset p^{-1}(L)$、
+    したがって$L' \coloneqq p([0, 1] \times [-a, a]) \supset L$となる。
+    $L'$はコンパクトだから
+    $K' \coloneqq \varphi(L')$もコンパクトである。
+    したがって
+    ある$b > 0$が存在して
+    $S^1 \times (-b, b) \supset K' \supset K$をみたす。
+    よって$(S^1 \times \R) \setminus K'$は連結でない。
+    一方$E \setminus L'$は連結である。
+    これで矛盾がいえた。
+\end{proof}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{射影空間}
+
+射影空間は、位相群の作用による商として定義される重要な空間のひとつである。
+射影空間$\K P^n$は$\K^{n + 1}$内の原点を通る直線をひとつの点とみなして
+それらを集めた空間とみなすことができる。
+すなわち Grassmann 多様体と呼ばれる多様体の特別な場合である。
+ここでは複素射影空間と実射影空間について述べる。
+
+\section{基本性質}
+
+\begin{definition}[射影空間]
+    $\K = \R$または$\C$とし、$n \ge 1$とする。
+    このとき、乗法群$\K^\times$の連続作用
+    $\K^\times \curvearrowright \K^{n + 1} \setminus \{ 0 \}$
+    に関する軌道空間を
+    \begin{equation}
+        \K P^n \coloneqq (\K^{n + 1} \setminus \{ 0 \}) / \K^\times
+    \end{equation}
+    とおき、これを
+    \term{$n$次元$\K$射影空間}[$n$-dimensional $\K$-projective space]
+    {射影空間}[しゃえいくうかん]
+    という。
+   標準射影$\K^{n + 1} \setminus \{ 0 \} \to \K P^n$を
+    $\varpi$とおく。
+\end{definition}
+
+\begin{definition}[斉次座標・非斉次座標]
+    \TODO{}
+\end{definition}
+
+\begin{lemma}
+    射影空間は Hausdorff である。
+\end{lemma}
+
+\begin{proof}
+    \cref{prop:orbit-space-Hausdorff} より成り立つ。
+\end{proof}
+
+斉次多項式により
+射影空間上に写像が誘導される。
+
+\begin{theorem}[斉次多項式から誘導される写像]
+    \TODO{}
+\end{theorem}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+$\K^{n + 1}$上の線型自己同型は
+射影空間上に同相写像を誘導する。
+
+\begin{theorem}[射影変換]
+    $A \in \GL(n + 1, \K)$とする。
+    写像
+    \begin{equation}
+        \K P^n \to \K P^n,
+        \quad
+        [z] \mapsto [Az]
+    \end{equation}
+    は well-defined であり同相写像となる。
+    これを\term{射影変換}[projective transformation]{射影変換}[しゃえいへんかん]という。
+\end{theorem}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+
+\section{複素射影空間}
+
+Hopf ファイブレーションは
+複素射影空間の具体的な計算に役立つ。
+
+\begin{theorem}[Hopf ファイブレーション]
+    商写像$\C^{n + 1} \setminus \{ 0 \} \to \C P^n$を$\varpi$とおき、
+    \begin{equation}
+        S^{2n + 1} = \{
+            z \in \C^{n + 1} \mid \| z \| = 1
+        \}
+    \end{equation}
+    とみなして$\pi \coloneqq \varpi|_{S^{2n + 1}}$とおく。
+    このとき$\pi$は同相$S^{2n + 1} / S^1 \approx \C P^n$を誘導する。
+    ただし、$S^1$の作用$S^1 \curvearrowright S^{2n + 1}$は
+    作用$\C^\times \curvearrowright \C^{n + 1} \setminus \{ 0 \}$の制限により定める。
+    $\pi$を \term{Hopf ファイブレーション}{Hopf fibration} という。
+    \begin{equation}
+        \begin{tikzcd}
+            S^{2n + 1}
+                \ar{r}{\pi = \varpi|_{S^{2n + 1}}}
+                \ar[twoheadrightarrow]{d}
+                & \C P^n \\
+            S^{2n + 1} / S^1
+                \ar[dashed]{ru}[swap]{\approx}
+        \end{tikzcd}
+    \end{equation}
+\end{theorem}
+
+\begin{proof}
+    $\pi$が連続であることは明らか。
+    $\pi$が$S^{2n + 1}$から$\C P^n$の上への全射であることは
+    各$[z] \in \C P^n, \; z \in \C^{n + 1} \setminus \{ 0 \}$に対し
+    $\pi(z / \| z \|) = [z]$が成り立つことからわかる。
+    単射性は、
+    $z, z' \in S^{2n + 1}$に関し
+    $\pi(z) = \pi(z')$ならば
+    $z = \alpha z' \; (\exists \alpha \in \C^\times)$であり、
+    $|z| = |z'| = 1$ゆえに$|\alpha| = 1$
+    すなわち$\alpha \in S^1$となることより従う。
+    したがって$\pi$により連続全単射
+    $\wb{\pi} \colon S^{2n + 1} / S^1 \to \C P^n$が誘導されるが、
+    いま$S^{2n + 1} / S^1$はコンパクトで$\C P^n$は Hausdorff だから
+    $\wb{\pi}$は同相である。
+\end{proof}
+
+射影空間の部分集合のうちよく現れるものに次がある:
+\begin{enumerate}
+    \item $\{ z_n = 0 \} \subset \C P^n$
+    \item $\{ z_n \neq 0 \} \subset \C P^n$
+    \item $\C P^n$から1点を除いた空間
+\end{enumerate}
+これらの空間について調べよう。
+
+\begin{lemma}
+    $\{ z_n = 0 \} \subset \C P^n$は$\C P^{n - 1}$に同相である。
+\end{lemma}
+
+\begin{proof}
+    \begin{equation}
+        [z_0 : \dots : z_{n - 1} : 0] \mapsto [z_0 : \dots : z_{n - 1}]
+    \end{equation}
+    \TODO{}
+\end{proof}
+
+\begin{lemma}
+    $\{ z_n \neq 0 \} \subset \C P^n$は$\C^n$に同相である。
+\end{lemma}
+
+\begin{proof}
+    \begin{equation}
+        [z_0 : \dots : z_{n - 1} : z_n]
+            \mapsto [z_0 / z_n : \dots : z_{n - 1} / z_n]
+    \end{equation}
+    \TODO{}
+\end{proof}
+
+以上の2つの補題によりとくに
+\begin{equation}
+    \C P^n = \C P^{n - 1} \sqcup \C^n
+\end{equation}
+と表せることがわかった。
+この関係は複素射影空間の胞体的ホモロジーを考える際に役立つ。
+さらに次の連続写像は基本的である。
+
+\begin{lemma}[$\C P^n$の胞体構造]
+    \label[lemma]{lemma:cpn-cell-structure}
+    $D^{2n} \subset \C^n$とみなして写像
+    \begin{equation}
+        \varphi^{2n} = \varphi \colon D^{2n} \to \C P^n,
+            \quad
+            w \mapsto [w_0 : \dots : w_{n - 1} : \sqrt{1 - \| w \|^2}]
+    \end{equation}
+    は商写像であり、
+    制限$\varphi|_{\mathring{D}^{2n}}$は
+    $\{ z_n \neq 0 \}$の上への同相写像となる。
+    $\varphi|_{\mathring{D}^{2n}}$の連続逆写像は
+    \begin{equation}
+        \psi \colon \{ z_n \neq 0 \} \to \mathring{D}^{2n},
+            \quad
+            [z_0 : \dots : z_{n - 1} : z_n]
+                \mapsto \frac{|z_n|}{\| z \|} \left(
+                    \frac{z_0}{z_n} : \dots : \frac{z_{n - 1}}{z_n}
+                \right)
+    \end{equation}
+    で与えられる。
+\end{lemma}
+
+\begin{proof}
+    $\varphi$および$\psi$が連続であることは定義から明らか。
+    $\psi$が$\varphi|_{\mathring{D}^{2n}}$の逆写像であることは
+    直接計算によりわかる。
+    したがって$\varphi|_{\mathring{D}^{2n}}$は
+    $\{ z_n \neq 0 \}$の上への同相写像であり、
+    逆写像は$\psi$である。
+    また、$\varphi$の定義から明らかに
+    $\varphi(\del D^{2n}) = \{ z_n = 0 \}$だから
+    内部の対応とあわせて$\varphi$は全射である。
+    $D^{2n}$はコンパクトで$\C P^n$は Hausdorff だから
+    \cref{thm:compact-to-Hausdorff}より
+    $\varphi$は閉写像である。
+    したがって$\varphi$は全射かつ連続な閉写像だから、
+    \cref{prop:surj-closed-cts-map-is-quotient-map}より
+    $\varphi$は商写像である。
+\end{proof}
+
+次に$\C P^n$から1点を抜いた空間を調べる。
+
+\begin{lemma}
+    $\C P^{n}$から任意の1点を除いた空間は互いに同相である。
+\end{lemma}
+
+\begin{proof}
+    $P \in \C P^{n}$とし
+    $P_0 \coloneqq [1 : 0 : \dots : 0]$とおく。
+    $\C P^{n} \setminus \{ P_0 \} \approx \C P^{n} \setminus \{ P \}$
+    を示せばよい。
+    そこで Hopf ファイブレーション
+    $S^{2n + 1} \to \C P^n$を$\pi$とおくと
+    \begin{alignat}{1}
+        P_0 &= \pi(p_0), \quad p_0 \coloneqq \up{t}(1, 0, \dots, 0) \\
+        P &= \pi(p), \quad p \in S^{2n + 1}
+    \end{alignat}
+    と表せる。
+    まず$S^{2n + 1}$のレベルで同相写像を構成し、
+    そこから求める同相を誘導する。
+    いま$p \neq 0 \in \R^{2n + 2}$だから、
+    $\R^{2n + 2}$の元を付け加えて
+    $\R^{2n + 2}$の基底$p, x_1, \dots, x_{2n + 1}$が得られる。
+    Gram-Schmidt の直交化により
+    正規直交基底$p, y_1, \dots, y_{2n + 1}$を得る。
+    これらを並べた$(2n + 2)$次行列を
+    $A \coloneqq [p y_1 \dots y_{2n + 1}]$とおくと、
+    $A$は直交行列だから
+    同相写像$S^{2n + 1} \to S^{2n + 1}, \; x \mapsto Ax$
+    が定まる。
+    ここで$Ap_0 = p, \; A(-p_0) = -p$だから
+    $S^{2n + 1} \setminus \{ p_0, -p_0 \}
+        \approx S^{2n + 1} \setminus \{ p, -p \}$
+    すなわち
+    $\pi^{-1}(\C P^n \setminus \{ P_0 \})
+        \approx \pi^{-1}(\C P^n \setminus \{ P \})$
+    が成り立つ。
+    この両辺は$\pi$に関し saturated な$S^{2n + 1}$の開集合だから
+    それぞれへの$\pi$の制限は等化写像となる。
+    これにより同相
+    $\C P^{n} \setminus \{ P_0 \} \approx \C P^{n} \setminus \{ P \}$
+    が誘導され、主張が示せた。
+\end{proof}
+
+上の補題を用いれば、
+複素射影空間から1点を除いた空間は
+次元をひとつ下げた複素射影空間とホモトピー同値であることが示せる。
+
+\begin{proposition}[$\C P^{n + 1}$から1点を除いた空間]
+    \label[proposition]{prop:cp-minus-a-point}
+    $\C P^{n + 1}$から1点を除いた空間は
+    $\C P^n$とホモトピー同値である。
+\end{proposition}
+
+\begin{proof}
+    標準射$\C^{n + 2} \setminus \{ 0 \} \to \C P^{n + 1}$を$\pi$とおく。
+    上の補題より、$P_0 \coloneqq [0 : \dots : 0 : 1]$とおいて
+    $\C P^{n + 1} \setminus \{ P_0 \} \simeqhe \C P^n$を示せば十分。
+    そこで埋め込み
+    \begin{equation}
+        \iota \colon \C P^n \to \C P^{n + 1} \setminus \{ P_0 \},
+        \quad
+        [z_0 : \dots : z_n] \mapsto [z_0 : \dots : z_n : 0]
+    \end{equation}
+    を考え、$\iota(\C P^n)$が$\C P^{n + 1} \setminus \{ P_0 \}$の
+    変形レトラクトであることを示せばよい。
+    集合$U \coloneqq \pi^{-1}(\C P^{n + 1} \setminus \{ P_0 \})$は
+    $\pi$に関し saturated な
+    $\C^{n + 2} \setminus \{ 0 \}$の開部分集合だから、
+    $\pi|_U$は等化写像である。
+    そこで連続写像
+    \begin{equation}
+        r \colon \C P^{n + 1} \setminus \{ P_0 \} \to \iota(\C P^n),
+        \quad
+        [z_0 : \dots : z_n : z_{n + 1}] \mapsto [z_0 : \dots : z_n : 0]
+    \end{equation}
+    が誘導される。
+    このとき$r$は変形レトラクションとなる。
+    実際、J. H. C. Whitehead の補題より連続写像
+    \begin{equation}
+        H \colon \C P^{n + 1} \setminus \{ P_0 \} \times I
+            \to \C P^{n + 1} \setminus \{ P_0 \},
+        \quad
+        ([z_0 : \dots : z_n : z_{n + 1}], t) \mapsto
+            [z_0 : \dots : z_n : tz_{n + 1}]
+    \end{equation}
+    が誘導され、これがホモトピーとなるからである。
+    したがって$\C P^{n + 1} \setminus \{ P_0 \} \simeqhe \C P^n$が示せた。
+\end{proof}
+
+$\C P^n$の部分空間$\C P^{n - 1}$を1点に縮めると
+$S^{2n}$が得られる。
+
+\begin{lemma}
+    $n \in \Z_{\ge 1}$に対し
+    $\C P^n / \C P^{n - 1}$は$S^{2n}$と同相である。
+    ただし$\C P^{n - 1} = \{ z_n = 0 \} \subset \C P^n$の意味である。
+\end{lemma}
+
+\begin{proof}
+    \cref{lemma:cpn-cell-structure}の連続写像
+    $\varphi^{2n} \colon D^{2n} \to \C P^n$を用いる。
+    図式
+    \begin{equation}
+        \begin{tikzcd}
+            D^{2n}
+                \ar[twoheadrightarrow]{r}{\varphi^{2n}}
+                \ar[twoheadrightarrow]{d}
+                & \C P^n
+                    \ar[twoheadrightarrow]{d} \\
+            S^{2n} \approx D^{2n} / \del D^{2n}
+                \ar[dashed]{r}[swap]{\wb{\varphi}}
+                & \C P^n / \C P^{n - 1}
+        \end{tikzcd}
+    \end{equation}
+    を可換にする連続全単射$\wb{\varphi}$が誘導され、
+    \TODO{$\wb{\varphi}$が単射であるのはなぜ？}
+    $S^{2n}$はコンパクトで
+    $\C P^n / \C P^{n - 1}$は Hausdorff だから
+    $\wb{\varphi}$は同相である。
+    \begin{innerproof}
+        $\C P^n / \C P^{n - 1}$が Hausdorff であることを示す。
+        \TODO{}
+    \end{innerproof}
+\end{proof}
+
+とくに次の系が従う。
+
+\begin{corollary}
+    \label[lemma]{lemma:cp1-s2-homeomorphic}
+    $\C P^1$は$S^2$と同相である。
+    \qed
+\end{corollary}
+
+$\C P^1$と$S^2$が同相であることを利用して
+$\C P^2$の単連結性を示す。
+
+\begin{lemma}
+    $\C P^2$は単連結である。
+\end{lemma}
+
+\begin{proof}
+    $\C P^2$から1点を抜いた空間$U, V$で被覆し
+    \cref{thm:fundamental-group-mayer-vietoris}を用いる。
+    $U \cap V$は$\C^3 \setminus \{ 0 \}$に引き戻すと
+    $\C^3$から$(z_0, 0, 0)$や$(0, z_1, 0)$の形の元を除いた空間になる。
+    これは弧状連結であることが示せるから
+    $U \cap V$も弧状連結である。
+    \TODO{}
+\end{proof}
+
+$\C P^2$内の平面射影曲線の簡単な例を調べよう。
+次の証明は\cite{川又01}を参考にした。
+\TODO{Fermat curve についても書きたい}
+
+\begin{proposition}
+    空間
+    \begin{equation}
+        X = \{
+            [z_0 : z_1 : z_2] \in \C P^2
+            \mid
+            z_0^2 + z_1^2 + z_2^2 = 0
+        \}
+    \end{equation}
+    は$S^2$と同相である。
+\end{proposition}
+
+\begin{proof}
+    \cref{lemma:cp1-s2-homeomorphic}より
+    $\C P^1 \approx S^2$だから$X \approx \C P^1$を示せばよい。
+    $z_0^2 + z_1^2 + z_2^2 = (z_0 + iz_1)(z_0 - iz_1) - (iz_2)^2$
+    と変形できることに着目して、線型同型
+    \begin{equation}
+        F \colon \C^3 \to \C^3,
+        \quad
+        z \mapsto \begin{bmatrix}
+            1 & i & 0 \\
+            1 & -i & 0 \\
+            0 & 0 & i
+        \end{bmatrix}
+        z
+    \end{equation}
+    により定まる射影変換$\wb{F} \colon \C P^2 \to \C P^2$を考える。
+    $\wb{F}(z_0, z_1, z_2) = (z_0 + iz_1, z_0 - iz_1, iz_2)$だから
+    \begin{equation}
+        \wb{F}(X) = \{
+            [w_0 : w_1 : w_2] \in \C P^2
+            \mid
+            w_0 w_1 - w_2^2 = 0
+        \}
+    \end{equation}
+    である。
+    $\wb{F}(X) \approx \C P^1$を示す。
+    そこで$f \colon \C P^1 \to \C P^2$を
+    $f([\zeta_0 : \zeta_1]) \coloneqq [\zeta_0^2 : \zeta_1^2 : \zeta_0 \zeta_1]$
+    で定める。
+    右辺は斉次だからこれは well-defined な連続写像であり、
+    また像が$\wb{F}(X)$に入ることも明らか。
+    つぎに$g \colon \wb{F}(X) \to \C P^1$を
+    \begin{equation}
+        g([w_0 : w_1 : w_2]) \coloneqq \begin{cases}
+            [w_0 : w_2] & (w_0 \neq 0) \\
+            [w_2 : w_1] & (w_1 \neq 0)
+        \end{cases}
+    \end{equation}
+    で定める。
+    $w_0 w_1 - w_2^2 = 0$ゆえに
+    $w_0 = 0$と$w_1 = 0$が同時に成り立つことはないから
+    場合分けはこれで十分で、
+    共通部分では$w_0 \neq 0, \; w_1 \neq 0, \; w_0 w_1 - w_2^2 = 0$より
+    $w_2 \neq 0$も成り立つことから
+    \begin{equation}
+        [w_0 : w_2]
+            = [w_0 w_1 : w_1 w_2]
+            = [w_2^2 : w_1 w_2]
+            = [w_2 : w_1]
+    \end{equation}
+    となる。
+    よって$g$は well-defined である。
+    直接計算により$f, g$は互いに逆写像であることがわかる。
+    したがって$f$は連続全単射で、
+    $\C P^1$がコンパクト、$\wb{F}(X)$が Hausdorff であることから
+    $f$は同相である。
+    よって$S^1 \approx \C P^1 \approx \wb{F}(X) \approx X$がいえた。
+\end{proof}
+
+
+
+\section{実射影空間}
+
+実射影空間も複素射影空間の場合と同様に
+Hopf ファイブレーションが考えられる。
+
+\begin{theorem}[Hopf ファイブレーション]
+    商写像$\R^{n + 1} \setminus \{ 0 \} \to \R P^n$を$\varpi$とおき、
+    $\pi \coloneqq \varpi|_{S^n}$とおく。
+    このとき$\pi$は同相$S^n / \{ \pm 1 \} \approx \R P^n$を誘導する。
+    $\pi$を \term{Hopf ファイブレーション}{Hopf fibration} という。
+\end{theorem}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+実射影空間の場合、
+Hopf ファイブレーションは普遍被覆になっている。
+
+\begin{proposition}[実射影空間の普遍被覆]
+    \TODO{}
+\end{proposition}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+実射影空間は次のように表示することもできる。
+
+\begin{theorem}[実射影空間の表示]
+    対蹠点の同一視により
+    $\R P^n \approx D^n / \sim$
+    \TODO{}
+\end{theorem}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+複素射影空間の場合と同様に次の補題が成り立つ。
+証明は複素の場合と全く同様だから省略する。
+
+\begin{lemma}
+    $\{ x_n = 0 \} \subset \R P^n$は$\R P^{n - 1}$に同相である。
+    \qed
+\end{lemma}
+
+\begin{lemma}
+    $\{ x_n \neq 0 \} \subset \R P^n$は$\R^n$に同相である。
+    \qed
+\end{lemma}
+
+\begin{lemma}
+    $D^{n} \subset \R^n$とみなして写像
+    \begin{equation}
+        f \colon D^{n} \to \R P^n,
+            \quad
+            y \mapsto [y_0 : \dots : y_{n - 1} : \sqrt{1 - \| y \|^2}]
+    \end{equation}
+    は$\{ x_n \neq 0 \}$の上への同相となる。
+    逆写像は
+    \begin{equation}
+        g \colon \{ x_n \neq 0 \} \to D^{n},
+            \quad
+            [x_0 : \dots : x_{n - 1} : x_n]
+                \mapsto \frac{|x_n|}{\| x \|} \left(
+                    \frac{x_0}{x_n} : \dots : \frac{x_{n - 1}}{x_n}
+                \right)
+    \end{equation}
+    で与えられる。
+    \qed
+\end{lemma}
+
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{Klein の壺}
+
+\begin{definition}[Klein の壺]
+    \TODO{}
+\end{definition}
+
+
+
+\end{document}

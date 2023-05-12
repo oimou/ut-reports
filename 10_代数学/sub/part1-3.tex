@@ -1,0 +1,2715 @@
+\documentclass[report]{jlreq}
+\usepackage{global}
+\usepackage{./local}
+\subfiletrue
+%\makeindex
+\begin{document}
+
+
+
+% ============================================================
+%
+% ============================================================
+\chapter{加群のテンソル積}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{可換環上の加群のテンソル積}
+
+テンソル積を定義する。まずは可換環上の加群に限って考える。
+
+\begin{definition}[双線型写像]
+    $A$を環、$M, N, L$を$A$-加群とする。
+    写像$f \colon M \times N \to L$が
+    \term{$A$-双線型写像}[$A$-bilinear map]
+    {双線型写像}[そうせんけいしゃぞう]
+    であるとは、
+    各$x_1, x_2 \in M, \; y_1, y_2 \in N, \; a_1, a_2 \in A$に対し
+    \begin{alignat}{1}
+        f(x_1, a_1 y_1 + a_2 y_2) &= a_1 f(x_1, y_1) + a_2 f(x_1, y_2) \\
+        f(a_1 x_1 + a_2 x_2, y_1) &= a_1 f(x_1, y_1) + a_2 f(x_2, y_1)
+    \end{alignat}
+    が成り立つことをいう。
+\end{definition}
+
+\begin{definition}[圏論的テンソル積]
+    $R$を可換環、$M, N$を$R$-加群とする。
+    組$(Z, \varphi)$が$M, N$の
+    \term{圏論的テンソル積}[categorical tensor product]
+    {圏論的テンソル積}[けんろんてきてんそるせき]
+    であるとは、次が成り立つことをいう:
+    \begin{description}
+        \item[(T1)] $Z$は$R$-加群である。
+        \item[(T2)] $\varphi$は$R$-双線型写像$M \times N \to Z$である。
+        \item[(T3)] (普遍性) 次が成り立つ:
+            \begin{alignat}{1}
+                &\forall \; L \colon \text{ $R$-加群} \\
+                &\forall \; f \colon M \times N \to L
+                    \colon \text{ $R$-双線型写像} \\
+                &\exists! \; \wb{f} \colon Z \to L
+                    \colon \text{ $R$-加群準同型}
+                    \quad \text{s.t.} \quad \\
+                &\quad \begin{tikzcd}[ampersand replacement=\&]
+                    \& M \times N
+                        \ar{ld}[swap]{\varphi}
+                        \ar{rd}{f} \\
+                    Z
+                        \ar[dashed]{rr}[swap]{\wb{f}}
+                        \& \& L
+                \end{tikzcd}
+            \end{alignat}
+    \end{description}
+\end{definition}
+
+\begin{remark}
+    \TODO{誘導された準同型の単射性の確認に関する注意を述べたい}
+\end{remark}
+
+\begin{theorem}[圏論的テンソル積の一意性]
+    $R$を可換環、
+    $M, N$を$R$-加群、
+    $(Z, \varphi), (Z', \varphi')$を$M, N$の圏論的テンソル積とする。
+    このとき、次の$\lMod{R}$の図式を可換にする
+    $R$-加群準同型$i$が一意に存在する:
+    \begin{equation}
+        \begin{tikzcd}
+            & M \times N
+                \ar{ld}[swap]{\varphi}
+                \ar{rd}{\varphi'} \\
+            Z
+                \ar[dashed]{rr}[swap]{i}
+                & & Z'
+        \end{tikzcd}
+    \end{equation}
+\end{theorem}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+可換環上の加群のテンソル積を具体的に構成する。
+
+\begin{definition}[可換環上の加群のテンソル積の構成]
+    \idxsym{tensor product}{$M \otimes_R N$}{可換環上の加群のテンソル積}
+    $R$を可換環、$M, N$を$R$-加群とする。
+
+    \TODO{}
+
+    商加群
+    \begin{equation}
+        M \otimes_R N \coloneqq [M \times N] / Bl
+    \end{equation}
+    を$M$と$N$の$R$上の
+    \term{テンソル積}[tensor product]{テンソル積}[てんそるせき]
+    といい、
+    写像
+    \begin{equation}
+        \otimes \colon M \times N \to M \otimes_R N,
+        \quad
+        (m, n) \mapsto p(m, n)
+    \end{equation}
+    を$M \otimes_R N$の
+    \term{標準射影}{標準射影!テンソル積の---}[ひょうじゅんしゃえい]という。
+    $(M \otimes_R N, \otimes)$は
+    $M, N$の圏論的テンソル積になっている (このあと示す)。
+\end{definition}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+\begin{theorem}[有限生成加群のテンソル積の生成系]
+    $R$を可換環、$M, N$を$R$-加群、
+    $S \subset M, \; T \subset N$を部分$R$-加群、
+    $M = \langle S \rangle, \; N = \langle T \rangle$
+    とする。
+    このとき
+    \begin{equation}
+        S \otimes T \coloneqq \{
+            s \otimes t \in M \otimes_R N
+            \mid
+            s \in S, t \in T
+        \}
+    \end{equation}
+    とおくと$\langle S \otimes T \rangle = M \otimes_R N$が成り立つ。
+    とくに$M, N$が有限生成ならば$M \otimes_R N$も有限生成である。
+\end{theorem}
+
+\begin{proof}
+    テンソル積の定義より、$M \otimes_R N$の元は
+    \begin{equation}
+        \sum_{i = 1}^n m_i \otimes n_i
+            \quad
+            (m_i \in M, \; n_i \in N)
+    \end{equation}
+    の形に書けるが、
+    いま$M = \langle S \rangle, \; N = \langle T \rangle$だから、これは
+    \begin{equation}
+        \sum_{i = 1}^n
+            \left(
+                \sum_{j = 1}^k r_{j} s_{j}
+            \right)
+            \otimes
+            \left(
+                \sum_{j' = 1}^{k'} r_{j'} t_{j'}
+            \right)
+            \quad
+            (r_j, r_{j'} \in R, \; s_j \in S, \; t_{j'} \in T)
+    \end{equation}
+    の形に書ける。右辺を整理して
+    \begin{equation}
+        \sum_{i, j, j'} r_{j} r_{j'} s_{j} \otimes t_{j'}
+            \in \langle S \otimes T \rangle
+    \end{equation}
+    を得る。
+\end{proof}
+
+\begin{theorem}[自由加群のテンソル積の基底]
+    \label[theorem]{thm:basis-of-tensor-product-of-free-modules}
+    $R$を可換環、$M, N$を自由$R$-加群、
+    $\{ v_i \}_{i \in I}$を$M$の基底、
+    $\{ w_j \}_{j \in J}$を$N$の基底とする。
+    このとき
+    \begin{equation}
+        B \coloneqq \{ v_i \otimes w_j \mid i \in I, j \in J \}
+    \end{equation}
+    は$M \otimes_R N$の$R$上の基底である。
+\end{theorem}
+
+\begin{proof}
+    $\langle B \rangle = M \otimes_R N$となるのは上の定理よりわかる。
+    あとは$B$が$R$上1次独立であることをいえばよく、
+    そのためには$B$を何らかの$R$-加群準同型で写した像が
+    $R$上1次独立であることをいえばよい。
+    そこで$R$-加群準同型
+    $\Psi \colon M \otimes_R N \to R^{\otimes (I \times J)}$
+    を
+    \begin{equation}
+        \Psi\left(
+            \left(
+                \fsum_{i \in I} a_i v_i
+            \right)
+            \otimes
+            \left(
+                \fsum_{j \in J} b_j w_j
+            \right)
+        \right)
+            \coloneqq (a_i b_j)_{(i, j) \in I \times J}
+    \end{equation}
+    で定める。
+    ただし、右辺が有限項を除いて$0$であることは左辺が有限和であることから明らかで、
+    また$R$-双線型性も明らか。
+    すると
+    \begin{equation}
+        \Psi(v_i \otimes w_j) = (c_{pq})_{(p, q) \in I \times J},
+            \quad
+            c_{pq} = \begin{cases}
+                1 & (p, q) = (i, j) \\
+                0 & \text{otherwise}
+            \end{cases}
+    \end{equation}
+    より$\{ \Psi(v_i \otimes w_j) \mid i \in I, j \in J \}$
+    は$R$上1次独立である。
+    よって$B$も$R$上1次独立である。
+\end{proof}
+
+\begin{corollary}[テンソル積の可換性]
+    \TODO{}
+\end{corollary}
+
+\begin{corollary}[テンソル積の結合性]
+    \TODO{}
+\end{corollary}
+
+\begin{definition}[代数のテンソル積]
+    $R$を可換環、$A, B$を$R$-代数とする。
+    $A, B$は$R$-加群とみなせるから、
+    テンソル積加群$A \otimes_R B$が考えられる。
+
+    \TODO{乗法を定める}
+\end{definition}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{非可換環上の加群のテンソル積}
+
+テンソル積の概念を非可換環上の加群まで一般化しよう。
+
+\begin{definition}[$A$-平衡$R$-双線型写像]
+    $R$を可換環、$A$を$R$-代数、
+    $M$を右$A$-加群、$N$を左$A$-加群、$L$を$R$-加群とする。
+    写像$f \colon M \times N \to L$が
+    \term{$A$-平衡$R$-双線型写像}[$A$-balanced $R$-bilinear map]
+    {平衡双線型写像}[へいこうそうせんけいしゃぞう]
+    であるとは、次が成り立つことをいう:
+    \begin{enumerate}
+        \item $f$は$R$-双線型写像である。
+        \item (平衡性) $m \in M, n \in N, a \in A$に対し
+            \begin{equation}
+                f(ma, n) = f(m, an)
+            \end{equation}
+            が成り立つ。
+    \end{enumerate}
+\end{definition}
+
+非可換環上の加群のテンソル積を具体的に構成する。
+
+\begin{definition}[非可換環上の加群のテンソル積の構成]
+    \TODO{}
+\end{definition}
+
+上の構成は次の意味での普遍性をみたすが、
+実はもう少し広い意味での普遍性が成り立つことを後で示す。
+
+\begin{theorem}[非可換環上の加群のテンソル積の普遍性]
+    $R$を可換環、$A$を$R$-代数、
+    $M$を右$A$-加群、$N$を左$A$-加群とする。
+    このとき次が成り立つ:
+    \begin{alignat}{1}
+        &\forall \; L \colon \text{ $R$-加群} \\
+        &\forall \; f \colon M \times N \to L
+            \colon \text{ $A$-平衡$R$-双線型写像} \\
+        &\exists! \; \wb{f} \colon M \otimes_A N \to L
+            \colon \text{ $R$-加群準同型}
+            \quad \text{s.t.} \quad \\
+        &\quad \begin{tikzcd}[ampersand replacement=\&]
+            \& M \times N
+                \ar{ld}[swap]{\otimes}
+                \ar{rd}{f} \\
+            M \otimes_A N
+                \ar[dashed]{rr}[swap]{\wb{f}}
+                \& \& L
+        \end{tikzcd}
+    \end{alignat}
+\end{theorem}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+\begin{definition}[左$B$-線型$A$-平衡$\Z$-双線型写像]
+    $A, B$を環、
+    $M$を$(B, A)$-両側加群、
+    $N$を左$A$-加群、$L$を左$B$-加群とする。
+    写像$f \colon M \times N \to L$が
+    \term{左$B$-線型$A$-平衡$\Z$-双線型写像}[left $B$-linear $A$-balanced $\Z$-bilinear map]
+    {左線型平衡$\Z$-双線型写像}[ひだりせんけいへいこうZそうせんけいしゃぞう]
+    であるとは、次が成り立つことをいう:
+    \begin{enumerate}
+        \item $f$は$A$-平衡$\Z$-双線型写像である。
+        \item (左$B$-線型性) $m \in M, n \in N, b \in B$に対し
+            \begin{equation}
+                f(bm, n) = bf(m, n)
+            \end{equation}
+            が成り立つ。
+    \end{enumerate}
+\end{definition}
+
+\begin{definition}[テンソル積への左作用]
+    $A, B$を環、
+    $M$を$(B, A)$-両側加群、
+    $N$を左$A$-加群とする。
+    このとき、$M \otimes_A N$に
+    左$B$-加群の構造を
+    \begin{equation}
+        b (m \otimes n) \coloneqq (bm) \otimes n
+        \quad
+        (b \in B)
+    \end{equation}
+    で定めることができる。
+\end{definition}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+\begin{theorem}[$\Z$の場合さえ考えればよいということ]
+    $R$を可換環、$A$を$R$-代数、
+    $M$を右$A$-加群、$N$を左$A$-加群とし、
+    \begin{itemize}
+        \item $M \otimes_A^1 N$: $A$を$R$-代数とみたときのテンソル積
+        \item $M \otimes_A^2 N$: $A$を$\Z$-代数とみたときのテンソル積
+    \end{itemize}
+    とおく。
+    このとき次が成り立つ:
+    \begin{alignat}{1}
+        &\exists! \; \iota
+            \colon M \otimes_A^1 N \to M \otimes_A^2 N \colon \text{ $\Z$-加群の同型}
+            \quad \text{s.t.} \quad \\
+        &\quad \begin{tikzcd}[ampersand replacement=\&]
+            \& M \times N
+                \ar{ld}[swap]{\otimes^1}
+                \ar{rd}{\otimes^2} \\
+            M \otimes_A^1 N
+                \ar[dashed]{rr}[swap]{\iota}{\cong}
+                \& \& M \otimes_A^2 N
+        \end{tikzcd}
+    \end{alignat}
+    ただし$\otimes^1, \otimes^2$は標準射影である。
+\end{theorem}
+
+\begin{proof}
+    $\iota$の逆写像にあたるものを考える。
+    $\otimes^1$は$A$-平衡$R$-双線型写像だから、
+    とくに$A$-平衡$\Z$-双線型写像でもある。
+    したがってテンソル積$M \otimes_A^2 N$の普遍性より
+    \begin{equation}
+        \begin{tikzcd}[ampersand replacement=\&]
+            \& M \times N
+                \ar{ld}[swap]{\otimes^2}
+                \ar{rd}{\otimes^1} \\
+            M \otimes_A^2 N
+                \ar[dashed]{rr}[swap]{\wb{\otimes^1}}
+                \& \& M \otimes_A^1 N
+        \end{tikzcd}
+    \end{equation}
+    を可換にする$\Z$-加群準同型$\wb{\otimes^1}$が
+    ただひとつ存在する。
+
+    $A$の$R$-代数としての構造を定める環準同型を
+    $\varphi \colon R \to Z(A)$とおく。
+    このとき、$M$に$(R, A)$-両側加群の構造を
+    \begin{equation}
+        rm \coloneqq m \varphi(r)
+        \quad
+        (m \in M, \; r \in R)
+    \end{equation}
+    で定義できる。
+    これによりテンソル積$M \otimes_A^2 N$への$R$の左作用を定めて
+    左$R$-加群の構造を入れる\TODO{どういうこと？}。
+
+    \TODO{}
+\end{proof}
+
+\begin{theorem}[テンソル積の普遍性 (最終形)]
+    $A, B$を環、
+    $M$を$(B, A)$-両側加群、
+    $N$を左$A$-加群とする。
+    このとき次が成り立つ:
+    \begin{alignat}{1}
+        &\forall \; L \colon \text{ 左$B$-加群} \\
+        &\forall \; f \colon M \times N \to L
+            \colon \text{ 左$B$-線型$A$-平衡$\Z$-双線型写像} \\
+        &\exists! \; \wb{f} \colon M \otimes_A N \to L
+            \colon \text{ $B$-加群準同型}
+            \quad \text{s.t.} \quad \\
+        &\quad \begin{tikzcd}[ampersand replacement=\&]
+            \& M \times N
+                \ar{ld}[swap]{\otimes}
+                \ar{rd}{f} \\
+            M \otimes_A N
+                \ar[dashed]{rr}[swap]{\wb{f}}
+                \& \& L
+        \end{tikzcd}
+    \end{alignat}
+\end{theorem}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+テンソル積は直和との間の分配律をみたす。
+
+\begin{theorem}[テンソル積の分配律]
+    \label[theorem]{thm:distribution-law-of-tensor-product}
+    $A, B$を環、
+    \begin{enumerate}
+        \item $\{ M_i \}_{i \in I}$を$(B, A)$-両側加群の族、
+            $N$を$A$-加群、
+            $\iota_i \colon M_i \hookrightarrow \bigoplus_{j \in I} M_j$
+            を標準包含とする。
+            このとき
+            \begin{equation}
+                \bigoplus_{i \in I} (\iota_i \otimes \id_N)
+                    \colon
+                    \bigoplus_{i \in I} (M_i \otimes_A N)
+                    \overset{\sim}{\to}
+                    \left(\bigoplus_{i \in I} M_i\right) \otimes_A N
+            \end{equation}
+            は$B$-加群の同型となる。
+        \item $M$を$(B, A)$-両側加群、
+            $\{ N_i \}_{i \in I}$を$A$-加群の族、
+            $\iota_i \colon N_i \hookrightarrow \bigoplus_{j \in I} N_j$
+            を標準包含とする。
+            このとき
+            \begin{equation}
+                \bigoplus_{i \in I} (\id_M \otimes \iota_i)
+                    \colon
+                    \bigoplus_{i \in I} (M \otimes_A N_i)
+                    \overset{\sim}{\to}
+                    M \otimes_A \left(\bigoplus_{i \in I} N_i\right)
+            \end{equation}
+            は$B$-加群の同型となる。
+    \end{enumerate}
+\end{theorem}
+
+\begin{proof}
+    (1)についてのみ示す。(2)も同様にして示せる。
+    左$B$-線型$A$-平衡$\Z$-双線型写像
+    $\Phi \colon \left(\bigoplus_{i \in I} M_i\right) \times N
+        \to \bigoplus_{i \in I} (M_i \otimes_A N)$
+    を
+    \begin{equation}
+        \Phi((x_i)_{i \in I}, y)
+            \coloneqq (x_i \otimes y)_{i \in I}
+    \end{equation}
+    で定めることができる。
+    よって、$B$-線型写像
+    \begin{equation}
+        \wb{\Phi}
+            \colon
+            \left(\bigoplus_{i \in I} M_i\right) \otimes_A N
+            \to
+            \bigoplus_{i \in I} (M_i \otimes_A N),
+            \quad
+            (x_i)_{i \in I} \otimes y
+            \mapsto
+            (x_i \otimes y)_{i \in I}
+    \end{equation}
+    が誘導される。
+    $\wb{\Phi}$が
+    $\bigoplus_{i \in I} (\iota_i \otimes \id_N)$の逆写像であることを示す。
+    右逆写像であることは
+    \begin{alignat}{1}
+        \left(
+            \bigoplus_{i \in I} (\iota_i \otimes \id_N)
+        \right)
+            \circ \wb{\Phi}
+            ((x_i)_{i \in I} \otimes y)
+            &= \left(
+                \bigoplus_{i \in I} (\iota_i \otimes \id_N)
+            \right)
+                ((x_i \otimes y)_{i \in I}) \\
+            &= \fsum_{i \in I}
+                (\iota_i \otimes \id_N)(x_i \otimes y) \\
+            &= \fsum_{i \in I}
+                ((z_{i; j})_{j \in I} \otimes y)
+                \quad
+                \text{ただし}
+                \quad
+                z_{i; j} \coloneqq \begin{cases}
+                    x_i & (j = i) \\
+                    0 & (j \neq i)
+                \end{cases} \\
+            &= \left(
+                \fsum_{i \in I} (z_{i; j})_{j \in I}
+            \right) \otimes y \\
+            &= (x_i)_{i \in I} \otimes y
+    \end{alignat}
+    より従う。
+    左逆写像であることも同様にしてわかる。
+    よって$\bigoplus_{i \in I} (\iota_i \otimes \id_N)$は
+    $B$-加群の同型である。
+\end{proof}
+
+
+
+% ============================================================
+%
+% ============================================================
+\chapter{加群の圏}
+
+この章では加群自体というより加群の圏について考える。
+
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{加群の圏と関手}
+
+加群の圏とそれにまつわる用語を導入する。
+
+\begin{definition}[加群の圏]
+    \TODO{}
+\end{definition}
+
+\begin{definition}[共変関手]
+    $A, B$を環とする。
+    $T \colon \lMod{A} \to \lMod{B}$が
+    \term{共変関手}[covariant functor]{共変関手}[きょうへんかんしゅ]
+    であるとは、
+    \begin{itemize}
+        \item 写像$T \colon \Ob(\lMod{A}) \to \Ob(\lMod{B})$
+        \item 写像$T \colon \Ar(\lMod{A}) \to \Ar(\lMod{B})$
+    \end{itemize}
+    が定まっていて
+    \begin{enumerate}
+        \item 各$M, N \in \Ob(\lMod{A})$に対し
+            \begin{equation}
+                T(\Hom_A(M, N)) \subset \Hom_B(T(M), T(N))
+            \end{equation}
+        \item $T(\id_M) = \id_{T(M)} \quad (M \in \Ob(\lMod{A}))$
+        \item 各$M, N, L \in \Ob(\lMod{A})$と
+            $f \in \Hom_A(M, N), \; g \in \Hom_A(N, L)$に対し
+            \begin{equation}
+                T(g) \circ T(f) = T(g \circ f)
+            \end{equation}
+    \end{enumerate}
+    が成り立つことをいう。
+\end{definition}
+
+\begin{definition}[反変関手]
+    $A, B$を環とする。
+    $T \colon \lMod{A} \to \lMod{B}$が
+    \term{反変関手}[contravariant functor]{反変関手}[はんぺんかんしゅ]
+    であるとは、
+    \begin{itemize}
+        \item 写像$T \colon \Ob(\lMod{A}) \to \Ob(\lMod{B})$
+        \item 写像$T \colon \Ar(\lMod{A}) \to \Ar(\lMod{B})$
+    \end{itemize}
+    が定まっていて
+    \begin{enumerate}
+        \item 各$M, N \in \Ob(\lMod{A})$に対し
+            \begin{equation}
+                T(\Hom_A(M, N)) \subset \Hom_B(T(N), T(M))
+            \end{equation}
+        \item $T(\id_M) = \id_{T(M)} \quad (M \in \Ob(\lMod{A}))$
+        \item 各$M, N, L \in \Ob(\lMod{A})$と
+            $f \in \Hom_A(M, N), \; g \in \Hom_A(N, L)$に対し
+            \begin{equation}
+                T(f) \circ T(g) = T(g \circ f)
+            \end{equation}
+    \end{enumerate}
+    が成り立つことをいう。
+\end{definition}
+
+\begin{definition}[押し出しと引き戻し]
+    $R$を可換環、$A$を$R$-代数、
+    $M, N, L$を$A$-加群とする。
+    \begin{enumerate}
+        \item $f \in \Hom_A(N, L)$とする。
+            $R$-代数準同型$f_\sharp$を
+            \begin{equation}
+                f_\sharp \colon \Hom_A(M, N) \to \Hom_A(M, L),
+                \quad
+                \varphi \mapsto f \circ \varphi
+            \end{equation}
+            で定める。
+            $f_\sharp$を
+            $f$による\term{押し出し}[pushout]{押し出し}[おしだし]という。
+        \item $h \in \Hom_A(L, M)$とする。
+            $R$-代数準同型$h^\sharp$を
+            \begin{equation}
+                h^\sharp \colon \Hom_A(M, N) \to \Hom_A(L, N),
+                \quad
+                \varphi \mapsto \varphi \circ h
+            \end{equation}
+            で定める。
+            $h^\sharp$を
+            $h$による\term{引き戻し}[pullback]{引き戻し}[ひきもどし]という。
+    \end{enumerate}
+\end{definition}
+
+テンソル積や$\Hom$をとる操作は共変/反変関手の一例である。
+
+\begin{theorem}[テンソル関手]
+    $A, B$を環、$M$を$(B, A)$-両側加群とする。
+    このとき、関手$M \otimes_A \Box$を
+    \begin{equation}
+        \begin{tikzcd}
+            \lMod{A} \ar{r}
+                & \lMod{B}
+                & \Hom_A(X, Y) \ar{r}
+                & \Hom_B(M \otimes_A X, M \otimes_A Y) \\
+            X \ar[mapsto]{r}
+                & M \otimes_A X
+                & f \ar[mapsto]{r}
+                & \id_M \otimes f
+        \end{tikzcd}
+    \end{equation}
+    で定めることができる。
+\end{theorem}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+\cref{definition:set-of-module-homomorphisms}でみたように
+加群準同型全体の集合には加群の構造が入るのであった。
+このことを利用して次のような関手を定めることができる。
+
+\begin{theorem}[共変ホム関手]
+    $R$を可換環、
+    $A, B$を$R$-代数、$M$を$(A, B)$-両側加群とする。
+    このとき、関手$\Hom_A(M, \Box)$を
+    \begin{equation}
+        \begin{tikzcd}
+            \lMod{A} \ar{r}
+                & \lMod{B}
+                & \Hom_A(X, Y) \ar{r}
+                & \Hom_B(\Hom_A(M, X), \Hom_A(M, Y)) \\
+            X \ar[mapsto]{r}
+                & \Hom_A(M, X)
+                & f \ar[mapsto]{r}
+                & f_\sharp
+        \end{tikzcd}
+    \end{equation}
+    で定めることができる。
+\end{theorem}
+
+\begin{remark}
+    $M$が単に左$A$-加群の場合は、
+    $M$を$(A, \Z)$-両側加群とみなせば定理を適用できる。
+\end{remark}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+\begin{theorem}[反変ホム関手]
+    $A, B$を環、$M$を$(A, B)$-両側加群とする。
+    このとき、反変関手$\Hom_A(\Box, M)$を
+    \begin{equation}
+        \begin{tikzcd}
+            \lMod{A} \ar{r}
+                & \lMod{B}
+                & \Hom_A(X, Y) \ar{r}
+                & \Hom_B(\Hom_A(Y, M), \Hom_A(X, M)) \\
+            X \ar[mapsto]{r}
+                & \Hom_A(X, M)
+                & f \ar[mapsto]{r}
+                & f^\sharp
+        \end{tikzcd}
+    \end{equation}
+    で定めることができる。
+\end{theorem}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{自然変換}
+
+\begin{definition}[自然変換]
+    \TODO{}
+\end{definition}
+
+\begin{definition}[関手の同型]
+    \idxsym{isomorphic covariant functors}{$T \cong S$}{共変関手$T, S$の同型}
+    $A, B$を環、
+    $T, S \colon \lMod{A} \to \lMod{B}$を共変関手とする。
+    $T, S$が\term{同型}[isomorphic]{同型}[どうけい]であるとは、
+    \begin{enumerate}
+        \item 任意の$A$-加群$M$に対し
+            $B$-加群の同型
+            $\tau_M \colon T(M) \overset{\sim}{\to} S(M)$が定まっている。
+        \item 任意の$A$-加群$M, N$と
+            $\varphi \in \Hom_A(M, N)$に対し図式
+            \begin{equation}
+                \begin{tikzcd}
+                    T(M) \ar{d}[swap]{\tau_M}{\sim} \ar{r}{T(\varphi)}
+                        & T(N) \ar{d}{\tau_N}[swap]{\sim} \\
+                    S(M) \ar{r}[swap]{S(\varphi)}
+                        & S(N)
+                \end{tikzcd}
+            \end{equation}
+            が可換となる。
+    \end{enumerate}
+    が成り立つことをいう。
+    このとき$T \cong S$と書く。
+    \TODO{随伴関手のとき$\Box$に対象を代入するとそのまま同型を表しているように読める！}
+\end{definition}
+
+\begin{remark}
+    反変関手についても同様の定義ができる。
+\end{remark}
+
+\begin{definition}[関手的]
+    $A, B, C_1, C_2$を環、
+    $T_i \colon \lMod{A} \to \lMod{C_i}, \;
+    S_i \colon \lMod{B} \to \lMod{C_i}$
+    ($i = 1, 2$)を共変関手とする。
+    $M \in \lMod{A}$と$N \in \lMod{B}$でパラメータ付けられた
+    $\Z$-加群同型の族
+    \begin{equation}
+        \tau_{M, N} \colon
+            \Hom_{C_1}(T_1(M), T_1(N))
+            \to
+            \Hom_{C_2}(S_2(M), S_2(N))
+    \end{equation}
+    が$M, N$に関し\term{関手的}{関手的}[かんしゅてき]であるとは、
+    \begin{enumerate}
+        \item 任意の$A$-加群$M, M'$、$B$-加群$N$および
+            $f \in \Hom_A(M, M')$に対し図式
+            \begin{equation}
+                \begin{tikzcd}
+                    \Hom_{C_1}(T_1(M), S_1(N))
+                        \ar{d}[swap]{\tau_{M, N}}{\sim}
+                        & \Hom_{C_1}(T_1(M'), S_1(N))
+                        \ar{d}{\tau_{M', N}}[swap]{\sim}
+                        \ar{l}[swap]{f^\sharp} \\
+                    \Hom_{C_2}(T_2(M), S_2(N))
+                        & \Hom_{C_2}(T_2(M'), S_2(N))
+                        \ar{l}{f^\sharp}
+                \end{tikzcd}
+            \end{equation}
+            が可換となる。
+            \TODO{$f^\sharp$は$T_1(f)$や$T_2(f)$を合成している？}
+        \item 任意の$A$-加群$M$、$B$-加群$N, N'$および
+            $g \in \Hom_B(N, N')$に対し図式
+            \begin{equation}
+                \begin{tikzcd}
+                    \Hom_{C_1}(T_1(M), S_1(N))
+                        \ar{d}[swap]{\tau_{M, N}}{\sim}
+                        \ar{r}{g_\sharp}
+                        & \Hom_{C_1}(T_1(M), S_1(N'))
+                        \ar{d}{\tau_{M, N'}}[swap]{\sim} \\
+                    \Hom_{C_2}(T_2(M), S_2(N))
+                        \ar{r}[swap]{g_\sharp}
+                        & \Hom_{C_2}(T_2(M), S_2(N'))
+                \end{tikzcd}
+            \end{equation}
+            が可換となる。
+    \end{enumerate}
+    が成り立つことをいう。
+\end{definition}
+
+\begin{theorem}[米田の補題の1つの型]
+    $A, B$を環、
+    $T, S \colon \lMod{A} \to \lMod{B}$を共変関手とする。
+    このとき次は同値である:
+    \begin{enumerate}
+        \item $T \cong S$
+        \item 各$A$-加群$M$と$B$-加群$N$に対し、
+            $M, N$に関して関手的な
+            $\Z$-加群の同型
+            \begin{equation}
+                \Psi_{M, N} \colon
+                    \Hom_B(T(M), N)
+                    \to
+                    \Hom_B(S(M), N)
+            \end{equation}
+            が存在する。
+        \item 各$A$-加群$M$と$B$-加群$N$に対し、
+            $M, N$に関して関手的な
+            $\Z$-加群の同型
+            \begin{equation}
+                \Phi_{N, M} \colon
+                    \Hom_B(N, T(M))
+                    \to
+                    \Hom_B(N, S(M))
+            \end{equation}
+            が存在する。
+    \end{enumerate}
+\end{theorem}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+\begin{definition}[随伴関手]
+    $A, B$を環、
+    $T \colon \lMod{A} \to \lMod{B}, \;
+    S \colon \lMod{B} \to \lMod{A}$
+    を共変関手とする。
+    $T$が$S$の\term{左随伴関手}[left adjoint functor]
+    {左随伴関手}[ひだりずいはんかんしゅ]、あるいは
+    $S$が$T$の\term{右随伴関手}[right adjoint functor]
+    {右随伴関手}[みぎずいはんかんしゅ]であるとは、
+    各$A$-加群$M$、$B$-加群$N$に対し、
+    $M, N$に関し関手的な$\Z$-加群の同型
+    \begin{equation}
+        \varphi_{M, N} \colon
+            \Hom_B(T(M), N)
+            \to
+            \Hom_A(M, S(N))
+    \end{equation}
+    が存在することをいう。
+\end{definition}
+
+\begin{theorem}[随伴の一意性]
+    \TODO{}
+\end{theorem}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+\begin{theorem}[テンソル関手とホム関手の随伴性]
+    $A, B$を環、
+    $M$を$(B, A)$-両側加群とする。
+    このとき
+    関手$M \otimes_A \Box \colon \lMod{A} \to \lMod{B}$は
+    $\Hom_B(M, \Box) \colon \lMod{B} \to \lMod{A}$の
+    左随伴関手である。
+    すなわち
+    $M \otimes_A \Box \dashv \Hom_B(M, \Box)$が成り立つ。
+\end{theorem}
+
+\begin{proof}
+    $X \in \lMod{A}, \; Y \in \lMod{B}$に関し関手的な
+    $\Z$-加群同型の族
+    \begin{equation}
+        \varphi_{X, Y} \colon
+            \Hom_B(M \otimes_A X, Y)
+            \to
+            \Hom_A(X, \Hom_B(M, Y))
+    \end{equation}
+    を構成する。
+    \TODO{}
+\end{proof}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{係数制限と係数拡大}
+\label[section]{section:restriction-and-extension-of-scalars}
+
+\cref{example:restriction-of-scalars}で触れた係数制限と、
+その随伴的な操作である係数拡大について述べる。
+
+\begin{definition}[係数制限]
+    \idxsym{restriction}{$\Res_A^B M, \; M|_B$}{$A$-加群$M$の$B$への制限}
+    $A, B$を環、
+    $\varphi \colon B \to A$を環準同型、
+    $M$を$A$-加群とする。
+    $B$-加群$\Res_A^B M = M|_B$を、
+    $M$への$B$の作用を
+    \begin{equation}
+        B \times M \to B,
+        \quad
+        (b, m) \mapsto \varphi(b) m
+    \end{equation}
+    で定めたものとし、
+    これを$M$の$B$への
+    \term{係数の制限}[restriction of scalars]{係数制限}[けいすうせいげん]
+    という。
+    断らない限り$\varphi$として包含写像を用いる。
+    $\Res_A^B \colon \lMod{A} \to \lMod{B}$は共変関手となる。
+\end{definition}
+
+\begin{definition}[係数拡大]
+    $A, B$を環、$\varphi \colon B \to A$を環準同型とする。
+    $A$に次のように$(A, B)$-両側加群の構造を入れる:
+    \begin{equation}
+        axb \coloneqq ax\varphi(b)
+            \quad
+            (x \in A, \; a \in A, \; b \in B)
+    \end{equation}
+    $B$-加群$M$に対し、
+    \begin{equation}
+        \Ind_B^A M \coloneqq A \otimes_B M
+    \end{equation}
+    を$M$の$A$への
+    \term{係数の拡大}[extension of scalars]{係数の拡大}[けいすうのかくだい]
+    という。
+    $\Ind_B^A \colon \lMod{B} \to \lMod{A}$は共変関手となる。
+\end{definition}
+
+\begin{theorem}[係数制限と係数拡大の随伴性]
+    $A, B$を環、
+    $\varphi \colon B \to A$を環準同型とする。
+    このとき、係数の拡大$\Ind_B^A$は係数の制限$\Res_A^B$の
+    左随伴関手である。
+\end{theorem}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+\begin{corollary}[Induction By Stage]
+    \begin{equation}
+        \Ind_C^A \cong \Ind_B^A \circ \Ind_C^B
+    \end{equation}
+    \TODO{}
+\end{corollary}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+\begin{definition}[Production]
+    $A, B$を環、
+    $\varphi \colon B \to A$を環準同型とし、
+    $A$に
+    \begin{equation}
+        bxa \coloneqq \varphi(b) xa
+    \end{equation}
+    により$(B, A)$-両側加群の構造を入れる。
+    このとき、$B$-加群$M$に対し
+    \begin{equation}
+        \Pro_B^A(M) \coloneqq \Hom_B(A, M)
+    \end{equation}
+    と定めると、共変関手
+    $\Pro_B^A \colon \lMod{B} \to \lMod{A}$
+    が定まる。
+\end{definition}
+
+\begin{proposition}
+    $\Pro_B^A$は$\Res_A^B$の右随伴関手である。
+\end{proposition}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{加法的関手と完全性}
+\label[section]{section:additive-functors}
+
+$A$を環とする。
+\cref{definition:set-of-module-homomorphisms}
+でみたように、すべての$A$-加群$M, N$に対し
+$\Hom_A(M, N)$は$\Z$-加群となるのであった。
+このような性質は加群の圏には欠かせないものであり、
+加群の圏の間の関手を調べる際には
+この$\Z$-加群構造を保つものが特に重要といえる。
+そこで、この節では加法的関手とその完全性の概念を定義する。
+
+\begin{definition}[加法的関手]
+    $A, B$を環とする。
+    共変関手$T \colon \lMod{A} \to \lMod{B}$が
+    \term{加法的}[additive]{加法的}[かほうてき]であるとは、
+    \begin{enumerate}
+        \item $T(0) = 0$
+        \item 各$M, N \in \Ob(\lMod{A})$に対し
+            $T \colon \Hom_A(M, N) \to \Hom_B(T(M), T(N))$が
+            $\Z$-加群の準同型となる。
+    \end{enumerate}
+    が成り立つことをいう。
+\end{definition}
+
+\begin{example}[加法的関手の例]
+    ~
+    \begin{itemize}
+        \item $A, B$を環、$M$を$(B, A)$-両側加群とする。
+            このとき、テンソル関手
+            $M \otimes_A \Box \colon \lMod{A} \to \lMod{B}$は加法的である。
+        \item $R$を可換環、$A, B$を$R$-代数、$M$を$(A, B)$-両側加群とする。
+            このとき、共変ホム関手
+            $\Hom_A(M, \Box) \colon \lMod{A} \to \lMod{B}$は加法的である。
+    \end{itemize}
+\end{example}
+
+加法的関手は有限直和を保つ。
+
+\begin{theorem}[加法的関手は有限直和を保つ]
+    $A, B$を環、
+    $T \colon \lMod{A} \to \lMod{B}$を加法的関手とする。
+    任意の$A$-加群$M_1, M_2$と
+    直和の標準射影
+    $\iota_i \colon M_i \hookrightarrow M_1 \oplus M_2 \; (i = 1, 2)$
+    に対し
+    \begin{equation}
+        T(\iota_1) \oplus T(\iota_2) \colon
+            T(M_1) \oplus T(M_2) \to T(M_1 \oplus M_2)
+    \end{equation}
+    は$B$-加群の同型を与える。
+    逆写像は、
+    $p_i \colon M_1 \oplus M_2 \to M_i \; (i = 1, 2)$
+    を直積の標準射影として
+    \begin{equation}
+        T(p_1) \times T(p_2) \colon
+            T(M_1 \oplus M_2) \to T(M_1) \oplus T(M_2)
+    \end{equation}
+    で与えられる。
+\end{theorem}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+\begin{theorem}[加法的関手は分裂短完全列を保つ]
+    $A, B$を環、
+    \begin{equation}
+        \begin{tikzcd}
+            0 \ar{r}
+                & M_1 \ar{r}
+                & M_2 \ar{r}
+                & M_3 \ar{r}
+                & 0
+                & (\text{exact})
+        \end{tikzcd}
+    \end{equation}
+    を$\lMod{A}$の分裂短完全系列とする。
+    関手$T \colon \lMod{A} \to \lMod{B}$が加法的ならば、
+    $T$はこの系列を分裂短完全系列に写す。
+\end{theorem}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+左完全関手を定義する。
+
+\begin{definition}[左完全関手\footnote{
+    $T$で写した系列の左端に射$0 \to \bullet$が現れることから「左」完全と呼ばれる。
+}]
+    $A, B$を環とする。
+    加法的共変関手$T \colon \lMod{A} \to \lMod{B}$が
+    \term{左完全}[left exact]{左完全}[ひだりかんぜん]であるとは、
+    $\lMod{A}$の任意の完全系列
+    \begin{equation}
+        \begin{tikzcd}
+            0 \ar{r}
+                & U \ar{r}{i}
+                & V \ar{r}{p}
+                & W
+                & (\text{exact})
+        \end{tikzcd}
+    \end{equation}
+    に対し、$\lMod{B}$の列
+    \begin{equation}
+        \begin{tikzcd}
+            0 \ar{r}
+                & T(U) \ar{r}{T(i)}
+                & T(V) \ar{r}{T(p)}
+                & T(W)
+        \end{tikzcd}
+    \end{equation}
+    が完全系列となることをいう。
+
+    加法的反変関手$T \colon \lMod{A} \to \lMod{B}$が左完全であるとは、
+    $\lMod{A}$の任意の完全系列
+    \begin{equation}
+        \begin{tikzcd}
+            U \ar{r}{i}
+                & V \ar{r}{p}
+                & W \ar{r}
+                & 0
+                & (\text{exact})
+        \end{tikzcd}
+    \end{equation}
+    に対し、$\lMod{B}$の列
+    \begin{equation}
+        \begin{tikzcd}
+            0 \ar{r}
+                & T(W) \ar{r}{T(p)}
+                & T(V) \ar{r}{T(i)}
+                & T(U)
+        \end{tikzcd}
+    \end{equation}
+    が完全系列となることをいう。
+\end{definition}
+
+共変/反変ホム関手は左完全である。
+
+\begin{theorem}[共変ホム関手の左完全性]
+    \label[theorem]{thm:hom-left-exactness}
+    $A, B$を環、
+    $X$を$(A, B)$-両側加群とする。
+    このとき、共変ホム関手
+    $\Hom_A(X, \Box) \colon \lMod{A} \to \lMod{B}$は左完全である。
+\end{theorem}
+
+\begin{proof}
+    \TODO{$\Ab$でなく$\lMod{B}$に修正したい}
+
+    $\lMod{A}$の任意の完全系列
+    \begin{equation}
+        \begin{tikzcd}
+            0 \ar{r}
+                & U \ar{r}{i}
+                & V \ar{r}{p}
+                & W
+                & (\text{exact})
+        \end{tikzcd}
+    \end{equation}
+    に対し、$\Ab$の列
+    \begin{equation}
+        \begin{tikzcd}
+            0 \ar{r} & \Hom_A(X, U) \ar{r}{i_*}
+                & \Hom_A(X, V) \ar{r}{p_*}
+                & \Hom_A(X, W)
+        \end{tikzcd}
+    \end{equation}
+    が完全系列となることを示す。
+
+    \uline{$\Ker i_* = 0$であること} \quad
+    $i$の単射性から明らか。
+
+    \uline{$\Im i_* \subset \Ker p_*$であること} \quad
+    $\Im i \subset \Ker p$より明らか。
+
+    \uline{$\Ker p_* \subset \Im i_*$であること} \quad
+    $g \in \Ker p_*$とすると、
+    \begin{equation}
+        g(x) \in \Ker p = \Im i \quad (\forall x \in X)
+    \end{equation}
+    が成り立つ。
+    よって
+    \begin{equation}
+        g(x) = i(u_x) \quad (\exists u_x \in U)
+    \end{equation}
+    が成り立ち、$i$の単射性より$u_x$は$x$に対し一意に定まる。
+    よって写像$f \colon X \to U, \; x \mapsto u_x$は well-defined である。
+    さらに、直接計算により$f \in \Hom_A(X, U)$であることもわかる。
+    よって$g = i_* f \in \Im i_*$である。
+\end{proof}
+
+\begin{theorem}[反変ホム関手の左完全性]
+    $A, B$を環、
+    $X$を$(A, B^\OP)$-両側加群とする。
+    このとき、反変ホム関手
+    $\Hom_A(\Box, X) \colon \lMod{A} \to \lMod{B}$は左完全である。
+    \TODO{終域あってる？}
+\end{theorem}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+右完全関手を定義する。
+
+\begin{definition}[右完全関手]
+    $A, B$を環とする。
+    加法的共変関手$T \colon \lMod{A} \to \lMod{B}$が
+    \term{右完全}[right exact]{右完全}[みぎかんぜん]であるとは、
+    $\lMod{A}$の任意の完全系列
+    \begin{equation}
+        \begin{tikzcd}
+            B' \ar{r}{i} & B \ar{r}{p} & B'' \ar{r} & 0
+        \end{tikzcd}
+    \end{equation}
+    に対し、$\lMod{B}$の列
+    \begin{equation}
+        \begin{tikzcd}
+            T(B') \ar{r}{T(i)} & T(B) \ar{r}{T(p)} & T(B'') \ar{r} & 0
+        \end{tikzcd}
+    \end{equation}
+    が完全系列となることをいう。
+\end{definition}
+
+テンソル関手は右完全である。
+すなわち全射を保つ。
+
+\begin{theorem}[テンソル関手の右完全性]
+    $A, B$を環、$M$を$(B, A)$-両側加群とする。
+    このとき、テンソル関手$M \otimes_A \Box$は右完全である。
+\end{theorem}
+
+\begin{proof}
+    \TODO{$\Ab$でなく$\lMod{B}$に修正したい}
+
+    $\lMod{A}$の任意の完全系列
+    \begin{equation}
+        \begin{tikzcd}
+            B' \ar{r}{i} & B \ar{r}{p} & B'' \ar{r} & 0
+        \end{tikzcd}
+    \end{equation}
+    に対し、$\Ab$の列
+    \begin{equation}
+        \begin{tikzcd}
+            M \otimes_A B' \ar{r}{1 \otimes i}
+                & M \otimes_A B \ar{r}{1 \otimes p}
+                & M \otimes_A B'' \ar{r}
+                & 0
+        \end{tikzcd}
+    \end{equation}
+    が完全系列となることを示す。
+
+    \uline{$\Im(1 \otimes i) \subset \Ker(1 \otimes p)$であること} \quad
+    \begin{equation}
+        (1 \otimes p) \circ (1 \otimes i)
+            = 1 \otimes (p \circ i)
+            = 1 \otimes 0
+            = 0
+    \end{equation}
+    より明らか。
+
+    \uline{$\Ker(1 \otimes p) \subset \Im(1 \otimes i)$であること} \quad
+    $E \coloneqq \Im(1 \otimes i)$とおく。
+    上で示した$E \subset \Ker(1 \otimes p)$より、図式
+    \begin{equation}
+        \begin{tikzcd}
+            M \otimes_A B \ar{rr}{\pi} \ar{rd}[swap]{1 \otimes p}
+                && (M \otimes_A B) / E \ar[dashed]{ld}{\what{p}} \\
+            & M \otimes_A B''
+        \end{tikzcd}
+    \end{equation}
+    を可換にする準同型$\what{p}$が誘導される。
+    ここで、もし$\what{p}$が同型であることを示せたならば、
+    \begin{alignat}{1}
+        \Ker (1 \otimes p)
+            &= \Ker (\what{p} \circ \pi) \\
+            &= \Ker \pi \quad (\because \text{ $\what{p}$は同型}) \\
+            &= E \\
+            &= \Im(1 \otimes i)
+    \end{alignat}
+    より示したいことが従う。
+    そこで、$\what{p}$の逆写像$M \otimes_A B'' \to (M \otimes_A B)/E$を構成する。
+    写像$f \colon M \times B'' \to (M \otimes_A B)/E$を次のように定める。
+    すなわち、各$(a, b'') \in M \times B''$に対し、
+    $p$の全射性より$p(b) = b''$なる$b \in B$がとれるから、
+    $f(a, b'') \coloneqq a \otimes b + E$と定める。
+    well-defined 性と$A$-双線型性は直接計算によりわかる。
+    よって準同型$\what{f} \colon M \otimes_A B'' \to (M \otimes_A B)/E$が誘導され、
+    $\what{f}$は$\what{p}$の逆写像となる。
+    したがって$\what{p}$が同型であることがいえた。
+
+    \uline{$1 \otimes p$が全射であること:}
+    $p$の全射性より明らか。
+\end{proof}
+
+一方、テンソル関手は単射を保つとは限らない。
+
+\begin{example}[テンソル関手が単射を保たない例]
+    \label[example]{example:tensor-need-not-preserve-injectivity}
+    $\Z$-加群の完全系列
+    \begin{equation}
+        \begin{tikzcd}
+            0 \ar{r} & \Z \ar{r}{i} & \Q \ar{r} & \Q/\Z \ar{r} & 0
+        \end{tikzcd}
+    \end{equation}
+    を考える。
+    テンソル関手
+    $\Z/2\Z \otimes_\Z \Box \colon \lMod{\Z} \to \lMod{\Z}$
+    の右完全性より
+    \begin{equation}
+        \begin{tikzcd}
+            \Z/2\Z \otimes \Z \ar{r}{1 \otimes i}
+                & \Z/2\Z \otimes \Q \ar{r}
+                & \Z/2\Z \otimes \Q/\Z \ar{r}
+                & 0
+        \end{tikzcd}
+    \end{equation}
+    は完全系列である。
+    この列の左端は$\Z/2\Z \otimes \Z \cong \Z$である。
+    一方、各$a \otimes q \in \Z/2\Z \otimes \Q$に対し
+    \begin{alignat}{1}
+        a \otimes q
+            &= 2a \otimes (q/2) \\
+            &= 0 \otimes (q/2) \\
+            &= 0
+    \end{alignat}
+    である。よって$\Z/2\Z \otimes \Q = 0$である。
+    したがって$1 \otimes i$は単射ではありえず、
+    関手$\Z/2\Z \otimes_\Z \Box$は完全関手でないことがわかる。
+\end{example}
+
+左右の完全性を兼ね備えたものが完全関手である。
+
+\begin{definition}[完全関手]
+    $A, B$を環とする。
+    加法的共変関手$T \colon \lMod{A} \to \lMod{B}$が
+    \term{完全}[exact]{完全}[かんぜん]であるとは、
+    $\lMod{A}$の任意の完全系列
+    \begin{equation}
+        \begin{tikzcd}
+            0 \ar{r}
+                & U \ar{r}{i}
+                & V \ar{r}{p}
+                & W \ar{r}
+                & 0
+                & (\text{exact})
+        \end{tikzcd}
+    \end{equation}
+    に対し、$\lMod{B}$の列
+    \begin{equation}
+        \begin{tikzcd}
+            0 \ar{r}
+                & T(U) \ar{r}{T(i)}
+                & T(V) \ar{r}{T(p)}
+                & T(W) \ar{r}
+                & 0
+        \end{tikzcd}
+    \end{equation}
+    が完全系列となることをいう。
+
+    加法的反変関手$T \colon \lMod{A} \to \lMod{B}$が完全であるとは、
+    $\lMod{A}$の任意の完全系列
+    \begin{equation}
+        \begin{tikzcd}
+            0 \ar{r}
+                & U \ar{r}{i}
+                & V \ar{r}{p}
+                & W \ar{r}
+                & 0
+                & (\text{exact})
+        \end{tikzcd}
+    \end{equation}
+    に対し、$\lMod{B}$の列
+    \begin{equation}
+        \begin{tikzcd}
+            0 \ar{r}
+                & T(W) \ar{r}{T(p)}
+                & T(V) \ar{r}{T(i)}
+                & T(U) \ar{r}
+                & 0
+        \end{tikzcd}
+    \end{equation}
+    が完全系列となることをいう。
+\end{definition}
+
+\begin{theorem}[完全関手は完全系列を完全系列に写す]
+    \TODO{}
+\end{theorem}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+\begin{corollary}
+    加法的関手が左完全かつ右完全であることと、
+    完全であることとは同値である。
+\end{corollary}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{射影加群}
+
+共変ホム関手$\Hom_A(P, \Box)$を完全にするのが射影加群である。
+
+\begin{definition}[射影加群]
+    $A$を環とし、$P$を$A$-加群とする。
+    $P$が次の同値な条件のうちのひとつ（したがってすべて）をみたすとき、
+    $P$を\term{射影加群}[projective module]{射影加群}[しゃえいかぐん]という。
+    \begin{enumerate}
+        \item (リフトの存在)
+            任意の$A$-加群準同型$f \colon P \to M''$と
+            全射$A$-加群準同型$g \colon M \to M''$に対し、
+            $A$-加群準同型$h \colon P \to M$であって
+            \begin{equation}
+                \begin{tikzcd}
+                    & P \ar[dashed]{ld}[swap]{h} \ar{d}{f} \\
+                    M \ar{r}[swap]{g}
+                        & M'' \ar{r}
+                        & 0
+                        & (\text{exact})
+                \end{tikzcd}
+            \end{equation}
+            を可換にするものが存在する。
+        \item $\lMod{A}$のすべての完全列$0 \to M' \to M'' \to P \to 0$が分裂する。
+        \item $P$はある自由$A$-加群の直和因子である。
+            すなわち、ある$A$-加群$M$が存在して$P \oplus M$は自由となる。
+        \item 函手$\Hom_A(P, \Box) \colon \lMod{A} \to \lMod{\Z}$は完全である。
+    \end{enumerate}
+\end{definition}
+
+\begin{proof}[同値性の証明.]
+    \uline{(1) $\Rightarrow$ (4)} \quad
+    $P$が (1) をみたすとし、
+    $\lMod{A}$の任意の完全系列
+    \begin{equation}
+        \begin{tikzcd}
+            0 \ar{r}
+                & U \ar{r}{i}
+                & V \ar{r}{p}
+                & W \ar{r}
+                & 0
+                & (\text{exact})
+        \end{tikzcd}
+    \end{equation}
+    に対し、$\Ab$の列
+    \begin{equation}
+        \begin{tikzcd}
+            0 \ar{r}
+                & \Hom_A(P, U) \ar{r}{i_*}
+                & \Hom_A(P, V) \ar{r}{p_*}
+                & \Hom_A(P, W) \ar{r}
+                & 0
+        \end{tikzcd}
+    \end{equation}
+    が完全系列となることを示す。
+    \cref{thm:hom-left-exactness} より
+    $\Hom_A(P, \Box)$の左完全性はわかっているから、あとは
+    \begin{equation}
+        \begin{tikzcd}
+            \Hom_A(P, V) \ar{r}{p_*}
+                & \Hom_A(P, W) \ar{r}
+                & 0
+        \end{tikzcd}
+    \end{equation}
+    が完全系列であること、すなわち$p_*$の全射性をいえばよい。
+    そのためには$\lMod{A}$の任意の射$h \colon P \to W$に対し
+    \begin{equation}
+        \begin{tikzcd}
+            & P \ar[dashed]{ld}[swap]{g} \ar{d}{h} \\
+            V \ar{r}[swap]{p}
+                & W \ar{r}
+                & 0
+        \end{tikzcd}
+    \end{equation}
+    を可換にする射$g$が存在することをいえばよいが、
+    $p$が全射であることと
+    $P$が (1) をみたすことからこのような$g$は存在する。
+    よって (4) がいえた。
+
+    \uline{(4) $\Rightarrow$ (1)} \quad
+    $\Hom_A(P, \Box)$は完全であるとする。
+    準同型$f \colon P \to M''$と全射準同型$g \colon M \to M''$が任意に与えられたとする。
+    このとき、列
+    \begin{equation}
+        \begin{tikzcd}
+            M \ar{r}{g}
+                & M'' \ar{r}
+                & 0
+                & (\text{exact})
+        \end{tikzcd}
+    \end{equation}
+    は完全系列である。
+    したがって、$\Hom_A(P, \Box)$の完全性より
+    \begin{equation}
+        \begin{tikzcd}
+            \Hom_A(P, M) \ar{r}{g_*}
+                & \Hom_A(P, M'') \ar{r}
+                & 0
+                & (\text{exact})
+        \end{tikzcd}
+    \end{equation}
+    は完全系列、すなわち$g_*$は全射である。
+    よって、図式
+    \begin{equation}
+        \begin{tikzcd}
+            M \ar{r}{g}
+                & M'' \ar{r}
+                & 0
+                & (\text{exact}) \\
+            & P \ar[dashed]{lu}{h} \ar{u}[swap]{f}
+        \end{tikzcd}
+    \end{equation}
+    を可換にする$h \in \Hom_A(P, M)$が存在する。
+    よって (1) がいえた。
+
+    \TODO{cf. [Lang] p.137}
+\end{proof}
+
+自由加群は、定義から明らかな射影加群の例のひとつである。
+
+\begin{proposition}
+    \label[proposition]{prop:free-module-is-projective}
+    自由加群は射影加群である。
+\end{proposition}
+
+\begin{proof}
+    射影加群の定義の条件(3)より従う。
+\end{proof}
+
+\begin{example}[自由でない射影加群の例]
+    $\Z/6\Z = \Z/2\Z \oplus \Z/3\Z$は$\Z/6\Z$-加群として自由だから、
+    直和因子$\Z/2\Z, \Z/3\Z$は射影$\Z/6\Z$-加群である。
+    一方、$\Z/3\Z$は$\Z/6\Z$-加群として自由ではない。
+    実際、もし自由加群ならばその濃度は$6$のべきか無限となるはずである。
+    同様に$\Z/2\Z$も自由でない。
+\end{example}
+
+直和により射影加群の例を増やすことができる。
+
+\begin{proposition}[射影的な直和加群]
+    $A$を環とする。
+    $\{ M_i \}_{i \in I}$を$A$-加群の族とするとき、
+    直和$M \coloneqq \bigoplus_{i \in I} M_i$が射影的であることと
+    各$M_i$が射影的であることとは同値である。
+\end{proposition}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{入射加群}
+
+反変ホム関手$\Hom_A(\Box, Q)$を完全にするのが入射加群である。
+
+\begin{definition}[入射加群]
+    $A$を環とし、$Q$を$A$-加群とする。
+    $Q$が次の同値な条件のうちのひとつ（したがってすべて）をみたすとき、
+    $Q$を\term{入射加群}[injective module]{入射加群}[にゅうしゃかぐん]という。
+    \begin{enumerate}
+        \item 任意の$A$-加群$M$とその$A$-部分加群$M'$、
+            および$A$-加群準同型$f \colon M' \to Q$に対し、
+            $A$-加群準同型$h \colon M \to Q$であって
+            \begin{equation}
+                \begin{tikzcd}
+                    0 \ar{r} & M' \ar{d}[swap]{f} \ar[hook]{r} & M \ar[dashed]{ld}{h} \\
+                    & Q
+                \end{tikzcd}
+            \end{equation}
+            を可換にするものが存在する。
+        \item 函手$\Hom_A(\Box, Q) \colon \lMod{A}^\OP \to \lMod{\Z}$は完全である。
+        \item すべての完全列$0 \to Q \to M \to M'' \to 0$が分裂する。
+    \end{enumerate}
+\end{definition}
+
+\begin{proof}
+    cf. \cite[p.782]{Lan02}
+\end{proof}
+
+\begin{theorem}
+    \label[theorem]{thm:Q-over-Z-is-injective}
+    $\Q / \Z$は入射$\Z$-加群である。
+\end{theorem}
+
+\begin{proof}
+    $\varphi \colon X \to Y$を単射な$\Z$-加群準同型、
+    $h \colon X \to \Q / \Z$を$\Z$-加群準同型とする。
+    図式
+    \begin{equation}
+        \begin{tikzcd}
+            0 \ar{r}
+                & X \ar[tail]{r}{\varphi} \ar{d}[swap]{h}
+                & Y \ar[dashed]{ld}{\psi}
+                & (\text{exact}) \\
+            & \Q / \Z
+        \end{tikzcd}
+    \end{equation}
+    を可換にする$\Z$-加群準同型$\psi$の存在を示す。
+    ここで
+    \begin{equation}
+        \calQ \coloneqq \{
+            (Z, \xi) \mid
+            \text{$Z$は$\Z$-加群}, \; X \subset Z \subset Y, \;
+            \text{$\xi \colon Z \to \Q / \Z$は$\Z$-加群準同型}, \;
+            \xi = h \; \text{ on } \; X
+        \}
+    \end{equation}
+    とおく。
+    $\calQ$上の関係$\le$を
+    \begin{equation}
+        (Z, \xi) \le (Z', \xi')
+            \quad \iff \quad
+            Z \subset Z'
+            \quad \text{かつ} \quad
+            \xi = \xi' \; \text{ on } \; Z
+    \end{equation}
+    で定めると、$\le$は$\calQ$上の半順序となり、
+    $\calQ$は帰納的半順序集合となる。
+    Zorn の補題より$\calQ$は極大元$(W, \psi)$をもつ。
+    \TODO{$W \subsetneq Y$として矛盾を導く}
+\end{proof}
+
+\begin{theorem}[完全関手の随伴]
+    \label[theorem]{thm:adjoint-of-exact-functor}
+    $A, B$を環、
+    $T \colon \lMod{A} \to \lMod{B}$を関手とする。
+    このとき次が成り立つ:
+    \begin{enumerate}
+        \item $T$がある完全関手の左随伴ならば、
+            $T$は射影加群を射影加群に写す。
+        \item $T$がある完全関手の右随伴ならば、
+            $T$は入射加群を入射加群に写す。
+    \end{enumerate}
+\end{theorem}
+
+\begin{proof}
+    (1) を示す。(2) も同様である。
+    $T$は完全関手$S \colon \lMod{B} \to \lMod{A}$の左随伴であるとし、
+    $M$を射影$A$-加群とする。
+    各$B$-加群$X$に対し、
+    随伴性より$\Hom_B(T(M), X) \cong \Hom_A(M, S(X))$だから、
+    共変ホム関手$\Hom_B(T(M), \Box)$は
+    $X \mapsto \Hom_B(T(M), X) \cong \Hom_A(M, S(X))$と写す。
+    右辺は完全関手の合成$\Hom_A(M, S(\Box))$だから完全である。
+    したがって$\Hom_B(T(M), \Box)$は完全である。
+    よって$T(M)$は射影加群である。
+\end{proof}
+
+\begin{definition}[可除加群]
+    $R$を可換環、$M$を$R$-加群とする。
+    $M$が\term{可除}[divisible]{可除}[かじょ]であるとは、
+    $R$の$0$でも零因子でもない任意の元$a \in R$に対し、
+    $a$倍写像$M \ni m \mapsto am \in M$が全射になることをいう。
+\end{definition}
+
+\begin{proposition}
+    可換環上の入射加群は可除加群である。
+\end{proposition}
+
+\begin{proof}
+    \cref{problem:algebra2-9.114} を参照。
+\end{proof}
+
+
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{平坦加群}
+
+テンソル関手を完全にするのが平坦加群である。
+ここでは平坦加群の定義として右側加群のものを与えるが、
+明らかに左側加群についても同様に定義される。
+
+\begin{definition}[平坦加群]
+    $A$を環、$F$を右$A$-加群とする。
+    $F$が次の同値な条件のうちのひとつ（したがってすべて）をみたすとき、
+    $F$を\term{平坦加群}[flat module]{平坦加群}[へいたんかぐん]という:
+    \begin{enumerate}
+        \item $\lMod{A}$の任意の完全系列
+            \begin{equation}
+                \begin{tikzcd}
+                    E' \ar{r}
+                        & E \ar{r}
+                        & E''
+                        & (\text{exact})
+                \end{tikzcd}
+            \end{equation}
+            に対し$\lMod{\Z}$の系列
+            \begin{equation}
+                \begin{tikzcd}
+                    F \otimes_A E' \ar{r}
+                        & F \otimes_A E \ar{r}
+                        & F \otimes_A E''
+                \end{tikzcd}
+            \end{equation}
+            は完全となる。
+        \item $\lMod{A}$の任意の完全系列
+            \begin{equation}
+                \begin{tikzcd}
+                    0 \ar{r}
+                        & E' \ar{r}
+                        & E \ar{r}
+                        & E'' \ar{r}
+                        & 0
+                        & (\text{exact})
+                \end{tikzcd}
+            \end{equation}
+            に対し$\lMod{\Z}$の系列
+            \begin{equation}
+                \begin{tikzcd}
+                    0 \ar{r}
+                        & F \otimes_A E' \ar{r}
+                        & F \otimes_A E \ar{r}
+                        & F \otimes_A E'' \ar{r}
+                        & 0
+                \end{tikzcd}
+            \end{equation}
+            は完全となる。
+        \item (単射を保つこと) $\lMod{A}$の任意の完全系列
+            \begin{equation}
+                \begin{tikzcd}
+                    0 \ar{r}
+                        & E' \ar{r}
+                        & E
+                        & (\text{exact})
+                \end{tikzcd}
+            \end{equation}
+            に対し$\lMod{\Z}$の系列
+            \begin{equation}
+                \begin{tikzcd}
+                    0 \ar{r}
+                        & F \otimes_A E' \ar{r}
+                        & F \otimes_A E
+                \end{tikzcd}
+            \end{equation}
+            は完全となる。
+    \end{enumerate}
+\end{definition}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+平坦でない加群の例のひとつは、
+\cref{example:tensor-need-not-preserve-injectivity}
+で紹介した ($\Z$-加群としての) $\Z / 2\Z$である。
+
+いくつかの基本的な平坦加群のクラスを挙げる。
+
+\begin{lemma}
+    \label[lemma]{lemma:module-tensor-isomorphism}
+    $A$を環とする。
+    \begin{enumerate}
+        \item 任意の$A$-加群$N$に対し、
+            $A$-加群準同型$\mu \colon A \otimes_A N \to N$であって
+            \begin{equation}
+                \mu(a \otimes n) = an
+                \quad
+                \mu^{-1}(n) = 1_A \otimes n
+            \end{equation}
+            なるものが存在する。
+        \item 任意の右$A$-加群$M$に対し、
+            右$A$-加群準同型$\eta \colon M \otimes_A A \to M$であって
+            \begin{equation}
+                \eta(m \otimes a) = ma,
+                \quad
+                \eta^{-1}(m) = m \otimes 1_A
+            \end{equation}
+            なるものが存在する。
+    \end{enumerate}
+\end{lemma}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+\begin{theorem}[基本的な平坦加群]
+    $A$を環とする。
+    \begin{enumerate}
+        \item $A_A$ (resp. $\down{A}A$) は平坦な右 (resp. 左) $A$-加群である。
+        \item $\{ F_i \}_{i \in I}$を右 (resp. 左) $A$-加群の族とするとき、
+            直和$F \coloneqq \oplus F_i$が平坦な右 (resp. 左) $A$-加群であることと
+            各$F_i$が平坦な右 (resp. 左) $A$-加群であることとは同値である。
+        \item 射影加群は平坦な左$A$-加群である。
+    \end{enumerate}
+\end{theorem}
+
+\begin{proof}
+    \uline{(1)} \quad
+    右$A$-加群の場合のみ示す。
+    $f \colon X \to Y$を単射$A$-加群準同型とする。
+    上の補題より、図式
+    \begin{equation}
+        \begin{tikzcd}
+            0
+                \ar{r}
+                & X
+                    \ar{r}{f}
+                & Y \\
+            & A \otimes_A X
+                \ar{u}{\mu}
+                \ar{r}[swap]{\id_A \otimes f}
+                & A \otimes_A Y
+                    \ar{u}[swap]{\mu'}
+        \end{tikzcd}
+    \end{equation}
+    を可換にする$A$-加群の同型$\mu, \mu'$が存在する
+    (図式の可換性は$a \otimes x$の形の元の行き先を追跡すればよい)。
+    $f$の単射性より$\id_A \otimes f$は単射である。
+    したがって$A_A$は平坦である。
+
+    \uline{(2)} \quad
+    \TODO{}
+
+    \uline{(3)} \quad
+    \TODO{(1), (2)を使う}
+\end{proof}
+
+平坦加群の条件(2)の逆も成り立つものは忠実平坦と呼ばれる。
+
+\begin{definition}[忠実平坦加群]
+    $A$を環、$F$を右$A$-加群とする。
+    $F$が
+    \term{忠実平坦加群}[faithfully flat module]{忠実平坦加群}[ちゅうじつへいたんかぐん]
+    であるとは、次が成り立つことをいう:
+    \begin{itemize}
+        \item $\lMod{A}$の系列
+            \begin{equation}
+                \begin{tikzcd}
+                    0 \ar{r}
+                        & E' \ar{r}
+                        & E \ar{r}
+                        & E'' \ar{r}
+                        & 0
+                \end{tikzcd}
+                \label[equation]{eq:faithfully-flat-1}
+            \end{equation}
+            および
+            $\lMod{\Z}$の系列
+            \begin{equation}
+                \begin{tikzcd}
+                    0 \ar{r}
+                        & F \otimes_A E' \ar{r}
+                        & F \otimes_A E \ar{r}
+                        & F \otimes_A E'' \ar{r}
+                        & 0
+                \end{tikzcd}
+                \label[equation]{eq:faithfully-flat-2}
+            \end{equation}
+            に関し、
+            系列\cref{eq:faithfully-flat-1}が完全であることと
+            系列\cref{eq:faithfully-flat-2}が完全であることとは同値である。
+    \end{itemize}
+\end{definition}
+
+忠実平坦加群の例のひとつは自由加群である。
+
+\begin{proposition}[自由加群は忠実平坦]
+    $0$でない自由加群は忠実平坦である。
+    $0$でない射影加群は忠実平坦とは限らない。
+\end{proposition}
+
+\begin{proof}
+    cf. \cref{problem:algebra2-9.119}
+\end{proof}
+
+平坦性を用いて
+入射加群のひとつの例が得られる。
+
+\begin{proposition}
+    $A$を環、$M$を平坦右$A$-加群とする。
+    $M$を$(\Z, A)$-両側加群とみて、
+    $\Hom_\Z(M, \Q / \Z)$は
+    入射$A$-加群である。
+\end{proposition}
+
+\begin{proof}
+    $M$が平坦であることより$M \otimes_A \Box$は完全関手だから、
+    \cref{thm:adjoint-of-exact-functor}
+    より$M \otimes_A \Box$の右随伴$\Hom_\Z(M, \Box)$は入射性を保つ。
+    \cref{thm:Q-over-Z-is-injective}より
+    $\Q / \Z$は入射$\Z$-加群であるから、
+    $\Hom_\Z(M, \Q / \Z)$は入射$A$-加群である。
+\end{proof}
+
+\begin{theorem}[入射加群への埋め込み]
+    $A$を環、$M$を$A$-加群とする。
+    このとき、ある入射$A$-加群$I$と
+    単射$A$-加群準同型$\varphi \colon M \to I$が存在する。
+\end{theorem}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+\begin{proposition}[局所化と平坦性]
+    \label[proposition]{prop:localization-and-flatness}
+    $R$を可換環とする。
+    \begin{enumerate}
+        \item $S \subset R$を$R$の積閉集合とするとき、
+            $S^{-1}R$は$R$-加群として平坦である。
+        \item \TODO{}
+    \end{enumerate}
+\end{proposition}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+$\Q$は$\Z$の商体だから、
+上で示した局所化の平坦性より$\Q$は$\Z$上平坦であることがわかる。
+一方、この事実は別の方法で示すこともできる。
+
+\begin{proposition}
+    \label[proposition]{prop:Q-is-flat-over-Z}
+    $\Q$は$\Z$上平坦である。
+\end{proposition}
+
+\begin{proof}
+    \TODO{これであってる？}
+    まず、$\Q$の任意の有限生成$\Z$-部分加群は
+    自由$\Z$-加群である。
+    \begin{innerproof}
+        $S$を$\Q$の有限生成$\Z$-部分加群とする。
+        $S = \emptyset$の場合は明らかだから$S \neq \emptyset$とする。
+        $S$は有限生成だから
+        \begin{equation}
+            S = \langle \{ q_1, \dots, q_n \} \rangle,
+            \quad
+            q_1, \dots, q_n \in \Q
+        \end{equation}
+        と表せる。
+        ここで、必要ならば$q_1, \dots, q_n$の
+        添字の小さい方から順に$\Z$上の1次独立性を保つ元のみを選び出して、
+        $q_1, \dots, q_n$は$\Z$上1次独立であるとしてよい。
+        このとき$\Z$-加群準同型
+        \begin{equation}
+            f \colon \Z^n \to S,
+            \quad
+            (m_1, \dots, m_n) \mapsto m_1 q_1 + \cdots + m_n q_n
+        \end{equation}
+        に対し準同型定理を用いて
+        同型$\Z^n \cong S$を得る。
+    \end{innerproof}
+    $M, N$を$\Z$-加群とし、
+    $f \colon M \to N$を単射$\Z$-加群準同型とする。
+    $\id_\Q \otimes f \colon \Q \otimes_\Z M \to \Q \otimes_\Z N$が
+    単射であることを示す。
+    $\xi \in \Q \otimes_\Z M$が
+    $(\id_\Q \otimes f)(\xi) = 0$をみたすとし、$\xi = 0$を示す。
+    $\xi$は
+    \begin{equation}
+        \xi = \sum_{j = 1}^n q_j \otimes v_j
+            \quad
+            (q_j \in \Q, \; v_j \in M)
+    \end{equation}
+    の形に表せる。
+    そこで$\Q$のイデアル、すなわち$\Z$-部分加群$I$を
+    $I \coloneqq \langle \{ q_1, \dots, q_j \} \rangle$
+    とおき、標準射影$I \to \Q$を$j$とおく。
+    このとき
+    \begin{equation}
+        \begin{tikzcd}
+            \Q \otimes_Z M
+                \ar{r}{\id_\Q \otimes f}
+                & \Q \otimes_Z N \\
+            I \otimes_Z M
+                \ar{u}{j \otimes \id_M}
+                \ar{r}[swap]{\id_I \otimes f}
+                & I \otimes_Z N
+                \ar{u}[swap]{j \otimes \id_N}
+        \end{tikzcd}
+    \end{equation}
+    は可換となる\TODO{なぜ？}。
+    冒頭で示したように$I$は自由$\Z$-加群、したがって平坦だから
+    $\id_I \otimes f$は単射である。
+    \TODO{}
+\end{proof}
+
+平坦加群の応用のひとつが、
+線型代数学で学んだ Rank-Nullity Theorem の
+加群バージョンである。
+
+\begin{theorem}[有限ランク自由$\Z$-加群の Rank-Nullity Theorem]
+    $M, N$を有限ランク自由$\Z$-加群、
+    $f \colon M \to N$を$\Z$-加群準同型とする。
+    このとき
+    \begin{equation}
+        \rk M = \rk\Ker f + \rk\Im f
+    \end{equation}
+    が成り立つ。
+\end{theorem}
+
+\begin{proof}
+    \cref{prop:localization-and-flatness}
+    あるいは
+    \cref{prop:Q-is-flat-over-Z}
+    より、$\Q$は$\Z$-加群として平坦である。
+    したがって$\Q \otimes_\Z \Box \colon \lMod{\Z} \to \lMod{\Q}$は完全関手である。
+    いま
+    \begin{equation}
+        \begin{tikzcd}
+            0 \ar{r}
+                & \Ker f \ar{r}
+                & M \ar{r}{f}
+                & \Im f \ar{r}
+                & 0
+                & (\text{exact})
+        \end{tikzcd}
+    \end{equation}
+    は完全系列だから
+    \begin{equation}
+        \begin{tikzcd}
+            0 \ar{r}
+                & \Q \otimes_\Z \Ker f \ar{r}
+                & \Q \otimes_\Z M \ar{r}{\id_\Q \otimes f}
+                & \Q \otimes_\Z \Im f \ar{r}
+                & 0
+        \end{tikzcd}
+    \end{equation}
+    も完全系列となる。
+    よって線型代数学の Rank-Nullity Theorem より
+    \begin{equation}
+        \rk M = \rk(\Q \otimes_\Z \Ker f) + \rk(\Q \otimes_\Z \Im f)
+    \end{equation}
+    が成り立つ。
+    いま\cref{thm:basis-of-tensor-product-of-free-modules}より
+    \begin{alignat}{1}
+        \rk M &= \dim_\Q (\Q \otimes_\Z M) \\
+        \rk\Ker f &= \dim_\Q (\Q \otimes_\Z \Ker f) \\
+        \rk\Im f &= \dim_\Q (\Q \otimes_\Z \Im f)
+    \end{alignat}
+    だから
+    \begin{equation}
+        \rk M = \rk\Ker f + \rk\Im f
+    \end{equation}
+    を得る。
+\end{proof}
+
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\newpage
+\section{演習問題}
+
+\subsection{Problem set 7}
+
+\begin{problem}[代数学II 7.93]
+    $A$を環とし、$x, y \in A$が$xy = 1$をみたすとする。
+    このとき常に$x, y \in A^\times$となるか？
+    正しければ証明を、誤りならば反例を与えよ。
+\end{problem}
+
+\begin{answer}
+    \TODO{}
+    \url{https://math.stackexchange.com/questions/1702297/is-there-a-ring-which-satisfies-xy-1-and-yx-neq-1}
+\end{answer}
+
+\begin{problem}[代数学II 7.95]
+    \label[problem]{problem:algebra2-7-95}
+    $A$を環、$R$を可換環、$(I, \le)$を有向的半順序集合、
+    $(\{ M_i \}_{i \in I}, \{ \varphi_{ij} \}_{i \le j})$を
+    $A$-加群 ($R$-代数) の有向系とする。
+    $x \in M_i, \; y \in M_j$に対しある$k \in I$が存在して
+    \begin{equation}
+        \begin{cases}
+            i, j \le k \\
+            \varphi_{ik}(x) = \varphi_{jk}(y)
+        \end{cases}
+    \end{equation}
+    をみたすとき$x \sim y$と書くことにすれば、
+    これは disjoint union $\bigsqcup_{i \in I} M_i$上の
+    同値関係を定める。このとき
+    \begin{equation}
+        \varinjlim_{i \in I} M_i
+            \coloneqq \bigsqcup_{i \in I} M_i \bigg/ \sim
+    \end{equation}
+    とおくと$A$-加群 ($R$-代数) の構造が自然に入り、
+    $\iota_i \colon M_i \to \varinjlim_{i \in I} M_i$を
+    包含写像$M_i \hookrightarrow \bigsqcup_{i \in I} M_i$から
+    誘導された写像とすると
+    $A$-加群 ($R$-代数) の準同型になり、
+    組$(\varinjlim_{i \in I} M_i, \{ \iota_i \}_{i \in I})$は
+    $(\{ M_i \}_{i \in I}, \{ \varphi_{ij} \}_{i \le j})$の
+    帰納極限になることを示せ。
+\end{problem}
+
+\begin{answer}
+    $I$は少なくともひとつの元をもつとしてよい。
+    \begin{innerproof}
+        もし$I = \emptyset$なら
+        $\varinjlim_{i \in I} M_i = \emptyset$となってしまい
+        $A$-加群の構造が入らない。
+    \end{innerproof}
+    $\varinjlim_{i \in I} M_i$に$A$-加群の構造が入ることを確かめる。
+    $\bigsqcup_{i \in I} M_i$の元を$(i, x)$の形に書くことにすれば、
+    $\varinjlim_{i \in I} M_i$の元は$[(i, x)]$の形に書ける。
+    まず各$[(i, x)], [(j, y)] \in \varinjlim_{i \in I} M_i$に対し
+    和を次のように定義する:
+    \begin{equation}
+        [(i, x)] + [(j, y)]
+            \coloneqq [(k, \varphi_{ik}(x) + \varphi_{jk}(y))]
+    \end{equation}
+    ただし$k \in I$は、
+    $k \ge i, j$なる$k$をひとつ選ぶとする
+    (このような$k$は$I$が有向系であることにより確かに存在する)。
+    この和は well-defined に定まり、
+    可換性および結合律をみたす。
+    \begin{innerproof}
+        可換性および結合律は
+        各$M_i$の加法の可換性および結合律より明らかだから、
+        well-defined 性のみ示す。
+        \begin{equation}
+            \label[equation]{eq:problem-7-95-1}
+            \begin{cases}
+                (i, x) \sim (i', x') \\
+                (j, y) \sim (j', y')
+            \end{cases}
+        \end{equation}
+        とする。
+        $k \ge i, j$なる$k \in I$と
+        $k' \ge i', j'$なる$k' \in I$をひとつずつ選び、
+        \begin{equation}
+            (k, \varphi_{ik}(x) + \varphi_{jk}(y))
+                \sim (k', \varphi_{i'k'}(x') + \varphi_{j'k'}(y'))
+        \end{equation}
+        が成り立つことを示せばよい。
+        まず (\cref{eq:problem-7-95-1}) より
+        ある$s, t \in I$が存在して
+        \begin{equation}
+            \begin{cases}
+                i, i' \le s \\
+                \varphi_{is}(x) = \varphi_{i's}(x') \\
+            \end{cases}
+            \quad \text{かつ} \quad
+            \begin{cases}
+                j, j' \le t \\
+                \varphi_{jt}(y) = \varphi_{j't}(y')
+            \end{cases}
+        \end{equation}
+        が成り立つ。
+        さらに$I$が有向系であることを用いて
+        次の図の下から順に$k, k', m \in I$を選んでいく:
+        \begin{equation}
+            \begin{tikzcd}[column sep=small]
+                &&& m \\
+                & \cdot \ar{rru} &&&& \cdot \ar{llu} \\
+                s \ar{ru}
+                    && k \ar{lu}
+                    && k' \ar{ru}
+                    && t \ar{lu} \\
+                i \ar{u} \ar{rru}
+                    && i' \ar{llu} \ar{rru}
+                    && j \ar{llu} \ar{rru}
+                    && j' \ar{llu} \ar{u}
+            \end{tikzcd}
+        \end{equation}
+        すると
+        \begin{alignat}{1}
+            \varphi_{km} (\varphi_{ik}(x) + \varphi_{jk}(y))
+                &= \varphi_{km} (\varphi_{ik} (x)) + \varphi_{km} (\varphi_{jk} (y))
+                    \quad (\text{準同型}) \\
+                &= \varphi_{im} (x) + \varphi_{jm} (y)
+                    \quad (\text{有向系の定義}) \\
+                &= \varphi_{sm} (\varphi_{is} (x)) + \varphi_{tm} (\varphi_{jt} (y))
+                    \quad (\text{有向系の定義}) \\
+                &= \varphi_{sm} (\varphi_{i's} (x')) + \varphi_{tm} (\varphi_{j't} (y'))
+                    \quad (\text{$s, t$のとり方}) \\
+                &= \varphi_{i'm} (x') + \varphi_{j'm} (y')
+                    \quad (\text{有向系の定義}) \\
+                &= \varphi_{k'm} (\varphi_{i'k'} (x')) + \varphi_{k'm} (\varphi_{j'k'} (y'))
+                    \quad (\text{有向系の定義}) \\
+                &= \varphi_{km} (\varphi_{ik}(x') + \varphi_{jk}(y'))
+                    \quad (\text{準同型})
+        \end{alignat}
+        が成り立つ。よって
+        \begin{equation}
+            (k, \varphi_{ik}(x) + \varphi_{jk}(y))
+                \sim (k', \varphi_{i'k'}(x') + \varphi_{j'k'}(y'))
+        \end{equation}
+        が示せた。
+    \end{innerproof}
+    いま$I$は元をもつとしていたからある$i_0 \in I$がとれる。
+    このとき$[(i_0, 0)]$はすべての$[(i, x)] \in \varinjlim M_i$に対し
+    \begin{equation}
+        [(i_0, 0)] + [(i, x)] = [(i, x)]
+    \end{equation}
+    をみたす。
+    \begin{innerproof}
+        $k \ge i_0, i$なる$k \in I$をひとつ選ぶ。
+        \begin{alignat}{1}
+            [(i_0, 0)] + [(i, x)]
+                &= [(k, \varphi_{i_0k}(0) + \varphi_{ik}(x))]
+                    \quad (\text{和の定義}) \\
+                &= [(k, \varphi_{ik}(x))]
+                    \quad (\text{準同型}) \\
+                &= [(i, x)]
+        \end{alignat}
+        となる。
+        ただし最後の等号が成り立つのは、いま$i, k \le k$であり、また
+        $\varphi_{kk} = \id_{M_k}$より
+        \begin{equation}
+            \varphi_{ik}(x) = \varphi_{kk} (\varphi_{ik}(x))
+        \end{equation}
+        したがって$(i, x) \sim (k, \varphi_{ik}(x)) $だからである。
+    \end{innerproof}
+    加法逆元は
+    \begin{equation}
+        - [(i, x)] \coloneqq [(i, -x)]
+    \end{equation}
+    により定まる。
+    したがって$\varinjlim M_i$はアーベル群となる。
+    つぎに各$[(i, x)] \in \varinjlim_{i \in I} M_i, \; a \in A$に対し
+    スカラー倍を次のように定義する:
+    \begin{equation}
+        a [(i, x)] \coloneqq [(i, ax)]
+    \end{equation}
+    このスカラー倍は well-defined に定まり、
+    $1 \in A$は自明に作用し、結合律および分配律が成り立つ。
+    \begin{innerproof}
+        $1 \in A$が自明に作用することと結合律および分配律が成り立つことは
+        各$M_i$のスカラー乗法に対するそれらの性質より明らかだから、
+        well-defined 性のみ示す。
+        $(i, x) \sim (i', x')$とすると
+        ある$s \in I$が存在して
+        \begin{equation}
+            \begin{cases}
+                i, i' \le s \\
+                \varphi_{is}(x) = \varphi_{i's}(x')
+            \end{cases}
+        \end{equation}
+        が成り立つ。$\varphi_{is}, \varphi_{i's}$が
+        $A$-加群準同型であることより
+        \begin{equation}
+            \varphi_{is}(ax) = \varphi_{i's}(ax')
+        \end{equation}
+        が成り立つ。したがって
+        $(i, ax) \sim (i', ax')$である。
+    \end{innerproof}
+    したがって$\varinjlim M_i$は$A$-加群となる。
+    つぎに各$\iota_i \colon M_i \to \varinjlim M_i$が
+    $A$-代数準同型となることを示す。
+    $\iota_i$の定義より
+    \begin{equation}
+        \iota_i(x) = [(i, x)]
+        \quad (x \in M_i)
+    \end{equation}
+    であることに注意すれば、
+    $\varinjlim M_i$への加法とスカラー乗法の定め方から
+    明らかに$\iota_i$は$A$-代数準同型である。
+    最後に$(\varinjlim M_i, \{ \iota_i \}_{i \in I})$が
+    $(\{ M_i \}_{i \in I}, \{ \varphi_{ij} \}_{i \le j})$の
+    帰納極限となることを示す。
+    そこで$A$-加群と$A$-加群準同型の族の組
+    $(N, \{ \xi_i \colon M_i \to N \}_{i \in I})$であって
+    $\xi_i = \xi_j \circ \varphi_{ij}$をみたすものが与えられたとする。
+    図式
+    \begin{equation}
+        \begin{tikzcd}
+            & \varinjlim M_k \ar[dashed]{dd}{\eta} \\
+            M_i \ar{ru}{\iota_{i}} \ar{rd}[swap]{\xi_i} \\
+            & N
+        \end{tikzcd}
+    \end{equation}
+    を可換にする$A$-加群準同型$\eta \colon \varinjlim M_k \to N$を構成する。
+    そこで写像$\eta \colon \varinjlim M_k \to N$を
+    \begin{equation}
+        \eta([(i, x)]) \coloneqq \xi_i(x)
+    \end{equation}
+    と定める。
+    \TODO{}
+\end{answer}
+
+\begin{problem}[代数学7.96]
+    $\R$における$0$の開近傍全体のなす集合を$\calN$とおく。
+    $U, V \in \calN$に対し
+    $U \le V \logeq U \supset V$と定めると、
+    これは$\calN$上の有向的半順序を与える。
+    各$U, V \in \calN, \; U \le V$に対し
+    $r_{UV} \colon \smooth(U) \to \smooth(V)$を制限写像とすると
+    $(\{ \smooth(U) \}_{U \in \calN}, \{ r_{UV} \}_{U \le V})$
+    は$\C$-代数の有向系となる。
+    ここで
+    \begin{equation}
+        C_0^\infty \coloneqq \varinjlim_{U \in \calN} \smooth(U)
+    \end{equation}
+    とおく。$C_0^\infty$は局所環となることを示し、
+    極大イデアルと異なる素イデアルを持つことを示せ。
+\end{problem}
+
+\begin{answer}
+    帰納極限の構成から明らかに$C_0^\infty$は可換$\C$-代数である。
+    $C_0^\infty$の元は
+    $0$の十分近くで一致する関数を同一視した類になっている。
+    \begin{equation}
+        I \coloneqq \{
+            [(U, f)] \in C_0^\infty
+            \mid
+            f(0) = 0
+        \}
+    \end{equation}
+    とおくと、$I$は$C_0^\infty$の極大イデアルである。
+    \begin{innerproof}
+        \TODO{}
+    \end{innerproof}
+    $f(0) \neq 0$なる元$[(U, f)]$を含むイデアルは
+    $C_0^\infty$に一致するから、
+    $C_0^\infty$の任意の極大イデアル$I'$はそのような元は含まない。
+    よって$I$の定義から$I' \subset I$であり、
+    $I'$が極大イデアルであることから$I' = I$である。
+    したがって$C_0^\infty$の極大イデアルは$I$のみである。
+    よって$C_0^\infty$は局所環である。
+    つぎに
+    \begin{equation}
+        J \coloneqq \{ [(\R, 0)] \}
+    \end{equation}
+    とおけば$J$は$C_0^\infty$の零イデアルであるが、
+    これは素イデアルでもある。
+    \begin{innerproof}
+        \TODO{}
+        (\cref{problem:algebra2-1.9})
+    \end{innerproof}
+    $I$はたとえば$[(\R, x^2)]$を含むから零イデアルではないことに注意すれば、
+    $J$が求める素イデアル、すなわち$I$と異なる素イデアルである。
+\end{answer}
+
+\subsection{Problem set 8}
+
+\begin{problem}[代数学II 8.108]
+    $A, B$を環、
+    $T \colon \lMod{A} \to \lMod{B}$を加法的共変関手とする。
+    $A$-加群の任意の完全系列
+    \begin{equation}
+        \begin{tikzcd}
+            0 \ar{r}
+                & M_1 \ar{r}{\alpha}
+                & M_2 \ar{r}{\beta}
+                & M_3 \ar{r}
+                & 0
+                & (\text{exact})
+        \end{tikzcd}
+    \end{equation}
+    に対し、
+    \begin{equation}
+        \begin{tikzcd}
+            T(M_1) \ar{r}{T(\alpha)}
+                & T(M_2) \ar{r}{T(\beta)}
+                & T(M_3) \ar{r}
+                & 0
+                & (\text{exact})
+        \end{tikzcd}
+    \end{equation}
+    は完全となるとする。
+    このとき$T$は右完全関手であることを示せ。
+\end{problem}
+
+\begin{proof}
+    \TODO{加法的であることはいつ使う？}
+    $A$-加群の完全系列
+    \begin{equation}
+        \begin{tikzcd}
+            M_1 \ar{r}{\alpha}
+                & M_2 \ar{r}{\beta}
+                & M_3 \ar{r}
+                & 0
+                & (\text{exact})
+        \end{tikzcd}
+    \end{equation}
+    が任意に与えられたとし、
+    \begin{equation}
+        \begin{tikzcd}
+            T(M_1) \ar{r}{T(\alpha)}
+                & T(M_2) \ar{r}{T(\beta)}
+                & T(M_3) \ar{r}
+                & 0
+        \end{tikzcd}
+    \end{equation}
+    が完全系列であることを示す。
+    準同型定理より図式
+    \begin{equation}
+        \begin{tikzcd}
+            M_1 \ar{d}[swap]{\pi} \ar{r}{\alpha}
+                & M_2 \\
+            M_1 / \Ker\alpha \ar[dashed]{ru}[swap]{\wb{\alpha}}
+        \end{tikzcd}
+        \label[equation]{eq:algebra2-8.108-1}
+    \end{equation}
+    を可換にする単射な$A$-加群準同型$\wb{\alpha}$が誘導される。
+    このとき$\Im\alpha = \Im\wb{\alpha}$も成り立つから
+    \begin{equation}
+        \begin{tikzcd}
+            0 \ar{r}
+                & M_1 / \Ker\alpha \ar{r}{\wb{\alpha}}
+                & M_2 \ar{r}{\beta}
+                & M_3 \ar{r}
+                & 0
+                & (\text{exact})
+        \end{tikzcd}
+    \end{equation}
+    は完全系列である。
+    そこで問題の仮定より
+    \begin{equation}
+        \begin{tikzcd}
+            T(M_1 / \Ker\alpha) \ar{r}{T(\wb{\alpha})}
+                & T(M_2) \ar{r}{T(\beta)}
+                & T(M_3) \ar{r}
+                & 0
+                & (\text{exact})
+        \end{tikzcd}
+        \label[equation]{eq:algebra2-8.108-2}
+    \end{equation}
+    は完全系列である。
+    $T$は共変だから、
+    \cref{eq:algebra2-8.108-1}より図式
+    \begin{equation}
+        \begin{tikzcd}
+            T(M_1) \ar{d}[swap]{T(\pi)} \ar{r}{T(\alpha)}
+                & T(M_2) \\
+            T(M_1 / \Ker\alpha) \ar{ru}[swap]{T(\wb{\alpha})}
+        \end{tikzcd}
+    \end{equation}
+    は可換である。
+    いま\cref{eq:algebra2-8.108-2}が完全系列であることより
+    $\Im T(\wb{\alpha}) = \Ker T(\beta)$だから、
+    あとは$\Im T(\alpha) = \Im T(\wb{\alpha})$を示せばよい。
+    そのためには$T(\pi)$の全射性をいえばよいが、
+    \begin{equation}
+        \begin{tikzcd}
+            0 \ar{r}
+                & \Ker\alpha \ar{r}
+                & M_1 \ar{r}{\pi}
+                & M_1 / \Ker\alpha \ar{r} 
+                & 0
+                & (\text{exact})
+        \end{tikzcd}
+    \end{equation}
+    が完全系列であることと問題の仮定より
+    \begin{equation}
+        \begin{tikzcd}
+            T(\Ker\alpha) \ar{r}
+                & T(M_1) \ar{r}{T(\pi)}
+                & T(M_1 / \Ker\alpha) \ar{r} 
+                & 0
+                & (\text{exact})
+        \end{tikzcd}
+    \end{equation}
+    は完全系列だから、とくに$T(\pi)$は全射である。
+    したがって$\Im T(\alpha) = \Im T(\wb{\alpha}) = \Ker T(\beta)$である。
+    よって
+    \begin{equation}
+        \begin{tikzcd}
+            T(M_1) \ar{r}{T(\alpha)}
+                & T(M_2) \ar{r}{T(\beta)}
+                & T(M_3) \ar{r}
+                & 0
+        \end{tikzcd}
+    \end{equation}
+    は完全系列である。
+\end{proof}
+
+\subsection{Problem set 9}
+
+\begin{problem}[代数学II 9.114]
+    \label[problem]{problem:algebra2-9.114}
+    $R$を可換環、$M$を$R$-加群とする。
+    このとき$M$が入射的ならば可除になることを示せ。
+\end{problem}
+
+\begin{proof}
+    $a \in M, \; a \neq 0$を零因子でないものとする。
+    $R$-加群準同型$a \times \colon M \to M, \; x \mapsto ax$は単射となるから、
+    いま$M$が入射的であることから図式
+    \begin{equation}
+        \begin{tikzcd}
+            M \ar[tail]{r}{a \times} \ar{d}[swap]{\id}
+                & M \ar[dashed]{ld}{f} \\
+            M
+        \end{tikzcd}
+    \end{equation}
+    を可換にする$R$-加群準同型$f$が存在する。
+    各$y \in M$に対し$y = f(ay) = af(y)$が成り立つから
+    $a \times$は全射である。
+    したがって$M$は可除である。
+\end{proof}
+
+\begin{problem}[代数学II 9.117]
+    $A$を環とする。
+    左$A$-加群$M$が
+    \term{平坦}[flat]{平坦}[へいたん]であるとは
+    共変関手$\Box \otimes_A M \colon \rMod{A} \to \lMod{\Z}$が
+    完全関手になることとする。
+    このとき、左$A$-加群$M$が平坦であることの必要十分条件は
+    $M$を右$A^\OP$-加群とみなしたときに
+    $M$が平坦であることであることを示せ。
+\end{problem}
+
+\begin{proof}
+    $X$を右$A$-加群とし、$a.x \coloneqq xa$により左$A^\OP$-加群ともみなす。
+    このとき写像
+    $M \times X \to X \otimes_A M, \; (m, x) \mapsto x \otimes m$は
+    左$\Z$-線型$A^\OP$-平衡$\Z$-双線型写像であるから、
+    $\Z$-線型写像$M \otimes_{A^\OP} X \to X \otimes_A M$が誘導される。
+    この逆写像は
+    $X \times M \to M \otimes_{A^\OP} X, \; (x, m) \mapsto m \otimes x$
+    により誘導される。
+    したがって$X \otimes_A M \cong M \otimes_{A^\OP} X$であるから、
+    $\rMod{A}$の完全列
+    \begin{equation}
+        \begin{tikzcd}
+            0
+                \ar{r}
+                & X
+                    \ar{r}
+                & Y
+        \end{tikzcd}
+    \end{equation}
+    (これは$\lMod{A^\OP}$の完全列でもある) に対し
+    \begin{equation}
+        \begin{tikzcd}
+            0
+                \ar{r}
+                & M \otimes_{A^\OP} X
+                    \ar{r}
+                & M \otimes_{A^\OP} Y
+        \end{tikzcd}
+    \end{equation}
+    が$\lMod{\Z}$の完全列であることと
+    \begin{equation}
+        \begin{tikzcd}
+            0
+                \ar{r}
+                & X \otimes_A M
+                    \ar{r}
+                & Y \otimes_A M
+        \end{tikzcd}
+    \end{equation}
+    が$\lMod{\Z}$の完全列であることは同値である。
+    よって問題の主張が示せた。
+\end{proof}
+
+\begin{problem}[代数学II 9.119]
+    \label[problem]{problem:algebra2-9.119}
+    $0$でない自由加群は忠実平坦であることを示せ。
+    また$0$でない射影加群はどうか？
+\end{problem}
+
+\begin{proof}
+    $A$を環とし、
+    $M$を$0$でない自由右$A$-加群とする。
+    このときとくに$A$は零環でない。
+    $M$が忠実平坦であることを示す ($M$が左$A$-加群の場合も同様である)。
+    $M$は自由ゆえに平坦だから、
+    $M$が忠実平坦であることをいうには、
+    $f \colon X \to Y$を任意の$A$-加群準同型として、
+    $\Z$-加群準同型
+    $\id_M \otimes f \colon M \otimes_A X \to M \otimes_A Y$
+    が単射であるとき
+    $f$が単射であることを示せばよい。
+    いま$M$は自由右$A$-加群だから、$M$の基底をひとつ固定すれば
+    右$A$-加群の同型
+    $\mu \colon M \overset{\sim}{\to} \bigoplus_{i \in I} A_A$が存在する。
+    このとき図式
+    \begin{equation}
+        \begin{tikzcd}[column sep=huge]
+            M \otimes_A X
+                \ar{r}{\id_M \otimes f}
+                \ar{d}[swap]{\mu}
+                & M \otimes_A Y
+                    \ar{d}{\mu} \\
+            \left(
+                \bigoplus_{i \in I} A
+            \right) \otimes_A X
+                \ar{r}[swap]{\id_{\bigoplus A} \otimes f}
+                & \left(
+                    \bigoplus_{i \in I} A
+                \right) \otimes_A Y
+        \end{tikzcd}
+    \end{equation}
+    は可換だから、
+    $\id_M \otimes f$の単射性より
+    $\id_{\bigoplus A} \otimes f$の単射性が従う。
+    ここで任意の$A$-加群$Z$に対し
+    \begin{equation}
+        \begin{tikzcd}
+            \left(
+                \bigoplus_{i \in I} A
+            \right) \otimes_A Z
+                \ar{r}{\sim}
+                & \bigoplus_{i \in I}
+                    (A \otimes_A Z)
+                    \ar{r}{\sim}
+                & \bigoplus_{i \in I} Z \\
+            (a_i)_{i \in I} \oplus z
+                \ar[mapsto]{r}
+                & (a_i \otimes z)_{i \in I}
+                    \ar[mapsto]{r}
+                & (a_i z)_{i \in I}
+        \end{tikzcd}
+    \end{equation}
+    は$A$-加群の同型である
+    (\cref{thm:distribution-law-of-tensor-product},
+    \cref{lemma:module-tensor-isomorphism})。
+    よって
+    \begin{equation}
+        \begin{tikzcd}[row sep=large]
+            \left(
+                \bigoplus_{i \in I} A
+            \right) \otimes_A X
+                \ar{r}{\sim}
+                \ar{d}[swap]{\id_{\bigoplus A} \otimes f}
+                & \bigoplus_{i \in I}
+                    (A \otimes_A X)
+                    \ar{r}{\sim}
+                & \bigoplus_{i \in I} X
+                    \ar[dashed]{d}{g} \\
+            \left(
+                \bigoplus_{i \in I} A
+            \right) \otimes_A Y
+                \ar{r}{\sim}
+                & \bigoplus_{i \in I}
+                    (A \otimes_A Y)
+                    \ar{r}{\sim}
+                & \bigoplus_{i \in I} Y
+        \end{tikzcd}
+    \end{equation}
+    の右端に誘導される$A$-加群準同型
+    $g((a_i x)_{i \in I}) = (a_i f(x))_{i \in I}$
+    は単射である。
+    $f$が単射であることを示す。
+    いま$\bigoplus_{i \in I} A \cong M \neq 0$だから
+    ある$i_0 \in I$が存在する。
+    $x \in X$とし、$f(x) = 0_Y$と仮定すると
+    $g((\delta_{i_0 i} x)_{i \in I})
+        = (\delta_{i_0 i} f(x))_{i \in I}
+        = 0_{\bigoplus Y}$
+    である。ただし$\delta_{i_0 i}$は
+    \begin{equation}
+        \delta_{i_0 i} \coloneqq \begin{cases}
+            1_A & (i = i_0) \\
+            0_A & (i \neq i_0)
+        \end{cases}
+    \end{equation}
+    と定義した。
+    $g$の単射性より$(\delta_{i_0 i} x)_{i \in I} = 0_{\bigoplus X}$だから
+    $x = \delta_{i_0 i_0} x = 0_X$である。
+    よって$f$は単射である。
+    したがって$M$は忠実平坦である。
+
+    一方、$0$でない射影加群が忠実平坦とは限らない例を挙げる。
+    $R \coloneqq \Z / 6\Z$とし、
+    $R$の元を$n \in \Z$に対し$\wb{n}$と書くことにする。
+    $R$のイデアル$M, N$を
+    \begin{equation}
+        M \coloneqq (\wb{3}) = \{ \wb{0}, \wb{3} \},
+        \qquad
+        N \coloneqq (\wb{2}) = \{ \wb{0}, \wb{2}, \wb{4} \}
+    \end{equation}
+    で定める。
+    $R$を$R$-加群、$M, N$を$R$の$R$-部分加群とみなすと
+    $R = M + N, \; M \cap N = 0$より
+    $R = M \oplus N$が成り立つ。
+    $R$は自由$R$-加群だから、とくに$M$は ($0$でない) 射影$R$-加群である。
+    そこで$M$が忠実平坦でないことを示せばよい。
+    標準射影$R \to M$を$p$とおく。
+    直和分解$R = M \oplus N$に沿って
+    $\wb{0} = \wb{0} + \wb{0}, \;
+        \wb{2} = \wb{0} + \wb{2}$
+    と表せるから$p(\wb{0}) = \wb{0} = p(\wb{2})$であり、
+    したがって$p$は単射でない。
+    一方$\id_M \otimes p \colon M \otimes_R R \to M \otimes_R M$は単射であることを示す。
+    $R$-加群準同型$f \colon M \to M \otimes_R M, \;
+        m \mapsto m \otimes \wb{3}$
+    を考える。
+    $R$-加群の同型
+    $\mu \colon M \overset{\sim}{\to} M \otimes_R R, \;
+        m \mapsto m \otimes \wb{1}$
+    は図式
+    \begin{equation}
+        \begin{tikzcd}[column sep=large]
+            M
+                \ar{rd}{f}
+                \ar{d}{\sim}[swap]{\mu} \\
+            M \otimes_R R
+                \ar{r}[swap]{\id_M \otimes p}
+                & M \otimes_R M
+        \end{tikzcd}
+    \end{equation}
+    を可換にするから、$\id_M \otimes p$が単射であることをいうには
+    $f$が単射であることをいえばよい。
+    ここで$f$の右逆写像は、
+    環$R$における積を$R$のイデアル$M$に制限した演算から誘導される
+    $g \colon M \otimes_R M \to M, \;
+        m \otimes m' \mapsto mm'$
+    により与えられる。
+    実際、各$m \in M$に対し
+    $m \overset{f}{\mapsto} m \otimes \wb{3}
+        \overset{g}{\mapsto} m \wb{3}$
+    だから
+    $m = \wb{0}$なら$m \wb{3} = \wb{0}$、
+    $m = \wb{3}$なら$m \wb{3} = \wb{9} = \wb{3}$
+    となり、$g$はたしかに$f$の右逆写像である。
+    したがって$f$、ひいては$\id_M \otimes p$の単射性がいえた。
+    よって$M$は$R$-加群として忠実平坦でない。
+\end{proof}
+
+\begin{problem}[代数学II 9.121]
+    $R$を可換環、$M, N$を平坦$R$-加群とする。
+    このとき$M \otimes_R N$は平坦であることを示せ。
+\end{problem}
+
+\begin{answer}
+    $\lMod{R}$の完全列
+    \begin{equation}
+        \begin{tikzcd}
+            0
+                \ar{r}
+                & X
+                    \ar{r}
+                & Y
+        \end{tikzcd}
+    \end{equation}
+    に対し、$N$の平坦性より
+    \begin{equation}
+        \begin{tikzcd}
+            0
+                \ar{r}
+                & N \otimes_R X
+                    \ar{r}
+                & N \otimes_R Y
+        \end{tikzcd}
+    \end{equation}
+    は$\lMod{R}$の完全列だから、
+    $M$の平坦性より
+    \begin{equation}
+        \begin{tikzcd}
+            0
+                \ar{r}
+                & M \otimes_R N \otimes_R X
+                    \ar{r}
+                & M \otimes_R N \otimes_R Y
+        \end{tikzcd}
+    \end{equation}
+    は$\lMod{R}$の完全列である。
+    したがって$M \otimes_R N$は平坦である。
+\end{answer}
+
+
+\end{document}

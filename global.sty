@@ -1,0 +1,636 @@
+% ============================================================
+% variables
+% ============================================================
+% subfile
+% true iff サブファイル
+\newif\ifsubfile
+
+
+
+% ============================================================
+% packages
+% ============================================================
+% silence
+% 警告メッセージを抑制する
+\usepackage{silence}
+    \WarningFilter{latexfont}{Some font shapes}
+    \WarningFilter{latexfont}{Font shape}
+    \WarningFilter{fancyhdr}{\headheight is too small}
+
+% etoolbox
+% イベントフックなど
+\usepackage{etoolbox}
+
+% geometry
+% 余白の設定などに使う
+\usepackage{geometry}
+    \geometry{top=25truemm,left=15truemm,right=15truemm,bottom=20truemm}
+
+% babel
+% 多言語対応
+\usepackage[russian,japanese]{babel}
+    % ギリシャ文字とキリル文字の範囲を欧文フォントにする (luatex-ja のコマンド)
+    \ltjsetparameter{jacharrange={-2}}
+    % ロシア語の表示に欧文フォントを使う
+    \babelfont[russian]{rm}{Times New Roman}
+
+% graphicx
+% 画像を挿入したりするときに使う
+\usepackage{graphicx}
+
+% float
+% 図表の表示位置に [H] を指定してその場に出せる
+\usepackage{float}
+
+% xcolor
+% 色の操作を拡張する
+\usepackage[dvipsnames]{xcolor}
+
+% url
+% URL を表示するときに使う
+\usepackage[hyphens]{url}
+
+% amsmac
+% screen 環境などが使える
+\usepackage{ascmac}
+
+% amsmath
+\usepackage{amsmath}
+    \makeatletter
+    \def\env@cases{%
+    \let\@ifnextchar\new@ifnextchar
+    \left\lbrace
+    \def\arraystretch{1.2}%
+    \array{l@{\quad}l@{}}
+    }
+    \makeatother
+
+    % change the equations number sectionwise
+    \numberwithin{equation}{section}
+
+% amsthm
+\usepackage{amsthm}
+    \theoremstyle{definition}
+    \newtheorem{theorem}{定理}[section]
+    \newtheorem{proposition}[theorem]{命題}
+    \newtheorem*{proposition*}{命題}
+    \newtheorem{propdef}[theorem]{命題-定義}
+    \newtheorem{lemma}[theorem]{補題}
+    \newtheorem*{lemma*}{補題}
+    \newtheorem{fact}[theorem]{事実}
+    \newtheorem*{fact*}{事実}
+    \newtheorem{corollary}[theorem]{系}
+    \theoremstyle{definition}
+    \newtheorem{definition}[theorem]{定義}
+    \newtheorem{remark}[theorem]{注意}
+    \newtheorem{example}[theorem]{例}
+    \newtheorem*{example*}{例}
+    \newtheorem{problem}{\raisebox{-0.2em}{\LARGE $\varspadesuit\,$} 演習問題}[chapter]
+    \renewcommand{\proofname}{証明.}
+
+    % proof 環境に内部的に番号を与える
+    \newcounter{myproof}
+    \AtBeginEnvironment{proof}{\stepcounter{myproof}}
+
+% newpxtext
+% New PX フォント
+% amsthm より後で読み込む必要がある
+\usepackage{newpxtext,newpxmath}
+
+% tcolorbox
+% 定理などの環境のスタイルを変更する
+\usepackage{tcolorbox}
+    \tcbuselibrary{breakable, theorems, skins}
+    \tcbset{mytcb/.style=
+        {
+            enhanced,
+            top=0pt,
+            bottom=0pt,
+            left=0pt,
+            right=0pt,
+            boxrule=0pt,
+            frame hidden,
+            no shadow,
+            no borderline,
+            colback=white,
+            boxsep=1em,
+            breakable,
+            arc=0pt
+        },
+        fontupper={\setlength{\parindent}{15pt}}
+    }
+    \tcbset{mythm/.style=
+        {
+            borderline={1pt}{1em}{black},
+            colback=black!2!,
+            breakable
+        }
+    }
+    \tcolorboxenvironment{theorem}{
+        mytcb,
+        mythm
+    }
+    \tcolorboxenvironment{proposition}{
+        mytcb,
+        mythm
+    }
+    \tcolorboxenvironment{lemma}{
+        mytcb,
+        mythm
+    }
+    \tcolorboxenvironment{fact}{
+        mytcb,
+        mythm
+    }
+    \tcolorboxenvironment{corollary}{
+        mytcb,
+        mythm
+    }
+    \tcolorboxenvironment{definition}{
+        mytcb,
+        borderline west={1pt}{1em}{BrickRed},
+        colback=BrickRed!3!
+    }
+    \tcolorboxenvironment{propdef}{
+        mytcb,
+        borderline west={1pt}{1em}{BrickRed},
+        colback=BrickRed!3!
+    }
+    \tcolorboxenvironment{remark}{
+        mytcb,
+        borderline west={1pt}{1em}{Dandelion},
+        colback=Dandelion!3!
+    }
+    \tcolorboxenvironment{example}{
+        mytcb,
+        borderline west={1pt}{1em}{Green},
+        colback=Green!3!
+    }
+    \tcolorboxenvironment{problem}{
+        mytcb,
+        borderline west={1pt}{1em}{Gray},
+        colback=Gray!3!
+    }
+    \tcolorboxenvironment{proof}{
+        mytcb,
+        left=0.5em,
+        borderline west={1pt}{0pt}{black, dotted},
+        opacityback=0,
+    }
+
+% collect
+% 演習問題を文書の末尾にまとめるために使う
+\usepackage{collect}
+    \definecollection{answers}
+    \NewDocumentCommand{\mycollect}{m}{%
+        % start a collect env without scoping
+        \collect{answers}
+            {\begin{proof}[#1]}
+            {\end{proof}}
+            {}{}%
+    }
+
+    % answer
+    % subfile が false ならばその場に proof 環境で出す
+    % subfile が true ならばその場には出さず collect する
+    \NewDocumentEnvironment{answer}{o}
+        {%
+            \def\answertitle{%
+                \IfValueTF{#1}%
+                    {演習問題 \theproblem の解答 (#1).}%
+                    {演習問題 \theproblem の解答.}%
+            }%
+            \ifsubfile%
+                \begingroup\edef\x{%
+                    \endgroup%
+                    \noexpand\begin{proof}[\answertitle]%
+                }%
+            \else%
+                \begingroup\edef\x{%
+                    \endgroup%
+                    \noexpand\mycollect{\answertitle}%
+                }%
+            \fi%
+            \x%
+        }
+        {%
+            % end the collect env
+            \ifsubfile%
+                \end{proof}%
+            \else%
+                \endcollect%
+            \fi%
+        }
+
+% hyperref
+% ハイパーリンクに関する設定に使う
+\usepackage{hyperref}
+    \hypersetup{
+        colorlinks,
+        linkcolor={red!50!black},
+        citecolor={blue!50!black},
+        urlcolor={blue!80!black}
+    }
+
+% cleveref
+\usepackage{cleveref}
+    % \cref の出力を日本語にする
+    \crefformat{chapter}{第#2#1#3章}
+    \crefformat{section}{#2#1#3節}
+    \crefformat{subsection}{#2#1#3節}
+    \crefname{theorem}{定理}{定理}
+    \crefname{lemma}{補題}{補題}
+    \crefname{fact}{事実}{事実}
+    \crefname{proposition}{命題}{命題}
+    \crefname{propdef}{命題-定義}{命題-定義}
+    \crefname{corollary}{系}{系}
+    \crefname{example}{例}{例}
+    \crefname{definition}{定義}{定義}
+    \crefname{figure}{図}{図}
+    \crefname{equation}{}{}
+    \crefname{problem}{問題}{問題}
+    \newcommand{\crefrangeconjunction}{--}
+    \newcommand{\crefpairconjunction}{, }
+    \newcommand{\crefmiddleconjunction}{, }
+    \newcommand{\creflastconjunction}{, }
+
+% fancyhdr
+% ヘッダの内容を変更する
+\usepackage{extramarks}
+\usepackage{fancyhdr}
+    \pagestyle{fancy}
+    \renewcommand{\chaptermark}[1]{\markboth{\arabic{chapter} . #1}{}}
+    \fancyhead[L]{\leftmark}
+    \fancyhead[R]{\lastrightmark}
+
+% bm
+% 記号を太文字で出すときに使う
+\usepackage{bm}
+
+% makeidx
+% 索引を作るために使う
+\usepackage{makeidx}
+
+% ulem
+% 下線などが使える
+\usepackage{ulem}
+
+% tikz
+\usepackage{tikz}
+\usepackage{tikz-cd}
+
+% mathtools
+\usepackage{mathtools}
+
+% array
+% 表の設定に使う
+\usepackage{array}
+
+% glossaries
+% 記号一覧を作るために使う
+\usepackage[sort=use]{glossaries}
+    \NewDocumentCommand{\idxsym}{mmm}{%
+        \newglossaryentry{#1}{name={#2},description={#3}}%
+        \glsadd{#1}%
+    }
+
+% footnotehyper
+% 脚注を tcolorbox の中に入れたりできるようにする
+\usepackage{footnotehyper}
+    \BeforeBeginEnvironment{tcolorbox}{\savenotes}
+    \AfterEndEnvironment{tcolorbox}{\spewnotes}
+    \newcounter{myfootnote}
+    \setcounter{myfootnote}{1}
+    \renewcommand*{\thempfootnote}{ \arabic{myfootnote})}
+    \NewCommandCopy{\oldfootnote}{\footnote}
+    \RenewDocumentCommand{\footnote}{m}{\oldfootnote{#1}\stepcounter{myfootnote}}
+
+% titlesec
+% 見出しのスタイルを変更する
+\usepackage{titlesec}
+    % part
+    \titleclass{\part}{top}
+    \titleformat{\part}
+        [display]
+        {\centering\normalfont\Huge\bfseries}
+        {\titlerule[5pt]\vspace{3pt}\titlerule[2pt]\vspace{3pt} 第 \thepart 部}
+        {0pt}
+        {\titlerule[2pt]\vspace{1pc}\huge}
+    \titlespacing{\part}{0pt}{0pt}{20pt}
+
+    % section
+    \titleformat{\section}
+        {\normalfont\Large\bfseries}
+        {\thesection}{1em}{}
+    \titlespacing{\section}{0pt}{5pt}{5pt}
+
+    % subsection
+    \titleformat{\subsection}
+        {\normalfont\large\sffamily}
+        {\Alph{subsection}.}{1em}{}
+    \titlespacing{\section}{0pt}{5pt}{5pt}
+    \renewcommand{\thesubsection}{\arabic{chapter}.\arabic{section} \Alph{subsection}}
+
+    % subsubsection
+    \titleformat{\subsubsection}
+        {\normalfont\large\sffamily}
+        {\thesubsubsection}{1em}{}
+    \titlespacing{\section}{0pt}{5pt}{5pt}
+
+% cancel
+% 打ち消し線を引くのに使う
+\usepackage{cancel}
+
+% enumitem
+\usepackage{enumitem}
+
+% natbib
+% citation と bibliography のフォーマット
+% cf. https://tex.stackexchange.com/questions/25701/bibtex-vs-biber-and-biblatex-vs-natbib
+\usepackage[numbers]{natbib}
+
+% indentfirst
+% subsection の最初の段落も字下げする
+\usepackage{indentfirst}
+
+%
+\usepackage{widebar}
+
+
+
+% ============================================================
+% commands in math mode
+% ============================================================
+
+% ------------------------------------------------------------
+% general
+% ------------------------------------------------------------
+\NewDocumentCommand{\what}{m}{\widehat{#1}}
+\NewDocumentCommand{\wt}{m}{\widetilde{#1}}
+\NewDocumentCommand{\wb}{m}{\widebar{#1}}
+\NewDocumentCommand{\up}{m}{\,{}^{#1}\!}
+\NewDocumentCommand{\down}{m}{\,{}_{#1}\!}
+
+% myparen, mybrace, mybracket
+% usage:
+%   \myparen{ここを括弧で囲む}
+\NewDocumentCommand{\myparen}{m}{\left({#1}\right)}
+\NewDocumentCommand{\mybrace}{m}{\left\{{#1}\right\}}
+\NewDocumentCommand{\mybracket}{m}{\left[{#1}\right]}
+
+% \mathbb{x} などを \bbx で書けるようにする
+% cf. https://nekodesu1728.hatenablog.com/entry/2022/08/14/033606
+\makeatletter
+\newcommand{\MyAlphabet}[1]{\@tfor\Ch@r:=#1\do{
+    \expandafter\edef\csname bf\Ch@r\endcsname{\noexpand\mathbf{\Ch@r}}
+    \expandafter\edef\csname bb\Ch@r\endcsname{\noexpand\mathbb{\Ch@r}}
+    \expandafter\edef\csname cal\Ch@r\endcsname{\noexpand\mathcal{\Ch@r}}
+    \expandafter\edef\csname frak\Ch@r\endcsname{\noexpand\mathfrak{\Ch@r}}
+    \expandafter\edef\csname scr\Ch@r\endcsname{\noexpand\mathscr{\Ch@r}}
+}}
+\makeatother
+\MyAlphabet{ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz}
+
+% \locallabel, \localcref
+% 証明のなかだけのローカルなラベルを作る
+% cf. https://tex.stackexchange.com/questions/73112/how-to-create-local-labels-refs-in-latex
+% usage:
+%   \begin{proof}
+%      \begin{equation}
+%          1 + 1 = 2 \locallabel{eq:1}
+%      \end{equation}
+%      \localcref{eq:1}はよく知られている。
+%   \end{proof}
+\NewDocumentCommand{\locallabel}{m}{\label{\themyproof:#1}}
+\NewDocumentCommand{\localcref}{m}{\cref{\themyproof:#1}}
+
+% ------------------------------------------------------------
+% set theory and logic
+% ------------------------------------------------------------
+\NewDocumentCommand{\id}{}{\mathrm{id}}
+\newcommand{\eps}{\varepsilon}
+\newcommand{\phai}{\varphi}
+\newcommand{\OOmega}{\overline{\Omega}}
+\newcommand{\tra}{\mathsf{T}}
+\renewcommand{\emptyset}{\varnothing}
+
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\K}{\mathbb{K}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\F}{\mathbb{F}}
+\renewcommand{\H}{\mathbb{H}}
+\DeclareMathOperator\Arg{Arg}
+
+\newcommand\logeq{\vcentcolon\Leftrightarrow}
+
+% ------------------------------------------------------------
+% topology
+% ------------------------------------------------------------
+\let\Vert\relax
+\newcommand{\Vert}{\mathrm{Vert}}
+\newcommand{\opensubset}{\stackrel{\text{open}}{\subset}}
+\newcommand{\closedsubset}{\stackrel{\text{closed}}{\subset}}
+\DeclareMathOperator\Int{Int}
+\DeclareMathOperator\Cl{Cl}
+
+% ------------------------------------------------------------
+% algebra
+% ------------------------------------------------------------
+\DeclareMathOperator{\Ker}{\mathrm{Ker}}
+\DeclareMathOperator{\Coker}{\mathrm{Coker}}
+
+\DeclareMathOperator{\GL}{\mathrm{GL}}
+\DeclareMathOperator{\SL}{\mathrm{SL}}
+\let\O\relax
+\DeclareMathOperator{\O}{\mathrm{O}}
+\DeclareMathOperator{\U}{\mathrm{U}}
+\DeclareMathOperator{\SO}{\mathrm{SO}}
+\DeclareMathOperator{\SU}{\mathrm{SU}}
+
+\DeclareMathOperator\rank{rank}
+\DeclareMathOperator\Hom{Hom}
+\DeclareMathOperator\Rad{Rad}
+\DeclareMathOperator\Aut{Aut}
+\DeclareMathOperator\End{End}
+\DeclareMathOperator\sgn{sgn}
+\DeclareMathOperator\Stab{Stab}
+\DeclareMathOperator\tr{tr}
+\DeclareMathOperator\Tor{Tor}
+\DeclareMathOperator\Ext{Ext}
+
+% ------------------------------------------------------------
+% category
+% ------------------------------------------------------------
+\DeclareMathOperator\Ob{\mathsf{Ob}}
+\DeclareMathOperator\Ar{\mathsf{Ar}}
+\newcommand{\Grp}{\mathbf{Grp}}
+\newcommand{\CatSet}{\mathbf{Set}}
+\newcommand{\CatRing}{\mathbf{Ring}}
+\newcommand{\CatComp}{\mathbf{Comp}}
+\newcommand{\CatTop}{\mathbf{Top}}
+\newcommand{\CatTopPair}{\mathbf{Top}^2}
+\newcommand{\CatMan}{\mathbf{Man}}
+\newcommand{\CatAb}{\mathbf{Ab}}
+\newcommand{\CatVect}{\mathbf{Vect}}
+\newcommand{\CatLie}{\mathbf{Lie}}
+\newcommand{\Catlie}{\mathbf{lie}}
+\NewDocumentCommand{\lMod}{m}{#1\text{-}\mathbf{Mod}}
+\NewDocumentCommand{\rMod}{m}{\mathbf{Mod}\text{-}#1}
+
+% ------------------------------------------------------------
+% manifold
+% ------------------------------------------------------------
+% \smooth
+% C^\infty のエイリアス。\ensuremath で math mode 外でも使える
+% usage:
+%   Let f be a \smooth map.
+\NewDocumentCommand{\smooth}{}{\ensuremath{C^\infty}}
+
+% \del
+% \partial のエイリアス
+\NewDocumentCommand{\del}{}{\partial}
+
+% \deldel
+% usage:
+%   点$0$における$f$の$x$による微分係数は$\deldel[f]{x}(0)$
+\NewDocumentCommand{\deldel}{om}{\frac{\del{\IfValueT{#1}{#1}}}{\del{#2}}}
+
+% \dd
+% usage:
+%   $f$の$t$による微分は$\dd{t} f = \dd[f]{t}$
+\NewDocumentCommand{\dd}{om}{\frac{d{\IfValueT{#1}{#1}}}{d{#2}}}
+
+\DeclareMathOperator\grad{grad}
+\DeclareMathOperator\curl{curl}
+\let\div\relax
+\DeclareMathOperator\div{div}
+\DeclareMathOperator{\Lie}{Lie}
+\DeclareMathOperator{\Hess}{Hess}
+
+% ------------------------------------------------------------
+% analysis
+% ------------------------------------------------------------
+\DeclareMathOperator\arsinh{arsinh}
+\DeclareMathOperator\arcosh{arcosh}
+\DeclareMathOperator\artanh{artanh}
+\DeclareMathOperator\supp{supp}
+
+\let\Re\relax
+\DeclareMathOperator{\Re}{\mathrm{Re}}
+\let\Im\relax
+\DeclareMathOperator{\Im}{\mathrm{Im}}
+
+
+
+% ============================================================
+% commands NOT in math mode
+% ============================================================
+% \TODO
+% usage:
+%   \TODO{ここを書く}
+\newcommand{\TODO}[1]{{\footnotesize \textcolor{red}{[TODO] {#1}}}}
+
+% \emph
+% usage:
+%   これを\emph{ベクトル}と呼ぶ
+\renewcommand{\emph}[1]{\textbf{#1}}
+
+% \term
+% usage:
+%   \term{$n$次元ベクトル空間}[vector space]{ベクトル空間}[べくとるくうかん]
+\NewDocumentCommand{\term}{momo}{%
+    {\boldmath\emph{#1\IfValueT{#2}{ (#2)}}}%
+    \IfValueTF{#4}%
+        {\index{#4@#3}}%
+        {\index{#3}}%
+}
+% \termsilent
+% usage:
+%   \termsilent{$n$次元ベクトル空間}[vector space]
+\NewDocumentCommand{\termsilent}{mo}{%
+    {\boldmath\emph{#1\IfValueT{#2}{ (#2)}}}%
+}
+% \termhidden
+% usage:
+%   \termhidden[vector space]{ベクトル空間}[べくとるくうかん]
+\NewDocumentCommand{\termhidden}{omo}{%
+    \IfValueTF{#3}%
+        {\index{#3@#2}}%
+        {\index{#2}}%
+}
+
+% \highlight
+% usage:
+%   \highlight{テキスト}
+\NewDocumentCommand{\highlight}{m}{\textcolor{magenta}{#1}}
+
+% innerproof
+% usege:
+%   \begin{innerproof} ... \end{innerproof}
+\newcommand*\circledbecause{\tikz[baseline=(C.base)]{%
+    \node[shape=circle,draw,inner sep=1.5pt] (C) {\because};%
+}}
+\newcommand{\sslash}{/\kern-0.3em/}
+\NewDocumentEnvironment{innerproof}{}
+    {\begin{itemize}[label={}, itemindent=0pt, labelsep=0pt, leftmargin=3em, rightmargin=1em]%
+        \item \circledbecause \quad}
+    {\hfill\sslash\end{itemize}}
+
+
+% ------------------------------------------------------------
+% old ones
+% ------------------------------------------------------------
+%\newcommand{\maru}[1]{\raise0.2ex\hbox{\textcircled{\scriptsize{#1}}}}
+
+
+
+% ============================================================
+%
+% ============================================================
+% bibliography のスタイリング
+% before: [Ken02]John F. Kennedy, ...
+% after:  [Ken02] John F. Kennedy, ...
+\makeatletter
+\renewcommand{\@biblabel}[1]{[#1] }
+\makeatother
+
+% インラインの数式も displaystyle で表示する
+\everymath{\displaystyle}
+
+% 縦揃えの数式の改ページを許可する
+\allowdisplaybreaks[4]
+
+% リストのスタイリング
+\renewcommand{\labelenumi}{(\arabic{enumi})}
+    \setlist[enumerate]{itemindent=2em, labelsep=1em}
+    \setlist[itemize]{itemindent=2em, labelsep=1em}
+    \setlist[description]{itemindent=1em, labelsep=1em}
+
+% remove spaces around \figure
+\NewCommandCopy{\oldfigure}{\figure}
+\RenewDocumentCommand{\figure}{O{tbp}}{\vskip -\lastskip \oldfigure[#1]}
+
+% style for \caption
+\NewCommandCopy{\oldcaption}{\caption}
+\RenewDocumentCommand{\caption}{m}{\oldcaption{#1}\vspace{1em}}
+
+% \myindexgroupheader
+% 索引ページの見出しを定義する
+\NewDocumentCommand{\myindexgroupheader}{m}{%
+    \par%
+    {\bfseries #1}%
+    \hrulefill%
+    \par%
+}
+
+% \llangle << and \rrangle >>
+\makeatletter
+\newsavebox{\@brx}
+\newcommand{\llangle}[1][]{\savebox{\@brx}{\(\m@th{#1\langle}\)}%
+    \mathopen{\copy\@brx\kern-0.5\wd\@brx\usebox{\@brx}}}
+\newcommand{\rrangle}[1][]{\savebox{\@brx}{\(\m@th{#1\rangle}\)}%
+    \mathclose{\copy\@brx\kern-0.5\wd\@brx\usebox{\@brx}}}
+\makeatother

@@ -1,0 +1,67 @@
+\documentclass[report, notitlepage]{jlreq}
+\usepackage{docmute}
+\usepackage{global}
+\usepackage{./sub/local}
+\def\assetspath{./}
+%\makeindex
+%\makeglossaries
+
+\title{集合}
+\author{Yahata}
+\date{}
+
+\begin{document}
+
+\maketitle
+\begin{abstract}
+    本稿では集合について整理する。
+\end{abstract}
+
+\setcounter{tocdepth}{1}
+\tableofcontents
+\markboth{\contentsname}{}
+
+% ============================================================
+%
+% ============================================================
+\part{集合}
+\input{sub/part1}
+
+% ============================================================
+%
+% ============================================================
+\newpage
+\phantomsection
+\addcontentsline{toc}{part}{演習問題の解答}
+\part*{演習問題の解答}
+
+\includecollection{answers}
+
+% ============================================================
+%
+% ============================================================
+\newpage
+\phantomsection
+\addcontentsline{toc}{part}{参考文献}
+\renewcommand{\bibname}{参考文献}
+\markboth{\bibname}{}
+\bibliographystyle{amsalpha}
+\bibliography{../mybibliography}
+
+% ============================================================
+%
+% ============================================================
+\newpage
+\phantomsection
+\addcontentsline{toc}{part}{記号一覧}
+\printglossary[title={記号一覧}]
+
+% ============================================================
+%
+% ============================================================
+\newpage
+\phantomsection
+\addcontentsline{toc}{part}{索引}
+\printindex
+
+\end{document}

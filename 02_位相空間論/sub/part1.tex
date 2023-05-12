@@ -1,0 +1,1498 @@
+\documentclass[report]{jlreq}
+\usepackage{global}
+\usepackage{./local}
+\subfiletrue
+\def\assetspath{../}
+\begin{document}
+
+% ============================================================
+%
+% ============================================================
+\chapter{位相}
+
+\begin{definition}[位相空間]
+    $X$を集合、
+    $\calO$を$X$の部分集合系とする。
+    このとき$\calO$が$X$の
+    \term{開集合系}[open sets]{開集合系}[かいしゅうごうけい]
+    あるいは
+    \term{位相}[topology]{位相}[いそう]
+    であるとは、次が成り立つことをいう:
+    \begin{description}
+        \item[(T1)] $\emptyset, X \in \calO$
+        \item[(T2)] $\calO$の元の有限個の交わりは
+            また$\calO$の元である。
+        \item[(T3)] $\calO$の元の任意個の和集合は
+            また$\calO$の元である。
+    \end{description}
+    組$(X, \calO)$を
+    \term{位相空間}[topological space]{位相空間}[いそうくうかん]
+    という。
+\end{definition}
+
+\begin{proposition}[位相空間としての空集合]
+    空集合$\emptyset$について次が成り立つ:
+    \begin{enumerate}
+        \item $\emptyset$の位相は$\{ \emptyset \}$ただひとつである。
+        \item (initial object) $X$を位相空間とする。
+            $\emptyset$から$X$への連続写像が
+            ただひとつ存在する。
+        \item (strict initial object) $X$を空でない位相空間とする。
+            $X$から$\emptyset$への連続写像は存在しない。
+    \end{enumerate}
+\end{proposition}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+\begin{definition}[内部、閉包、境界]
+    \idxsym{interior}
+        {$\Int_X A, \; \Int A, \; \mathring{A}, \; A^{o}$}
+        {$X$における$A$の内部}
+    \idxsym{closure}
+        {$\Cl_X A, \; \Cl A, \; \overline{A}, \; A^{e}$}
+        {$X$における$A$の閉包}
+    \idxsym{boundary}
+        {$\del_X A, \; \del A$}
+        {$X$における$A$の境界}
+    $X$を位相空間、$A \subset X$とする。
+    \begin{itemize}
+        \item $A$に含まれる ($X$の) 最大の開集合を
+            $\Int_X A$と書き、
+            $X$における$A$の\term{内部}[interior]{内部}[ないぶ]
+            という。
+        \item $A$を含む ($X$の) 最小の閉集合を
+            $\Cl_X A$と書き、
+            $X$における$A$の\term{閉包}[closure]{閉包}[へいほう]
+            という。
+        \item $\Cl_X A \setminus \Int_X A$を
+            $\del_X A$と書き、
+            $X$における$A$の\term{境界}[boundary]{境界}[きょうかい]
+            という。
+    \end{itemize}
+    どこにおける内部や閉包なのかが明らかな場合は
+    内部を$\Int A, \mathring{A}$、
+    閉包を$\Cl A, \overline{A}$、
+    境界を$\del A$と書くこともある。
+\end{definition}
+
+\begin{proposition}[内部、閉包、境界の特徴付け]
+    \TODO{}
+\end{proposition}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+
+
+% ============================================================
+%
+% ============================================================
+\chapter{近傍基と開基}
+
+定義に基づいて空間に位相を与えるには、
+開集合系のすべての元、すなわちすべての開集合を記述しなければならず現実的でない。
+この苦労を回避するために近傍基と開基の概念を導入する。
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{近傍基}
+
+"規則的" な位相、
+すなわち各点ごとに局所的な位相の様子に違いが無いような位相を扱う場合には
+近傍基の概念が有効である。
+
+\begin{definition}[近傍]
+    \TODO{}
+\end{definition}
+
+\begin{definition}[近傍系]
+    $(X, \calO)$を位相空間、
+    $x \in X$とする。
+    $x$の近傍全部の集合系$\calN_x$を
+    $x$の\term{近傍系}[neighborhood system]{近傍系}[きんぼうけい]
+    という。
+\end{definition}
+
+\begin{definition}[近傍基]
+    $(X, \calO)$を位相空間、
+    $x \in X$とする。
+    $x$の近傍系$\calN_x$の部分系$\calB_x$が
+    $x$の\term{近傍基}[neighborhood base]{近傍基}[きんぼうき]
+    であるとは、
+    任意の$N \in \calN_x$に対し、
+    ある$B \in \calB_x$が存在して、
+    $B \subset N$が成り立つことをいう。
+\end{definition}
+
+\TODO{第1可算な空間では、ネットの収束性を点列で述べることができる？}
+
+\begin{definition}[第1可算]
+    \TODO{}
+\end{definition}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{開基と準開基}
+
+開基は開集合系の定義の (T3) を取り除いたものとみなせる。
+
+\begin{definition}[開基]
+    $(X, \calO)$を位相空間、
+    $\calB \subset \calO$とする。
+    このとき$\calB$が$\calO$の
+    \term{開基}[base]{開基}[かいき]
+    であるとは、
+    任意の$O \in \calO$と$x \in O$に対し、
+    ある$B \in \calB$が存在して、
+    $x \in B \subset O$が成り立つことをいう。
+\end{definition}
+
+与えられた部分集合系が開基となるかどうかには注意を払わなければならないが、
+その場合には次の特徴付けを使うことができる。
+
+\begin{proposition}[開基の特徴付け]
+    \label[proposition]{prop:open-base-characterization}
+    \TODO{}
+\end{proposition}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+準開基は開集合系の定義の (T2), (T3) を取り除いたものとみなせる。
+
+\begin{definition}[準開基]
+    $(X, \calO)$を位相空間、
+    $\calB \subset \calO$とする。
+    このとき$\calB$が$\calO$の
+    \term{準開基}[subbase]{準開基}[じゅんかいき]
+    であるとは、
+    $\calB$の元の有限個の交わり全部の集合系が
+    $\calO$の開基であることをいう。
+\end{definition}
+
+\begin{example}[順序位相]
+    $(X, \le)$を全順序集合とする。
+    $X$の準開基$\calB$を
+    \begin{equation}
+        \calB
+            \coloneqq \mybrace{
+                (a, \rightarrow), \,
+                (\leftarrow, b)
+                \subset X
+                \mid
+                a, b \in X
+            }
+    \end{equation}
+    で定める。
+    このとき、
+    $\calB$により定まる開基$\calB'$は
+    \begin{equation}
+        \calB'
+            \coloneqq \mybrace{
+                (a, \rightarrow), \,
+                (\leftarrow, b), \,
+                (a, b) \subset X
+                \mid
+                a, b \in X
+            }
+    \end{equation}
+    と表せる。
+    \begin{innerproof}
+        \TODO{}
+    \end{innerproof}
+    以上により定まる$X$の位相を
+    $(X, \le)$の
+    \term{順序位相}[order topology]{順序位相}[じゅんじょいそう]
+    という。
+\end{example}
+
+\begin{definition}[第2可算]
+    \TODO{}
+\end{definition}
+
+
+
+% ============================================================
+%
+% ============================================================
+\chapter{連続写像}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{連続写像}
+
+\begin{definition}[連続写像]
+    $X, Y$を位相空間、
+    $f \colon X \to Y$を写像とする。
+    \begin{itemize}
+        \item $x_0 \in X$とする。
+            $f$が\term{$x_0$で連続}[continuous at $x_0$]{連続!1点で---}[れんぞく]
+            であるとは、
+            $Y$における$f(x_0)$の任意の近傍$V \subset Y$に対し、
+            $X$における$x_0$のある近傍$U \subset X$が存在して、
+            $f(U) \subset V$が成り立つことをいう。
+        \item $f$が
+            \term{連続}[continuous]{連続}[れんぞく]
+            であるとは、
+            任意の$V \opensubset Y$に対し、
+            $f^{-1}(V) \opensubset X$であることをいう。
+    \end{itemize}
+\end{definition}
+
+1点での連続性と全体での連続性は
+次のように互いに言い換えることができる。
+
+\begin{proposition}[1点での連続性と全体での連続性]
+    \label[proposition]{prop:cts-and-cts-at-a-point}
+    $X, Y$を位相空間とする。
+    このとき、写像$f \colon X \to Y$に関し次は同値である:
+    \begin{enumerate}
+        \item $f$はすべての点$x \in X$で連続である。
+        \item $f$は連続である。
+    \end{enumerate}
+\end{proposition}
+
+\begin{proof}
+    \uline{(1) \Rightarrow (2)} \quad
+    $V \opensubset Y$とする。
+    $f^{-1}(V) \opensubset X$を示す。
+    そこで$x \in f^{-1}(V)$とすると、
+    $f$が$x$で連続であることより
+    $X$における$x$のある近傍$U_x \subset X$が存在して
+    $f(U_x) \subset V$、
+    したがって$U_x \subset f^{-1}(f(U_x)) \subset f^{-1}(V)$が成り立つ。
+    よって
+    $x \in \mathring{U}_x
+        \subset U_x
+        \subset f^{-1}(V)$
+    である。したがって
+    $f^{-1}(V)
+        = \bigcup_{x \in f^{-1}(V)} \mathring{U}_x
+        \opensubset X$
+    がいえた。
+
+    \uline{(2) \Rightarrow (1)} \quad
+    $x \in X$とする。
+    $f$が$x$で連続であることを示す。
+    そこで$V$を$Y$における$f(x)$の近傍とすると、
+    いま$f$は連続だから$x \in f^{-1}(\mathring{V}) \opensubset X$となる。
+    そこで$U \coloneqq f^{-1}(\mathring{V})$とおけば
+    $U$は$X$における$x$の近傍であって
+    $f(U) = f(f^{-1}(\mathring{V}))
+        \subset \mathring{V}
+        \subset V$
+    が成り立つ。
+    したがって$f$は$x$で連続である。
+\end{proof}
+
+\begin{definition}[局所同相写像]
+    連続写像$f \colon X \to Y$が
+    \term{局所同相写像}[local homeomorphism]{局所同相写像}[きょくしょどうそうしゃぞう]
+    であるとは、
+    各$x \in X$に対し
+    $x$のある開近傍$U \opensubset X$と
+    $f(x)$のある開近傍$V \opensubset Y$が存在して
+    $f|_U$が$V$の上への同相写像となることをいう。
+\end{definition}
+
+\begin{definition}[位相的埋め込み]
+    $X, Y$を包含関係があるとは限らない2つの位相空間とし、$f \colon X \to Y$を連続写像とする。
+    $f$が$X$から$f(X)$への同相写像であるとき、
+    $f$は\term{位相的埋め込み}[topological embedding]{位相的埋め込み}[いそうてきうめこみ]であるという。
+    単に埋め込みともいう。
+    埋め込み$f \colon X \to Y$が存在するとき、$X$は$Y$に\emph{埋め込まれる}といい、
+    $X$を$Y$の部分集合とみなすことがある（！）。
+\end{definition}
+
+\begin{example}[埋め込みの例]
+    包含写像はすべて埋め込みである。
+\end{example}
+
+区分的に定義された写像の連続性をいうために便利な補題が次である。
+
+\begin{lemma}[貼り合わせ補題]
+    $X, Y$を位相空間、
+    $f \colon X \to Y$を連続写像、
+    $A, B \subset X$をいずれも閉部分集合
+    (あるいはいずれも開部分集合) とし、$X = A \cup B$とする。
+    このとき、$f|_A \colon A \to Y$および$f|_B \colon B \to Y$が
+    いずれも連続ならば、$f$も連続である。
+\end{lemma}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+\TODO{何に使う？}
+
+\begin{definition}[固有写像]
+    $f \colon X \to Y$を連続写像とする。
+    $f$が\term{固有}[proper]{固有写像}[こゆうしゃぞう]
+    であるとは、
+    $Y$の任意のコンパクト部分集合の$f$による逆像が
+    $X$のコンパクト部分集合であることをいう。
+\end{definition}
+
+\begin{definition}[商写像]
+    $X, Y$を位相空間、
+    $\scrO_X, \scrO_Y$をそれぞれの開集合系とする。
+    全射$p \colon X \to Y$が
+    \term{商写像}[quotient map]{商写像}[しょうしゃぞう]あるいは
+    \term{等化写像}[identification map]{等化写像}[とうかしゃぞう]であるとは、
+    \begin{equation}
+        V \in \scrO_Y
+        \; \Leftrightarrow \;
+        p^{-1}(V) \in \scrO_X
+        \quad (V \subset Y)
+    \end{equation}
+    が成り立つことをいう。
+\end{definition}
+
+
+
+% ============================================================
+%
+% ============================================================
+\chapter{収束性}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{点列の収束}
+
+点列の収束の概念を定義する。
+
+\begin{definition}[点列の収束]
+    $X$を位相空間、
+    $(a_n)_{n \in \N}$を$X$の点列、
+    $b \in X$とする。
+    $(a_n)_n$が$b$に
+    \term{収束}[converge]{収束!点列の---}[しゅうそく]するとは、
+    次が成り立つことをいう:
+    \begin{itemize}
+        \item $X$における$b$の任意の近傍$U \subset X$に対し、
+            ある$N \in \N$が存在して、
+            $n \ge N$なるすべての$n \in \N$に対して
+            $a_n \in U$である。
+    \end{itemize}
+\end{definition}
+
+\begin{remark}
+    一般に、点列は2個以上の点に収束しないとは限らないことに注意すべきである。
+    実際、たとえば$\N$に密着位相を入れると
+    $\N$の任意の点列は任意の点に収束する。
+\end{remark}
+
+第1可算空間においては
+写像の連続性を点列の収束で特徴づけることができる。
+
+\begin{proposition}[連続写像の特徴付け]
+    $X, Y$を第1可算な位相空間とする。
+    このとき、写像$f \colon X \to Y$に関して次は同値である:
+    \begin{enumerate}
+        \item $f$は連続である。
+        \item 任意の$x \in X$と$x$に収束する$X$内の任意の点列
+            $(x_n)_n$に対し、
+            $Y$内の点列$(f(x_n))_n$は
+            $f(x)$に収束する。
+    \end{enumerate}
+\end{proposition}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{ネットの収束}
+
+ネットは点列の一般化である。
+
+\begin{definition}[ネット]
+    $X$を位相空間、
+    $(\Lambda, \preceq)$を有向集合とする。
+    写像$P \colon \Lambda \to X$、すなわち
+    $\Lambda$によって添字付けられた$X$の点の族
+    $P = (a_\lambda)_{\lambda \in \Lambda}$を
+    $X$内の
+    \term{ネット}[net]{ネット}[ねっと]という。
+\end{definition}
+
+\begin{definition}[ネットの収束]
+    $X$を位相空間、
+    $(a_\lambda)_{\lambda \in \Lambda}$を$X$内のネット、
+    $b \in X$とする。
+    $(a_\lambda)_\lambda$が$b$に
+    \term{収束}[converge]{収束!ネットの---}[しゅうそく]するとは、
+    次が成り立つことをいう:
+    \begin{itemize}
+        \item $X$における$b$の任意の近傍$U \subset X$に対し、
+            ある$\lambda_0 \in \Lambda$が存在して、
+            $\lambda \succeq \lambda_0$なるすべての$\lambda \in \Lambda$に対して
+            $a_\lambda \in U$となる。
+    \end{itemize}
+\end{definition}
+
+\begin{remark}
+    点列の収束のところで注意したように、
+    ネットも2個以上の点に収束しないとは限らないことに注意すべきである。
+\end{remark}
+
+ネットの最も重要な例は近傍基である。
+
+\begin{example}[近傍基により定まるネット]
+    $X$を位相空間、
+    $\calB_x$を$x \in X$の近傍基とする。
+    $\calB_x$上の2項関係
+    $B \preceq B' \logeq B \supset B'$
+    により$(\calB_x, \preceq)$は有向集合となる。
+    このとき、選択公理により選択関数
+    $P \colon \calB_x \to \bigcup_{B \in \calB_x} B, \;
+        B \mapsto x_B \in B$
+    が存在し、これは$x$に収束する$X$内のネットとなる。
+    実際、近傍基の定義より
+    $x$の任意の近傍$N$に対し
+    $B \subset N$なる$B \in \calB_x$が存在し、
+    $B' \succeq B$なる任意の$B'$に対し
+    $x_{B'} \in B' \subset B \subset N$が成り立つ。
+\end{example}
+
+写像の1点における連続性はネットの収束によって特徴付けられる。
+
+\begin{theorem}[1点における連続性の特徴付け]
+    $X, Y$を位相空間、
+    $x_0 \in X$とする。
+    このとき、写像$f \colon X \to Y$に関して次は同値である:
+    \begin{enumerate}
+        \item $f$は$x_0$において連続である。
+        \item $x_0$に収束する$X$内の任意のネット$(x_\lambda)_\lambda$に対し、
+            $Y$内のネット$(f(x_\lambda))_\lambda$は$f(x_0)$に収束する。
+    \end{enumerate}
+\end{theorem}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+\begin{corollary}[連続写像の特徴付け]
+    $X, Y$を位相空間とする。
+    このとき、写像$f \colon X \to Y$に関して次は同値である:
+    \begin{enumerate}
+        \item $f$は連続である。
+        \item 任意の$x \in X$と$x$に収束する$X$内の任意のネット
+            $(x_\lambda)_\lambda$に対し、
+            $Y$内のネット$(f(x_\lambda))_\lambda$は
+            $f(x)$に収束する。
+    \end{enumerate}
+\end{corollary}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+
+
+% ============================================================
+%
+% ============================================================
+\chapter{New from Old}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{部分空間}
+
+\begin{theorem}[部分位相の普遍性]
+    $X$を位相空間、$A \subset X$を部分空間とする。
+    inclusion $A \to X$を$i$とおく。
+    このとき次が成り立つ:
+    \begin{alignat}{1}
+        &\forall \; g \colon Z \to X
+            \colon \text{ 連続 with $g(Z) \subset A$} \\
+        &\exists! \; f \colon Z \to A
+            \colon \text{連続}
+            \quad \text{s.t.} \quad \\
+        &\quad \begin{tikzcd}[ampersand replacement=\&]
+            Z \ar[dashed]{rd}[swap]{f} \ar{r}{g} \& X \\
+            \& A \ar{u}[swap]{i}
+        \end{tikzcd}
+    \end{alignat}
+\end{theorem}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{直積空間}
+
+\begin{theorem}[積位相の普遍性]
+    $X_\alpha \; (\alpha \in A)$を位相空間の族とし、
+    各$\alpha$に対し
+   標準射影$\prod_{\beta \in A} X_\beta \to X_{\alpha}$を
+    $p_\alpha$とおく。
+    このとき次が成り立つ:
+    \begin{alignat}{1}
+        &\forall \; \{ g_\alpha \colon Z \to X_\alpha \}_{\alpha \in A}
+            \colon \text{ 連続写像の族} \\
+        &\exists! \; f \colon Z \to \prod_{\beta \in A} X_\beta
+            \colon \text{連続}
+            \quad \text{s.t.} \quad \\
+        &\quad \begin{tikzcd}[ampersand replacement=\&]
+            Z \ar[dashed]{rd}[swap]{f} \ar{r}{g_\alpha} \& X_\alpha \\
+            \& \prod_{\beta \in A} X_\beta \ar{u}[swap]{p_\alpha}
+        \end{tikzcd}
+        \quad (\forall \alpha \in A)
+    \end{alignat}
+\end{theorem}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{商空間}
+
+\begin{theorem}[商位相の普遍性]
+    $X$を位相空間、$\sim$を$X$上の同値関係とし、
+   標準射影$X \to X / \sim$を$q$とおく。
+    このとき次が成り立つ:
+    \begin{alignat}{1}
+        &\forall \; g \colon X \to Z
+            \colon \text{
+                連続
+                \quad with \quad
+                $q(x) = q(y) \Rightarrow g(x) = g(y)$
+            } \\
+        &\exists! \; f \colon X / \sim \to Z
+            \colon \text{連続}
+            \; \text{s.t.} \; \\
+        &\quad \begin{tikzcd}[ampersand replacement=\&]
+            X \ar{d}[swap]{q} \ar{r}{g} \& Z \\
+            X / \sim \ar[dashed]{ru}[swap]{f}
+        \end{tikzcd}
+    \end{alignat}
+\end{theorem}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{接着空間と wedge 和}
+
+\TODO{もうちょっと整理したい}
+
+\begin{definition}[接着空間]
+    $X, Y$を位相空間、$A \subset Y$を閉部分集合、
+    $f \colon A \to X$を連続写像とするとき、
+    以下のように構成される空間$X \cup_f Y$を、
+    （$f$に沿って）$Y$を$X$に接着して得られた
+    \term{接着空間}[adjunction space]{接着空間}[せっちゃくくうかん]という。
+    \begin{itemize}
+        \item 直和$X \amalg Y$上の同値関係$\sim$を
+            $a \sim f(a)\; (\forall a \in A)$で定め、
+        \item $X \cup_f Y \coloneqq (X \amalg Y) / \sim$と定める。
+    \end{itemize}
+    $f$は\term{接着写像}[attaching map]{接着写像}[せっちゃくしゃぞう]と呼ばれる。
+\end{definition}
+
+\TODO{点付き空間の概念を先に導入しておきたい}
+
+\begin{definition}[wedge 和]
+    $X, Y$を位相空間、$x_0 \in X, y_0 \in Y$とする。
+    以下のように構成される空間$X \vee Y$を、
+    $X$と$Y$の\term{wedge 和}[wedge sum]{wedge 和}[wedge わ]という。
+    \begin{itemize}
+        \item 集合$X \amalg Y$上の同値関係$\sim$を
+            $x_0 \sim y_0$で定め、
+        \item $X \vee Y \coloneqq (X \amalg Y) / \sim$と定める。
+    \end{itemize}
+\end{definition}
+
+\begin{remark}[接着空間と wedge 和の違い]
+    一見すると、wedge 和は接着空間の定義で$f \colon \{x_0\} \to Y, x \mapsto y_0$とおいた特別な場合のように見えるが、
+    そうではない。
+    実際、$\{x_0\}$は$X$の閉集合とは限らない。
+\end{remark}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{柱・錐・懸垂}
+
+\begin{definition}[1点に縮めた空間]
+    $X$を位相空間とし、$A \subset X$とする。
+    $\Delta(X) \cup A \times A$をグラフとする$X$の同値関係$\sim$\footnotemark
+    による商空間を$X/A$と表し、
+    $X$において$A$を
+    \term{1点に縮めた空間}{1点に縮めた空間}[1てんにちぢめたくうかん]と呼ぶ。
+\end{definition}
+
+\footnotetext{
+    $\Delta(X) \cup A \times A$をグラフとする$X$の同値関係$\sim$とは、
+    すなわち$x, y \in X$に対し
+    \begin{equation}
+        x \sim y
+        \quad \Leftrightarrow \quad
+        (x = y \vee (x \in A \wedge y \in A))
+    \end{equation}
+    ということである。
+}
+
+\begin{definition}[柱、錐、懸垂]
+    $X$を位相空間とする。
+    \begin{itemize}
+        \item 直積$X \times I$を$ZX$と書き、
+            $X$の\term{柱}[cylinder]{柱}[ちゅう]と呼ぶ。
+        \item $ZX$の部分集合$X \times \{0\}$を
+            1点に縮めて得られる空間を$CX$と書き、$X$の
+            \term{錐}[cone]{錐}[すい]という。
+        \item $ZX$の部分集合$X \times \{0\}$および$X \times \{1\}$を
+            1点に縮めて得られる空間を$\Sigma X$と書き、$X$の
+            \term{懸垂}[suspension]{懸垂}[けんすい]という。
+    \end{itemize}
+\end{definition}
+
+\begin{example}[柱、錐、懸垂の例]
+    \TODO{}
+\end{example}
+
+\begin{example}[球面の懸垂]
+    球面$S^n$の懸垂$\Sigma S^n$は$S^{n + 1}$と同相である
+    (\cref{problem:geometry2-3.1})。
+\end{example}
+
+\begin{definition}[写像柱、写像錐]
+    $f \colon X \to Y$を連続写像とする。
+    \begin{itemize}
+        \item 直和$ZX \sqcup Y$を
+            $(x, 1) \sim f(x)\; (x \in X)$で生成された同値関係で
+            割って得られる空間を$Z_f$と書き、
+            \term{写像柱}[mapping cylinder]{写像柱}[しゃぞうちゅう]と呼ぶ。
+        \item $CX \sqcup Y$を
+            $x \sim f(x)\; (x \in X)$で生成された同値関係で
+            割って得られる空間を$C_f$と書き、
+            \term{写像錐}[mapping cone]{写像錐}[しゃぞうすい]と呼ぶ。
+    \end{itemize}
+\end{definition}
+
+\begin{example}[写像錐の例]
+    $f \colon S^1 \to S^1, z \mapsto z^2$の写像錐$C_f$は
+    実射影平面に同相である。
+    イメージとしては、円錐のふちの対蹠点同士を貼り合わせたものである。
+    \TODO{}
+\end{example}
+
+
+
+% ============================================================
+%
+% ============================================================
+\chapter{分離公理}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{Hausdorff 性}
+
+\begin{definition}[Hausdorff]
+    \TODO{}
+\end{definition}
+
+\begin{proposition}[Hausdorff 空間の非交和は Hausdorff]
+    \TODO{}
+\end{proposition}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+\begin{theorem}[Hausdorff 空間の特徴付け]
+    \TODO{}
+\end{theorem}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+\begin{corollary}[Hausdorff 空間の不動点集合は閉]
+    \label[corollary]{corollary:Hausdorff-fixed-points-closed}
+    $X$を Hausdorff 空間、
+    $f \colon X \to X$を連続写像とする。
+    $f$の不動点全体の集合$A = \{x \in X \mid f(x) = x\}$は
+    $X$の閉集合である。
+\end{corollary}
+
+\begin{proof}
+    $A$は連続写像
+    $X \to X \times X, \; x \mapsto (x, f(x))$による
+    対角集合の逆像である。
+    $X$が Hausdorff であることの特徴付けより
+    $X$の対角集合は$X \times X$の閉集合だから、
+    $A$は$X$の閉集合である。
+\end{proof}
+
+Hausdorff 空間は収束性に関して次の重要な性質を持つ。
+
+\begin{proposition}[極限の一意性]
+    $X$を位相空間、
+    $(\Lambda, \preceq)$を有向集合、
+    $P \colon \Lambda \to X$をネットとする。
+    このとき$X$が Hausdorff ならば、
+    $P$の収束する点は (存在すれば) 一意である。
+\end{proposition}
+
+\begin{proof}
+    $P$が$b, b' \in X$に収束するとし、
+    $b = b'$を示せばよい。
+    $b \neq b'$と仮定して矛盾を導く。
+    いま$X$は Hausdorff だから
+    $b, b'$を分離する開集合$U, U'$が存在する。
+    するとネットの収束の定義より
+    \begin{equation}
+        \begin{cases}
+            \exists \lambda_0 \in \Lambda
+                \quad \text{s.t.} \quad
+                \forall \lambda \succeq \lambda_0
+                \quad \text{に対し} \quad
+                P(\lambda) \in U \\
+            \exists \lambda_0' \in \Lambda
+                \quad \text{s.t.} \quad
+                \forall \lambda \succeq \lambda_0'
+                \quad \text{に対し} \quad
+                P(\lambda) \in U'
+        \end{cases}
+    \end{equation}
+    が成り立つ。
+    このとき有向集合の定義より
+    $\lambda_0, \lambda_0'$の共通上界$\lambda_1$が存在するが、
+    $\lambda_1 \succeq \lambda_0, \; \lambda_1 \succeq \lambda_0'$より
+    $P(\lambda_1) \in U \cap U' = \emptyset$だから不合理である。
+    背理法より$b = b'$がいえた。
+\end{proof}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{正規空間}
+
+正規空間は、
+その直積や部分空間が正規空間になるとは限らないという点では扱いづらい空間だが、
+3つの有用な特徴付けを持つ。
+
+\begin{definition}[正規空間]
+    \TODO{}
+\end{definition}
+
+\begin{theorem}[Urysohn の補題]
+    \TODO{}
+\end{theorem}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+\begin{theorem}[Tietze の拡張定理]
+    \TODO{}
+\end{theorem}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+\begin{theorem}[開被覆の縮小可能性]
+    \TODO{}
+\end{theorem}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{演習問題}
+
+\begin{problem}
+    順序位相は Hausdorff であることを示せ。
+\end{problem}
+
+\begin{answer}
+    $(X, \le)$を全順序集合とし、順序位相を入れる。
+    $x, y \in X, \, x \neq y$とする。
+    一般性を失うことなく$x < y$としてよい。
+    開区間$(x, y)$が空集合の場合
+    $(\leftarrow, y) \cap (x, \rightarrow) = \emptyset$だから、
+    $(\leftarrow, y), (x, \rightarrow)$が
+    $x, y$を分離する開集合となる。
+    $(x, y)$がある元$z \in (x, y)$を含む場合、
+    $(\leftarrow, z), (z, \rightarrow)$が
+    $x, y$を分離する開集合となる。
+    以上より$(X, \le)$の順序位相は Hausdorff であることがいえた。
+\end{answer}
+
+
+
+% ============================================================
+%
+% ============================================================
+\chapter{連結性}
+
+位相空間の連結性を定義する。
+この節で導入する大域的・局所的な連結性の間には
+含意がほとんどないことに注意すべきである。
+実際、一方が成り立っても他方は成り立たないような
+様々な興味深い反例が存在する。
+その相互関係を下図に挙げておく。
+破線とそのラベルは含意が成り立たない反例を示している。
+\begin{equation}
+    \begin{tikzcd}[row sep=huge, column sep=huge]
+        \text{連結}
+            \ar[dashed, shift left=1.0ex]{d}{\substack{
+                \text{topologist's} \\
+                \text{sine curve}
+            }}[marking]{\times}
+            \ar[dashed, shift left=1.0ex]{r}{\substack{
+                \text{topologist's} \\
+                \text{sine curve}
+            }}[marking]{\times}
+            & \text{弧状連結}
+                \ar[Rightarrow, shift left=1.0ex]{l}
+                \ar[dashed, shift left=1.0ex]{d}
+                    {\text{くし空間}}[marking]{\times} \\
+        \text{局所連結}
+            \ar[dashed, shift left=1.0ex]{u}
+                {[0, 1] \cup [2, 3]}[marking]{\times}
+            \ar[dashed, shift left=1.0ex]{r}
+                {\text{補有限位相}}[marking]{\times}
+            & \text{局所弧状連結}
+                \ar[Rightarrow, shift left=1.0ex]{l}
+                \ar[dashed, shift left=1.0ex]{u}
+                    {[0, 1] \cup [2, 3]}[marking]{\times}
+    \end{tikzcd}
+\end{equation}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{連結空間}
+
+\begin{definition}[連結]
+    位相空間$X$が
+    \term{連結}[connected]{連結}[れんけつ]
+    であるとは、
+    任意の$U, V \opensubset X$に対し
+    \begin{enumerate}
+        \item $U \cup V = X$かつ$U \cap V = \emptyset$ならば
+            $U, V$の\highlight{ちょうど一方}が空集合である。
+    \end{enumerate}
+    が成り立つことをいう。
+\end{definition}
+
+\begin{remark}
+    空集合$\emptyset$は連結でない\footnote{
+        文献によっては空集合も連結とみなすことがあり、
+        その場合は定義の「ちょうど一方」を「少なくとも一方」に置き換えればよい。
+    }。
+\end{remark}
+
+\begin{definition}[局所連結]
+    \TODO{}
+\end{definition}
+
+次の特徴付けは連結性を用いる証明でよく使われる。
+
+\begin{proposition}[連結性の特徴付け]
+    位相空間$X$に関し次は同値である:
+    \begin{enumerate}
+        \item $X$は連結である。
+        \item 部分空間$A \subset X$に関し、
+            $A = X$であることと$A \neq \emptyset$であることは同値である。
+    \end{enumerate}
+\end{proposition}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+
+% ============================================================
+%
+% ============================================================
+\chapter{コンパクト性}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{コンパクト性}
+
+コンパクト性を定義する。
+コンパクト性の定義には
+ネットの収束性による定義と
+被覆の有限性による定義という2通りの同値な定義がある。
+これらのうち大学教養レベルの教科書では
+後者が採用されることが多い。
+
+\begin{definition}[開被覆]
+    $X$を位相空間、
+    $A \subset X$とする。
+    $X$の開部分集合の族$\calU = \{ U_\lambda \}_{\lambda \in \Lambda}$であって
+    $A \subset \bigcup_{\lambda \in \Lambda} U_\lambda$
+    をみたすものを
+    \term{$X$における$A$の開被覆}[open cover of $A$ in $X$]{開被覆}[かいひふく]
+    という。
+    $A = X$の場合は$\calU$を単に$X$の開被覆という。
+\end{definition}
+
+\begin{definition}[コンパクト]
+    $X$を位相空間とする。
+    $X$が\term{コンパクト}[compact]{コンパクト}[こんぱくと]であるとは、
+    次の互いに同値な定義のうち少なくとも1つ (したがって両方)
+    が成り立つことをいう:
+    \begin{enumerate}
+        \item (Bolzano-Weierstrass 性)
+            $X$内の任意のネットは
+            $X$上の点に収束する部分ネットを持つ。
+        \item (Heine-Borel 性)
+            $X$の任意の開被覆は
+            有限部分被覆を持つ。
+    \end{enumerate}
+\end{definition}
+
+\begin{proof}[同値性の証明.]
+    \TODO{}
+\end{proof}
+
+部分集合のコンパクト性は次のように特徴付けられる。
+
+\begin{proposition}[部分集合のコンパクト性の特徴付け]
+    $X$を位相空間、$A \subset X$とする。
+    このとき次は同値である:
+    \begin{enumerate}
+        \item $A$は (部分空間として) コンパクトである。
+        \item $X$における$A$の任意の開被覆は
+            有限部分被覆を持つ。
+    \end{enumerate}
+\end{proposition}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+\begin{lemma}
+    \label[lemma]{lemma:closed-subset-of-compact-space-is-compact}
+    コンパクト空間の閉部分集合はコンパクトである。
+\end{lemma}
+
+\begin{proof}
+    $K$をコンパクト空間、$A \closedsubset K$とする。
+    $\calU = \{ U_\lambda \opensubset A \}_{\lambda \in \Lambda}$を
+    $A$の開被覆とする。
+    各$\lambda \in \Lambda$に対し、
+    $A$の部分位相の定義より
+    ある$V_\lambda \opensubset K$が存在して
+    $U_\lambda = V_\lambda \cap A$と表せることから
+    $U_\lambda \cup A^c = V_\lambda \cup A^c$は
+    $K$の開部分集合である。
+    したがって$\{ U_\lambda \cup A^c \}_{\lambda \in \Lambda}$は
+    $K$の開被覆だから、
+    $K$のコンパクト性より有限部分被覆
+    $U_1 \cup A^c, \dots, U_n \cup A^c$が存在する。
+    すると各$x \in A$に対し
+    ある$i \in \{ 1, \dots, n \}$が存在して
+    $x \in U_i \cup A^c$、
+    したがって$x \in U_i$となる。
+    これは$U_1, \dots, U_n$が
+    $\calU$の有限部分被覆であることを意味する。
+    したがって$A$はコンパクトである。
+\end{proof}
+
+\begin{lemma}
+    コンパクト空間の連続像はコンパクトである。
+\end{lemma}
+
+\begin{proof}
+    $K$をコンパクト空間、
+    $f \colon K \to f(K)$を連続写像とする。
+    $\calV \coloneqq \{ V_\lambda \opensubset f(K) \}_{\lambda \in \Lambda}$を
+    $f(K)$の任意の開被覆とする。
+    ここで$f$は連続写像だから
+    $\calU \coloneqq \{ f^{-1}(V_\lambda) \}_{\lambda \in \Lambda}$
+    は$K$の開被覆である。
+    したがって$K$のコンパクト性より
+    $\calU$の有限部分被覆$f^{-1}(V_1), \dots, f^{-1}(V_n)$が存在する。
+    このとき$\{ V_1, \dots, V_n \}$は$\calV$の有限部分被覆になっている。
+    実際、$y \in f(K)$とすると
+    $y = f(x) \; (\exists x \in K)$と表せて、
+    $f^{-1}(V_1), \dots, f^{-1}(V_n)$が$K$の被覆であることより
+    ある$i \in \{ 1, \dots, n \}$が存在して
+    $x \in f^{-1}(V_i)$、
+    したがって$y = f(x) \in V_i$となるからである。
+    よって$f(K)$はコンパクトである。
+\end{proof}
+
+\begin{lemma}
+    Hausdorff 空間のコンパクト部分集合は閉である。
+\end{lemma}
+
+\begin{proof}
+    $X$を Hausdorff 空間、$A \subset X$をコンパクト部分集合とする。
+    $A$が$X$の閉集合であることを示すには
+    $\Cl_X A = A$を示せばよい。
+    背理法のために$\Cl_X A \supsetneq A$と仮定すると、
+    ある$x \in \Cl_X A \setminus A$が存在する。
+    ここで$X$の Hausdorff 性より、
+    各$y \in A$に対し
+    $x, y$を分離する$X$の開集合$U_y, V_y$が存在する。
+    すると$(V_y)_{y \in A}$は$X$における$A$の開被覆であるから、
+    $A$のコンパクト性より
+    有限部分被覆$V_{y_1}, \dots, V_{y_n}$が存在する。
+    このとき
+    各$U_{y_i} \; (i = 1, \dots, n)$は$X$における$x$の開近傍であるから、
+    その共通部分$\bigcap_{i = 1}^n U_{y_i}$も
+    $X$における$x$の開近傍である。
+    よって、$x \in \Cl_X A$であることとあわせて
+    $\myparen{ \bigcap_{i = 1}^n U_{y_i} }
+        \cap \myparen{\bigcup_{i = 1}^n V_{y_i}}
+        \neq \emptyset$
+    となる。
+    そこで$b \in \myparen{ \bigcap_{i = 1}^n U_{y_i} }
+        \cap \myparen{\bigcup_{i = 1}^n V_{y_i}}$
+    をひとつ選ぶと
+    $b$はある$V_{y_i}$に含まれるが、
+    一方で$b$は$U_{y_i}$にも含まれるから
+    $U_{y_i} \cap V_{y_i} \neq \emptyset$となり、
+    $U_{y_i}, V_{y_i}$が交わりをもたないことに矛盾する。
+    背理法より$\Cl_X A = A$である。
+\end{proof}
+
+次の定理は種々の空間の同相を示すために (筆舌に尽くしがたいほど) 有用である。
+
+\begin{theorem}[コンパクト空間から Hausdorff 空間への連続写像は閉]
+    \label[theorem]{thm:compact-to-Hausdorff}
+    コンパクト空間から Hausdorff 空間への連続写像は
+    閉写像であり、
+    とくに中への同相写像である。
+\end{theorem}
+
+\begin{proof}
+    上の一連の補題より従う。
+\end{proof}
+
+Tube lemma と呼ばれる汎用的な補題を以下に示す。
+Tube lemma は Tychonoff の定理の有限直積の場合の証明にも利用できる。
+証明の流れは\cite[p.189]{Rot98}によった。
+
+\begin{lemma}[Tube lemma]
+    $X, Y$を位相空間、
+    $U \opensubset X \times Y$とし、
+    $K \subset Y$をコンパクト集合とする。
+    このとき、集合
+    $A = \{ x \in X \mid \{ x \} \times K \subset U \}$は
+    $X$の開集合である。
+\end{lemma}
+
+\begin{proof}
+    $x_0 \in A$とする。
+    $A$の定義より$\{ x_0 \} \times K \subset U$である。
+    いま$U \opensubset X \times Y$ゆえに
+    各$(x_0, y) \in \{ x_0 \} \times K$は
+    $X \times Y$における$U$の内点だから、
+    ある$x_0 \in \exists L_y \opensubset X$と
+    $y \in \exists N_y \opensubset Y$が存在して
+    $(x_0, y) \in L_y \times N_y \subset U$が成り立つ。
+    とくに$\{ N_y \}_{y \in K}$は$Y$における$K$の開被覆だから、
+    $K$のコンパクト性より有限部分被覆
+    $N_{y_1}, \dots, N_{y_n}$が存在する。
+    そこで$L \coloneqq \bigcap_{i=1}^n L_{y_i}$とおくと
+    $L \opensubset X$であり、また
+    $\{ x_0 \} \times K \;
+        \subset L \times \bigcup_{i=1}^n N_{y_i} \;
+        \subset \bigcup_{i=1}^n (L \times N_{y_i}) \;
+        \subset U$
+    したがって
+    $x_0 \in L \subset A$
+    が成り立つ。
+    よって$x_0$は$X$における$A$の内点である。
+    以上より$A$は$X$の開集合である。
+\end{proof}
+
+\begin{theorem}[Tychonoff]
+    \TODO{}
+\end{theorem}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{局所コンパクト性}
+
+局所コンパクト性を定義する。
+
+\begin{definition}[局所コンパクト]
+    位相空間$X$が
+    \term{局所コンパクト}[locally compact]{局所コンパクト}[きょくしょこんぱくと]
+    であるとは、
+    任意の$x \in X$と$x$の$X$における任意の開近傍$U$に対し、
+    $x$の$X$における開近傍$W$であって
+    \begin{enumerate}
+        \item $x \in W \subset \Cl_X W \subset U$である。
+        \item $\Cl_X W$はコンパクトである。
+    \end{enumerate}
+    が成り立つものが存在することをいう。
+\end{definition}
+
+局所コンパクト性を定義にしたがって確かめるには
+すべての開近傍$U$に対して$W$の存在を言わなければならないが、
+Hausdorff 空間においてはこの労力を劇的に削減できる。
+
+\begin{proposition}[Hausdorff 空間における局所コンパクト性の特徴付け]
+    Hausdorff 位相空間$X$に関し次は同値である:
+    \begin{enumerate}
+        \item $X$は局所コンパクトである。
+        \item 各$x \in X$はコンパクトな近傍を持つ。
+    \end{enumerate}
+\end{proposition}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{パラコンパクト性}
+
+パラコンパクト性はコンパクト性の一般化である。
+定義から直接にはその有用性が見えにくいが、
+多様体論において重要な役割を果たす性質である。
+
+まず開被覆に関する用語を準備する。
+
+\begin{definition}[局所有限]
+    $X$を位相空間、
+    $Y \subset X$、
+    $\calU$を$Y$の開被覆とする。
+    $\calU$が
+    \term{局所有限}[locally finite]{局所有限}[きょくしょゆうげん]
+    であるとは、
+    各$x \in Y$に対し
+    $x$のある近傍$N_x$であって
+    $N_x$と交わる$U \in \calU$がたかだか有限個であるようなものが
+    存在することをいう。
+\end{definition}
+
+\begin{definition}[開細分]
+    $X$を位相空間、
+    $\calU, \calV$を$X$の開被覆とする。
+    $\calU$が$\calV$の
+    \term{開細分}[open refinement]{開細分}[かいさいぶん]
+    であるとは、
+    各$U \in \calU$に対し
+    $U \subset V$なる$V \in \calV$が存在することをいう。
+\end{definition}
+
+パラコンパクト性を定義する。
+
+\begin{definition}[パラコンパクト]
+    $X$を位相空間とする。
+    $X$が\term{パラコンパクト}[paracompact]{パラコンパクト}[ぱらこんぱくと]であるとは、
+    $X$の任意の開被覆が
+    局所有限な開細分を持つことをいう。
+\end{definition}
+
+\begin{proposition}[パラコンパクト性の特徴付け]
+    \TODO{}
+\end{proposition}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{演習問題}
+
+\begin{problem}
+    コンパクトだが閉でない部分集合を持つような位相空間は存在するか？
+    正しければ証明し、正しくなければ反例を挙げよ。
+\end{problem}
+
+\begin{answer}
+    \TODO{実数を使わない例？}
+    反例を挙げる。
+    $I_a, I_b$を閉区間$[0, 1] \subset \R$の
+    2つのコピーとする。
+    直和$I_a \amalg I_b \eqqcolon X$上の同値関係$\sim$を
+    $(a, t) \sim (b, t) \; (t \in [0, 1))$
+    により生成されるもので定め、
+    $\sim$による等化空間を$Y$、
+    標準射影$X \to Y$を$\pi$とおく。
+    $\pi(I_a)$はコンパクト空間$I_a$の
+    連続写像$\pi$による像だからコンパクトである。
+    一方、$\pi(I_a)$は$Y$の閉集合でないことを示す。
+    $X$の部分集合$\{ (a, 1) \}$は
+    $X$の開集合でないから、
+    $\{ \pi((a, 1)) \}$は$Y$の開集合でない。
+    したがって$\pi(I_a) = Y \setminus \{ \pi((a, 1)) \}$は
+    $Y$の閉集合でない。
+    よって$Y$が求める反例になっている。
+\end{answer}
+
+
+
+% ============================================================
+%
+% ============================================================
+\chapter{商空間再訪}
+
+商空間について改めて考えよう。
+ここで saturated set とよばれる集合論的な概念を導入する。
+saturated set は商写像の性質を調べる上で重要な概念である。
+
+\begin{definition}[saturated set]
+    $f \colon X \to Y$を写像とする。
+    $A \subset X$が
+    \term{$f$に関し saturated}{saturated}
+    であるとは、
+    $A = f^{-1}(f(A))$が成り立つことをいう。
+\end{definition}
+
+\begin{proposition}[saturated set の性質]
+    $f \colon X \to Y$を写像、
+    $S, T \subset X$を部分集合とする。
+    $S$または$T$が$f$に関し saturated ならば
+    $f(S \cap T) = f(S) \cap f(T)$が成り立つ。
+\end{proposition}
+
+\begin{proof}
+    $S$が$f$に関し saturated である場合を示せば十分。
+    $f(S \cap T) \subset f(S) \cap f(T)$は明らかだから逆向きの包含を示す。
+    $y \in f(S) \cap f(T)$とする。
+    ある$t \in T$が存在して$y = f(t)$をみたす。
+    $S$は$f$に関し saturated だから
+    $t \in f^{-1}(y) \subset f^{-1}(f(S)) = S$である。
+    したがって$t \in S \cap T$、
+    ゆえに$y = f(t) \in f(S \cap T)$である。
+\end{proof}
+
+\begin{theorem}[商写像の制限]
+    \label[theorem]{thm:restriction-of-quotient-map}
+    $q \colon X \to Y$を商写像とする。
+    $U \subset X$が$q$に関し saturated な開 (あるいは閉) 部分集合ならば
+    制限$q|_U \colon U \to q(U)$は商写像である。
+\end{theorem}
+
+\begin{remark}
+    反例は
+    \cref{problem:geometry2-ex-14}を参照。
+    \TODO{どういう反例？}
+\end{remark}
+
+\begin{proof}
+    開の場合のみ示す。
+    $q|_U \colon U \to q(U)$が連続かつ全射であることは明らか。
+    $V \subset q(U)$に関し
+    $V$が open in $q(U)$であることと
+    $(q|_U)^{-1}(V)$が open in $U$であることが同値であることを示す。
+    $V$が open in $q(U)$とすると、
+    ある$V' \opensubset Y$が存在して$V = V' \cap q(U)$と書ける。
+    すると
+    \begin{alignat}{1}
+        (q|_U)^{-1}(V)
+            &= (q|_U)^{-1}(V' \cap q(U)) \\
+            &= (q|_U)^{-1}(V') \cap (q|_U)^{-1}(q(U)) \\
+            &= (q|_U)^{-1}(V') \cap U \\
+            &= q^{-1}(V') \cap U
+    \end{alignat}
+    だから$(q|_U)^{-1}(V)$は open in $U$である。
+    逆に$(q|_U)^{-1}(V)$が open in $U$とすると、
+    $U$が open in $X$であることとあわせて
+    $(q|_U)^{-1}(V)$は open in $X$である。
+    ところで$U$は$q$に関し saturated だから
+    \begin{alignat}{1}
+        (q|_U)^{-1}(V)
+            &= q^{-1}(V) \cap U \\
+            &= q^{-1}(V) \cap q^{-1}(q(U)) \\
+            &= q^{-1}(V \cap q(U)) \\
+            &= q^{-1}(V)
+    \end{alignat}
+    したがって$q^{-1}(V)$は open in $X$である。
+    $q$は商写像だから$V$が open in $Y$となる。
+    このことと$V = V \cap q(U)$より
+    $V$は open in $q(U)$である。
+    以上で同値がいえた。
+\end{proof}
+
+次の命題は写像が商写像であるための十分条件を与える。
+ただし必要条件ではない。
+\TODO{saturated と関係ありそう？}
+
+\begin{proposition}[全射連続な開/閉写像は商写像]
+    \label[proposition]{prop:surj-closed-cts-map-is-quotient-map}
+    次が成り立つ:
+    \begin{enumerate}
+        \item 全射連続な開写像は商写像である。
+        \item 全射連続な閉写像は商写像である。
+    \end{enumerate}
+\end{proposition}
+
+\begin{proof}
+    (1) は明らかだから (2) を示す。
+    $f \colon X \to Y$を全射かつ連続な閉写像とする。
+    $V \subset Y$とし、$f^{-1}(V) \opensubset X$とする。
+    \begin{alignat}{1}
+        Y \setminus V
+            &= f(f^{-1}(Y \setminus V)) \quad (\text{$f$: 全射}) \\
+            &= f(X \setminus f^{-1}(V))
+    \end{alignat}
+    であり、$X \setminus f^{-1}(V)$が closed in $X$であることと
+    $f$が閉写像であることから、右辺、したがって左辺$Y \setminus V$は closed in $Y$である。
+    したがって$V$は open in $Y$である。
+    よって$V$は商写像である。
+\end{proof}
+
+商空間にホモトピーを誘導するために便利な
+J. H. C. Whitehead の補題を紹介しよう。
+
+\begin{theorem}[J. H. C. Whitehead の補題]
+    $J, X, Y$を位相空間とし、$p \colon X \to Y$を等化写像とする。
+    $J$が局所コンパクトならば、
+    $p \times \id_J \colon X \times J \to Y \times J$は等化写像である。
+\end{theorem}
+
+\begin{proof}
+    $p \times \id_J$が全射かつ連続であることは明らか。
+    あとは$Y \times J$の部分集合$B$であって
+    $A \coloneqq (p \times \id_J)^{-1}(B)$が
+    $X \times J$の開集合となるものが任意に与えられたとし、
+    $B$が$Y \times J$の開集合となることを示せばよい。
+    $(y_0, t_0) \in B$とし、
+    $(y_0, t_0)$が$Y \times J$における$B$の内点であることを示す。
+    $(x_0, t_0)
+        \in (p \times \id_J)^{-1}(\{ (y_0, t_0) \})
+        \subset A$
+    をひとつ選ぶ。
+    $(x_0, t_0)$は$X \times J$における$A$の内点だから、
+    ある$x_0 \in \exists L \opensubset X$と
+    $t_0 \in \exists N \opensubset J$が存在して
+    $(x_0, t_0) \in L \times N \subset A$が成り立つ。
+    ここで$J$の局所コンパクト性より
+    ある$W \opensubset J$が存在して
+    $t_0 \in W \subset \wb{W} \subset J$が成り立つ。
+    このとき tube lemma より
+    集合$U_A \coloneqq \{ x \in X \mid \{ x \} \times \wb{W} \subset A \}$
+    は$X$の開集合である。
+    ここで$x \in X$に関し
+    $p(x) \in p(A)$であることと
+    $x \in A$であることとは同値である。
+    実際、
+    \begin{alignat}{1}
+        p(x) \in p(U_A)
+            &\implies \exists u \in U_A \quad \text{s.t.} \quad p(x) = p(u) \\
+            &\implies \{ p(x) \} \times \wb{W} \subset B
+                \quad (\because \{ u \} \times \wb{W} \subset A) \\
+            &\implies \{ x \} \times \wb{W} \subset A
+                \quad (\because \text{ $p \times \id_J$で逆像をとった}) \\
+            &\implies x \in U_A \\
+            &\implies p(x) \in p(U_A)
+    \end{alignat}
+    だからである。
+    したがって$p^{-1}(p(U_A)) = U_A$である。
+    $p$は等化写像であったから、
+    $U_A$が$X$の開集合であることより
+    $p(U_A)$が$Y$の開集合であることが従う。
+    よって$p(U_A) \times W$は$Y \times J$の開集合である。
+    $U_A$はとくに$x_0$も含むから
+    $(y_0, t_0) = (p(x_0), t_0) \in p(U_A) \times W \subset B$
+    が成り立つ。
+    したがって$(y_0, t_0)$は$Y \times J$における$B$の内点である。
+    以上より$B$は$Y \times J$の開集合であることがいえた。
+\end{proof}
+
+
+% ============================================================
+%
+% ============================================================
+\chapter{位相群の作用}
+
+\begin{definition}[軌道空間]
+    \idxsym{orbit space}{$X / G$}{$G$の作用による$X$の軌道空間}
+    $G$を位相群、$X$を位相空間とし、
+    $G$は$X$に左から作用しているとする。
+    このとき、$G$の作用で写り合う$X$の点を同値とみなして
+    $X$の商空間を考えたものを$X / G$と書き\footnote{
+        $G$の作用が左からであることを明示するために
+        $G \backslash X$と書く流儀もある。
+    }、
+    $G$の作用による$X$の
+    \term{軌道空間}[orbit space]{軌道空間}[きどうくうかん]
+    という。
+\end{definition}
+
+\begin{proposition}[軌道空間への商写像は開写像]
+    \TODO{}
+\end{proposition}
+
+\begin{definition}[固有作用]
+    $G$を位相群、$X$を位相空間とし、
+    $G$は$X$に左から作用しているとする。
+    $G$の作用が
+    \term{固有}[proper]{固有作用}[こゆうさよう]
+    であるとは、写像
+    \begin{equation}
+        G \times X \to X \times X,
+        \quad
+        (g, x) \mapsto (gx, x)
+    \end{equation}
+    が固有写像であることをいう。
+\end{definition}
+
+\begin{proposition}[軌道空間が Hausdorff となる十分条件]
+    \label[proposition]{prop:orbit-space-Hausdorff}
+    $G$を位相群、$X$を局所コンパクト Hausdorff 位相空間とし、
+    $G$は$X$に左から作用しているとする。
+    このとき、軌道空間$X / G$は Hausdorff である。
+\end{proposition}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+\TODO{離散群を考えるのは被覆空間のため？}
+
+\begin{definition}[固有不連続]
+    $G$を位相群、$X$を位相空間とし、
+    $G$は$X$に左から作用しているとする。
+    このとき、$G$の作用が
+    \term{固有不連続}[properly discontinuous]{固有不連続}[こゆうふれんぞく]
+    であるとは、次が成り立つことをいう:
+    $X$の任意のコンパクト部分集合$K$に対し、
+    $K$と$gK$が交わりを持つような
+    $g \in G$は有限個しかない。
+    \TODO{この用語は避けたい}
+\end{definition}
+
+
+
+
+\end{document}

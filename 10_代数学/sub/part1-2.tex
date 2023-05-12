@@ -1,0 +1,3992 @@
+\documentclass[report]{jlreq}
+\usepackage{global}
+\usepackage{./local}
+\subfiletrue
+%\makeindex
+\begin{document}
+
+% ============================================================
+%
+% ============================================================
+\chapter{加群}
+
+群が集合の置換群としての表現を持つように、
+環はアーベル群の自己準同型環としての表現を持っている。
+したがってそのような表現を通して
+環の性質を調べることができそうである。
+加群とは、このような表現によって環が作用しているアーベル群のことである。
+また別の見方では、加群とは加法とスカラー倍を備えた代数系のことであり、
+アーベル群やベクトル空間の一般化である。
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{加群}
+
+\begin{definition}[加群]
+    $A$を環とする。
+    集合$M$が\term{左$A$-加群}[left $A$-module]{加群}[かぐん]
+    あるいは\emph{$A$上の左加群}であるとは、
+    次が成り立つことをいう:
+    \begin{description}
+        \item[(M1)] $V$はアーベル群である。
+        \item[(M2)]
+            \term{スカラー倍}[scalar multiplication]{スカラー倍}[すからーばい]と呼ばれる
+            写像$R \times V \to V, \; (r, v) \mapsto rv$が定義されている。
+        \item[(M3)] $a, b \in R, \; x \in M$に対し
+            \begin{equation}
+                1x = x, \quad (ab) x = a (bx)
+            \end{equation}
+            が成り立つ。
+        \item[(M4)] $a, b \in R, \; x, y \in M$に対し
+            \begin{alignat}{1}
+                (a + b) x &= ax + bx \\
+                a (x + y) &= ax + ay
+            \end{alignat}
+            が成り立つ。
+    \end{description}
+    \emph{右$A$-加群 (right $A$-module)}も同様に定義される。
+    本稿では左$A$-加群を単に\emph{$A$-加群 ($A$-module)}や加群と呼ぶことにする。
+\end{definition}
+
+\begin{definition}[両側加群]
+    $A, B$を環とする。
+    集合$M$が
+    \term{$(A, B)$-両側加群}[$(A, B)$-bimodule]{両側加群}[りょうがわかぐん]
+    であるとは、
+    次が成り立つことをいう:
+    \begin{description}
+        \item[(BM1)] $M$は左$A$-加群かつ右$B$-加群である。
+        \item[(BM2)] $a \in A, \; b \in B, \; x \in M$に対し
+            \begin{equation}
+                (ax)b = a(xb)
+            \end{equation}
+            が成り立つ。
+    \end{description}
+\end{definition}
+
+\begin{example}[加群の例]
+    \idxsym{regular modules}{$\down{A}A, A_A$}{左/右正則加群}
+    $A$を環とする。
+    \begin{itemize}
+        \item 任意のアーベル群は$\Z$-加群である。
+        \item $A$の左イデアル、とくに$A$自身は左からの積で$A$-加群となる。
+            このように環$A$自身を左$A$-加群とみなしたものを
+            $\down{A}A$と書き、
+            \term{左正則加群}[left regular module]
+                {左正則加群}[ひだりせいそくかぐん]と呼ぶ。
+            同様に環$A$自身を
+            右からの積で右$A$-加群とみなしたものを
+            $A_A$と書き、
+            \term{右正則加群}[left regular module]
+                {右正則加群}[みぎせいそくかぐん]と呼ぶ。
+        \item 自明群$0$は任意の環上の加群である。
+    \end{itemize}
+\end{example}
+
+既存の加群の係数を制限することで
+新たな加群を構成することができる。
+これを\term{係数の制限}[restriction of scalars]{係数制限}[けいすうせいげん]
+といい、詳しくは
+\cref{section:restriction-and-extension-of-scalars}
+で調べる。
+
+\begin{example}[係数の制限]
+    \label[example]{example:restriction-of-scalars}
+    $A, B$を環、
+    $M$を$B$-加群、
+    $\phi \colon A \to B$を環準同型とする。
+    このとき
+    $ax \coloneqq \phi(a)x$でスカラー倍を定めることで
+    $M$に$A$-加群の構造が入る。
+    \begin{itemize}
+        \item $A \subset B$が部分環なら、
+            標準包含により$B$は$A$-加群となる。
+        \item $R$が可換環なら、
+            標準包含により$R[X_1, \dots, X_n]$は$A$-加群である。
+        \item $R$を可換環とし、$H \subset G$を部分群とすると、
+            \cref{prop:group-ring-homomorphism}より
+            $R[H]$は$R[G]$の部分環である。
+            よって$R[G]$は$R[H]$-加群である。
+        \item $V \coloneqq \F_2^3$は$\F_2$上のベクトル空間（とくに加群）である。
+            $\Z$から$\F_2$への自然な環準同型により
+            $V$は$\Z$-加群となる。
+            また、$\Z/4\Z$から$\F_2$への自然な環準同型により
+            $V$は$\Z/4\Z$-加群にもなる。
+        \item $\C[x, y]/(x, y^2)$は$\C$-加群だから、
+            evaluation homomorphism $\C[x, y] \to \C$により
+            $\C[x, y]$-加群にもなる。
+    \end{itemize}
+\end{example}
+
+\begin{definition}[加群の準同型]
+    $A$を環、
+    $V_1, V_2$を$A$-加群とする。
+    写像$\varphi \colon V_1 \to V_2$が
+    \term{$A$-加群準同型}[$A$-module homomorphism]
+        {加群準同型}[かぐんじゅんどうけい]
+    であるとは、
+    \begin{enumerate}
+        \item $\varphi$は群準同型
+        \item $\varphi(av) = a\varphi(v) \quad (a \in R, v \in V_1)$
+    \end{enumerate}
+    が成り立つことをいう。
+\end{definition}
+
+\begin{example}[加群準同型の例]
+    \label[example]{ex:module-homomorphism}
+    $A \coloneqq \C[x, y], I \coloneqq (x, y) \subset A$とする。
+    写像$\phi \colon A^2 \to I,$
+    \begin{equation}
+        [f_1, f_2] \mapsto f_1 x + f_2 y
+    \end{equation}
+    を考える。$\phi$は定義から明らかに全射であり、
+    $I$を$A$-加群とみれば$\phi$は$A$-加群準同型である。
+    $\Ker(\phi)$を求める。
+    $[f_1, f_2] \in \Ker(\phi)$ならば$f_1 x + f_2 y = 0$である。
+    よって$f_1 x = -f_2 y$となるが、$A$はUFDで$x, y$は互いに素だから、
+    素元分解の一意性より$f_1 = yg_1, f_2 = xg_2 \; (g_1, g_2 \in A)$と表せる。
+    よって$g_1 xy = - g_2 xy$であり、$A$は整域だから
+    $g_1 = -g_2$、したがって$[f_1, f_2] = g_1 \cdot [y, -x]$である。
+    よって$\Ker(\phi) \subset A \cdot [y, -x]$である。
+    逆の包含も明らか。したがって$\Ker(\phi) = A \cdot [y, -x]$である。
+\end{example}
+
+
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{部分加群}
+
+\begin{definition}[部分加群]
+    $A$を環とし、$M$を$A$-加群とする。
+    部分集合$N \subset M$が$M$の和とスカラー倍により加群となるとき、
+    $N$を$M$の\term{部分$A$-加群}[$A$-submodule]{部分加群}[ぶぶんかぐん]という。
+    $N$が$M$の部分加群であることは次と同値である：
+    \begin{enumerate}
+        \item $N$は$M$の加法部分群であり、
+        \item $a \in A, n \in N \Rightarrow an \in N$が成り立つ。
+    \end{enumerate}
+\end{definition}
+
+\begin{definition}[イデアル上の線型結合からなる部分加群]
+    \idxsym{submodule with ideal coefficients}{$IM$}
+        {左イデアル$I$上の線型結合全体からなる部分加群}
+    $A$を環、$M$を$A$-加群、$I \subset A$を左イデアルとする。
+    $M$の元の$I$-線型結合全体の集合を
+    \begin{equation}
+        IM \coloneqq \{
+            a_1 v_1 + \cdots + a_n v_n \mid
+            n \in \Z_{\ge 0}, \; a_i \in I, \; v_i \in M
+        \}
+    \end{equation}
+    とおく。
+    $IM$は$M$の部分$A$-加群となる。
+\end{definition}
+
+\begin{example}[部分加群の例]
+    ~
+    \begin{itemize}
+        \item 正則左$R$-加群の部分$R$-加群は
+            $R$の左イデアルに他ならない。
+            右/双加群が右/両側イデアルに対応することも同様である。
+    \end{itemize}
+\end{example}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{生成された加群}
+
+\TODO{$Rv$とかの記法は？それは環のイデアル？}
+
+\begin{definition}[部分集合により生成された加群]
+    \idxsym{submodule generated by a subset}
+        {$\langle S \rangle, \; AS$}{$S$により生成された部分加群}
+    \idxsym{submodule generated by an element}
+        {$\langle v \rangle, \; Av$}{$v$により生成された部分加群}
+    $A$を環、$M$を$A$-加群とする。
+    \begin{itemize}
+        \item 部分集合$S \subset M$に対し、
+            $S$を含む$M$の最小の部分加群を
+            $S$により\term{生成された部分加群}[generated submodule]
+            {生成された部分加群}[せいせいされたかぐん]と呼び、
+            $\langle S \rangle$や$AS$と書く。
+        \item $S$が1元集合$S = \{ v \}$の場合、
+            $\langle S \rangle$を
+            $v$により$A$上生成された
+            \term{巡回加群}[cyclic submodule]{巡回加群}[じゅんかいかぐん]と呼び、
+            波括弧を省略して
+            $\langle v \rangle$や$Av$とも書く。
+    \end{itemize}
+\end{definition}
+
+有限集合で生成される加群は特に重要であるが、
+ここでは定義と簡単な例を述べるにとどめ、
+詳しく調べるのは\cref{chapter:finiteness}にまわす。
+
+\begin{definition}[有限生成加群]
+    $A$を環、$M$を$A$-加群とする。
+    $M$が有限集合で生成されるとき、$M$は
+    $A$-加群として\term{有限生成}[finitely generated]
+    {有限生成!加群として---}[ゆうげんせいせい]であるという。
+\end{definition}
+
+\begin{example}[有限生成加群とそうでない加群の例]
+    ~
+    \begin{itemize}
+        \item $A$を環とする。
+            $n \in \Z_{\ge 1}$に対し$A^n$は$A$上の有限生成加群である。
+            生成元は$(0, \dots, \overset{\stackrel{j}{\smile}}{1}, \dots, 0)
+                \; (j = 1, \dots, n)$
+            である。
+        \item $A$を可換環とし、$B \coloneqq A[X]$とすると、
+            $B$は$A$-加群として有限生成\highlight{ではない}。
+            しかし$A$-代数としては$x$により生成されるから有限生成である。
+        \item \cref{section:noetherian-modules-and-artinian-modules}
+            で述べるネーター性は有限生成性を強化した性質である。
+    \end{itemize}
+\end{example}
+
+$\Q$が$\Z$上有限生成でないことは
+簡単な反例を作るときに役立つかもしれない。
+
+\begin{lemma}
+    \label[lemma]{lemma:Q-is-not-finitely-generated-over-Z}
+    $\Q$は$\Z$上有限生成でない。
+\end{lemma}
+
+\begin{proof}
+    $\Q$が有限個の元$q_1, \dots, q_n$により$\Z$上生成されたとする。
+    $q_i = k_i / l_i, \;
+        k_i \in \Z, \;
+        l_i \in \Z_{\ge 1}, \;
+        \gcd(k_i, l_i) = 1$と表す。
+    $l_1, \dots, l_n$の素因数分解に現れない素数$p$をひとつ選ぶ。
+    $1 / p = \sum_{i = 1}^n n_i k_i / l_i$と表せる。
+    よって
+    $l_1 \dots l_n = p \sum_{i = 1}^n n_i k_i \prod_{j \neq i} l_j$
+    が成り立つ。
+    $p$の選び方より
+    左辺は$p$で割り切れないが、
+    右辺は$p$で割り切れるから矛盾。
+    よって$\Q$は$\Z$上有限生成でない。
+\end{proof}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{商加群}
+
+\begin{definition}[商加群]
+    \TODO{}
+\end{definition}
+
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{準同型定理}
+
+\begin{proposition}[加群準同型の像と核]
+    $A$を環、
+    $f \colon M \to N$を$A$-加群準同型とする。
+    このとき$\Ker f, \; \Im f$はそれぞれ
+    $M, N$の$A$-部分加群である。
+\end{proposition}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+\begin{theorem}[準同型定理]
+    \TODO{}
+\end{theorem}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+\begin{example}[準同型定理の例]
+    \cref{ex:module-homomorphism}の具体例を考える。
+    $A = \C[x]$とし、$M = A^2$とする。
+    $N = A \cdot [1, x]$とすると
+    $N$は$M$の部分$A$-加群である。
+    $\phi \colon M \to A, [a, b] \mapsto b - ax$は$A$-加群準同型である。
+    $\phi([0, b]) = b$なので、$\phi$は全射である。
+    さらに$\Ker(\phi) = A \cdot [1, x] = N$
+    より$M/N \cong A$である。
+    \begin{equation}
+        \begin{tikzcd}
+            & A \\
+            M \ar{ru}{\phi} \ar[two heads]{r} & M/N \ar[dashed]{u}
+        \end{tikzcd}
+    \end{equation}
+\end{example}
+
+\begin{theorem}[第2同型定理, 菱形同型定理]
+    $A$を環、
+    $M$を$A$-加群、
+    $H, K \subset M$を$A$-部分加群とする。
+    このとき$(H + K) / K \cong H / (H \cap K)$が成り立つ。
+    \begin{equation}
+        \begin{tikzcd}
+            & H + K \\
+            H \ar[dashed, no head]{ru}
+                && K \ar[dash]{lu} \\
+            & H \cap K \ar[dash]{lu} \ar[dashed, no head]{ru}
+        \end{tikzcd}
+    \end{equation}
+\end{theorem}
+
+\begin{proof}
+    準同型$H \to (H + K) / K, \; h \mapsto h + K$に
+    準同型定理を用いればよい。
+\end{proof}
+
+\begin{theorem}[第3同型定理]
+    $A$を環、
+    $K \subset L \subset M$を$A$-部分加群の列とする。
+    このとき
+    \begin{equation}
+        \frac{M / K}{L / K} \cong \frac{M}{L}
+    \end{equation}
+    が成り立つ。
+\end{theorem}
+
+\begin{proof}
+    準同型$M / K \to M / L, \; m + K \to m + L$に
+    準同型定理を用いればよい。
+    cf. \cref{problem:algebra2-5.63}
+\end{proof}
+
+加群に対しても
+環の両側イデアルの対応原理
+(\cref{thm:ideal-correspondence-principle})
+と類似の主張が成り立つ。
+\TODO{束の同型？}
+この定理は、商加群のイデアル全体の集合にある種の下界を与える。
+したがって、たとえば\cref{chapter:finiteness}で述べる
+イデアルの降鎖条件の確認に使うことができ、
+アルティン環の例を考えるためにも役立つ。
+
+\begin{theorem}[部分加群の対応原理]
+    \label[theorem]{thm:supmodule-correspondence-principle}
+    $A$を環、
+    $M$を$A$-加群、
+    $N \subset M$を$A$-部分加群とする。
+    \begin{alignat}{1}
+        \scrI_N(M) &\coloneqq \{
+            K \colon \text{$K$は$N$を含む$M$の$A$-部分加群}
+        \} \\
+        \scrI(M / N) &\coloneqq \{
+            K \colon \text{$K$は$M / N$の$A$-部分加群}
+        \}
+    \end{alignat}
+    とおくと、
+    \begin{equation}
+        \wt{p} \colon \scrI_N(M) \to \scrI(M / N),
+        \quad K \mapsto p(K)
+    \end{equation}
+    は包含関係を保つ全単射であり、
+    $\wt{p}$の逆写像$q$は
+    \begin{equation}
+        q \colon \scrI(M / N) \to \scrI_N(M),
+        \quad K' \mapsto p^{-1}(K')
+    \end{equation}
+    で与えられる。
+\end{theorem}
+
+\begin{proof}
+    \TODO{}
+%    $\wt{p}$の逆写像$q$が
+%    \begin{equation}
+%        q \colon \scrI(A / I) \to \scrI_I(A),
+%        \quad J' \mapsto p^{-1}(J')
+%    \end{equation}
+%    で与えられることを示す。
+%    $A / I$の両側イデアル$J'$に対し
+%    $p^{-1}(J')$が$A$の両側イデアルであることは
+%    \cref{thm:ring-hom-and-ideals}より成り立ち、
+%    また$I = p^{-1}(0) \subset p^{-1}(J')$も成り立つ。
+%    よって$q$は well-defined である。
+%
+%    $q$が$\wt{p}$の逆写像であることを示す。
+%    $J' \in \scrI(A / I)$に対し
+%    $p(p^{-1}(J')) = J'$であることは
+%    $p$の全射性より従う。
+%    $J \in \scrI_I(A)$に対し
+%    $p^{-1}(p(J)) = J$であることを示す。
+%    "$\supset$"は集合の一般論より成り立つ。
+%    逆に$x \in p^{-1}(p(J))$とすると、
+%    ある$j \in J$が存在して$p(x) = p(j)$となる。
+%    よって$p(x - j) = 0$だから
+%    $x - j \in p^{-1}(0) = I \subset J$である。
+%    したがって$x = (x - j) + j \in J$が成り立つから
+%    "$\subset$"もいえた。
+%    よって$q$は$\wt{p}$の逆写像である。
+%
+%    $\wt{p}$が包含を保つことは
+%    写像による部分集合の像と逆像が包含を保つことから従う。
+%    以上で定理の主張が示された。
+\end{proof}
+
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{自己準同型環}
+
+加群準同型全体の集合には次のように加群の構造が入る。
+
+\begin{definition}[加群準同型全体の集合]
+    \label[definition]{definition:set-of-module-homomorphisms}
+    \idxsym{Module homomorphism}{$\Hom_A(V_1, V_2)$}
+        {$A$-加群準同型$V_1 \to V_2$全体のなす集合}
+    \begin{description}
+        \item[($\Hom$の$\Z$-加群構造)]
+            $A$を環、
+            $V_1, V_2$を$A$-加群とする。
+            集合
+            \begin{equation}
+                \Hom_A(V_1, V_2) \coloneqq \{
+                    \varphi \colon V_1 \to V_2 \mid \varphi \text{ は$A$-加群準同型}
+                \}
+            \end{equation}
+            に対し、
+            加法、零元を
+            \begin{alignat}{1}
+                (\varphi + \psi)(v)
+                    &\coloneqq \varphi(v) + \psi(v) \\
+                (\varphi + 0)(v)
+                    &= \varphi(v)
+                    = (0 + \varphi)(v)
+            \end{alignat}
+            として$\Z$-加群の構造が入る。
+        \item[(環上の加群)]
+            $A, B$を環、
+            $V_1$を$A$-加群、
+            $V_2$を$B$-加群とする。
+            $\Z$-加群$\Hom_{\Z}(V_1, V_2)$に対し、
+            スカラー倍を
+            \begin{equation}
+                (a\varphi)(m) \coloneqq \varphi(am)
+            \end{equation}
+            として$A$-加群の構造が入る。
+        \item[(環上の両側加群)]
+            $A, B$を環、
+            $V_1$を$(B, A)$-両側加群、
+            $V_2$を$B$-加群とする。
+            $B$-加群$\Hom_B(V_1, V_2)$に対し、
+            スカラー倍を
+            \begin{equation}
+                (a\varphi)(m) \coloneqq \varphi(ma)
+            \end{equation}
+            として$A$-加群の構造が入る。
+        \item[(代数上の加群)]
+            $R$を可換環、
+            $A$を$R$-代数とする。
+            $\Z$-加群$\Hom_A(V_1, V_2)$に対し、
+            スカラー倍を
+            \begin{equation}
+                (r \varphi)(v) \coloneqq r \varphi(v)
+            \end{equation}
+            として$R$-加群の構造が入る\footnote{
+                $A$が可換環でないときは、
+                $\Hom_A(V_1, V_2)$に$A$-加群の構造が入るとは限らない。
+                実際、$a, b \in A, \; ab \neq ba$をとり
+                $a\id \in \Hom_A(V_1, V_1)$を仮定すると、
+                $x \in V_1 \setminus \{ 0 \}$
+                に対し
+                $bax = (a\id)(bx) = abx$
+                より$ab = ba$となり矛盾する。
+            }。
+    \end{description}
+\end{definition}
+
+とくに自己準同型全体の加群には次のように環や代数の構造が入る。
+
+\begin{definition}[自己準同型環]
+    \idxsym{Module endomorphism}{$\End_A(V)$}
+        {$A$-加群自己準同型$V \to V$全体のなす集合}
+    \begin{description}
+        \item[(環上の加群)]
+            $A$を環、
+            $V$を$A$-加群とする。
+            $A$-加群$\Hom_A(V, V)$を$\End_A(V)$と書き、
+            $\End_A(V)$に対し、
+            乗法、単位元を
+            \begin{alignat}{1}
+                (\varphi \cdot \psi)(v)
+                    &\coloneqq (\varphi \circ \psi)(v) \\
+                (\id_V \cdot \varphi)(v)
+                    &= \varphi(v)
+                    = (\varphi \cdot \id_V)(v)
+            \end{alignat}
+            として環の構造が入る。
+            $\End_A(V)$を$V$の
+            \term{自己準同型環}[endmorphism ring]{自己準同型環}[じこじゅんどうけいかん]
+            という。
+        \item[(代数上の加群)]
+            $R$を可換環、
+            $A$を$R$-代数、
+            $V$を$A$-加群とする。
+            環$\End_A(V)$に対し、
+            環準同型
+            \begin{equation}
+                R \to Z(\End_A(V)),
+                \quad
+                r \mapsto (v \mapsto rv)
+            \end{equation}
+            により$R$-代数の構造が入る。
+    \end{description}
+\end{definition}
+
+加群の自己準同型をひとつ固定すると、
+次の例のように係数環を多項式環上まで拡張できる。
+この構成は\cref{chapter:linear-algebra}で重要となる。
+
+\begin{example}[多項式環上の加群]
+    $R$を可換環、$M$を$R$-加群、$\varphi \in \End_R(M)$とする。
+    このとき、$M$は写像
+    \begin{equation}
+        R[X] \times M \to M,
+        \quad
+        (f, v) \mapsto f(\varphi)(v)
+    \end{equation}
+    をスカラー乗法として$R[X]$-加群となる。
+    $M$が$R$上有限生成ならば、
+    明らかに$R[X]$上でも有限生成である。
+\end{example}
+
+
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{直積と直和}
+
+加群の直積と直和を定義する。
+まず圏論的直積を考える。
+
+\begin{definition}[圏論的直積]
+    $A$を環、
+    $S$を集合、
+    $\{ V_i \}_{i \in S}$を$A$-加群の族とする。
+    $A$-加群$W$と
+    $A$-加群準同型の族$\{ q_i \colon W \to V_i \}_{i \in S}$の対
+    $(W, \{ q_i \}_i)$が
+    \term{圏論的直積}[categorical direct product]{圏論的直積}[けんろんてきちょくせき]
+    であるとは、
+    \begin{alignat}{1}
+        &\forall \; \{ f_i \colon U \to V_i \}_{i \in S}
+            \colon \text{ $A$-加群準同型の族} \\
+        &\exists! \; F \colon U \to W
+            \colon \text{ $A$-加群準同型}
+            \quad \text{s.t.} \quad \\
+        &\quad
+            \begin{tikzcd}[ampersand replacement=\&]
+                U \ar{rd}[swap]{f_i} \ar[dashed]{rr}{F} \&\& W \ar{ld}{q_i} \\
+                \& V_i
+            \end{tikzcd}
+    \end{alignat}
+    が成り立つことをいう\footnote{
+        つまり、直積写像が一意に存在するということである。
+    }。
+\end{definition}
+
+圏論的直積の具体的な構成を与えよう。
+
+\begin{definition}[直積]
+    \idxsym{direct product module}{$\prod_{i \in S} V_i$}{加群の直積}
+    $A$を環、
+    $S$を集合、
+    $\{ V_i \}_{i \in S}$を$A$-加群の族とする。
+    直積集合$\prod_{i \in S} V_i$に加法とスカラー倍を
+    \begin{alignat}{1}
+        (v_i)_i + (w_i)_i &\coloneqq (v_i + w_i)_i \\
+        a \cdot (v_i)_i &\coloneqq (a \cdot v_i)_i
+    \end{alignat}
+    で定め、零元を$(0)_i$として$A$-加群の構造を入れたものを
+    加群の\term{直積}[direct product]{直積}[ちょくせき]という。
+    直積加群は標準射影の族
+    \begin{equation}
+        p_k \colon \prod_{i \in S} V_i \to V_k,
+        \quad
+        (v_i)_i \mapsto v_k
+    \end{equation}
+    とあわせて考える。
+\end{definition}
+
+\begin{proposition}[直積は圏論的直積]
+    $A$を環、
+    $S$を集合、
+    $\{ V_i \}_{i \in S}$を$A$-加群の族とする。
+    このとき、直積加群$\prod_{i \in S} V_i$とその標準射影の族$\{ p_i \}_i$
+    の対は圏論的直積である。
+\end{proposition}
+
+\begin{proof}
+    $F(u) \coloneqq (f_i(u))_i$と定めればよい。
+\end{proof}
+
+つぎに圏論的直和を考える。
+
+\begin{definition}[圏論的直和]
+    $A$を環、
+    $S$を集合、
+    $\{ V_i \}_{i \in S}$を$A$-加群の族とする。
+    $A$-加群$W$と
+    $A$-加群準同型の族$\{ \iota_i \colon V_i \to W \}_{i \in S}$の対
+    $(W, \{ \iota_i \}_i)$が
+    \term{圏論的直和}[categorical direct sum]{圏論的直和}[けんろんてきちょくわ]
+    であるとは、
+    \begin{alignat}{1}
+        &\forall \; \{ f_i \colon V_i \to U \}_{i \in S}
+            \colon \text{ $A$-加群準同型の族} \\
+        &\exists! \; F \colon W \to U
+            \colon \text{ $A$-加群準同型}
+            \quad \text{s.t.} \quad \\
+        &\quad
+            \begin{tikzcd}[ampersand replacement=\&]
+                W \ar[dashed]{rr}{F} \&\& U \\
+                \& V_i \ar{lu}{\iota_i} \ar{ru}[swap]{f_i}
+            \end{tikzcd}
+    \end{alignat}
+    が成り立つことをいう\footnote{
+        つまり、直和写像が一意に存在するということである。
+    }。
+\end{definition}
+
+圏論的直和の具体的な構成を与える。
+
+\begin{definition}[外部直和]
+    \idxsym{external direct sum module}{$\bigoplus_{i \in S} V_i$}{加群の外部直和}
+    $A$を環、
+    $S$を集合、
+    $\{ V_i \}_{i \in S}$を$A$-加群の族とする。
+    $\prod_{i \in S} V_i$の部分$A$-加群
+    \begin{equation}
+        \bigoplus_{i \in S} V_i
+            \coloneqq \biggl\{
+                (v_i)_i \in \prod_{i \in S} V_i
+                \; \bigg| \;
+                \text{有限個の$i \in S$を除いて$v_i = 0$}
+            \biggr\}
+    \end{equation}
+    を加群の\term{外部直和}[external direct sum]{外部直和}[がいぶちょくわ]という。
+    外部直和は標準射の族
+    \begin{equation}
+        \iota_k \colon V_k \to \bigoplus_{i \in S} V_i,
+        \quad
+        v \mapsto (v_i)_i
+        \quad \text{with} \quad
+        v_i = \begin{cases}
+            0 & i \neq k \\
+            v & i = k
+        \end{cases}
+    \end{equation}
+    とあわせて考える。
+\end{definition}
+
+\begin{remark}
+    $S$が有限集合ならば、
+    定義から明らかに
+    直積$\prod_{i \in S} V_i$と
+    (外部)直和$\bigoplus_{i \in S} V_i$は一致する。
+\end{remark}
+
+\begin{definition}[内部直和]
+    \TODO{}
+\end{definition}
+
+圏論的直和の特徴付けを与える。
+この特徴付けは
+\cref{section:additive-functors}
+で加法的関手を調べる際に役立つ。
+
+\begin{proposition}[直和の特徴付け]
+    $A$を環、
+    $\Lambda$を集合、
+    $\{ M_\lambda \}_{\lambda \in \Lambda}$
+    を$A$-加群の族、
+    $\{ j_\lambda \colon M_\lambda \to M \}_{\lambda \in \Lambda}$
+    を$A$-加群準同型の族とする。
+    このとき、次は同値である:
+    \begin{enumerate}
+        \item $(M, \{ j_\lambda \}_{\lambda \in \Lambda})$は圏論的直和である。
+        \item ある$A$-加群準同型の族
+            $\{ q_\lambda \colon M \to M_\lambda \}_{\lambda \in \Lambda}$
+            が存在して次をみたす:
+            \begin{enumerate}
+                \item 各$\lambda, \mu \in \Lambda$に対し
+                    $q_\mu \circ j_\lambda = \delta_{\lambda \mu} \id_{M_\lambda}$
+                    である。
+                \item 各$x \in M$に対し、
+                    有限個の$\lambda \in \Lambda$を除いて
+                    $q_\lambda(x) = 0$
+                    である。
+                \item 各$x \in M$に対し
+                    $\sum_{\lambda \in \Lambda} j_\lambda \circ q_\lambda(x) = x$
+                    である。
+            \end{enumerate}
+    \end{enumerate}
+\end{proposition}
+
+\begin{proof}
+    \uline{(1) \Rightarrow (2)} \quad
+    \TODO{}
+
+    \uline{(2) \Rightarrow (1)} \quad
+    \begin{equation}
+        f(x) \coloneqq
+            \sum_{\lambda \in \Lambda}
+            f_\lambda \circ q_\lambda(x)
+    \end{equation}
+    \TODO{}
+\end{proof}
+
+有限直和の場合は明らかに$(2b)$の条件は不要である。
+
+\begin{corollary}[有限直和の特徴付け]
+    $A$を環、
+    $M_1, \dots, M_n \; (n \in \Z_{\ge 2})$
+    を$A$-加群、
+    $j_k \colon M_k \to M \; (k = 1, \dots, n)$
+    を$A$-加群準同型とする。
+    このとき、次は同値である:
+    \begin{enumerate}
+        \item $(M, (j_1, \dots, j_n))$は圏論的直和である。
+        \item ある$A$-加群準同型
+            $q_k \colon M \to M_k \; (k = 1, \dots, n)$
+            が存在して次をみたす:
+            \begin{enumerate}
+                \item 各$1 \le k, l \le n$に対し
+                    $q_l \circ j_k = \delta_{kl} \id_{M_k}$
+                    である。
+                \item $\sum_{k = 1}^n j_k \circ q_k = \id_M$
+                    である。
+            \end{enumerate}
+    \end{enumerate}
+    \qed
+\end{corollary}
+
+2つの直和の場合はさらに簡単になり、
+$q_l \circ j_k = 0 \; (l \neq k)$の条件を除くことができる。
+
+\begin{corollary}
+    $A$を環、
+    $M_1, M_2$を$A$-加群、
+    $j_k \colon M_k \to M \; (k = 1, 2)$
+    を$A$-加群準同型とする。
+    このとき、次は同値である:
+    \begin{enumerate}
+        \item $(M, (j_1, j_2))$は圏論的直和である。
+        \item ある$A$-加群準同型
+            $q_k \colon M \to M_k \; (k = 1, 2)$
+            が存在して次をみたす:
+            \begin{enumerate}
+                \item $q_1 \circ j_1 = \id_{M_1}, \;
+                    q_2 \circ j_2 = \id_{M_2}$
+                    である。
+                \item $j_1 \circ q_1 + j_2 \circ q_2 = \id_M$
+                    である。
+            \end{enumerate}
+    \end{enumerate}
+\end{corollary}
+
+\begin{remark}
+    3個以上の直和の場合は
+    $q_l \circ j_k = 0 \; (l \neq k)$
+    の条件を除くことはできない。
+    実際、$M = M_1 = M_2 = M_3 = \Z/2\Z$として
+    $j_k \colon M_k \to M, \; x \mapsto x$の場合を考えると、
+    $q_k \colon M \to M_k, \; x \mapsto x$は
+    $q_k \circ j_k = \id_{M_k}, \;
+        j_1 \circ q_1 + j_2 \circ q_2 + j_3 \circ q_3 = \id_M$
+    をみたすが、明らかに$M \not\cong M_1 \oplus M_2 \oplus M_3$である。
+\end{remark}
+
+\begin{proof}
+    条件(2)から$q_1 \circ j_2 = 0, \; q_2 \circ j_1 = 0$が従うことをいえばよい。
+    \begin{alignat}{1}
+        q_1
+            &= q_1 \circ (j_1 \circ q_1 + j_2 \circ q_2)
+                \quad (\text{条件(2b)}) \\
+            &= q_1 \circ j_1 \circ q_1 + q_1 \circ j_2 \circ q_2 \\
+            &= q_1 + q_1 \circ j_2 \circ q_2
+                \quad (\text{条件(2a)})
+    \end{alignat}
+    より$q_1 \circ j_2 \circ q_2 = 0 = 0 \circ q_2$であるが、
+    いま$q_2 \circ j_2$が恒等写像ゆえに$q_2$は全射だから
+    両辺の$q_2$を打ち消して
+    $q_1 \circ j_2 = 0$を得る。
+    同様に$q_2 \circ j_1 = 0$も得られる。
+\end{proof}
+
+
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{完全系列}
+
+直和の概念は
+系列の分裂という概念につながる。
+
+\begin{definition}[完全系列]
+    $A$を環とする。
+    $\lMod{A}$の系列
+    \begin{equation}
+        \begin{tikzcd}
+            M_1
+                \ar{r}{f_1}
+                & M_2
+                    \ar{r}{f_2}
+                & \cdots
+                    \ar{r}{f_{n-1}}
+                & M_n
+        \end{tikzcd}
+    \end{equation}
+    が$\Im f_i = \Ker f_{i + 1} \; (i = 1, \dots, n - 2)$をみたすとき、
+    この系列は\term{完全}[exact]{完全}[かんぜん]であるという。
+
+    また、
+    \begin{equation}
+        \begin{tikzcd}
+            0
+                \ar{r}
+                & L
+                    \ar{r}{\phi}
+                & M
+                    \ar{r}{\psi}
+                & N
+                    \ar{r}
+                & 0
+        \end{tikzcd}
+    \end{equation}
+    の形の完全系列を
+    \term{短完全系列}[short exact sequence]{短完全系列}[たんかんぜんけいれつ]という。
+\end{definition}
+
+\begin{example}[短完全系列の例]
+    $M$を加群、$N \subset M$を部分加群とする。
+    $\pi \colon M \to M/N$を自然な準同型とすると、列
+    \begin{equation}
+        \begin{tikzcd}
+            0 \ar{r} & N \ar[hook]{r} & M \ar{r}{\pi} & M/N \ar{r} & 0
+        \end{tikzcd}
+    \end{equation}
+    は短完全系列である。
+\end{example}
+
+\begin{definition}[分裂]
+    $A$を環とする。
+    $A$-加群の短完全系列
+    \begin{equation}
+        \begin{tikzcd}
+            0 \ar{r}
+                & L \ar{r}{i}
+                & M \ar{r}{p}
+                & N \ar{r}
+                & 0
+        \end{tikzcd}
+    \end{equation}
+    が\term{分裂}[split]{分裂}[ぶんれつ]するとは、
+    次の同値な条件のどれかひとつ (よって全て) が成り立つことをいう:
+    \begin{enumerate}
+        \item $p \circ g = \id_N$なる$A$-加群準同型$g \colon N \to M$が存在する。
+            $g$を\term{right splitting}{right splitting}という。
+        \item $f \circ i = \id_L$なる$A$-加群準同型$f \colon M \to L$が存在する。
+            $f$を\term{left splitting}{left splitting}という。
+        \item $M$の$A$-部分加群$M'$が存在して
+            $M = \Im i \oplus M'$が成り立つ。
+    \end{enumerate}
+\end{definition}
+
+\begin{remark}
+    left splitting の定義域は
+    $\Im i$でなく$M$全体であることに注意。
+    同様に right splitting の定義域は
+    $\Im p$でなく$N$全体であることに注意。
+\end{remark}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+\begin{example}[分裂しない短完全系列の例]
+    $\pi \colon \Z \to \Z/2\Z$を自然な準同型とすると、列
+    \begin{equation}
+        \begin{tikzcd}
+            0 \ar{r}
+                & \Z \ar{r}{2 \times}
+                & \Z \ar{r}{\pi}
+                & \Z/2\Z \ar{r}
+                & 0
+        \end{tikzcd}
+    \end{equation}
+    は短完全系列である。
+    この短完全系列は分裂しない。
+\end{example}
+
+\begin{proposition}[分裂すれば直和で書ける]
+    $A$を環とする。
+    $A$-加群の短完全系列
+    \begin{equation}
+        \begin{tikzcd}
+            0 \ar{r}
+                & L \ar{r}{i}
+                & M \ar{r}{p}
+                & N \ar{r}
+                & 0
+        \end{tikzcd}
+    \end{equation}
+    が分裂するならば
+    外部直和との同型$M \cong L \oplus N$が成り立つ。
+    より詳しく、
+    この短完全系列の right splitting $j$に対し
+    内部直和$M = \Im i \oplus \Im j$が成り立つ。
+\end{proposition}
+
+\begin{proof}
+    $j$を right splitting として
+    $M = \Im i \oplus \Im j$を示す。
+    $m \in M$とすると
+    $m - jp(m) \in \Ker p = \Im i$だから
+    $m = m - jp(m) + jp(m) \in \Im i + \Im j$である。
+    つぎに$\Im i \cap \Im j = 0$を示す。
+    $x \in \Im i \cap \Im j$が$0$であることを示せばよいが、
+    これは次の図式の diagram chasing により明らか:
+    \begin{equation}
+        \begin{tikzcd}
+            &&& C \ar{ld}[swap]{j} \\
+            0 \ar{r}
+                & A \ar{r}[swap]{i}
+                & B \ar{r}[swap]{p}
+                & C \ar[equal]{u} \ar{r}
+                & 0
+        \end{tikzcd}
+    \end{equation}
+    よって$M = \Im i \oplus \Im j \cong L \oplus N$がいえた。
+    ただし、$i, j$が単射ゆえに
+    $L \cong \Im i, \; N \cong \Im j$であることを用いた。
+\end{proof}
+
+\begin{example}[直和で書けても分裂するとは限らない]
+    上の命題の逆は一般には成り立たない。
+    \TODO{}
+\end{example}
+
+
+
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{自由加群}
+
+加群に対しても、ベクトル空間の場合と同様に基底の概念が定義できる。
+
+\begin{definition}[線型独立]
+    $A$を環、$M$を$A$-加群とする。
+    $B \subset M$が$A$上
+    \term{線型独立}[linearly independent]{線型独立}[せんけいどくりつ]
+    であるとは、
+    $B$の任意の元$v_1, \dots, v_k \in B \; (k \in \Z_{\ge 1})$と
+    $A$の任意の元$a_1, \dots, a_k \in A$に対し
+    「$a_1 v_1 + \cdots + a_k v_k = 0 \implies a_1 = \cdots = a_k = 0$」
+    が成り立つことをいう。
+\end{definition}
+
+\begin{definition}[自由加群]
+    $A$を環、$M$を$A$-加群とする。
+    \begin{itemize}
+        \item 部分集合$B \subset M$が線型独立かつ$\langle B \rangle = M$をみたすとき、
+            $B$を$M$の\term{基底}[basis]{基底}[きてい]という。
+        \item $M$が$M = \{0\}$であるかまたは基底を持つとき、
+            $M$は\term{自由}[free]{自由}[じゆう]であるという。
+    \end{itemize}
+\end{definition}
+
+\begin{example}[自由加群の例]
+    ~
+    \begin{itemize}
+        \item $\Z$-加群$\Z/m\Z$は基底をもたない (よって自由加群でない)。
+            実際、任意の有限部分集合$\{ a_1, \dots, a_k \} \subset \Z/m\Z$に対し
+            $m a_1 + \dots + m a_k = 0$である。
+    \end{itemize}
+\end{example}
+
+自由加群は係数環の直和で書けるという特徴付けを持つ。
+
+\begin{proposition}[自由加群の特徴付け]
+    $A$を環、
+    $V$を$A$-加群とする。
+    $V$が自由加群であることと、
+    ある集合$S$が存在して$A$-加群の同型
+    $V \cong A^{\oplus S}$が成り立つこととは同値である。
+\end{proposition}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+\begin{proposition}[自由加群の有限直和]
+    $A$を環とする。
+    自由$A$-加群の有限個の直和も自由$A$-加群である。
+\end{proposition}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+\begin{theorem}[自由加群の普遍性]
+    $A$を環とし、$V$を自由$A$-加群、$B \subset V$を基底とする。
+    このとき次が成り立つ:
+    \begin{alignat}{1}
+        &\forall \; W
+            \colon \text{ $A$-加群} \\
+        &\forall \; \varphi \colon B \to W 
+            \colon \text{ 写像} \\
+        &\exists! \; \wt{\varphi} \colon V \to W \colon \text{ $A$-加群準同型}
+            \quad \text{s.t.} \quad \\
+        &\quad \begin{tikzcd}[ampersand replacement=\&]
+            B \ar[hook]{d} \ar{r}{\varphi} \& W \\
+            V \ar[dashed]{ru}[swap]{\wt{\varphi}}
+        \end{tikzcd}
+    \end{alignat}
+\end{theorem}
+
+\begin{proof}
+    \begin{equation}
+        \wt{\varphi} \biggl(
+            \fsum_{b \in B} a_b b
+        \biggr)
+            \coloneqq \fsum_{b \in B} a_b \varphi(b)
+    \end{equation}
+    と定めればよい。
+\end{proof}
+
+\begin{theorem}[体上の加群の性質]
+    $K$を体とする。
+    \begin{enumerate}
+        \item 任意の$K$-加群は自由加群である。
+        \item 集合$S_1, S_2$に関し
+            \begin{equation}
+                \down{K} K^{\oplus S_1} \cong \down{K} K^{\oplus S_2}
+                \quad \iff \quad
+                \sharp S_1 = \sharp S_2
+            \end{equation}
+            が成り立つ。
+    \end{enumerate}
+\end{theorem}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+\begin{theorem}[可換環上の加群の性質]
+    $R$を可換環とする。
+    集合$S_1, S_2$に関し
+    \begin{equation}
+        \down{R} R^{\oplus S_1} \cong \down{R} R^{\oplus S_2}
+        \quad \iff \quad
+        \sharp S_1 = \sharp S_2
+    \end{equation}
+    が成り立つ。
+\end{theorem}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{可換環上の自由加群}
+
+ベクトル空間における次元と類似の概念として、
+可換環上の自由加群のランクが定義できる。
+とくに体$K$上の自由加群とは$K$-ベクトル空間に他ならない。
+さらにこのとき$M$の$K$上のランクとは
+$K$-ベクトル空間としての次元$\dim_K M$に他ならない。
+
+\begin{definition}[自由加群のランク]
+    \TODO{ねじれがある場合は？}
+    \idxsym{rank of free module}{$\rk$}{自由加群のランク}
+    $R$を可換環、
+    $M$を$R$上の自由加群とする。
+    このとき、$M$の基底はすべて同じ濃度を持ち、
+    $M$の任意の生成系の濃度は基底の濃度以上である（このあと示す）。
+    そこで、$M$の$K$上の\term{ランク}[rank]{ランク} $\rk(M)$を
+    \begin{itemize}
+        \item $M \neq \{0\}$なら基底の濃度
+        \item $M = \{0\}$なら$0$
+    \end{itemize}
+    と定める。
+    ランクが有限の自由加群は
+    \term{有限ランク自由加群}[free module of finite rank]
+    {有限ランク自由加群}[ゆうげんらんくじゆうかぐん]
+    あるいは形容詞で
+    \term{free of finite rank}{free of finite rank}
+    であるという。
+\end{definition}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+\begin{corollary}
+    $R$を可換環、
+    $A$を$R$-代数とする。
+    $A$が$R$-加群として有限ランクの自由加群であるとき、
+    集合$S_1, S_2$に関し
+    \begin{equation}
+        \down{R} R^{\oplus S_1} \cong \down{R} R^{\oplus S_2}
+        \quad \implies \quad
+        \sharp S_1 = \sharp S_2
+    \end{equation}
+    が成り立つ。
+\end{corollary}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+有限ランク自由加群と有限生成加群の間には次の関係がある。
+
+\begin{theorem}[有限ランク自由加群と有限生成加群の関係]
+    $R$を可換環とする。
+    このとき、$R$-加群$M$に関し次は同値である:
+    \begin{enumerate}
+        \item ある$n \in \Z_{\ge 0}$が存在して全射$R$-加群準同型$R^n \to M$が存在する。
+            すなわち、$M$はある有限ランク自由加群の商加群である。
+        \item $M$は$R$-加群として有限生成である。
+    \end{enumerate}
+\end{theorem}
+
+\begin{proof}
+    \uline{(1) \Rightarrow (2)} \quad
+    題意の全射を$f$とおくと、$M$は明らかに$R$上
+    \begin{equation}
+        \{ f(1, 0, \dots, 0), f(0, 1, \dots, 0), \dots, f(0, 0, \dots, 1) \}
+    \end{equation}
+    により生成される。
+
+    \uline{(2) \Rightarrow (1)} \quad
+    $M$を生成する有限部分集合$S = \{ s_1, \dots, s_n \} \subset M$をひとつ選べば、
+    写像$(r_1, \dots, r_n) \mapsto r_1 s_1 + \cdots + r_n s_n$が
+    求める全射となる。
+\end{proof}
+
+
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{帰納極限と射影極限}
+
+\begin{definition}[帰納極限]
+    ~
+    \begin{itemize}
+        \item 半順序集合$(I, \le)$が
+            \term{有向的}[directed]{有向的}[ゆうこうてき]であるとは、
+            任意の$x, y \in I$に対して
+            ある$z \in I$が存在して
+            $x \le z$かつ$y \le z$が成り立つことをいう。
+        \item $A$を環とし、$(I, \le)$を有向的半順序集合とする。
+            $A$-加群の
+            \term{帰納系}[inductive system]{帰納系}[きのうけい]あるいは
+            \term{有向系}[direct system]{有向系}[ゆうこうけい]とは、
+            組$(\{ M_i \}_{i \in I}, \{ \varphi_{ij} \}_{i \le j})$であって
+            次をみたすものをいう:
+            \begin{enumerate}
+                \item $M_i \; (i \in I)$は$A$-加群である。
+                \item $i \le j$なる$i, j \in I$に対して
+                    $\varphi_{ij} \colon M_i \to M_j$は
+                    $A$-加群の準同型である。
+                \item $i \le j \le k$に対し
+                    $\varphi_{jk} \circ \varphi_{ij} = \varphi_{ik}$が成り立つ。
+                    \begin{equation}
+                        \begin{tikzcd}
+                            M_i \ar{r}{\varphi_{ij}}
+                                \ar[bend right=60]{rr}[swap]{\varphi_{ik}}
+                                & M_j \ar{r}{\varphi_{jk}}
+                                & M_k
+                        \end{tikzcd}
+                    \end{equation}
+                \item $\varphi_{ii} = \id_{M_i} \; (i \in I)$である。
+            \end{enumerate}
+        \item $A$を環、$(I, \le)$を有向的半順序集合とし、
+            $(\{ M_i \}_{i \in I}, \{ \varphi_{ij} \}_{i \le j})$を
+            $A$-加群の有向系とする。
+            組$(L, \{ \phi_i \}_{i \in I})$が
+            $(\{ M_i \}_{i \in I}, \{ \varphi_{ij} \}_{i \le j})$の
+            \term{帰納極限}[inductive limit]{帰納極限}[きのうきょくげん]
+            であるとは、次が成り立つことをいう:
+            \begin{enumerate}
+                \item $L$は$A$-加群である。
+                \item $\phi_i \colon M_i \to L \; (i \in I)$は$A$-加群準同型である。
+                \item $i \le j$なる$\forall i, j \in I$に対して
+                    $\phi_j \circ \varphi_{ij} = \phi_i$が成り立つ。
+                    \begin{equation}
+                        \begin{tikzcd}
+                            M_i \ar{rr}{\varphi_{ij}}
+                                \ar{rd}[swap]{\phi_i}
+                                && M_j \ar{ld}{\phi_j} \\
+                                & L
+                        \end{tikzcd}
+                    \end{equation}
+                \item (帰納極限の普遍性) 次の条件をみたす:
+                    \begin{alignat}{1}
+                        &\forall \; N
+                            \colon \text{ $A$-加群} \\
+                        &\forall \; \{ \xi_i \colon M_i \to N \}_{i \in I}
+                            \colon \text{ $A$-加群準同型の族} \\
+                        &\qquad \text{with} \quad
+                            \text{
+                                $i \le j$なる$i, j \in I$に対し
+                                $\xi_j \circ \varphi_{ij} = \xi_i$
+                            } \\
+                        &\exists! \; \eta \colon L \to N
+                            \colon \text{ $A$-加群準同型}
+                            \quad \text{s.t.} \quad \\
+                        &\forall \; i \in I
+                            \quad \text{に対し} \quad \\
+                        &\qquad \begin{tikzcd}[ampersand replacement=\&]
+                            \& M_i
+                                \ar{ld}[swap]{\phi_i}
+                                \ar{rd}{\xi_i} \\
+                            L \ar[dashed]{rr}[swap]{\eta}
+                                \& \& N
+                        \end{tikzcd}
+                    \end{alignat}
+            \end{enumerate}
+        \item 上の定義で「$A$-加群」の部分を
+            「$R$-代数」に置き換えることで、
+            $R$-代数の有向系およびその帰納極限も同様に定義される。
+    \end{itemize}
+\end{definition}
+
+\begin{remark}
+    帰納極限の具体的な構成は
+    \cref{problem:algebra2-7-95}を参照せよ。
+\end{remark}
+
+\begin{definition}[射影極限]
+    ~
+    \begin{itemize}
+        \item $A$を環とし、$(I, \le)$を有向的半順序集合とする。
+            $A$-加群の
+            \term{射影系}[projective system]{射影系}[しゃえいけい]あるいは
+            \term{逆向系}[inverse system]{逆向系}[ぎゃっこうけい]とは、
+            組$(\{ M_i \}_{i \in I}, \{ \varphi_{ij} \}_{i \ge j})$であって
+            次をみたすものをいう:
+            \begin{enumerate}
+                \item $M_i \; (i \in I)$は$A$-加群である。
+                \item $i \ge j$なる$i, j \in I$に対して
+                    $\varphi_{ij} \colon M_i \to M_j$は
+                    $A$-加群の準同型である。
+                \item $i \ge j \ge k$に対し
+                    $\varphi_{jk} \circ \varphi_{ij} = \varphi_{ik}$が成り立つ。
+                    \begin{equation}
+                        \begin{tikzcd}
+                            M_i \ar{r}{\varphi_{ij}}
+                                \ar[bend right=60]{rr}[swap]{\varphi_{ik}}
+                                & M_j \ar{r}{\varphi_{jk}}
+                                & M_k
+                        \end{tikzcd}
+                    \end{equation}
+                \item $\varphi_{ii} = \id_{M_i} \; (i \in I)$である。
+            \end{enumerate}
+        \item $A$を環、$(I, \le)$を有向的半順序集合とし、
+            $(\{ M_i \}_{i \in I}, \{ \varphi_{ij} \}_{i \ge j})$を
+            $A$-加群の射影系とする。
+            組$(L, \{ \phi_i \}_{i \in I})$が
+            $(\{ M_i \}_{i \in I}, \{ \varphi_{ij} \}_{i \ge j})$の
+            \term{射影極限}[projective limit]{射影極限}[しゃえいきょくげん]
+            であるとは、次が成り立つことをいう:
+            \begin{enumerate}
+                \item $L$は$A$-加群である。
+                \item $\phi_i \colon L \to M_i \; (i \in I)$は$A$-加群準同型である。
+                \item $i \ge j$なる$\forall i, j \in I$に対して
+                    $\phi_j = \varphi_{ij} \circ \phi_i$が成り立つ。
+                    \begin{equation}
+                        \begin{tikzcd}
+                            & L
+                                \ar{ld}[swap]{\phi_i}
+                                \ar{rd}{\phi_j} \\
+                            M_i \ar{rr}[swap]{\varphi_{ij}}
+                                & & M_j
+                        \end{tikzcd}
+                    \end{equation}
+                \item (射影極限の普遍性) 次の条件をみたす:
+                    \begin{alignat}{1}
+                        &\forall \; N
+                            \colon \text{ $A$-加群} \\
+                        &\forall \; \{ \xi_i \colon N \to M_i \}_{i \in I}
+                            \colon \text{ $A$-加群準同型の族} \\
+                        &\qquad \text{with} \quad
+                            \text{
+                                $i \ge j$なる$i, j \in I$に対し
+                                $\xi_j = \varphi_{ij} \circ \xi_i$
+                            } \\
+                        &\exists! \; \eta \colon N \to L
+                            \colon \text{ $A$-加群準同型}
+                            \quad \text{s.t.} \quad \\
+                        &\forall \; i \in I
+                            \quad \text{に対し} \quad \\
+                        &\qquad \begin{tikzcd}[ampersand replacement=\&]
+                            N \ar[dashed]{rr}{\eta}
+                                \ar{rd}[swap]{\xi_i}
+                                \& \& L
+                                \ar{ld}{\phi_i} \\
+                                \& M_i
+                        \end{tikzcd}
+                    \end{alignat}
+            \end{enumerate}
+        \item 上の定義で「$A$-加群」の部分を
+            「$R$-代数」に置き換えることで、
+            $R$-代数の射影系およびその射影極限も同様に定義される。
+    \end{itemize} 
+\end{definition}
+
+
+
+
+
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\newpage
+\section{演習問題}
+
+\subsection{Problem set 4}
+
+\begin{problem}[代数学II 4.51]
+    \label[problem]{problem:algebra2-4.51}
+    $A$を環としたとき$\End_A(\down{A}A) \cong A^\OP$を示せ。
+\end{problem}
+
+\begin{answer}
+    写像$\Phi \colon \End_A(\down{A}A) \to A^\OP$を
+    \begin{equation}
+        \Phi(f) = f(1)
+    \end{equation}
+    で定める。
+    $\Phi$は環準同型である。
+    \begin{innerproof}
+        $\Phi(0) = 0, \; \Phi(f + g) = \Phi(f) + \Phi(g)$は明らか。
+        積を保つことは、$A^\OP$の積を$*$と書けば
+        \begin{alignat}{1}
+            \Phi(f \circ g)
+                &= f \circ g (1) \\
+                &= f(g(1)) \\
+                &= f(g(1) \cdot 1) \\
+                &= g(1) f(1) \\
+                &= f(1) * g(1) \\
+                &= \Phi(f) * \Phi(g)
+        \end{alignat}
+        より成り立つ。
+    \end{innerproof}
+    逆写像$\Psi \colon A^\OP \to \End_A(\down{A}A)$は
+    \begin{equation}
+        \Psi(a) = (x \mapsto x \cdot a)
+    \end{equation}
+    で定まる。
+    \begin{innerproof}
+        逆写像であることは
+        \begin{alignat}{1}
+            \Phi \circ \Psi(a)
+                &= \Phi(x \mapsto x \cdot a) \\
+                &= a
+        \end{alignat}
+        および
+        \begin{alignat}{1}
+            \Psi \circ \Phi(f)
+                &= (x \mapsto x \cdot f(1)) \\
+                &= (x \mapsto f(x)) \\
+                &= f
+        \end{alignat}
+        よりわかる。
+    \end{innerproof}
+    よって$\Phi$は環の同型$\End_A(\down{A}A) \cong A^\OP$を与える。
+\end{answer}
+
+\begin{problem}[代数学II 4.56]
+    $\down{A}A \cong \down{A}A \oplus \down{A}A$なる環$A \neq 0$の例を挙げよ。
+\end{problem}
+
+\begin{answer}
+    \TODO{c.f. \url{https://mathlog.info/articles/619}}
+\end{answer}
+
+\begin{problem}[代数学II 4.57]
+    $K$を体、$A$を$K$-代数、$V$を既約$A$-加群であって
+    $\dim_K(V) < \infty$なるものとする。
+    このとき、$\dim_K(V) < n$ならば
+    $V^{\oplus n}$は巡回$A$-加群とならないことを示せ。
+\end{problem}
+
+\begin{answer}
+    \TODO{$V$が既約であることはいつ使う？}
+    $d \coloneqq \dim_K V \in \Z_{\ge 1}$とおく。
+    $V$の$K$-ベクトル空間としての基底$e_1, \dots, e_d$をひとつ選ぶ。
+    $n \in \Z_{\ge 0}$とする。
+    $n = 0$の場合は示したい含意の前提が偽なので成り立つ。
+    以下、$n \ge 1$の場合を考える。
+    対偶を示すため、$V^{\oplus n}$は巡回$A$-加群であると仮定する。
+    仮定より、$V^{\oplus n}$の$A$-加群としての生成元
+    $v_1, \dots, v_n$が存在する。
+    このとき$v_1, \dots, v_n$は$V$において$K$上1次独立である。
+    \begin{innerproof}
+        $\mu_1, \dots, \mu_n \in K$に対し線型関係
+        \begin{equation}
+            \mu_1 v_1 + \dots + \mu_n v_n = 0
+        \end{equation}
+        を仮定する。
+        いま$V^{\oplus n}$は$A$上$v_1, \dots, v_n$で生成されるのであったから、
+        とくにある$a_i \in A \; (i = 1, \dots, n)$が存在して
+        \begin{equation}
+            a_i \cdot (v_1, \dots, v_n) \quad
+                \bigl(= (a_i \cdot v_1, \dots, a_i \cdot v_n) \bigr) \quad
+                = (0, \dots, \overset{\stackrel{i}{\smile}}{e_1}, \dots, 0)
+        \end{equation}
+        が成り立つ。
+        そこで、上の線型関係の式の両辺に左から$a_i$を掛けて
+        \begin{alignat}{2}
+            && a_i \cdot (\mu_1 v_1 + \dots + \mu_n v_n) &= 0 \\
+            &\therefore& \mu_i e_1 &= 0 \\
+            &\therefore& \mu_i &= 0
+        \end{alignat}
+        をすべての$i = 1, \dots, n$に対し得る。
+        よって$v_1, \dots, v_n$は$K$上1次独立である。
+    \end{innerproof}
+    したがって$\dim_K(V) \ge n$であり、対偶が示せた。
+\end{answer}
+
+\begin{problem}[代数学II 4.58]
+    $A$を環、$V, W$を互いに同型でない既約$A$-加群とする。
+    このとき$V \oplus W$は巡回$A$-加群であることを示せ。
+\end{problem}
+
+\begin{remark}
+    「互いに同型でない」という条件は必須である。
+    実際、$V = W = \Z / 2\Z$は既約$\Z$-加群であるが、
+    $V \oplus W = \Z / 2\Z \oplus \Z / 2\Z$は巡回$\Z$-加群でない。
+\end{remark}
+
+\begin{answer}
+    中国剰余定理の証明と同様の流れで示す。
+    $V, W$は既約だから、$A$のある極大左イデアル$I, J$が存在して
+    $V \cong \down{A}A / I, \; W \cong \down{A}A / J$が成り立つ。
+    ここで準同型定理より図式
+    \begin{equation}
+        \begin{tikzcd}
+            \down{A}A \ar{d} \ar{r}{p = p_1 \times p_2}
+                & \down{A}A / I \times \down{A}A / J
+                = \down{A}A / I \oplus \down{A}A / J
+                = V \oplus W \\
+            \down{A}A / (I \cap J)
+                \ar[dashed, end anchor=south west]{ur}[swap]{\wb{p}}
+        \end{tikzcd}
+    \end{equation}
+    の破線部に$A$-加群準同型$\wb{p}$が誘導される。
+    $\down{A}A$が巡回$A$-加群ゆえに
+    $\down{A}A / (I \cap J)$も巡回$A$-加群なので、
+    $V \oplus W$が巡回$A$-加群であることを示すには
+    $\wb{p}$が同型であることを示せば十分である。
+    そのためには全単射をいえばよい。
+    $\wb{p}$が単射であることは
+    $\Ker \wb{p} = I \cap J$より明らか。
+    $\wb{p}$が全射であることを示す。
+    そのためには
+    \begin{align}
+        e_1 &\coloneqq (1, 0) \in \down{A}A / I \times A / J \\
+        e_2 &\coloneqq (0, 1) \in \down{A}A / I \times A / J
+    \end{align}
+    とおき、$e_1, e_2 \in \Im \wb{p}$をいえばよい。
+    いま$V, W$は同型でないから$I \neq J$、
+    したがって$I, J$が極大であることとあわせて$I + J = A$である。
+    よって$x + y = 1$なる$x \in I, \; y \in J$が存在する。
+    このとき
+    \begin{alignat}{1}
+        p_1(x) &= 0 \\
+        p_2(x) &= p_2(1 - y) = p_2(1) = 1
+    \end{alignat}
+    よって
+    \begin{equation}
+        p(x) = (p_1(x), p_2(x)) = (0, 1) = e_2 \in \Im \wb{p}
+    \end{equation}
+    が成り立つ。
+    同様に$e_1 \in \Im \wb{p}$も成り立つ。
+    よって$\wb{p}$は同型である。
+    したがって$V \oplus W$は巡回$A$-加群である。
+\end{answer}
+
+\begin{problem}[代数学II 4.59]
+    $D$を division algebra, $D^n$を$n$次元縦ベクトルの空間とし
+    これを$D^n$の左からの積で$D$-加群とみなす。
+    このとき$\End_D(D^n) \cong M_n(D)^{\OP}$を示せ。
+\end{problem}
+
+\begin{answer}
+    \TODO{division algebra であることはいつ使う？}
+
+    $(D^n)^n$は$D^n$の元である縦ベクトルを横に$n$個並べたもの全部の空間とする。
+    $(D^n)^n$には
+    左$\End_D(D^n)$-加群の構造
+    \begin{equation}
+        \varphi . [v_1, \dots, v_n]
+            \coloneqq [\varphi(v_1), \dots, \varphi(v_n)]
+            \quad
+            (\varphi \in \End_D(D^n), \; v_i \in D^n)
+    \end{equation}
+    が入り (ただし「$.$」で$\End_D(D^n)$の作用を表す)、
+    また右からの積で右$M_n(D)$-加群の構造が入る。
+    さらに各$\varphi \in \End_D(D^n), \; v_i \in D^n, \; A = (a_{ij}) \in M_n(D)$に対し
+    \begin{alignat}{1}
+        (\varphi . [v_1, \dots, v_n]) A
+            &= [\varphi(v_1), \dots, \varphi(v_n)] A \\
+            &= \left[
+                \sum_{j = 1}^n a_{j1} \varphi(v_j), \dots,
+                \sum_{j = 1}^n a_{jn} \varphi(v_j)
+            \right] \\
+            &= \varphi . \left[
+                \sum_{j = 1}^n a_{j1} v_j, \dots,
+                \sum_{j = 1}^n a_{jn} v_j
+            \right] \\
+            &= \varphi . ([v_1, \dots, v_n] A)
+    \end{alignat}
+    が成り立つから、
+    $(D^n)^n$は$(\End_D(D^n), M_n(D))$-両側加群である。
+    ここで$D^n$の標準基底を$e_1, \dots, e_n$とおき、
+    \begin{equation}
+        E \coloneqq [e_1, \dots, e_n] \in (D^n)^n
+    \end{equation}
+    とおくと、$e_1, \dots, e_n$が$D^n$の基底であることから
+    各$f \in \End_D(D^n)$に対し
+    $f . E = E \up{t}A$なる$A \in M_n(D)$がただひとつ定まる。
+    逆に各$A \in M_n(D)$に対し、自由加群の普遍性より
+    $f . E = E \up{t}A$なる$f \in \End_D(D^n)$がただひとつ定まる。
+    したがって、このように$f$を$A$に写す写像を
+    $\Phi \colon \End_D(D^n) \to M_n(D)^{\OP}$とおけば$\Phi$は全単射である。
+    あとは$\Phi$が$D$-代数の準同型であることを示せばよい。
+    各$f, g \in \End_D(D^n), \; a \in D$に対し
+    \begin{alignat}{1}
+        (f + g) . E
+            &= f.E + g.E \\
+            &= E \up{t}\Phi(f) + E \up{t}\Phi(g) \\
+        (f \circ g) . E
+            &= f . (g . E) \\
+            &= f . (E \up{t}\Phi(g)) \\
+            &= (f . E) \up{t}\Phi(g) \\
+            &= E \up{t}\Phi(f) \up{t}\Phi(g) \\
+            &= E \up{t}(\Phi(g) \Phi(f)) \\
+        (\id) . E
+            &= E = E \up{t} I_n \\
+        (af) . E
+            &= a . (f . E) \\
+            &= a . (E \up{t}\Phi(f)) \\
+            &= aE \up{t}\Phi(f) \\
+            &= E \up{t} (a \Phi(f))
+    \end{alignat}
+    が成り立つことから$\Phi$は$D$-代数の準同型、
+    したがって同型である。
+    よって$\End_D(D^n) \cong M_n(D)^{\OP}$である。
+\end{answer}
+
+\subsection{Problem set 5}
+
+\begin{problem}[代数学II 5.63]
+    \label[problem]{problem:algebra2-5.63}
+    $A$を環、$M$を$A$-加群とし、
+    $N$を$M$の部分$A$-加群、
+    $L$を$N$の部分$A$-加群とする。
+    このとき$N / L$は$M / L$の部分$A$-加群とみなせて、
+    \begin{equation}
+        M / N \cong (M / L) / (N / L)
+    \end{equation}
+    が成り立つことを示せ。
+\end{problem}
+
+\begin{answer}
+    \TODO{長過ぎる？}
+    いま図式
+    \begin{equation}
+        \begin{tikzcd}
+            0 \ar{r} & N \ar{r} & M \ar{r} & M / N \ar{r} & 0
+        \end{tikzcd}
+    \end{equation}
+    は exact である。
+    また、
+    $\begin{tikzcd}
+        N \ar{d} \ar{r} & M \ar{d} \\
+        N / L \ar[dashed]{r} & M / L
+    \end{tikzcd}$
+    について、
+    $n \in N$が
+    $\begin{tikzcd}
+        N \ar{d} \\
+        N / L
+    \end{tikzcd}$
+    で$0$に写ることは$n \in L$と同値で、
+    さらにこれは
+    $n$が
+    $\begin{tikzcd}
+        N \ar{r} & M \ar{d} \\
+        & M / L
+    \end{tikzcd}$
+    で$0$に写ることと同値である。
+    よって単射
+    $\begin{tikzcd}
+        N / L \ar{r} & M / L
+    \end{tikzcd}$
+    が誘導される。
+    これにより$N / L$を$M / L$の部分$A$-加群とみなすことができる。
+    したがって上下の行が exact な可換図式
+    \begin{equation}
+        \begin{tikzcd}
+            0 \ar{r}
+                & N \ar{d} \ar{r}
+                & M \ar{d} \ar{r}
+                & M / N \ar{r}
+                & 0 \\
+            0 \ar{r}
+                & N / L \ar{r}
+                & M / L \ar{r}
+                & (M / L) / (N / L) \ar{r}
+                & 0
+        \end{tikzcd}
+    \end{equation}
+    を得る。
+    このとき
+    $\begin{tikzcd}
+        M \ar{d} \ar{r} & M / N \ar[dashed]{d} \\
+        M / L \ar{r} & (M / L) / (N / L)
+    \end{tikzcd}$
+    を可換にする射
+    $\begin{tikzcd}
+        M / N \ar{d} \\
+        (M / L) / (N / L)
+    \end{tikzcd}$
+    が誘導される。なぜならば、
+    $m \in M$が
+    $\begin{tikzcd}
+        M \ar{r} & M / N
+    \end{tikzcd}$
+    で$0$に写るとすれば、上の行の exact 性により
+    $m$はある$n \in N$の
+    $\begin{tikzcd}
+        N \ar{r} & M
+    \end{tikzcd}$
+    による像となり、
+    $m$の
+    $\begin{tikzcd}
+        M \ar{d} \\
+        M / L \ar{r} & (M / L) / (N / L)
+    \end{tikzcd}$
+    による像は
+    $n$の
+    \begin{equation}
+        \begin{tikzcd}
+            N \ar{r} & M \ar{d} \\
+            & M / L \ar{r} & (M / L) / (N / L)
+        \end{tikzcd}
+        =
+        \begin{tikzcd}
+            N \ar{d} \\
+            N / L \ar{r} & M / L \ar{r} & (M / L) / (N / L)
+        \end{tikzcd}
+    \end{equation}
+    による像$0$に一致するからである。
+    ただし、像が$0$であることは
+    下の行の exact 性による。
+    さらに
+    $\begin{tikzcd}
+        M \ar{d} \\
+        M / L \ar{r} & (M / L) / (N / L)
+    \end{tikzcd}$
+    の全射性より
+    $\begin{tikzcd}
+        M / N \ar{d} \\
+        (M / L) / (N / L)
+    \end{tikzcd}$
+    は全射である。
+    あとは
+    $\begin{tikzcd}
+        M / N \ar{d} \\
+        (M / L) / (N / L)
+    \end{tikzcd}$
+    の単射性を示せばよい。
+    $m + N \in M / N$が
+    $\begin{tikzcd}
+        M / N \ar{d} \\
+        (M / L) / (N / L)
+    \end{tikzcd}$
+    で$0$に写るとする。
+    そこで$m + N$の
+    $\begin{tikzcd}
+        M \ar{r} & M / N
+    \end{tikzcd}$
+    による逆像のひとつ$m'$を選ぶと、
+    $m'$は
+    $\begin{tikzcd}
+        M \ar{d} \\
+        M / L \ar{r} & (M / L) / (N / L)
+    \end{tikzcd}$
+    により$0$に写り、したがって
+    $m' + L$は
+    $\begin{tikzcd}
+        M / L \ar{r} & (M / L) / (N / L)
+    \end{tikzcd}$
+    により$0$に写る。
+    下の行の exact 性により、
+    $m' + L$は
+    $\begin{tikzcd}
+        N / L \ar{r} & M / L
+    \end{tikzcd}$
+    の像に含まれる。
+    よって、$m'$はある$n \in N$と$l \in L$により$m' = n + l$と表せる。
+    したがって
+    \begin{equation}
+        m + N = m' + N = (n + l) + N = 0
+    \end{equation}
+    となり、
+    $\begin{tikzcd}
+        M / N \ar{d} \\
+        (M / L) / (N / L)
+    \end{tikzcd}$
+    の単射性が示せた。
+\end{answer}
+
+
+
+
+
+
+
+% ============================================================
+%
+% ============================================================
+\chapter{既約加群}
+
+既約加群について述べる。
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{既約加群}
+
+加群の既約の概念を定義する。
+
+\begin{definition}[既約加群]
+    \label[definition]{def:irreducible-module}
+    $A$を環とする。
+    $A$-加群$M$が
+    \term{単純}[simple]{単純}[たんじゅん]あるいは
+    \term{既約}[irreducible]{既約}[きやく]
+    であるとは、
+    $M \neq 0$であって
+    $0$と$M$以外の部分加群を持たないことをいう
+    \footnote{
+        表現論では「既約」、環論では「単純」ということが多いらしい。
+        本稿では主に前者を用いる。
+    }
+    。
+\end{definition}
+
+既約加群は次のように特徴付けられる。
+
+\begin{theorem}[既約加群の特徴付け]
+    $A$を環、$U$を$A$-加群とする。
+    このとき次は同値である:
+    \begin{enumerate}
+        \item $U$は既約である。
+        \item 任意の$v \in U, \; v \neq 0$は$U$を$A$上生成する。
+    \end{enumerate}
+\end{theorem}
+
+\begin{proof}
+    \uline{(1) \Rightarrow (2)} \quad
+    $U = 0$のときは明らかだから、$U \neq 0$のときを考える。
+    $v \in U - \{ 0 \}$とする。
+    $\langle v \rangle \neq 0$だから、
+    $U$が既約であることより$\langle v \rangle = U$である。
+    よって$U$は$A$上$v$で生成される巡回加群である。
+
+    \uline{(2) \Rightarrow (1)} \quad
+    \TODO{}
+\end{proof}
+
+既約加群は次の意味で完全列を分裂させる。
+
+\begin{theorem}
+    $A$を環、$U$を既約$A$-加群とする。
+    このとき$\lMod{A}$の任意の完全列
+    \begin{equation}
+        \begin{tikzcd}
+            0
+                \ar{r}
+                & X
+                    \ar{r}{f}
+                & U
+                    \ar{r}{g}
+                & Y
+                    \ar{r}
+                & 0
+        \end{tikzcd}
+    \end{equation}
+    は分裂する。
+\end{theorem}
+
+\begin{proof}
+    $U$が既約であることより
+    $\Ker g$は$0$または$U$である。
+    $\Ker g = 0$の場合、
+    $g$は単射だから完全列より全単射となる。
+    したがって$g$は right splitting となり
+    所与の完全列は分裂する。
+    $\Ker g = U$の場合、
+    $\Im f = \Ker g = U$より
+    $f$は全射だから完全列より全単射となる。
+    したがって$f$は left splitting となり
+    所与の完全列は分裂する。
+\end{proof}
+
+\begin{corollary}
+    \label[corollary]{corollary:homomorphic-image-of-irreducible-module}
+    既約加群の準同型像は$0$または既約である。
+\end{corollary}
+
+\begin{proof}
+    $A$を環、
+    $Y$を$A$-加群、
+    $U$を既約$A$-加群、
+    $f \colon U \to Y$を$A$-加群準同型とする。
+    $\Im f \neq 0$と仮定して$\Im f$が既約であることを示せばよい。
+    ここで、定理より完全列
+    \begin{equation}
+        \begin{tikzcd}
+            0
+                \ar{r}
+                & \Ker f
+                    \ar[hook]{r}
+                & U
+                    \ar{r}{f}
+                & \Im f
+                    \ar{r}
+                & 0
+        \end{tikzcd}
+    \end{equation}
+    は分裂するから$U \cong \Ker f \oplus \Im f$である。
+    いま$\Im f \neq 0$だから、
+    $U$が既約であることより$\Ker f = 0$でなければならない。
+    したがって$U \cong \Im f$となり
+    $\Im f$は既約となる。
+\end{proof}
+
+
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{ねじれと annihilator}
+
+Annihilator の概念を定義する。
+Annihilator は群論でいう元の位数 (order) や群の冪数 (exponent) の
+加群論における一般化である。
+
+\begin{definition}[ねじれ]
+    \idxsym{tortion subset}{$M_\tor$}{$M$のねじれ元全体と$0$からなる部分集合}
+    $A$を環、
+    $M$を$A$-加群とする。
+    \begin{itemize}
+        \item $v \in M - \{ 0 \}$が
+            ある$r \in A - \{ 0 \}$に対し
+            $rv = 0$をみたすとき、
+            $v$は$M$の
+            \term{ねじれ元}[tortion element]{ねじれ元}[ねじれげん]
+            であるという。
+        \item $M$がねじれ元を持たないとき、
+            $M$は\term{ねじれなし}[tortion-free]{ねじれなし}であるという。
+        \item $M$のすべての元がねじれ元であるとき、
+            $M$は\term{ねじれ加群}[tortion module]{ねじれ加群}[ねじれかぐん]
+            であるという。
+        \item $M$のすべてのねじれ元と$0$からなる\highlight{集合}を$M_\tor$と書く。
+    \end{itemize}
+\end{definition}
+
+一般に$M_\tor$は$M$の部分加群であるとは限らないが、
+$M$が整域上の加群ならば$M_\tor$は部分加群となる。
+
+\begin{proposition}[ねじれ部分加群]
+    $R$を可換環、
+    $M$を$R$-加群とする。
+    $M_\tor$は$M$の部分加群であり、
+    $M / M_\tor$はねじれなしである。
+\end{proposition}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+\begin{definition}[Annihilator]
+    \idxsym{annihilator of an element}{$\ann_A(x)$}{$A$-加群の元の annihilator}
+    \idxsym{annihilator of a module}{$\Ann_A(V)$}{$A$-加群の annihilator}
+    $A \neq 0$を環、$V$を$A$-加群とする。
+    \begin{itemize}
+        \item 各$x \in V$に対し
+            \begin{equation}
+                \ann_A(x) \coloneqq \{ a \in A \mid ax = 0 \}
+            \end{equation}
+            を$x$の$A$における \term{annihilator}{annihilator} という。
+            これは$A$の左イデアルである。
+        \item
+            \begin{alignat}{1}
+                \Ann_A(V)
+                    &\coloneqq \{
+                        a \in A \mid \forall x \in V \text{ に対し } ax = 0
+                    \} \\
+                    &= \bigcap_{x \in V} \ann_A(x)
+            \end{alignat}
+            を$V$の \term{annihilator}{annihilator} という。
+            これは$A$の両側イデアルである。
+        \item $\Ann_A(V) = 0$のとき、
+            $V$は\term{忠実}[faithful]{忠実}[ちゅうじつ]であるという。
+    \end{itemize}
+\end{definition}
+
+既約加群の annihilator と係数環の極大左イデアルは
+次のように対応する。
+
+\begin{theorem}[既約加群の annihilator と極大左イデアルの対応]
+    \label[theorem]{thm:ann-and-maximal-ideal-of-irreducible-module}
+    $A \neq 0$を環とする。
+    \begin{enumerate}
+        \item $I \subset A$を極大左イデアルとすると、
+            $\down{A}A / I$は既約$A$-加群である。
+        \item $V$を既約$A$-加群、
+            $v \in V - \{ 0 \}$とする。
+            このとき$\ann_A(v)$は$A$の極大左イデアルである。
+        \item $R$を可換環とする。
+            次の全単射が成り立つ:
+            \begin{alignat}{2}
+                \{
+                    \text{既約$R$-加群の同型類}
+                \}
+                    &\quad \leftrightarrow \quad
+                    &&\Max(R) \\
+                R / \frakm
+                    &\quad \mapsfrom \quad
+                    &&\frakm \\
+                V
+                    &\quad \mapsto \quad
+                    &&\Ann_R(V)
+            \end{alignat}
+    \end{enumerate}
+\end{theorem}
+
+\begin{remark}
+    この定理によれば、環$A$の左イデアル$I$に関し、
+    商加群$\down{A}A / I$が既約であることと
+    $I$が極大左イデアルであることは同値である。
+\end{remark}
+
+\begin{proof}
+    \uline{(1)} \quad
+    部分加群の対応原理 (\cref{thm:supmodule-correspondence-principle})
+    より明らか。
+
+    \uline{(2)} \quad
+    $\ann_A(v)$の定義より、
+    $A$-加群準同型
+    $\varphi \colon \down{A}A \to V, \; a \mapsto av$
+    は$\Ker(\varphi) = \ann_A(v)$をみたす。
+    したがって
+    \begin{equation}
+        \begin{tikzcd}
+            \down{A}A
+                \ar{r}{\varphi}
+                \ar[twoheadrightarrow]{d}
+                & V \\
+            A / \ann_A(v)
+                \ar[dashed]{ru}[swap]{\wb{\varphi}}
+        \end{tikzcd}
+    \end{equation}
+    を可換にする$A$-加群の同型$\wb{\varphi}$が誘導される。
+    $A / \ann_A(v) \cong V$は
+    既約ゆえに非自明な部分加群を持たないから、
+    部分加群の対応原理 (\cref{thm:supmodule-correspondence-principle})
+    より$\ann_A(v)$は$A$の極大左イデアルである。
+
+    \uline{(3)} \quad
+    \TODO{}
+\end{proof}
+
+
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{Schur の補題}
+
+Schur の補題とその系について述べる。
+
+\begin{definition}[代数的閉体]
+    $K$を体とする。
+    $K$が\term{代数的閉体}[algebraically closed field; ACF]{代数的閉体}[だいすうてきへいたい]
+    であるとは、
+    任意の$f \in K[X], \; n = \deg f \ge 1$が
+    \begin{equation}
+        f(X) = a(X - \alpha_1) \cdots (X - \alpha_n)
+            \quad
+            (a \neq 0, \; \alpha_i \in K)
+    \end{equation}
+    と表せることをいう。
+\end{definition}
+
+\cref{prop:embedding-of-field-into-algebra}より、
+体上の代数には体が埋め込まれているとみなせるのであった。
+このとき次が成り立つ。
+
+\begin{lemma}[Dixmier の補題]
+    \label[lemma]{lemma:dixmier}
+    $K$を代数的閉体、
+    $D$を$\dim_K D < \sharp K$なる可除$K$-代数とする。
+    このとき$D = K$が成り立つ\footnote{
+        厳密には、$D$が環準同型$\varphi$により$K$-代数になっているとして
+        $K$-代数の同型$(D, \varphi) \cong (K, \id_K)$が成り立つということである。
+    }。
+\end{lemma}
+
+\begin{proof}
+    $K \subset D$であることはよい。
+    $K \subsetneq D$であったと仮定して矛盾を導く。
+    仮定よりある$\gamma \in D - K$が存在する。
+    このとき、評価準同型$\ev_\gamma \colon K[X] \to D$は単射である。
+    \begin{innerproof}
+        $\ev_\gamma$が単射でないと仮定し矛盾を導く。
+        仮定よりある$0 \neq f \in \Ker \ev_\gamma$が存在する。
+        明らかに$f \notin K$だから$n \coloneqq \deg f \ge 1$である。
+        そこで$K$が代数的閉体であることより
+        \begin{equation}
+            f(X) = a(X - \alpha_1) \cdots (X - \alpha_n)
+                \quad
+                (a \neq 0, \; \alpha_i \in K)
+        \end{equation}
+        と表せる。よって
+        $0 = f(\gamma) = a(\gamma - \alpha_1) \cdots (\gamma - \alpha_n)$
+        が成り立つ。
+        $\gamma \notin K$ゆえに各$\gamma - \alpha_i$は$0$でなく、
+        また$a$も$0$でないから、
+        とくに$a$は$D$の零因子である。
+        これは$D$が可除ゆえに零因子を持たないことに反する。
+        背理法より$\ev_\gamma$は単射である。
+    \end{innerproof}
+    各$\alpha \in K$に対し、
+    $\gamma \in D - K$ゆえに
+    $\gamma - \alpha \neq 0$だから、
+    $D$が可除であることより
+    逆元$(\gamma - \alpha)^{-1} \in D$が存在する。
+    そこで
+    $B \coloneqq
+        \{
+            (\gamma - \alpha)^{-1} \in D \mid \alpha \in K
+        \}$
+    とおくと、$B$は$K$上1次独立である。
+    \begin{innerproof}
+        背理法のために、
+        $B$が$K$上1次独立でないとする。
+        すなわち、相異なるある$\alpha_1, \dots, \alpha_n \in K$と
+        ある$a_1, \dots, a_n \in K^\times$が存在して
+        \begin{equation}
+            \sum_{i = 1}^n a_i (\gamma - \alpha_i)^{-1} = 0
+        \end{equation}
+        が成り立つと仮定する。
+        いま$D$は可除ゆえに零因子を持たないから$n \ge 2$である。
+        よって
+        \begin{equation}
+            a_1 (\gamma - \alpha_1)^{-1}
+                + \sum_{i = 2}^n a_i (\gamma - \alpha_i)^{-1}
+                = 0
+        \end{equation}
+        である。両辺に$(\gamma - \alpha_1) \cdots (\gamma - \alpha_n)$をかけて
+        \begin{equation}
+            a_1 (\gamma - \alpha_2) \cdots (\gamma - \alpha_n)
+                + \sum_{i = 2}^n a_i \prod_{k \neq i} (\gamma - \alpha_k)
+                = 0
+        \end{equation}
+        を得る。
+        このとき$\ev_\gamma \colon K[X] \to D$が単射であることより、
+        $K[X]$において
+        \begin{equation}
+            a_1 (X - \alpha_2) \cdots (X - \alpha_n)
+                + \sum_{i = 2}^n a_i \prod_{k \neq i} (X - \alpha_k)
+                = 0_{K[X]}
+        \end{equation}
+        が成り立つ。
+        そこで$X$に$\alpha_1$を代入して
+        $a_1 (\alpha_1 - \alpha_2) \cdots (\alpha_1 - \alpha_n) = 0_K$
+        を得る。
+        各$\alpha_i$は相異なるから各$\alpha_1 - \alpha_i$は$0_K$でなく、
+        また$a_1$も$0_K$でないから、
+        とくに$a_1$は$K$の零因子である。
+        これは$K$が体ゆえに零因子を持たないことに反する。
+        背理法より$B$は$K$上1次独立である。
+    \end{innerproof}
+    よって
+    $\sharp K \le \sharp B \le \sharp \dim_K D < \sharp K$
+    となり矛盾が従う。
+    背理法より$K = D$である。
+\end{proof}
+
+次に述べる Schur の補題は
+加群準同型全体のなす加群の構造に関する主張であり、
+既約加群の性質からほとんど直ちに導かれるものであるが、
+いくつかの有用な系が従う。
+
+\begin{theorem}[Schur の補題]
+    \label[theorem]{thm:Schur-lemma}
+    \termhidden{Schur の補題}[Schur のほだい]
+    $A$を環、$U_1, U_2$を既約$A$-加群とする。
+    このとき、
+    $\Hom_A(U_1, U_2)$の$0$でない元はすべて
+    $A$-加群の同型
+    $U_1 \xrightarrow{\sim} U_2$
+    を与える。
+    とくに
+    $\Hom_A(U_1, U_2) \neq 0 \iff U_1 \cong U_2$である。
+\end{theorem}
+
+\begin{proof}
+    $0 \neq f \in \Hom_A(U_1, U_2)$とする。
+    $U_1, U_2$は既約$A$-加群だから
+    $\Ker f, \; \Im f$は自明な部分加群であるが、
+    いま$f \neq 0$より$\Ker f \neq U_1, \; \Im f \neq 0$だから
+    $\Ker f = 0, \; \Im f = U_2$である。
+    よって$f$は全単射、したがって$A$-加群の同型である。
+\end{proof}
+
+\begin{corollary}
+    \label[corollary]{corollary:homomorphic-image-of-irreducible-module-is-isomorphic}
+    既約加群$U$の準同型像は$0$でなければ$U$と同型である。
+\end{corollary}
+
+\begin{proof}
+    Schur の補題と
+    \cref{corollary:homomorphic-image-of-irreducible-module}
+    より従う。
+\end{proof}
+
+\begin{corollary}
+    \label[corollary]{corollary:Schur-lemma-corollary-1}
+    $A$を環、
+    $U$を既約$A$-加群とする。
+    このとき、次が成り立つ:
+    \begin{enumerate}
+        \item $D \coloneqq \End_A(U)$は可除環である。
+        \item 各$n \in \Z_{\ge 1}$に対し環の同型
+            \begin{equation}
+                \End_A(U^{\oplus n})
+                    \cong
+                    M_n(D)
+            \end{equation}
+            が成り立つ\TODO{$A$が可換環なら$A$-代数としての同型？}。
+    \end{enumerate}
+\end{corollary}
+
+\begin{proof}
+    \uline{(1)} \quad
+    \cref{thm:Schur-lemma}より明らか。
+
+    \uline{(2)} \quad
+    \begin{alignat}{1}
+        \End_A(U^{\oplus n})
+            &= \Hom_A(U_1 \oplus \cdots \oplus U_n, U_1 \oplus \cdots \oplus U_n) \\
+            &= \bigoplus_{i, j} \Hom_A(U_j, U_i) \\
+            &= \bigoplus_{i, j} D_{ij}
+    \end{alignat}
+    \TODO{}
+\end{proof}
+
+\begin{example}
+    上の系について、$A$が体$K$の場合を考えてみよう。
+    $K$は非自明なイデアルを持たないから、
+    $K$自身を$K$-加群とみなすと既約である。
+    ここで$f \in \End_K(K)$を$f(1) \in K$に写す写像によって
+    $K$-代数としての同型$\End_K(K) \cong K$が成り立つことに注意すれば、
+    上の系は$\End_K(K^n) \cong M_n(K)$が成り立つことを主張している。
+    このことは、有限次元ベクトル空間$K^n$の自己準同型が
+    $K$上の行列と対応するというよく知られた線型代数学の結果に他ならない。
+\end{example}
+
+\begin{corollary}[Schur-Dixmier の補題]
+    \termhidden{Schur-Dixmier の補題}[Schur-Dixmier のほだい]
+    $K$を代数的閉体、
+    $A$を$\dim_K A < \sharp K$なる$K$-代数とする。
+    このとき、任意の既約$A$-加群$U$に対し
+    \begin{equation}
+        \End_A(U) = K
+    \end{equation}
+    が成り立つ。
+\end{corollary}
+
+\begin{remark}
+    $K = \C, \; \dim_K A = \aleph_0$の場合などがよくある。
+\end{remark}
+
+\begin{proof}
+    $D \coloneqq \End_A(U)$とおく。
+    $A$は$K$-代数だから$D$も$K$-代数であり、
+    \cref{corollary:Schur-lemma-corollary-1}より
+    $D$は可除$K$-代数となる。
+    よって$\dim_K D < \sharp K$を示せば
+    Dixmier の補題 (\cref{lemma:dixmier}) より
+    $\End_A(U) = D = K$が従う。
+    $U$は既約$A$-加群だから、
+    \cref{thm:ann-and-maximal-ideal-of-irreducible-module}より
+    $A$のある極大イデアルによる商と$A$-加群として同型である。
+    したがって
+    $\dim_K U \le \dim_K A < \sharp K$である。
+    一方、$x \in U - \{ 0 \}$をひとつ選んで
+    $F \colon D \to U, \; \varphi \mapsto \varphi(x)$とおけば
+    $F$は$K$-線型写像である。
+    さらに$F$は単射である。
+    実際、$\varphi \in D, \; F(\varphi) = \varphi(x) = 0$とすると、
+    もし$\varphi \neq 0$なら
+    Schur の補題 (\cref{thm:Schur-lemma}) より
+    $\varphi$は同型だから$x = 0$となり$x \neq 0$に矛盾する。
+    よって$\varphi = 0$、したがって$F$は単射である。
+    よって$\dim_K D \le \dim_K U$だから
+    $\dim_K D < \sharp K$が成り立つ。
+    これが示したいことであった。
+\end{proof}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{直既約加群}
+
+直既約加群の概念を定義する。
+
+\begin{definition}[直既約]
+    $A$を環とする。
+    $A$-加群$M$が
+    \term{直既約}[indecomposable]{直既約}[ちょくきやく]
+    であるとは、
+    $M \neq 0$であって
+    $0$と$M$以外の直和成分を持たないことをいう。
+\end{definition}
+
+\begin{remark}
+    直既約加群の概念は
+    その名の通り既約加群の定義とよく似ている。
+    既約加群は非自明な部分加群を持たないから
+    もちろん非自明な直和成分を持たず、したがって直既約である。
+    逆に直既約加群は非自明な部分加群を持ちうるから、
+    既約加群であるとは限らない。
+\end{remark}
+
+\begin{theorem}
+    $R$をPID、
+    $x \in R^\times$を素元とする。
+    このとき
+    任意の$n \in \Z_{\ge 1}$に対し
+    $R / (x^n)$は局所環であり、
+    また$R$-加群としては直既約となる。
+\end{theorem}
+
+\begin{proof}
+    $A \coloneqq R / (x^n)$とおく。
+    $x$の$A$における像を$\wb{x}$と書く。
+    このとき$(\wb{x})$は$A$の極大イデアルである。
+    $\frakm$を$A$の任意の極大イデアルとすると
+    $0 = \wb{x}^n \in \frakm$ゆえに
+    $\wb{x} \in \frakm$である。
+    したがって$(\wb{x}) = \frakm$だから
+    $A$は局所環である。
+
+    $A$が$R$-加群として直既約であることを示す。
+    $A = M_1 \oplus M_2$と
+    $0$でない$R$-部分加群の直和に分解できたとすると、
+    ある$e_i \in M_i \; (i = 1, 2)$が存在して
+    $1 = e_1 + e_2$が成り立つ。
+    このとき$e_1 e_2 \in M_1 \cap M_2 = 0$
+    だから$e_1, e_2$は単元ではなく、
+    したがって$e_1, e_2 \in (\wb{x})$となる。
+    よって$1 = e_1 + e_2 \in (\wb{x})$となり
+    $(\wb{x})$が$A$の極大イデアルであることに矛盾する。
+    したがって$A$は直既約である。
+\end{proof}
+
+
+
+
+
+
+% ============================================================
+%
+% ============================================================
+\chapter{有限生成性}
+\label[chapter]{chapter:finiteness}
+
+この章では加群と環の有限生成性について述べる。
+まず Jacobson 根基の概念を導入し、
+それを用いて有限生成加群に関する最も重要な定理のひとつである
+Nakayama の補題を示す。
+次に加群の有限生成性を強化した概念であるネーター加群とアルティン加群を導入し、
+さらに強い概念として組成列を持つ加群を導入する。
+最後に加群から環の話題へ移ってネーター環を定義する。
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{Jacobson 根基と Nakayama の補題}
+
+この節では、
+有限生成加群に関する最も重要な定理のひとつである
+Nakayama の補題について述べる。
+
+$0$でない有限生成加群は既約な商加群をもつ。
+
+\begin{proposition}[既約商加群の存在]
+    \label[proposition]{prop:irreducible-quotient-module}
+    $A$を環、
+    $V$を有限生成$A$-加群とする。
+    このとき、任意の$A$-部分加群$V' \subsetneq V$に対し、
+    $V' \subset W \subsetneq V$
+    なるある$A$-部分加群$W$であって
+    $V / W$が既約となるものが存在する。
+\end{proposition}
+
+\begin{proof}
+    \TODO{Zorn の補題を使う}
+\end{proof}
+
+Jacobson 根基を定義する。
+環$A$の Jacobson 根基の元は、あらゆる既約$A$-加群に$0$として作用するものである。
+
+\begin{definition}
+    \idxsym{left primitive ideal}{$\Prim(A)$}{$A$の左原始イデアル}
+    $A$を環とする。
+    \begin{enumerate}
+        \item $A$の両側イデアル$I$が
+            \term{左原始イデアル}[left primitive ideal]{左原始イデアル}[ひだりげんしいである]
+            であるとは、
+            ある既約$A$-加群$U$が存在して
+            $I = \Ann_A(U)$が成り立つことをいう。
+        \item $A$の左原始イデアルの全体を
+            \begin{equation}
+                \Prim(A) \coloneqq \{
+                    \text{$A$の左原始イデアル}
+                \}
+            \end{equation}
+            と書く。
+        \item $A$の左原始イデアル全部の共通部分を
+            \begin{equation}
+                J(A) \coloneqq \bigcap_{I \in \Prim(A)} I
+            \end{equation}
+            と書き、これを$A$の
+            \term{Jacobson 根基}[Jacobson radical]{Jacobson 根基}[Jacobson こんき]
+            という。
+    \end{enumerate}
+\end{definition}
+
+Jacobson 根基は次のように特徴付けることができる。
+
+\begin{theorem}[Jacobson 根基の特徴付け]
+    $A$を環とする。
+    $x \in A$に関し次は同値である:
+    \begin{enumerate}
+        \item $x \in J(A)$
+        \item 任意の既約$A$-加群$U$に対し$xU = 0$となる。
+        \item 任意の極大左イデアル$I \subset A$に対し$x(A / I) = 0$となる。
+        \item $x \in \bigcap_{I \colon \text{$A$の極大左イデアル}} I$
+        \item 任意の$a \in A$に対し$1 - ax$が左逆元を持つ。
+    \end{enumerate}
+    \TODO{}
+\end{theorem}
+
+\begin{proof}
+    \uline{(1) \Leftrightarrow (2)} \quad
+    定義より明らか。
+
+    \uline{(1) \Rightarrow (2)} \quad
+    \TODO{}
+
+    \uline{(4) \Rightarrow (5)} \quad
+    $x \in \bigcap_{I \colon \text{$A$の極大左イデアル}} I$とする。
+    $a \in A$とすると
+    $1 = ax + (1 - ax)$である。
+    $1 - ax$がある極大左イデアル$I$に属したとすると、
+    $x$したがって$ax$も$I$に属するから$1 \in I$となり
+    $I$が極大左イデアルであることに矛盾する。
+    よって$1 - ax$はいかなる極大左イデアルにも属さず、
+    したがって$A (1 - ax) = A$である。
+    よって$1 - ax$は左逆元を持つ。
+\end{proof}
+
+Jacobson 根基は右イデアルを用いて特徴付けることもできる。
+
+\begin{proposition}[Jacobson 根基の右イデアルによる特徴付け]
+    \TODO{}
+\end{proposition}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+\begin{lemma}
+    $A$を環、$V$を$A$-加群、$V' \subsetneq V$を部分$A$-加群とする。
+    $V / V'$が既約$A$-加群ならば
+    \begin{equation}
+        J(A) V \subset V'
+    \end{equation}
+    が成り立つ。
+\end{lemma}
+
+\begin{proof}
+    $V / V'$は既約$A$-加群だから
+    Jacobson 根基の定義より$J(A) (V / V') = 0$であり、
+    したがって$J(A) V \subset V'$である。
+\end{proof}
+
+Nakayama の補題を示す。
+
+\begin{theorem}[Nakayama の補題]
+    \termhidden{Nakayama の補題}[Nakayama のほだい]
+    $A$を環、$V$を有限生成$A$-加群、
+    $V' \subset V$を部分$A$-加群とする。
+    このとき$V' + J(A) V = V$ならば
+    $V' = V$である。
+\end{theorem}
+
+\TODO{局所環の場合、有限次元ベクトル空間に帰着させるための橋渡しとなる？ cf. [Reid]}
+
+\TODO{Cayley-Hamilton から示すこともできる？ cf. \cref{problem:algebra2-6.86}}
+
+\begin{proof}
+    $V' \subsetneq V$と仮定して矛盾を導く。
+    $V$は有限生成$A$-加群だから、
+    $V' \subsetneq V$の仮定と
+    \cref{prop:irreducible-quotient-module}より
+    $V' \subset W \subsetneq V$なる
+    ある$A$-部分加群$W$が存在して$V / W$は既約となる。
+    したがって上の補題より
+    $J(A)V \subset W$が成り立つ。
+    よって$V = V' + J(A)V \subset W \subsetneq V$
+    となり矛盾が従う。
+\end{proof}
+
+\begin{corollary}
+    $A$を環、$V$を有限生成$A$-加群とする。
+    このとき$J(A) V = V$ならば$V = 0$である。
+    \qed
+\end{corollary}
+
+\begin{corollary}
+    $A$を環、$V$を有限生成$A$-加群、
+    $v_1, \dots, v_n$を$V / J(A)V$の$A / J(A)$上の生成元、
+    $p \colon V \to V / J(A)V$を標準射影とする。
+    このとき、$p(\wt{v}_i) = v_i$なる任意の$\wt{v}_i$に対し
+    $V$は$A$上$\wt{v}_1, \dots, \wt{v}_n$により生成される。
+\end{corollary}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+\begin{corollary}
+    $A$を可換局所環
+    \TODO{}
+\end{corollary}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{ネーター加群とアルティン加群}
+\label[section]{section:noetherian-modules-and-artinian-modules}
+
+ネーター加群とアルティン加群を定義する。
+
+\begin{definition}[昇鎖条件と降鎖条件]
+    $A$を環、
+    $V$を$A$-加群とする。
+    \begin{itemize}
+        \item $V$の$A$-部分加群の増大列
+            \begin{equation}
+                V_1 \subset V_2 \subset \cdots
+            \end{equation}
+            あるいは減少列
+            \begin{equation}
+                V_1 \supset V_2 \supset \cdots
+            \end{equation}
+            が\term{停留的}[starionary]{停留的}[ていりゅうてき]であるとは、
+            ある$N \in \Z_{\ge 1}$が存在して
+            \begin{equation}
+                V_N = V_{N + 1} = \cdots
+            \end{equation}
+            をみたすことをいう。
+        \item $V$の任意の$A$-部分加群の増大列が停留的であるとき、
+            $V$は
+            \term{昇鎖条件}[ascending chain condition; ACC]{昇鎖条件}[しょうさじょうけん]
+            をみたすという。
+        \item $V$の任意の$A$-部分加群の増大列が停留的であるとき、
+            $V$は
+            \term{降鎖条件}[descending chain condition; DCC]{降鎖条件}[こうさじょうけん]
+            をみたすという。
+    \end{itemize}
+\end{definition}
+
+ネーター加群は、有限生成加群の有限生成性を強化したものとみなせる。
+
+\TODO{有限余生成はコンパクト性のFIPによる特徴付けと似ている？}
+
+\begin{definition}[ネーター加群とアルティン加群]
+    $A$を環、
+    $V$を$A$-加群とする。
+    $V$が
+    \term{ネーター加群}[noetherian module]{ネーター加群}[ねーたーかぐん]
+    であるとは、$V$が次の互いに同値な条件のうち
+    少なくとも1つ (よってすべて) をみたすことをいう (同値性はこのあと示す):
+    \begin{description}
+        \item[(N1)] $V$は昇鎖条件をみたす。
+        \item[(N2)] $V$の任意の$A$-部分加群は有限生成である。
+        \item[(N3)] $V$の$A$-部分加群からなる任意の集合は空でない限り極大元を持つ。
+    \end{description}
+
+    $V$が
+    \term{アルティン加群}[artinian module]{アルティン加群}[あるてぃんかぐん]
+    であるとは、$V$が次の互いに同値な条件のうち
+    少なくとも1つ (よってすべて) をみたすことをいう (同値性はこのあと示す):
+    \begin{description}
+        \item[(A1)] $V$は降鎖条件をみたす。
+        %\item $V$の任意の$A$-部分加群は有限余生成である。
+        \item[(A3)] $V$の$A$-部分加群からなる任意の集合は空でない限り極小元を持つ。
+    \end{description}
+\end{definition}
+
+\begin{proof}[同値性の証明.]
+    アルティン性の同値性の証明はネーター性の場合と同様だから、
+    ネーター性の同値性のみ示す。
+
+    \uline{(1) \Rightarrow (2)} \quad
+    \begin{equation}
+        0
+            \subsetneq \langle v_1 \rangle
+            \subsetneq \langle v_1, v_2 \rangle
+            \subsetneq \dots
+            \subsetneq \langle v_1, \dots, v_{n - 1} \rangle
+            \subsetneq W
+    \end{equation}
+    \TODO{}
+
+    \uline{(2) \Rightarrow (1)} \quad
+    \TODO{}
+\end{proof}
+
+\begin{example}[ネーター環とアルティン環の例]
+    ~
+    \begin{itemize}
+        \item $A$を環とする。既約$A$-加群は、定義から明らかにネーターかつアルティンである。
+        \item $K$を体、$A$を$K$-代数とする。
+            $A$-加群$V$が$K$上有限次元ならば、
+            $V$はネーターかつアルティンである。
+    \end{itemize}
+\end{example}
+
+\begin{example}[ネーター/アルティン加群と有限生成加群の関係]
+    ~
+    \begin{itemize}
+        \item ネーター加群はアルティン加群であるとは限らない。
+            実際、$\down{\Z}\Z$は明らかにネーター加群であるが、
+            $2\Z \supsetneq 4\Z \supsetneq \cdots$
+            は停留的でないから$\down{\Z}\Z$はアルティン加群でない。
+        \item アルティン加群はネーター加群であるとは限らない
+            (cf. \cref{problem:algebra2-5.68})。
+        \item アルティン加群は有限生成加群であるとは限らない。
+            \TODO{例？}
+        \item 有限生成加群はネーター加群であるとは限らない。
+            実際、無限変数多項式環$R \coloneqq \Q[X_0, X_1, \dots]$の左正則加群$\down{R}R$は
+            $R$上$1$により生成される有限生成加群だが、
+            $R$-部分加群$\langle X_0, X_1, \dots \rangle$は
+            $R$上有限生成でないから$\down{R}R$はネーター加群でない。
+    \end{itemize}
+\end{example}
+
+次の定理により、ネーター性/アルティン性は完全系列を介して "伝播" することがわかる。
+とくにネーター性/アルティン性は部分加群や商加群に遺伝する。
+
+\begin{theorem}[完全系列と有限性]
+    \label[theorem]{thm:exact-sequence-and-finiteness}
+    $A$を環とする。
+    $\lMod{A}$の完全列
+    \begin{equation}
+        \begin{tikzcd}
+            0
+                \ar{r}
+                & X
+                    \ar{r}
+                & Y
+                    \ar{r}
+                & Z
+                    \ar{r}
+                & 0
+        \end{tikzcd}
+    \end{equation}
+    に対し次は同値である:
+    \begin{enumerate}
+        \item $Y$はネーター (resp. アルティン) である。
+        \item $X, Z$はネーター (resp. アルティン) である。
+    \end{enumerate}
+\end{theorem}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+$0$でないアルティン加群は既約な部分加群をもつ。
+
+\begin{theorem}[既約部分加群の存在]
+    $A$を環とする。
+    $0$でないアルティン$A$-加群は
+    既約部分加群をもつ。
+\end{theorem}
+
+\begin{proof}
+    $V$を$0$でないアルティン$A$-加群とすると、
+    $V$のアルティン性より
+    $V$の$0$でない$A$-部分加群全体の集合は
+    極小元$V_0$をもつ。
+    このとき$V_0 \neq 0$と極小性より$V_0$は既約である。
+\end{proof}
+
+
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{組成列}
+
+組成列について述べる。
+まずフィルトレーションの概念を定義する。
+
+\begin{definition}[フィルトレーション]
+    $A$を環、
+    $V$を$A$-加群とする。
+    $A$-部分加群の減少列
+    \begin{equation}
+        V = V_0 \supsetneq V_1 \supsetneq \cdots \supsetneq V_n = 0
+    \end{equation}
+    を$V$の\term{フィルトレーション}[filtration]{フィルトレーション}
+    といい、
+    $n$をフィルトレーションの
+    \term{長さ}[length]{長さ}[ながさ]
+    という。
+\end{definition}
+
+\begin{definition}
+    $A$を環とする。
+    \begin{itemize}
+        \item $A$-加群$V$が
+            \term{有限の長さを持つ}[of finite length]{有限の長さを持つ}[ゆうげんのながさをもつ]
+            とは、
+            $V$の長さ$n \in \Z_{\ge 0}$の
+            フィルトレーション$\{ V_i \}_{i = 0}^n$であって、
+            各$V_i / V_{i + 1} \; (0 \le i \le n - 1)$が既約であるようなものが
+            存在することをいう。
+            このとき、$\{ V_i \}_i$を$V$の
+            \term{組成列}{組成列}[そせいれつ]
+            といい、
+            各$V_i / V_{i + 1}$を$\{ V_i \}$の
+            \term{既約成分}{既約成分}[きやくせいぶん]という。
+        \item $n$を$\{ V_i \}$の
+            \term{長さ}[length]{長さ}[ながさ]
+            という。
+        \item 各既約$A$-加群$U$に対して、
+            $U \cong V_i / V_{i + 1}$となる
+            $0 \le i \le n$の個数を$U$の$\{ V_i \}$における
+            \term{重複度}{重複度}[ちょうふくど]
+            という。
+        \item $V$のすべての組成列の長さの最小値を$l(V)$で表す。
+            ただし$l(0) = 0$と定める。
+        \item ふたつの組成列$\{ V_i \}$と$\{ V'_i \}$が
+            \term{同値}{同値!組成列の---}[どうち]であるとは、
+            長さが一致し、任意の既約$A$-加群の
+            重複度が一致することをいう。
+    \end{itemize}
+\end{definition}
+
+有限の長さを持つ加群は
+非常に強い有限性を持っている。
+
+\begin{theorem}
+    $A$を環とする。
+    $A$-加群$V$に関し次は同値である:
+    \begin{enumerate}
+        \item $V$は有限の長さを持つ。
+        \item $V$はネーターかつアルティンである。
+    \end{enumerate}
+\end{theorem}
+
+\begin{proof}
+    \uline{(1) \Rightarrow (2)} \quad
+    $V = V_0 \supsetneq V_1 \supsetneq \cdots \supsetneq V_n = 0$を
+    $V$の長さ$n$の組成列とする。
+    系列
+    \begin{equation}
+        \begin{tikzcd}
+            0
+                \ar{r}
+                & V_n
+                    \ar{r}
+                & V_{n - 1}
+                    \ar{r}
+                & V_{n - 1} / V_n
+                    \ar{r}
+                & 0
+        \end{tikzcd}
+    \end{equation}
+    は完全列であり、
+    $V_n = 0$および既約$A$-加群$V_{n - 1} / V_n$は
+    ネーターかつアルティンだから、
+    \cref{thm:exact-sequence-and-finiteness}より
+    $V_{n - 1}$はネーターかつアルティンである。
+    帰納的に$V_0 = V$がネーターかつアルティンであることがわかる。
+
+    \uline{(2) \Rightarrow (1)} \quad
+
+    \TODO{}
+\end{proof}
+
+\begin{corollary}
+    $A$を環とする。
+    $\lMod{A}$の完全列
+    \begin{equation}
+        \begin{tikzcd}
+            0
+                \ar{r}
+                & V_1
+                    \ar{r}
+                & V_2
+                    \ar{r}
+                & V_3
+                    \ar{r}
+                & 0
+        \end{tikzcd}
+    \end{equation}
+    に対し次は同値である:
+    \begin{enumerate}
+        \item $V_2$は有限の長さを持つ。
+        \item $V_1, V_3$は有限の長さを持つ。
+    \end{enumerate}
+\end{corollary}
+
+\begin{proof}
+    \cref{thm:exact-sequence-and-finiteness}
+    より明らか。
+\end{proof}
+
+組成列は本質的に一意的である。
+これにより加群の次元のようなものを一義的に定義することができ、
+これはベクトル空間の次元のように振る舞う。
+
+\TODO{どういうこと？}
+
+\begin{theorem}[Jordan-H\"{o}lder の定理]
+    \label[theorem]{thm:Jordan-Holder}
+    $A$を環とする。
+    $A$-加群$V$が有限の長さを持つとき、
+    $V$の任意の組成列は互いに同値となる。
+\end{theorem}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{ネーター環}
+
+ネーター環を定義する。
+
+
+\begin{definition}[ネーター環]
+    $A$を環とする。
+    $\down{A}A$がネーター加群のとき
+    $A$を
+    \term{左ネーター環}[left noetherian ring]{ネーター環}[ねーたーかん]
+    という。
+    右も同様に定義する。
+    $A$が可換環のときは単に
+    \term{ネーター環}[noetherian ring]{ネーター環}[ねーたーかん]
+    という。
+\end{definition}
+
+環のネーター性がその上の加群のネーター性をもたらすことを確認しよう。
+左ネーター環上の有限生成加群はネーター加群となる。
+
+\begin{theorem}
+    \label[theorem]{thm:fg-module-over-noetherian-ring-is-noetherian}
+    $A$を左ネーター環とすると、
+    任意の有限生成$A$-加群はネーター加群である。
+\end{theorem}
+
+\begin{proof}
+    まず$A^{\oplus n}$がネーター加群であることを
+    $n$に関する帰納法によって示す。
+    $A = A^{\oplus n} / A^{\oplus (n - 1)}$ゆえに
+    完全列
+    \begin{equation}
+        \begin{tikzcd}
+            0
+                \ar{r}
+                & A^{\oplus (n - 1)}
+                    \ar{r}
+                & A^{\oplus n}
+                    \ar{r}
+                & A
+                    \ar{r}
+                & 0
+        \end{tikzcd}
+    \end{equation}
+    を得る。
+    いま$A$は左ネーター環ゆえにネーター加群で、
+    また帰納法の仮定より$A^{\oplus (n - 1)}$もネーター加群なので、
+    \cref{thm:exact-sequence-and-finiteness}より
+    $A^{\oplus n}$もネーター加群である。
+
+    つぎに$V$を有限生成$A$-加群とする。
+    $V = \langle v_1, \dots, v_n \rangle$と表せて、
+    $v_1, \dots, v_n$により定まる全射
+    $p \colon A^{\oplus n} \to V$により
+    完全列
+    \begin{equation}
+        \begin{tikzcd}
+            0
+                \ar{r}
+                & \Ker p
+                    \ar{r}
+                & A^{\oplus n}
+                    \ar{r}{p}
+                & V
+                    \ar{r}
+                & 0
+        \end{tikzcd}
+    \end{equation}
+    を得る。
+    $A^{\oplus n}$はネーター加群なので
+    \cref{thm:exact-sequence-and-finiteness}より
+    $V$もネーター加群である。
+\end{proof}
+
+驚くべきことに、
+ネーター環がさらに可換であれば、
+その上の有限生成な加群のみならず
+有限生成な代数までもネーター性をもつ。
+
+\begin{theorem}[Hilbert の基底定理\footnote{
+    Hilbert の時代には生成系のことを基底 (basis) と呼んでいたため
+    このような名前になっている \cite{Rei95}。
+}]
+    \termhidden{Hilbert の基底定理}[Hilbert のきていていり]
+    $R$を可換ネーター環とすると、
+    $R$上有限生成な可換$R$-代数$A$は
+    ネーター環である。
+\end{theorem}
+
+\begin{proof}
+    $R[X_1, \dots, X_n]$がネーター環であることを示せばよく、
+    さらに\cref{corollary:polynomial-ring-isomorphism}より
+    $R[X]$がネーター環であることを示せばよい。
+    $I \subset R[X]$を任意のイデアルとし、
+    $I$が$R$-加群として有限生成であることを示す。
+    \TODO{}
+\end{proof}
+
+\begin{remark}
+    可換ネーター環の部分環はネーター環であるとは限らない
+    (cf. \cref{problem:algebra2-5.74})。
+\end{remark}
+
+\begin{proposition}
+    PIDはネーター環である。
+\end{proposition}
+
+\begin{proof}
+    \TODO{生成元の既約元分解を考える}
+\end{proof}
+
+
+
+% ============================================================
+%
+% ============================================================
+\chapter{半単純加群と半単純環}
+\label[chapter]{chapter:semisimple-module-and-semisimple-ring}
+
+\TODO{アルティン単純環は半単純加群/環とどういう関係？}
+
+この章では半単純加群について述べた後、
+アルティン単純環と半単純環の構造について詳しく調べる。
+この章の目標は、代数学における最も重要な定理のひとつである
+Wedderburn-Artin の構造定理を示すことである。
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{半単純加群}
+
+半単純加群の概念を定義する。
+
+\begin{definition}[半単純加群]
+    $A$を環、$V$を$A$-加群とする。
+    $V$が\term{半単純}[semisimple]{半単純}[はんたんじゅん]
+    あるいは
+    \term{完全可約}[completely reducible]{完全可約}[かんぜんかやく]
+    であるとは、
+    $V$の既約部分$A$-加群の族$\{ V_i \}_{i \in I}$が存在して
+    $V = \bigoplus_{i \in I} V_i$が成り立つことをいう。
+\end{definition}
+
+\begin{example}[半単純加群の例]
+    ~
+    \begin{itemize}
+        \item $K$を体とする。有限次元$K$-ベクトル空間は
+            $K$の有限個の直和に同型だから、
+            $K$上の半単純加群である。
+    \end{itemize}
+\end{example}
+
+加群が半単純であることを定義に沿って示すには
+直和分解の存在を示さなければならないが、
+実はもう少し簡単な条件を確認すればよい。
+すなわち、加群が既約部分加群による "被覆" を持つとき、
+その "部分被覆" によって直和分解ができる。
+
+\begin{theorem}
+    \label[theorem]{thm:semisimple-cover}
+    $A$を環、$V$を$A$-加群、
+    $\{ V_i \}_{i \in I}$を
+    $V$の既約部分$A$-加群の族とする。
+    このとき、
+    $V = \sum_{i \in I} V_i$が成り立つならば、
+    ある$J \subset I$が存在して
+    $V = \bigoplus_{i \in J} V_i$が成り立つ。
+    とくに$V$は半単純である。
+\end{theorem}
+
+\begin{proof}
+    $\calS \coloneqq
+        \left\{
+            J \subset I
+            \; \middle| \;
+            \sum_{j \in J} V_j = \bigoplus_{j \in J} V_j
+        \right\}$
+    とおく。
+    いま$V = \sum_{i \in I} V_i$ゆえに
+    $I \neq \emptyset$だから$I$の1点からなる部分集合が存在して、
+    それは明らかに$\calS$に属する。
+    よって$\calS \neq \emptyset$である。
+    $\calS$が帰納的半順序集合であることを示す。
+    そこで$\calI \subset \calS$を任意の全順序部分集合とする。
+    ここで$J_0 \coloneqq \bigcup_{J \in \calI} J$とおくと
+    $J_0$は$\calS$における$\calI$の上界である。
+    \begin{innerproof}
+        \TODO{}
+    \end{innerproof}
+    したがって Zorn の補題より
+    $\calS$は極大元$J_1$を持つ。
+    そこで$V' \coloneqq \bigoplus_{j \in J_1} V_j$とおく。
+    ここで$V' \subsetneq V$であったとすると、
+    $V = \sum_{i \in I} V_i$の仮定とあわせて、
+    ある$k \in I - J_1$が存在して
+    $V_k \not\subset V'$が成り立つ。
+    いま$V_k$は既約ゆえに$V_k \cap V' = 0$だから
+    $\sum_{j \in J_1 \cup \{ k \}} V_j
+        = \left( \bigoplus_{j \in J_1} V_j \right) \oplus V_k$
+    が成り立つ。
+    よって$J_1 \cup \{ k \} \in \calS$となり、
+    $J_1$の極大性に矛盾する。
+    したがって$V' = V$である。
+\end{proof}
+
+半単純加群の商加群は半単純である。
+
+\begin{corollary}[半単純加群の商は半単純]
+    \label[corollary]{corollary:quotinet-of-semisimple-module}
+    $A$を環、
+    $V$を半単純$A$-加群、
+    $W \subset V$を$A$-部分加群とする。
+    このとき$V / W$は半単純$A$-加群である。
+    詳しくいえば、
+    $p \colon V \to V / W$を標準射影とするとき、
+    $V$の既約部分加群への直和分解
+    $V = \bigoplus_{i \in I} V_i$に対し、
+    ある$J \subset I$が存在して
+    $V / W = \bigoplus_{i \in J} p(V_i)$が
+    既約部分加群への直和分解となる。
+\end{corollary}
+
+\begin{proof}
+    $V$の直和分解を$p$で写して
+    $V / W
+        = p\left( \bigoplus_{i \in I} V_i \right)
+        = \sum_{i \in I} p\left( V_i \right)$
+    が成り立つ。
+    このとき、$V_i$が既約であることから
+    $p(V_i)$は$0$または既約である。
+    そこで$I$から$p(V_i) = 0$なる$i$をすべて除いたものを$I'$とおけば、
+    $V / W = \sum_{i \in I'} p(V_i)$
+    と既約部分加群の和で表せる。
+    したがって上の定理より
+    ある$J \subset I' \subset I$が存在して
+    $V / W = \bigoplus_{j \in J} p(V_j)$
+    と既約部分加群への直和分解が成り立つ。
+    よって$V / W$は半単純である。
+\end{proof}
+
+Socle とは、加群の既約部分加群すべての和である。
+実は最大の半単純部分加群にもなっている。
+
+\begin{corollary}
+    $A$を環、
+    $V$を$A$-加群とする。
+    このとき
+    \begin{equation}
+        \soc(V) \coloneqq
+            \sum_{\substack{
+                V_0 \subset V \colon
+                    \text{既約$A$-部分加群}
+            }} V_0
+    \end{equation}
+    とおくと、$\soc(V)$は$V$の最大の半単純部分加群である。
+\end{corollary}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+半単純加群の部分加群は半単純となり、さらに直和因子となる。
+
+\begin{theorem}
+    \label[theorem]{thm:submodule-of-semisimple-module}
+    $A$を環、
+    $V$を半単純$A$-加群、
+    $W$を$V$の$A$-部分加群とする。
+    このとき次が成り立つ:
+    \begin{enumerate}
+        \item $W$は半単純である。
+        \item ある$V$の$A$-部分加群$W'$が存在して
+            $V = W \oplus W'$となる。
+    \end{enumerate}
+\end{theorem}
+
+\begin{proof}
+    まず(2)を示す。
+    $p \colon V \to V / W$を標準射影とし、短完全列
+    \begin{equation}
+        \begin{tikzcd}
+            0
+                \ar{r}
+                & W
+                    \ar[hook]{r}
+                & V
+                    \ar{r}{p}
+                & V / W
+                    \ar{r}
+                & 0
+        \end{tikzcd}
+    \end{equation}
+    を考える。
+    \cref{corollary:quotinet-of-semisimple-module}より
+    ある$J \subset I$が存在して
+    $V / W = \bigoplus_{i \in J} p(V_i)$が
+    既約部分加群への直和分解となる。
+    ここで Schur の補題 (\cref{thm:Schur-lemma}) より
+    各$p|_{V_i} \colon V_i \to p(V_i)$は同型となるから、
+    $A$-加群準同型
+    \begin{equation}
+        s \colon
+            V / W = \bigoplus_{i \in J} p(V_i)
+            \overset{\prod_{i \in J} (p|_{V_i})^{-1}}{\to}
+            \bigoplus_{i \in J} V_i
+            \hookrightarrow
+            V
+    \end{equation}
+    が上の短完全列の right splitting を与える。
+    よって$V = W \oplus s(V / W)$が成り立ち、(2)が従う。
+
+    つぎに(1)を示す。
+    $J' \coloneqq I - J$とおくと
+    $V
+        = \left(
+            \bigoplus_{i \in J'} V_i
+        \right)
+            \oplus \left( \bigoplus_{i \in J} V_i \right)
+        = \left(
+            \bigoplus_{i \in J'} V_i
+        \right) \oplus s(V / W)$
+    となるから、標準射影に対して準同型定理を適用して
+    $W \cong V / s(V / W) \cong \bigoplus_{i \in J'} V_i$が成り立つ。
+    いま各$V_i$は既約だから
+    $W$は半単純である。
+\end{proof}
+
+\begin{corollary}
+    \label[corollary]{corollary:finite-irreducible-decomposition}
+    $A$を環、
+    $V$を半単純ネーター (またはアルティン) $A$-加群とする。
+    このとき$V$の有限個の既約$A$-部分加群
+    $V_1, \dots, V_n$が存在して
+    $V = V_1 \oplus \cdots \oplus V_n$が成り立つ。
+\end{corollary}
+
+\begin{proof}
+    \TODO{系なのか？}
+    $V$は半単純だから、既約部分加群への直和分解
+    $V = \bigoplus_{i \in I} V_i$が存在する。
+    そこで$I$が有限集合であることをいえばよい。
+    背理法のために$I$が無限集合であると仮定する。
+    すると可算無限部分集合$J = \{ i_0, i_1, \dots \} \subset I$が存在する。
+    いま各$V_i$は既約ゆえに$V_i \neq 0$だから、
+    \begin{itemize}
+        \item $V$がネーターの場合は部分加群の増大列
+            \begin{equation}
+                V_{i_0}
+                    \subsetneq V_{i_0} \oplus V_{i_1}
+                    \subsetneq \cdots
+            \end{equation}
+            が停留的でないため矛盾が従い、
+        \item $V$がアルティンの場合は部分加群の減少列
+            \begin{equation}
+                \bigoplus_{i \in J} V_i
+                    \supsetneq \bigoplus_{i \in J - \{ i_0 \}} V_i
+                    \supsetneq \bigoplus_{i \in J - \{ i_0, i_1 \}} V_i
+                    \supsetneq \cdots
+            \end{equation}
+            が停留的でないため矛盾が従う。
+    \end{itemize}
+    したがって$I$は有限集合である。
+\end{proof}
+
+半単純加群を短完全列の分裂によって特徴付けることができる。
+
+\begin{theorem}[半単純加群の特徴付け]
+    $A$を環とする。
+    $A$-加群$M$に関し、次は同値である:
+    \begin{enumerate}
+        \item $M$は半単純加群である。
+        \item $\lMod{A}$の任意の完全列
+            \begin{equation}
+                \begin{tikzcd}
+                    0 \ar{r}
+                        & V_1 \ar{r}
+                        & M \ar{r}
+                        & V_2 \ar{r}
+                        & 0
+                        & (\text{exact})
+                \end{tikzcd}
+            \end{equation}
+            は分裂する。
+    \end{enumerate}
+\end{theorem}
+
+\begin{proof}
+    \uline{(1) \Rightarrow (2)} \quad
+    \cref{thm:submodule-of-semisimple-module}より従う。
+
+    \uline{(2) \Rightarrow (1)} \quad
+    \TODO{}
+\end{proof}
+
+
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{アルティン環}
+
+この節では、次節で述べるアルティン単純環の準備としてアルティン環を定義する。
+アルティン環は見かけ上はネーター環と対になる概念であるが、
+後で\cref{prop:commutative-artinian-ring-is-noetherian}
+で述べるように、
+可換環においてはアルティン環はネーター環でもある。
+また、ある意味ではアルティン環は体の次に簡単な種類の環である。
+\TODO{どういう意味？}
+
+\begin{definition}[アルティン環]
+    $A$を環とする。
+    $\down{A}A$がアルティン加群のとき
+    $A$を
+    \term{左アルティン環}[left artinian ring]{アルティン環}[あるてぃんかん]
+    という。
+    右も同様に定義する。
+    $A$が可換環のときは単に
+    \term{アルティン環}[artinian ring]{アルティン環}[あるてぃんかん]
+    という。
+\end{definition}
+
+可換なアルティン環はいくつかの著しい性質を持つ。
+
+\begin{proposition}
+    可換アルティン環の素イデアルは極大イデアルである。
+\end{proposition}
+
+\begin{proof}
+    cf. \cref{problem:algebra2-5.75}
+\end{proof}
+
+\begin{proposition}
+    可換アルティン環は極大イデアルを高々有限個しか持たない。
+\end{proposition}
+
+\begin{proof}
+    cf. \cref{problem:algebra2-5.76}
+\end{proof}
+
+\begin{proposition}
+    \label[proposition]{prop:commutative-artinian-ring-is-noetherian}
+    可換アルティン環はネーター環である。
+\end{proposition}
+
+\begin{answer}
+    cf. \cref{problem:algebra2-6.84}
+\end{answer}
+
+
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{アルティン単純環}
+
+アルティン単純環、すなわち単純なアルティン環について調べる。
+
+\begin{proposition}
+    \label[proposition]{prop:end-and-opposite-ring}
+    $A$を環とする。
+    $\End_A(\down{A}A) \cong A^\OP$が成り立つ。
+\end{proposition}
+
+\begin{proof}
+    cf. \cref{problem:algebra2-4.51}
+\end{proof}
+
+\begin{proposition}
+    $A$を左アルティン単純環とする。
+    \begin{enumerate}
+        \item 既約$A$-加群$U$が同型を除いて一意に存在する。
+        \item $D \coloneqq \End_A(U)$とおく。
+            ある$n \in \Z_{\ge 1}$が存在して
+            $A \cong M_n(D^\OP)$が成り立つ。
+    \end{enumerate}
+\end{proposition}
+
+\begin{proof}
+    $A$は左アルティン環だから、
+    $A$の$0$でない左イデアルのなかで極小なもの$U \subset A$が存在する。
+    このとき$U \neq 0$と極小性より$U$は$A$-加群として既約である。
+    $U$の一意性の証明は最後にまわす。
+    ここで任意の$a \in A$に対し
+    $Ua \subset A$だから、
+    $U$の既約性と
+    \cref{corollary:homomorphic-image-of-irreducible-module-is-isomorphic}
+    より$Ua = 0$または$Ua \cong U$である。
+    さて、$\sum_{a \in A} Ua$は$A$の$0$でない両側イデアルだから、
+    $A$が単純環であることとあわせて
+    $\sum_{a \in A} Ua = A$が成り立つ。
+    したがって、\cref{thm:semisimple-cover}と
+    \cref{corollary:finite-irreducible-decomposition}
+    よりある$a_1, \dots, a_n \in A$が存在して
+    $A = \bigoplus_{i = 1}^n Ua_i, \; Ua_i \cong U$が成り立つ。
+    よって$\End_A(\down{A}A) \cong M_n(D)$となり、
+    \cref{prop:end-and-opposite-ring}
+    より
+    $A \cong (A^\OP)^\OP
+        \cong \End_A(\down{A}A)^\OP
+        \cong M_n(D)^\OP
+        \cong M_n(D^\OP)$
+    が成り立つ。
+    これで(2)がいえた。
+
+    最後に$U$の一意性を示す。
+    $A = \bigoplus_{i = 1}^n Ua_i, \; Ua_i \cong U$より、
+    $\down{A}A$は既約成分がすべて$U$に同型な組成列を持つ。
+    一方、$V$を既約$A$-加群とすると
+    \cref{thm:ann-and-maximal-ideal-of-irreducible-module}
+    より$A$のある極大左イデアル$I$が存在して
+    $A$-加群の同型$V \cong A / I$が成り立つ。
+    このことと$A$の左アルティン性より、
+    極大$A$-部分加群を順次とることで得られる列
+    $\down{A}A \supsetneq I \supsetneq \cdots$
+    は$V$と同型な既約成分をもつ$\down{A}A$の組成列となる。
+    したがって、
+    Jordan-H\"{o}lder の定理
+    (\cref{thm:Jordan-Holder})
+    より$U \cong V$が成り立つ。
+    これで$U$の一意性がいえて(1)が示せた。
+\end{proof}
+
+\begin{corollary}
+    $K$を代数的閉体、
+    $A$を$K$上有限次元な単純$K$-代数とする。
+    このとき、ある$n \in \Z_{\ge 1}$が存在して
+    $A \cong M_n(K)$が成り立つ。
+\end{corollary}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+\begin{corollary}
+    左アルティン単純環は
+    左/右ネーター、右アルティンになる。
+\end{corollary}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+\begin{theorem}
+    $D$を可除環とする。
+    \begin{enumerate}
+        \item $\down{D}D, \; D_D$は既約である。
+        \item \TODO{}
+            \begin{equation}
+                \Hom_{D^\OP}(D^m, D^n) \cong M_{n, m}(D)
+            \end{equation}
+        \item $m \neq n$ならば$D^m \not\cong D^n$である。
+    \end{enumerate}
+\end{theorem}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+\begin{definition}[右ベクトル空間の次元]
+    $D$を可除環とする。
+    右$D$-ベクトル空間が有限生成ならば
+    次元が well-defined に定まる。
+    \TODO{}
+\end{definition}
+
+\begin{theorem}
+    $D$を可除環、
+    $n \in \Z_{\ge 1}$とする。
+    $A \in M_n(D)$に関し次は同値である:
+    \begin{enumerate}
+        \item $A$は可逆である。
+        \item $A$はいくつかの基本行列の積である。
+        \item 右1次独立なある$v_1, \dots, v_n \in D^n$が存在して
+            $A = \begin{pmatrix}
+                v_1 & \cdots & v_n
+            \end{pmatrix}$が成り立つ。
+    \end{enumerate}
+\end{theorem}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+\begin{corollary}
+    \label[corollary]{corollary:e1-matrix}
+    任意の$0 \neq v \in D^n$に対し、
+    $Ae_1 = v$となる$A \in \GL_n(D)$が存在する。
+\end{corollary}
+
+\begin{corollary}
+    $D^n$は既約$M_n(D)$-加群である。
+\end{corollary}
+
+\TODO{ベクトル空間の自己同型写像が行列と対応することと関係ある？}
+
+\begin{lemma}
+    $D$を可除環、
+    $n \in \Z_{\ge 1}$とする。
+    このとき
+    $\End_{M_n(D)}(D^n) \cong D^\OP$が成り立つ。
+\end{lemma}
+
+\begin{proof}
+    $D^n$の標準基底を$e_1, \dots, e_n$とおく。
+    $B \subset M_n(D)$を
+    \begin{equation}
+        B \coloneqq \left\{
+            \left[\begin{smallmatrix}
+                1 \\
+                0 \\
+                \vdots & \quad \text{\large *} \quad \\[1ex]
+                0
+            \end{smallmatrix}\right]
+            \in M_n(D)
+        \right\}
+    \end{equation}
+    で定めると、$B$は$M_n(D)$の部分環となり、
+    $Be_1 = \{ e_1 \}$が成り立つ。
+    さて、$\varphi \in \End_{M_n(D)}(D^n), \;
+        v \in D^n - \{ 0 \}$
+    とする。
+    すると\cref{corollary:e1-matrix}より
+    ある$g \in \GL_n(D)$が存在して
+    $ge_1 = v$が成り立つ。
+    ここで、すべての$A \in B$に対し
+    $\varphi(e_1) = \varphi(Ae_1) = A\varphi(e_1)$
+    が成り立つから、
+    $B$の元の形から明らかに、ある$d \in D$が一意に存在して
+    $\varphi(e_1) = e_1 d$が成り立つ。
+    したがって
+    $\varphi(v) = \varphi(ge_1) = g\varphi(e_1) = ge_1d = vd$
+    となる。
+    以上より
+    写像$\End_{M_n(D)}(D^n) \to D^\OP, \; \varphi \mapsto d$
+    が得られた。
+    \TODO{}
+\end{proof}
+
+\begin{theorem}
+    $D_1, D_2$を可除環とする。
+    このとき$M_m(D_1) \cong M_n(D_2)$ならば
+    $D_1 \cong D_2$かつ$m = n$が成り立つ。
+\end{theorem}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{半単純環}
+
+\begin{theorem}
+    $A$を左アルティン環、
+    $\{ I_j \}_{j \in J}$を$A$の左イデアルの族とする。
+    このとき$J$の有限部分集合$J_0$が存在して
+    \begin{equation}
+        \bigcap_{j \in J} I_j = \bigcap_{j \in J_0} I_j
+    \end{equation}
+    が成り立つ。
+\end{theorem}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+\begin{definition}[半単純環]
+    $A$を環とする。
+    $\down{A}A$が半単純加群であるとき、
+    $A$を\term{半単純環}[semisimple ring]{半単純環}[はんたんじゅんかん]という。
+\end{definition}
+
+\begin{remark}
+    単純環は半単純環であるとは限らない。
+\end{remark}
+
+\begin{theorem}
+    $A$を半単純環とする。
+    \begin{enumerate}
+        \item $\down{A}A$は有限個の既約部分加群の直和になる。
+            したがって$A$は左ネーターかつ左アルティンである。
+        \item $A$上の既約加群は同型を除いて有限個であり、
+            これらと同型な$\down{A}A$の部分加群が存在する。
+    \end{enumerate}
+\end{theorem}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+\TODO{Socle とはちょっと違う？}
+
+\begin{definition}
+    $A$を半単純環、
+    $U$を既約$A$-加群とする。
+    \begin{equation}
+        A_U \coloneqq \sum_{\substack{
+            U_0 \subset \down{A}A \colon
+                \text{$A$-部分加群} \\
+            U_0 \cong U
+        }} U_0
+    \end{equation}
+    とおく。
+\end{definition}
+
+\begin{lemma}
+    $V$を$A_U$の既約部分加群とすると
+    $V \cong U$が成り立つ。
+\end{lemma}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+\begin{theorem}[Wedderburn]
+    $A$を半単純環、
+    $U_1, \dots, U_l$を$A$の既約加群の同型類の完全代表系とする。
+    \begin{enumerate}
+        \item $A_{U_i}$は$A$の両側イデアルである。
+        \item ある$n_i \in \Z_{\ge 1}$が存在して
+            $A_{U_i} \cong U_i^{\oplus n_i}$が成り立つ。
+        \item $A = A_{U_1} \oplus \cdots \oplus A_{U_l}$
+        \item $A_{U_i} A_{U_j} = 0 \; (i \neq j)$
+    \end{enumerate}
+\end{theorem}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+Wedderburn-Artin の定理を述べる。
+これは代数学における最も重要な定理のひとつである\cite[p.153]{AF92}。
+
+\begin{theorem}[Wedderburn-Artin]
+    環$A$に関し次は同値である:
+    \begin{enumerate}
+        \item $A$は半単純環である。
+        \item $A^\OP$は半単純環である。
+        \item 任意の$A$-加群は半単純である。
+        \item ある可除代数$D_1, \dots, D_l$と
+            $n_1, \dots, n_l \in \Z_{\ge 1}$が存在して
+            \highlight{環の同型}
+            $A \cong M_{n_1}(D_1) \oplus \cdots \oplus M_{n_l}(D_l)$が成り立つ。
+    \end{enumerate}
+\end{theorem}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+\begin{theorem}
+    $A$を環とする。
+    \begin{enumerate}
+        \item $A$が左アルティン環ならば、
+            $A / J(A)$は半単純環である。
+        \item $A$が単純環ならば$J(A) = 0$である。
+    \end{enumerate}
+\end{theorem}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+
+
+
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\newpage
+\section{演習問題}
+
+\subsection{Problem set 5}
+
+\begin{problem}[代数学II 5.68]
+    \label[problem]{problem:algebra2-5.68}
+    アルティン加群であるがネーター加群でないような例を挙げよ。
+\end{problem}
+
+\begin{answer}
+    $p$を素数とする。
+    \term{Pr\"{u}fer $p$群}[Pr\"{u}fer $p$-group]{Pr\"{u}fer 群}[Pr\"{u}fer ぐん]
+    $M \coloneqq \Z[1/p] / \Z$が
+    問題の条件をみたす例であることを示す\footnote{
+        より強く、$M$は$\Z$上有限生成でもない。
+        \TODO{証明？}
+    }。
+    ただし$\Z[1/p]$は$1/p$により$\Z$上生成された$\Q$の$\Z$-部分代数を
+    $\Z$-加群とみなしたものである。
+
+    まず次の claim を示しておく。
+    \begin{itemize}
+        \item $M$の任意の$\Z$-真部分加群$N$に対し
+            ある$k \in \Z_{\ge 0}$が存在して
+            $N = \langle 1/p^k \rangle / \Z$が成り立つ。
+    \end{itemize}
+    ただし各$q \in \Z[1/p]$に対し$\langle q \rangle$は
+    $\Z$上$q$により生成された$\Z[1/p]$の巡回部分加群を表す。
+    \begin{innerproof}
+        各$x \in M$に対し
+        $k_x \coloneqq \min\{
+                k \in \Z_{\ge 0}
+                \mid
+                x \in \langle 1/p^k \rangle / \Z
+            \}$
+        とおくと
+        \begin{equation}
+            x = \frac{n}{p^{k_x}} + \Z
+            \quad
+            (n \in \Z, \; \gcd(n, p^{k_x}) = 1)
+        \end{equation}
+        と表せる。
+        このとき$\gcd(n, p^{k_x}) = 1$より
+        ある$l, m \in \Z$が存在して
+        $nl + p^{k_x}m = 1$が成り立つから
+        \begin{equation}
+            N \ni lx = \frac{1 - p^{k_x}m}{p^{k_x}} + \Z
+                = \frac{1}{p^{k_x}} + \Z
+        \end{equation}
+        が成り立つ。
+        よって
+        $\langle 1/p^{k_x} \rangle / \Z \subset N$が成り立つ。
+        ここで、
+        $N$が$M$の真部分加群であることから
+        集合$\{ k_x \mid x \in N \}$には
+        最大値$k_0 \in \Z_{\ge 0}$が存在する。
+        $N \subset \bigcup_{x \in N} (\langle 1/p^{k_x} \rangle / \Z)
+            \subset \langle 1/p^{k_0} \rangle / \Z$だから
+        $N = \langle 1/p^{k_0} \rangle / \Z$となる。
+    \end{innerproof}
+
+    $M$がアルティンであることを示す。
+    各$x \in M$に対し$\langle x \rangle_M$で
+    $\Z$上$x$により生成された$\Z[1/p]$の巡回部分加群を表すことにする。
+    $M$の$\Z$-真部分加群の任意の減少列
+    \begin{equation}
+        \left\langle \frac{1}{p^{n_0}} \right\rangle_M
+            \supset \left\langle \frac{1}{p^{n_1}} \right\rangle_M
+            \supset \cdots
+            \quad
+            (n_i \in \Z_{\ge 0})
+    \end{equation}
+    は$n_i$が非負整数の減少列であることから停留的である。
+    したがって$M$はアルティンである。
+    $M$がネーターでないことは、
+    $M$の$\Z$-真部分加群の増大列
+    \begin{equation}
+        \left\langle \frac{1}{p} \right\rangle_M
+            \subset \left\langle \frac{1}{p^2} \right\rangle_M
+            \subset \cdots
+    \end{equation}
+    が停留的でないことから従う。
+    以上より$M$はアルティン加群だがネーター加群でないことが示せた。
+\end{answer}
+
+\begin{problem}[代数学II 5.71]
+    可換環$R$上の1変数多項式環$R[X]$が
+    ネーター環ならば、$R$はネーター環か？
+\end{problem}
+
+\begin{answer}
+    $R$がネーター環となることの対偶を示す。
+    $R$がネーター環でないとすると、
+    昇鎖条件をみたさない$R$のイデアルの増大列
+    \begin{equation}
+        I_1 \subset I_2 \subset \cdots
+    \end{equation}
+    がとれる。
+    そこで
+    \begin{equation}
+        J_n \coloneqq \left\{
+            \sum_{i = 0}^r a_i X^i \in R[X] \mid a_i \in I_n
+        \right\}
+        \quad (n = 1, 2, \dots)
+    \end{equation}
+    とおけば、
+    \begin{equation}
+        J_1 \subset J_2 \subset \cdots
+    \end{equation}
+    は昇鎖条件をみたさない$R[X]$のイデアルの増大列となる。
+    よって$R[X]$はネーター環でない。
+    これで対偶がいえた。
+\end{answer}
+
+\begin{problem}[代数学II 5.74]
+    \label[problem]{problem:algebra2-5.74}
+    可換ネーター環の部分環は常にネーターか？
+    正しければ証明を、誤りなら反例を与えよ。
+\end{problem}
+
+\begin{answer}[解法1.]
+可換ネーター環の部分環はネーターとは限らない。
+実際、$\C[X, Y]$は
+$\C$が体ゆえにネーター環であることと
+Hilbert の基底定理よりネーター環であるが、
+部分環
+\begin{equation}
+    \C\langle \{ XY, XY^2, XY^3, \dots \} \rangle
+\end{equation}
+は昇鎖条件をみたさないイデアルの増大列
+\begin{equation}
+    (XY) \subsetneq (XY, XY^2) \subsetneq (XY, XY^2, XY^3) \subsetneq \cdots
+\end{equation}
+をもつからネーター環ではない。
+\end{answer}
+
+\begin{answer}[解法2.]
+    無限変数多項式環$\C[X_1, X_2, \dots]$は
+    ネーター環ではないが、
+    これは整域だから商体に埋め込める。
+    商体は体ゆえにネーター環だからこれが反例になっている。
+\end{answer}
+
+\begin{problem}[代数学II 5.75]
+    \label[problem]{problem:algebra2-5.75}
+    可換アルティン環において素イデアルは極大イデアルになることを示せ。
+\end{problem}
+
+\begin{answer}
+$R$を可換アルティン環、
+$P$を$R$の素イデアルとする。
+$B \coloneqq A / P$とおくと、
+\cref{thm:exact-sequence-and-finiteness}
+より$B$はアルティン環であり、
+さらに$P$: 素イデアルより$B$は整域でもある。
+$P$が極大イデアルであることをいうには、
+$B$が体であることを示せばよい。
+そこで$x \in B - \{ 0 \}$とする。
+降鎖条件より、ある$n \in \Z_{\ge 0}$が存在して
+$(x^n) = (x^{n + 1})$が成り立つ。
+したがって、ある$y \in B$が存在して
+$x^n = yx^{n + 1}$となる。
+いま$B$は整域だから$x^n$を打ち消して
+$1 = xy$が成り立つ。
+よって$x \in B^\times$となる。
+$B$は零環でないから
+これで$B^\times = B - \{ 0 \}$がいえた。
+よって$B = A / P$は体であり、
+したがって$P$は極大イデアルである。
+\end{answer}
+
+\begin{problem}[代数学II 5.76]
+    \label[problem]{problem:algebra2-5.76}
+    可換アルティン環は極大イデアルを高々有限個しか持たないことを示せ。
+\end{problem}
+
+\begin{answer}
+    \TODO{}
+    cf. \cite[p.89]{AM69}
+\end{answer}
+
+\subsection{Problem set 6}
+
+\begin{problem}[代数学II 6.79]
+    $A, B$を左ネーター環とするとき
+    直積環$A \times B$も左ネーター環になることを示せ。
+\end{problem}
+
+\begin{answer}
+    $A \times B$の左イデアルは
+    $A, B$の左イデアルの直積の形に書けることに注意する。
+    $A \times B$の左イデアルの昇鎖
+    \begin{equation}
+        I_1 \times J_1 \subset I_2 \times J_2 \subset \cdots
+    \end{equation}
+    が与えられたとする。このとき、とくに
+    \begin{equation}
+        \begin{cases}
+            I_1 \subset I_2 \subset \cdots \\
+            J_1 \subset J_2 \subset \cdots
+        \end{cases}
+    \end{equation}
+    が成り立つから、$A, B$の左ネーター性より
+    \begin{align}
+        &\exists m \in \Z_{\ge 1}
+            \quad \text{s.t.} \quad
+            I_m = I_{m + 1} = \cdots \\
+        &\exists n \in \Z_{\ge 1}
+            \quad \text{s.t.} \quad
+            J_n = J_{n + 1} = \cdots
+    \end{align}
+    が成り立つ。よって$k \coloneqq \max\{m, n\}$とおけば
+    \begin{equation}
+        I_k \times J_k = I_{k + 1} \times J_{k + 1} = \cdots
+    \end{equation}
+    となる。したがって$A \times B$は左ネーター環である。
+\end{answer}
+
+\begin{problem}[代数学II 6.82]
+    $A$を左アルティン環とすると、
+    ある正整数$n$が存在して$J(A)^n = 0$となることを示せ。
+\end{problem}
+
+\begin{answer}
+    \TODO{本当に正しい？}
+
+    \cite[p.172]{AF92}
+
+    $A$は左アルティン環だから、降鎖
+    $J(A) \supset J(A)^2 \supset \dots$
+    は停留的である。すなわちある正整数$n$が存在して
+    $J(A)^n = J(A)^{n + 1} = \dots$となる。
+    この$n$に対し$J(A)^n = 0$となることを示せばよい。
+    $J(A)^n \neq 0$であると仮定して矛盾を導く。
+    集合$P$を
+    \begin{equation}
+        P \coloneqq \{
+            I \subset A \colon \text{左イデアル}
+            \mid
+            I \subset J(A)^n, \; IJ(A)^n \neq 0
+        \}
+    \end{equation}
+    と定める。
+    $J(A)^n \in P$より$P \neq \emptyset$だから、
+    $A$のアルティン性より$P$は包含に関する極小元$I_0$をもつ。
+
+    ここで$I_0$は単項イデアルであることを示す。
+    $I_0 J(A)^n \neq 0$より
+    ある$x_0 \in I_0 - \{ 0 \}$であって
+    $x_0 J(A)^n \neq 0$なるものが存在する。
+    このとき$(x_0) J(A)^n \neq 0$である。
+    $(x_0) \subset I_0 \subset J(A)^n$であることとあわせて
+    $(x_0) \in P$だから、$I_0$の極小性より
+    $(x_0) = I_0$が従い、
+    $I_0$は単項イデアルであることがいえた。
+
+    さて、
+    $I_0 J(A)^n \subset J(A)^n$かつ
+    $I_0 J(A)^n J(A)^n = I_0 J(A)^n \neq 0$より
+    $I_0 J(A)^n \in P$であり、
+    また$I_0 J(A)^n \subset I_0$だから、
+    $I_0$の極小性より
+    $I_0 J(A)^n = I_0$である。
+    したがって
+    $I_0 J(A)^n = I_0 = (x_0)$は
+    $x_0$で生成される (有限生成) $A$-加群であって
+    $I_0 J(A)^n J(A) = I_0 J(A)^n$をみたすから、
+    Nakayama の補題より$I_0 J(A)^n = 0$である。
+    これは$I_0 J(A)^n = I_0 \neq 0$に矛盾。
+    背理法より$J(A)^n = 0$である。
+\end{answer}
+
+\begin{problem}[代数学II 6.84]
+    \label[problem]{problem:algebra2-6.84}
+    可換アルティン環はネーター環になることを示せ。
+\end{problem}
+
+\begin{answer}
+    \TODO{cf. \cite[p.90]{AM69}}
+\end{answer}
+
+\begin{problem}[代数学II 6.86](行列式の技巧\footnote{
+    cf. \cite{松村00}
+})
+    \label[problem]{problem:algebra2-6.86}
+    $R$を可換環とする。$n$を正整数として
+    $M$を$n$個の元$v_1, \dots, v_n$で生成される$R$-加群とする。
+    $\varphi \in \End_R(M)$とし、
+    各$1 \le i, j \in n$に対して$a_{i,j} \in R$を
+    \begin{equation}
+        \varphi(v_i) = \sum_{j = 1}^n a_{i,j} v_j
+    \end{equation}
+    をみたすようにとる。
+    $X$を不定元、$\delta_{i, j}$を Kronecker のデルタとして
+    行列$L = (\delta_{i, j}X - a_{i,j})_{1 \le i, j\ \le n} \in M_n(R[X])$
+    を考える。そこで$d(X) = \det L \in R[X]$とすると
+    任意の$v \in M$に対して$d(\varphi) v = 0$となることを示せ。
+\end{problem}
+
+\begin{answer}
+    $v_i \; (1 \le i \le n)$は$M$を$R$上生成するから
+    $d(\varphi) v_i = 0 \; (1 \le i \le n)$をいえばよい。
+    $M$に$X$を$\varphi$として作用させることで$R[X]$-加群の構造を入れる。
+    これにより$M^n$に$M_n(R[X])$-加群の構造が入り、
+    \begin{equation}
+        v \coloneqq \begin{bmatrix}
+            v_1 \\
+            \vdots \\
+            v_n
+        \end{bmatrix}
+        \in M^n
+    \end{equation}
+    とおくと
+    \begin{equation}
+        Lv = 0
+    \end{equation}
+    が成り立つ。
+    左から$L$の余因子行列を掛けて
+    \begin{equation}
+        \det(L) I_n v = 0
+    \end{equation}
+    したがって$d(\varphi) v_i = d(X) v_i = 0 \; (1 \le i \le n)$が成り立つ。
+\end{answer}
+
+\begin{problem}[代数学II 6.87]
+    \label[problem]{problem:algebra2-6.87}
+    $R$を可換環、$I \subset R$をイデアル、$M$を有限生成$R$-加群とする。
+    $IM = M$が成り立つならば
+    ある$x \in I$であって$1 + x \in \Ann_R(M)$をみたすものが存在することを示せ。
+\end{problem}
+
+\begin{answer}
+    \cref{problem:algebra2-6.86}の記号を引き続き用いて
+    $\varphi = \id_M$の場合を考える。
+    $IM = M$の仮定から
+    $a_{i, j}$らは$I$の元にとれる。
+    ここで行列式の定義より
+    \begin{equation}
+        d(X) = \det(L) = \sum_{\sigma \in \calS_n}
+            \sgn(\sigma)
+            (\delta_{\sigma(1) 1} X - a_{\sigma(1) 1})
+    \end{equation}
+    だから、右辺の形より$d(X)$の最高次以外の係数はすべて$I$に属する。
+    したがって
+    \begin{equation}
+        d(X) = X^n + b_1 X^{n - 1} + \cdots + b_{n - 1} X + b_n
+            \quad
+            (b_i \in I, \; 1 \le i \le n)
+    \end{equation}
+    と表せる。
+    このことと$d(\id_M)v = d(X)v = 0 \; (v \in M)$より
+    \begin{equation}
+        (1 + b_1 + \dots + b_n) v = 0
+            \quad
+            (v \in M)
+    \end{equation}
+    が成り立つ。
+    したがって$x \coloneqq b_1 + \dots + b_n$とおけば
+    $x \in I, \; 1 + x \in \Ann_R(M)$が成り立つ。
+\end{answer}
+
+\begin{problem}[代数学II 6.88]
+    $R$を可換環、$M$を有限生成$R$-加群とする。
+    $f \in \End_R(M)$が全射ならば$M$の自己同型になることを示せ。
+\end{problem}
+
+\begin{answer}
+    $f$の単射性をいえばよい。
+    $M$に$X$を$f$として作用させることで$R[X]$-加群の構造を入れる。
+    $M$は$R$-加群として有限生成だから$R[X]$-加群としても有限生成である。
+    また、$f$の全射性より$R[X]$のイデアル$(X)$は
+    $(X)M = M$をみたす。
+    そこで\cref{problem:algebra2-6.87}より、
+    ある$F \in R[X]$であって$1 + F(X)X \in \Ann_{R[X]}(M)$をみたすものが存在する。
+    したがって
+    \begin{align}
+        \id_M(v) + F(f) \circ f(v) &= 0
+            \quad
+            (v \in M) \\
+        \therefore
+            - F(f) \circ f &= \id_M
+    \end{align}
+    が成り立つから、$f$は左逆写像$-F(f)$をもつ。
+    よって$f$は単射であり、
+    したがって$f$は自己同型である。
+\end{answer}
+
+\begin{problem}[代数学II 6.89]
+    極大両側イデアルは左原始イデアルになることを示せ。
+\end{problem}
+
+\begin{answer}
+    \TODO{}
+\end{answer}
+
+
+\end{document}

@@ -1,0 +1,732 @@
+\documentclass[report]{jlreq}
+\usepackage{global}
+\usepackage{./local}
+\subfiletrue
+\def\assetspath{../}
+%\makeindex
+\chead{2023/05/02}
+\begin{document}
+
+% ============================================================
+%
+% ============================================================
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{振り返りと導入}
+
+前回は指数型分布族を定義した。
+本稿では、前回発表時の指摘を取り入れながら、指数型分布族と最小次元実現について簡単に整理しなおす。
+その後、新たなトピックとして期待値と分散の定義を行う。
+
+前回に引き続き、可測空間$\calX$上の確率測度全体の集合を
+$\calP(\calX)$と書くことにする。
+また、Einstein の記法を用いる。
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{指数型分布族と最小次元実現}
+
+本稿では、指数型分布族の定義は次のものを用いる。
+注意点として、前回は有限次元$\R$-ベクトル空間として
+$V$ではなく$\R^m$を用いていたが、
+より一般の状況に対応するため、
+本稿からは$V$を用いるように変更する。
+なお、この変更により前回の定理の証明は修正が必要となるが、
+その内容については本稿では扱わない
+(修正内容は \url{0425_コメント.pdf} に書きました)。
+
+\begin{definition}[指数型分布族]
+    \label[definition]{def:exponential-family}
+    $\calX$を可測空間、
+    $\emptyset \neq \calP \subset \calP(\calX)$とする。
+    $\calP$が$\calX$上の
+    \term{指数型分布族}[exponential family]
+        {指数型分布族}[しすうがたぶんぷぞく]
+    であるとは、次が成り立つことをいう:
+    $\exists \; (\highlight{V}, T, \mu)$ s.t.
+    \begin{description}
+        \item[\highlight{(E0)}] \highlight{$V$は有限次元$\R$-ベクトル空間である。}
+        \item[(E1)] $T \colon \calX \to \highlight{V}$は可測写像である。
+        \item[(E2)] $\mu$は$\calX$上の$\sigma$-有限測度であり、
+            $\forall \; p \in \calP$に対し$p \ll \mu$をみたす。
+        \item[(E3)] $\forall \; p \in \calP$に対し、
+            $\exists \; \theta \in \highlight{V^\vee}$ s.t.
+            \begin{equation}
+                \dd[p]{\mu}(x)
+                    = \frac{
+                        \exp \langle \theta, T(x) \rangle
+                    }{
+                        \int_\calX \exp \langle \theta, T(y) \rangle \, \mu(dy)
+                    }
+                    \quad
+                    \text{$\mu$-a.e. $x \in \calX$}
+            \end{equation}
+            である。
+            ただし$\langle \cdot, \cdot \rangle$は
+            \highlight{自然なペアリング$V^\vee \times V \to \R$である。}
+    \end{description}
+    さらに次のように定める:
+    \begin{itemize}
+        \item $(\highlight{V}, T, \mu)$を$\calP$の
+            \term{実現}[representation]
+            {実現}[じつげん]
+            という。
+            \begin{itemize}
+                \item $m$を$(\highlight{V}, T, \mu)$の
+                    \term{次元}[dimension]{次元}[じげん]
+                    という。
+                \item $T$を$(\highlight{V}, T, \mu)$の
+                    \term{十分統計量}[sufficient statistic]
+                    {十分統計量}[じゅうぶんとうけいりょう]
+                    という。
+                \item $\mu$を$(\highlight{V}, T, \mu)$の
+                    \term{基底測度}[base measure]
+                    {基底測度}[きていそくど]
+                    という。
+            \end{itemize}
+        \item 集合$\Theta_{(\highlight{V}, T, \mu)}$
+            \begin{equation}
+                \Theta_{(\highlight{V}, T, \mu)}
+                    \coloneqq \mybrace{
+                        \theta \in \highlight{V^\vee}
+                        \;\Big|\;
+                        \int_\calX \exp \langle \theta, T(y) \rangle \, \mu(dy) < +\infty
+                    }
+            \end{equation}
+            を$(\highlight{V}, T, \mu)$の
+            \term{自然パラメータ空間}[natural parameter space]
+            {自然パラメータ空間}[しぜんぱらめーたくうかん]
+            という。
+        \item 関数$\psi \colon \Theta_{(\highlight{V}, T, \mu)} \to \R,$
+            \begin{equation}
+                \psi(\theta)
+                    \coloneqq
+                    \log \int_\calX \exp \langle \theta, T(y) \rangle \, \mu(dy)
+            \end{equation}
+            を$(\highlight{V}, T, \mu)$の
+            \term{対数分配関数}[log-partition function]
+            {対数分配関数}[たいすうぶんぱいかんすう]
+            という。
+    \end{itemize}
+\end{definition}
+
+以降、本節では
+$\calX$を可測空間、
+$\calP \subset \calP(\calX)$を$\calX$上の指数型分布族、
+$(V, T, \mu)$を$\calP$の実現とする。
+
+\begin{proposition}
+    \label[proposition]{prop:as-a}
+    $(V, T, \mu)$に関する次の条件は同値である:
+    \begin{enumerate}
+        \item $\langle \theta, T(x) \rangle$が
+            $\calX$上$\mu$-a.e.定数であるような
+            $\theta \in V^\vee$は$\theta = 0$のみである。
+        \item 各$p \in \calP$に対し、
+            \cref{def:exponential-family}の条件(E3)をみたす$\theta \in V^\vee$は
+            ただひとつである。
+    \end{enumerate}
+\end{proposition}
+
+\begin{proof}
+    \uline{(2) \Rightarrow (1)} \quad
+    前回示した。
+
+    \uline{(1) \Rightarrow (2)} \quad
+    $\theta, \theta' \in V^\vee$が
+    \cref{def:exponential-family}の条件(E3)をみたすとすると、
+    \begin{equation}
+        e^{\langle \theta, T(x) \rangle - \psi(\theta)}
+            = \dd[p]{\mu}(x)
+            = e^{\langle \theta', T(x) \rangle - \psi(\theta')}
+            \qquad
+            \text{$\mu$-a.e.$x \in \calX$}
+    \end{equation}
+    が成り立つ。式を整理して
+    \begin{equation}
+        \langle \theta - \theta', T(x) \rangle
+            = \psi(\theta) - \psi(\theta')
+            \qquad
+            \text{$\mu$-a.e.$x \in \calX$}
+    \end{equation}
+    が成り立つ。
+    したがって(1)より$\theta = \theta'$である。
+\end{proof}
+
+\begin{definition}[最小次元実現]
+    実現$(V, T, \mu)$が
+    $\calP$の実現のうちで次元が最小のものであるとき、
+    $(V, T, \mu)$を$\calP$の
+    \term{最小次元実現}[minimal representation]
+        {最小次元実現}[さいしょうじげんじつげん]という。
+\end{definition}
+
+次の事実は前回示した。
+
+\begin{fact}
+    最小次元実現は存在する。
+    \qed
+\end{fact}
+
+\begin{fact}
+    最小次元実現は\cref{prop:as-a}の2条件をみたす。
+    \qed
+\end{fact}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{期待値と分散}
+
+ここで一旦指数型分布族の話題から離れて、
+可測関数 (あるいは確率変数) の期待値と分散を定義しておく。
+これらの概念は、期待値パラメータ空間の定義や、
+対数分配関数の性質を調べる際に重要な役割を果たす。
+
+ここでは期待値および分散の概念を
+ベクトル値関数に対して定義したい。
+そこで、まずベクトル値関数の積分および可積分性を
+次のように定めておく。
+
+\begin{definition}[ベクトル値関数の積分]
+    $\calX$を可測空間、
+    $V$を有限次元$\R$-ベクトル空間、
+    $p$を$\calX$上の確率測度、
+    $f \colon \calX \to V$を可測写像とする。
+    $V$のある基底$e^1, \dots, e^m$が存在して、
+    この基底に関する$f$の成分
+    $f_i \colon \calX \to \R \; (i = 1, \dots, m)$が
+    すべて$p$-可積分であるとき、
+    $f$は$p$に関し
+    \term{可積分}[integrable]
+        {可積分!ベクトル値関数の---}[かせきぶん]
+    であるという
+    (well-defined 性はこのあと示す)。
+
+    $f$が$p$-可積分であるとき、
+    $f$の$p$に関する\term{積分}[integral]
+        {積分}[せきぶん]
+    を
+    \begin{equation}
+        \int_\calX f(x) \, p(dx)
+            \coloneqq \myparen{
+                \int_\calX f_i(x) \, p(dx)
+            } e^i
+            \in V
+    \end{equation}
+    で定義する
+    (well-defined 性はこのあと示す)。
+
+    ただし$\dim V = 0$の場合は
+    $f$は$p$-可積分で$\int_\calX f(x) \, p(dx) = 0$と約束する。
+\end{definition}
+
+\begin{remark}
+    $V = \R$の場合は
+    $\R$-値関数の通常の積分に一致する。
+\end{remark}
+
+\begin{proof}[well-defined 性の証明.]
+    $f$が$p$-可積分であるかどうかは
+    $V$の基底の取り方によらないことを示す。
+    そこで、$e^1, \dots, e^m$および$\tilde{e}^1, \dots, \tilde{e}^m$を
+    それぞれ$V$の基底とし、
+    それぞれの基底に関する$f$の成分を
+    $f_i, \; \tilde{f}_i \colon \calX \to \R \; (i = 1, \dots, m)$とおく。
+    示すべきことは
+    「$\tilde{f}_i \; (i = 1, \dots, m)$がすべて$L^1(\calX, p)$に属するならば
+    $f_i \; (i = 1, \dots, m)$もすべて$L^1(\calX, p)$に属する」ということである。
+    このことは、
+    $L^1(\calX, p)$が$\R$-ベクトル空間であることと、
+    $f_i$たちが$\tilde{f}_i$たちの
+    $\R$-線型結合であることから従う。
+    よって$f$が$p$-可積分であるかどうかは
+    $V$の基底の取り方によらない。
+
+    次に、$f$の$p$に関する積分は
+    $V$の基底の取り方によらないことを示す。
+    $e^i, \; \tilde{e}^i$をそれぞれ$V$の基底とする。
+    いま、ある$a_i^j \in \R \; (i, j = 1, \dots, m)$が存在して
+    $f_i = a_i^j \tilde{f}_j \; (i = 1, \dots, m)$
+    および
+    $\tilde{e}^j = a_i^j e^j \; (j = 1, \dots, m)$
+    が成り立っているから、
+    \begin{alignat}{1}
+        \myparen{
+            \int_\calX \tilde{f}_j \, p(dx)
+        } \tilde{e}^j
+            &= \myparen{
+                \int_\calX \tilde{f}_j \, p(dx)
+            } a_i^j e^i \\
+            &= \myparen{
+                \int_\calX a_i^j \tilde{f}_j \, p(dx)
+            } e^i
+                \quad (\text{積分の$\R$-線型性}) \\
+            &= \myparen{
+                \int_\calX f_i \, p(dx)
+            } e^i
+    \end{alignat}
+    が成り立つ。これで積分の well-defined 性も示せた。
+\end{proof}
+
+以降、本節では
+$\calX$を可測空間、
+$V$を有限次元$\R$-ベクトル空間 (次元を$m \in \Z_{\ge 0}$とおく)、
+$p$を$\calX$上の確率測度、
+$f \colon \calX \to V$を可測写像とする。
+
+ベクトル値関数の積分を用いて、期待値および分散を定義する。
+
+\begin{definition}[期待値]
+    $f$が$p$-可積分であるとき、
+    $f$の$p$に関する
+    \term{期待値}[expected value]
+        {期待値}[きたいち]
+    $E_p[f]$を
+    \begin{equation}
+        E_p[f] \coloneqq \int_\calX f(x) \, p(dx)
+            \in V
+    \end{equation}
+    と定義する。
+\end{definition}
+
+つぎに分散を定義する。
+$\R$-値関数の通常の分散との類似で、
+ベクトル値関数$f$の分散を
+"$V_p[f] \coloneqq E_p[(f - E_p[f]) \otimes (f - E_p[f])]$"
+と定義したい。
+その準備として次の補題を示しておく。
+
+\begin{lemma}[分散の存在条件]
+    \label[lemma]{lemma:f_otimes_f}
+    可測写像$f \colon \calX \to V$に関し
+    次の2条件は同値である:
+    \begin{enumerate}
+        \item $f$および
+            $(f - E_p[f]) \otimes (f - E_p[f])$が
+            $p$-可積分
+        \item $f \otimes f$が$p$-可積分
+    \end{enumerate}
+\end{lemma}
+
+この補題の証明には次の事実を用いる。
+
+\begin{fact}
+    \label[fact]{fact:l2_subset_l1}
+    $\calY$を可測空間、
+    $\mu$を$\calY$上の有限測度とする。
+    このとき、
+    任意の実数$1 < p < +\infty$に対し
+    $L^p(\calY, \mu) \subset L^1(\calY, \mu)$が成り立つ。
+\end{fact}
+
+\begin{proof}[\cref{lemma:f_otimes_f}の証明.]
+    $\dim V = 0$の場合は明らかに成り立つ。
+    以後$\dim V \ge 1$の場合を考える。
+    $V$の基底$e^1, \dots, e^m$をひとつ選んで固定し、
+    この基底に関する$f$の成分を
+    $f_i \colon \calX \to \R \; (i = 1, \dots, m)$とおいておく。
+
+    \uline{(1) \Rightarrow (2)} \quad
+    $f$が$p$-可積分であることより
+    $E_p[f] \in V$が存在するから、
+    これを$a \coloneqq E_p[f]$とおき、
+    $V$の基底$e^i$に関する$a$の成分を
+    $a_i \in \R \; (i = 1, \dots, m)$とおいておく。
+    示すべきことは、
+    すべての$i, j = 1, \dots, m$に対し
+    $f_i f_j \in L^1(\calX, p)$が成り立つことである。
+    そこで次のことに注意する:
+    \begin{enumerate}[label=(\roman*)]
+        \item $p$が確率測度であることより$1 \in L^1(\calX, p)$である。
+        \item $f$が$p$-可積分であることより
+            $f_i \in L^1(\calX, p) \; (i = 1, \dots, m)$である。
+        \item $(f - a) \otimes (f - a)$が$p$-可積分であることより
+            $(f_i - a_i)(f_j - a_j)
+                = f_i f_j - a_i f_j - a_j f_i + a_i a_j \in L^1(\calX, p) \;
+                (i, j = 1, \dots, m)$である。
+    \end{enumerate}
+    したがって、
+    $L^1(\calX, p)$が$\R$-ベクトル空間であることとあわせて
+    $f_i f_j \in L^1(\calX, p) \; (i, j = 1, \dots, m)$が成り立つ。
+    よって$f \otimes f$は$p$-可積分である。
+
+    \uline{(2) \Rightarrow (1)} \quad
+    まず$f$が$p$-可積分であることを示す。
+    そのためには、
+    $f_i \in L^1(\calX, p) \; (i = 1, \dots, m)$
+    が成り立つことをいえばよい。
+    いま$f \otimes f$が$p$-可積分であるから、
+    $f_i f_j \in L^1(\calX, p) \; (i, j = 1, \dots, m)$
+    が成り立つ。
+    とくにすべての$i = 1, \dots, m$に対し
+    $f_i \in L^2(\calX, p)$が成り立つから、
+    \cref{fact:l2_subset_l1}とあわせて
+    $f_i \in L^1(\calX, p)$が成り立つ。
+    よって$f$は$p$-可積分である。
+
+    つぎに$(f - E_p[f]) \otimes (f - E_p[f])$が$p$-可積分であることを示す。
+    いま$f$が$p$-可積分であることより
+    $E_p[f] \in V$が存在するから、
+    これを$a \coloneqq E_p[f]$とおき、
+    $V$の基底$e^i$に関する$a$の成分を
+    $a_i \in \R \; (i = 1, \dots, m)$とおいておく。
+    示したいことは、
+    $(f_i - a_i)(f_j - a_j)
+        = f_i f_j - a_i f_j - f_i a_j + a_i a_j
+        \in L^1(\calX, p) \; (i, j = 1, \dots, m)$
+    が成り立つことである。
+    そこで次のことに注意する:
+    \begin{enumerate}[label=(\roman*)]
+        \item $p$が確率測度であることより$1 \in L^1(\calX, p)$である。
+        \item $f$が$p$-可積分であることより
+            $f_i \in L^1(\calX, p) \; (i = 1, \dots, m)$である。
+        \item $f \otimes f$が$p$-可積分であることより
+            $f_i f_j
+                \in L^1(\calX, p) \;
+                (i, j = 1, \dots, m)$である。
+    \end{enumerate}
+    したがって、
+    $L^1(\calX, p)$が$\R$-ベクトル空間であることとあわせて
+    $(f_i - a_i)(f_j - a_j)
+        = f_i f_j - a_i f_j - f_i a_j + a_i a_j
+        \in L^1(\calX, p) \; (i, j = 1, \dots, m)$
+    が成り立つ。
+    よって$(f - E_p[f]) \otimes (f - E_p[f])$は$p$-可積分である。
+\end{proof}
+
+この補題を踏まえて分散を定義する。
+
+\begin{definition}[分散]
+    $f \otimes f \colon \calX \to V \otimes_\R V$が$p$-可積分であるとき、
+    $f$の$p$に関する
+    \term{分散}[variance]
+        {分散}[ぶんさん]
+    $V_p[f]$を
+    \begin{equation}
+        V_p[f]
+            \coloneqq E_p[(f - E_p[f]) \otimes (f - E_p[f])]
+            \in V \otimes V
+    \end{equation}
+    と定義する
+    (\cref{lemma:f_otimes_f}よりこれは存在する)。
+\end{definition}
+
+正規分布族の十分統計量について期待値と分散を求めてみる。
+
+\begin{example}[正規分布族の十分統計量の期待値と分散]
+    $\calX = \R$、
+    $\lambda$を$\R$上の Lebesgue 測度とし、
+    正規分布族
+    \begin{equation}
+        \calP \coloneqq \mybrace{
+            P_{(\mu, \sigma^2)}(dx)
+                = \frac{1}{\sqrt{2\pi\sigma^2}} \exp\myparen{
+                    -\frac{(x - \mu)^2}{2\sigma^2}
+                } \lambda(dx)
+            \;\Big|\;
+            \mu \in \R, \; \sigma^2 > 0
+        }
+    \end{equation}
+    と$\calP$の実現$(V, T, \mu), \;
+        V = \R^2, \;
+        T \colon \calX \to V, \;
+        x \mapsto \up{t}(x, x^2)$を考える。
+    各$P = P_{(\mu, \sigma^2)} \in \calP$に対し、
+    $T$の期待値$E_p[T] \in V$と
+    分散$V_p[T] \in V \otimes V$を求めてみる。
+    ただし、以下$x, \dots, x^4$の$P$に関する可積分性は仮定する
+    (可積分性は次回示す)。
+
+    まず期待値を求める。
+    求めるべきものは、
+    $V = \R^2$の標準基底を$e_1, e_2$として
+    \begin{equation}
+        E_P[T]
+            = E_P[x] \, e_1 + E_P[x^2] \, e_2
+    \end{equation}
+    である。
+    各成分は$E_P[x] = \mu, \;
+        E_P[x^2]
+            = E_P[(x - \mu)^2] + E_P[x]^2
+            = \sigma^2 + \mu^2 \in \R$
+    と求まるから
+    \begin{equation}
+        E_P[T]
+            = \mu \, e_1 + (\sigma^2 + \mu^2) \, e_2
+    \end{equation}
+    である。
+
+    次に分散を求める。
+    求めるべきものは
+    \begin{equation}
+        V_P[T]
+            = E_P[(T - E_P[T]) \otimes (T - E_P[T])]
+    \end{equation}
+    である。
+    これを$V \otimes V$の基底
+    $e_i \otimes e_j \; (i, j = 1, 2)$
+    に関して成分表示すると
+    \begin{alignat}{1}
+        V_P[T]
+            &=
+                E_P[(x - \mu)^2] \, e_1 \otimes e_1 \\
+            &\quad +
+                E_P[(x - \mu)(x^2 - (\sigma^2 + \mu^2))] \,
+                (e_1 \otimes e_2 + e_2 \otimes e_1) \\
+            &\quad +
+                E_P[(x^2 - (\sigma^2 + \mu^2))^2] \, e_2 \otimes e_2
+    \end{alignat}
+    と表される。
+    そこで原点周りのモーメント
+    $a_3 \coloneqq E_P[x^3], \; a_4 \coloneqq E_P[x^4] \in \R$とおくと、
+    各成分は
+    \begin{alignat}{1}
+        E_P[(x - \mu)^2]
+            &= \sigma^2 \\
+        E_P[(x - \mu)(x^2 - (\sigma^2 + \mu^2))]
+            &= a_3 - \mu (\sigma^2 + \mu^2) \\
+        E_P[(x^2 - (\sigma^2 + \mu^2))^2]
+            &= a_4 - (\sigma^2 + \mu^2)^2
+    \end{alignat}
+    と求まる。
+    したがって$V_P[T]$は
+    \begin{alignat}{1}
+        V_P[T]
+            &= \sigma^2 \, e_1 \otimes e_1 \\
+            &\quad +
+                (a_3 - \mu (\sigma^2 + \mu^2)) \,
+                (e_1 \otimes e_2 + e_2 \otimes e_1) \\
+            &\quad +
+                (a_4 - (\sigma^2 + \mu^2)^2) \, e_2 \otimes e_2
+    \end{alignat}
+    と表される。
+    最後に原点周りのモーメント
+    $a_3, a_4$を具体的に求める。
+    これは期待値周りのモーメントの計算に帰着される。
+    そこで標準正規分布を$P_0 \coloneqq P_{(0, 1)} \in \calP$とおくと、
+    $E_P\mybracket{\myparen{
+        \frac{x - \mu}{\sigma}
+    }^k} = E_{P_0}[x^k] \; (k = 3, 4)$より
+    $E_P[(x - \mu)^k] = \sigma^k E_{P_0}[x^k] \; (k = 3, 4)$が成り立つ。
+    ここで$P_0$に関する期待値を
+    部分積分などを用いて直接計算すると
+    $E_{P_0}[x^3] = 0, \; E_{P_0}[x^4] = 3$となるから、
+    $E_P[(x - \mu)^3] = 0, \; E_P[(x - \mu)^4] = 3 \sigma^4$を得る。
+    これらを用いて$a_3, a_4$を計算すると
+    \begin{alignat}{1}
+        0
+            &= E_P[(x - \mu)^3] \\
+            &= E_P[x^3] - 3 E_P[x^2] \mu + 3 E_P[x] \mu^2 - \mu^3 \\
+            &= a_3 - 3 (\sigma^2 + \mu^2) \mu + 3 \mu^3 - \mu^3 \\
+            &= a_3 - 3 \sigma^2 \mu - \mu^3 \\
+        \therefore a_3
+            &= 3 \sigma^2 \mu + \mu^3
+        \intertext{および}
+        3 \sigma^4
+            &= E_P[(x - \mu)^4] \\
+            &= E_P[x^4] - 4 E_P[x^3] \mu + 6 E_P[x^2] \mu^2
+                - 4 E_P[x] \mu^3 + \mu^4 \\
+            &= a_4 - 4 a_3 \mu + 6 (\sigma^2 + \mu^2) \mu^2
+                - 4 \mu^4 + \mu^4 \\
+            &= a_4 - 6 \sigma^2 \mu^2 - \mu^4 \\
+        \therefore a_4
+            &= 3 \sigma^4 + 6 \sigma^2 \mu^2 + \mu^4
+    \end{alignat}
+    を得る。
+    これらを$V_P[T]$の成分表示に代入して
+    \begin{alignat}{1}
+        V_P[T]
+            &= \sigma^2 \, e_1 \otimes e_1 \\
+            &\quad +
+                2 \sigma^2 \mu \,
+                (e_1 \otimes e_2 + e_2 \otimes e_1) \\
+            &\quad +
+                (4 \sigma^2 \mu^2 + 2 \sigma^4) \, e_2 \otimes e_2
+    \end{alignat}
+    となる。
+    行列表示は$\begin{bmatrix}
+        \sigma^2 & 2 \sigma^2 \mu \\
+        2 \sigma^2 \mu & 4 \sigma^2 \mu^2 + 2 \sigma^4
+    \end{bmatrix} \in M_2(\R)$となり、
+    これは対称かつ正定値である。
+\end{example}
+
+\begin{remark}[Fisher 情報行列に関する (あまり厳密でない) 補足]
+    上の例の$V_P[T]$は
+    座標変換
+    $\R \times \R_{> 0} \to \R^2, \;
+        (\mu, \sigma)
+            \mapsto
+            (\theta_1, \theta_2)
+            = \myparen{\frac{\mu}{\sigma^2}, - \frac{1}{2 \sigma^2}}$
+    の Jacobi 行列$J$による合同変換により
+    $\up{t}J V_P[T] J = \begin{bmatrix}
+        \frac{1}{\sigma^2} & 0 \\
+        0 & \frac{2}{\sigma^2}
+    \end{bmatrix}$に写る。
+    これは正規分布のパラメータ$(\mu, \sigma)$に関する Fisher 情報行列に一致する
+    (詳細は次回以降で Fisher 計量の話題のときに触れたい)。
+\end{remark}
+
+上の例でみた$V_P[T]$は正定値対称であった。
+より一般に分散は次の性質を持つ。
+
+\begin{theorem}[分散の半正定値対称性]
+    $V_p[f] \in V \otimes_\R V$は、
+    $V^\vee$上の$\R$-双線型形式とみて
+    対称かつ半正定値である。
+\end{theorem}
+
+\begin{remark}[双線型形式としてのテンソル]
+    一般に、$\omega \in V \otimes V$を
+    $V^\vee$上の$\R$-双線型形式とみるとは、
+    $V$の基底$e^i \; (i = 1, \dots, m)$をひとつ選んで
+    $\omega$の成分表示を
+    $\omega = \omega_{ij} e^i \otimes e^j, \;
+        \omega_{ij} \in \R$
+    とおくとき、
+    \begin{equation}
+        \omega(\theta, \theta')
+            \coloneqq \omega_{ij} \theta(e^i) \theta'(e^j)
+            \in \R
+    \end{equation}
+    と定めるということである (これは well-defined である)。
+\end{remark}
+
+\begin{proof}
+    まず$V_p[f]$が対称であることを示す。
+    そこで$V$の基底$e^i \; (i = 1, \dots, m)$をひとつ選んで固定し、
+    $f, E_p[f]$の成分表示を
+    それぞれ$f_i, m_i \; (i = 1, \dots, m)$とおく。
+    すると
+    \begin{alignat}{1}
+        V_p[f]
+            &= E_p[(f - E_p[f]) \otimes (f - E_p[f])] \\
+            &= \myparen{
+                \int_\calX
+                (f_i(x) - m_i)(f_j(x) - m_j)
+                \, p(dx)
+            } e^i \otimes e^j
+    \end{alignat}
+    となり、最後の行の
+    $\int_\calX (f_i(x) - m_i)(f_j(x) - m_j) \, p(dx)$
+    は添字の置換に関し不変である。
+    したがって$V_p[f]$は対称である。
+
+    つぎに$V_p[f]$が半正定値であることを示す。
+    示したいことは、各$\theta \in V^\vee$に対し
+    $V_p[f](\theta, \theta) \ge 0$が成り立つことであるが、
+    これは
+    \begin{alignat}{1}
+        V_p[f](\theta, \theta)
+            &= \sum_{i, j}
+                \myparen{
+                    \int_\calX (f_i(x) - m_i)(f_j(x) - m_j) \, p(dx)
+                }
+                \theta(e^i) \theta(e^j) \\
+            &= \int_\calX \myparen{
+                \sum_{i, j}
+                \theta(e^i)(f_i(x) - m_i)
+                \theta(e^j)(f_j(x) - m_j)
+            } \, p(dx) \\
+            &= \int_\calX \myparen{
+                \sum_{i}
+                \theta(e^i)(f_i(x) - m_i)
+            }^2 \, p(dx) \\
+            &\ge 0
+    \end{alignat}
+    より従う。
+    したがって$V_p[f]$は半正定値である。
+\end{proof}
+
+最後に、分散が0であることの特徴づけを与えておく。
+
+\begin{proposition}[分散が0であるための必要十分条件]
+    \label[proposition]{prop:zero_variance_condition}
+    分散を持つ可測写像$f \colon \calX \to V$に関し、
+    $V_p[f] = 0$であることと
+    $f$が$p$-a.e.定数であることは同値である。
+\end{proposition}
+
+証明には次の事実を用いる。
+
+\begin{fact}
+    \label[fact]{fact:nonnegative_func}
+    $\calY$を可測空間、
+    $\mu$を$\calY$上の測度とする。
+    このとき、
+    $g(x) \ge 0 \; \text{$\mu$-a.e.$x$}$なる
+    $\mu$-可積分関数$g \colon \calY \to \R$に関し、
+    $\int_\calY g(x) \, \mu(dx) = 0$であることと
+    $g = 0 \; \text{$\mu$-a.e.$x$}$であることは同値である。
+\end{fact}
+
+\begin{proof}[\cref{prop:zero_variance_condition}の証明.]
+    ここでは「$p$-a.e.」を「a.e.」と略記する。
+    $V$の基底$e^i \; (i = 1, \dots, m)$をひとつ選んで固定し、
+    この基底に関する
+    $f$の成分を$f_i \colon \calX \to \R \; (i = 1, \dots, m)$、
+    $E_p[f]$の成分を$a_i \in \R \; (i = 1, \dots, m)$とおいておく。
+
+    \uline{(\Leftarrow)} \quad
+    $f$がa.e.定数ならば、
+    $f_i(x) = a_i \;
+        \text{a.e.$x$} \;
+        (i = 1, \dots, m)$
+    したがって
+    $(f_i(x) - m_i)(f_j(x) - m_j) = 0 \;
+        \text{a.e.$x$} \;
+        (i, j = 1, \dots, m)$
+    である。
+    よって
+    $\int_\calX (f_i(x) - m_i)(f_j(x) - m_j) \, p(dx) = 0 \;
+        (i, j = 1, \dots, m)$
+    だから
+    $V_p[f] = 0$である。
+
+    \uline{(\Rightarrow)} \quad
+    対偶を示すため、
+    $f$はa.e.定数ではないと仮定する。
+    すると、
+    $f_i$がa.e.定数ではないような
+    ある$i \in \{ 1, \dots, m \}$が存在する。
+    このとき$(f_i - m_i)^2 = 0 \; \text{a.e.}$ではないから、
+    \cref{fact:nonnegative_func}より
+    $\int_\calX (f_i(x) - m_i)^2 \, p(dx) > 0$である。
+    したがって$V_p[f] \neq 0$である。
+\end{proof}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{今後の予定}
+
+\begin{itemize}
+    \item 期待値パラメータ空間
+    \item 対数分配関数の微分可能性および Hessian の正定値性
+    \item 対数分配関数から誘導されるダイバージェンス
+\end{itemize}
+
+\TODO{このような流れでよい?}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{参考文献}
+
+\nocite{amari_information_2016}
+\nocite{wainwright_graphical_2007}
+\nocite{bn1970_pdf}
+
+{
+    \renewcommand{\bibsection}{}
+    \bibliographystyle{amsalpha}
+    \bibliography{./bibliography,../../mybibliography}
+}
+
+
+\end{document}

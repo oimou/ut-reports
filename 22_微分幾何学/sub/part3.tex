@@ -1,0 +1,958 @@
+\documentclass[report]{jlreq}
+\usepackage{global}
+\usepackage{./local}
+\subfiletrue
+%\makeindex
+\begin{document}
+
+この部では計量を持つ多様体、すなわち擬 Riemann 多様体について論じる。
+また、すでに述べた接続の概念と計量との関係についても調べる。
+とくに、Riemann 多様体のアファイン接続にいくつかの自然な制約を課すと
+接続が一意に定まり、これは Levi-Civita 接続と呼ばれる。
+
+微分幾何学において、
+多様体の外在的な性質と内在的な性質はそれぞれ異なる重要性を持つ。
+多様体の外在的な性質とは
+多様体が埋め込まれている空間に由来する性質であり、
+内在的な性質とは多様体自身が持つ性質である。
+\TODO{}
+
+% ============================================================
+%
+% ============================================================
+\chapter{擬 Riemann 多様体}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{擬 Riemann 多様体}
+
+計量については\cref{section:metric}で述べた。
+
+\begin{definition}[擬 Riemann 多様体]
+    \TODO{計量を持つ多様体はパラコンパクトか？}
+    多様体$M$と$M$上の擬 Riemann 計量$g$の組$(M, g)$を
+    \term{擬 Riemann 多様体}[pseudo-Riemannian manifold]
+        {擬 Riemann 多様体}[ぎ Riemann たようたい]
+    という。
+\end{definition}
+
+擬 Riemann 計量により多様体上\TODO{というよりは接空間上？}に
+ノルムや角度などの幾何学的概念が導入される。
+
+\begin{definition}[ノルム]
+    \idxsym{norm determined by a pseudo-Riemannian metric}
+        {$|v|_g$}{擬 Riemann 計量により定まるノルム}
+    $(M, g)$を擬 Riemann 多様体、
+    $p \in M$とする。
+    $v \in T_p M$に対し
+    \begin{equation}
+        |v|_g \coloneqq \sqrt{\langle v, v \rangle_g}
+    \end{equation}
+    と書き、これを
+    $v$の\term{ノルム}[norm]{ノルム}という。
+\end{definition}
+
+\begin{definition}[角度]
+    \TODO{}
+\end{definition}
+
+擬 Riemann 計量の成分表示には特別な記法を用いる。
+
+\begin{definition}[計量の成分表示]
+    $(M, g)$を擬 Riemann 多様体、
+    $x^1, \ldots, x^n$を局所座標とする。
+    この座標の座標フレームに関する$g$の成分を
+    $g_{ij}$と書くことにする。
+    すなわち
+    \begin{equation}
+        g = g_{ij} \, dx^i \otimes dx^j
+    \end{equation}
+    である。
+    さらに、$g$が非退化対称であることから
+    $(g_{ij})_{i, j}$は正則な対称行列である。
+    そこで$(g_{ij})$は逆行列を持つが、
+    これは添字を上げて
+    $(g^{ij})_{i, j}$と書くことにする。
+\end{definition}
+
+\begin{proposition}[計量の成分と座標変換]
+    \begin{equation}
+        g_{ab} = g_{ij} \deldel[x^i]{u^a} \deldel[x^j]{u^b}
+    \end{equation}
+    これは行列表示の合同変換になっている
+    (したがって Sylvester の慣性法則が適用される)。
+    \TODO{}
+\end{proposition}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{Riemann 多様体の構成}
+
+通常の多様体における部分多様体や積多様体の構成と同様に、
+擬 Riemann 多様体においても部分多様体や積多様体が定義される。
+
+\begin{definition}[Riemann 部分多様体]
+    \TODO{}
+\end{definition}
+
+\begin{proposition}[Riemann 部分多様体の計量]
+    \begin{equation}
+        g(u, v) = \wt{g}(u, v)
+    \end{equation}
+    \TODO{}
+\end{proposition}
+
+\begin{proof}
+    部分多様体の接空間の同一視
+    $d\iota(u) = u$による。
+    \TODO{}
+\end{proof}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{等長写像と平坦性}
+
+\begin{definition}[等長写像]
+    $(M, g), (\wt{M}, \wt{g})$を擬 Riemann 多様体とする。
+    微分同相写像$\varphi \colon M \to \wt{M}$が
+    \term{等長写像}[isometry]{等長写像}[とうちょうしゃぞう]
+    であるとは、
+    次の同値な条件のうち少なくとも1つ (したがってすべて) をみたすことをいう:
+    \begin{enumerate}
+        \item 引き戻しにより計量が一致する。
+            すなわち$\varphi^* \wt{g} = g$が成り立つ。
+        \item 各$p \in M$に対し、
+            $d\varphi_p \colon T_p M \to T_{\varphi(p)} \wt{M}$は
+            計量同型写像である。
+    \end{enumerate}
+    等長写像$(M, g) \to (\wt{M}, \wt{g})$が存在するとき、
+    $(M, g)$と$(\wt{M}, \wt{g})$は
+    \term{等長}[isometric]{等長}[とうちょう]
+    であるという。
+\end{definition}
+
+\begin{proof}[同値性の証明.]
+    \TODO{}
+\end{proof}
+
+\begin{definition}[局所等長]
+    \TODO{}
+\end{definition}
+
+\begin{definition}[平坦]
+    $n$次元擬 Riemann 多様体$(M, g)$が
+    \term{平坦}[flat]{平坦}[へいたん]
+    であるとは、$\R^n$と局所等長であることをいう。
+\end{definition}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{擬 Riemann 多様体上の微分形式}
+
+擬 Riemann 多様体においては、
+擬 Riemann 計量を用いて接ベクトルと余接ベクトルを
+互いに変換し合うことができる。
+
+\begin{definition}[音楽同型]
+    \idxsym{flat operator}{$X^\flat$}{$X$の添字を下げて得られる余接ベクトル場}
+    \idxsym{sharp operator}{$\omega^\sharp$}{$\omega$の添字を上げて得られる接ベクトル場}
+    $(M, g)$を擬 Riemann 多様体とし、
+    束同型$\what{g} \colon TM \to T^*M$
+    \begin{equation}
+        \what{g}(v)(w) \coloneqq g_p(v, w)
+            \quad
+            (p \in M, \; v, w \in T_p M)
+    \end{equation}
+    を考える。
+    $(E_i)_i$を$TM$の局所フレーム、
+    $(\eps^i)_i$をその双対フレームとする。
+    \begin{itemize}
+        \item $X \in \frakX{M}$とすると、
+            $X$のフレーム表示$X = X^i E_i$に対し
+            $\what{g}(X) = (g_{ij} X^i) \eps_j$が成り立つ。
+            そこで$X_j \coloneqq g^{ij} X^i$とおくと、
+            $\what{g}(X) = X_j \eps_j$が成り立つ。
+            この記法を念頭に、
+            $\what{g}(X)$を$X^\flat$と書き、
+            \term{$X$の添字を下げて}[lowering an index]{添字を下げる}[そえじをさげる]
+            得られたという。
+        \item $\omega \in \Omega(M)$とすると、
+            $\omega$のフレーム表示$\omega = \omega^i \eps_i$に対し
+            $\what{g}^{-1}(\omega) = (g^{ij} \omega_j) E_i$が成り立つ。
+            そこで$\omega^i \coloneqq g_{ij} \omega_j$とおくと、
+            $\what{g}^{-1}(\omega) = \omega^i E_i$が成り立つ。
+            この記法を念頭に、
+            $\what{g}^{-1}(\omega)$を$\omega^\sharp$と書き、
+            \term{$\omega$の添字を上げて}[raising an index]{添字を上げる}[そえじをあげる]
+            得られたという。
+    \end{itemize}
+    $\flat, \sharp$で表される束同型を
+    \term{音楽同型}[musical isomorphisms]{音楽同型}[おんがくどうけい]
+    という。
+\end{definition}
+
+音楽同型を用いて定義される最も重要な概念が勾配である。
+
+\begin{definition}[勾配]
+    $(M, g)$を擬 Riemann 多様体、
+    $f$を$M$上の{\smooth}実数値関数、
+    $X$を$M$上のベクトル場とする。
+    ベクトル場
+    \begin{equation}
+        \grad f \coloneqq (df)^\sharp
+    \end{equation}
+    を$f$の\term{勾配}[gradient]{勾配}[こうばい]という。
+\end{definition}
+
+\begin{proposition}[勾配の性質]
+    $(M, g)$を Riemann 多様体とし、
+    $X$を$M$上のベクトル場とする。
+    このとき
+    \begin{equation}
+        \langle \grad f, X \rangle_g = Xf
+    \end{equation}
+    が成り立つ。
+\end{proposition}
+
+\begin{proof}
+    定義に基づいて変形すれば
+    \begin{alignat}{1}
+        \langle \grad f, X \rangle_g
+            &= (\grad f)^\flat (X) \\
+            &= (df^\sharp)^\flat (X) \\
+            &= df(X) \\
+            &= Xf
+    \end{alignat}
+    を得る。
+\end{proof}
+
+\begin{definition}[回転]
+    ベクトル場
+    \begin{equation}
+        \curl X \coloneqq \beta^{-1} d(X^\flat)
+    \end{equation}
+    を$X$の\term{回転}[curl]{回転}[かいてん]という。
+    \TODO{}
+\end{definition}
+
+\TODO{Lie 微分と関係がある？}
+
+\begin{definition}[発散]
+    関数
+    \begin{equation}
+        \div X \coloneqq *^{-1} d(\beta(X))
+    \end{equation}
+    を$X$の\term{発散}[divergence]{発散}[はっさん]という。
+    \TODO{}
+\end{definition}
+
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{Riemann 多様体上の積分}
+\label[section]{sec:integral-on-Riemannian-manifold}
+
+\subsection{弧長積分}
+
+弧長積分は1次元の積分である。
+
+\begin{definition}[曲線の弧長]
+    $(M, g)$を Riemann 多様体、
+    $\gamma \colon [a, b] \to M$を$M$上の\smooth 曲線とする。
+    このとき、曲線$\gamma$の
+    \term{弧長}[arc length]{弧長}[こちょう]を
+    \begin{equation}
+        L_g(\gamma) \coloneqq \int_a^b |\gamma'(t)|_g \, dt
+    \end{equation}
+    で定義する。
+\end{definition}
+
+\begin{example}[単位円周の弧長]
+    \TODO{}
+\end{example}
+
+\subsection{面積分}
+
+面積分は余次元1の積分である。
+
+\TODO{}
+
+\subsection{体積分}
+
+体積分は最高次の積分である。
+
+\begin{definition}[計量に付随する体積形式]
+    \idxsym{volume form w.r.t. metric}{$d\vol_g, \vol_g$}
+        {計量$g$に付随する体積形式}
+    $M$を向きづけられた$n$次元多様体、
+    $g$を$M$上の計量、
+    $\{ (U_\alpha, \varphi_\alpha) \}_{\alpha \in A}$を
+    与えられた$M$の向きを定める atlas とし、
+    各$\alpha \in A$に対し
+    $\varphi_\alpha \eqqcolon (x_{\alpha 1}, \dots, x_{\alpha n})$
+    とおいて$U_\alpha$上で
+    \begin{equation}
+        g = g_{\alpha ij} dx_{\alpha i} \otimes dx_{\alpha j}
+    \end{equation}
+    と座標表示する。
+    このとき、$\omega_\alpha \in \Omega^n(U_\alpha)$を
+    \begin{equation}
+        \omega_\alpha \coloneqq
+            \sqrt{|\det g_\alpha|} \, dx_{\alpha 1} \wedge \dots \wedge dx_{\alpha n}
+    \end{equation}
+    と定めると、
+    $\omega_\alpha$らをはりあわせて
+    $M$上の nonvanishing な最高次形式$\omega$が定まる (このあとすぐ示す)。
+    $\omega$を$g$に付随する\term{体積形式}[volume form]{体積形式}[たいせきけいしき]といい、
+    $d\vol_g$や$\vol_g$と書く。
+\end{definition}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+\begin{example}[$S^n$の体積]
+    $S^n$の体積 ($n=1$なら円周の長さ、$n=2$なら球の表面積) を求める。
+    $S^n$の表示は色々あるが、ここでは立体射影を用いる。
+    $S^n \setminus \{N\}$は立体射影
+    $f \colon \R^n \to \R^{n+1},$
+    \begin{equation}
+        f(x) = \frac{(2x, |x|^2 - 1)}{|x|^2 + 1}
+    \end{equation}
+    の像である。
+    そこで、$f$が$\R^n \to S^n \setminus \{N\}$の
+    向きを保つ微分同相であること
+    \footnote{
+        ただし、$f$は等長写像ではない。
+    }
+    にも注意すれば、
+    \begin{alignat}{1}
+        \int_{S^n} \,dV_{i^* \wb{g}}
+            &= \int_{\R^n} f^* dV_{i^* \wb{g}}
+                \quad \text{(\cref{prop:integration-over-parametrizations})} \\
+            &= \int_{\R^n} f^* \left(
+                    \sqrt{\det (i^* \wb{g}_{ij})}
+                    \,dy^1 \wedge \dots \wedge dy^n
+                \right)
+                \quad \text{(\cref{prop:volume-form-local-coordinate-expression})} \\
+            &= \int_{\R^n} \sqrt{\det (i^* \wb{g}_{ij} \circ f)}
+                \,dx^1 \wedge \dots \wedge dx^n
+                \quad \text{(\cref{prop:tensor-pullback-properties})}
+    \end{alignat}
+    が成り立つ。
+    ただし、$(y^i) \coloneqq f^{-1}$とおいた。
+    ここで
+    \begin{alignat}{1}
+        f^* (i^* \wb{g})
+            &= f^* (i^* \wb{g}_{ij} \,dy^1 \wedge \dots \wedge dy^n) \\
+            &= i^* \wb{g}_{ij} \circ f
+                \, d(y^1 \circ f) \wedge \dots \wedge d(y^n \circ f) \\
+            &= i^* \wb{g}_{ij} \circ f
+                \, dx^1 \wedge \dots \wedge dx^n
+    \end{alignat}
+    だから
+    \begin{equation}
+        i^* \wb{g}_{ij} \circ f = f^* i^* \wb{g}_{ij}
+        = (i \circ f)^* \wb{g}_{ij}
+    \end{equation}
+    である ($i^* \wb{g}_{ij}$は$(y^i)$に関する局所座標表示の係数、
+    $(i \circ f)^* \wb{g}_{ij}$は$(x^i)$に関する局所座標表示の係数)。
+    よって、上の計算を続けて
+    \begin{alignat}{1}
+        \int_{S^n} \,dV_{i^* \wb{g}}
+            &= \int_{\R^n} \sqrt{\det ((i \circ f)^* \wb{g}_{ij})}
+                \,dx^1 \wedge \dots \wedge dx^n \\
+            &= \int_{-\infty}^\infty \dots \int_{-\infty}^\infty
+                \sqrt{\det ((i \circ f)^* \wb{g}_{ij})} \,dx^1 \dots dx^n
+    \end{alignat}
+    が成り立つ。
+    直接計算により
+    \begin{equation}
+        (i \circ f)^* \wb{g}
+            = \left(\frac{2}{1 + |x|^2}\right)^2 (dx^1dx^1 + \dots + dx^ndx^n)
+    \end{equation}
+    であるから、
+    \begin{equation}
+        \sqrt{\det ((i \circ f)^* \wb{g})_{ij}}
+            = \left(\frac{2}{1 + |x|^2}\right)^n
+    \end{equation}
+    である。よって、たとえば$S^1$の体積 (円周の長さ) は
+    \begin{equation}
+        \int_{-\infty}^\infty \frac{2}{1 + |x|^2} \,dx
+            = 2 \pi
+    \end{equation}
+    である。$S^2$の体積 (球の表面積) は
+    \begin{equation}
+        \int_{-\infty}^\infty \int_{-\infty}^\infty \frac{4}{(1 + x^2 + y^2)^2} \,dx dy
+            = 4 \pi
+    \end{equation}
+    である。
+\end{example}
+
+\begin{theorem}[発散定理; Green の定理]
+    \termhidden[divergence theorem]{発散定理}[はっさんていり]
+    \termhidden[Green's theorem]{Green の定理}[Greenのていり]
+    $(M, g)$を向き付けられた Riemann 多様体とする。
+    このとき、$M$上の compactly supported な任意のベクトル場$X$に対し
+    \begin{equation}
+        \int_M \div X \, dV_g
+            = \int_{\partial M} \langle X, N \rangle_g \,dV_{\tilde{g}}
+    \end{equation}
+    が成り立つ。
+    ただし、$N$は$\partial M$に沿った外向き単位法線ベクトル場であり、
+    $\tilde{g}$は$\partial M$上の誘導計量である。
+\end{theorem}
+
+\begin{proof}
+    cf. [Lee] p.424
+\end{proof}
+
+\begin{definition}[表面積分]
+    \TODO{}
+\end{definition}
+
+
+
+% ============================================================
+%
+% ============================================================
+\chapter{擬 Riemann 多様体の例}
+
+この章では擬 Riemann 多様体の具体例に触れる。
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{Euclid 空間}
+
+$(\R^n, \wb{g})$の等長変換は
+\begin{equation}
+    (b, A) \cdot x = b + A x
+    \quad (b \in \R^n, A \in \mathrm{O}(n))
+\end{equation}
+で尽くされる。
+等長変換群$\Iso(\R^n, \wb{g})$は半直積$\R^n \rtimes_\theta \mathrm{O}(n)$である。
+\TODO{proof}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{球面}
+
+$(S^n, \mathring{g})$の等長変換群
+$\Iso(S^n, \mathring{g})$は$\O(n + 1)$である。
+
+\TODO{proof}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{トーラス}
+
+\begin{proposition}[トーラスの平坦性]
+    トーラス$T^n$に$\R^{2n}$からの誘導計量を入れた Riemann 多様体は平坦である。
+    \TODO{平坦とは？}
+\end{proposition}
+
+\begin{proof}
+    パラメータ付け$X \colon \R^n \to T^n,$
+    \begin{equation}
+        (u^1, \dots, u^n) \mapsto (\cos u^i, \sin u^i)_{i = 1}^n
+    \end{equation}
+    を考える。
+    $\R^{2n}, \R^n$の Euclid 計量をそれぞれ$\wb{g}, \wb{g}'$とおき、
+    $T^n$の誘導計量を$g$とおく。
+    また、$X$の局所的な逆写像を$\varphi$とおく。
+    状況を大まかに表した図式が次である：
+    \begin{equation}
+        \begin{tikzcd}
+            (\R^n, \wb{g}') \ar[shift left=1ex]{r}{X}
+                & (T^n, g) \ar[shift left=1ex]{l}{\varphi} \ar[hook]{r}{i}
+                & (\R^{2n}, \wb{g})
+        \end{tikzcd}
+    \end{equation}
+    $(T^n, g)$が平坦であることを示すには、
+    $\varphi^{-1}$が等長写像であること、すなわち
+    \begin{equation}
+        (\varphi^{-1})^* g = \wb{g}'
+    \end{equation}
+    をいえばよい。
+    左辺をより計算しやすい$\wb{g}$で表すと、
+    \begin{equation}
+        (\varphi^{-1})^* g = X^* g = X^* i^* \wb{g} = (i \circ X)^* \wb{g}
+    \end{equation}
+    となる。ここで、局所座標表示により
+    \begin{alignat}{1}
+        (i \circ X)^* \wb{g}
+            &= (i \circ X)^* (dx^j dx^j) \\
+            &= d(\cos u^j)^2 + d(\sin u^j)^2 \\
+            &= (- \sin u^j \,du^j)^2 + (\cos u^j \,du^j)^2 \\
+            &= \sin^2 u^j \,du^j du^j + \cos^2 u^j \,du^j du^j \\
+            &= du^j du^j \\
+            &= \wb{g}'
+    \end{alignat}
+    を得る。
+    よって$(\varphi^{-1})^* g = \wb{g}'$がいえた。
+\end{proof}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{双曲空間}
+
+\TODO{}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{等質空間}
+
+\TODO{}
+
+
+
+% ============================================================
+%
+% ============================================================
+\chapter{計量と接続}
+
+この章では計量と接続の関係について述べる。
+第2部で見たように、
+アファイン接続は曲率や測地線などの幾何学的概念を提供する。
+一方、本章で詳しく調べる Riemann 計量もまた
+いくつかの幾何学的概念をもたらす。
+どの幾何学的概念が接続と計量のいずれに由来するのか、
+はっきりと区別しておくことは重要である。
+そこで下に一覧を整理しておく。
+
+\begin{itemize}
+    \item 接続に由来する概念
+        \begin{enumerate}
+            \item 平行移動
+            \item 共変微分
+            \item 測地線
+            \item 曲率
+        \end{enumerate}
+    \item 計量に由来する概念
+        \begin{enumerate}
+            \item 曲線の長さ
+            \item 距離
+            \item 直交性
+        \end{enumerate}
+\end{itemize}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{計量を保つ接続}
+
+\TODO{符号の一貫性や正定値性を使っているか？}
+
+\begin{definition}[計量を保つ接続]
+    $M$を多様体、
+    $E \to M$をベクトル束、
+    $g$を$E$の計量、
+    $\nabla$を$E$の接続とする。
+    $\nabla$が\term{$g$を保つ}[preserve]{計量を保つ}[けいりょうをたもつ]、
+    あるいは$g$が$\nabla$に関し
+    \term{平行}[parallel]{平行}[へいこう]
+    であるとは、
+    \begin{equation}
+        X(g(\xi, \eta)) = g(\nabla_X\xi, \eta) + g(\xi, \nabla_X\eta)
+        \quad (X \in \frakX(M), \; \xi, \eta \in A^0(E))
+    \end{equation}
+    が成り立つことをいう。
+    同じことだが、$X$を使わずに書けば
+    \begin{equation}
+        d(g(\xi, \eta)) = g(\nabla\xi, \eta) + g(\xi, \nabla\eta)
+    \end{equation}
+    となる。
+\end{definition}
+
+\begin{proposition}[計量を保つ接続の特徴付け]
+    $M$を多様体、
+    $E \to M$をランク$r$のベクトル束、
+    $g$を$E$の計量、
+    $\nabla$を$E$の接続とする。
+    このとき、次は同値である:
+    \begin{enumerate}
+        \item $\nabla$が$g$を保つ。
+        \item $\nabla g = 0$
+    \end{enumerate}
+\end{proposition}
+
+\begin{proof}
+    Eistein の記法を用いる。
+    同値をいうには
+    \begin{equation}
+        X(g(\xi, \eta))
+            = (\nabla_X g)(\xi, \eta) + g(\nabla_X\xi, \eta) + g(\xi, \nabla_X\eta)
+            \quad
+            (X \in \frakX(M), \; \xi, \eta \in A^0(E))
+    \end{equation}
+    を示せばよい。
+    まず$X \in \frakX(M), \; \xi, \eta \in A^0(E)$とする。
+    局所フレーム$(e_1, \dots, e_r)$をひとつ選び、
+    その双対を$(e^1, \dots, e^r)$とおく。
+    $g, \xi, \eta$を局所的に
+    \begin{equation}
+        g = g_{ij} e^i \otimes e^j, \quad
+        \xi = \xi^k e_k, \quad \eta = \eta^l e_l
+    \end{equation}
+    と表示しておく。
+    ここで、次が成り立つことに注意する
+    (縮約については\cref{section:contraction-of-tensor-fields}を参照):
+    \begin{equation}
+        \tr \circ \tr (\nabla_X (e^i \otimes e^j \otimes e_k \otimes e_l)) = 0
+    \end{equation}
+    \begin{innerproof}
+        左辺を変形して
+        \begin{alignat}{1}
+            &\quad \tr \circ \tr (\nabla_X (e^i \otimes e^j \otimes e_k \otimes e_l)) \\
+            &= \tr \circ \tr \Bigl(
+                \nabla_X e^i \otimes e^j \otimes e_k \otimes e_l
+                + e^i \otimes \nabla_X e^j \otimes e_k \otimes e_l \\
+            &\qquad
+                + e^i \otimes e^j \otimes \nabla_X e_k \otimes e_l
+                + e^i \otimes e^j \otimes e_k \otimes \nabla_X e_l \Bigr) \\
+            &\qquad \quad (\text{$\because$ テンソル積の共変微分の定義}) \\
+            &= \tr \Bigl(
+                \langle \nabla_X e^i, e_k \rangle e^j \otimes e_l
+                + \langle e^i, e_k \rangle \nabla_X e^j \otimes e_l \\
+            &\qquad
+                + \langle e^i, \nabla_X e_k \rangle e^j \otimes e_l
+                + \langle e^i, e_k \rangle e^j \otimes \nabla_X e_l \Bigr) \\
+            &\qquad \quad (\text{$\because$ 縮約の性質}) \\
+            &= \tr \Bigl(
+                \cancel{X(\langle e^i, e_k \rangle) e^j \otimes e_l}
+                + \langle e^i, e_k \rangle \nabla_X e^j \otimes e_l
+                + \langle e^i, e_k \rangle e^j \otimes \nabla_X e_l \Bigr) \\
+            &\qquad \quad (\text{$\because$ $1$-形式の共変微分の定義}) \\
+            &= \tr (\nabla_X e^j \otimes e_l
+                + e^j \otimes \nabla_X e_l) \\
+            &= \langle \nabla_X e^j, e_l \rangle
+                + \langle e^j, \nabla_X e_l \rangle
+                \quad (\text{$\because$ 縮約の性質}) \\
+            &= X \langle e^j, e_l \rangle
+                \quad (\text{$\because$ $1$-形式の共変微分の定義}) \\
+            &= 0
+        \end{alignat}
+        を得る。
+    \end{innerproof}
+    よって
+    \begin{alignat}{1}
+        &\quad (\nabla_X g)(\xi, \eta) + g(\nabla_X\xi, \eta) + g(\xi, \nabla_X\eta) \\
+        &= \tr \circ \tr (
+            \nabla_X g \otimes \xi \otimes \eta
+            + g \otimes \nabla_X\xi \otimes \eta
+            + g \otimes \xi \otimes \nabla_X\eta
+        ) \\
+        &\qquad \quad (\text{$\because$ 縮約の性質}) \\
+        &= \tr \circ \tr (\nabla_X (g \otimes \xi \otimes \eta))
+            \quad (\text{$\because$ テンソル積の共変微分の定義}) \\
+        &= \tr \circ \tr (\nabla_X (
+            g_{ij} \xi^k \eta^l e^i \otimes e^j \otimes e_k \otimes e_l
+        )) \\
+        &= \tr \circ \tr (
+            g_{ij} \xi^k \eta^l \nabla_X e^i \otimes e^j \otimes e_k \otimes e_l
+            + X(g_{ij} \xi^k \eta^l) e^i \otimes e^j \otimes e_k \otimes e_l
+        ) \\
+        &\qquad \quad (\text{$\because$ 共変微分の定義}) \\
+        &= g_{ij} \xi^k \eta^l
+            \cancel{\tr \circ \tr (
+                \nabla_X (e^i \otimes e^j \otimes e_k \otimes e_l)
+            )} \\
+        &\qquad + \tr \circ \tr (
+            X(g_{ij} \xi^k \eta^l) e^i \otimes e^j \otimes e_k \otimes e_l
+        ) \quad (\text{$\because$ 縮約の性質}) \\
+        &= X(g_{ij} \xi^k \eta^l)
+            \quad (\text{$\because$ 縮約の性質}) \\
+        &= X(g(\xi, \eta))
+    \end{alignat}
+    を得る。これが示したいことであった。
+\end{proof}
+
+接続が与えられているとき、
+各フレームに対し接続形式が定まるのであった。
+ここではとくに正規直交フレームに対し定まる接続形式を考える。
+
+\begin{proposition}[正規直交フレームに関する接続形式]
+    $M$を多様体、
+    $E \to M$をランク$r$のベクトル束、
+    $g$を$E$の計量、
+    $\nabla$を$E$の接続とする。
+    $U \opensubset M$とし、
+    $U$上の$g$に関する正規直交フレーム
+    $\calE = (e_1, \ldots, e_r)$が
+    与えられているとする。
+    $\nabla$が$g$を保つとすると、
+    $\calE$に関する$\nabla$の接続形式
+    $\omega = (\omega_\lambda^\mu)_{\lambda, \mu}$は
+    交代行列となる。
+\end{proposition}
+
+\begin{proof}
+    Eistein の記法を用いる。
+    $\calE$は正規直交だから
+    \begin{equation}
+        g(e_\lambda, e_\mu) = \delta_{\lambda\mu}
+            \quad (\forall \; \lambda, \mu)
+    \end{equation}
+    が成り立つ。いま$\nabla$は$g$を保つことに注意して外微分をとれば
+    \begin{alignat}{1}
+        0 &= g(\nabla e_\lambda, e_\mu) + g(e_\lambda, \nabla e_\mu) \\
+            &= g(\omega_\lambda^\nu e_\nu, e_\mu) + g(e_\lambda, \omega_\mu^\nu e_\nu) \\
+            &= \omega_\lambda^\mu + \omega_\mu^\lambda
+    \end{alignat}
+    が成り立つ。
+    したがって$\omega$は交代行列である。
+\end{proof}
+
+\begin{proposition}[変換関数は直交群に値を持つ]
+    上の命題の状況で、さらに
+    $\{ U_\alpha \}_{\alpha \in A}$を$M$の open cover であって
+    各$U_\alpha$上で$g$に関する正規直交フレーム
+    $\calE_\alpha = (e^{(\alpha)}_1, \dots, e^{(\alpha)}_r)$を
+    持つものとする\footnote{
+        このような open cover はたしかに存在する。
+        実際、各点$x \in M$のある近傍$U_p$上で
+        正規直交フレームが存在するから、
+        $M$自身を添字集合として$\{ U_p \}_{p \in M}$をとればよい。
+        なお、実は$U \opensubset M$上にフレームが存在すれば、
+        $U$上に$g$に関する正規直交フレームも存在する。
+        詳細は [Lee] p.330 を参照。
+    }。
+    このとき、各$U_\alpha$上の局所自明化
+    $\varphi_\alpha \colon U_\alpha \to U_\alpha \times \R^r$を
+    $\calE_\alpha$から定まるものとすれば、
+    局所自明化の族
+    $\{ \varphi_\alpha \}$
+    に対する$E$の変換関数$\{ \psi_{\alpha\beta} \}$は
+    直交群$O(r)$に値を持つ。
+\end{proposition}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+逆に、$\frako(r, \R)$に値をもつ1-形式の族から接続を構成できる。
+
+\begin{proposition}[接続形式から定まる接続]
+    $M$を多様体、
+    $E \to M$をランク$r$のベクトル束、
+    $g$を$E$の計量とする。
+    $\{ U_\alpha \}_{\alpha \in A}$を$M$の open cover であって
+    各$U_\alpha$上で$g$に関する正規直交フレーム
+    $\calE_\alpha = (e^{(\alpha)}_1, \dots, e^{(\alpha)}_r)$
+    を持つものとする。
+    さらに、各$U_\alpha$上の局所自明化$\varphi_\alpha$を
+    $\calE_\alpha$から定め、
+    変換関数を$\{ \psi_{\alpha\beta} \}$とおく。
+    このとき、$\frako(r, \R)$に値をもつ$1$-形式の族
+    \begin{equation}
+        \omega = \{ \omega_\alpha \}_{\alpha \in A}
+    \end{equation}
+    であって、変換規則
+    \begin{equation}
+        \omega_\beta
+            = \psi_{\alpha\beta}^{-1} \omega_\alpha \psi_{\alpha\beta}
+            + \psi_{\alpha\beta}^{-1} \, d \psi_{\alpha\beta}
+            \quad
+            \text{on $U_\alpha \cap U_\beta$}
+    \end{equation}
+    をみたすものが与えられたならば、
+    次をみたす$E$の接続が構成できる:
+    \begin{enumerate}
+        \item 各フレーム$\calE_\alpha$に関する
+            $\nabla$の接続形式は$\omega_\alpha$である。
+        \item $\nabla$は$g$を保つ。
+    \end{enumerate}
+\end{proposition}
+
+\begin{proof}
+    Eistein の記法を用いる。
+    (1) をみたす$\nabla$の構成法は、局所的に定義して貼り合うことを確認すればよい。
+    これは前回と同様なので省略。
+    $g$を保つことを示す。
+    $X \in \frakX(M), \xi, \eta \in A^0(E)$とし、
+    命題で与えられた正規直交フレームを用いて局所的に
+    \begin{equation}
+        g_{ij} = g(e_i, e_j), \quad
+        \xi = \xi^i e_i, \quad
+        \eta = \eta^j e_j
+    \end{equation}
+    と表示すれば、
+    \begin{alignat}{1}
+        &\quad g(\nabla_X \xi, \eta) + g(\xi, \nabla_X \eta) \\
+        &= g(\xi^i \nabla_X e_i, \eta) + g(X(\xi^i) e_i, \eta) \\
+        &\qquad + g(\xi, \eta^j \nabla_X e_j) + g(\xi, X(\eta^j) e_j)
+            \quad (\text{$\because$ 共変微分の定義}) \\
+        &= \xi^i \eta^j g(\nabla_X e_i, e_j) + X(\xi^i) \eta^j g(e_i, e_j) \\
+        &\qquad + \xi^i \eta^j g(e_i, \nabla_X e_j) + \xi^i X(\eta^j) g(e_i, e_j) \\
+        &= \xi^i \eta^j \omega_i^k g_{kj} + X(\xi^i) \eta^j g_{ij} \\
+        &\qquad + \xi^i \eta^j \omega_j^k g_{ik} + \xi^i X(\eta^j) g_{ij} \\
+        &= \xi^i \eta^j (\omega_i^j + \omega_j^i)
+            + X(\xi^i) \eta^j g_{ij} + \xi^i X(\eta^j) g_{ij}
+            \quad (\text{$\because$ 正規直交性}) \\
+        &= X(\xi^i) \eta^j g_{ij} + \xi^i X(\eta^j) g_{ij}
+            \quad (\text{$\because$ 接続形式は交代行列}) \\
+        &= g_{ij} X(\xi^i \eta^j)
+    \end{alignat}
+    であり、一方
+    \begin{alignat}{1}
+        X(g(\xi, \eta))
+            &= X(g_{ij} \xi^i \eta^j) \\
+            &= X(g_{ij}) \xi^i \eta^j
+                + g_{ij} X(\xi^i \eta^j) \\
+            &= g_{ij} X(\xi^i \eta^j)
+                \quad (\text{$\because$ 正規直交性})
+    \end{alignat}
+    であるから
+    \begin{equation}
+        X(g(\xi, \eta)) = g(\nabla_X \xi, \eta) + g(\xi, \nabla_X \eta)
+    \end{equation}
+    が成り立つ。
+    したがって$\nabla$は$g$を保つ。
+\end{proof}
+
+\begin{proposition}[計量を保つ接続の存在]
+    $M$をパラコンパクトな多様体、
+    $E \to M$をベクトル束、
+    $g$を$E$の計量とする。
+    このとき、$g$を保つような$E$の接続が存在する。
+\end{proposition}
+
+\begin{proof}
+    1の分割を用いればよい。
+    \TODO{}
+\end{proof}
+
+\begin{proposition}[曲率形式]
+    $M$を多様体、
+    $E \to M$をランク$r$ベクトル束、
+    $g$を$E$の計量、
+    $\nabla$を$E$の接続、
+    $R$を$\nabla$の曲率とする。
+    $\nabla$が$g$を保つならば、
+    \begin{equation}
+        g(R\xi, \eta) + g(\xi, R\eta) = 0
+    \end{equation}
+    が成り立ち、
+    任意の正規直交フレーム
+    $\calE \coloneqq (e_1, \dots, e_r)$に対し
+    曲率形式$\Omega$は交代行列となる。
+\end{proposition}
+
+\begin{proof}
+    $g$が$\nabla$を保つとすると
+    \begin{equation}
+        d(g(\xi, \eta)) = g(\nabla \xi, \eta) + g(\xi, \nabla \eta)
+            \quad (\xi, \eta \in A^0(E))
+    \end{equation}
+    が成り立つから、両辺の外微分をとって
+    \begin{alignat}{1}
+        0 &= d(g(\nabla \xi, \eta)) + d(g(\xi, \nabla \eta)) \\
+            &= g(D\nabla \xi, \eta) - g(\nabla \xi, \nabla \eta)
+                + g(\nabla \xi, \nabla \eta) + g(\xi, D\nabla \eta) \\
+            &\qquad \quad (\text{$\because$ \cref{prop:signed-leibniz-rule}}) \\
+            &= g(R \xi, \eta) + g(\xi, R \eta)
+    \end{alignat}
+    を得る。
+    また、接続形式に対して行った議論と同様にして
+    $\Omega$が交代行列であることも従う。
+\end{proof}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{捩れのない接続}
+
+\TODO{}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{Levi-Civita 接続}
+
+\TODO{接続形式で書くと何が嬉しいのか？}
+
+\begin{definition}[Levi-Civita 接続]
+    $(M, g)$を$n$次元擬 Riemann 多様体、
+    $\theta^1, \dots, \theta^n$を
+    $g$に関する正規直交フレームとする。
+    このとき、次をみたす接続形式$\omega = (\omega_j^i)$がただひとつ存在する：
+    \begin{enumerate}[label=(\alph*)]
+        \item $\omega_j^i = - \omega_i^j$
+        \item $d\theta^i + \omega_j^i \wedge \theta^j = 0$
+    \end{enumerate}
+    この$\omega$を$(M, g)$の
+    \term{Levi-Civita 接続}[Levi-Civita connection]
+        {Levi-Civita 接続}[Levi-Civitaせつぞく]という。
+\end{definition}
+
+\begin{remark}
+    上の定義の (a) は計量が保たれることを意味し、
+    (b) は第1構造方程式の各辺が$0$、すなわち捩れがないことを意味する。
+\end{remark}
+
+\begin{proposition}[Levi-Civita 接続の接続係数]
+    $(M, g)$を$n$次元擬 Riemann 多様体、
+    $\nabla$を Levi-Civita 接続、
+    $\Gamma_{ij}^k$を$\nabla$の接続係数とする。
+    \begin{enumerate}
+        \item (座標フレームに関する接続係数)
+            $x^1, \dots, x^n$を座標とすると
+            \begin{equation}
+                \Gamma_{ij}^k
+                    = \frac{1}{2} g^{kl}
+                    \myparen{
+                        \del_i g_{jl}
+                        + \del_j g_{il}
+                        - \del_l g_{ij}
+                    }
+            \end{equation}
+            が成り立つ。
+        \item \TODO{}
+    \end{enumerate}
+\end{proposition}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{最短線と測地線}
+
+\TODO{}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{曲率}
+
+\begin{definition}[$(1, 3)$-曲率テンソル]
+    \TODO{}
+\end{definition}
+
+\begin{definition}[$(0, 4)$-曲率テンソル]
+    \TODO{}
+\end{definition}
+
+\begin{definition}[接続に関する平坦性]
+    \TODO{Levi-Civita 接続では計量に関する平坦性と同値？}
+\end{definition}
+
+
+
+\end{document}

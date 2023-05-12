@@ -1,0 +1,2119 @@
+\documentclass[report]{jlreq}
+\usepackage{../global}
+\usepackage{./local}
+\begin{document}
+
+\tableofcontents
+\markboth{\contentsname}{}
+
+% ============================================================
+%
+% ============================================================
+\newpage
+\setcounter{chapter}{1}
+\chapter{接続}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\setcounter{section}{2}
+\section{内積をもったベクトル束}
+
+\begin{definition}[ベクトルバンドルの内積]
+    $M$を多様体、$E \to M$をベクトルバンドルとする。
+    $\Gamma(E^* \otimes E^*)$の元$g$が次をみたすとき、
+    $g$を$E$の\term{内積}[inner product]{内積}[ないせき]という。
+    \begin{itemize}
+        \item 各$x \in M$に対し、
+            $g_x \colon E_x \times E_x \to \R$が
+            $E_x$上の$\R$-双線型形式として対称かつ正定値である。
+    \end{itemize}
+\end{definition}
+
+\begin{definition}[内積を保つ接続]
+    $M$を多様体、
+    $E \to M$をベクトルバンドル、
+    $g$を$E$の内積、
+    $\nabla$を$E$の接続とする。
+    $\nabla$が\term{$g$を保つ}[preserve]{内積を保つ}[ないせきをたもつ]、
+    あるいは$g$が$\nabla$に関し
+    \term{平行}[parallel]{平行}[へいこう]
+    であるとは、
+    \begin{equation}
+        X(g(\xi, \eta)) = g(\nabla_X\xi, \eta) + g(\xi, \nabla_X\eta)
+        \quad (X \in \frakX(M), \; \xi, \eta \in A^0(E))
+    \end{equation}
+    が成り立つことをいう。
+    同じことだが、$X$を使わずに書けば
+    \begin{equation}
+        d(g(\xi, \eta)) = g(\nabla\xi, \eta) + g(\xi, \nabla\eta)
+    \end{equation}
+    となる。
+\end{definition}
+
+\begin{proposition}[内積を保つ接続の特徴付け]
+    $M$を多様体、
+    $E \to M$をランク$r$のベクトルバンドル、
+    $g$を$E$の内積、
+    $\nabla$を$E$の接続とする。
+    次は同値である:
+    \begin{enumerate}
+        \item $\nabla$が$g$を保つ。
+        \item $\nabla g = 0$
+    \end{enumerate}
+\end{proposition}
+
+\begin{proof}
+    Eistein の記法を用いる。
+    同値をいうには
+    \begin{equation}
+        X(g(\xi, \eta))
+            = (\nabla_X g)(\xi, \eta) + g(\nabla_X\xi, \eta) + g(\xi, \nabla_X\eta)
+            \quad
+            (X \in \frakX(M), \; \xi, \eta \in A^0(E))
+    \end{equation}
+    を示せばよい。
+    まず$X \in \frakX(M), \; \xi, \eta \in A^0(E)$とする。
+    局所フレーム$(e_1, \dots, e_r)$をひとつ選び、
+    その双対を$(e^1, \dots, e^r)$とおく。
+    $g, \xi, \eta$を局所的に
+    \begin{equation}
+        g = g_{ij} e^i \otimes e^j, \quad
+        \xi = \xi^k e_k, \quad \eta = \eta^l e_l
+    \end{equation}
+    と表示しておく。
+    ここで、次が成り立つことに注意する
+    (縮約については\cref{section:contraction-of-tensor-fields}を参照):
+    \begin{equation}
+        \tr \circ \tr (\nabla_X (e^i \otimes e^j \otimes e_k \otimes e_l)) = 0
+    \end{equation}
+    \begin{innerproof}
+        左辺を変形して
+        \begin{alignat}{1}
+            &\quad \tr \circ \tr (\nabla_X (e^i \otimes e^j \otimes e_k \otimes e_l)) \\
+            &= \tr \circ \tr \Bigl(
+                \nabla_X e^i \otimes e^j \otimes e_k \otimes e_l
+                + e^i \otimes \nabla_X e^j \otimes e_k \otimes e_l \\
+            &\qquad
+                + e^i \otimes e^j \otimes \nabla_X e_k \otimes e_l
+                + e^i \otimes e^j \otimes e_k \otimes \nabla_X e_l \Bigr) \\
+            &\qquad \quad (\text{$\because$ テンソル積の共変微分の定義}) \\
+            &= \tr \Bigl(
+                \langle \nabla_X e^i, e_k \rangle e^j \otimes e_l
+                + \langle e^i, e_k \rangle \nabla_X e^j \otimes e_l \\
+            &\qquad
+                + \langle e^i, \nabla_X e_k \rangle e^j \otimes e_l
+                + \langle e^i, e_k \rangle e^j \otimes \nabla_X e_l \Bigr) \\
+            &\qquad \quad (\text{$\because$ 縮約の性質}) \\
+            &= \tr \Bigl(
+                \cancel{X(\langle e^i, e_k \rangle) e^j \otimes e_l}
+                + \langle e^i, e_k \rangle \nabla_X e^j \otimes e_l
+                + \langle e^i, e_k \rangle e^j \otimes \nabla_X e_l \Bigr) \\
+            &\qquad \quad (\text{$\because$ $1$-形式の共変微分の定義}) \\
+            &= \tr (\nabla_X e^j \otimes e_l
+                + e^j \otimes \nabla_X e_l) \\
+            &= \langle \nabla_X e^j, e_l \rangle
+                + \langle e^j, \nabla_X e_l \rangle
+                \quad (\text{$\because$ 縮約の性質}) \\
+            &= X \langle e^j, e_l \rangle
+                \quad (\text{$\because$ $1$-形式の共変微分の定義}) \\
+            &= 0
+        \end{alignat}
+        を得る。
+    \end{innerproof}
+    よって
+    \begin{alignat}{1}
+        &\quad (\nabla_X g)(\xi, \eta) + g(\nabla_X\xi, \eta) + g(\xi, \nabla_X\eta) \\
+        &= \tr \circ \tr (
+            \nabla_X g \otimes \xi \otimes \eta
+            + g \otimes \nabla_X\xi \otimes \eta
+            + g \otimes \xi \otimes \nabla_X\eta
+        ) \\
+        &\qquad \quad (\text{$\because$ 縮約の性質}) \\
+        &= \tr \circ \tr (\nabla_X (g \otimes \xi \otimes \eta))
+            \quad (\text{$\because$ テンソル積の共変微分の定義}) \\
+        &= \tr \circ \tr (\nabla_X (
+            g_{ij} \xi^k \eta^l e^i \otimes e^j \otimes e_k \otimes e_l
+        )) \\
+        &= \tr \circ \tr (
+            g_{ij} \xi^k \eta^l \nabla_X e^i \otimes e^j \otimes e_k \otimes e_l
+            + X(g_{ij} \xi^k \eta^l) e^i \otimes e^j \otimes e_k \otimes e_l
+        ) \\
+        &\qquad \quad (\text{$\because$ 共変微分の定義}) \\
+        &= g_{ij} \xi^k \eta^l
+            \cancel{\tr \circ \tr (
+                \nabla_X (e^i \otimes e^j \otimes e_k \otimes e_l)
+            )} \\
+        &\qquad + \tr \circ \tr (
+            X(g_{ij} \xi^k \eta^l) e^i \otimes e^j \otimes e_k \otimes e_l
+        ) \quad (\text{$\because$ 縮約の性質}) \\
+        &= X(g_{ij} \xi^k \eta^l)
+            \quad (\text{$\because$ 縮約の性質}) \\
+        &= X(g(\xi, \eta))
+    \end{alignat}
+    を得る。これが示したいことであった。
+\end{proof}
+
+接続が与えられているとき、
+各フレームに対し接続形式が定まるのであった。
+ここではとくに正規直交フレームに対し定まる接続形式を考える。
+
+\begin{proposition}[正規直交フレームに関する接続形式]
+    $M$を多様体、
+    $E \to M$をランク$r$のベクトルバンドル、
+    $g$を$E$の内積、
+    $\nabla$を$E$の接続とする。
+    $U \opensubset M$とし、
+    $U$上の$g$に関する正規直交フレーム
+    $\calE = (e_1, \ldots, e_r)$が
+    与えられているとする。
+    $\nabla$が$g$を保つとすると、
+    $\calE$に関する$\nabla$の接続形式
+    $\omega = (\omega_\lambda^\mu)_{\lambda, \mu}$は
+    交代行列となる。
+\end{proposition}
+
+\begin{proof}
+    Eistein の記法を用いる。
+    $\calE$は正規直交だから
+    \begin{equation}
+        g(e_\lambda, e_\mu) = \delta_{\lambda\mu}
+            \quad (\forall \; \lambda, \mu)
+    \end{equation}
+    が成り立つ。いま$\nabla$は$g$を保つことに注意して外微分をとれば
+    \begin{alignat}{1}
+        0 &= g(\nabla e_\lambda, e_\mu) + g(e_\lambda, \nabla e_\mu) \\
+            &= g(\omega_\lambda^\nu e_\nu, e_\mu) + g(e_\lambda, \omega_\mu^\nu e_\nu) \\
+            &= \omega_\lambda^\mu + \omega_\mu^\lambda
+    \end{alignat}
+    が成り立つ。
+    したがって$\omega$は交代行列である。
+\end{proof}
+
+\begin{proposition}[変換関数は直交群に値を持つ]
+    上の命題の状況で、さらに
+    $\{ U_\alpha \}_{\alpha \in A}$を$M$の open cover であって
+    各$U_\alpha$上で$g$に関する正規直交フレーム
+    $\calE_\alpha = (e^{(\alpha)}_1, \dots, e^{(\alpha)}_r)$を
+    持つものとする\footnote{
+        このような open cover はたしかに存在する。
+        実際、各点$x \in M$のある近傍$U_p$上で
+        正規直交フレームが存在するから、
+        $M$自身を添字集合として$\{ U_p \}_{p \in M}$をとればよい。
+        なお、実は$U \opensubset M$上にフレームが存在すれば、
+        $U$上に$g$に関する正規直交フレームも存在する。
+        詳細は [Lee] p.330 を参照。
+    }。
+    このとき、各$U_\alpha$上の局所自明化
+    $\varphi_\alpha \colon U_\alpha \to U_\alpha \times \R^r$を
+    $\calE_\alpha$から定まるものとすれば、
+    局所自明化の族
+    $\{ \varphi_\alpha \}$
+    に対する$E$の変換関数$\{ \psi_{\alpha\beta} \}$は
+    直交群$O(r)$に値を持つ。
+\end{proposition}
+
+\begin{proof}
+    前回と同様なので省略。
+\end{proof}
+
+逆に、上の命題の条件をみたすような接続形式の族から接続を構成できる。
+
+\begin{proposition}[接続形式から定まる接続]
+    $M$を多様体、
+    $E \to M$をランク$r$のベクトルバンドル、
+    $g$を$E$の内積とする。
+    $\{ U_\alpha \}_{\alpha \in A}$を$M$の open cover であって
+    各$U_\alpha$上で$g$に関する正規直交フレーム
+    $\calE_\alpha = (e^{(\alpha)}_1, \dots, e^{(\alpha)}_r)$
+    を持つものとする。
+    さらに、各$U_\alpha$上の局所自明化$\varphi_\alpha$を
+    $\calE_\alpha$から定め、
+    変換関数を$\{ \psi_{\alpha\beta} \}$とおく。
+    このとき、$1$-形式の行列の族
+    \begin{equation}
+        \omega = \{ \omega_\alpha \}_{\alpha \in A},
+        \quad
+        \text{$\omega_\alpha$は$U_\alpha$上の$1$-形式の交代行列}
+    \end{equation}
+    であって、変換規則
+    \begin{equation}
+        \omega_\beta
+            = \psi_{\alpha\beta}^{-1} \omega_\alpha \psi_{\alpha\beta}
+            + \psi_{\alpha\beta}^{-1} \, d \psi_{\alpha\beta}
+            \quad
+            \text{on $U_\alpha \cap U_\beta$}
+    \end{equation}
+    をみたすものが与えられたならば、
+    次をみたす$E$の接続が構成できる:
+    \begin{enumerate}
+        \item 各フレーム$\calE_\alpha$に関する
+            $\nabla$の接続形式は$\omega_\alpha$である。
+        \item $\nabla$は$g$を保つ。
+    \end{enumerate}
+\end{proposition}
+
+\begin{proof}
+    Eistein の記法を用いる。
+    (1) をみたす$\nabla$の構成法は、局所的に定義して貼り合うことを確認すればよい。
+    これは前回と同様なので省略。
+    $g$を保つことを示す。
+    $X \in \frakX(M), \xi, \eta \in A^0(E)$とし、
+    命題で与えられた正規直交フレームを用いて局所的に
+    \begin{equation}
+        g_{ij} = g(e_i, e_j), \quad
+        \xi = \xi^i e_i, \quad
+        \eta = \eta^j e_j
+    \end{equation}
+    と表示すれば、
+    \begin{alignat}{1}
+        &\quad g(\nabla_X \xi, \eta) + g(\xi, \nabla_X \eta) \\
+        &= g(\xi^i \nabla_X e_i, \eta) + g(X(\xi^i) e_i, \eta) \\
+        &\qquad + g(\xi, \eta^j \nabla_X e_j) + g(\xi, X(\eta^j) e_j)
+            \quad (\text{$\because$ 共変微分の定義}) \\
+        &= \xi^i \eta^j g(\nabla_X e_i, e_j) + X(\xi^i) \eta^j g(e_i, e_j) \\
+        &\qquad + \xi^i \eta^j g(e_i, \nabla_X e_j) + \xi^i X(\eta^j) g(e_i, e_j) \\
+        &= \xi^i \eta^j \omega_i^k g_{kj} + X(\xi^i) \eta^j g_{ij} \\
+        &\qquad + \xi^i \eta^j \omega_j^k g_{ik} + \xi^i X(\eta^j) g_{ij} \\
+        &= \xi^i \eta^j (\omega_i^j + \omega_j^i)
+            + X(\xi^i) \eta^j g_{ij} + \xi^i X(\eta^j) g_{ij}
+            \quad (\text{$\because$ 正規直交性}) \\
+        &= X(\xi^i) \eta^j g_{ij} + \xi^i X(\eta^j) g_{ij}
+            \quad (\text{$\because$ 接続形式は交代行列}) \\
+        &= g_{ij} X(\xi^i \eta^j)
+    \end{alignat}
+    であり、一方
+    \begin{alignat}{1}
+        X(g(\xi, \eta))
+            &= X(g_{ij} \xi^i \eta^j) \\
+            &= X(g_{ij}) \xi^i \eta^j
+                + g_{ij} X(\xi^i \eta^j) \\
+            &= g_{ij} X(\xi^i \eta^j)
+                \quad (\text{$\because$ 正規直交性})
+    \end{alignat}
+    であるから
+    \begin{equation}
+        X(g(\xi, \eta)) = g(\nabla_X \xi, \eta) + g(\xi, \nabla_X \eta)
+    \end{equation}
+    が成り立つ。
+    したがって$\nabla$は$g$を保つ。
+\end{proof}
+
+\begin{proposition}[内積を保つ接続の存在]
+    $M$をパラコンパクトな多様体、
+    $E \to M$をベクトルバンドル、
+    $g$を$E$の内積とする。
+    このとき、$g$を保つような$E$の接続が存在する。
+\end{proposition}
+
+\begin{proof}
+    1の分割を用いればよい。前回と同様なので省略。
+\end{proof}
+
+\begin{proposition}[曲率形式]
+    $M$を多様体、
+    $E \to M$をランク$r$ベクトルバンドル、
+    $g$を$E$の内積、
+    $\nabla$を$E$の接続、
+    $R$を$\nabla$の曲率とする。
+    $g$が$\nabla$を保つならば、
+    \begin{equation}
+        g(R\xi, \eta) + g(\xi, R\eta) = 0
+    \end{equation}
+    が成り立ち、
+    任意の正規直交フレーム
+    $\calE \coloneqq (e_1, \dots, e_r)$に対し
+    曲率形式$\Omega$は交代行列となる。
+\end{proposition}
+
+\begin{proof}
+    $g$が$\nabla$を保つとすると
+    \begin{equation}
+        d(g(\xi, \eta)) = g(\nabla \xi, \eta) + g(\xi, \nabla \eta)
+            \quad (\xi, \eta \in A^0(E))
+    \end{equation}
+    が成り立つから、両辺の外微分をとって
+    \begin{alignat}{1}
+        0 &= d(g(\nabla \xi, \eta)) + d(g(\xi, \nabla \eta)) \\
+            &= g(D\nabla \xi, \eta) - g(\nabla \xi, \nabla \eta)
+                + g(\nabla \xi, \nabla \eta) + g(\xi, D\nabla \eta) \\
+            &\qquad \quad (\text{$\because$ \cref{prop:signed-leibniz-rule}}) \\
+            &= g(R \xi, \eta) + g(\xi, R \eta)
+    \end{alignat}
+    を得る。
+    また、接続形式に対して行った議論と同様にして
+    $\Omega$が交代行列であることも従う。
+\end{proof}
+
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{主ファイバー束}
+
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\subsection{主ファイバーバンドル}
+
+次に主ファイバーバンドルを定義する。
+
+\begin{definition}[主ファイバーバンドル]
+    $M$を多様体とし、
+    $G$を Lie 群とする。
+    多様体$P$が
+    $G$を\term{構造群}[structure group]{構造群}[こうぞうぐん]とする$M$上の
+    \term{主ファイバーバンドル}[principal fiber bundle]{主ファイバーバンドル}[しゅふぁいばーばんどる]、
+    あるいは\term{主$G$バンドル}[principal $G$-bundle]{主$G$バンドル}[しゅGばんどる]であるとは、
+    $P$が次をみたすことである：
+    \begin{enumerate}
+        \item 全射な{\smooth}写像$p \colon P \to M$が与えられている。
+        \item $G$は$P$に右から{\smooth}に作用しており、
+            さらに次をみたす:
+            \begin{enumerate}[label=(\arabic{enumi}-\alph*)]
+                \item 作用はファイバーを保つ。
+                \item 作用はファイバー上単純推移的\footnote{
+                        作用が\term{単純推移的}[simply transitive]
+                        {単純推移的}[たんじゅんすいいてき]
+                        であるとは、自由かつ推移的であることをいう。
+                    }である。
+            \end{enumerate}
+        \item $M$のある開被覆$\{ U_\alpha \}_{\alpha \in A}$が存在して、
+            各$U_\alpha$上に
+            次をみたす写像
+            $\sigma_\alpha \colon U_\alpha \to p^{-1}(U_\alpha)$
+            が存在する:
+            \begin{enumerate}[label=(\arabic{enumi}-\alph*)]
+                \item $\sigma_\alpha$は{\smooth}であって
+                    $p \circ \sigma_\alpha = \id_{U_\alpha}$をみたす。
+                    すなわち$\sigma_\alpha$は$U_\alpha$上の
+                    $P$の切断である。
+                \item (局所自明性) 写像
+                    \begin{equation}
+                        \varphi_\alpha \colon p^{-1}(U_\alpha) \to U_\alpha \times G,
+                        \quad
+                        \underbrace{\sigma_\alpha(x) . s}_{
+                            \mathclap{\text{群作用を「$.$」で書く。}}
+                        } \mapsto (x, s)
+                    \end{equation}
+                    が diffeo である
+                    (写像として well-defined に定まることはすぐ後で確かめる)\footnote{
+                        このように定めた写像$\varphi_\alpha$が diffeo かどうか
+                        (とくに{\smooth}かどうか) は
+                        他の条件からはおそらく導かれない気がするので (\TODO{本当に？})、
+                        独立な条件として与えておくことにする。
+                    }。
+            \end{enumerate}
+    \end{enumerate}
+    ここで
+    \begin{itemize}
+        \item $\varphi_\alpha$を$U_\alpha$上の$P$の
+            \term{局所自明化}[local trivialization]{局所自明化}[きょくしょじめいか]
+            という。
+    \end{itemize}
+\end{definition}
+
+\begin{lemma}[$G$-torsor の特徴付け]
+    $G$を群、
+    $X$を空でない集合とし、
+    $G$は$X$に右から作用しているとする。
+    このとき次は同値である:
+    \begin{enumerate}
+        \item $G$の作用が単純推移的である。
+        \item 写像
+            \begin{equation}
+                \theta \colon X \times G \to X \times X,
+                \quad
+                (x, g) \mapsto (x.g, x)
+            \end{equation}
+            が全単射である\footnote{
+                写像$\theta$を shear map といい、
+                shear map が全単射のとき$X$を$G$-torsor という。
+            }。
+    \end{enumerate}
+    したがって、とくに上の定義の$\varphi_\alpha$が確かに写像として定まる。
+\end{lemma}
+
+\begin{proof}
+    \begin{alignat}{1}
+        \theta \colon \text{ 全射}
+            &\iff \forall x, y \in X \; \exists g \in G \; [x.g = y] \\
+            &\iff \text{$G$の作用が推移的} \\
+        \theta \colon \text{ 単射}
+            &\iff \forall x \in X \;
+                \forall g, g' \in G \;
+                [x.g = x.g' \implies g = g'] \\
+            &\iff \forall x \in X \;
+                \forall g, g' \in G \;
+                [x = x.g'g^{-1} \implies g'g^{-1} = 1] \\
+            &\iff \forall x \in X \;
+                \forall g \in G \;
+                [x = x.g \implies g = 1] \\
+            &\iff \text{$G$の作用が自由}
+    \end{alignat}
+\end{proof}
+
+\begin{definition}[変換関数]
+    $M$を多様体、
+    $p \colon P \to M$を主$G$バンドルとすると、
+    主$G$バンドルの定義より、$M$の open cover $\{U_\alpha\}_{\alpha \in A}$であって
+    各$U_\alpha$上に切断
+    $\sigma_\alpha \colon U_\alpha \to p^{-1}(U_\alpha)$
+    を持つものがとれる。
+    各$\alpha, \beta \in A, \; U_\alpha \cap U_\beta \neq \emptyset$
+    に対し、
+    写像$\psi_{\alpha\beta} \colon U_\alpha \cap U_\beta \to G$を
+    $x \in U_\alpha \cap U_\beta$を
+    $\sigma_\beta(x) = \sigma_\alpha(x) . s$なる$s \in G$
+    に写す写像、すなわち
+    \begin{equation}
+        x \overset{\sigma_\beta}{\mapsto} \sigma_\beta(x) = \sigma_\alpha(x) . s
+            \overset{
+                \substack{\sigma_\alpha \text{ より定まる} \\ \text{局所自明化}}
+            }{\mapsto} (x, s)
+            \overset{\mathrm{pr}_2}{\mapsto} s
+    \end{equation}
+    で定めると、これは{\smooth}である。
+    {\smooth}写像の族$\{ \psi_{\alpha\beta} \}$を、
+    切断の族$\{ \sigma_\alpha \}$から定まる
+    $P$の\term{変換関数}[transition function]{変換関数}[へんかんかんすう]という。
+\end{definition}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\subsection{ベクトルバンドルと主ファイバーバンドルの関係}
+
+多様体上のランク$r$ベクトルバンドルが与えられると、
+フレームバンドルとよばれる主$\GL(r, \R)$バンドルを構成できる。
+
+\begin{definition}[フレームバンドル]
+    $M$を$n$次元多様体、
+    $E \to M$をランク$r$ベクトルバンドルとする。
+    $M$の atlas
+    $\{ (U_\alpha, \psi_\alpha) \}_{\alpha \in A}$であって、
+    各$\alpha$に対して$U_\alpha$上の$E$の局所自明化$\rho_\alpha$が存在するものがとれる。
+    \begin{innerproof}
+        各$x \in M$に対し、
+        多様体の定義とベクトルバンドルの定義より、
+        $x$の$M$における開近傍$V_x, W_x$であって
+        $V_x$を定義域とするチャートが存在し、
+        かつ$W_x$上の$E$の局所自明化が存在するようなものがとれる。
+        そこで$U_x \coloneqq V_x \cap W_x$とおけば
+        $\{ U_x \}_{x \in M}$が求める atlas となる。
+    \end{innerproof}
+    $E$の局所自明化の族$\{ \rho_\alpha \}$により定まる
+    $E$の変換関数を$\{ \rho_{\alpha\beta} \}$とおく。
+    $E$の\term{フレームバンドル}[frame bundle]{フレームバンドル}[ふれーむばんどる]
+    とよばれる主$\GL(r, \R)$バンドル
+    $p \colon P \to M$を次のように構成する:
+    \begin{enumerate}
+        \item 各$x \in M$に対し、集合$P_x$を
+            \begin{equation}
+                P_x \coloneqq \{
+                    u \colon \R^r \to E_x
+                    \mid
+                    \text{$u$は線型同型}
+                \}
+            \end{equation}
+            で定める。
+            $P_x$は$E_x$の基底全体の集合とみなせる。
+        \item $P_x$らの disjoint union を
+            \begin{equation}
+                P \coloneqq \coprod_{x \in M} P_x
+            \end{equation}
+            とおく。
+        \item 射影$p \colon P \to M$を
+            \begin{equation}
+                p((x, u)) \coloneqq x 
+            \end{equation}
+            で定義する。
+        \item $\GL(r, \R)$の$P$への右作用$\beta$を
+            次のように定める:
+            \begin{equation}
+                \beta \colon P \times \GL(r, \R) \to P,
+                \quad
+                ((x, u), s) \mapsto (x, u \circ s)
+            \end{equation}
+        \item 各$\alpha \in A$に対し、
+            $U_\alpha$上の$E$の局所自明化$\rho_\alpha$をひとつ選び、
+            それにより定まる$E$のフレームを
+            $e_1^{(\alpha)}, \dots, e_r^{(\alpha)}$とおく。
+            写像$\sigma_\alpha \colon U_\alpha \to p^{-1}(U_\alpha)$を
+            次のように定める:
+            \begin{itemize}
+                \item 各$x \in U_\alpha$に対し、
+                    $E_x$の基底$e_1^{(\alpha)}(x), \dots, e_r^{(\alpha)}(x)$により
+                    定まる線型同型$\R^r \to E_x$を
+                    一時的な記号で$\sigma_\alpha(x)_2$と書く。
+                \item $\sigma_\alpha(x) \coloneqq (x, \sigma_\alpha(x)_2)$と定める。
+                    記号の濫用で$\sigma_\alpha(x)_2$も$\sigma_\alpha(x)$と書く。
+            \end{itemize}
+        \item 写像$\varphi_\alpha$を
+            \begin{equation}
+                \varphi_\alpha
+                    \colon p^{-1}(U_\alpha) \to U_\alpha \times \GL(r, \R),
+                    \quad
+                    (x, \sigma_\alpha(x) \circ s) \mapsto (x, s)
+            \end{equation}
+            と定める。
+            ただし、$(x, \sigma_\alpha(x) \circ s)$から
+            $s$が一意に定まることは
+            $s = \sigma_\alpha(x)^{-1} \circ \sigma_\alpha(x) \circ s$
+            と表せることよりわかる。
+            また、$\varphi_\alpha$は明らかに可逆である。
+        \item 写像族$\{ \varphi_\alpha \}$を用いて
+            $P$に多様体構造が入る (このあとすぐ示す)。
+        \item $p \colon P \to M$は、
+            $\{ \sigma_\alpha \colon U_\alpha \to p^{-1}(U_\alpha) \}$
+            を切断の族、
+            これにより定まる変換関数を$\{ \rho_{\alpha\beta} \}$として
+            $M$上の主$\GL(r, \R)$バンドルとなる (このあとすぐ示す)。
+    \end{enumerate}
+    $P$は$E$に\term{同伴する}[associated]{同伴する}[どうはんする]
+    主ファイバーバンドルと呼ばれる。
+\end{definition}
+
+\begin{proof}
+    $\GL(r, \R) = \R^{r^2}$と同一視する。
+    まず$P$に多様体構造が入ることを示す。
+    $M$の atlas $\{ (U_\alpha, \psi_\alpha) \}$は、
+    小さい範囲に制限した chart、すなわち
+    \begin{equation}
+        (U'_\alpha, \psi_\alpha|_{U'_\alpha})
+        \quad
+        (\alpha \in A, \; U'_\alpha \opensubset U_\alpha)
+    \end{equation}
+    をすべて含むとしてよい。
+    写像族$\{ \Phi_\alpha \colon p^{-1}(U_\alpha) \to \R^{n + r^2} \}$を
+    \begin{equation}
+        \begin{tikzcd}
+            p^{-1}(U_\alpha)
+                \ar{r}{\varphi_\alpha}
+                \ar[bend right=30, end anchor=south west]{rr}[swap]{\Phi_\alpha}
+                & U_\alpha \times \GL(r, \R)
+                \ar{r}{\psi_\alpha \times \id}
+                & \psi_\alpha(U_\alpha) \times \R^{r^2}
+                \subset \R^{n + r^2}
+        \end{tikzcd}
+    \end{equation}
+    を可換にするものとして定める。
+    $P$に$\{ \Phi_\alpha \}$を atlas とする多様体構造が入ることを示すため、
+    Smooth Manifold Chart Lemma (\cref{lemma:smooth-manifold-chart-lemma})
+    の条件を確認する。
+    $\varphi_\alpha$が可逆であることと
+    $\psi_\alpha$が$M$の chart であることから、
+    $\Phi_\alpha$は$\R^{n + r^2}$の開部分集合
+    $\psi_\alpha(U_\alpha) \times \R^{r^2}$への全単射である。
+    よって (i) が満たされる。
+
+    各$\alpha, \beta \in A$に対し
+    $\psi_\alpha, \psi_\beta$が$M$の chart であることから
+    \begin{align}
+        \Phi_\alpha(p^{-1}(U_\alpha) \cap p^{-1}(U_\beta))
+            = \psi_\alpha(U_\alpha \cap U_\beta) \times \R^{r^2} \\
+        \Phi_\beta(p^{-1}(U_\alpha) \cap p^{-1}(U_\beta))
+            = \psi_\beta(U_\alpha \cap U_\beta) \times \R^{r^2}
+    \end{align}
+    はいずれも$\R^{n + r^2}$の開部分集合である。
+    よって (ii) が満たされる。
+
+    各$\alpha, \beta \in A$に対し
+    合成写像$\varphi_\beta \circ \varphi_\alpha^{-1}$は
+    \begin{equation}
+        \begin{tikzcd}
+            (U_\alpha \cap U_\beta) \times \GL(r, \R)
+                \ar{r}{\varphi_\alpha^{-1}}
+                & \pi^{-1}(U_\alpha \cap U_\beta)
+                \ar{r}{\varphi_\beta}
+                & (U_\alpha \cap U_\beta) \times \GL(r, \R) \\[-1em]
+            (x, s)
+                \ar[mapsto]{r}
+                & (x, \sigma_\alpha(x) \circ s)
+                \ar[mapsto]{r}
+                & (x, \sigma_\beta(x)^{-1} \circ \sigma_\alpha(x) \circ s)
+        \end{tikzcd}
+    \end{equation}
+    という対応を与えるが、
+    ここで$\sigma_\beta(x)^{-1} \circ (\sigma_\alpha(x)) \circ s$は
+    $(x, s)$に関し{\smooth}である。
+    \begin{innerproof}
+        $s$を右から合成する演算は
+        Lie 群$\GL(r, \R)$における積なので{\smooth}である。
+        そこで$\sigma_\beta(x)^{-1} \circ \sigma_\alpha(x)$について考える。
+        いま各$x \in U_\alpha \cap U_\beta$に対し
+        \begin{equation}
+            \begin{tikzcd}
+                \R^r \ar{rr}{\sigma_\beta(x)^{-1} \circ \sigma_\alpha(x)}
+                    \ar{dr}[swap]{\sigma_\beta(x)}
+                    & & \R^r \ar{dl}{\sigma_\alpha(x)} \\
+                & E_x
+            \end{tikzcd}
+        \end{equation}
+        は可換であるが、
+        $\sigma_\alpha, \sigma_\beta$は定め方から
+        $E$の局所自明化の$E_x$への制限$\rho_\alpha(x), \rho_\beta(x)$の逆写像である。
+        よって写像
+        \begin{equation}
+            U_\alpha \cap U_\beta \to \GL(r, \R),
+            \quad
+            x \mapsto \sigma_\beta(x)^{-1} \circ \sigma_\alpha(x)
+        \end{equation}
+        は$E$の変換関数$\rho_{\beta\alpha}$に他ならず、
+        したがってこれは{\smooth}である。
+        よって、$\sigma_\beta(x)^{-1} \circ (\sigma_\alpha(x)) \circ s$は
+        $(x, s)$に関し{\smooth}である。
+    \end{innerproof}
+    したがって
+    \begin{equation}
+        \Phi_\beta \circ \Phi_\alpha^{-1}
+            = (\psi_\beta \times \id) \circ \varphi_\beta
+                \circ \varphi_\alpha^{-1}
+                \circ (\psi_\alpha \times \id)^{-1}
+    \end{equation}
+    は$\Phi_\alpha(p^{-1}(U_\alpha) \cap p^{-1}(U_\beta))$上{\smooth}である。
+    よって (iii) が満たされる。
+
+    $\{ (U_\alpha, \psi_\alpha) \}$は
+    小さい範囲に制限した chart をすべて含むことから
+    明らかに (iv) が満たされる。
+
+    以上で Smooth Manifold Chart Lemma の条件が確認できた。
+    したがって$P$は
+    $\{ (p^{-1}(U_\alpha), \Phi_\alpha) \}$を atlas として多様体となる。
+
+    つぎに、$P$は
+    $\{ \sigma_\alpha \colon U_\alpha \to p^{-1}(U_\alpha) \}$
+    を切断の族として
+    $M$上の主$\GL(r, \R)$バンドルとなることを示す。
+    そのためには次を示せばよい:
+    \begin{enumerate}
+        \item $p$が{\smooth}であること
+        \item 作用$\beta$がファイバーを保つこと
+        \item 作用$\beta$がファイバー上単純推移的であること
+        \item 作用$\beta$が{\smooth}であること
+        \item $\sigma_\alpha$が$U_\alpha$上の$P$の切断となること
+        \item 主ファイバーバンドルの定義の局所自明性が満たされること
+        \item $\{ \sigma_\alpha \}$により定まる$P$の変換関数が
+            $\{ \rho_{\alpha\beta} \}$であること
+    \end{enumerate}
+    ここで、$\varphi_\alpha$らは diffeo である。実際、図式
+    \begin{equation}
+        \begin{tikzcd}
+            p^{-1}(U_\alpha)
+                \ar{r}{\varphi_\alpha}
+                \ar[bend right=30, end anchor=south west]{rr}[swap]{\Phi_\alpha}
+                & U_\alpha \times \GL(r, \R)
+                \ar{r}{\psi_\alpha \times \id}
+                & \psi_\alpha(U_\alpha) \times \R^{r^2}
+                \subset \R^{n + r^2}
+        \end{tikzcd}
+    \end{equation}
+    が可換であることと$\psi_\alpha \times \id, \; \Phi_\alpha$が
+    diffeo であることから従う。
+
+    $p$が{\smooth}であることは
+    各点の近傍での{\smooth}性を示せばよいが、これは
+    各$(x, u) \in P$に対し$p^{-1}(U_\alpha)$が開近傍となるような
+    $\alpha \in A$がとれて
+    \begin{equation}
+        \begin{tikzcd}
+            p^{-1}(U_\alpha)
+                \ar{rd}[swap]{p}
+                \ar{r}{\Phi_\alpha}
+                & p^{-1}(U_\alpha) \times \R^{n + r^2}
+                \ar{d}{\mathrm{pr}_1} \\
+            & P
+        \end{tikzcd}
+    \end{equation}
+    が可換となることから従う。
+
+    $\GL(r, \R)$の$P$への作用
+    \begin{equation}
+        \beta((x, u), s)
+            = (x, u \circ s)
+    \end{equation}
+    がファイバーを保つことは定義から明らか。
+
+    $\beta$がファイバー$P_x = p^{-1}(x) \; (x \in M)$上単純推移的であることは、
+    shear map
+    \begin{equation}
+        P_x \times \GL(r, \R) \to P_x \times P_x,
+        \quad
+        ((x, u), s) \mapsto ((x, u \circ s), (x, u))
+    \end{equation}
+    が逆写像
+    \begin{equation}
+        P_x \times P_x \to P_x \times \GL(r, \R),
+        \quad
+        ((x, t), (x, u)) \mapsto ((x, u), u^{-1} \circ t)
+    \end{equation}
+    を持つことから従う。
+
+    $\beta$が{\smooth}であることを示す。
+    $(x, u) \in P$の近傍$U_\alpha$上で
+    \begin{equation}
+        (x, u) = (x, \sigma_\alpha(x) \circ t)
+        \quad
+        (t \in \GL(r, \R))
+    \end{equation}
+    の形に書けることに注意すれば、
+    \begin{alignat}{1}
+            &((x, u), s) \in p^{-1}(U_\alpha) \times \GL(r, \R) \\
+        \overset{
+            \mathclap{\id \times (\mathrm{pr}_2 \circ \varphi_\alpha)}
+        }{\mapsto} \qquad
+            &((x, u), s, t)
+            \in p^{-1}(U_\alpha) \times \GL(r, \R) \times \GL(r, \R) \\
+        \overset{\mathclap{\text{$\GL(r, \R)$での積}}}{\mapsto} \qquad
+            &((x, u), ts)
+            \in p^{-1}(U_\alpha) \times \GL(r, \R) \\
+        \overset{p}{\mapsto} \qquad
+            &(x, ts)
+            \in U_\alpha \times \GL(r, \R) \\
+        \overset{\mathclap{\varphi_\alpha^{-1}}}{\mapsto} \qquad
+            &(x, \sigma_\alpha(x) \circ ts)
+            = (x, u \circ s)
+            \in p^{-1}(U_\alpha)
+    \end{alignat}
+    の各写像が{\smooth}であることから、
+    $\beta$は$U_\alpha$上{\smooth}であることがわかる。
+    したがって$\beta$は{\smooth}である。
+
+    $\sigma_\alpha$が$U_\alpha$上の$P$の切断となることを示す。
+    $p \circ \sigma_\alpha(x) = x$となることは定義から明らか。
+    {\smooth}性は
+    \begin{equation}
+        \sigma_\alpha(x)
+            = \varphi_\alpha^{-1}(x, 1)
+    \end{equation}
+    よりわかる。
+    したがって$\sigma_\alpha$は$U_\alpha$上の$P$の切断である。
+    さらに$\varphi_\alpha$の定義と$\varphi_\alpha$が diffeo であることから
+    主ファイバーバンドルの定義の局所自明性も満たされる。
+
+    最後に、$x \in U_\alpha \cap U_\beta, \; \alpha, \beta \in A$に対し
+    \begin{equation}
+        \sigma_\beta(x)
+            = \sigma_\alpha(x) \circ \sigma_\alpha^{-1} \circ \sigma_\beta(x)
+            = \sigma_\alpha(x) \circ \rho_{\alpha\beta}(x)
+    \end{equation}
+    が成り立つことから、
+    $\{ \sigma_\alpha \}$により定まる$P$の変換関数は
+    $\{ \rho_{\alpha\beta} \}$である。
+
+    以上で$P$は
+    $\{ \sigma_\alpha \}$を切断の族とし、
+    これにより定まる$P$の変換関数を
+    $\{ \rho_{\alpha\beta} \}$として
+    $M$上の主$\GL(r, \R)$バンドルとなることが示せた。
+\end{proof}
+
+\begin{example}[構造群の縮小]
+    $E$をベクトルバンドル、
+    $g$を$E$の内積とする。
+    フレームバンドルの定義の$P_x$を
+    \begin{equation}
+        Q_x \coloneqq \{ u \colon \R^r \to E_x
+            \mid u \text{ は線型同型かつ内積を保つ}
+        \}
+    \end{equation}
+    に置き換えると、$Q$は
+    直交群$O(r)$を構造群とする$M$上の主バンドルとなる。
+    このとき$Q$は$P$の部分バンドルであり、
+    $Q$は$P$の構造群$\GL(r, \R)$を$O(r)$に
+    \term{縮小}[reduction]{縮小}[しゅくしょう]
+    して得られたという。
+\end{example}
+
+逆に主$G$バンドル$P$と
+表現$\rho \colon G \to \GL(r, \R)$が与えられると、
+ランク$r$ベクトルバンドル$E$が構成できる。
+
+\begin{definition}[同伴するベクトルバンドル]
+    $M$を多様体、$P \to M$を主$G$バンドル、
+    $\rho \colon G \to \GL(r, \R)$を Lie 群の表現とする。
+    直積多様体$P \times \R^r$への
+    $G$の{\smooth}右作用を
+    \begin{equation}
+        (P \times \R^r) \times G \to P \times \R^r,
+        \quad
+        ((u, y), s) \mapsto (u.s, \rho(s)^{-1} y)
+    \end{equation}
+    で定め、軌道空間$(P \times \R^r) / G$を
+    \begin{equation}
+        P \times_\rho \R^r
+    \end{equation}
+    と書く。
+    このとき、$P \times_\rho \R^r$は
+    $M$上のベクトルバンドルとなり、
+    $P$のある変換関数$\{ \psi_{\alpha\beta} \}$に対し
+    $\{ \rho \circ \psi_{\alpha\beta} \}$が
+    $P \times_\rho \R^r$の変換関数のひとつとなる
+    (このあとすぐ示す)。
+    これを$P$に
+    \term{同伴する}[associated]{同伴する}[どうはんする]
+    ベクトルバンドルという。
+\end{definition}
+
+\begin{proof}
+    $P \times_\rho \R^r$が$M$上のベクトルバンドルになることを、
+    Vector Bundle Chart Lemma を用いて示す。
+   標準射影$P \to M$および
+    $P \times \R^r \to P \times_\rho \R^r$を
+    それぞれ$p, q$とおく。
+
+    まず射影を構成する。図式
+    \begin{equation}
+        \begin{tikzcd}
+            P \times \R^r
+                \ar{d}[swap]{\mathrm{pr}_1}
+                \ar{r}{q}
+                & P \times_\rho \R^r
+                \ar[dashed]{d}{\pi} \\
+            P \ar{r}[swap]{p}
+                & M
+        \end{tikzcd}
+    \end{equation}
+    において、$p \circ \mathrm{pr}_1$は$q$のファイバー上定値である。
+    \begin{innerproof}
+        $u \in P_x, \; u' \in P_{x'} \; (x, x' \in M),
+        \; y, y' \in \R^r$について
+        $q(u, y) = q(u', y')$ならば、
+        $q$の定義から
+        ある$s \in G$が存在して
+        $(u, y) = (u' . s, \rho(s)^{-1} y')$が成り立ち、
+        とくに$u = u' . s$だが、
+        $G$の$P$への作用がファイバーを保つことから
+        $x = x'$が成り立つ。
+    \end{innerproof}
+    したがって
+    写像$\pi \colon P \times_\rho \R^r \to M$が誘導される。
+    このとき$p \circ \mathrm{pr}_1$が全射であることより
+    $\pi$も全射である。
+
+    つぎに$P \times_\rho \R^r$の局所自明化を構成する。
+    $P$の切断の族$\{ \sigma_\alpha \colon U_\alpha \to P \}_{\alpha \in A}$
+    であって$\bigcup U_\alpha = P$なるものをひとつ選ぶ。
+    これにより定まる$P$の局所自明化の族を$\{ \varphi_\alpha \}$とおき、
+    さらにこれにより定まる$P$の変換関数を$\{ \psi_{\alpha\beta} \}$とおく。
+    このとき、各$\alpha \in A$に対し図式
+    \begin{equation}
+        \begin{tikzcd}[column sep=large]
+            U_\alpha  \times \R^r
+                \ar[dashed]{drr}
+                \ar{r}{\substack{(x, y) \\ \; \mapsto (x, 1, y)}}
+                & U_\alpha \times G \times \R^r
+                \ar{r}{\varphi_\alpha^{-1} \times \id}
+                & p^{-1}(U_\alpha) \times \R^r
+                \ar{d}{q} \\
+            && p^{-1}(U_\alpha) \times_\rho \R^r
+                = \pi^{-1}(U_\alpha)
+        \end{tikzcd}
+    \end{equation}
+    の破線部の写像は全単射である。
+    \begin{innerproof}
+        $(u, y), (u', y') \in U_\alpha \times \R^r$について
+        \begin{alignat}{1}
+                &q(\varphi_\alpha^{-1}(u, 1), y)
+                    = q(\varphi_\alpha^{-1}(u', 1), y') \\
+            \iff
+                &\exists s \in G
+                \quad \text{s.t.} \quad
+                \begin{cases}
+                    \varphi_\alpha^{-1}(u, 1) = \varphi_\alpha^{-1}(u', 1) . s \\
+                    y = \rho(s)^{-1} y'
+                \end{cases} \\
+            \iff
+                &\exists s \in G
+                \quad \text{s.t.} \quad
+                \begin{cases}
+                    \varphi_\alpha^{-1}(u, 1) = \varphi_\alpha^{-1}(u', s) \\
+                    y = \rho(s)^{-1} y'
+                \end{cases} \\
+            \iff
+                &\exists s \in G
+                \quad \text{s.t.} \quad
+                \begin{cases}
+                    (u, 1) = (u', s) \\
+                    y = \rho(s)^{-1} y'
+                \end{cases} \\
+            \iff
+                &\begin{cases}
+                    u = u' \\
+                    y = y'
+                \end{cases}
+        \end{alignat}
+    \end{innerproof}
+    ただし、図式の右下が
+    $p^{-1}(U_\alpha) \times_\rho \R^r = \pi^{-1}(U_\alpha)$であることは
+    次のようにしてわかる。
+    \begin{innerproof}
+        $(\subset)$ \quad
+        \begin{align}
+            \pi(p^{-1}(U_\alpha) \times_\rho \R^r)
+                &= \pi \circ q(p^{-1}(U_\alpha) \times \R^r) \\
+                &= p \circ \mathrm{pr}_1 (p^{-1}(U_\alpha) \times \R^r) \\
+                &= p \circ p^{-1}(U_\alpha) \\
+                &\subset U_\alpha
+        \end{align}
+        より$p^{-1}(U_\alpha) \times_\rho \R^r \subset \pi^{-1}(U_\alpha)$である。
+
+        \noindent
+        $(\supset)$ \quad
+        $(u, y) \in p^{-1}(U_\alpha) \times \R^r$について
+        $\pi(q(u, y)) \in U_\alpha$ならば
+        \begin{equation}
+            p(u) = p \circ \mathrm{pr}_1(u, y) \in U_\alpha
+        \end{equation}
+        だから$(u, y) \in p^{-1}(U_\alpha) \times \R^r$、
+        したがって$q(u, y) \in p^{-1}(U_\alpha) \times_\rho \R^r$である。
+    \end{innerproof}
+    そこで、破線矢印の逆向きの写像$\pi^{-1}(U_\alpha) \to U_\alpha \times \R^r$を
+    $\Phi_\alpha$とおく。
+    各$x \in M$に対し、
+    $x \in U_\alpha$なる$\alpha \in A$をひとつ選べば、
+    $\Phi_\alpha(x) \colon \pi^{-1}(x) \to \{ x \} \times \R^r = \R^r$
+    は可逆である。
+    実際、
+    \begin{equation}
+        \{ x \} \times \R^r \to \pi^{-1}(x),
+        \quad
+        (x, y) \mapsto q(\varphi^{-1}(x, 1), y)
+    \end{equation}
+    が逆写像を与える。
+    そこで、この 1:1 対応により$\pi^{-1}(x)$に
+    $r$次元$\R$-ベクトル空間の構造を入れる。
+
+    最後に、$U_\alpha \cap U_\beta \neq \emptyset$なる$\alpha, \beta \in A$と
+    $(x, y) \in (U_\alpha \cap U_\beta) \times \R^r$に対し
+    \begin{alignat}{1}
+        \Phi_\alpha \circ \Phi_\beta^{-1} (x, y)
+            = (x, \rho \circ \psi_{\alpha\beta} y)
+    \end{alignat}
+    が成り立つ。
+    \begin{innerproof}
+        まず
+        \begin{alignat}{1}
+            \Phi_\alpha \circ \Phi_\beta^{-1} (x, y)
+                &= \Phi_\alpha(q(\varphi_\beta^{-1}(x, 1), y)) \\
+                &= \Phi_\alpha(q(\varphi_\beta(x)^{-1}(1), y))
+        \end{alignat}
+        である。このとき
+        \begin{align}
+            (\varphi_\beta(x)^{-1}(1), y)
+            &= (\sigma_\beta(x), y) \\
+            &= (\sigma_\alpha(x) . \psi_{\alpha\beta}(x), y)
+        \end{align}
+        が成り立つから
+        \begin{align}
+            \Phi_\alpha(q(\varphi_\beta(x)^{-1}(1), y))
+                &= \Phi_\alpha(q(\sigma_\alpha(x) . \psi_{\alpha\beta}(x), y)) \\
+                &= \Phi_\alpha(
+                    \sigma_\alpha(x),
+                    \rho(\psi_{\alpha\beta}(x)^{-1})^{-1} y
+                ) \\
+                &= \Phi_\alpha(
+                    \varphi_\alpha(x)^{-1}(1),
+                    \rho(\psi_{\alpha\beta}(x)) y
+                ) \\
+                &= \Phi_\alpha \circ \Phi_\alpha^{-1}(
+                    x,
+                    \rho(\psi_{\alpha\beta}(x)) y
+                ) \\
+                &= (x, \rho \circ \psi_{\alpha\beta} y)
+        \end{align}
+        となる。
+    \end{innerproof}
+    $\rho, \psi_{\alpha\beta}$はいずれも{\smooth}だから
+    $\rho \circ \psi_{\alpha\beta} \colon U_\alpha \cap U_\beta \to \GL(r, \R)$
+    も{\smooth}である。
+
+    以上で Vector Bundle Chart Lemma の条件が確認できた。
+    したがって$P \times_\rho \R^r$は$M$上のベクトルバンドルとなり、
+    $\{ \Phi_\alpha \}$は$P \times_\rho \R^r$の局所自明化の族となり、
+    これにより定まる$P \times_\rho \R^r$の変換関数は
+    $\{ \rho \circ \psi_{\alpha\beta} \}$である。
+\end{proof}
+
+\begin{example}[ベクトルバンドルのフレームバンドルに同伴するベクトルバンドル]
+    $E \to M$をランク$r$ベクトルバンドル、
+    $\{ \psi_{\alpha\beta} \}$を$E$の変換関数、
+    $P$を$E$から構成されたフレームバンドルとする。
+    フレームバンドルの定義より、
+    $\{ \psi_{\alpha\beta} \}$も$P$の変換関数であった。
+    よって表現$\rho \colon \GL(r, \R) \to \GL(r, \R)$を
+    恒等写像とすれば、
+    $P \times_\rho \R^r$の変換関数は
+    $\{ \rho \circ \psi_{\alpha\beta} = \psi_{\alpha\beta} \}$となり、
+    $P \times_\rho \R^r$が$E$に一致することがわかる。
+\end{example}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\subsection{Lie 群の基本概念}
+
+Lie 群の基本的概念を復習しておく。
+
+\begin{definition}[左不変ベクトル場]
+    $G$を Lie 群とする。
+    ベクトル場$X \in \frakX(G)$が
+    \term{左不変}[left-invariant]{左不変}[ひだりふへん]
+    であるとは、すべての$g \in G$に対し図式
+    \begin{equation}
+        \begin{tikzcd}
+            TG \ar{r}{d(L_g)} & TG \\
+            G \ar{u}{X} \ar{r}[swap]{L_g} & G \ar{u}[swap]{X}
+        \end{tikzcd}
+    \end{equation}
+    が可換となることをいう。
+\end{definition}
+
+\begin{lemma}
+    $G$を Lie 群とする。
+    $X, Y \in \frakX(G)$を左不変ベクトル場とすると、
+    次が成り立つ:
+    \begin{enumerate}
+        \item 各$a, b \in \R$に対し$aX + bY$は左不変ベクトル場である。
+        \item $[X, Y]$は左不変ベクトル場である。
+    \end{enumerate}
+\end{lemma}
+
+\begin{proof}
+    幾何学Iで扱ったので省略。
+\end{proof}
+
+\begin{definition}[Lie 群の Lie 環]
+    $G$を Lie 群とする。
+    $G$の左不変ベクトル場全体の集合を$\Lie(G)$とおくと、
+    上の補題より、
+    $\Lie(G)$は$\frakX(G)$の$\R$-部分ベクトル空間であり、
+    Lie 括弧について閉じている。
+    $\Lie(G)$を
+    $G$の\term{Lie 環}[Lie algebra]{Lie 環}[Lie かん]
+    という\footnote{
+        日本語ではしばしば Lie algebra のことを「Lie 環」と呼ぶらしいが
+        Lie algebra と Lie ring とは異なる概念である。
+    }。
+\end{definition}
+
+Lie 群の作用 (とくに Lie 群の演算も含む) から誘導される
+接バンドル上の作用を具体的に計算するために便利な公式を与えておく。
+
+\begin{lemma}["全微分"の公式]
+    $M, G$を多様体とし、
+    {\smooth}写像$\alpha \colon M \times G \to M$が
+    与えられているとし、各$x \in M, \; g \in G$に対し
+    \begin{alignat}{1}
+        L_x \colon G \to M, \quad g \mapsto \alpha(x, g) \\
+        R_g \colon M \to M, \quad x \mapsto \alpha(x, g)
+    \end{alignat}
+    と定める。
+    このとき、$d\alpha \colon TM \times TG \to TM$は
+    \begin{equation}
+        d\alpha((x, u), (g, v))
+            = (\alpha(x, g), d(L_x) v + d(R_g) u)
+            \quad
+            ((x, u) \in TM, \; (g, v) \in TG)
+    \end{equation}
+    をみたす。
+    ただし、$TM \times TG \cong T(M \times G)$の同一視のもとで
+    $d\alpha$は$TM \times TG$上の写像とみなしており、
+    また本来$d(L_x)_g$などと書くべきところを添字を省略して
+    $d(L_x)$などと書いている。
+\end{lemma}
+
+\begin{proof}
+    $(x, u) \in TM, \; (g, v) \in TG$とする。
+    $M, G$内のある{\smooth}曲線$\gamma, \beta$が存在して
+    \begin{align}
+        \gamma(0) &= x, \quad [\gamma] = u \\
+        \beta(0) &= g, \quad [\beta] = v
+    \end{align}
+    が成り立つ ($[ \, ]$は曲線の類を表す)。
+    さて、示すべき式の左辺を変形すると
+    \begin{alignat}{1}
+        d\alpha((x, u), (g, v))
+            &= d\alpha((x, [\gamma]), (g, [\beta])) \\
+            &= d\alpha((x, [\gamma]), (g, 0))
+                + d\alpha((x, 0), (g, [\beta]))
+    \end{alignat}
+    となる。
+    ここで$M, G$内で定値$x, g$をとる曲線をそれぞれ$c_x, c_g$とおけば
+    \begin{equation}
+        [c_x] = 0_{T_xM}, \quad [c_g] = 0_{T_gG}
+    \end{equation}
+    となる。よって
+    \begin{align}
+        d\alpha((x, [\gamma]), (g, 0))
+            &= d\alpha((x, [\gamma]), (g, [c_g])) \\
+            &= \left(
+                \alpha(x, g), \;
+                \dd{t} \alpha(\gamma(t), c_g(t)) \Big|_{t = 0}
+            \right) \\
+            &= \left(
+                \alpha(x, g), \;
+                \dd{t} \alpha(\gamma(t), g) \Big|_{t = 0}
+            \right) \\
+            &= \left(
+                \alpha(x, g), \;
+                \dd{t} R_g(\gamma(t)) \Big|_{t = 0}
+            \right) \\
+            &= (
+                \alpha(x, g), \;
+                d(R_g) [\gamma]
+            ) \\
+            &= (\alpha(x, g), d(R_g) u)
+    \end{align}
+    を得る。同様にして
+    \begin{equation}
+        d\alpha((x, 0), (g, [\beta]))
+            = (\alpha(x, g), d(L_x) v)
+    \end{equation}
+    を得る。したがって
+    \begin{equation}
+        d\alpha((x, u), (g, v))
+            = (\alpha(x, g), d(L_x) v + d(R_g) u)
+    \end{equation}
+    がいえた。
+\end{proof}
+
+\begin{lemma}[$TG$の Lie 群構造]
+    $G$を Lie 群とし、
+    積と逆元をそれぞれ$\mu \colon G \times G \to G, \; \iota \colon G \to G$とおく。
+    $TG$は$d\mu \colon TG \times TG \to TG$を積、
+    $(1, 0) \in TG$を単位元として Lie 群となり、
+    逆元は$d\iota \colon TG \to TG$で与えられる。
+\end{lemma}
+
+\begin{proof}
+    $TG$が多様体であることと、$d\mu, d\iota$が{\smooth}であることは明らか。
+    あとは$d\mu$が群の演算の公理を満たすことと、
+    $d\iota$が逆元を与えることを示せばよい。
+    
+    \uline{結合律} \quad
+    $(g, u), (h, v), (i, w) \in TG$とする。
+    表記の簡略化のため$d\mu$による二項演算を
+    $\, \cdot \,$で書くことにすれば、
+    \begin{alignat}{1}
+        &\quad ((g, u) \cdot (h, v)) \cdot (i, w) \\
+        &= (gh, d(L_g) v + d(R_h) u) \cdot (i, w) \\
+        &= (ghi, d(L_{gh}) w + d(R_i) (d(L_g) v + d(R_h) u)) \\
+        &= (ghi, d(L_{gh}) w + d(L_g) d(R_i) v + d(R_{hi}) u)
+    \end{alignat}
+    であり、一方
+    \begin{alignat}{1}
+        &\quad (g, u) \cdot ((h, v) \cdot (i, w)) \\
+        &= (g, u) \cdot (hi, d(L_h) w + d(R_i) v) \\
+        &= (ghi, d(L_g) (d(L_h) w + d(R_i) v) + d(R_{hi}) u) \\
+        &= (ghi, d(L_{gh}) w + d(L_g) d(R_i) v + d(R_{hi}) u)
+    \end{alignat}
+    となるから結合則がいえた。
+
+    \uline{単位元} \quad
+    $(g, u) \in TG$に対し
+    \begin{alignat}{1}
+        (g, u) \cdot (1, 0)
+            &= (g, d(L_g) 0 + d(R_1) u) \\
+            &= (g, u) \\
+        (1, 0) \cdot (g, u)
+            &= (g, d(L_1) u + d(R_g) 0) \\
+            &= (g, u)
+    \end{alignat}
+    より$(1, 0)$は単位元である。
+
+    \uline{逆元} \quad
+    $(g, [\gamma]) \in TG$に対し
+    \begin{alignat}{1}
+        (g, [\gamma]) \cdot d\iota(g, [\gamma])
+            &= (g, [\gamma]) \cdot (g^{-1}, d\iota [\gamma]) \\
+            &= (g, [\gamma]) \cdot (g^{-1}, [\iota \circ \gamma]) \\
+            &= \left(
+                1, \;
+                \dd{t} \mu(\gamma(t), \iota \circ \gamma(t)) \Big|_{t = 0}
+            \right) \\
+            &= \left(
+                1, \;
+                \dd{t} 1 \Big|_{t = 0}
+            \right) \\
+            &= (1, 0)
+    \end{alignat}
+    となる。左右逆の積についても同様。
+    したがって$d\iota$が逆元を与える。
+\end{proof}
+
+上の補題により
+$TG$が Lie 群となることがわかったが、
+群としての具体的な構造は次の命題で与えられる。
+
+\begin{proposition}[$TG$の群構造]
+    $G$を Lie 群とし、$\frakg \coloneqq \Lie(G)$とおく。
+    さらに各$a \in G$に対し内部自己同型
+    \begin{equation}
+        G \to G,
+        \quad
+        g \mapsto a g a^{-1}
+        = L_a \circ R_{a^{-1}} (g)
+    \end{equation}
+    の微分を$\Ad_a$とおく。
+    上の補題より$TG$は群だから\TODO{どういうこと？}、
+    写像$\Ad \colon G \to \Aut(TG)$は群の表現となる\footnote{
+        表現$\Ad$を
+        \term{随伴表現}[adjoint representation]{随伴表現}[ずいはんひょうげん]
+        という。
+    }。
+    このとき、$TG$は半直積群$G \ltimes_{\Ad} \frakg$と群同型であり、
+    群同型写像は
+    \begin{equation}
+        G \ltimes_{Ad} \frakg \to TG,
+        \quad
+        (a, X) \mapsto (a, d(R_a) X)
+    \end{equation}
+    で与えられる。
+\end{proposition}
+
+\begin{proof}
+    %半直積群の定義から、$G \ltimes_{\Ad} \frakg$の演算は
+    %\begin{equation}
+    %    (a, X) (b, Y) = (ab, X + \Ad_a Y)
+    %\end{equation}
+    %で与えられている。
+    長いので省略。
+    cf. \url{https://math.stackexchange.com/a/3585581/1026040}
+\end{proof}
+
+Lie 群の接バンドルに群構造が誘導されるのと同様に、
+主$G$バンドルの接バンドルには群作用が誘導される。
+
+\begin{lemma}
+    $M$を多様体、
+    $P \to M$を主$G$バンドルとし、
+    $G$の$P$への{\smooth}右作用を
+    $\alpha \colon P \times G \to P$とおく。
+    このとき、
+    $d\alpha \colon TP \times TG \to TP$は
+    Lie 群$TG$の$TP$への{\smooth}右作用を定める。
+\end{lemma}
+
+\begin{proof}
+    $d\alpha$が{\smooth}であることは明らか。
+    あとは$d\alpha$が群作用の公理をみたすことを確かめればよいが、
+    これは$TG$が Lie 群となることの証明と同様なので省略。
+\end{proof}
+
+\subsection{基本ベクトル場}
+
+基本ベクトル場を定義する。
+基本ベクトル場の概念は主ファイバーバンドルの接続の定義に利用される。
+以下では Lie 群を接バンドルへ埋め込んで同一視した議論が行われるから、
+埋め込み方について補題を述べておく。
+
+\begin{lemma}
+    $G$を Lie 群とすると、ゼロ切断
+    \begin{equation}
+        G \to TG,
+        \quad
+        p \mapsto (p, 0)
+    \end{equation}
+    は Lie 群の埋め込みである。
+    この同一視により$G \subset TG$とみなす。
+    \qed
+\end{lemma}
+
+\begin{proof}
+    幾何学I演習で扱ったので省略。
+\end{proof}
+
+\begin{lemma}
+    $G$を Lie 群とすると、
+    \begin{equation}
+        \Lie(G) \to T_1G,
+        \quad
+        X \mapsto (1, X_1)
+    \end{equation}
+    は Lie 代数として同型である。
+    この同一視により$\Lie(G) = T_1G \subset TG$とみなす。
+    \qed
+\end{lemma}
+
+\begin{proof}
+    幾何学I演習で扱ったので省略。
+\end{proof}
+
+基本ベクトル場を定義する。
+
+\begin{definition}[基本ベクトル場]
+    $M$を多様体、$P \to M$を主$G$バンドル、
+    $A \in \Lie(G)$とする。
+    上の補題より、$P$上のベクトル場$A^* \in \frakX(P)$を
+    \begin{equation}
+        A^*_u \coloneqq u . A = (u, 0) . (1, A_1) = (u, d(L_u) A_1)
+        \quad (u \in P)
+    \end{equation}
+    で定めることができる\footnote{
+        ここでの$L_u$は$G \to G$でなく$G \to P$の写像であることに注意。
+        したがって "$A$の左不変性より$d(L_u) A_1 = A_u$" という議論は誤りである。
+    }。
+    $A^*$を$A$に対応する\term{基本ベクトル場}[fundamental vector field]
+    {基本ベクトル場}[きほんべくとるば]
+    という。
+\end{definition}
+
+\begin{lemma}[左不変ベクトル場は完備]
+    Lie 群$G$の左不変ベクトル場は完備である。
+\end{lemma}
+
+\begin{proof}[証明のスケッチ.]
+    $X$を左不変ベクトル場とすると、
+    単位元$1$のまわりで積分曲線の定義域に
+    $(-\eps, \eps), \; \eps > 0$が含まれ、
+    左不変性よりすべての$g \in G$のまわりで
+    $(-\eps, \eps)$が積分曲線の定義域に含まれる。
+    あとはコンパクト台をもつベクトル場が完備であることの証明と
+    同様の流れで示せる。
+    詳しくは [Lee] p.216 を参照。
+\end{proof}
+
+\begin{definition}[1助変数部分群]
+    $M$を多様体、$P \to M$を主$G$バンドル、
+    $A \in \Lie(G)$とする。
+    上の補題より$A$は完備なので、
+    $A$の生成するフローは
+    {\smooth}写像$\R \times G \to G$であり、
+    さらにこれは$G$への{\smooth}左作用を定める。
+    そこで、とくに単位元$1 \in G$を通る軌道$\R \to G$を
+    $e^{tA}$あるいは$\exp tA$と書くことにする。
+    この曲線$e^{tA} \colon \R \to G$を、
+    $A$によって生成される
+    \term{1助変数部分群}[one-parameter subgroup]{1助変数部分群}[1じょへんすうぶぶんぐん]
+    という。
+\end{definition}
+
+\begin{proposition}[基本ベクトル場の幾何学的意味]
+    上の定義の状況で、
+    $A$に対応する基本ベクトル場$A^*$の$u \in P$での値は、
+    $P$内の曲線
+    \begin{equation}
+        \R \to P, \quad
+        t \mapsto u . e^{tA}
+    \end{equation}
+    の$u$での接ベクトルに等しい。すなわち
+    \begin{equation}
+        A^*_u = \dd{t}\Big|_{t = 0} u . e^{tA}
+    \end{equation}
+    が成り立つ。
+\end{proposition}
+
+\begin{proof}
+    $e^{tA}$が$A$の積分曲線であることに注意して
+    \begin{alignat}{1}
+        \dd{t}\Big|_{t = 0} u . e^{tA}
+            &= \dd{t}\Big|_{t = 0} L_u \circ e^{tA} \\
+            &= \left(
+                \dd{t}\Big|_{t = 0} e^{tA}
+            \right) (L_u) \\
+            &= A_1 (L_u) \\
+            &= d(L_u) A_1 \\
+            &= A^*_u
+    \end{alignat}
+    を得る。
+\end{proof}
+
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\newpage
+\appendix
+
+% ============================================================
+%
+% ============================================================
+\chapter{前回までの振り返り}
+
+前回までの内容のうち、
+今回の内容にとくに関係するものを参照用に整理しておく。
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{ベクトルバンドルの構成法}
+
+ここでは与えられたファイバーの族からベクトルバンドルを構成する方法を考える。
+素朴な方法としては、まず与えられたファイバーたちの
+disjoint union に位相と可微分構造を入れて、
+局所自明化を構成し、それらがベクトルバンドルの
+公理を満たすことを確かめるというやり方がある。
+しかし、毎回このようなプロセスを繰り返すのは面倒である。
+実は以下に示すように、もっと簡単な方法でベクトルバンドルを構成できる。
+
+まずひとつ補題を示す。
+
+\begin{lemma}[Smooth Manifold Chart Lemma]
+    \label[lemma]{lemma:smooth-manifold-chart-lemma}
+    $M$を\highlight{集合}とし、
+    $M$の部分集合上の写像の族
+    $\{ \varphi_\alpha \colon U_\alpha \to \R^n \}_{\alpha \in A}$であって
+    次をみたすものが与えられているとする:
+    \begin{enumerate}[label={(\roman*)}]
+        \item 各$\alpha \in A$に対し、
+            $\varphi_\alpha$は$U_\alpha$から
+            $\R^n$の開部分集合$\varphi_\alpha(U_\alpha)$への
+            全単射である。
+        \item 各$\alpha, \beta$に対し、
+            集合$\varphi_\alpha(U_\alpha \cap U_\beta)$および
+            $\varphi_\beta(U_\alpha \cap U_\beta)$は
+            $\R^n$の開部分集合である。
+        \item $U_\alpha \cap U_\beta \neq \emptyset$ならば、
+            写像
+            \begin{equation}
+                \varphi_\beta \circ \varphi_\alpha^{-1}
+                    \colon \varphi_\alpha(U_\alpha \cap U_\beta)
+                    \to \varphi_\beta(U_\alpha \cap U_\beta)
+            \end{equation}
+            は{\smooth}である。
+        \item 各$p, q \in M, \; p \neq q$に対し、
+            $p, q$の両方を含むような$U_\alpha$が存在するか、
+            または$p \in U_\alpha, \; q \in U_\beta$なる
+            disjoint な$U_\alpha, U_\beta$が存在する。
+    \end{enumerate}
+    このとき、$M$の多様体構造 (位相も含めて) であって、
+    $\{ (U_\alpha, \varphi_\alpha) \}_\alpha$を atlas とする
+    ものが一意に存在する。
+    さらに次の条件
+    \begin{enumerate}[label={(\roman*)}]
+        \setcounter{enumi}{4}
+        \item 可算個の$U_\alpha$で$M$が被覆される。
+    \end{enumerate}
+    が課されているならば、$M$はパラコンパクトとなる。
+\end{lemma}
+
+\begin{proof}[証明のスケッチ.]
+    一意性は明らか (位相は atlas を通して開基が構成できることから決まるし、
+    可微分構造は atlas が与えられていることから決まる)。
+    存在を示す。
+    まず位相を入れる。
+    $\varphi_\alpha^{-1}(V), \; \alpha \in A, \; V \opensubset \R^n$の形の集合全体を
+    開基として位相を入れる
+    (開基となることは (ii), (iii) から従う)。
+    (i) より$\varphi_\alpha$らは
+    $\R^n$の開部分集合との同相を与える。
+    (iv) より Hausdorff 性が従う。
+    (iii) より$\{ (U_\alpha, \varphi_\alpha) \}_\alpha$は atlas となる。
+    (v) より第2可算性、ひいてはパラコンパクト性が従う。
+    これで存在がいえた。
+    詳細は [Lee] p.21 を参照。
+\end{proof}
+
+ベクトルバンドルの構成法の1つ目として、
+局所自明化の族と変換関数を与えることで
+ベクトルバンドルが構成できることを示す。
+
+\begin{lemma}[Vector Bundle Chart Lemma]
+    $M$を多様体、$r \in \Z_{\ge 0}$とし、
+    各$p$に対し$r$次元ベクトル空間$E_p$が与えられているとする。
+    集合$E$を
+    \begin{equation}
+        E \coloneqq \coprod_{p \in M} E_p
+    \end{equation}
+    とおき、$\pi \colon E \to M$は
+    $E_p$の元を$p$に写す写像とする。
+    さらに次のデータが与えられているとする:
+    \begin{enumerate}
+        \item $M$の open cover $\{U_\alpha\}_{\alpha \in A}$
+        \item 各$\alpha \in A$に対し、
+            全単射$\Phi_\alpha \colon \pi^{-1}(U_\alpha) \to U_\alpha \times \R^r$であって、
+            各$E_p$への制限がベクトル空間の同型写像$E_p \to \{ p \} \times \R^r \cong \R^r$
+            であるもの
+        \item $U_\alpha \cap U_\beta \neq \emptyset$なる
+            各$\alpha, \beta \in A$に対し、
+            {\smooth}写像
+            $\psi_{\alpha \beta} \colon U_\alpha \cap U_\beta \to \GL(r;\, \R)$であって
+            \begin{equation}
+                \Phi_\alpha \circ \Phi_\beta^{-1} (p, v)
+                    = (p, \psi_{\alpha \beta}(p) v)
+            \end{equation}
+            をみたすもの
+    \end{enumerate}
+    このとき、$E$は次をみたすような$M$上のベクトルバンドル構造が一意に存在する:
+    \begin{itemize}
+        \item $E$は$M$上のランク$r$のベクトルバンドルである。
+        \item 射影は$\pi$である。
+        \item $\{(U_\alpha, \Phi_\alpha)\}$は$E$の局所自明化の族であって、
+            変換関数は$\{ \psi_{\alpha \beta} \}$である。
+    \end{itemize}
+\end{lemma}
+
+\begin{remark}
+    この補題は、このあと述べる Vector Bundle Construction Theorem と比べると
+    ファイバーの形を先に指定できるという点で有用である。
+\end{remark}
+
+\begin{proof}[証明のスケッチ.]
+    まず$E$に多様体構造を入れる。
+    $\Phi_\alpha$らと$M$の atlas を用いて
+    $E$の atlas となるべき写像族を構成し、
+    Smooth Manifold Chart Lemma の条件を確かめればよい。
+    うまく構成することで条件 (i), (ii), (iii), (iv) はおのずと満たされる
+    \TODO{もうちょっとちゃんと書く}。
+    $M$の第2可算性から (v) も従う。
+    つぎにベクトルバンドル構造を考える。
+    上で構成した atlas は、
+    $\Phi_\alpha$らの局所座標表示が恒等写像になるという条件も
+    みたしているとしてよい (最初からそのように構成する)。
+    このようにして$\Phi_\alpha$らは局所自明化となり、
+    $\pi$は{\smooth}となることが確認できる。
+    これで存在がいえた。
+    一意性は、与えられた$\Phi_\alpha$らが
+    diffeo であるという条件から従う。
+    詳細は [Lee] p.253 を参照。
+\end{proof}
+
+次に、上の補題の主張を強めて、
+コサイクル条件をみたす変換関数から
+ベクトルバンドルを構成できることを示す。
+具体的には、局所的な直積バンドルたちを、
+変換関数を用いて貼り合わせてベクトルバンドルを構成する。
+
+\begin{theorem}[Vector Bundle Construction Theorem]
+    \label[proposition]{prop:construction-of-vector-bundle-from-transition-function}
+    $M$を多様体、
+    $\{U_\alpha\}_{\alpha \in A}$を$M$の open cover とし、
+    {\smooth}写像の族$\psi = \{ \psi_{\alpha\beta} \}_{\alpha, \beta \in A},$
+    \begin{equation}
+        \psi_{\alpha\beta} \colon U_\alpha \cap U_\beta \to \GL(r; \R)
+    \end{equation}
+    であってコサイクル条件
+    \begin{equation}
+        \psi_{\alpha\beta}(x) \circ \psi_{\beta\gamma}(x)
+            = \psi_{\alpha\gamma}(x)
+        \quad (x \in U_\alpha \cap U_\beta \cap U_\gamma)
+    \end{equation}
+    をみたすものが与えられているとする。
+    このとき、集合$\coprod_{\alpha} (U_\alpha \times \R^r_\alpha)$
+    \;($\R^r_\alpha$は$\R^r$のコピー) 上に
+    次のように同値関係を定めることができる:
+    \begin{equation}
+        (\alpha, (x, \xi)) \sim (\beta, (y, \eta))
+            \quad \logeq \quad
+            \begin{cases}
+                x = y \\
+                \xi = \psi_{\alpha\beta}(x) \eta
+            \end{cases}
+    \end{equation}
+    さらにこのとき、集合$E$を
+    \begin{equation}
+        E \coloneqq \left(\coprod_{\alpha} (U_\alpha \times \R^r_\alpha)\right)
+            \Big/\! \sim
+    \end{equation}
+    とおくと、
+    次を満たすような$M$上のベクトルバンドル構造が一意に存在する:
+    \begin{itemize}
+        \item $E$は$M$上のランク$r$のベクトルバンドルである。
+        \item 射影は$E \to M, \; [(x, \xi)] \mapsto x$である。
+        \item $E$のある局所自明化の族
+            $\{ \Phi_\alpha \colon \pi^{-1}(U_\alpha) \to U_\alpha \times \R^r \}$
+            が存在して、変換関数は
+            $\{ \psi_{\alpha\beta} \}$
+            である。
+    \end{itemize}
+\end{theorem}
+
+\begin{proof}
+    同値関係であることは変換関数の基本性質から明らか。
+    また、一意性は$\id \colon E \to E$がベクトルバンドルの同型を与えることから明らか。
+    存在を示すために
+    Vector Bundle Chart Lemma の条件を確認する。
+
+    \underline{Step 1} \quad
+    写像$\pi \colon E \to M$を
+    \begin{equation}
+        [(\alpha, (x, \xi))] \mapsto x
+    \end{equation}
+    で定める。同値関係$\sim$の定義よりこれは well-defined である。
+
+    \underline{Step 2} \quad
+    各$p \in M$に対し$E_p \coloneqq \pi^{-1}(p)$とおく。
+    $E_p$に$r$次元ベクトル空間の構造を定義したい。
+    そこで、$p \in U_\alpha$なる$\alpha$をひとつ選んで$\alpha_p$とおく。
+    すると同値関係$\sim$の定義より明らかに、各$\xi \in E_p$に対し
+    \begin{equation}
+        \xi = [(\alpha_p, (p, v))]
+    \end{equation}
+    をみたす$v \in \R^r_{\alpha_p}$が一意に定まる。
+    これにより写像$E_p \to \R^r_{\alpha_p}$が定まる。
+    この写像は逆写像$v \mapsto [(\alpha_p, (p, v))]$を持つから全単射である。
+    そこで、この1:1対応$E_p \leftrightarrow \R^r_{\alpha_p}$を用いて、
+    $E_p$に$r$次元ベクトル空間の構造を定める。
+
+    \underline{Step 3} \quad
+    各$\alpha \in A$に対し、写像
+    $\Phi_\alpha \colon \pi^{-1}(U_\alpha) \to U_\alpha \times \R^r$
+    を次のように定める。
+    まず、各$\xi \in \pi^{-1}(U_\alpha)$に対し
+    $p \coloneqq \pi(\xi)$とおき、
+    さらに Step 2 で導入した全単射から
+    \begin{alignat}{8}
+        E_p \;
+            && \to & \; \R^r_{\alpha_p} \;
+            & \to & \; \R^r_\alpha \;
+            & \to & \; \R^r \\
+        \xi \;
+            && \mapsto & \; (\alpha_p, v) \;
+            & \mapsto & \; (\alpha, \psi_{\alpha\alpha_p}(p) v) \;
+            & \mapsto & \; \psi_{\alpha\alpha_p}(p) v
+    \end{alignat}
+    という1:1対応が得られることを用いて
+    $\Phi_\alpha(\xi) \coloneqq (p, \psi_{\alpha\alpha_p}(p) v)$と定める。
+    $\Phi_\alpha$は逆写像
+    \begin{equation}
+        U_\alpha \times \R^r \to \pi^{-1}(U_\alpha),
+        \quad
+        (p, w) \mapsto [(\alpha, (p, w))]
+    \end{equation}
+    を持つから全単射である。
+    また、各$p \in U_\alpha$に対し、$E_p$のベクトル空間の構造の定め方より、
+    $\Phi_\alpha$の$E_p$への制限は
+    $E_p \to \{p\} \times \R^r \cong \R^r$の線型同型である。
+
+    \underline{Step 4} \quad
+    各$\alpha, \beta \in A$と$(p, v) \in (U_\alpha \cap U_\beta) \times \R^r$に対し
+    \begin{alignat}{1}
+        \Phi_\alpha \circ \Phi_\beta^{-1}(p, v)
+            &= \Phi_\alpha [(\beta, (p, v))] \\
+            &= \Phi_\alpha [(\beta,
+                (p, \psi_{\beta\alpha}(p) \psi_{\alpha\beta} (p) v))] \\
+            &= \Phi_\alpha [(\alpha,
+                (p, \psi_{\alpha\beta}(p) v))] \\
+            &= (p, \psi_{\alpha\beta}(p) v)
+    \end{alignat}
+    が成り立つ。
+
+    \underline{Step 5} \quad
+    Vector Bundle Chart Lemma より、
+    $E$は次をみたすような$M$上のベクトルバンドル構造をただひとつ持つ:
+    \begin{itemize}
+        \item $E$は$M$上のランク$r$のベクトルバンドルである。
+        \item 射影は$\pi \colon E \to M, \; [(x, \xi)] \mapsto x$である。
+        \item $\{(U_\alpha, \Phi_\alpha)\}$は$E$の局所自明化の族である。
+    \end{itemize}
+    さらに Step 4 の議論より、
+    {\smooth}写像の族$\{ \psi_{\alpha\beta} \}$は
+    局所自明化の族$\{ (U_\alpha, \Phi_\alpha) \}$に対する
+    $E$の変換関数であることもわかる。
+\end{proof}
+
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{テンソル場の縮約}
+\label[section]{section:contraction-of-tensor-fields}
+
+\begin{definition}[テンソル場の縮約]
+    $E \to M$をランク$r$ベクトルバンドル、
+    $U \opensubset M$とする。
+    以下、切断の定義域はすべて$U$上で考える。
+    \begin{equation}
+        T^{p, q} E \coloneqq
+            \underbrace{E \otimes \dots \otimes E}_{p \text{ times}}
+            \otimes
+            \underbrace{E^* \otimes \dots \otimes E^*}_{q \text{ times}}
+            \quad
+            (p, q \in \Z_{\ge 0})
+    \end{equation}
+    と書くことにする。
+    $p, q \in \Z_{\ge 1}$とし、
+    各$0 \le k \le p, \; 0 \le l \le q$に対し
+    写像$\tr^k_l \colon \Gamma(T^{p, q} E) \to \Gamma(T^{p - 1, q - 1} E)$
+    を次のように定める:
+    $S \in \Gamma(T^{p, q}M)$が任意に与えられたとする。
+    $E$の局所フレーム$(e_1, \dots, e_r)$をとり、
+    双対フレームを$(e^1, \dots, e^r)$とする。
+    $S$を局所的に
+    \begin{equation}
+        S = \sum_{\substack{i_1 \dots i_p \\ j_1 \dots j_q}}
+            S^{i_1 \dots i_r}_{j_1 \dots j_s}
+            e_{i_1} \otimes \dots \otimes e_{i_r}
+            \otimes
+            e^{j_1} \otimes \dots \otimes e^{j_s}
+    \end{equation}
+    と表示し、
+    \begin{alignat}{1}
+        \tr^k_l S &\coloneqq
+            \sum_{
+                \substack{
+                    i_1 \dots \what{i}_k \dots i_p \\
+                    j_1 \dots \what{j}_l \dots j_q \\
+                    m
+                }
+            }
+            S^{
+                i_1 \dots \overset{\stackrel{k}{\smile}}{m} \dots i_r
+            }_{
+                j_1 \dots \underset{\stackrel{\frown}{l}}{m} \dots j_s
+            }
+            e_{i_1} \otimes \dots \otimes \what{e}_{i_k} \otimes \dots \otimes e_{i_r}
+            \otimes
+            e^{j_1} \otimes \dots \otimes \what{e}^{j_l} \otimes \dots \otimes e^{j_s} \\
+            &\in \Gamma(T^{p - 1, q - 1} E)
+    \end{alignat}
+    と定める。
+    この写像$\tr^k_l$を
+    テンソル場の\term{縮約}[contraction]{縮約}[しゅくやく]あるいは
+    \term{トレース}[trace]{トレース}という。
+    $k, l$の組が明らかな場合、添字を省略して単に$\tr$と書くことが多い。
+    $\tr$は定義から明らかに$\smooth(U)$-線型写像である。
+\end{definition}
+
+\begin{remark}
+    上の定義の状況で、とくに
+    $\omega \in \Gamma_U(E^*), \; \xi \in \Gamma_U(E)$
+    に対し
+    \begin{equation}
+        \tr (\omega \otimes \xi) = \langle \omega, \xi \rangle
+    \end{equation}
+    が成り立ち、$g \in \Gamma_U(E^* \otimes E^*), \; \xi, \eta \in \Gamma_U(E)$に対し
+    \begin{equation}
+        \tr \circ \tr (g \otimes \xi \otimes \eta) = g(\xi, \eta)
+    \end{equation}
+    が成り立つことが直接計算によりわかる。
+\end{remark}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{ベクトル束の接続と曲率}
+
+\begin{definition}[ベクトルバンドルに値をもつ微分形式]
+    $M$を多様体、$E \to M$をベクトルバンドルとし、$p \in \Z_{\ge 0}$とする。
+    ベクトルバンドル$\bigwedge^p T^*M \otimes E$の切断を
+    \term{$E$に値をもつ$p$-形式}
+    {ベクトルバンドルに値をもつ微分形式}[べくとるばんどるにあたいをもつびぶんけいしき]
+    あるいは
+    \term{$E$-値$p$-形式}[$E$-valued $p$-form]
+    {ベクトルバンドルに値をもつ微分形式}[べくとるばんどるにあたいをもつびぶんけいしき]
+    という。
+    $E$-値$p$-形式全体のなす集合を
+    \begin{equation}
+        A^p(E) \coloneqq \Gamma\Bigl(
+            \Bigl(\bigwedge^p T^*M\Bigr) \otimes E
+        \Bigr)
+    \end{equation}
+    と書く。
+    $E$-値$p$-形式は
+    $\theta \otimes \xi \; (\theta \in A^p(M), \; \xi \in A^0(E))$の形
+    の元の和に (一意ではないが) 書ける。
+\end{definition}
+
+\begin{remark}
+    テキストでは$\theta$と$\xi$の順序が逆になったりしているが、
+    ここでは$\theta \otimes \xi$の順序に統一する。
+\end{remark}
+
+ベクトルバンドル値形式は
+従来の意味での微分形式ではなく、
+したがって外積は定義されていないが、
+通常の外積から自然に定義が拡張される。
+
+\begin{definition}[ベクトルバンドル値形式の外積]
+    $M$を多様体、$E \to M$をベクトルバンドル、
+    $p, q \in \Z_{\ge 0}$とする。
+    $\wedge \colon A^p(M) \times A^q(M) \to A^{p + q}(M)$を
+    通常の外積とし、
+    その一般化として
+    $\wedge \colon A^p(M) \times A^q(E) \to A^{p + q}(E)$を
+    \begin{alignat}{1}
+        (\omega, \xi)
+            = \left(
+                \omega,
+                \sum_{i} \alpha_i \otimes \xi_i
+            \right)
+            \mapsto
+            \omega \wedge \xi
+            &\coloneqq
+            \sum_{i} \omega \wedge \alpha_i \otimes \xi_i \\
+        &\qquad \quad
+            (\alpha_i \in A^q(M), \; \xi_i \in A^0(E))
+    \end{alignat}
+    と定める。
+    これは明らかに$\xi$の表し方によらず well-defined に定まる。
+\end{definition}
+
+\begin{definition}[ベクトルバンドル値形式の内積]
+    $M$を多様体、
+    $E \to M, \; F \to M$をベクトルバンドル、
+    $g \colon A^0(E) \times A^0(F) \to A^0(M)$を
+    $\smooth(M)$-双線型写像とする。
+    $g$の一般化として、同じ記号で写像
+    $g \colon A^p(E) \times A^q(F) \to A^{p + q}(M)$を
+    \begin{alignat}{1}
+        (\omega, \xi)
+            = \left(
+                \sum_{i} \alpha_i \otimes \omega_i,
+                \sum_{j} \beta_j \otimes \xi_j
+            \right)
+            &\mapsto
+            g(\omega, \xi)
+            \coloneqq
+            \sum_{i, j}
+            g(\omega_i, \xi_j)
+            \alpha_i \wedge \beta_j \\
+        &
+            (
+                \alpha_i \in A^p(M), \; \beta_j \in A^q(M), \;
+                \omega_i \in A^0(E), \; \xi_j \in A^0(F)
+            )
+    \end{alignat}
+    と定める。
+    これは$\omega, \xi$の表し方によらず well-defined に定まり (証明略)、
+    また$\smooth(M)$-双線型写像である。
+\end{definition}
+
+\begin{remark}
+    上の定義の$g \colon A^0(E) \times A^0(F) \to A^0(M)$の例としては、
+    双対の定める内積$\langle , \rangle \colon A^0(E^*) \times A^0(E) \to A^0(M)$や
+    計量$g \colon A^0(E) \times A^0(E) \to A^0(M)$がある。
+\end{remark}
+
+\begin{definition}[ベクトルバンドルの接続]
+    \label[definition]{def:vector-bundle-connection}
+    $M$を多様体とし、
+    $\pi \colon E \to M$をベクトルバンドルとする。
+    $E$の\term{接続}[connection]{接続}[せつぞく]とは、
+    $\R$-線型写像$A^0(E) \to A^1(E)$であって、
+    Leibniz の公式
+    \begin{equation}
+        \nabla(f\xi) = df \otimes \xi + f \nabla\xi
+            \quad (f \in A^0(M),\; \xi \in A^0(E))
+    \end{equation}
+    をみたすものである。
+    各$\xi \in A^0(E),\; X \in \frakX(M)$に対し、
+    $\nabla\xi(X) \in A^0(E)$を$\nabla_X\xi$とも書き、
+    $\xi$の$X$方向の\term{共変微分}[covariant derivative]{共変微分}[きょうへんびぶん]と呼ぶ。
+\end{definition}
+
+\begin{definition}[接続形式]
+    $M$を多様体、
+    $E \to M$をランク$r$のベクトルバンドル、
+    $\nabla$を$E$の接続とする。
+    さらに$U \opensubset M$、
+    $\calE \coloneqq (e_1, \dots, e_r)$を$U$上の$E$のフレームとする。
+    このとき、
+    $U$上の$1$-形式の族$\omega = (\omega_\lambda^\mu)_{\lambda, \mu}$により
+    \begin{equation}
+        \nabla e_\lambda
+            = \sum_{\mu} \omega_\lambda^\mu \otimes e_\mu
+            \quad (\lambda = 1, \dots, r)
+    \end{equation}
+    と書ける。
+    $\omega$をフレーム$\calE$に関する$\nabla$の
+    \term{接続形式}[connection form]{接続形式}[せつぞくけいしき]という。
+\end{definition}
+
+\begin{proposition}[接続形式の変換規則]
+    上の定義の状況で、
+    さらに$\calE' \coloneqq (e'_1, \dots, e'_r)$も$U$上の$E$のフレームとし、
+    $\calE'$に関する$\nabla$の接続形式を$\omega'$とする。
+    フレームの取り替えの行列$(a_\lambda^\mu)$は
+    \begin{equation}
+        e'_\lambda = \sum_{\mu} a_\lambda^\mu e_\mu
+        \quad (a_\lambda^\mu \in A^0(U))
+    \end{equation}
+    とおく。
+    このとき、接続形式の変換規則は
+    \begin{equation}
+        \omega' = a^{-1} \omega a + a^{-1} da
+    \end{equation}
+    となる。
+    \qed
+\end{proposition}
+
+\begin{definition}[ベクトルバンドルの代数的構成とその接続]
+    \TODO{}
+\end{definition}
+
+\begin{definition}[共変外微分]
+    $M$を多様体、
+    $E \to M$をベクトルバンドル、
+    $\nabla$を$E$の接続、
+    $p \in \Z_{\ge 0}$とする。
+    $\R$-線型写像$D \colon A^p(E) \to A^{p + 1}(E)$を
+    \begin{equation}
+        D(\theta \otimes \xi)
+            \coloneqq d\theta \otimes \xi + \theta \wedge \nabla\xi
+            \quad (\theta \in A^p(M), \; \xi \in A^0(E))
+    \end{equation}
+    で定め、$D$を
+    \term{共変外微分}[covariant exterior derivative]{共変外微分}[きょうへんがいびぶん]
+    という。
+\end{definition}
+
+\begin{proposition}[共変外微分の anti-derivation 性 (外積に関して)]
+    $M$を多様体、
+    $E \to M$をベクトルバンドル、
+    $\nabla$を$E$の接続、
+    $D$を$\nabla$から定まる共変外微分とする。
+    $p, q \in \Z_{\ge 0}$に対し
+    \begin{equation}
+        D(\theta \wedge \varphi)
+            = d\theta \wedge \varphi + (-1)^p \theta \wedge D\varphi
+            \quad
+            (\theta \in A^p(M), \; \varphi \in A^q(E))
+    \end{equation}
+    が成り立つ\footnote{
+        [小林]では$E$-値形式を表すときの$\xi$と$\theta$の順序が逆なので
+        \begin{equation}
+            D(\varphi \wedge \theta)
+                = D\varphi \wedge \theta + (-1)^p \varphi \wedge d\theta
+        \end{equation}
+        という形になっている。
+    }。
+    \qed
+\end{proposition}
+
+\begin{proposition}[符号付き Leibniz rule]
+    \label[proposition]{prop:signed-leibniz-rule}
+    $M$を多様体、
+    $E \to M, \; E' \to M$をベクトルバンドル、
+    $\nabla, \nabla'$をそれぞれ$E, E'$の接続、
+    $D, D'$をそれぞれ$\nabla, \nabla'$から定まる共変外微分、
+    $g \colon A^0(E) \times A^0(E') \to A^0(M)$を
+    $\smooth(M)$-双線型写像とする。
+    $D, D'$が条件
+    \begin{equation}
+        d(g(\xi, \eta)) = g(\nabla\xi, \eta) + g(\xi, \nabla'\eta)
+            \quad
+            (\xi \in A^0(E), \; \eta \in A^0(E'))
+    \end{equation}
+    をみたすならば\footnote{
+        とくに$g$が$M$の Riemann 計量で
+        $E = E' = TM$の状況でこの条件が成り立っているならば、
+        $\nabla'$は$g$に関する$\nabla$の
+        \term{双対接続}[dual connection]{双対接続}[そうついせつぞく]
+        であるという。
+    }、
+    $p, q \in \Z_{\ge 0}$に対し
+    \begin{equation}
+        d(g(\xi, \eta))
+            = g(D\xi, \eta) + (-1)^p g(\xi, D'\eta)
+            \quad
+            (\xi \in A^p(E), \; \eta \in A^q(E'))
+    \end{equation}
+    が成り立つ。
+\end{proposition}
+
+\begin{proof}
+    Einstein の記法を用いる。
+    $A^p(E), A^q(E')$の元はそれぞれ
+    \begin{align}
+        &\alpha \otimes \xi \in A^p(E)
+            \quad (\alpha \in A^p(M), \; \xi \in A^0(E)) \\
+        &\beta \otimes \eta \in A^q(E')
+            \quad (\beta \in A^q(M), \; \eta \in A^0(E'))
+    \end{align}
+    の形の元の有限和で書けるから、
+    このような形の元について示せば十分である。
+    \begin{align}
+        \nabla \xi = \alpha^i \otimes \xi_i,
+            \quad
+            (\alpha^i \in A^1(M), \; \xi_i \in A^0(E)) \\
+        \nabla \eta = \beta^j \otimes \eta_j
+            \quad
+            (\beta^j \in A^1(M), \; \eta_j \in A^0(E'))
+    \end{align}
+    とおいておく (ただし、Einstein の記法を使うために共変・反変による
+    添字の上下の慣例を一時的に無視している)。
+    まず
+    \begin{alignat}{1}
+        &\quad d(g(\alpha \otimes \xi, \beta \otimes \eta)) \\
+        &= d(g(\xi, \eta) \alpha \wedge \beta)
+            \quad (\text{$\because$ ベクトルバンドル値形式の内積の定義}) \\
+        &= d(g(\xi, \eta)) \alpha \wedge \beta
+            + g(\xi, \eta) d\alpha \wedge \beta
+            + (-1)^p g(\xi, \eta) \alpha \wedge d\beta \\
+        &= d(g(\xi, \eta)) \alpha \wedge \beta
+            + g(\xi \otimes d\alpha, \eta \otimes \beta)
+            + (-1)^p g(\xi \otimes \alpha, \eta \otimes d\beta)
+            \label[equation]{eq:signed-leibniz-rule-1}
+    \end{alignat}
+    となる。ここで、第1項は
+    \begin{alignat}{1}
+        &\quad d(g(\xi, \eta)) \alpha \wedge \beta \\
+        &= g(\nabla \xi, \eta) \alpha \wedge \beta
+            + g(\xi, \nabla' \eta) \alpha \wedge \beta
+            \quad (\text{$\because$ 命題の仮定}) \\
+        &= g(\xi_i, \eta) \alpha^i \wedge \alpha \wedge \beta
+            + g(\xi, \eta_j) \beta^j \wedge \alpha \wedge \beta \\
+        &= g(\xi_i, \eta) \alpha^i \wedge \alpha \wedge \beta
+            + (-1)^p g(\xi, \eta_j) \alpha \wedge \beta^j \wedge \beta \\
+        &= g(\xi_i \otimes \alpha^i \wedge \alpha, \eta \otimes \beta)
+            + (-1)^p g(\xi \otimes \alpha, \eta_j \beta^j \wedge \beta) \\
+        &= g(\nabla \xi \wedge \alpha, \eta \otimes \beta)
+            + (-1)^p g(\xi \otimes \alpha, \nabla' \eta \wedge \beta)
+    \end{alignat}
+    となる。
+    したがって、\cref{eq:signed-leibniz-rule-1}より
+    \begin{alignat}{1}
+        d(g(\alpha \otimes \xi, \beta \otimes \eta))
+            &= g(\nabla \xi \wedge \alpha, \eta \otimes \beta)
+                + g(\xi \otimes d\alpha, \eta \otimes \beta) \\
+            &\qquad \quad + (-1)^p g(\xi \otimes \alpha, \nabla' \eta \wedge \beta)
+                + (-1)^p g(\xi \otimes \alpha, \eta \otimes d\beta) \\
+            &= g(D(\xi \wedge \alpha), \eta \otimes \beta)
+                + (-1)^p g(\xi \otimes \alpha, D'(\eta \wedge \beta))
+    \end{alignat}
+    が成り立つ。
+\end{proof}
+
+\begin{definition}[曲率]
+    $M$を多様体、
+    $E \to M$をベクトルバンドル、
+    $\nabla$を$E$の接続、
+    $D$を$\nabla$により定まる共変外微分とする。
+    $R \coloneqq D^2$とおき、
+    $R$を$\nabla$の
+    \term{曲率}[curvature]{曲率}[きょくりつ]
+    という。
+\end{definition}
+
+\begin{remark}
+    写像$R = D^2 \colon A^0(E) \to A^2(E)$は
+    $A^2(\End E)$の元ともみなせる。
+\end{remark}
+
+
+
+\newpage
+\phantomsection
+\addcontentsline{toc}{chapter}{参考文献}
+\renewcommand{\bibname}{参考文献}
+\markboth{\bibname}{}
+\begin{thebibliography}{9}
+    \bibitem{leesmo}
+        John. M. Lee.
+        \textit{Introduction to Smooth Manifolds}.
+        Springer,
+        2012
+    \bibitem{leerie}
+        John. M. Lee.
+        \textit{Introduction to Riemannian Manifolds}.
+        Springer,
+        2018
+    \bibitem{kob} 小林 昭七. "接続の微分幾何とゲージ理論". 裳華房, 2004
+    \bibitem{tu}
+        Loring W. Tu.
+        \textit{Differential Geometry}.
+        Springer,
+        2017
+    \bibitem{rotman} Joseph J. Rotman \textit{An Introduction to Homological Algebra}. Springer, 2008
+    \bibitem{kol}
+        Ivan Kolář, Jan Slovák, Peter W. Michor.
+        \textit{Natural Operations in Differential Geometry}.
+        Springer Berlin, Heidelberg,
+        1993
+\end{thebibliography}
+
+\end{document}

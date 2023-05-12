@@ -1,0 +1,170 @@
+\documentclass[report, notitlepage]{jlreq}
+\usepackage{docmute}
+\usepackage{global}
+\usepackage{./sub/local}
+\def\assetspath{./}
+%\makeindex
+%\makeglossaries
+
+\title{情報幾何ゼミ (数学講究XA)}
+\author{Keiji Yahata}
+\date{2023/04~}
+
+\begin{document}
+
+\maketitle
+
+\chapter*{Preface}
+
+次のような流れで進める。
+
+\begin{enumerate}
+    \item 指数型分布族
+        \begin{enumerate}
+            \item 最小次元実現
+        \end{enumerate}
+    \item 期待値と分散
+        \begin{enumerate}
+            \item ベクトル値関数の積分の定義
+            \item 分散の半正定値対称性
+        \end{enumerate}
+    \item grad と Hessian
+    \item 対数分配関数
+        \begin{enumerate}
+            \item \smooth 性
+            \item Hessian の正定値性
+        \end{enumerate}
+    \item KLダイバージェンス
+    \item Fisher 計量
+    \item アファイン接続
+    \item ルジャンドル変換
+    \item 期待値パラメータ空間
+    \item 統計的推定への応用
+    \item 無限次元化?
+\end{enumerate}
+
+資料について
+
+\begin{itemize}
+    \item 同値の証明について。
+        複数の条件の同値性を示すときは、
+        言い換えられる元の条件を最初に挙げ、
+        言い換える先の条件を後に挙げること。
+    \item 長い証明はステップに分解し、
+        各ステップごとに目標を述べてから進めること。
+        できるだけ簡単に証明が終わるステップを先に終わらせるのがよい。
+    \item 新しい文字を導入する際は、どの集合に属するかを明示すること。
+    \item 命題を「定理」と呼ぶのは、
+        その命題のステートメントを見ただけで価値がわかる場合に限るのがよい。
+    \item 議論のスキップについて
+        \begin{itemize}
+            \item 「詳細は資料を見てください」
+            \item 一般の場合についての証明を資料に書いておき、
+                発表の際には議論の要点が伝わるような
+                簡単な特殊な場合に限って述べるのもよい。
+                (e.g. 「$(r, s) = (1, 1)$の場合のみ証明します」)
+            \item 議論の途中に重要な仮定が用いられている場合は、
+                完全にスキップしてしまうのではなく、
+                どのように仮定が用いられたかをコメントすること。
+        \end{itemize}
+    \item 数学的概念は何に依存して定まるものか明らかにすること。
+        (e.g. 単に「対数分配関数」でなく「$(V, T, \mu)$に関する対数分配関数」)
+\end{itemize}
+
+発表と板書について
+
+\begin{itemize}
+    \item 板書は発表資料の内容をすべて書くのではなく、キーワードやキーフレーズのみに留めること。
+        断った上で略語を使うのもよい。
+    \item 論理的に正しいことを話すだけでなく、
+        意図の伝わりやすい話し方を心がけること。
+        (Logic と motivation のバランス)
+    \item 発表の最初に全体のアウトラインを述べること。
+    \item 「本に書いてあったから」ではなく、自分自身の理解を話すこと。
+        \begin{itemize}
+            \item 本の内容を自分の言葉で説明しようと試みると、
+                どうしても発表中に間違いに気づくことがある。
+                しかし、本の内容を単になぞって最初から正しいことを話すよりも、
+                誤りを修正しながら話した方が、参加者の理解につながることがある。
+        \end{itemize}
+    \item 「わかる」について
+        \begin{itemize}
+            \item 「わかる」の中にも色々あり、
+                条件反射で完全な証明が浮かぶケース、
+                5秒程度考えれば証明方針が浮かびそうなケース、
+                証明はできないがイメージはつくケースなどがある。
+        \end{itemize}
+    \item 「わからない」について
+        \begin{itemize}
+            \item 質問の意図がわからないときは、自己完結的に質問を解釈せず、意図を明確にしてから答えること。
+                「質問の意図がわからなかったのでもう一度お願いします」
+                「どのようなフォーマットで答えたらいいかわかりません」
+            \item 10秒程度考えても回答の方針が立たない場合は、わからないと言うこと。
+                「方法が思いつきません」
+                「すぐに答えられません」
+            \item 簡単そうな quiz がわからないとき、
+                とりあえずステートメントの形で問いを書き起こしてみると、
+                思考が整理できて良いかもしれない。
+        \end{itemize}
+    \item ちょっと待ってほしいとき。
+        「ちょっと待ってください」
+        「いま言葉を整理しています」
+\end{itemize}
+
+質問について
+
+\begin{itemize}
+    \item ゼミの進み方が速すぎると感じたら、
+        質問をすることによってゼミの速さをゆるやかにすることができる。
+\end{itemize}
+
+\tableofcontents
+\markboth{\contentsname}{}
+
+% ============================================================
+%
+% ============================================================
+
+% ============================================================
+%
+% ============================================================
+\newpage
+\phantomsection
+\addcontentsline{toc}{part}{演習問題の解答}
+\part*{演習問題の解答}
+
+\includecollection{answers}
+
+% ============================================================
+%
+% ============================================================
+\newpage
+\phantomsection
+\addcontentsline{toc}{part}{参考文献}
+\renewcommand{\bibname}{参考文献}
+\markboth{\bibname}{}
+\part*{参考文献}
+
+{
+    \renewcommand{\bibsection}{}
+    \bibliographystyle{amsalpha}
+    \bibliography{../mybibliography}
+}
+
+% ============================================================
+%
+% ============================================================
+\newpage
+\phantomsection
+\addcontentsline{toc}{part}{記号一覧; Nomenclature}
+\printglossary[title={記号一覧; Nomenclature}]
+
+% ============================================================
+%
+% ============================================================
+\newpage
+\phantomsection
+\addcontentsline{toc}{part}{索引}
+\printindex
+
+\end{document}

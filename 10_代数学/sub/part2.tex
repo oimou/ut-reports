@@ -1,0 +1,451 @@
+\documentclass[report]{jlreq}
+\usepackage{global}
+\usepackage{./local}
+\subfiletrue
+%\makeindex
+\begin{document}
+
+
+
+% ************************************************************
+%
+% ************************************************************
+\part{種々の主題}
+
+
+
+
+% ============================================================
+%
+% ============================================================
+\chapter{外積代数}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{テンソル代数}
+
+\begin{definition}[テンソル代数]
+    $K$を体、$V$を$K$-ベクトル空間とし、
+    $K$上のテンソル積の記号$\otimes_K$を$\otimes$で書くことにする。
+    さらに
+    \begin{alignat}{1}
+        T^n(V) &\coloneqq \underbrace{
+            V \otimes \cdots \otimes V
+        }_{\text{$n$個}},
+            \quad T^0(V) \coloneqq K \\
+        T(V) &\coloneqq \bigoplus_{n \ge 0} T^n(V)
+    \end{alignat}
+    とおき、$T(V)$上の$K$-双線型写像$\cdot$を
+    \begin{equation}
+        T^n(V) \times T^m(V) \to T^{n+m}(V),
+        \quad
+        (x, y) \mapsto x \cdot y \coloneqq x \otimes y
+    \end{equation}
+    で定めると、
+    $(T(V), 1_K, 0_K, +, \cdot)$は$K$-代数となる。
+    これを$V$上の
+    \term{テンソル代数}[tensor algebra]{テンソル代数}[てんそるだいすう]
+    という。
+\end{definition}
+
+\begin{theorem}[テンソル代数の普遍性]
+    $K$を体、$V$を$K$-ベクトル空間、
+    $\iota$を標準包含$V = T^1(V) \hookrightarrow T(V)$とする。
+    このとき、任意の$K$-代数$A$と
+    $K$-線型写像$f \colon V \to A$に対し、
+    図式
+    \begin{equation}
+        \begin{tikzcd}
+            V
+                \ar{r}{f}
+                \ar{d}[swap]{\iota}
+                & A \\
+            T(V)
+                \ar[dashed]{ru}[swap]{F}
+        \end{tikzcd}
+    \end{equation}
+    を可換にする$K$-代数準同型$F \colon T(V) \to A$が
+    一意に存在する。
+\end{theorem}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+\begin{theorem}[基底]
+    \TODO{}
+\end{theorem}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{外積代数}
+
+\begin{definition}[外積代数]
+    \TODO{}
+\end{definition}
+
+
+
+
+% ============================================================
+%
+% ============================================================
+\chapter{代数幾何学}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{零点定理}
+
+零点定理の弱形の特別な形\TODO{？}はこれまでの知識で示すことができる。
+
+\begin{theorem}[Hilbert の零点定理 (弱形)]
+    \label[theorem]{thm:nullstellensatz}
+    \termhidden{零点定理}[れいてんていり]
+    \termhidden{Nullstellensatz}
+    $K$を非可算濃度をもつ代数的閉体とする。
+    このとき、$K[X_1, \dots, X_n]$の
+    任意の極大イデアル$\frakm$に対し
+    組$(\alpha_1, \dots, \alpha_n) \in K^n$が一意に存在して
+    $\frakm = (X_1 - \alpha_1, \dots, X_n - \alpha_n)$をみたす。
+\end{theorem}
+
+\begin{proof}
+    $\dim_K K[X_1, \dots, K_n] = \aleph_0$だから、
+    可除$K$-代数$K[X_1, \dots, K_n] / \frakm$は
+    $K$上高々可算次元である。
+    よって Dixmier の補題 (\cref{lemma:dixmier}) により
+    環の同型$f \colon K[X_1, \dots, K_n] / \frakm \to K$
+    が存在する。
+    標準射影
+    $K[X_1, \dots, K_n] \to K[X_1, \dots, K_n] / \frakm$を
+    $\pi$とおき、
+    $\alpha_i \coloneqq f(\pi(X_i)) \in K$とおく。
+    すると$f \circ \pi \colon K[X_1, \dots, K_n] \to K$は
+    各$X_i$を$\alpha_i$に写す$K$-代数準同型だから、
+    多項式環の普遍性
+    (\cref{thm:multivariate-polynomial-ring-universality})
+    より可換図式
+    \begin{equation}
+        \begin{tikzcd}[column sep=large]
+            K[X_1, \dots, K_n]
+                \ar{r}{\ev_{(\alpha_1, \dots, \alpha_n)}}
+                \ar{d}
+                & K \\
+            K[X_1, \dots, K_n] / \frakm
+                \ar[start anchor=north east]{ru}[swap]{f}
+        \end{tikzcd}
+    \end{equation}
+    を得る。
+    したがって
+    $\frakm = \Ker \ev_{(\alpha_1, \dots, \alpha_n)}$
+    であり、
+    \cref{prop:ev-kernel}
+    より$\frakm = (X_1 - \alpha_1, \dots, X_n - \alpha_n)$を得る。
+\end{proof}
+
+\begin{theorem}
+    $A \subset B \subset C$を可換環、
+    $A$はネーター、
+    $C$は$A$-代数として有限生成かつ$B$-加群として有限生成とする。
+    このとき$B$は$A$-代数として有限生成である。
+\end{theorem}
+
+\begin{proof}
+    Hilbert の基底定理を用いる。
+    \TODO{}
+\end{proof}
+
+\begin{theorem}
+    $K$を体、
+    $E$を体かつ有限生成$K$-代数とする。
+    このとき$\dim_K E < \infty$である。
+\end{theorem}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+\TODO{何が違う？}
+
+\begin{corollary}[Hilbert の零点定理 (弱形)]
+    $K$を代数的閉体とする。
+    このとき、$K[X_1, \dots, X_n]$の
+    任意の極大イデアル$\frakm$に対し
+    組$(\alpha_1, \dots, \alpha_n) \in K^n$が存在して
+    \TODO{一意性は？}
+    \begin{equation}
+        \begin{tikzcd}
+            K[X_1, \dots, X_n] / \frakm
+                \ar{r}{\sim}
+                & K \\
+            X_i
+                \ar[mapsto]{r}
+                & \alpha_i
+        \end{tikzcd}
+    \end{equation}
+    をみたす。
+\end{corollary}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+
+
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{アファイン多様体と Hilbert Nullstellensatz}
+
+\TODO{既約加群のところで述べたやつとは違う？}
+
+\begin{definition}[アファイン多様体]
+    $K$を代数的閉体とする。
+    \begin{itemize}
+        \item 部分集合$I \subset K[X_1, \dots, X_n]$に対し
+            \begin{equation}
+                \Var(I) \coloneqq \{
+                    (x_1, \dots, x_n) \in K^n
+                    \mid
+                    f(x_1, \dots, x_n) = 0
+                    \; (\forall f \in I)
+                \}
+            \end{equation}
+            とおく。
+            $\Var(I)$を$I$により定まる
+            \term{アファイン多様体}[affine variety]{アファイン多様体}[あふぁいんたようたい]
+            という。
+        \item $S \subset K^n$に対し
+            \begin{equation}
+                \Id(S) \coloneqq \{
+                    f \in K[X_1, \dots, X_n]
+                    \mid
+                    f(x_1, \dots, x_n) = 0
+                    \; (\forall (x_1, \dots, x_n) \in S)
+                \}
+            \end{equation}
+            とおく。
+    \end{itemize}
+\end{definition}
+
+\begin{definition}[closed algebraic set とその射]
+    \begin{itemize}
+        \item $I$がイデアルのとき、$\Var(I)$を
+            \term{closed algebraic set}{closed algebraic set}
+            という。
+        \item \TODO{}
+    \end{itemize}
+\end{definition}
+
+\begin{definition}[座標環]
+    $S \subset K^n$を closed algebraic set とする。
+    \begin{equation}
+        K[S] \coloneqq K[X_1, \dots, X_n] / \Id(S)
+    \end{equation}
+    \TODO{}
+\end{definition}
+
+\begin{lemma}
+    $\Id(S)$は$K[X_1, \dots, X_n]$の根基イデアルである。
+    \TODO{}
+\end{lemma}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+\begin{lemma}
+    \begin{equation}
+        \Var(S) = \Var((S))
+    \end{equation}
+    \TODO{}
+\end{lemma}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+\TODO{Rabinowitz trick で示す？}
+
+\begin{theorem}[Hilbert の零点定理 (強形)]
+    \begin{equation}
+        \Id(\Var(I)) = \sqrt{I}
+    \end{equation}
+    \TODO{}
+\end{theorem}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+
+
+
+% ============================================================
+%
+% ============================================================
+\chapter{有限群の表現論}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{群の表現}
+
+郡の表現は
+\cref{section:group-action}で定義した。
+ここではとくにベクトル空間の圏における群の表現について考える。
+
+\begin{definition}
+    $G$を群、$K$を体とする。
+    $K$-ベクトル空間の圏における$G$の表現$T$に対し、
+    $K$-ベクトル空間$V \coloneqq T(*)$と
+    $T$により定まる群準同型$\pi \colon G \to \GL(V)$の組
+    $(V, \pi)$を
+    \term{$G$の$K$上の表現}{表現}[ひょうげん]
+    といい、$V$をこの表現の
+    \term{表現空間}[representation space]{表現空間}[ひょうげんくうかん]
+    という。
+\end{definition}
+
+次の定理により、
+$G$の$K$上の表現のかわりに$K[G]$-加群を考えればよいことがわかる。
+
+\begin{theorem}
+    $G$を群、$K$を体とする。
+    $G$の$K$上の表現と群環$K[G]$上の加群は1対1に対応する。
+\end{theorem}
+
+\begin{proof}
+    $(V, \pi)$を$G$の$K$上の表現とするとき、
+    $V$の$K[G]$-加群構造を
+    \begin{equation}
+        \left(\sum_{g \in G} a_g g\right) v
+            \coloneqq \sum_{g \in G} a_g \pi(g) v
+            \quad
+            \left(
+                \sum_{g \in G} a_g g \in K[G], \;
+                v \in V
+            \right)
+    \end{equation}
+    で定めることができる。
+
+    逆に$V$を$K[G]$-加群とするとき、
+    $V$は標準的な方法で$K$-ベクトル空間であり、
+    群準同型$\pi \colon G \to \GL(V)$を
+    \begin{equation}
+        \pi(g) v \coloneqq gv
+            \quad
+            (g \in G, \; v \in V)
+    \end{equation}
+    で定めると$G$の$K$上の表現$(V, \pi)$が得られる。
+    これらの対応は互いに逆になっている。
+\end{proof}
+
+\begin{theorem}[Maschke の定理]
+    $K$を標数$p$の体、
+    $G$を$p \nmid \sharp G$なる有限群、
+    $V$を$\dim_K V < \infty$なる$K[G]$-加群、
+    $W$を$V$の$K[G]$-部分加群とする。
+    このとき、
+    $V$のある$K[G]$-部分加群$\wt{W}$であって
+    $V = W \oplus \wt{W}$なるものが存在する。
+\end{theorem}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+\begin{theorem}
+    $K$を標数$p$の体、
+    $G$を$p \nmid \sharp G$なる有限群とする。
+    このとき、$K[G]$は半単純環である。
+\end{theorem}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+\begin{corollary}
+    $K$を標数$p$の代数的閉体、
+    $G$を$p \nmid \sharp G$なる有限群、
+    $U_1, \dots, U_l$を$G$の既約表現の
+    同型類の完全代表系とする。
+    このとき
+    \begin{equation}
+        \sharp G = (\dim U_1)^2 + \cdots + (\dim U_l)^2
+    \end{equation}
+    が成り立つ。
+
+    \TODO{既約表現とは？}
+\end{corollary}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+\begin{theorem}
+    $\calC(G)$を$G$の共役類全体の集合とする。
+    \begin{equation}
+        \{ f_c \mid c \in \calC(G) \}
+    \end{equation}
+    \TODO{}
+\end{theorem}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+\begin{theorem}
+    \begin{equation}
+        \sharp \{
+            \text{$G$の既約表現の同型類}
+        \} = \sharp \calC(G)
+    \end{equation}
+    \TODO{}
+\end{theorem}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+\begin{definition}[誘導表現]
+    \TODO{}
+\end{definition}
+
+\begin{lemma}
+    \begin{equation}
+        \dim_K \Hom_{K[G]}(U, V) = \dim_K \Hom_{K[G]}(V, U)
+    \end{equation}
+    \TODO{}
+\end{lemma}
+
+\begin{proof}
+    \TODO{Schur の補題を使う}
+\end{proof}
+
+\begin{theorem}
+    \begin{equation}
+        K[G] \oplus_{K[H]} V
+            \cong \Hom_{K[G]}(K[G], V)
+    \end{equation}
+    \TODO{}
+\end{theorem}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+
+
+
+
+
+\end{document}

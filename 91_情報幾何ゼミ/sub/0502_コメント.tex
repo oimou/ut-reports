@@ -1,0 +1,195 @@
+\documentclass[report]{jlreq}
+\usepackage{global}
+\usepackage{./local}
+\subfiletrue
+\def\assetspath{../}
+%\makeindex
+\chead{2023/05/02}
+\begin{document}
+
+% ============================================================
+%
+% ============================================================
+
+発表中にコメントがあった命題などを整理する。
+
+ベクトル値関数の可積分性は、
+次のように双対空間を用いると簡潔に定義できる。
+
+\begin{definition}[ベクトル値関数の可積分性]
+    $\calX$を可測空間、
+    $V$を有限次元$\R$-ベクトル空間、
+    $\mu$を$\calX$上の測度、
+    $f \colon \calX \to V$を可測写像とする。
+    すべての$g \in V^\vee$に対し
+    $g \circ f \in L^1(\calX, \mu)$が成り立つとき、
+    $f$は$\mu$に関し
+    \term{可積分}[integrable]
+        {可積分}[かせきぶん]
+    であるという。
+\end{definition}
+
+アファイン部分空間の定義を整理する。
+
+\begin{definition}[アファイン部分空間]
+    $K$を体、
+    $V$を$K$-ベクトル空間、
+    $A \subset V$を部分集合とする。
+    $A$が$V$の$K$上の
+    \term{アファイン部分空間}[affine subspace]
+        {アファイン部分空間}[あふぁいんぶぶんくうかん]であるとは、
+    次が成り立つことをいう:
+    $\exists \; (S, v)$ s.t.
+    \begin{description}
+        \item[(A1)] $S \subset V$は$K$-部分ベクトル空間である。
+        \item[(A2)] $v \in V$であり、$A = v + S$が成り立つ。
+    \end{description}
+\end{definition}
+
+次の命題より、
+アファイン部分空間に値を持つ写像の期待値も定義できる。
+
+\begin{proposition}[アファイン部分空間に値を持つ写像の積分]
+    $\calX$を可測空間、
+    $p$を$\calX$上の確率測度、
+    $V$を有限次元$\R$-ベクトル空間、
+    $f \colon \calX \to V$を$p$-可積分写像とする。
+    このとき、
+    $V$のあるアファイン部分空間$A$が存在して
+    $f(x) \in A \; \text{$p$-a.e.$x$}$が成り立つならば、
+    $\int_\calX f(x) \, p(dx) \in A$となる。
+\end{proposition}
+
+\begin{proof}
+    $f(x) \in A \; \text{$p$-a.e.$x$}$より、
+    $f(x) = v + \tilde{f}(x)$なる
+    $p$-可積分写像$\tilde{f} \colon \calX \to S$が存在する。
+    これより
+    \begin{alignat}{1}
+        \int_\calX f(x) \, p(dx)
+            &= \int_\calX (v + \tilde{f}(x)) \, p(dx) \\
+            &= v + \int_\calX \tilde{f}(x) \, p(dx)
+                \quad
+                (\text{$p$は確率測度}) \\
+            &\in v + S \\
+            &= A
+    \end{alignat}
+    が成り立つ。
+\end{proof}
+
+ベクトル値関数の可積分性の定義を$q$-乗可積分まで拡張し、
+また$q$-乗可積分関数全体の集合を$L^q(\calX, p; V)$と書くことにすれば、
+次が成り立つ。
+
+\begin{lemma}[分散の存在条件]
+    \label[lemma]{lemma:f_otimes_f}
+    可測写像$f \colon \calX \to V$に関し
+    次の2条件は同値である:
+    \begin{enumerate}
+        \item $f$および
+            $(f - E_p[f]) \otimes (f - E_p[f])$が
+            $p$-可積分
+        \item $f \otimes f$が$p$-可積分
+        \highlight{\item $f \in L^2(\calX, p; V)$}
+    \end{enumerate}
+\end{lemma}
+
+\begin{proof}
+    \uline{(2) \Rightarrow (3)} \quad 明らか。
+
+    \uline{(3) \Rightarrow (2)} \quad
+    H\"older の不等式を用いて示せる。
+\end{proof}
+
+\begin{proposition}
+    $V$にノルム$\| \cdot \|$が与えられているとする。
+    このとき次は同値である。
+    \begin{enumerate}
+        \item $\| f \| \in L^1(\calX, p)$
+        \item $f \in L^1(\calX, p; V)$
+    \end{enumerate}
+\end{proposition}
+
+\begin{proof}
+    \uline{(2) \Rightarrow (1)} \quad
+    三角不等式より明らか。
+
+    \uline{(1) \Rightarrow (2)} \quad
+    $V$の基底$E$をひとつ選んで固定し、
+    成分に関する2-ノルムを$\| \cdot \|_E$とおく。
+    有限次元$\R$-ベクトル空間上のノルムの同値性を用いて
+    $|f_i(x)| \le \| f(x) \|_E \le C\| f(x) \| \; \text{$p$-a.e.$x$}$
+    が成り立つから
+    $f_i \in L^1(\calX, p)$が従う。
+\end{proof}
+
+自然パラメータ空間$\Theta$は、
+指数型分布族の定義の条件(E3)をみたす$\theta$をすべて含んでいる
+(一般には真に含んでいる)。
+
+\begin{proposition}
+    $\theta \in V^\vee$が
+    ある$p \in \calP$に対し
+    指数型分布族の条件(E3)をみたすならば、
+    $\theta$は$\Theta$に属する。
+    すなわち、
+    \begin{equation}
+        \mybrace{
+            \theta \in V^\vee
+            \;\Big|\;
+            \exists \; p \in \calP
+            \quad \text{s.t.} \quad
+            \dd[p]{\nu}(x)
+                = \frac{
+                    \exp{\langle \theta, T(x) \rangle}
+                }{
+                    \int_\calX \exp{\langle \theta, T(y) \rangle} \, \nu(dy)
+                }
+                \quad
+                (\text{$\nu$-a.e.$x$})
+        }
+            \subset \Theta
+    \end{equation}
+    が成り立つ。
+\end{proposition}
+
+\begin{proof}
+    まず$\theta \in V^\vee$とし、
+    $\theta$はある$p \in \calP$に対し
+    \cref{def:exponential-family}の条件(E3)をみたすものとする。
+    背理法のため$\theta \notin \Theta$と仮定する。
+    すると$\Theta$の定義より
+    $\int_\calX \exp{\langle \theta, T(y) \rangle} \, \nu(dy) = +\infty$
+    が成り立つから、
+    条件(E3)より
+    $\dd[p]{\nu}(x) = \frac{\exp{\langle \theta, T(x) \rangle}}{\infty} = 0 \;
+        (\text{$\nu$-a.e.$x$})$
+    が成り立つ。
+    よって
+    \begin{equation}
+        1 = \int_\calX \dd[p]{\nu}(x) \, \nu(dx)
+            = \int_\calX 0 \, \nu(dx)
+            = 0
+    \end{equation}
+    となり矛盾が従う。
+    背理法より$\theta \in \Theta$が成り立つ。
+\end{proof}
+
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{参考文献}
+
+\nocite{amari_information_2016}
+\nocite{wainwright_graphical_2007}
+\nocite{bn1970_pdf}
+
+{
+    \renewcommand{\bibsection}{}
+    \bibliographystyle{amsalpha}
+    \bibliography{./bibliography,../../mybibliography}
+}
+
+
+\end{document}

@@ -1,0 +1,309 @@
+\documentclass[report]{jlreq}
+\usepackage{../../global}
+\usepackage{./local}
+\subfiletrue
+\def\assetspath{../}
+%\makeindex
+\begin{document}
+
+
+% ============================================================
+%
+% ============================================================
+\chapter{初等解法}
+
+この章では初等解法について述べる。
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{変数分離形}
+
+\TODO{}
+
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{同次形}
+
+同次形の微分方程式について述べる\footnote{
+    ここでいう「同次」は、線型常微分方程式の「同次」とは異なる概念である。
+}。
+
+\TODO{}
+
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{1階線型常微分方程式}
+
+\begin{definition}[1階線型常微分方程式]
+    \begin{equation}
+        y' + P(x) y = Q(x)
+    \end{equation}
+    の形の微分方程式を
+    \term{1階線型常微分方程式}{1階線型常微分方程式}[1かいせんけいじょうびぶんほうていしき]
+    という。
+\end{definition}
+
+定数係数の場合は後の\S{3}の内容でカバーされるので、
+ここでは変数係数の場合を列挙する。
+ちなみに、変数係数の場合は未定係数法が使えないことに注意せよ。
+
+\subsection{定数変化法}
+
+同次方程式の一般解の任意定数の部分を未知変数に置き換え、
+その未知変数に関する微分方程式を解くことで
+非同次方程式の解を求める方法を
+\term{定数変化法}{定数変化法}[ていすうへんかほう]
+という。
+
+\begin{example}[定数変化法]
+    \TODO{}
+\end{example}
+
+\subsection{ベルヌーイの微分方程式}
+
+\TODO{}
+
+\subsection{リッカチの微分方程式}
+
+\TODO{}
+
+
+
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{完全形}
+
+\begin{definition}[全微分方程式と完全形]
+    微分方程式$y' = - \frac{P(x, y)}{Q(x, y)}$を
+    \begin{equation}
+        P(x, y) dx + Q(x, y) dy = 0
+    \end{equation}
+    の形に書いたものを\textbf{全微分方程式}という。
+    さらに、局所的に或る$C^2$級関数$\Phi$を用いて
+    \begin{equation}
+        P(x, y) = \Phi_x (x, y),\quad
+        Q(x, y) = \Phi_y (x, y)
+    \end{equation}
+    と書けるとき\textbf{完全形}であるという。
+\end{definition}
+
+\begin{definition}[積分因子]
+    全微分方程式が完全形でなくとも、或る$\lambda(x, y) \not\equiv 0$により
+    \begin{equation}
+        \lambda(x, y) P(x, y) dx + \lambda(x, y) Q(x, y) = 0
+    \end{equation}
+    が完全形になることがある。このような$\lambda(x, y)$を\textbf{積分因子}という。
+\end{definition}
+
+全微分方程式が完全形のとき
+\begin{equation}
+    d\Phi = \Phi_x dx + \Phi_y dy = 0
+\end{equation}
+と書けるから、一般解は
+\begin{equation}
+    \Phi = C
+\end{equation}
+となる。
+
+\begin{theorem}[2.4.1]
+    全微分方程式が完全形であることと
+    \begin{equation}
+        P_y(x, y) = Q_x(x, y) \quad ((x, y) \in U)
+    \end{equation}
+    が成り立つこととは同値である。
+\end{theorem}
+
+\begin{proof}
+    必要条件であることは明らか。
+    十分条件であることは
+    \begin{equation}
+        \Phi(x, y) = \int_\alpha^x P(s, y)\, ds + \int_\beta^y Q(\alpha, t)\, dt
+    \end{equation}
+    とおいて変形していけば示せる。
+\end{proof}
+
+全微分方程式の解法は以下の通りである。
+
+\begin{enumerate}
+    \item 全微分方程式の形に書き直し、
+    \item $P_y, Q_x$を求めて完全形か否かを確かめ、
+        \begin{equation}
+            \underbrace{P(x, y)}_{\substack{\big\downarrow \\ P_y}}\, dx
+                + \underbrace{Q(x, y)}_{\substack{\big\downarrow \\ Q_x}}\, dy = 0
+        \end{equation}
+    \item 完全形でなければ、元の方程式の代わりに次の方程式を考える。
+        \begin{equation}
+            (\lambda P)\, dx + (\lambda Q)\, dy = 0
+        \end{equation}
+        \begin{enumerate}
+            \item 積分因子タイプ1の場合は$\lambda \coloneqq x^\alpha y^\beta$と置く。
+            \item 積分因子タイプ2の場合は$\frac{P_y - Q_x}{Q}$が$x$のみの関数になることを利用して
+                $\lambda \coloneqq \lambda(x)$とおく（$y$の場合も同様）。
+        \end{enumerate}
+\end{enumerate}
+
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\newpage
+\section{演習問題}
+
+\begin{problem}[2.1.2 変数分離形]
+    (1) ロジスティック方程式
+    \begin{equation}
+        y' = (a - by) y,\quad a, b > 0
+    \end{equation}
+    を解け。
+    (ヒント: 解の一意性より、ある点$x = x_0$で$y(x_0) = a/b$をみたすとすれば
+    $y(x) \equiv a/b$でなければならないことがわかる。)
+
+    (2) 次の微分方程式を解け。
+    \begin{equation}
+        y' = \sin x \tan y
+    \end{equation}
+\end{problem}
+
+\begin{problem}
+    \begin{equation}
+        y' = \sqrt{ax + by + c}
+    \end{equation}
+    (ヒント: 根号の中身を$u$とおけば変数分離形に帰着できる。)
+\end{problem}
+
+\begin{problem}[2.2.1 同次形]
+    \begin{equation}
+        y' = e^{y/x} + \frac{y}{x}
+    \end{equation}
+    (ヒント: $z \coloneqq \dfrac{y}{x}$とおくことで変数分離形に帰着できる。)
+\end{problem}
+
+\begin{problem}[2.2.2]
+    \begin{equation}
+        y' = \frac{x^2 + y^2}{xy}
+    \end{equation}
+    (ヒント: 分母分子を$x^2$で割ることで同次形に帰着できる。)
+\end{problem}
+
+\begin{problem}[2.2.3]
+    \begin{equation}
+        y' = \frac{x - 2y + 3}{2x + y - 4}
+    \end{equation}
+    (ヒント: $ad - bc \neq 0$なので平行移動により同次形に帰着できる\footnote{
+        いきなり$z = \frac{y - 2}{x - 1}$と置いてもよいが、
+        一旦$\xi = x - 1,\; \eta = y - 2$と置いたほうが見通しが良い。
+    }。)
+\end{problem}
+
+\begin{problem}[2.2.3']
+    \begin{equation}
+        y' = \frac{x - y + 3}{-x + y - 4}
+    \end{equation}
+    (ヒント: $ad - bc = 0$なので分子または分母を$z$とおくことで変数分離形に帰着できる。)
+\end{problem}
+
+\begin{problem}[2.2.4 同次形の一般化]
+    \begin{equation}
+        y' = \frac{y}{x} \left(\frac{y}{x^2} + 1\right)
+    \end{equation}
+    (ヒント: $f(\lambda x, \lambda^2 y) = \lambda^{2-1} f(x, y)$なので、
+    $z \coloneqq \dfrac{y}{x^2}$とおくことで
+    変数分離形に帰着できる。)
+\end{problem}
+
+\begin{problem}[2.3.1]
+    \begin{equation}
+        y' = xy - x^3
+    \end{equation}
+    (ヒント: 非同次1階線型なので定数変化法によって解ける。)
+\end{problem}
+
+\begin{problem}[2.3.2]
+    \begin{equation}
+        y' = \frac{2}{x} y + x^2 \cos x
+    \end{equation}
+    定数変化法によって解ける。
+\end{problem}
+
+\begin{problem}[2.3.3]
+    \begin{equation}
+        y' = xy - x^5
+    \end{equation}
+    の解のひとつが$y = x^4 + 4x^2 + 8$であることを利用して一般解を求めよ。
+\end{problem}
+
+\begin{problem}[2.3.4]
+    非斉次項が$Q(x) y^m$であるようなものを\textbf{ベルヌーイの微分方程式}という\footnote{
+        忘れがちだが、たとえば$m = 1/2$などの場合にも適用できる。
+    }。
+    \begin{equation}
+        y' = -xy + x^3 y^4
+    \end{equation}
+    $z \coloneqq y^{1-m}$とおくと1階線型に帰着できる。
+\end{problem}
+
+\begin{problem}[2.3.5]
+    正規形で表したときに右辺が$y$の2次式になるものを
+    \textbf{リッカチの微分方程式}という\footnote{
+        右辺が$y$の1次式となるものは1階線型常微分方程式である。
+    }。
+    \begin{equation}
+        y' = y^2 + (2-x) y - 2x + 1
+    \end{equation}
+    の解のひとつが$\varphi(x) = x$であることを利用して一般解を求めよ。
+    $z \coloneqq y - \varphi(x)$とおくとベルヌーイの微分方程式に帰着できる。
+\end{problem}
+
+\begin{problem}
+    教科書の問2.3, 問2.4を読者の演習問題とする。
+\end{problem}
+
+\begin{problem}[2.4.2 完全形]
+    \begin{equation}
+        y' = - \frac{2xy}{x^2 + \cos y}
+    \end{equation}
+
+    解答：
+    \begin{equation}
+        x^2 y + \sin y = C
+    \end{equation}
+\end{problem}
+
+\begin{problem}[2.4.3 積分因子タイプ1]
+    \begin{equation}
+        (3x + 2y) y\, dx + (2x + 3y) x\, dy = 0
+    \end{equation}
+
+    解答：
+    \begin{equation}
+        x^3 y^2 + x^2 y^3 = C
+    \end{equation}
+\end{problem}
+
+\begin{problem}[2.4.4 積分因子タイプ2]
+    \begin{equation}
+        (x^2 + y) dx - x\, dy = 0
+    \end{equation}
+
+    解答：
+    \begin{equation}
+        y = x^2 - Cx
+    \end{equation}
+\end{problem}
+
+\begin{problem}
+    教科書の問2.5, 問2.7を読者の演習問題とする。
+\end{problem}
+
+\begin{problem}
+    \cite{寺坂10} 第2章例題1-9を読者の演習問題とする。
+\end{problem}
+
+\end{document}

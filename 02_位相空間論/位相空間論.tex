@@ -1,0 +1,71 @@
+\documentclass[report, notitlepage]{jlreq}
+\usepackage{docmute}
+\usepackage{global}
+\usepackage{./sub/local}
+\def\assetspath{./}
+\makeindex
+\makeglossaries
+
+\title{位相空間論}
+\author{Yahata}
+\date{}
+
+\begin{document}
+
+\maketitle
+\begin{abstract}
+    本稿では位相空間と距離空間について整理する。
+    主に\cite{Wil04}を参考にしている。
+\end{abstract}
+
+\setcounter{tocdepth}{1}
+\tableofcontents
+\markboth{\contentsname}{}
+
+% ============================================================
+%
+% ============================================================
+\part{位相空間}
+\input{sub/part1}
+
+\part{距離空間}
+\input{sub/part2}
+
+% ============================================================
+%
+% ============================================================
+\newpage
+\phantomsection
+\addcontentsline{toc}{part}{演習問題の解答}
+\part*{演習問題の解答}
+
+\includecollection{answers}
+
+% ============================================================
+%
+% ============================================================
+\newpage
+\phantomsection
+\addcontentsline{toc}{part}{参考文献}
+\renewcommand{\bibname}{参考文献}
+\markboth{\bibname}{}
+\bibliographystyle{amsalpha}
+\bibliography{../mybibliography}
+
+% ============================================================
+%
+% ============================================================
+\newpage
+\phantomsection
+\addcontentsline{toc}{part}{記号一覧}
+\printglossary[title={記号一覧}]
+
+% ============================================================
+%
+% ============================================================
+\newpage
+\phantomsection
+\addcontentsline{toc}{part}{索引}
+\printindex
+
+\end{document}
