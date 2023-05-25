@@ -1,0 +1,231 @@
+\documentclass[report]{jlreq}
+\usepackage{global}
+\usepackage{./local}
+\subfiletrue
+\def\assetspath{../}
+%\makeindex
+\chead{2023/05/23}
+\begin{document}
+
+% ============================================================
+%
+% ============================================================
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{振り返りと導入}
+
+\begin{itemize}
+    \item 期待値パラメータ空間
+\end{itemize}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{Fisher 計量}
+
+\begin{example}[正規分布族]
+    \TODO{ちゃんと書く}
+    $\calP$を$\calX = \R$上の正規分布族とし、
+    実現$(V, T, \mu)$を
+    $V = \R^2, \;
+        T(x) = (x, x^2), \;
+        \mu = \lambda$
+    とおく。
+    これは条件Aをみたす。
+
+    自然パラメータ空間は
+    $\Theta = \Theta^\circ = \R \times \R_{< 0}$である。
+
+    対数分配関数は
+    \begin{equation}
+        \psi(\theta)
+            = \frac{\mu^2}{2 \sigma^2}
+            + \log \sigma
+            + \frac{1}{2} \log 2\pi
+    \end{equation}
+    である。
+    ただし$\theta^1 = \frac{\mu}{\sigma^2}, \;
+        \theta^2 = -\frac{1}{2 \sigma^2}$
+    とおいた。
+    よって
+    \begin{alignat}{1}
+        d\psi
+            &=
+                \frac{\mu}{\sigma^2}
+                d\mu
+                + \frac{\sigma^2 - \mu^2}{\sigma^3}
+                d\sigma
+                \\
+            &=
+                -\frac{\theta^1}{2\theta^2} d\theta^1
+                +\myparen{
+                    -\frac{1}{2\theta^2}
+                    + \frac{(\theta^1)^2}{4(\theta^2)^2}
+                }
+                d\theta^2
+                \\
+        \Hess\psi
+            &= Dd\psi \\
+            &=
+                \myparen{
+                    -\frac{1}{2\theta^2}
+                    d\theta^1
+                    + \frac{\theta^1}{2(\theta^2)^2}
+                    d\theta^2
+                }
+                d\theta^1
+                +
+                \myparen{
+                    \frac{\theta^1}{2(\theta^2)^2}
+                    d\theta^1
+                    + \myparen{
+                        \frac{1}{2(\theta^2)^2}
+                        - \frac{(\theta^1)^2}{2(\theta^2)^3}
+                    }
+                    d\theta^2
+                }
+                d\theta^2
+                \\
+            &=
+                \frac{1}{\sigma^2} (d\mu)^2
+                + \frac{2}{\sigma^2} (d\sigma)^2
+    \end{alignat}
+    である。
+    Fisher 計量$g \coloneqq \Hess\psi$から定まる
+    Levi-Civita 接続$\nabla^{(g)}$の、
+    座標$\mu, \sigma$に関する接続係数を求めてみる。
+    \begin{alignat}{2}
+        {\Gamma^{(g)}}_{11}^1
+            = 0,
+            &\qquad
+                {\Gamma^{(g)}}_{12}^1
+                    = {\Gamma^{(g)}}_{21}^1
+                    = -\frac{1}{\sigma},
+            &&\qquad
+                {\Gamma^{(g)}}_{22}^1
+                    = 0,
+            \\
+        {\Gamma^{(g)}}_{11}^2
+            = \frac{1}{2\sigma},
+            &\qquad
+                {\Gamma^{(g)}}_{12}^2
+                    = {\Gamma^{(g)}}_{21}^2
+                    = 0,
+            &&\qquad
+                {\Gamma^{(g)}}_{22}^2
+                    = -\frac{1}{\sigma}
+    \end{alignat}
+    測地線の方程式は
+    \begin{equation}
+        \begin{cases}
+            x'' - \frac{2}{y} x' y' = 0 \\
+            y'' + \frac{1}{2y} (x')^2 - \frac{1}{y} (y')^2 = 0
+        \end{cases}
+    \end{equation}
+    である。
+    これを直接解くのは少し大変である。
+    その代わりに、
+    既知の Riemann 多様体との間の等長同型を利用して測地線を求める。
+    $(\Theta, g)$は、
+    上半平面$H$に計量
+    $\breve{g} = \frac{(dx)^2 + (dy)^2}{2y^2}$
+    を入れた Riemann 多様体との間に
+    等長同型$(\Theta, g) \to (H, \breve{g}), \;
+        (x, y) \mapsto (x, \sqrt{2}y)$
+    を持つ。
+    Levi-Civita 接続に関する測地線は
+    等長同型で保たれるから、
+    $(H, \breve{g})$の測地線を求めればよい。
+    $(H, \breve{g})$の測地線は、
+    $y$軸に平行な直線と
+    $x$軸上に中心を持つ半円で尽くされることが知られている。
+    これらを等長同型で写して、
+    $(\Theta, g)$の測地線として
+    $y$軸に平行な直線と
+    $x$軸上に長軸を持つ半楕円が得られる。
+\end{example}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{期待値パラメータ空間}
+
+指数型分布族の話題に戻る。
+以降、本節では$\calX$を可測空間、
+$\calP \subset \calP(\calX)$を$\calX$上の指数型分布族、
+$(V, T, \nu)$を$\calP$の実現、
+$\Theta \coloneqq \Theta_{(V, T, \nu)}$を
+$(V, T, \nu)$の自然パラメータ空間とする。
+
+\begin{definition}[期待値パラメータ空間]
+    集合$\calM_{(V, T, \nu)}$
+    \begin{equation}
+        \calM_{(V, T, \nu)}
+            \coloneqq \mybrace{
+                \mu \in V
+                \mid
+                \exists \;
+                p \colon \text{$\calX$上の確率分布}
+                \; \text{s.t.} \;
+                p \ll \nu, \;
+                E_p[T] = \mu
+            }
+    \end{equation}
+    を$(V, T, \nu)$の
+    \term{期待値パラメータ空間}[mean parameter space]
+        {期待値パラメータ空間}[きたいちぱらめーたくうかん]
+    という。
+\end{definition}
+
+期待値パラメータ空間$\calM$は、
+$\calP$に属する確率分布に関する$T$の期待値をすべて含んでいる
+(一般には真に含んでいる)。
+
+\begin{proposition}
+    $\mu \in V$が
+    ある$p \in \calP$に関する
+    $T$の期待値ならば (すなわち$\mu = E_p[T]$ならば)、
+    $\mu$は$\calM_{(V, T, \nu)}$に属する。
+\end{proposition}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+\begin{proposition}[$\calM$は凸集合]
+    $\calM_{(V, T, \nu)}$は$V$の凸集合である。
+\end{proposition}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{今後の予定}
+
+\begin{itemize}
+    \item KL ダイバージェンス
+    \item Fisher 計量
+    \item アファイン接続
+\end{itemize}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{参考文献}
+
+\nocite{amari_information_2016}
+
+{
+    \renewcommand{\bibsection}{}
+    \bibliographystyle{amsalpha}
+    \bibliography{./bibliography,../../mybibliography}
+}
+
+
+\end{document}

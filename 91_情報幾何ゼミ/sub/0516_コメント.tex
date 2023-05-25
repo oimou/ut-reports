@@ -1,0 +1,627 @@
+\documentclass[report]{jlreq}
+\usepackage{global}
+\usepackage{./local}
+\subfiletrue
+\def\assetspath{../}
+%\makeindex
+\chead{2023/05/16}
+\begin{document}
+
+% ============================================================
+%
+% ============================================================
+
+発表中にコメントがあった事柄を整理する。
+
+次の補題の証明を修正した(不等式評価の部分)。
+
+\begin{lemma}[優関数の存在]
+    \label[lemma]{lemma:existence_of_dominant_function}
+    $e^i \; (i = 1, \dots, m)$を$V^\vee$の基底とし、
+    この基底が定める$\Theta^\circ$上のチャートを
+    $\varphi = (\theta_1, \dots, \theta_m) \colon \Theta^\circ \to \R^m$
+    とおく。
+    このとき、
+    任意の$k \in \Z_{\ge 1}, \;
+        i_1, \dots, i_k \in \{ 1, \dots, m \}$
+    に対し、次が成り立つ:
+    \begin{enumerate}
+        \item 任意の$\theta \in \Theta^\circ$に対し、
+            関数
+            $\del_{i_k} \cdots \del_{i_1} h(\cdot, \theta)
+                \colon \calX \to \R$
+            は$L^1(\calX, \mu)$に属する。
+        \item 任意の$\theta \in \Theta^\circ$に対し、
+            $\Theta^\circ$における$\theta$のある近傍$U$と、
+            ある$\mu$-可積分関数$\Phi \colon \calX \to \R$が存在し、
+            すべての$\theta' \in U$に対し
+            $\myabs{
+                \del_{i_k} \cdots \del_{i_1} h(x, \theta')
+            } \le \Phi(x) \; \text{a.e.$x$}$
+            が成り立つ。
+    \end{enumerate}
+\end{lemma}
+
+\begin{proof}
+    (1)は(2)より直ちに従うから、(2)を示す。
+    そこで$\theta \in \Theta^\circ$を任意とする。
+    補題の主張は座標$\theta_1, \dots, \theta_m$を
+    平行移動して考えても等価だから、
+    点$\theta$の座標は
+    $\varphi(\theta) = 0 \in \R^m$
+    であるとしてよい。
+
+    \uline{Step 1: $U, \Phi$の構成} \quad
+    $\eps > 0$を十分小さく選び、
+    $\R^m$内の閉立方体
+    \begin{alignat}{1}
+        A_{2\eps}
+            \coloneqq
+            \prod_{i = 1}^m [- 2\eps, 2\eps]
+        \quad
+        A_{\eps}
+            \coloneqq
+            \prod_{i = 1}^m [- \eps, \eps]
+    \end{alignat}
+    が$\varphi(\Theta^\circ)$に含まれるようにしておく。
+    すると
+    $U \coloneqq \varphi^{-1}(\Int A_{\eps})
+        \subset \varphi(\Theta^\circ)$は
+    $\theta$の近傍となる。
+    また、$\Phi$を
+    \begin{equation}
+        \Phi(x) \coloneqq
+            \myparen{
+                \frac{k + 1}{\eps}
+            }^k
+            \sum_{\tau \in \{ \pm 1 \}^m}
+                \exp\myparen{
+                    \sum_{i = 1}^m
+                    2\eps \tau_i T^i(x)
+                }
+            \quad
+            (x \in \calX)
+    \end{equation}
+    で定めると、
+    各$\tau \in \{ \pm 1 \}^m$に対し
+    $2\eps\tau_i \in A_{2\eps} \; (i = 1, \dots, m)$
+    ゆえに
+    右辺の$\sum$の各項は$\calX$上$\mu$-可積分だから、
+    $\Phi$も$\mu$-可積分である。
+    これらの$U$と$\Phi$が求めるものであることを示す。
+
+    \uline{Step 2: $h$の座標表示} \quad
+    残りの示すべきことは、
+    すべての$\theta' \in U$に対し
+    $\myabs{
+        \del_{i_k} \cdots \del_{i_1} h(x, \theta')
+    } \le \Phi(x) \; \text{a.e.$x$}$
+    が成り立つことである。
+    そこで、不等式の具体的な計算のために
+    $h$の座標表示を求めておく。
+    いま各$\theta' \in U$に対し
+    \begin{equation}
+        h(x, \theta')
+            = \exp\langle \theta', T(x) \rangle
+            = \exp\langle \theta_i(\theta') e^i, T(x) \rangle
+            = \exp\myparen{\theta_i(\theta') T^i(x)}
+    \end{equation}
+    が成り立っている。
+    ただし
+        $T^i \colon \calX \to \R, \;
+        x \mapsto \langle e^i, T(x) \rangle \;
+        (i = 1, \dots, m)$
+    とおいた。
+    したがって
+    \begin{equation}
+        \locallabel{eq:partial-derivative-of-h}
+        \del_{i_k} \cdots \del_{i_1} h(x, \theta')
+            = T^{i_1}(x) \cdots T^{i_k}(x)
+                \exp\myparen{\theta_i(\theta') T^i(x)}
+    \end{equation}
+    と表せることがわかる。
+
+    \uline{Step 3: $U, \Phi$が条件を満足すること} \quad
+    $\theta' \in U$を任意とし、
+    式\localcref{eq:partial-derivative-of-h}の絶対値を上から評価する。
+    ただし、表記の簡略化のため以降
+    $t' \coloneqq (t'_1, \dots, t'_m)
+        \coloneqq \varphi(\theta')
+        \in \R^m$
+    とおく。
+    まず$\frac{k + 1}{\eps} \frac{\eps}{k + 1} = 1$より
+    \begin{alignat}{1}
+        \myabs{
+            T^{i_1}(x) \cdots T^{i_k}(x)
+            \exp\myparen{
+                \sum_{i = 1}^m
+                t'_i T^i(x)
+            }
+        }
+            &=
+                \myparen{
+                    \frac{k + 1}{\eps}
+                }^k
+                \myparen{
+                    \prod_{\alpha = 1}^k
+                        \frac{\eps}{k + 1}
+                        |T^{i_\alpha}(x)|
+                }
+                \exp\myparen{
+                    \sum_{i = 1}^m
+                    t'_i T^i(x)
+                } 
+                \\
+    \intertext{
+        $C \coloneqq \myparen{\frac{k + 1}{\eps}}^k$とおいて
+    }
+            &=
+                \myparen{
+                    \frac{k + 1}{\eps}
+                }^k
+                \myparen{
+                    \prod_{\alpha = 1}^k
+                        \frac{\eps}{k + 1}
+                        |T^{i_\alpha}(x)|
+                }
+                \exp\myparen{
+                    \sum_{i = 1}^m
+                    t'_i T^i(x)
+                } 
+                \\
+    \intertext{
+        以後しばらく$t'_1$が動くあいだは
+        絶対値$|T^i(x)|$で評価をすることにして、
+    }
+            &\le
+                C
+                \myparen{
+                    \prod_{\alpha = 1}^k
+                        \frac{\eps}{k + 1}
+                        |T^{i_\alpha}(x)|
+                }
+                \exp\myparen{
+                    \sum_{i = 1}^m
+                    |t'_i| |T^i(x)|
+                } 
+                \\
+    \intertext{
+        各$i = 1, \dots, m$について
+        $|T^i(x)|$にかかる係数を評価すると、
+        ある$t''_i \in A_{2\eps}$が存在して
+    }
+            &=
+                C
+                \exp\myparen{
+                    \sum_{i = 1}^m
+                    t''_i |T^i(x)|
+                }
+                \\
+            &=
+                C
+                \prod_{i = 1}^m
+                    \exp\myparen{
+                        t''_i |T^i(x)|
+                    }
+                \\
+            &\le
+                C
+                \prod_{i = 1}^m
+                    \exp\myparen{
+                        2\eps |T^i(x)|
+                    }
+                \\
+    \intertext{
+        $e^{|s|} \le e^s + e^{-s} \; (s \in \R)$より
+    }
+            &\le
+                C
+                \prod_{i = 1}^m
+                \mybrace{
+                    \exp\myparen{
+                        2\eps T^i(x)
+                    }
+                    +
+                    \exp\myparen{
+                        - 2\eps T^i(x)
+                    }
+                }
+                \\
+    \intertext{
+        式を展開して
+    }
+            &=
+                C
+                \sum_{\tau \in \{ \pm 1 \}^m}
+                    \exp\myparen{
+                        \sum_{i = 1}^m
+                        2\eps \tau_i T^i(x)
+                    }
+                \\
+            &= \Phi(x)
+    \end{alignat}
+    以上で$U, \Phi$が条件を満たすことが示された。
+\end{proof}
+
+上の補題のように
+$\theta$から全方向への動きを抑える優関数をとるのでなく、
+1方向への動きを抑える優関数をとる場合は、
+次の補題のように段階的に示した方が簡単である。
+
+\begin{lemma}
+    $e^i \; (i = 1, \dots, m)$を$V^\vee$の基底とし、
+    この基底が定める$\Theta^\circ$上のチャートを
+    $\varphi = (\theta_1, \dots, \theta_m) \colon \Theta^\circ \to \R^m$
+    とおく。
+    このとき、次が成り立つ:
+    \begin{enumerate}
+        \item $\calX$上の任意の測度$\mu$および、
+            任意の$i = 1, \dots, m$に対し
+            \begin{equation}
+                \del_i \int_\calX h(x, \theta) \, \mu(dx)
+                    = \int_\calX \del_i h(x, \theta) \, \mu(dx)
+            \end{equation}
+            が成り立つ。
+        \item $\calX$上の任意の測度$\mu$および、
+            $h(x, \theta) a(x) \in L^1(\calX, \mu)$なる
+            任意の可測関数$a \colon \calX \to \R$に対し
+            \begin{equation}
+                \del_i \int_\calX h(x, \theta) a(x) \, \mu(dx)
+                    = \int_\calX \del_i h(x, \theta) a(x) \, \mu(dx)
+            \end{equation}
+            が成り立つ。
+        \item $\calX$上の任意の測度$\mu$および、
+            任意の$k \in \Z_{\ge 0}, \;
+                i_1, \dots, i_k \in \{ 1, \dots, m \}$に対し
+            \begin{equation}
+                \del_{i_k} \cdots \del_{i_1}
+                    \int_\calX h(x, \theta)
+                    \, \mu(dx)
+                    = \int_\calX
+                        \del_{i_k} \cdots \del_{i_1} h(x, \theta)
+                        \, \mu(dx)
+            \end{equation}
+            が成り立つ。
+    \end{enumerate}
+\end{lemma}
+
+\begin{proof}
+    \uline{(1)} \quad
+    前の補題の証明の$m = 1, k = 1$のケースとほぼ同じ。
+
+    \uline{(2)} \quad
+    $\mu_{\pm} \coloneqq a_{\pm} \cdot \mu$
+    とおいて(1)を適用すればよい。
+
+    \uline{(3)} \quad
+    $T^i(x)$を$a(x)$として(2)を帰納的に適用すればよい。
+\end{proof}
+
+ちなみに、
+最終的に使わなくなってしまったが、
+次のことが成り立つ(いつか使うかもしれない)。
+
+\begin{proposition}
+    すべての$x \in \R$に対し
+    \begin{equation}
+        |x| < \cosh x
+            = \frac{e^x + e^{-x}}{2}
+    \end{equation}
+    が成り立つ。
+\end{proposition}
+
+\begin{proof}
+    $x^2 - 2x + 2 = (x - 1)^2 + 1 > 0$より
+    $\frac{1}{2} x^2 + 1 > x$だから
+    \begin{alignat}{1}
+        \cosh x
+            =
+                1 + \frac{1}{2} x^2 + \cdots
+            \ge
+                1 + \frac{1}{2} x^2
+            >
+                x
+    \end{alignat}
+    を得る。
+\end{proof}
+
+$\exp$を他の関数に置き換えた場合、
+どのくらい同じことがいえるかを考えてみる。
+
+\begin{problem}
+    $f \colon \R \to \R$を$C^1$級正値凸関数、
+    $V$を$m$次元$\R$-ベクトル空間、
+    $\mu$を$V$上の測度、
+    $h \colon V^\vee \times V \to \R, \; (t, x) \mapsto f(\myangle{t}{x})$とし、
+    $V^\vee$のある開部分集合$U$上で
+    $\lambda \colon U \to \R, \; t \mapsto \int_V h(t, x) \, \mu(dx)$が
+    定義されているとする。
+    このとき、
+    $U$上の任意の座標$x^i \; (i = 1, \dots, m)$に対し
+    $\del_i \lambda'(t) = \int_V \del_i h(t, x) \, \mu(dx)$
+    は成り立つか？
+\end{problem}
+
+簡単な設定で考えてみる。
+
+\newpage
+\begin{problem}
+    $\calX$を可測空間、
+    $\mu$を$\calX$上の測度、
+    $T \colon \calX \to \R$を可測関数、
+    $f \colon \R \to \R$を微分可能な凸関数、
+    $h \colon \R \times \calX \to \R, \; (t, x) \mapsto f(tT(x))$とし、
+    $\R$のある開部分集合$\Theta$上で
+    $\lambda \colon \Theta \to \R, \; t \mapsto \int_\R h(t, x) \, \mu(dx)$が
+    定義されているとする。
+    このとき、
+    $\lambda'(t) = \int_\R \deldel[h]{t} (t, x) \, \mu(dx) \; (t \in \Theta)$
+    は成り立つか？
+\end{problem}
+
+\begin{answer}
+    $t \in \Theta$とし、
+    $\lambda'(t) = \int_\R \deldel[h]{t} (t, x) \, \mu(dx)$
+    が成り立つことを示す。
+    そのために示すべきことは
+    偏導関数に対する優関数の存在、すなわち
+    \begin{description}
+        \vspace{-1em}
+        \setstretch{1.5}
+        \item[(A)] $t$のある開近傍$U \opensubset \Theta$と、
+            ある$\mu$-可積分関数$\Phi \colon \calX \to \R$が存在し、
+            すべての$t' \in U$に対し
+            $\myabs{
+                \deldel[h]{t}(t', x)
+            } \le \Phi(x) \; \text{a.e.$x$}$
+            が成り立つ。
+    \end{description}
+    である。
+
+    \uline{Step 1: $U, \Phi$の構成} \quad
+    $r > 0$を十分小さく選び、$\R$の閉区間
+    \begin{equation}
+        A_{2r} \coloneqq [t - 2r, t + 2r],
+            \quad
+            A_r \coloneqq [t - r, t + r]
+    \end{equation}
+    が$\Theta$に含まれるようにしておく。
+    そこで
+    $U \coloneqq \Int_\Theta A_r = (t - r, t + r)$
+    とおき、
+    $\Phi \colon \calX \to \R$を
+    \begin{equation}
+        \Phi(x)
+            \coloneqq
+            \frac{5}{2r}
+            \Big(
+                \myabs{
+                    h(t - 2r, x)
+                }
+                +
+                \myabs{
+                    h(t + 2r, x)
+                }
+            \Big)
+    \end{equation}
+    と定める。
+    以下、この$U, \Phi$が条件(A)をみたすものであることを示す。
+
+    まず$U$は$\Theta$における$t$の開近傍であり、
+    また
+    $t \pm 2r \in A_{2r} \subset \Theta$ゆえに
+    $h(t \pm 2r, \cdot) \colon \calX \to \R$は
+    $\mu$-可積分だから、
+    $\Phi$は$\mu$-可積分である。
+    したがって
+    残りの示すべきことは、
+    すべての$t' \in U$に対し
+    $\myabs{
+        \deldel[h]{t}(t', x)
+    }
+        \le \Phi(x) \; \text{a.e.$x$}$
+    すなわち
+    $\myabs{
+        f'(t'T(x)) T(x)
+    }
+        \le \Phi(x) \; \text{a.e.$x$}$
+    が成り立つことである。
+
+    \uline{Step 2: $\Phi$による不等式評価} \quad
+    $t' \in U$とする。
+    まず各$x \in \calX$に対し、$T(x)$の符号で場合分けして不等式評価を与える。
+    そこで複号同順でそれぞれの場合を一度に書くと、
+    $T(x) \gtrless 0$の場合、
+    $t'T(x) < (t \pm 2r) T(x)$だから、
+    $f$の微分可能性と凸性より
+    \begin{alignat}{2}
+        &\phantom{\therefore} \qquad&
+            f'(t'T(x))
+            &\le
+                \frac{
+                    f((t \pm 2r)T(x)) - f(t'T(x))
+                }
+                {
+                    ((t \pm 2r)T(x) - t'T(x))
+                }
+            \\
+        &\therefore&
+            |f'(t'T(x))T(x)|
+            &\le
+                \frac{1}{|t \pm 2r - t'|}
+                \Big(
+                    |f((t \pm 2r)T(x))| + |f(t'T(x))|
+                \Big)
+            \\
+        &&
+            &\le
+                \frac{1}{r}
+                \Big(
+                    |f((t \pm 2r)T(x))| + |f(t'T(x))|
+                \Big)
+    \end{alignat}
+    が成り立つ。
+    したがって、
+    $T(x) > 0$と$T(x) < 0$の場合を合わせると、
+    $T(x) \neq 0$のとき
+    \begin{equation}
+        \locallabel{eq:1}
+        |f'(t'T(x)) T(x)|
+            \le
+                \frac{1}{r}
+                \Big(
+                    |f((t - 2r)T(x))|
+                    + |f(t'T(x))|
+                    + |f((t + 2r)T(x))|
+                    + |f(t'T(x))|
+                \Big)
+    \end{equation}
+    が成り立つ。
+    この不等式は$T(x) = 0$の場合も成り立つから、
+    すべての$x \in \calX$に対して成り立つ。
+
+    さらに
+    \localcref{eq:1}の右辺の
+    $|f(t'T(x))|$の項を評価することを考える。
+    いま$t' \in A_r$ゆえに、
+    ある$s \in [1/4, 3/4]$が存在して
+    $t' = (1 - s)(t - 2r) + s(t + 2r)$が成り立つから、
+    $f$の凸性より
+    \begin{alignat}{1}
+        |f(t'T(x))|
+            &=
+                \myabs{
+                    f((1 - s)(t - 2r)T(x) + s(t + 2r)T(x))
+                }
+                \\
+            &\le
+                \myabs{
+                    (1 - s)f((t - 2r)T(x)) + sf((t + 2r)T(x))
+                }
+                \\
+            &\le
+                (1 - s) |f((t - 2r)T(x))| + s |f((t + 2r)T(x))|
+                \\
+            &\le
+                \frac{3}{4}
+                \Big(
+                    |f((t - 2r)T(x))| + |f((t + 2r)T(x))|
+                \Big)
+    \end{alignat}
+    が成り立つ。
+    この不等式を\localcref{eq:1}に合わせれば、
+    すべての$x \in \calX$に対して
+    \begin{alignat}{1}
+        |f'(t'T(x)) T(x)|
+            &=
+                \frac{10}{4r}
+                \Big(
+                    |f((t - 2r)T(x))|
+                    +
+                    |f((t + 2r)T(x))|
+                \Big)
+                \\
+            &=
+                \frac{5}{2r}
+                \Big(
+                    |h(t - 2r, x)|
+                    +
+                    |h(t + 2r, x)|
+                \Big)
+                \\
+            &=
+                \Phi(x)
+    \end{alignat}
+    が成り立つことがわかる。
+    したがって$U, \Phi$が条件(A)をみたすことが示されて、
+    証明が完了した。
+\end{answer}
+
+\newpage
+$f$の具体的な形が与えられている場合は以下のような主張が成り立つ。
+
+\begin{proposition}
+    $p > 1, \; c > 0, \;
+        f \colon \R \to \R, \; |x|^p + c$とし、
+    $h \colon \R \times \R \to \R, \; (t, x) \mapsto f(tx)$とし、
+    $\R$のある開区間$J$上で
+    $\lambda \colon J \to \R, \; t \mapsto \int_\R h(t, x) \, dx$が
+    定義されているとする。
+    このとき、
+    $\lambda'(t) = \int_\R \deldel{t} h(t, x) \, dx$
+    が成り立つ。
+\end{proposition}
+
+\begin{proof}[証明の概略.]
+    $f(x) = x^2 + 1$の場合を考える。他の$p, c$の場合も同様。
+    各$t \in \R$に対し、
+    $r > 0$を十分小さく選べば、
+    $f((t \pm r)x)$は可積分で、
+    優関数として
+    \begin{equation}
+        \Phi(x) \coloneqq
+            \myparen{
+                \frac{2}{(t + r)^2}
+                +
+                2
+            }
+                f((t + r)x)
+            +
+            \myparen{
+                \frac{2}{(t - r)^2}
+                +
+                2
+            }
+                f((t - r)x)
+    \end{equation}
+    を選ぶことができる。
+    実際、
+    任意の$t' \in [t - r, t + r]$に対し
+    \begin{alignat}{1}
+        \myabs{
+            \deldel{t} h(x, t')
+        }
+            &= \myabs{
+                x f'(t'x)
+            }
+                \\
+            &= \myabs{
+                2t'x^2
+            }
+                \\
+            &\le
+                \underbrace{
+                    \frac{2}{(t + r)^2}
+                        f((t + r)x)
+                    +
+                    \frac{2}{(t - r)^2}
+                        f((t - r)x)
+                }_{\text{$|t'| \le 1$の場合の上界}}
+                +
+                \underbrace{
+                    2 f((t + r)x)
+                    +
+                    2 f((t - r)x)
+                }_{\text{$|t'| > 1$の場合の上界}}
+                \\
+            &=
+                \myparen{
+                    \frac{2}{(t + r)^2}
+                    +
+                    2
+                }
+                    f((t + r)x)
+                +
+                \myparen{
+                    \frac{2}{(t - r)^2}
+                    +
+                    2
+                }
+                    f((t - r)x)
+                \\
+            &= \Phi(x)
+    \end{alignat}
+    となる。
+\end{proof}
+
+\end{document}

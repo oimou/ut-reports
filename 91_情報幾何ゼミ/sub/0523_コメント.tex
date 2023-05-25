@@ -1,0 +1,231 @@
+\documentclass[report]{jlreq}
+\usepackage{global}
+\usepackage{./local}
+\subfiletrue
+\def\assetspath{../}
+%\makeindex
+\chead{2023/05/23}
+\begin{document}
+
+% ============================================================
+%
+% ============================================================
+
+発表中にコメントがあった事柄を整理する。
+
+各$\omega \in V^\vee$に対し、
+$\langle \omega, f \rangle$を
+\termsilent{$f$の$\omega$の向きの成分}、
+$\Var[\langle \omega, f \rangle]$を
+\termsilent{$f$の$\omega$の向きの分散}と呼ぶことにすれば、
+次の命題が成り立つ。
+
+\begin{proposition}
+    \begin{enumerate}
+        \item $f$の分散が$0$であることと、
+            すべての$\omega \in V^\vee$に対し
+            $f$の$\omega$の向きの分散が$0$であることとは同値である。
+        \item $\omega \in V^\vee$に関し、
+            $f$の$\omega$の向きの分散が$0$であることと、
+            $f$の$\omega$の向きの成分がa.e.定数であることとは同値である。
+        \item $f$がa.e.定数であることと、
+            すべての$\omega \in V^\vee$に対し
+            $f$の$\omega$の向きの成分がa.e.定数であることとは同値である。
+    \end{enumerate}
+\end{proposition}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+$\Var[f]$を行列とみなせば、
+$f$の$\omega$の向きの分散が$0$であることは
+次のように理解できる。
+
+\begin{proposition}
+    $V$の基底を固定することで
+    $\Var[f] \in M_m(\R), \; \omega \in \R^m$とみなせば、
+    $\Var[\langle \omega, f \rangle] = 0$であることと、
+    $\Var[f]\omega = 0$であることとは同値である。
+\end{proposition}
+
+\begin{lemma}
+    $A \in M_m(\R)$を半正定値対称行列とする\footnote{
+        半正定値性を除いた場合の反例としては
+        $A = \begin{bmatrix}
+            1 & 0 \\
+            0 & -1
+        \end{bmatrix}, \;
+            v = \begin{bmatrix}
+                1 \\ 1
+            \end{bmatrix}$
+        がある。
+    }。
+    このとき、$v \in \R^m$に関し
+    $\up{t}v A v = 0$であることと、
+    $Av = 0$であることとは同値である。
+\end{lemma}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+\begin{proof}[命題の証明.]
+    \TODO{}
+\end{proof}
+
+条件Aは
+アファイン部分空間の言葉で特徴づけることができる。
+
+\begin{proposition}
+    実現$(V, T, \mu)$に関し次は同値である:
+    \begin{enumerate}
+        \item $(V, T, \mu)$は条件Aをみたす。
+        \item $T$の像が$V$をほとんど affine span する\TODO{定義?}。
+    \end{enumerate}
+\end{proposition}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+\begin{definition}
+    \begin{equation}
+        \Theta'_{(V, T, \mu)} \coloneqq \mybrace{
+            \theta \in \Theta_{(V, T, \mu)}
+            \mid
+            P_\theta \in \calP
+        }
+    \end{equation}
+    を$\calP$の実現$(V, T, \mu)$の
+    \termsilent{真のパラメータ空間}[strict parameter space]と呼ぶ。
+\end{definition}
+
+\begin{propdef}
+    指数型分布族$\calP$に関し、次は同値である:
+    \begin{enumerate}
+        \item ある最小次元実現$(V, T, \mu)$に対し、
+            $\Theta'_{(V, T, \mu)}$は$V^\vee$で開である。
+        \item すべての最小次元実現$(V, T, \mu)$に対し、
+            $\Theta'_{(V, T, \mu)}$は$V^\vee$で開である。
+    \end{enumerate}
+    $\calP$がこれらの同値な2条件をみたすとき、
+    $\calP$は\termsilent{開}[open]であるという。
+\end{propdef}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+\begin{proposition}
+    $(V, T, \mu)$を$\calP$の最小次元実現とする。
+    このとき、
+    写像$\Theta'_{(V, T, \mu)} \to \calP, \;
+        \theta \mapsto P_\theta$は全単射である。
+\end{proposition}
+
+\begin{proof}
+    全射性は$\Theta'$の定義より従う。
+    単射性は\url{0502_資料.pdf}の命題2.2(2)より従う。
+\end{proof}
+
+\begin{propdef}
+    $\calP$は開であるとする。
+    $\calP$の最小次元実現$(V, T, \mu)$をひとつ選ぶと、
+    上の命題の全単射により
+    $\calP$上に多様体構造と平坦アファイン接続を定めることができる。
+    この多様体構造および平坦アファイン接続は
+    最小次元実現のとり方によらない。
+    これを$\calP$の
+    \termsilent{自然な多様体構造}
+    および
+    \termsilent{自然な平坦アファイン接続}
+    と呼ぶ。
+\end{propdef}
+
+\begin{proof}
+    \TODO{cf. [BN78, Lem. 8.1]. ちなみに[BN70]の証明はRN微分のa.e.一致の扱いに誤りがあるらしい}
+\end{proof}
+
+\begin{propdef}[$\calP$の Fisher 計量]
+    $\calP$は開であるとする。
+    $\calP$の最小次元実現$(V, T, \mu)$をひとつ選ぶと、
+    $\Theta'_{(V, T, \mu)}$上の Fisher 計量を
+    $\calP$上の Riemann 計量とみなすことができる。
+    この計量は最小次元実現のとり方によらない。
+    これを$\calP$の
+    \termsilent{Fisher 計量}
+    と呼ぶ。
+\end{propdef}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+\begin{proposition}
+    条件Aが成り立つことと
+    $\Hess\psi$が正定値であることとは同値である。
+\end{proposition}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+\begin{definition}[スコア関数]
+    \begin{alignat}{2}
+        p
+            &\colon \Theta \times \calX \to \R, \quad
+            &&(\theta, x) \mapsto \exp\myparen{
+                \langle \theta, T(x) \rangle - \psi(\theta)
+            }
+            \\
+        l
+            &\colon \Theta \times \calX \to \R, \quad
+            &&(\theta, x) \mapsto \log p(\theta, x)
+            \\
+        dl
+            &\colon \Theta \times \calX \to V, \quad
+            &&(\theta, x) \mapsto dl_\theta
+            \\
+        dl^2
+            &\colon \Theta \times \calX \to V \otimes V, \quad
+            &&(\theta, x) \mapsto dl_\theta^2
+            \\
+        E[dl^2]
+            &\colon \Theta \to V \otimes V, \quad
+            &&\theta \mapsto E_{P_\theta}[dl^2]
+    \end{alignat}
+    ただし
+    $dl$の値域が$V$であるのは、
+    各$\theta$ごとに$dl_\theta \in T^\vee_\theta \Theta$を
+    $V^{\vee\vee} = V$の元とみなしている。
+\end{definition}
+
+\begin{proposition}
+    \begin{equation}
+        E[dl^2] = \Hess\psi
+    \end{equation}
+\end{proposition}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section*{参考文献}
+
+\nocite{amari_information_2016}
+
+{
+    \renewcommand{\bibsection}{}
+    \bibliographystyle{amsalpha}
+    \bibliography{./bibliography,../../mybibliography}
+}
+
+
+
+\end{document}

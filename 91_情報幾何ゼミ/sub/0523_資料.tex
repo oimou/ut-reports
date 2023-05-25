@@ -14,94 +14,497 @@
 % ------------------------------------------------------------
 %
 % ------------------------------------------------------------
-\section{振り返りと導入}
+\section*{振り返りと導入}
 
+前回は対数分配関数について調べた。
+本稿では次のことを行う:
 \begin{itemize}
-    \item KL ダイバージェンス
-    \item Fisher 情報量
-    \item アファイン接続
+    \item 分散の基本的な性質を調べる。
+    \item Hessian を定義する。
+    \item 対数分配関数から Fisher 計量を定める。
 \end{itemize}
 
 % ------------------------------------------------------------
 %
 % ------------------------------------------------------------
-\section{期待値パラメータ空間}
+\section{分散の性質}
 
-指数型分布族の話題に戻る。
-以降、本節では$\calX$を可測空間、
-$\calP \subset \calP(\calX)$を$\calX$上の指数型分布族、
-$(V, T, \nu)$を$\calP$の実現、
-$\Theta \coloneqq \Theta_{(V, T, \nu)}$を
-$(V, T, \nu)$の自然パラメータ空間とする。
+本節では
+$\calX$を可測空間、
+$p$を$\calX$上の確率測度、
+$V$を$m$次元$\R$-ベクトル空間 ($m \in \Z_{\ge 0}$)
+とする。
 
-\begin{definition}[期待値パラメータ空間]
-    集合$\calM_{(V, T, \nu)}$
+以前 (\url{0502_資料.pdf}) の正規分布族の例では、
+十分統計量の分散が正定値対称であることをみた。
+ここでは分散の基本的な性質を調べる。
+
+\begin{proposition}[期待値・分散とペアリング]
+    \label[proposition]{prop:expectation-variance-pairing}
+    $f \colon \calX \to V$を可測写像とする。
+    \begin{enumerate}
+        \item $f$が$p$に関する期待値を持つならば、
+            任意の$\omega \in V^\vee$に対し
+            $E_p[\langle \omega, f(x) \rangle]
+                = \langle \omega, E_p[f(x)] \rangle$
+            が成り立つ。
+        \item $f$が$p$に関する分散を持つならば、
+            任意の$\omega \in V^\vee$に対し
+            $\Var_p[\langle \omega, f(x) \rangle]
+                = \langle \omega \otimes \omega, \Var_p[f(x)] \rangle$
+            が成り立つ。
+    \end{enumerate}
+\end{proposition}
+
+\begin{proof}
+    \uline{(1)} \quad
+    $V$の基底をひとつ選んで固定し、
+    この基底および双対基底に関する$f, \omega$の成分を
+    それぞれ$f^i \colon \calX \to \R, \; \omega_i \in \R \; (i = 1, \dots, m)$とおけば、
     \begin{equation}
-        \calM_{(V, T, \nu)}
-            \coloneqq \mybrace{
-                \mu \in V
-                \mid
-                \exists \;
-                p \colon \text{$\calX$上の確率分布}
-                \; \text{s.t.} \;
-                p \ll \nu, \;
-                E_p[T] = \mu
-            }
+        E[\langle \omega, f(x) \rangle]
+            =
+                E[\omega_i f^i(x)]
+            =
+                \omega_i E[f^i(x)]
+            = \langle \omega, E[f(x)] \rangle
     \end{equation}
-    を$(V, T, \nu)$の
-    \term{期待値パラメータ空間}[mean parameter space]
-        {期待値パラメータ空間}[きたいちぱらめーたくうかん]
-    という。
+    となる。
+
+    \uline{(2)} \quad
+    表記の簡略化のため$\alpha \coloneqq E[f] \in V$とおけば
+    \begin{alignat}{1}
+        \Var[\langle \omega, f(x) \rangle]
+            &=
+                E[(\langle \omega, f(x) \rangle - \langle \omega, \alpha \rangle)^2]
+                \\
+            &=
+                E[\langle \omega, f(x) - \alpha \rangle^2]
+                \\
+            &=
+                E[
+                    \langle
+                        \omega \otimes \omega,
+                        (f(x) - \alpha)^2
+                    \rangle
+                ]
+                \\
+            &=
+                \langle
+                    \omega \otimes \omega,
+                    E[(f(x) - \alpha)^2]
+                \rangle
+                \\
+            &=
+                \langle
+                    \omega \otimes \omega,
+                    \Var[f(x)]
+                \rangle
+    \end{alignat}
+    となる。
+\end{proof}
+
+\begin{theorem}[分散の半正定値対称性]
+    \label[theorem]{thm:variance-positive-semidefinite}
+    $f \colon \calX \to V$を可測写像とし、
+    $f$は$p$に関する分散を持つとする。
+    このとき、
+    $\Var_p[f] \in V \otimes V$は
+    対称かつ半正定値である。
+\end{theorem}
+
+\begin{proof}
+    $\Var[f] = E[(f - E[f])^2]$が対称であることは、
+    写像$(f - E[f])^2$が
+    $V \otimes V$の対称テンソル全体からなるベクトル部分空間に値を持つことから従う。
+    $\Var[f]$が半正定値であることは、
+    各$\omega \in V^\vee$に対し
+    $\Var[f](\omega, \omega)
+        = \langle \omega \otimes \omega, \Var[f] \rangle
+        = \Var[\langle \omega, f(x) \rangle]
+        \ge 0$
+    より従う。
+\end{proof}
+
+分散が0であることの特徴づけを述べておく。
+
+\begin{proposition}[分散が0であるための必要十分条件]
+    \label[proposition]{prop:zero_variance_condition}
+    可測写像$f \colon \calX \to V$であって$p$に関する分散を持つものに関し、
+    次は同値である:
+    \begin{enumerate}
+        \item $\Var_p[f] = 0$
+        \item $f$は$p$-a.e.定数
+    \end{enumerate}
+\end{proposition}
+
+証明には次の事実を用いる。
+
+\begin{fact}
+    \label[fact]{fact:nonnegative_func}
+    $\calY$を可測空間、
+    $\mu$を$\calY$上の測度とする。
+    このとき、
+    $g \in L^1(\calY, \mu)$であって
+    $g(y) \ge 0 \; \text{$\mu$-a.e.}$
+    をみたすものに関し、
+    次は同値である:
+    \begin{enumerate}
+        \item $\int_\calY g(y) \, \mu(dy) = 0$
+        \item $g(y) = 0 \quad \text{$\mu$-a.e.}$
+    \end{enumerate}
+    \vspace{-2em}
+    \qed
+\end{fact}
+
+\begin{proof}[\cref{prop:zero_variance_condition}の証明.]
+    $V$の基底$e_i \; (i = 1, \dots, m)$をひとつ選んで固定し、
+    $f, E[f]$の成分表示を
+    それぞれ$f^i \colon \calX \to \R$
+    および
+    $a^i \in \R \; (i = 1, \dots, m)$とおいておく。
+
+    \uline{(2) \Rightarrow (1)} \quad
+    $f$がa.e.定数ならば、
+    $f^i(x) = a^i \;
+        \text{a.e.} \;
+        (i = 1, \dots, m)$
+    したがって
+    $(f^i(x) - a^i)(f^j(x) - a^j) = 0 \;
+        \text{a.e.} \;
+        (i, j = 1, \dots, m)$
+    である。
+    よって
+    $\int_\calX (f^i(x) - a^i)(f^j(x) - a^j) \, p(dx) = 0 \;
+        (i, j = 1, \dots, m)$
+    だから
+    $\Var[f] = 0$である。
+
+    \uline{(1) \Rightarrow (2)} \quad
+    $\Var[f] = 0$とすると、
+    すべての$i = 1, \dots, m$に対し
+    $\int_\calX (f^i(x) - a^i)^2 \, p(dx) = 0$が成り立つ。
+    よって\cref{fact:nonnegative_func}より、
+    すべての$i = 1, \dots, m$に対し
+    $(f^i(x) - a^i)^2 = 0 \;
+        \text{a.e.}$
+    したがって
+    $f^i(x) = a^i \;
+        \text{a.e.}$
+    が成り立つ。
+    よって$f$はa.e.定数である。
+\end{proof}
+
+
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{Hessian}
+
+本節では
+$W$を$m$次元$\R$-ベクトル空間 ($m \in \Z_{\ge 0}$)、
+$U \opensubset W$を開部分集合とする。
+
+本節では$U$上の$C^\infty$関数に対し Hessian を定義したい。
+そこで、まず$U$上にアファイン接続を定義し、それを用いて Hessian を定義する。
+
+\subsection{$U$上のアファイン接続}
+
+一般のアファイン接続の平坦性を定義しておく。
+
+\begin{definition}[平坦アファイン接続]
+    $M$を多様体、
+    $\nabla$を$M$上のアファイン接続とする。
+    \begin{itemize}
+        \item $M$の開部分集合$O \opensubset M$上の座標であって、
+            それに関する$\nabla$の接続係数がすべて$0$となるものを、
+            $O$上の
+            \term{$\nabla$-アファイン座標}[$\nabla$-affine coordinates]
+                {アファイン座標}[アファインざひょう]
+            という。
+        \item 各$p \in M$に対し、
+            $p$のまわりの$\nabla$-アファイン座標が存在するとき、
+            $\nabla$は$M$上
+            \term{平坦}[flat]{平坦}[へいたん]であるという。
+    \end{itemize}
 \end{definition}
 
-期待値パラメータ空間$\calM$は、
-$\calP$に属する確率分布に関する$T$の期待値をすべて含んでいる
-(一般には真に含んでいる)。
+今考えている$U$上には、次のような平坦アファイン接続が定まる。
 
-\begin{proposition}
-    $\mu \in V$が
-    ある$p \in \calP$に関する
-    $T$の期待値ならば (すなわち$\mu = E_p[T]$ならば)、
-    $\mu$は$\calM_{(V, T, \nu)}$に属する。
+\begin{propdef}[$U$上の平坦アファイン接続]
+    $U$上のアファイン接続
+    $D \colon \Gamma(TU) \to \Gamma(T^\vee U \otimes TU)$を、
+    次の規則で well-defined に定めることができる:
+    \begin{itemize}
+        \item 各$X \in \Gamma(TU)$に対し、
+            $W$の基底が定める$U$上の座標
+            $x^i \; (i = 1, \dots, m)$
+            をひとつ選び、
+            \begin{equation}
+                \label{eq:def_connection_d}
+                DX
+                    \coloneqq dX^i \otimes \deldel{x^i}
+                    \in \Gamma(T^\vee U \otimes TU)
+            \end{equation}
+            と定める。
+            ただし、
+            $X$の成分表示を$X = X^i \deldel{x^i}$とおいた。
+    \end{itemize}
+    さらに、この$D$は$U$上のアファイン接続として平坦である。
+\end{propdef}
+
+\begin{proof}
+    写像として well-defined であることを一旦認め、
+    先に$\R$-線型性、Leibniz 則、平坦性を確かめる。
+    $D$の$\R$-線型性と Leibniz 則は、
+    外微分$d$の$\R$-線型性と Leibniz 則から従う。
+    平坦性は、
+    式\cref{eq:def_connection_d}で用いた座標$x^i$が
+    $D$-アファイン座標となることから従う。
+    最後に、$D$が写像として well-defined であることを示す。
+    $y^\alpha \; (\alpha = 1, \dots, m)$を
+    $W$の基底が定める$U$上の座標とすると、
+    \begin{alignat}{1}
+        dX^i \otimes \deldel{x^i}
+            &=
+                d\myparen{
+                    X^\alpha \deldel[x^i]{y^\alpha}
+                }
+                \otimes
+                \deldel[y^\alpha]{x^i}
+                \deldel{y^\alpha}
+                \\
+            &=
+                \Bigg(
+                    \deldel[x^i]{y^\alpha} dX^\alpha
+                    +
+                    X^\alpha \underbrace{
+                        d\myparen{
+                            \deldel[x^i]{y^\alpha}
+                        }
+                    }_{=0}
+                \Bigg)
+                \otimes
+                \deldel[y^\alpha]{x^i}
+                \deldel{y^\alpha}
+                \\
+            &=
+                dX^\alpha
+                \otimes
+                \deldel{y^\alpha}
+    \end{alignat}
+    となる。ただし「$= 0$」の部分は
+    $x^i$と$y^\alpha$の間の座標変換がアファイン変換となることを用いた。
+    これで well-defined 性も示された。
+\end{proof}
+
+\subsection{Hessian}
+
+$U$上のアファイン接続$D$により、
+$T^\vee U$の接続が誘導される。
+これを用いて Hessian を定義する。
+
+\begin{definition}[Hessian]
+    \smooth 関数$f \colon U \to \R$に対し、
+    $f$の\term{Hessian}{Hessian}[Hessian]を
+    \begin{equation}
+        \Hess f \coloneqq Ddf
+            \in \Gamma(T^\vee U \otimes T^\vee U)
+    \end{equation}
+    と定義する。
+\end{definition}
+
+$D$-アファイン座標を用いると、
+Hessian の成分表示は簡単な形になる。
+
+\begin{proposition}[Hessian の成分表示]
+    \label[proposition]{prop:hessian_components}
+    $x^i \; (i = 1, \dots, m)$を
+    $U$上の$D$-アファイン座標とする。
+    このとき、
+    座標$x^i$に関する$\Hess f$の成分表示は
+    \begin{equation}
+        \Hess f
+            = \frac{\del^2 f}{\del x^i \del x^j} \, dx^i \otimes dx^j
+    \end{equation}
+    となる。
+    とくに$f$の\smooth 性より
+    $\Hess f$は対称テンソルである。
 \end{proposition}
 
 \begin{proof}
-    \TODO{}
+    $(\Hess f)(\del_i, \del_j)
+        = \langle D_{\del_i} df, \del_j \rangle
+        = \del_i \langle df, \del_j \rangle
+            - \langle
+                df,
+                \underbrace{D_{\del_i} \del_j}_{= 0}
+            \rangle
+        = \del_i (\del_j f)
+        = \frac{\del^2 f}{\del x^i \del x^j}$
+    より従う。
 \end{proof}
 
-\begin{proposition}[$\calM$は凸集合]
-    $\calM_{(V, T, \nu)}$は$V$の凸集合である。
-\end{proposition}
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{Fisher 計量}
+
+前回までと同様に、
+$\calX$を可測空間、
+$\calP \subset \calP(\calX)$を$\calX$上の指数型分布族、
+$(V, T, \mu)$を$\calP$の次元$m$の実現、
+$\Theta \subset V^\vee$を自然パラメータ空間、
+$\psi \colon \Theta \to \R$を対数分配関数、
+$\Theta^\circ$を$V^\vee$における$\Theta$の内部とし、
+$\lambda \colon \Theta \to \R, \;
+    \theta
+    \mapsto
+    \int_\calX \exp \langle \theta, T(x) \rangle \, \mu(dx)$
+とおく。
+
+本節では、
+対数分配関数$\psi$から$\Theta^\circ$上に計量が定まることをみる。
+まず、\url{0502_資料.pdf}の命題2.2でも触れた次の条件に名前をつけておく。
+
+\begin{definition}[条件A]
+    $\calP$の実現$(V, T, \mu)$に関する次の条件を、
+    \termsilent{条件A}と呼ぶことにする。
+    \begin{description}
+        \item[(条件A)] $\langle \theta, T(x) \rangle$が
+            $\calX$上$\mu$-a.e.定数であるような
+            $\theta \in V^\vee$は$\theta = 0$のみである。
+    \end{description}
+\end{definition}
+
+Fisher 計量を定義する。
+
+\begin{propdef}[Fisher 計量]
+    $\psi$を$\Theta^\circ$上の\smooth 関数とみなすと、
+    各$\theta \in \Theta^\circ$に対し
+    $(\Hess \psi)_\theta
+        \in T^{(0, 2)}_\theta \Theta^\circ$
+    は
+    $\Var_{P_\theta}[T]$に一致する。
+    さらに$(V, T, \mu)$が条件Aをみたすならば、
+    $\Hess \psi$は正定値である。
+
+    したがって
+    $(V, T, \mu)$が条件Aをみたすとき、
+    $\Hess\psi$は
+    $\Theta^\circ$上の Riemann 計量となり、
+    これを$\psi$の定める
+    \term{Fisher 計量}[Fisher metric]{Fisher 計量}[Fisher けいりょう]
+    という。
+\end{propdef}
 
 \begin{proof}
-    \TODO{}
+    まず
+    $(\Hess \psi)_\theta = \Var_{P_\theta}[T] \;
+        (\theta \in \Theta^\circ)$
+    を示す。
+    $\Theta^\circ$上の$D$-アファイン座標
+    $\theta^i \; (i = 1, \dots, m)$をひとつ選ぶと、
+    \cref{prop:hessian_components}より、
+    座標$\theta^i$に関する$\Hess \psi$の成分表示は
+    $\Hess\psi
+        = \frac{\del^2 \psi}{\del \theta^i \del \theta^j}
+        \, d\theta^i \otimes d\theta^j$
+    となる。
+    ここで前回 (\url{0516_資料.pdf}) の系2.4より
+    \begin{alignat}{1}
+        \frac{\del^2 \psi}{\del \theta^i \del \theta^j}(\theta)
+            &=
+                \del_i \del_j \log \lambda(\theta)
+                \\
+            &=
+                \del_i \myparen{
+                    \frac{\del_j \lambda(\theta)}{\lambda(\theta)}
+                }
+                \\
+            &=
+                \frac{
+                    \del_i \del_j \lambda(\theta)
+                }{
+                    \lambda(\theta)
+                }
+                -
+                \frac{
+                    \del_i \lambda(\theta)
+                    \del_j \lambda(\theta)
+                }{
+                    \lambda(\theta)^2
+                }
+                \\
+            &=
+                E[T^i(x) T^j(x)]
+                -
+                E[T^i(x)]
+                E[T^j(x)]
+                \\
+            &=
+                E[
+                    (T^i(x) - E[T^i(x)])
+                    (T^j(x) - E[T^j(x)])
+                ]
+    \end{alignat}
+    を得る。
+    ただし$E[\cdot]$は$P_\theta$に関する期待値$E_{P_\theta}[\cdot]$の略記である。
+    したがって
+    $\Hess_\theta \psi = \Var_{P_\theta}[T]$
+    が成り立つ。
+
+    次に、$(V, T, \mu)$が条件Aをみたすとし、
+    $\Hess\psi$が正定値であることを示す。
+    すなわち、
+    各$\theta \in \Theta^\circ$に対し
+    $(\Hess\psi)_\theta$が正定値であることを示す。
+    そのためには各$u \in V^\vee$に対し
+    「$(\Hess\psi)_\theta(u, u) = 0$ならば$u = 0$」
+    を示せばよいが、
+    上で示したことと
+    \cref{prop:expectation-variance-pairing}より
+    \begin{equation}
+        (\Hess\psi)_\theta(u, u)
+            = (\Var_{P_\theta}[T])(u, u)
+            = \langle u \otimes u, \Var_{P_\theta}[T] \rangle
+            = \Var_{P_\theta}[\langle u, T(x) \rangle]
+    \end{equation}
+    と式変形できるから、
+    $(\Hess\psi)_\theta(u, u) = 0$ならば
+    \cref{prop:zero_variance_condition}より
+    $\langle u, T(x) \rangle$は$\text{a.e.}$定数であり、
+    したがって条件Aより$u = 0$となる。
+    よって$(\Hess\psi)_\theta$は正定値である。
+    したがって$\Hess\psi$は正定値である。
 \end{proof}
+
 
 
 % ------------------------------------------------------------
 %
 % ------------------------------------------------------------
-\section{今後の予定}
+\section*{今後の予定}
 
 \begin{itemize}
-    \item KL ダイバージェンス
-    \item Fisher 計量
-    \item アファイン接続
+    \item Fisher 計量の具体例として正規分布族を考える。
+    \item Amari-Chentsov テンソルを定義する。
 \end{itemize}
 
 % ------------------------------------------------------------
 %
 % ------------------------------------------------------------
-\section{参考文献}
+\section*{参考文献}
 
 \nocite{amari_information_2016}
-\nocite{bn1970_pdf}
 
 {
     \renewcommand{\bibsection}{}
     \bibliographystyle{amsalpha}
     \bibliography{./bibliography,../../mybibliography}
 }
+
 
 
 \end{document}

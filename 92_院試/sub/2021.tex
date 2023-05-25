@@ -1,0 +1,344 @@
+\documentclass[report]{jlreq}
+\usepackage{global}
+\usepackage{./local}
+\subfiletrue
+\def\assetspath{../}
+%\makeindex
+\chead{2021}
+\begin{document}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{A}
+
+\begin{proof}[2021 A1.]
+    $V$の基底$1, x, x^2, x^3$の双対基底を
+    $\omega_0, \omega_1, \omega_2, \omega_3 \in V^*$とおく。
+    各$a \in \R$に対し、
+    $\Ker g_a, \Ker h_a$を双対基底を使って書き直しておくと
+    \begin{alignat}{1}
+        \Ker g_a
+            &=
+                \myparen{
+                    \R (a^3 \omega_3 + a^2 \omega_2 + a \omega_1 + \omega_0)
+                }^\perp,
+                \\
+        \Ker h_a
+            &=
+                \myparen{
+                    \R (3a^2 \omega_3 + 2a \omega_2 + \omega_1)
+                }^\perp
+    \end{alignat}
+    となる。
+
+    \uline{(1)} \quad
+    問題文の和空間は、各項について
+    \begin{alignat}{1}
+        \Ker g_0 \cap \Ker g_1
+            &=
+                (\R \omega_0)^\perp
+                \cap
+                (\R (\omega_3 + \omega_2 + \omega_1 + \omega_0))^\perp
+                \\
+            &=
+                \mybrace{
+                    \R \omega_0
+                    \oplus
+                    \R (\omega_3 + \omega_2 + \omega_1 + \omega_0)
+                }^\perp
+                \\
+            &=
+                \mybrace{
+                    \R \omega_0
+                    \oplus
+                    \R (\omega_3 + \omega_2 + \omega_1)
+                }^\perp
+                \\
+        \Ker g_1 \cap \Ker g_2
+            &=
+                (\R (\omega_3 + \omega_2 + \omega_1 + \omega_0))^\perp
+                \cap
+                (\R (8 \omega_3 + 4 \omega_2 + 2 \omega_1))^\perp
+                \\
+            &=
+                \mybrace{
+                    \R (\omega_3 + \omega_2 + \omega_1 + \omega_0)
+                    \oplus
+                    \R (8 \omega_3 + 4 \omega_2 + 2 \omega_1 + \omega_0)
+                }^\perp
+                \\
+            &=
+                \mybrace{
+                    \R (\omega_3 + \omega_2 + \omega_1 + \omega_0)
+                    \oplus
+                    \R (7 \omega_3 + 3 \omega_2 + \omega_1)
+                }^\perp
+    \end{alignat}
+    と表せるから、
+    \begin{alignat}{1}
+        &\phantom{=} (\Ker g_0 \cap \Ker g_1) + (\Ker g_1 \cap \Ker g_2)
+            \\
+        &=
+            \mybrace{
+                (
+                    \R \omega_0
+                    \oplus
+                    \R (\omega_3 + \omega_2 + \omega_1)
+                )
+                \cap
+                (
+                    \R (\omega_3 + \omega_2 + \omega_1 + \omega_0)
+                    \oplus
+                    \R (7 \omega_3 + 3 \omega_2 + \omega_1)
+                )
+            }^\perp
+    \end{alignat}
+    となる。
+    直接計算より波括弧$\mybrace{ \cdots }$の中身は
+    $\R (\omega_3 + \omega_2 + \omega_1 + \omega_0)$
+    に一致するから、
+    \begin{equation}
+        (\Ker g_0 \cap \Ker g_1) + (\Ker g_1 \cap \Ker g_2)
+            = \mybrace{
+                \R (\omega_3 + \omega_2 + \omega_1 + \omega_0)
+            }^\perp
+    \end{equation}
+    である。
+    したがって、
+    この空間の次元は
+    $\dim V - \dim \mybrace{\R (\omega_3 + \omega_2 + \omega_1 + \omega_0)} = 4 - 1 = 3$
+    であり、基底のひとつは
+    $1 - x, \; x - x^2, \; x^2 - x^3$である。
+
+    \uline{(2)} \quad
+    問題文の和空間の第1項と第2項の共通部分が
+    $0$とならない実数$a$を求めればよい。
+    そこで共通部分を式変形すると
+    \begin{alignat}{1}
+        &\phantom{=}
+            (\Ker g_0 \cap \Ker h_a) \cap (\Ker g_1 \cap \Ker h_0)
+            \\
+        &=
+            (\R \omega_0)^\perp
+            \cap
+            (\R (3a^2 \omega_3 + 2a \omega_2 + \omega_1))^\perp
+            \cap
+            (\R (\omega_3 + \omega_2 + \omega_1 + \omega_0))^\perp
+            \cap
+            (\R \omega_1)^\perp
+            \\
+    \intertext{第2項以外をまとめて}
+        &=
+            (\R (3a^2 \omega_3 + 2a \omega_2 + \omega_1))^\perp
+            \cap
+            \mybrace{
+                (\R \omega_0)
+                \oplus
+                (\R \omega_1)
+                \oplus
+                (\R (\omega_3 + \omega_2 + \omega_1 + \omega_0))
+            }^\perp
+            \\
+        &=
+            (\R (3a^2 \omega_3 + 2a \omega_2 + \omega_1))^\perp
+            \cap
+            \mybrace{
+                (\R \omega_0)
+                \oplus
+                (\R \omega_1)
+                \oplus
+                (\R (\omega_3 + \omega_2))
+            }^\perp
+            \\
+        &=
+            (\R (3a^2 \omega_3 + 2a \omega_2 + \omega_1))^\perp
+            \cap
+            \R (x^2 - x^3)
+    \end{alignat}
+    となる。
+    この共通部分が$0$とならないための必要十分条件は
+    $(3a^2 \omega_3 + 2a \omega_2 + \omega_1)(x^2 - x^3) = 0$
+    すなわち
+    $-3a^2 + 2a = 0$
+    が成り立つことである。
+    したがって、$a = 0, \frac{2}{3}$が求める答えである。
+\end{proof}
+
+\begin{proof}[2021 A3.]
+    \uline{(1)} \quad
+    $f$は$\Z_{\ge 1}$上の数え上げ測度に関する積分とみなす。
+    $f, g$それぞれについて、
+    $\frac{\sin nx}{n^2}, \; \frac{\sin tx}{t^2}$の
+    $x$に関する連続性と、
+    優関数$\frac{1}{n^2}, \; \frac{1}{t^2}$の存在より、
+    優収束定理を用いて
+    絶対収束性と連続性が従う。
+
+    \uline{(2)} \quad
+    $C = 2$が求める定数のひとつであることを示す。
+    そのために$x > 0$とし、
+    $h_x \colon [1, \infty) \to \R, \;
+        y \mapsto \frac{\sin yx}{y^2}$
+    と定めると、
+    示すべきことは、
+    すべての$n \in \Z_{\ge 1}$と
+    $n \le t \le n + 1$なる$t \in \R$に対し
+    $|h_x(t) - h_x(n)| \le \frac{2x}{n^2}$が成り立つことである。
+    $n = t$の場合は明らかだから、$n < t$の場合を考える。
+    そこで区間$[n, t]$上で$h_x$に平均値定理を用いると、
+    ある$t' \in (n, t)$が存在して
+    $\frac{h_x(t) - h_x(n)}{t - n} = h_x'(t')$
+    が成り立つ。
+    よって
+    \begin{alignat}{1}
+        |h_x(t) - h_x(n)|
+            &=
+                |t - n| \myabs{
+                    - \frac{2x \cos t'x}{t'^3}
+                }
+                \\
+            &\le
+                \frac{2 (t - n) x}{t^3}
+                \\
+            &\le
+                \frac{2x}{n^2}
+    \end{alignat}
+    となり、目的の不等式が得られた。
+
+    \uline{(3)} \quad
+    (1)で示した$g$の連続性より$g(x) \to g(0) = 0 \; \text{as} \; x \to +0$である。
+    そこで L'H\^opital の定理を用いるため、
+    $g$の$\R_{> 0}$上での微分可能性を確かめる。
+    まず部分積分と変数変換により
+    $g(x) = \sin x + x \int_x^\infty \frac{\cos t}{t} \, dt \; (x \in \R)$
+    である。
+    この右辺の積分について、
+    $\frac{\cos t}{t}$の
+    $\R_{> 0}$上の原始関数は
+    $\log t + \alpha(t) \;
+        (\text{$\alpha$は$\R$上の解析関数})$
+    の形であるから、
+    そのひとつを選んで$G(t)$とおけば
+    $\int_x^\infty \frac{\cos t}{t} \, dt
+        = \lim_{t \to \infty} G(t) - G(x)
+        \;
+        (x > 0)$
+    が成り立つ。
+    このとき
+    $\lim_{t \to \infty} G(t)$は$x$によらない実定数だから、
+    これを$c \coloneqq \lim_{t \to \infty} G(t) \in \R$とおく。
+    すると
+    $g(x) = \sin x + x(c - G(x)) \; (x > 0)$
+    が成り立つから、$g$は$\R_{> 0}$上微分可能である。
+    さらに$g$の具体的な形より
+    \begin{equation}
+        \frac{
+            g'(x)
+        }{
+            \myparen{
+                x \log \frac{1}{x}
+            }'
+        }
+            =
+            \frac{
+                \cos x + c - G(x) - xG'(x)
+            }{
+                - \log x + x^2
+            }
+            =
+            \frac{
+                \cos x + c - \log x - \alpha(x) - 1 - x\alpha'(x)
+            }
+            {
+                - \log x + x^2
+            }
+            \to 1
+            \quad
+            \text{as}
+            \quad
+            x \to +0
+    \end{equation}
+    となるから、
+    L'H\^opital の定理より
+    $\lim_{x \to +0} \frac{g(x)}{x \log \frac{1}{x}} = 1$を得る。
+
+    \uline{(4)} \quad
+    (2)より、すべての$x > 0, \; t \ge 1$に対し
+    $\myabs{
+        \frac{\sin tx}{t^2}
+        -
+        \frac{\sin \lfloor t \rfloor x}{\lfloor t \rfloor^2}
+    }
+        \le
+            \frac{Cx}{\lfloor t \rfloor^2}$
+    が成り立つ ($\lfloor \cdot \rfloor$は床関数) から、
+    すべての$x > 0$に対し
+    \begin{alignat}{1}
+        |f(x) - g(x)|
+            &=
+                \myabs{
+                    \int_1^\infty
+                        \myparen{
+                            \frac{\sin tx}{t^2}
+                            -
+                            \frac{\sin \lfloor t \rfloor x}{\lfloor t \rfloor^2}
+                        }
+                        \, dt
+                }
+                \\
+            &\le
+                \int_1^\infty
+                    \myabs{
+                        \frac{\sin tx}{t^2}
+                        -
+                        \frac{\sin \lfloor t \rfloor x}{\lfloor t \rfloor^2}
+                    }
+                    \, dt
+                \\
+            &\le
+                \int_1^\infty
+                    \frac{Cx}{\lfloor t \rfloor^2}
+                    \, dt
+                \\
+            &=
+                Cx \sum_{n = 1}^\infty
+                    \frac{1}{n^2}
+    \end{alignat}
+    したがって
+    $\beta \coloneqq \sum_{n = 1}^\infty \frac{1}{n^2} \in \R$
+    とおいて
+    \begin{equation}
+        \myabs{
+            \frac{f(x)}{x \log \frac{1}{x}}
+            -
+            \frac{g(x)}{x \log \frac{1}{x}}
+        }
+            \le
+                \myabs{
+                    \frac{C \beta x}{x \log \frac{1}{x}}
+                }
+            =
+                C \beta \frac{1}{\myabs{
+                    \log \frac{1}{x}
+                }}
+            \to
+                0
+                \quad
+                \text{as}
+                \quad
+                x \to +0
+    \end{equation}
+    が成り立つ。
+    よって
+    $\lim_{x \to +0}
+        \frac{f(x)}{x \log \frac{1}{x}}
+        =
+        \lim_{x \to +0}
+        \frac{g(x)}{x \log \frac{1}{x}}
+        =
+        1$
+    を得る。
+\end{proof}
+
+\end{document}

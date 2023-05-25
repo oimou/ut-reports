@@ -377,6 +377,8 @@
 \NewDocumentCommand{\myparen}{m}{\left({#1}\right)}
 \NewDocumentCommand{\mybrace}{m}{\left\{{#1}\right\}}
 \NewDocumentCommand{\mybracket}{m}{\left[{#1}\right]}
+\NewDocumentCommand{\myabs}{m}{\left|{#1}\right|}
+\NewDocumentCommand{\myangle}{mm}{\left\langle{#1},{#2}\right\rangle}
 
 % \mathbb{x} などを \bbx で書けるようにする
 % cf. https://nekodesu1728.hatenablog.com/entry/2022/08/14/033606
@@ -460,6 +462,7 @@
 \DeclareMathOperator\tr{tr}
 \DeclareMathOperator\Tor{Tor}
 \DeclareMathOperator\Ext{Ext}
+\DeclareMathOperator\pr{pr}
 
 % ------------------------------------------------------------
 % category

@@ -19,149 +19,20 @@
 前回は期待値と分散を定義した。
 本稿では次のことを行う:
 \begin{itemize}
-    \item 分散の基本的な性質を調べる。
     \item 対数分配関数$\psi$の\smooth 性と、微分と積分の順序交換ができることを示す。
-    \item Hessian を定義し、$\psi$の Hessian の正定値性を示す。
+    \item 分散の基本的な性質を調べる。
 \end{itemize}
 
-% ------------------------------------------------------------
-%
-% ------------------------------------------------------------
-\section{分散の性質}
-
-前回の正規分布族の例でみた$V_P[T]$は正定値対称であった。
-一般に、分散は次の性質を持つ。
-
-\begin{theorem}[分散の半正定値対称性]
-    $V_p[f] \in V \otimes V$は、
-    対称かつ半正定値である。
-\end{theorem}
-
-\begin{proof}
-    まず$V_p[f]$が対称であることを示す。
-    \TODO{$V^\vee$の基底をとるべき?}
-    そこで$V$の基底$e^i \; (i = 1, \dots, m)$をひとつ選んで固定し、
-    $f, E_p[f]$の成分表示を
-    それぞれ$f_i, a_i \; (i = 1, \dots, m)$とおく。
-    すると
-    \begin{alignat}{1}
-        V_p[f]
-            &= E_p[(f - E_p[f])^2] \\
-            &= \myparen{
-                \int_\calX
-                (f_i(x) - a_i)(f_j(x) - a_j)
-                \, p(dx)
-            } e^i e^j
-    \end{alignat}
-    となり、最終行の成分は添字$i, j$の置換に関し不変である。
-    したがって$V_p[f]$は対称である。
-
-    つぎに$V_p[f]$が半正定値であることを示す。
-    示したいことは、
-    $V_p[f]$を$V^\vee$上の$\R$-双線型形式とみなして、
-    各$\theta \in V^\vee$に対し
-    $V_p[f](\theta, \theta) \ge 0$が成り立つことであるが、
-    これは
-    \begin{alignat}{1}
-        V_p[f](\theta, \theta)
-            &= \sum_{i, j}
-                \myparen{
-                    \int_\calX (f_i(x) - a_i)(f_j(x) - a_j) \, p(dx)
-                }
-                \theta(e^i) \theta(e^j) \\
-            &= \int_\calX \myparen{
-                \sum_{i, j}
-                \theta(e^i)(f_i(x) - a_i)
-                \theta(e^j)(f_j(x) - a_j)
-            } \, p(dx) \\
-            &= \int_\calX \myparen{
-                \sum_{i}
-                \theta(e^i)(f_i(x) - a_i)
-            }^2 \, p(dx) \\
-            &\ge 0
-    \end{alignat}
-    より従う。
-    したがって$V_p[f]$は半正定値である。
-\end{proof}
-
-分散が0であることの特徴づけを与えておく。
-
-\begin{proposition}[分散が0であるための必要十分条件]
-    \label[proposition]{prop:zero_variance_condition}
-    分散を持つ可測写像$f \colon \calX \to V$に関し、
-    次は同値である:
-    \begin{enumerate}
-        \item $V_p[f] = 0$
-        \item $f$は$p$-a.e.定数
-    \end{enumerate}
-\end{proposition}
-
-証明には次の事実を用いる。
-
-\begin{fact}
-    \label[fact]{fact:nonnegative_func}
-    $\calY$を可測空間、
-    $\mu$を$\calY$上の測度とする。
-    このとき、
-    $\mu$-可積分関数$g \colon \calY \to \R$であって
-    $g(y) \ge 0 \; \text{$\mu$-a.e. $y \in \calY$}$
-    をみたすものに関し、
-    次は同値である。
-    \begin{enumerate}
-        \item $\int_\calY g(x) \, \mu(dx) = 0$
-        \item $g(y) = 0 \quad \text{$\mu$-a.e. $y \in \calY$}$
-    \end{enumerate}
-    \qed
-\end{fact}
-
-\begin{proof}[\cref{prop:zero_variance_condition}の証明.]
-    ここでは「$p$-a.e.」を「a.e.」と略記する。
-    \TODO{$V^\vee$の基底をとるべき?}
-    $V$の基底$e^i \; (i = 1, \dots, m)$をひとつ選んで固定し、
-    この基底に関する
-    $f$の成分を$f_i \colon \calX \to \R \; (i = 1, \dots, m)$、
-    $E_p[f]$の成分を$a_i \in \R \; (i = 1, \dots, m)$とおいておく。
-
-    \uline{(\Leftarrow)} \quad
-    $f$がa.e.定数ならば、
-    $f_i(x) = a_i \;
-        \text{a.e.$x$} \;
-        (i = 1, \dots, m)$
-    したがって
-    $(f_i(x) - a_i)(f_j(x) - a_j) = 0 \;
-        \text{a.e.$x$} \;
-        (i, j = 1, \dots, m)$
-    である。
-    よって
-    $\int_\calX (f_i(x) - a_i)(f_j(x) - a_j) \, p(dx) = 0 \;
-        (i, j = 1, \dots, m)$
-    だから
-    $V_p[f] = 0$である。
-
-    \uline{(\Rightarrow)} \quad
-    対偶を示すため、
-    $f$はa.e.定数ではないと仮定する。
-    すると、
-    $f_i$がa.e.定数ではないような
-    ある$i \in \{ 1, \dots, m \}$が存在する。
-    このとき$(f_i - a_i)^2 = 0 \; \text{a.e.}$ではないから、
-    \cref{fact:nonnegative_func}より
-    $\int_\calX (f_i(x) - a_i)^2 \, p(dx) > 0$である。
-    したがって$V_p[f] \neq 0$である。
-\end{proof}
+前回に引き続き、可測空間$\calX$上の確率測度全体の集合を
+$\calP(\calX)$と書くことにする。
+また、Einstein の記法を用いる。
 
 % ------------------------------------------------------------
 %
 % ------------------------------------------------------------
 \section{対数分配関数}
 
-本節では、対数分配関数が
-自然パラメータ空間の内部において\smooth であって、
-積分記号下の微分が可能であることを示したい。
-
-\TODO{$\Theta$は内部を持つだろうか?}
-
-以降、本節では
+本節では
 $\calX$を可測空間、
 $\calP \subset \calP(\calX)$を$\calX$上の指数型分布族、
 $(V, T, \mu)$を$\calP$の次元$m$の実現、
@@ -179,101 +50,186 @@ $\lambda \colon \Theta \to \R$を
         &\coloneqq \int_\calX h(x, \theta) \, \mu(dx)
         &&\quad (\theta \in \Theta)
 \end{alignat}
-と定める (つまり$\lambda(\theta) = e^{\psi(\theta)}$である)。
+と定める (つまり$\psi(\theta) = \log \lambda(\theta)$である)。
 
-\TODO{
-\cite{brown_fundamentals_1986}
-}
+本節の目標は次の定理を示すことである。
 
-\begin{lemma}[優関数の存在]
+\begin{theorem}[$\lambda$と$\psi$の\smooth 性と積分記号下の微分]
+    \label[theorem]{thm:smoothness_of_lambda}
     $\varphi = (\theta_1, \dots, \theta_m) \colon \Theta^\circ \to \R^m$
     を$\Theta^\circ$上のチャートとする。
     このとき、
-    任意の$\theta \in \Theta^\circ$および
-    $k \in \Z_{\ge 0}, \;
+    任意の$k \in \Z_{\ge 1}, \;
         i_1, \dots, i_k \in \{ 1, \dots, m \}$
     に対し、
-    $\Theta^\circ$における$\theta$のある近傍$U$が存在して、
-    $\calX$上の関数族
     \begin{equation}
-        \mybrace{
-            \frac{\del^k h}{\del \theta_{i_1} \dots \del \theta_{i_k}}(x, \theta')
-        }_{\theta' \in U}
+        \label{eq:smoothness_of_lambda_1}
+        \del_{i_k} \cdots \del_{i_1} \lambda(\theta)
+            = \int_\calX
+                \del_{i_k} \cdots \del_{i_1} h(x, \theta)
+                \, \mu(dx)
+            \quad (\theta \in \Theta^\circ)
     \end{equation}
-    はある$\mu$-可積分関数$\calX \to \R$により支配される。
+    が成り立つ
+    ($\del_i$は$\deldel{\theta_i} \in \Gamma(T\Theta^\circ)$の略記)。
+    ただし、
+    左辺の微分可能性および
+    右辺の可積分性も定理の主張に含まれる。
+    とくに$\lambda$および$\psi$は$\Theta^\circ$上の\smooth 関数である。
+\end{theorem}
+
+\cref{thm:smoothness_of_lambda}の証明には次の事実を用いる。
+
+\begin{fact}[積分記号下の微分]
+    \label[fact]{fact:diff-under-integral}
+    $\calY$を可測空間、
+    $\nu$を$\calY$上の測度、
+    $I \subset \R$を開区間、
+    $f \colon \calY \times I \to \R$を
+    \begin{enumerate}[label=(\roman*)]
+        \item 各$t \in I$に対し$f(\cdot, t) \colon \calY \to \R$が可測
+        \item 各$y \in \calY$に対し$f(y, \cdot) \colon I \to \R$が微分可能
+    \end{enumerate}
+    をみたす関数とする。
+    このとき、$f$に関する条件
+    \begin{enumerate}
+        \item 各$t \in I$に対し
+            $f(\cdot, t) \in L^1(\calY, \nu)$である。
+        \item ある$\nu$-可積分関数
+            $\Phi \colon \calY \to \R$が存在し、
+            すべての$t' \in I$に対し
+            $\myabs{
+                \deldel[f]{t}(y, t')
+            } \le \Phi(y) \; \text{a.e.$y$}$
+            である。
+    \end{enumerate}
+    が成り立つならば、
+    関数$I \to \R, \; t \mapsto \int_\calY f(y, t) \, \nu(dy)$は微分可能で、
+    \begin{equation}
+        \deldel{t} \int_\calY f(y, t) \, \nu(dy)
+            = \int_\calY \deldel[f]{t}(y, t) \, \nu(dy)
+    \end{equation}
+    が成り立つ。
+    \qed
+\end{fact}
+
+\cref{thm:smoothness_of_lambda}の証明において最も重要なステップは、
+\cref{fact:diff-under-integral}の前提が満たされることの確認である。
+そのための補題を次に示す。
+
+\begin{lemma}[優関数の存在]
+    \label[lemma]{lemma:existence_of_dominant_function}
+    $e^i \; (i = 1, \dots, m)$を$V^\vee$の基底とし、
+    この基底が定める$\Theta^\circ$上のチャートを
+    $\varphi = (\theta_1, \dots, \theta_m) \colon \Theta^\circ \to \R^m$
+    とおく。
+    このとき、
+    任意の$k \in \Z_{\ge 1}, \;
+        i_1, \dots, i_k \in \{ 1, \dots, m \}$
+    に対し、次が成り立つ:
+    \begin{enumerate}
+        \item 任意の$\theta \in \Theta^\circ$に対し、
+            関数
+            $\del_{i_k} \cdots \del_{i_1} h(\cdot, \theta)
+                \colon \calX \to \R$
+            は$L^1(\calX, \mu)$に属する。
+        \item 任意の$\theta \in \Theta^\circ$に対し、
+            $\Theta^\circ$における$\theta$のある近傍$U$と、
+            ある$\mu$-可積分関数$\Phi \colon \calX \to \R$が存在し、
+            すべての$\theta' \in U$に対し
+            $\myabs{
+                \del_{i_k} \cdots \del_{i_1} h(x, \theta')
+            } \le \Phi(x) \; \text{a.e.$x$}$
+            が成り立つ。
+    \end{enumerate}
 \end{lemma}
 
 \begin{proof}
-    $\theta \in \Theta^\circ, \;
-        k \in \Z_{\ge 0}, \;
-        i_1, \dots, i_k \in \{ 1, \dots, m \}$
-    とし、
-    $\theta$の座標を
-    $t = (t_1, \dots, t_m) \coloneqq \varphi(\theta) \in \R^m$
-    とおく。
-    $\Theta^\circ$における$\theta$の開近傍$U'$をひとつ選ぶと、
-    $\varphi(U')$は$\R^m$における$t$の開近傍となる。
-    そこで、
+    (1)は(2)より直ちに従うから、(2)を示す。
+    そこで$\theta \in \Theta^\circ$を任意とする。
+    補題の主張は座標$\theta_1, \dots, \theta_m$を
+    平行移動して考えても等価だから、
+    点$\theta$の座標は
+    $\varphi(\theta) = 0 \in \R^m$
+    であるとしてよい。
+
+    \uline{Step 1: $U$の構成} \quad
     $\eps > 0$を十分小さく選び、
-    $\R^m$内の開立方体
-    $A_{4\eps}
-        \coloneqq
-        \prod_{i = 1}^m (t_i - 2\eps, t_i + 2\eps)$
-    が$\varphi(U')$に含まれるようにしておく。
-    さらに$\R^m$内の開立方体$A_{2\eps}$を
-    $A_{2\eps}
-        \coloneqq
-        \prod_{i = 1}^m (t_i - \eps, t_i + \eps)$
-    と定める。
-    すると$U \coloneqq \varphi^{-1}(A_{2\eps}) \subset U'$は
-    $\Theta^\circ$における$\theta$の近傍となるが、
+    $\R^m$内の閉立方体
+    \begin{alignat}{1}
+        A_{2\eps}
+            \coloneqq
+            \prod_{i = 1}^m [- 2\eps, 2\eps]
+        \quad
+        A_{\eps}
+            \coloneqq
+            \prod_{i = 1}^m [- \eps, \eps]
+    \end{alignat}
+    が$\varphi(\Theta^\circ)$に含まれるようにしておく。
+    すると
+    $U \coloneqq \varphi^{-1}(\Int A_{\eps})
+        \subset \varphi(\Theta^\circ)$は
+    $\theta$の近傍となるが、
     これが求める$U$の条件を満たすことを示す。
 
-    まず$h$の偏導関数の座標表示を求める。
-    そこで、自然な同一視により
-    $\deldel{\theta_i}_\theta \in T_\theta \Theta^\circ \;
-        (i = 1, \dots, m)$
-    を$V^\vee$の基底とみなしたものを
-    $e^i \in V^\vee \; (i = 1, \dots, m)$
-    とおいておく。
-    すると各$\theta' \in U$に対し、
-    $\theta'$の座標を
-    $t' = (t'_1, \dots, t'_m) \coloneqq \varphi(\theta') \in A_{2\eps}$
-    として
+    \uline{Step 2: $h$の座標表示} \quad
+    まず具体的な計算のために
+    $h$の座標表示を求める。
+    いま各$\theta' \in U$に対し
     \begin{equation}
-        h(x, t')
-            = e^{\langle t', T(x) \rangle}
-            = e^{\langle t'_i e^i, T(x) \rangle}
-            = e^{t'_i T^i(x)}
+        h(x, \theta')
+            = \exp\langle \theta', T(x) \rangle
+            = \exp\langle \theta_i(\theta') e^i, T(x) \rangle
+            = \exp\myparen{\theta_i(\theta') T^i(x)}
     \end{equation}
-    が成り立つ
-    (ただし
+    が成り立っている。
+    ただし
         $T^i \colon \calX \to \R, \;
         x \mapsto \langle e^i, T(x) \rangle \;
         (i = 1, \dots, m)$
-        とおいた)。
+    とおいた。
     したがって
     \begin{equation}
         \locallabel{eq:partial-derivative-of-h}
-        \frac{\del^k h}{\del \theta_{i_1} \dots \del \theta_{i_k}}(x, \theta')
-            = T^{i_1}(x) \cdots T^{i_k}(x) e^{t'_i T^i(x)}
+        \del_{i_k} \cdots \del_{i_1} h(x, \theta')
+            = T^{i_1}(x) \cdots T^{i_k}(x)
+                \exp\myparen{\theta_i(\theta') T^i(x)}
     \end{equation}
     と表せることがわかる。
 
-    次に、式\localcref{eq:partial-derivative-of-h}の絶対値を上から評価する。
+    \uline{Step 3: $\Phi$の構成} \quad
+    $\Phi$を構成するため、
+    式\localcref{eq:partial-derivative-of-h}の絶対値を上から評価する。
+    表記の簡略化のため
+    $t' \coloneqq (t'_1, \dots, t'_m)
+        \coloneqq \varphi(\theta')
+        \in \R^m$
+    とおいておく。
+    まず$\frac{k + 1}{\eps} \frac{\eps}{k + 1} = 1$より
     \begin{alignat}{1}
-        |T^{i_1}(x) \cdots T^{i_k}(x) e^{t'_i T^i(x)}|
+        \myabs{
+            T^{i_1}(x) \cdots T^{i_k}(x)
+            \exp\myparen{
+                \sum_{i = 1}^m
+                t'_i T^i(x)
+            }
+        }
             &=
                 \myparen{
                     \frac{k + 1}{\eps}
                 }^k
-                \exp\myparen{t'_i T^i(x)} 
-                \prod_{\alpha = 1}^k
-                    \frac{\eps}{k + 1}
-                    |T^{i_\alpha}(x)|
+                \myparen{
+                    \prod_{\alpha = 1}^k
+                        \frac{\eps}{k + 1}
+                        |T^{i_\alpha}(x)|
+                }
+                \exp\myparen{
+                    \sum_{i = 1}^m
+                    t'_i T^i(x)
+                } 
                 \locallabel{eq:estimate}
     \end{alignat}
-    であり、末尾の部分は
+    であり、$\prod$の部分を評価すると
     \begin{alignat}{1}
         \prod_{\alpha = 1}^k
             \frac{\eps}{k + 1}
@@ -289,36 +245,42 @@ $\lambda \colon \Theta \to \R$を
                         T^{i_\alpha}(x)
                     }
                 }
+                \quad
+                (\because s \le e^s + e^{-s} \; (s \in \R))
                 \\
-            &= \sum_{(\sigma_1, \dots, \sigma_k) \in \{ \pm 1 \}^k}
+            &= \sum_{\sigma \in \{ \pm 1 \}^k}
                 \exp\myparen{
                     \sum_{\alpha = 1}^k
                         \frac{\eps}{k + 1}
                         \sigma_\alpha
                         T^{i_\alpha}(x)
                 }
+                \quad
+                (\because \text{式の展開})
+                \locallabel{eq:estimate-part}
     \end{alignat}
+    (ただし$\sigma_\alpha$は$\sigma$の第$\alpha$成分)
     となるから、
+    式\localcref{eq:estimate}と式\localcref{eq:estimate-part}を合わせて
     \begin{alignat}{1}
         \localcref{eq:estimate}
             &\le
-                \myparen{
-                    \frac{k + 1}{\eps}
-                }^k
-                \exp\myparen{t'_i T^i(x)} 
-                \sum_{(\sigma_1, \dots, \sigma_k) \in \{ \pm 1 \}^k}
+                C
+                \sum_{\sigma \in \{ \pm 1 \}^k}
                     \exp\myparen{
                         \sum_{\alpha = 1}^k
                             \frac{\eps}{k + 1}
                             \sigma_\alpha
                             T^{i_\alpha}(x)
                     }
+                \exp\myparen{
+                    \sum_{i = 1}^m
+                    t'_i T^i(x)
+                }
                 \\
             &=
-                \myparen{
-                    \frac{k + 1}{\eps}
-                }^k
-                \sum_{(\sigma_1, \dots, \sigma_k) \in \{ \pm 1 \}^k}
+                C
+                \sum_{\sigma \in \{ \pm 1 \}^k}
                     \exp\myparen{
                         \sum_{\alpha = 1}^k
                             \frac{\eps}{k + 1}
@@ -327,245 +289,316 @@ $\lambda \colon \Theta \to \R$を
                         + \sum_{i = 1}^m
                             t'_i T^i(x)
                     }
-                \\
-            &=
-                \myparen{
-                    \frac{k + 1}{\eps}
-                }^k
-                \sum_{\sigma = (\sigma_1, \dots, \sigma_k) \in \{ \pm 1 \}^k}
-                    \exp\myparen{
-                        \sum_{i = 1}^m
-                            t''_{\sigma, i} T^i(x)
-                    }
                 \locallabel{eq:estimate-2}
     \end{alignat}
-    となる。ただし最終行の$t''_{\sigma, i}$は各$i = 1, \dots, m$に対し
+    となる。
+    ただし$C \coloneqq \myparen{\frac{k + 1}{\eps}}^k \in \R_{> 0}$とおいた。
+    ここで最終行の$\exp$の中身について、
+    各$i = 1, \dots, m$に対し
+    $T^i(x)$の係数を評価することで、
+    ある$t'' \in A_{2\eps}$が存在して
     \begin{equation}
-        t''_{\sigma, i} \coloneqq
-            t_i + \sum_{\substack{
-                \alpha \in \{ 1, \dots, k \} \\
-                i_\alpha = i
-            }}
-                \frac{\eps}{k + 1}
-                \sigma_\alpha
-            \in \R
+        \localcref{eq:estimate-2}
+            =
+                C
+                \sum_{\sigma \in \{ \pm 1 \}^k}
+                    \exp\myparen{
+                        \sum_{i = 1}^m
+                            t''_i T^i(x)
+                    }
+            =
+                2^k C
+                    \exp\myparen{
+                        \sum_{i = 1}^m
+                            t''_i T^i(x)
+                    }
+                \locallabel{eq:estimate-3}
     \end{equation}
-    とおいた。
-    ここで、$t''_\sigma = (t''_{\sigma, 1}, \dots, t''_{\sigma, m}) \in \R^m$は
-    $A_{4\eps}$に属している。
-    なぜならば、各$i = 1, \dots, m$に対し
+    と表せることがわかる。
+    そこで
+    $|t''_i| \le 2\eps \; (i = 1, \dots, m)$より
     \begin{alignat}{1}
-        |t''_{\sigma, i} - t_i|
-            &\le |t'_i - t_i| + \sum_{\substack{
-                \alpha \in \{ 1, \dots, k \} \\
-                i_\alpha = i
-            }}
-                \frac{\eps}{k + 1} \\
-            &< \eps + \eps \\
-            &= 2\eps
+        \localcref{eq:estimate-3}
+            &\le
+                2^k C
+                \prod_{i = 1}^m
+                    \myparen{
+                        \exp\myparen{
+                            2\eps
+                            T^i(x)
+                        }
+                        + \exp\myparen{
+                            - 2\eps
+                            T^i(x)
+                        }
+                    }
+                \\
+            &=
+                2^k C
+                \sum_{\tau \in \{ \pm 1 \}^m}
+                    \exp\myparen{
+                        \sum_{i = 1}^m
+                            2\eps
+                            \tau_i
+                            T^i(x)
+                    }
     \end{alignat}
-    が成り立つからである。
-    したがって
-    \localcref{eq:estimate-2}は
-    $\calX$上の$\mu$-可積分関数の$\R$-線型結合だから
-    $\mu$-可積分であり、
-    また ($t'$によらないから) $\theta'$によらない。
+    を得る。
+    この右辺は
+    ($t'$によらないから) $\theta'$によらない$\calX$上の関数であり、
+    また$\sum$の各項が
+    $2\eps \tau \in A_{2\eps}$ゆえに$\mu$-可積分だから
+    式全体も$\mu$-可積分である。
     したがってこれが求める優関数である。
 \end{proof}
 
-\begin{theorem}[積分記号下の微分]
-    $\lambda$に関し次が成り立つ。
-    \begin{enumerate}
-        \item $\lambda$は$\Theta^\circ$上$C^\infty$級である。
-        \item 各$\theta \in \Theta^\circ$と
-            $\theta$の近傍上で定義された
-            任意のベクトル場$X^{(1)}, \dots, X^{(n)} \; (n \in \Z_{\ge 1})$
-            に対し
-            \begin{equation}
-                (X^{(1)} \cdots X^{(n)} \lambda)(\theta)
-                    = \int_\calX
-                        (X^{(1)} \cdots X^{(n)} h)(x, \theta) \, \mu(dx)
-            \end{equation}
-            が成り立つ。
-    \end{enumerate}
-\end{theorem}
+目標の\cref{thm:smoothness_of_lambda}を証明する。
 
-\begin{proof}
-    \TODO{}
+\begin{proof}[\cref{thm:smoothness_of_lambda}の証明.]
+    \cref{thm:smoothness_of_lambda}のステートメントで
+    与えられているチャート$\varphi = (\theta_1, \dots, \theta_m)$は
+    ($V^\vee$の基底が定めるものとは限らない)
+    任意のものであるが、
+    実は定理の主張を示すには、
+    $V^\vee$の基底をひとつ選び、
+    その基底が定めるチャート
+    $\wt{\varphi} = (\wt{\theta}_1, \dots, \wt{\theta}_m)$
+    に対して定理の主張を示せば十分である。
+    その理由は次である:
+    \begin{itemize}
+        \item 式\cref{eq:smoothness_of_lambda_1}の左辺の微分可能性は、
+            $\lambda$が$C^\infty$であればよいから、
+            チャート$\wt{\varphi}$で考えれば十分。
+        \item 式\cref{eq:smoothness_of_lambda_1}の右辺の可積分性および
+            式\cref{eq:smoothness_of_lambda_1}の等号の成立については、
+            Leibniz 則より、
+            $\lambda$の$\wt{\theta}_1, \dots, \wt{\theta}_m$に関する
+            $k$回偏導関数が、
+            $\lambda$の$\theta_1, \dots, \theta_m$に関する
+            $k$回以下の偏導関数たちの
+            ($x$によらない) $C^\infty(\Theta^\circ)$-係数の
+            線型結合に書けることから従う。
+    \end{itemize}
+    そこで、以降$\varphi$は
+    $V^\vee$の基底が定めるチャートとする。
+
+    \cref{lemma:existence_of_dominant_function} (1)より、
+    式\cref{eq:smoothness_of_lambda_1}の右辺の可積分性はわかっている。
+    よって、残りの示すべきことは
+    \begin{enumerate}[label=(\roman*)]
+        \item 式\cref{eq:smoothness_of_lambda_1}の左辺の微分可能性
+        \item 式\cref{eq:smoothness_of_lambda_1}の等号の成立
+    \end{enumerate}
+    の2点である。
+
+    まず$k = 1, i_k = 1$の場合に(i), (ii)が成り立つことを示す。
+    そのためには、
+    $t = (t_1, \dots, t_m) \in \varphi(\Theta^\circ)$を任意に固定したとき、
+    $t_1$を含む$\R$の十分小さな開区間$I$が存在して、
+    関数
+    \begin{equation}
+        \locallabel{eq:h_restriction}
+        g \colon \calX \times I \to \R,
+            \quad
+            (x, s) \mapsto h(x, \varphi^{-1}(s, t_2, \dots, t_m))
+    \end{equation}
+    が\cref{fact:diff-under-integral}の仮定(1), (2)をみたすことをいえばよい。
+
+    いま
+    $\varphi^{-1}(t) \in \Theta^\circ$だから、
+    \cref{lemma:existence_of_dominant_function}(2)のいう
+    $\Theta^\circ$における$\varphi^{-1}(t)$の近傍$U$と
+    $\mu$-可積分関数$\Phi \colon \calX \to \R$が存在する。
+    このとき$\varphi(U)$は$\R^m$における$t$の近傍となるから、
+    $t_1$を含む$\R$の十分小さな開区間$I$が存在して
+    \begin{equation}
+        I \times \{ t_2 \} \times \cdots \times \{ t_m \}
+            \subset \varphi(U)
+    \end{equation}
+    が成り立つ。
+    この$I$を用いて定まる関数$g$が
+    \cref{fact:diff-under-integral}の仮定(1), (2)をみたすことを確認する。
+
+    まず\cref{lemma:existence_of_dominant_function}の結果(1)より、
+    $g$は\cref{fact:diff-under-integral}の仮定(1)をみたす。
+    また\cref{lemma:existence_of_dominant_function}の結果(2)より、
+    $g$は\cref{fact:diff-under-integral}の仮定(2)をみたす。
+    したがって$k = 1, i_k = 1$の場合について(i),(ii)が示された。
+
+    同様にして$i_k = 2, \dots, m$の場合についても示される。
+    以降、$k$に関する帰納法で、すべての$k \in \Z_{\ge 1}$および
+    $i_1, \dots, i_k \in \{ 1, \dots, m \}$に対して示される。
+    これで定理の証明が完了した。
 \end{proof}
+
+\cref{thm:smoothness_of_lambda}から次の系が従う。
+
+\begin{corollary}
+    $\varphi = (\varphi_1, \dots, \varphi_m) \colon \Theta^\circ \to \R^m$を
+    $V^\vee$の基底が定めるチャートとする。
+    また、各$\theta \in \Theta$に対し、
+    $\calX$上の確率測度$P_\theta$を
+    $P_\theta(dx)
+        = e^{\langle \theta, T(x) \rangle - \psi(\theta)} \, \mu(dx)$
+    と定める。
+    このとき、
+    任意の$k \in \Z_{\ge 1}, \;
+        i_1, \dots, i_k \in \{ 1, \dots, m \}$
+    に対し、
+    \begin{equation}
+        E_{P_\theta}[T^{i_k}(x) \cdots T^{i_1}(x)]
+            = \frac{
+                \del_{i_k} \cdots \del_{i_1} \lambda(\theta)
+            }{
+                \lambda(\theta)
+            }
+            \quad
+            (\theta \in \Theta^\circ)
+    \end{equation}
+    が成り立つ。
+    ただし、左辺の期待値の存在も系の主張に含まれる。
+    \qed
+\end{corollary}
+
+\begin{example}[正規分布族における原点周りのモーメント]
+    $\calP$が$\calX = \R$上の正規分布族であるとき、
+    任意の$P \in \calP$に対し、
+    $P$に関する$x, x^2, \dots$の期待値
+    $E_P[x], E_P[x^2], \dots$が存在する。
+\end{example}
+
 
 % ------------------------------------------------------------
 %
 % ------------------------------------------------------------
-\section{Hessian}
-
-本節では、
-$\R^n$の開部分集合上の関数に対する Hessian の概念を、
-一般の有限次元$\R$-ベクトル空間$W$の開部分集合$U$上の関数にまで拡張したい。
-そこで、まず$U$上に平坦アファイン接続を導入しておく。
+\section{分散の性質}
 
 以降、本節では
-$W$を$m$次元$\R$-ベクトル空間 ($m \in \Z_{\ge 0}$)、
-$U \opensubset W$を開部分集合とする。
+$\calX$を可測空間、
+$V$を$m$次元$\R$-ベクトル空間 ($m \in \Z_{\ge 0}$)、
+$p$を$\calX$上の確率測度、
+$f \colon \calX \to V$を可測写像とする。
 
-\begin{definition}[$W^\vee$の基底が定める$U$上の座標]
-    $W^\vee$の任意の基底$(f^i)_{i = 1}^m, \; f^i \colon W \to \R$に対し、
-    その$U$上への制限
-    $(x^i)_{i = 1}^m, \; x^i \colon U \to \R$は
-    $U$上の座標となる。
-    この$(x^i)_i$を、
-    本稿だけの呼び方として、
-    \termsilent{$W^\vee$の基底$(f^i)_i$が定める$U$上の座標}
-    と呼ぶことにする。
-\end{definition}
+前回の正規分布族の例では、
+十分統計量の分散が正定値対称であることをみた。
+一般に、分散は次の性質を持つ。
 
-\begin{propdef}[$W$の開部分多様体としての$U$上の平坦アファイン接続]
-    $U$上のアファイン接続
-    $D \colon \Gamma(TU) \to \Gamma(T^\vee U \otimes TU)$を、
-    次の規則で well-defined に定めることができる:
-    \begin{itemize}
-        \item 各$X \in \Gamma(TU)$に対し、
-            $W^\vee$の基底が定める$U$上の座標$(x^i)_{i = 1}^m$をひとつ選び、
-            この座標に関する$X$の成分を$X^i \in \smooth(U)$とおいて
-            \begin{equation}
-                \label{eq:def_connection_d}
-                DX
-                    \coloneqq dX^i \otimes \deldel{x^i}
-                    \in \Gamma(T^\vee U \otimes TU)
-            \end{equation}
-            と定める。
-    \end{itemize}
-    さらに、この$D$は$U$上のアファイン接続として平坦である。
-
-    以上により定まる$D$を、
-    本稿だけの呼び方として、
-    \termsilent{$W$の開部分多様体としての
-        $U$上の平坦アファイン接続}
-    と呼ぶことにする。
-\end{propdef}
-
-\begin{proof}
-    写像として well-defined であることを一旦認め、
-    先に$\R$-線型性、Leibniz 則、平坦性を確かめる。
-    $D$の$\R$-線型性と Leibniz 則は、
-    外微分$d$の$\R$-線型性と Leibniz 則から従う。
-    平坦性、
-    すなわち$D$の接続係数がすべて$0$になるような座標の存在は、
-    \cref{eq:def_connection_d}より明らかである。
-    最後に、$D$が写像として well-defined であることを示す。
-    \TODO{well-defined 性}
-\end{proof}
-
-\TODO{1-form の共変微分をどう定義するかの remark?}
-
-\begin{definition}[Hessian]
-    \TODO{Fr\'echet 微分で定義すべき?しかしノルムは入ってない。}
-    \smooth 関数$f \colon U \to \R$に対し、
-    $f$の\term{Hessian}{Hessian}[Hessian]
-    $\Hess f \in \Gamma(T^\vee U \otimes T^\vee U)$を
-    \begin{equation}
-        \Hess f \coloneqq Ddf
-    \end{equation}
-    と定義する。
-\end{definition}
-
-\begin{proposition}
-    Hessian は対称テンソルである。
-\end{proposition}
-
-\begin{proof}
-    $W^\vee$の基底が定める$U$上の座標$(x^i)_{i = 1}^m$をひとつ選び、
-    この座標に関する$\Hess f$の成分表示を具体的に計算する。
-    そこで$\deldel{x^i}$を$\del_i$と略記することにすれば
-    \begin{alignat}{1}
-        (\Hess f)(\del_i, \del_j)
-            &= (D_{\del_i} df)(\del_j) \\
-            &= \del_i (df(\del_j)) - df(\underbrace{D_{\del_i} \del_j}_{= 0}) \\
-            &= \del_i (\del_j f) \\
-            &= \frac{\del^2 f}{\del x^i \del x^j}
-    \end{alignat}
-    となり、
-    いま$f$が\smooth であることより
-    これは添字$i, j$の置換に関し対称である。
-    したがって$\Hess f$は対称テンソルである。
-\end{proof}
-
-\begin{proposition}
-    $U$がさらに$W$の凸集合であるとする。
+\begin{theorem}[分散の半正定値対称性]
+    $f \in L^2(\calX, p; V)$とする。
     このとき、
-    $\Hess f$が正定値ならば
-    $f$は$U$上で狭義凸である。
-    逆は成立しない。
-\end{proposition}
-
-\begin{proof}
-    \TODO{}
-\end{proof}
-
-\begin{theorem}[対数分配関数の Hessian の正定値性]
-    すべての$\theta \in \Int\Theta$に対し、
-    $\Hess_{\theta} \psi
-        = \myparen{
-            \frac{\del^2 \psi}{\del\theta_i \del\theta_j} (\theta)
-        }_{i, j}$
-    は非負定値かつ対称である。
-    さらに$(T, \mu)$が最小表現ならば、
-    $\Hess_\theta \psi$は
-    正定値である。
+    $\Var_p[f] \in V \otimes V$は、
+    対称かつ半正定値である。
 \end{theorem}
 
 \begin{proof}
-    $\psi(\theta) = \log \int_\calX e^{\langle \theta, T(x) \rangle} \mu(dx)$
-    だから、直接計算により
+    まず$\Var_p[f]$が対称であることを示す。
+    そこで$V$の基底$e_i \; (i = 1, \dots, m)$をひとつ選んで固定し、
+    $f, E_p[f]$の成分表示を
+    それぞれ$f^i \colon \calX \to \R$
+    および
+    $a^i \in \R \; (i = 1, \dots, m)$とおく。
+    すると
     \begin{alignat}{1}
-        \deldel[\psi]{\theta_i}(\theta)
-            &= \int_\calX
-                T_i(x)
-                e^{\langle \theta, T(x) \rangle - \psi(\theta)}
-                \, \mu(dx), \\
-        \frac{\del^2 \psi}{\del\theta_i \del\theta_j} (\theta)
-            &= \int_\calX
-                T_i(x) T_j(x)
-                e^{\langle \theta, T(x) \rangle - \psi(\theta)}
-                \, \mu(dx) \nonumber \\
-            &\qquad - \myparen{
+        \Var_p[f]
+            &= E_p[(f - E_p[f])^2]
+            = \myparen{
                 \int_\calX
-                    T_i(x)
-                    e^{\langle \theta, T(x) \rangle - \psi(\theta)}
-                    \, \mu(dx)
-            }
-            \myparen{
-                \int_\calX
-                    T_j(x)
-                    e^{\langle \theta, T(x) \rangle - \psi(\theta)}
-                    \, \mu(dx)
-            } \\
-            &= E_\theta[T_i(x) T_j(x)] - E_\theta[T_i(x)] E_\theta[T_j(x)] \\
-            &= E_\theta[T_i(x) T_j(x)] - \alpha_i \alpha_j \\
-            &= E_\theta[(T_i(x) - \alpha_i)(T_j(x) - \alpha_j)]
+                (f^i(x) - a^i)(f^j(x) - a^j)
+                \, p(dx)
+            } e_i e_j
     \end{alignat}
-    を得る。
-    ただし$\alpha_k \coloneqq E_\theta[T_k(x)] \; (k = 1, \dots, m)$とおいた。
-    よって
-    $\Hess_\theta \psi
-        = \myparen{
-            \frac{\del^2 \psi}{\del\theta_i \del\theta_j} (\theta)
-        }_{i, j}$
-    は$\theta$に関する$T$の分散$V_\theta[T(x)]$に一致する。
+    となり、最終行の成分は添字$i, j$の置換に関し不変である。
+    したがって$V_p[f]$は対称である。
+
+    つぎに$\Var_p[f]$が半正定値であることを示す。
+    示すべきことは、
+    $\Var_p[f]$を$V^\vee$上の$\R$-双線型形式とみなして、
+    各$\theta \in V^\vee$に対し
+    $\Var_p[f](\theta, \theta) \ge 0$が成り立つことであるが、
+    これは
+    \begin{alignat}{1}
+        \Var_p[f](\theta, \theta)
+            &= \sum_{i, j = 1}^m
+                \myparen{
+                    \int_\calX (f^i(x) - a^i)(f^j(x) - a^j) \, p(dx)
+                }
+                \theta(e_i) \theta(e_j) \\
+            &= \int_\calX \myparen{
+                \sum_{i = 1}^m
+                \theta(e_i)(f^i(x) - a^i)
+            }^2 \, p(dx) \\
+            &\ge 0
+    \end{alignat}
+    より従う。
+    したがって$\Var_p[f]$は半正定値である。
+\end{proof}
+
+分散が0であることの特徴づけを与えておく。
+
+\begin{proposition}[分散が0であるための必要十分条件]
+    \label[proposition]{prop:zero_variance_condition}
+    $f \in L^2(\calX, p; V)$に関し、
+    次は同値である:
+    \begin{enumerate}
+        \item $\Var_p[f] = 0$
+        \item $f$は$p$-a.e.定数
+    \end{enumerate}
+\end{proposition}
+
+証明には次の事実を用いる。
+
+\begin{fact}
+    \label[fact]{fact:nonnegative_func}
+    $\calY$を可測空間、
+    $\mu$を$\calY$上の測度とする。
+    このとき、
+    $\mu$-可積分関数$g \colon \calY \to \R$であって
+    $g(y) \ge 0 \; \text{$\mu$-a.e. $y \in \calY$}$
+    をみたすものに関し、
+    次は同値である:
+    \begin{enumerate}
+        \item $\int_\calY g(y) \, \mu(dy) = 0$
+        \item $g(y) = 0 \quad \text{$\mu$-a.e. $y \in \calY$}$
+    \end{enumerate}
+    \vspace{-2em}
+    \qed
+\end{fact}
+
+\begin{proof}[\cref{prop:zero_variance_condition}の証明.]
+    ここでは「$p$-a.e.」を「a.e.」と略記する。
+    $V$の基底$e_i \; (i = 1, \dots, m)$をひとつ選んで固定し、
+    $f, E_p[f]$の成分表示を
+    それぞれ$f^i \colon \calX \to \R$
+    および
+    $a^i \in \R \; (i = 1, \dots, m)$とおいておく。
+
+    \uline{(\Leftarrow)} \quad
+    $f$がa.e.定数ならば、
+    $f^i(x) = a^i \;
+        \text{a.e.$x$} \;
+        (i = 1, \dots, m)$
     したがって
-    \cref{lem:variance-nonnegative-definite-and-symmetric}
-    より$\Hess_\theta \psi$は非負定値かつ対称である。
-    \TODO{}
+    $(f^i(x) - a^i)(f^j(x) - a^j) = 0 \;
+        \text{a.e.$x$} \;
+        (i, j = 1, \dots, m)$
+    である。
+    よって
+    $\int_\calX (f^i(x) - a^i)(f^j(x) - a^j) \, p(dx) = 0 \;
+        (i, j = 1, \dots, m)$
+    だから
+    $\Var_p[f] = 0$である。
+
+    \uline{(\Rightarrow)} \quad
+    対偶を示すため、
+    $f$はa.e.定数ではないと仮定する。
+    すると、
+    $f_i$がa.e.定数ではないような
+    ある$i \in \{ 1, \dots, m \}$が存在する。
+    このとき$(f^i - a^i)^2 = 0 \; \text{a.e.}$ではないから、
+    \cref{fact:nonnegative_func}より
+    $\int_\calX (f^i(x) - a^i)^2 \, p(dx) > 0$である。
+    したがって$\Var_p[f] \neq 0$である。
 \end{proof}
-
-\begin{corollary}[対数分配関数の凸性]
-    \TODO{正定値性より従う。あるいは H\"older}
-\end{corollary}
-
-\begin{proof}
-    \TODO{}
-\end{proof}
-
 
 
 % ------------------------------------------------------------
@@ -574,9 +607,9 @@ $U \opensubset W$を開部分集合とする。
 \section{今後の予定}
 
 \begin{itemize}
-    \item KL ダイバージェンス
-    \item Fisher 計量
-    \item アファイン接続
+    \item Hessian の定義と$\psi$の Hessian の正定値性を示す。
+    \item KL ダイバージェンスを定義する。
+    \item Fisher 計量を定義する。
 \end{itemize}
 
 % ------------------------------------------------------------
@@ -585,13 +618,13 @@ $U \opensubset W$を開部分集合とする。
 \section{参考文献}
 
 \nocite{amari_information_2016}
-\nocite{bn1970_pdf}
+\nocite{dudley_18466_2003}
+\nocite{brown_fundamentals_1986}
 
 {
     \renewcommand{\bibsection}{}
     \bibliographystyle{amsalpha}
     \bibliography{./bibliography,../../mybibliography}
 }
-
 
 \end{document}
