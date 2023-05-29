@@ -75,6 +75,7 @@
     \newtheorem{proposition}[theorem]{命題}
     \newtheorem*{proposition*}{命題}
     \newtheorem{propdef}[theorem]{命題-定義}
+    \newtheorem*{propdef*}{命題-定義}
     \newtheorem{lemma}[theorem]{補題}
     \newtheorem*{lemma*}{補題}
     \newtheorem{fact}[theorem]{事実}
@@ -134,7 +135,15 @@
         mytcb,
         mythm
     }
+    \tcolorboxenvironment{proposition*}{
+        mytcb,
+        mythm
+    }
     \tcolorboxenvironment{lemma}{
+        mytcb,
+        mythm
+    }
+    \tcolorboxenvironment{lemma*}{
         mytcb,
         mythm
     }
@@ -152,6 +161,11 @@
         colback=BrickRed!3!
     }
     \tcolorboxenvironment{propdef}{
+        mytcb,
+        borderline west={1pt}{1em}{BrickRed},
+        colback=BrickRed!3!
+    }
+    \tcolorboxenvironment{propdef*}{
         mytcb,
         borderline west={1pt}{1em}{BrickRed},
         colback=BrickRed!3!

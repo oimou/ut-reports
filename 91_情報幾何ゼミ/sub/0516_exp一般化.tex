@@ -37,7 +37,7 @@ $\exp$を他の関数に置き換えた場合、
     $\calX$を可測空間、
     $\mu$を$\calX$上の測度、
     $T \colon \calX \to \R$を可測関数、
-    $f \colon \R \to \R$を微分可能で上または下に凸な関数、
+    $f \colon \R \to \R$を微分可能な凸関数、
     $h \colon \R \times \calX \to \R, \; (t, x) \mapsto f(tT(x))$とし、
     $\R$のある開部分集合$\Theta$上で
     $\lambda \colon \Theta \to \R, \; t \mapsto \int_\calX h(t, x) \, \mu(dx)$が
@@ -65,9 +65,6 @@ $\exp$を他の関数に置き換えた場合、
             が成り立つ。
     \end{description}
     である。
-    $f$が上に凸の場合は
-    $f$を$-f$に置き換えて同様の議論をすればよいから、
-    以降$f$が下に凸の場合のみ示す。
 
     \uline{Step 1: $U, \Phi$の構成} \quad
     $r > 0$を十分小さく選び、$\R$の閉区間
@@ -84,24 +81,32 @@ $\exp$を他の関数に置き換えた場合、
     \begin{equation}
         \Phi(x)
             \coloneqq
-            \frac{5}{2r}
-            \Big(
-                \myabs{
-                    h(t - 2r, x)
-                }
-                +
-                \myabs{
-                    h(t + 2r, x)
-                }
-            \Big)
+                \frac{1}{r}
+                \Big(
+                    \myabs{
+                        h(t + 2r, x)
+                    }
+                    +
+                    \myabs{
+                        h(t + r, x)
+                    }
+                    +
+                    \myabs{
+                        h(t - r, x)
+                    }
+                    +
+                    \myabs{
+                        h(t - 2r, x)
+                    }
+                \Big)
     \end{equation}
     と定める。
     以下、この$U, \Phi$が条件(A)をみたすものであることを示す。
 
     まず$U$は$\Theta$における$t$の開近傍であり、
     また
-    $t \pm 2r \in A_{2r} \subset \Theta$ゆえに
-    $h(t \pm 2r, \cdot) \colon \calX \to \R$は
+    $t \pm r, t \pm 2r \in \Theta$ゆえに
+    $h(t \pm r, \cdot), h(t \pm 2r, \cdot) \colon \calX \to \R$は
     $\mu$-可積分だから、
     $\Phi$は$\mu$-可積分である。
     したがって
@@ -121,109 +126,130 @@ $\exp$を他の関数に置き換えた場合、
     \uline{Step 2: $\Phi$による不等式評価} \quad
     $t' \in U$とする。
     まず各$x \in \calX$に対し、$T(x)$の符号で場合分けして不等式評価を与える。
-    そこで複号同順でそれぞれの場合を一度に書くと、
-    $T(x) \gtrless 0$の場合、
-    $t'T(x) < (t \pm 2r) T(x)$だから、
-    $f$の微分可能性と凸性より
-    \begin{alignat}{2}
-        &\phantom{\therefore} \qquad&
-            f'(t'T(x))
-            &\le
-                \frac{
-                    f((t \pm 2r)T(x)) - f(t'T(x))
-                }
-                {
-                    ((t \pm 2r)T(x) - t'T(x))
-                }
-            \\
-        &\therefore&
-            |f'(t'T(x))T(x)|
-            &\le
-                \frac{1}{|t \pm 2r - t'|}
-                \Big(
-                    |f((t \pm 2r)T(x))| + |f(t'T(x))|
-                \Big)
-            \\
-        &&
-            &\le
-                \frac{1}{r}
-                \Big(
-                    |f((t \pm 2r)T(x))| + |f(t'T(x))|
-                \Big)
-    \end{alignat}
-    が成り立つ。
-    したがって、
-    $T(x) > 0$と$T(x) < 0$の場合を合わせると、
-    $T(x) \neq 0$のとき
-    \begin{equation}
-        \locallabel{eq:1}
-        |f'(t'T(x)) T(x)|
-            \le
-                \frac{1}{r}
-                \Big(
-                    |f((t - 2r)T(x))|
-                    + |f(t'T(x))|
-                    + |f((t + 2r)T(x))|
-                    + |f(t'T(x))|
-                \Big)
-    \end{equation}
-    が成り立つ。
-    この不等式は$T(x) = 0$の場合も成り立つから、
-    すべての$x \in \calX$に対して成り立つ。
 
-    さらに
-    \localcref{eq:1}の右辺の
-    $|f(t'T(x))|$の項を評価することを考える。
-    いま$t' \in A_r$ゆえに、
-    ある$s \in [1/4, 3/4]$が存在して
-    $t' = (1 - s)(t - 2r) + s(t + 2r)$が成り立つから、
+    $T(x) > 0$の場合、
+    $(t - 2r)T(x) < (t - r)T(x) < t'T(x) < (t + r)T(x) < (t + 2r)T(x)$
+    だから、
     $f$の凸性より
-    \begin{alignat}{1}
-        |f(t'T(x))|
-            &=
-                \myabs{
-                    f((1 - s)(t - 2r)T(x) + s(t + 2r)T(x))
+    \begin{alignat}{4}
+        \frac{
+            f((t - r)T(x)) - f((t - 2r)T(x))
+        }{
+            (t - r)T(x) - (t - 2r)T(x)
+        }
+            &\le
+                f'(t'T(x))
+            &&\le
+                \frac{
+                    f((t + 2r)T(x)) - f((t + r)T(x))
+                }{
+                    (t + 2r)T(x) - (t + r)T(x)
                 }
-                \\
+    \end{alignat}
+    $T(x) > 0$より
+    \begin{alignat}{2}
+        \frac{
+            f((t - r)T(x)) - f((t - 2r)T(x))
+        }{
+            r
+        }
             &\le
-                \myabs{
-                    (1 - s)f((t - 2r)T(x)) + sf((t + 2r)T(x))
+                f'(t'T(x)) T(x)
+            &&\le
+                \frac{
+                    f((t + 2r)T(x)) - f((t + r)T(x))
+                }{
+                    r
                 }
-                \\
-            &\le
-                (1 - s) |f((t - 2r)T(x))| + s |f((t + 2r)T(x))|
-                \\
-            &\le
-                \frac{3}{4}
-                \Big(
-                    |f((t - 2r)T(x))| + |f((t + 2r)T(x))|
-                \Big)
     \end{alignat}
     が成り立つ。
-    この不等式を\localcref{eq:1}に合わせれば、
-    すべての$x \in \calX$に対して
+    さらに
+    $\R_{\ge 0}$ (resp. $\R_{\le 0}$) 上での
+    $| \cdot |$の単調増加性 (resp. 単調減少性) より
+    \begin{alignat}{1}
+        f'(t'T(x)) T(x) \ge 0
+            &\implies
+                |f'(t'T(x)) T(x)|
+                    \le
+                        \frac{1}{r}
+                        \myabs{
+                            f((t + 2r)T(x)) - f((t + r)T(x))
+                        },
+            \\
+        f'(t'T(x)) T(x) < 0
+            &\implies
+                |f'(t'T(x)) T(x)|
+                    \le
+                        \frac{1}{r}
+                        \myabs{
+                            f((t - r)T(x)) - f((t - 2r)T(x))
+                        }
+    \end{alignat}
+    が成り立つ。
+    したがって、これら2つの不等式を合わせて
     \begin{alignat}{1}
         |f'(t'T(x)) T(x)|
-            &=
-                \frac{10}{4r}
+            &\le
+                \frac{1}{r}
                 \Big(
-                    |f((t - 2r)T(x))|
+                    \myabs{
+                        f((t + 2r)T(x)) - f((t + r)T(x))
+                    }
                     +
-                    |f((t + 2r)T(x))|
+                    \myabs{
+                        f((t - r)T(x)) - f((t - 2r)T(x))
+                    }
+                \Big)
+                \\
+            &\le
+                \frac{1}{r}
+                \Big(
+                    \myabs{
+                        f((t + 2r)T(x))
+                    }
+                    +
+                    \myabs{
+                        f((t + r)T(x))
+                    }
+                    +
+                    \myabs{
+                        f((t - r)T(x))
+                    }
+                    +
+                    \myabs{
+                        f((t - 2r)T(x))
+                    }
                 \Big)
                 \\
             &=
-                \frac{5}{2r}
+                \frac{1}{r}
                 \Big(
-                    |h(t - 2r, x)|
+                    \myabs{
+                        h(t + 2r, x)
+                    }
                     +
-                    |h(t + 2r, x)|
+                    \myabs{
+                        h(t + r, x)
+                    }
+                    +
+                    \myabs{
+                        h(t - r, x)
+                    }
+                    +
+                    \myabs{
+                        h(t - 2r, x)
+                    }
                 \Big)
                 \\
             &=
                 \Phi(x)
     \end{alignat}
-    が成り立つことがわかる。
+    が成り立つ。
+
+    $T(x) < 0$の場合も同様にして
+    $|f'(t'T(x)) T(x)| \le \Phi(x)$
+    が成り立ち、
+    また$T(x) = 0$の場合も明らかに成り立つ。
     したがって$U, \Phi$が条件(A)をみたすことが示されて、
     証明が完了した。
 \end{answer}

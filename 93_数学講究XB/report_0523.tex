@@ -1,0 +1,629 @@
+\documentclass[report, notitlepage]{jlreq}
+\usepackage{global}
+\usepackage{./sub/local}
+\def\assetspath{./}
+%\makeindex
+\makeglossaries
+
+\title{数学講究XB レポート \\[1ex] Gromov-Hausdorff 距離が距離であることの証明}
+\author{05-220542 \\ Keiji Yahata}
+\date{}
+
+\lhead{数学講究XB レポート}
+\rhead{05-220542 Keiji Yahata}
+
+\newcommand{\CMet}{\mathrm{CMet}}
+\newcommand{\GH}{\mathrm{GH}}
+
+\begin{document}
+
+\maketitle
+
+% ============================================================
+%
+% ============================================================
+\newpage
+\setcounter{section}{1}
+
+本レポートでは Gromov-Hausdorff 距離が距離であることの証明を与える。
+まず Gromov-Hausdorff 距離の定義を行う。
+
+\begin{propdef}[Gromov-Hausdorff 距離]
+    コンパクト距離空間の同型類全体の集合を$\CMet$と書く。
+    ただし「同型」とは等長同型$\cong$の意味である。
+    このとき、
+    $\CMet$上の2変数関数
+    $d_\GH \colon \CMet \times \CMet \to [0, +\infty]$であって
+    次をみたすものがただひとつ存在する:
+    \begin{itemize}
+        \item 各$\calX, \calY \in \CMet$に対し、
+            代表元$X \in \calX, \; Y \in \calY$をひとつずつ選ぶと
+            \begin{equation}
+                \label{eq:def}
+                \begin{alignedat}{2}
+                    d_\GH(\calX, \calY)
+                        =
+                            \inf \{
+                                \eps \in \R_{> 0}
+                                \mid
+                                \exists d \colon \text{metric on $X \sqcup Y$}
+                                \; \text{s.t.} \;
+                                &d|_X = d_X, \; d|_Y = d_Y,
+                                    \\
+                                &\forall x \in X, \;
+                                    \exists y \in Y, \;
+                                    d(x, y) < \eps, \;
+                                    \\
+                                &\forall y \in Y, \;
+                                    \exists x \in X, \;
+                                    d(x, y) < \eps
+                            \}
+                \end{alignedat}
+            \end{equation}
+            が成り立つ。
+            ただし$d_X, d_Y$はそれぞれ$X, Y$に定まっている距離である。
+    \end{itemize}
+    $d_\GH$を\termsilent{Gromov-Hausdorff 距離}という。
+\end{propdef}
+
+\begin{proof}
+    用語および記法の準備として、
+    正実数$\eps \in \R_{> 0}$と
+    コンパクト距離空間$X, Y$に対し、
+    $X \sqcup Y$上の距離$d$に関する条件
+    \begin{equation}
+        \begin{cases}
+            d|_X = d_X,
+                \quad
+                d|_Y = d_Y
+                \\
+            \forall x \in X, \;
+                \exists y \in Y, \;
+                d(x, y) < \eps \;
+                \\
+            \forall y \in Y, \;
+                \exists x \in X, \;
+                d(x, y) < \eps
+        \end{cases}
+    \end{equation}
+    を条件$P(\eps, X, Y)$と呼ぶことにし、
+    集合$A_{X, Y} \subset \R_{> 0}$を
+    \begin{equation}
+        \label{eq:def-A}
+        A_{X, Y}
+            \coloneqq
+                \{
+                    \eps \in \R_{> 0}
+                    \mid
+                    \text{$X \sqcup Y$上の距離$d$で条件$P(\eps, X, Y)$をみたすものが存在する}
+                \}
+    \end{equation}
+    と定める。
+    すると式\cref{eq:def}の右辺は
+    $\inf A_{X, Y}$と表せることに注意しておく。
+
+    $d_\GH$を式\cref{eq:def}で定義するために、
+    まず well-defined 性を示す。
+    すなわち、
+    $\calX, \calY \in \CMet$を任意とし、
+    $\inf A_{X, Y}$の値は
+    代表元の選び方によらないことを示す。
+    そのためには、
+    $\calX, \calY$の
+    任意の代表元$X, X' \in \calX, \; Y, Y' \in \calY$に対し
+    $A_{X, Y} = A_{X', Y'}$が成り立つことをいえば十分である。
+    さらに$X, Y$と$X', Y'$の立場を入れ替えても同様の議論が成り立つから、
+    $A_{X, Y} \subset A_{X', Y'}$を示せばよい。
+    そこで$\eps \in A_{X, Y}$を任意とする。
+    すると$A_{X, Y}$の定義より、
+    $X \sqcup Y$上の距離$d$であって
+    条件$P(\eps, X, Y)$をみたすものが存在する。
+    目標である$\eps \in A_{X', Y'}$を示すためには、
+    $X' \sqcup Y'$上の距離$d'$であって
+    条件$P(\eps, X', Y')$をみたすものを構成すればよい。
+
+    \uline{Step 1: 距離$d'$の構成} \quad
+    等長同型写像$f \colon X \cong X', \; g \colon Y \cong Y'$をひとつずつ選び、
+    写像$d' \colon (X' \sqcup Y') \times (X' \sqcup Y') \to [0, +\infty)$を
+    $d'(s', t') \coloneqq d((f \sqcup g)^{-1}(s'), (f \sqcup g)^{-1}(t'))$で定める。
+    すると、
+    $d$が$X \sqcup Y$上の距離であることから
+    $d'$は正値性、対称性、三角不等式をみたし、
+    さらに$f \sqcup g$が$X \sqcup Y \to X' \sqcup Y'$の全単射であることから、
+    $d'$は非退化性もみたす。
+    したがって$d'$は$X' \sqcup Y'$上の距離となる。
+
+    \uline{Step 2: 距離$d'$が条件$P(\eps, X', Y')$をみたすこと} \quad
+    $d'|_{X'} = d_{X'}$であることは、
+    各$s', t' \in X'$に対し
+    \begin{alignat}{2}
+        d'|_{X'}(s', t')
+            &=
+                d((f \sqcup g)^{-1}(s'), (f \sqcup g)^{-1}(t'))
+                &&
+                \\
+            &=
+                d(f^{-1}(s'), f^{-1}(t'))
+                \qquad
+                &&(\because s', t' \in X')
+                \\
+            &=
+                d_X(f^{-1}(s'), f^{-1}(t'))
+                \qquad
+                &&(\because d|_X = d_X, \; f^{-1}(s'), f^{-1}(t') \in X)
+                \\
+            &=
+                d_{X'}(s', t')
+                \qquad
+                &&(\because \text{$f$は等長同型写像})
+    \end{alignat}
+    となることより従う。
+    $d'|_{Y'} = d_{Y'}$についても同様である。
+    さらに
+    「$\forall x' \in X', \; \exists y' \in Y', \; d'(x', y') < \eps$」
+    について、
+    各$x' \in X'$に対し、
+    $f^{-1}(x') \in X$ゆえに
+    ある$y \in Y$が存在して$d(f^{-1}(x'), y) < \eps$となるから、
+    $y' \coloneqq g(y) \in Y'$とおけば
+    \begin{alignat}{2}
+        d'(x', y')
+            &=
+                d((f \sqcup g)^{-1}(x'), (f \sqcup g)^{-1}(y'))
+                &&
+                \\
+            &=
+                d(f^{-1}(x'), g^{-1}(y'))
+                \qquad
+                &&(\because x' \in X', \; y' \in Y')
+                \\
+            &=
+                d(f^{-1}(x'), y)
+                \\
+            &<
+                \eps
+    \end{alignat}
+    が成り立つ。
+    「$\forall y' \in Y', \; \exists x' \in X', \; d'(x', y') < \eps$」
+    についても同様である。
+    
+    以上で$\eps \in A_{X', Y'}$がいえた。
+    したがって$A_{X, Y} \subset A_{X', Y'}$
+    ひいては$A_{X, Y} = A_{X', Y'}$が示され、
+    $\inf A_{X, Y}$の値は代表元の選び方によらないことが示された。
+\end{proof}
+
+Gromov-Hausdorff 距離が距離であることを示す。
+
+\begin{theorem}[Gromov-Hausdorff 距離は距離]
+    \label[theorem]{thm:GH_is_distance}
+    Gromov-Hausdorff 距離$d_\GH$は$\CMet$上の距離である。
+\end{theorem}
+
+この定理の証明はいくつかの補題に分けて行う。
+まず三角不等式を示す。
+
+\begin{lemma}
+    \label[lemma]{lemma:GH_triangle_inequality}
+    $d_\GH$は三角不等式をみたす。
+\end{lemma}
+
+\begin{proof}
+    $\calX, \calY, \calZ \in \calM$とし、
+    $a \coloneqq d_\GH(\calX, \calZ), \;
+        b \coloneqq d_\GH(\calX, \calY), \;
+        c \coloneqq d_\GH(\calY, \calZ)$
+    とおく。
+    示すべき不等式は$a \le b + c$である。
+    $b = \infty$または$c = \infty$の場合は明らかだから、
+    $b, c < \infty$の場合を考える。
+
+    $Y = \emptyset$の場合は
+    $b, c < \infty$より
+    $X = \emptyset, \; Z = \emptyset$となるから、
+    $a = b = c = 0$となり
+    証明は終わる。
+
+    以降$Y \neq \emptyset$の場合を考える。
+    すると$a \le b + c$を示すためには、
+    任意の$s > b, \; t > c$に対し
+    $a \le s + t$が成り立つことを示せばよく、
+    そのためには
+    $\calX, \calY, \calZ$の代表元
+    $X, Y, Z$をひとつずつ選んで
+    $s + t \in A_{X, Z}$を示せばよい
+    ($A_{X, Z}$は\cref{eq:def-A}で定義したもの)。
+    そこで、
+    $X \sqcup Z$上の距離$d_{X \sqcup Z}$であって
+    条件$P(s + t, X, Z)$をみたすものを構成することを考える。
+
+    \uline{Step 1: $d_{X \sqcup Z}$の構成} \quad
+    いま$s > b, \; t > c$ゆえに
+    $s \in A_{X, Y}, \; t \in A_{Y, Z}$だから、
+    $X \sqcup Y$上の距離$d_{X \sqcup Y}$であって
+    条件$P(s, X, Y)$をみたすものと、
+    $Y \sqcup Z$上の距離$d_{Y \sqcup Z}$であって
+    条件$P(t, Y, Z)$をみたすものがそれぞれ存在する。
+    これらを用いて
+    写像$d_{X \sqcup Z} \colon (X \sqcup Z) \times (X \sqcup Z) \to [0, +\infty)$を
+    \begin{alignat}{1}
+        d_{X \sqcup Z}(x, x')
+            &\coloneqq
+                d_{X \sqcup Y}(x, x')
+                \qquad
+                (x, x' \in X)
+                \\
+        d_{X \sqcup Z}(z, z')
+            &\coloneqq
+                d_{Y \sqcup Z}(z, z')
+                \qquad
+                (z, z' \in Z)
+                \\
+        d_{X \sqcup Z}(x, z)
+            &\coloneqq
+                d_{X \sqcup Z}(z, x)
+                \coloneqq
+                \inf_{y \in Y} \mybrace{
+                    d_{X \sqcup Y}(x, y) + d_{Y \sqcup Z}(y, z)
+                }
+                \qquad
+                (x \in X, \; z \in Z)
+    \end{alignat}
+    と定義する。
+
+    \uline{Step 2: $d_{X \sqcup Z}$が距離であること} \quad
+    $d_{X \sqcup Z}$は
+    定義から明らかに正値性、非退化性、対称律をみたすから、
+    あとは三角不等式の成立を確かめればよい。
+    $x, x' \in X, \; z \in Z$として、
+    経路$x \leadsto z \leadsto x'$に沿った距離の和は
+    \begin{alignat}{1}
+        d_{X \sqcup Z}(x, z)
+            + d_{X \sqcup Z}(z, x')
+            &=
+                \inf_{y \in Y} \mybrace{
+                    d_{X \sqcup Y}(x, y) + d_{Y \sqcup Z}(y, z)
+                }
+                +
+                \inf_{y' \in Y} \mybrace{
+                    d_{Y \sqcup Z}(z, y') + d_{X \sqcup Y}(y', x')
+                }
+                \\
+            &=
+                \inf_{y, y' \in Y} \mybrace{
+                    d_{X \sqcup Y}(x, y) + d_{Y \sqcup Z}(y, z)
+                    +
+                    d_{Y \sqcup Z}(z, y') + d_{X \sqcup Y}(y', x')
+                }
+                \\
+            &\ge
+                \inf_{y, y' \in Y} \mybrace{
+                    d_{X \sqcup Y}(x, y)
+                    + d_{Y \sqcup Z}(y, y')
+                    + d_{X \sqcup Y}(y', x')
+                }
+                \\
+            &=
+                \inf_{y, y' \in Y} \mybrace{
+                    d_{X \sqcup Y}(x, y)
+                    + d_{X \sqcup Y}(y, y')
+                    + d_{X \sqcup Y}(y', x')
+                }
+                \\
+            &\ge
+                d_{X \sqcup Y}(x, x')
+    \end{alignat}
+    より三角不等式をみたす。
+    経路$x \leadsto x' \leadsto z$に沿った距離の和は
+    \begin{alignat}{1}
+        d_{X \sqcup Z}(x, x')
+            + d_{X \sqcup Z}(x', z)
+            &=
+                d_{X \sqcup Y}(x, x')
+                +
+                \inf_{y \in Y} \mybrace{
+                    d_{X \sqcup Y}(x', y) + d_{Y \sqcup Z}(y, z)
+                }
+                \\
+            &=
+                \inf_{y \in Y} \mybrace{
+                    d_{X \sqcup Y}(x, x')
+                    + d_{X \sqcup Y}(x', y)
+                    + d_{Y \sqcup Z}(y, z)
+                }
+                \\
+            &\ge
+                \inf_{y \in Y} \mybrace{
+                    d_{X \sqcup Y}(x, y)
+                    + d_{Y \sqcup Z}(y, z)
+                }
+                \\
+            &=
+                d_{X \sqcup Z}(x, z)
+    \end{alignat}
+    より三角不等式をみたす。
+    他の経路についても同様にして三角不等式をみたすことがわかる。
+    したがって$d_{X \sqcup Z}$は$X \sqcup Z$上の距離である。
+
+    \uline{Step 3: $d_{X \sqcup Z}$が$P(s + t, X, Z)$をみたすこと} \quad
+    $d_{X \sqcup Z}|_X = d_X, \;
+        d_{X \sqcup Z}|_Z = d_Z$
+    は定義より明らかである。
+    つぎに
+    「$\forall x \in X, \; \exists z \in Z, \; d_{X \sqcup Z}(x, z) < s + t$」を示す。
+    そこで$x \in X$を任意とする。
+    すると$d_{X \sqcup Y}$が$P(s, X, Y)$をみたすことから、
+    ある$y \in Y$が存在して$d_{X \sqcup Y}(x, y) < s$となる。
+    一方$d_{Y \sqcup Z}$が$P(t, Y, Z)$をみたすことから、
+    ある$z \in Z$が存在して$d_{Y \sqcup Z}(y, z) < t$となる。
+    したがって
+    \begin{equation}
+        d_{X \sqcup Z}(x, z)
+            \le
+                d_{X \sqcup Y}(x, y) + d_{Y \sqcup Z}(y, z)
+            <
+                s + t
+    \end{equation}
+    が成り立つ。
+    同様にして
+    「$\forall z \in Z, \; \exists x \in X, \; d_{X \sqcup Z}(x, z) < s + t$」も示される。
+    したがって$d_{X \sqcup Z}$は$P(s + t, X, Z)$をみたす。
+
+    以上より
+    $s + t \in A_{X, Z}$が示された。
+    したがって$d_\GH$は三角不等式をみたす。
+\end{proof}
+
+非退化性の一方を示す。
+
+\begin{lemma}
+    \label[lemma]{lemma:GH_nondegeneracy_1}
+    $\calX = \calY \implies d_\GH(\calX, \calY) = 0$が成り立つ。
+\end{lemma}
+
+\begin{proof}
+    $\calX = \calY$とする。
+    $d_\GH(\calX, \calY) = 0$を示すには、
+    $\calX, \calY$の代表元$X, Y$をひとつずつ選んで、
+    すべての$n \in \Z_{\ge 1}$に対し
+    $\tfrac{1}{n} \in A_{X, Y}$が成り立つことをいえば十分である
+    ($A_{X, Y}$は\cref{eq:def-A}で定義したもの)。
+    そのためには、$X \sqcup Y$上の距離$d_{X \sqcup Y}$であって
+    条件$P(\tfrac{1}{n}, X, Y)$をみたすものを構成すればよい。
+    そこで、写像
+    $d_{X \sqcup Y} \colon (X \sqcup Y) \times (X \sqcup Y) \to [0, +\infty)$を
+    次のように定める。
+    まず$\calX = \calY$より$X \cong Y$であるから、
+    等長同型写像$f \colon X \stackrel{\sim}{\to} Y$をひとつ選ぶことができる。
+    これを用いて
+    \begin{alignat}{1}
+        d_{X \sqcup Y}(x, x')
+            &\coloneqq
+                d_X(x, x')
+                \qquad
+                (x, x' \in X)
+                \\
+        d_{X \sqcup Y}(y, y')
+            &\coloneqq
+                d_Y(y, y')
+                \qquad
+                (y, y' \in Y)
+                \\
+        d_{X \sqcup Y}(x, y)
+            &\coloneqq
+                d_{X \sqcup Y}(y, x)
+            \coloneqq
+                d_Y(f(x), y)
+                + \frac{1}{2n}
+                \qquad
+                (x \in X, \; y \in Y)
+    \end{alignat}
+    と定める。
+    すると$d_{X \sqcup Y}$は明らかに
+    正値性、非退化性、対称律、三角不等式をみたし、
+    $X \sqcup Y$上の距離となる。
+
+    $d_{X \sqcup Y}$が条件$P(\tfrac{1}{n}, X, Y)$をみたすことを確かめる。
+    まず$d_{X \sqcup Y}|_X = d_X, \; d_{X \sqcup Y}|_Y = d_Y$は定義より明らかである。
+    つぎに
+    「$\forall x \in X, \;
+        \exists y \in Y, \;
+        d_{X \sqcup Y}(x, y) < \tfrac{1}{n}$」を示す。
+    各$x \in X$に対し、$y \coloneqq f(x)$とおけば
+    \begin{alignat}{1}
+        d_{X \sqcup Y}(x, y)
+            &=
+                d_Y(f(x), y)
+                + \frac{1}{2n}
+                \\
+            &=
+                d_X(x, x)
+                + \frac{1}{2n}
+                \qquad
+                (\because \text{$f$は等長})
+                \\
+            &<
+                \frac{1}{n}
+    \end{alignat}
+    が成り立つ。
+    最後に
+    「$\forall y \in Y, \;
+        \exists x \in X, \;
+        d_{X \sqcup Y}(x, y) < \tfrac{1}{n}$」を示す。
+    各$y \in Y$に対し、$x \coloneqq f^{-1}(y)$とおけば
+    (ここで$f$が逆写像を持つことを用いた)
+    \begin{alignat}{1}
+        d_{X \sqcup Y}(x, y)
+            &=
+                d_Y(f(x), y)
+                + \frac{1}{2n}
+                \\
+            &=
+                d_Y(y, y)
+                + \frac{1}{2n}
+                \qquad
+                (\because \text{$f$は等長})
+                \\
+            &<
+                \frac{1}{n}
+    \end{alignat}
+    が成り立つ。
+    したがって$d_{X \sqcup Y}$は条件$P(\tfrac{1}{n}, X, Y)$をみたす。
+
+    以上より、
+    すべての$n \in \Z_{\ge 1}$に対し
+    $\tfrac{1}{n} \in A_{X, Y}$が成り立つことがわかった。
+    したがって$d_\GH(\calX, \calY) = \inf A_{X, Y} = 0$である。
+\end{proof}
+
+非退化性のもう一方を示すため、次の補題を用意しておく。
+
+\begin{lemma}
+    \label[lemma]{lemma:GH_approx_map}
+    $d_\GH(\calX, \calY) = 0$とする。
+    このとき、
+    各$n \in \Z_{\ge 1}$に対し、
+    ある写像$f_n \colon X \to Y$であって
+    次をみたすものが存在する:
+    \begin{enumerate}
+        \item すべての$x, x' \in X$に対し
+            $\myabs{
+                d_X(x, x') - d_Y(f_n(x), f_n(x'))
+            } < \tfrac{1}{n}$
+            が成り立つ。
+        \item $Y = \widebar{B}_{\tfrac{1}{n}}(f_n(X))$が成り立つ。
+            ただし$\widebar{B}_{\tfrac{1}{n}}(\cdot)$は
+            $\tfrac{1}{n}$-閉近傍を表す。
+    \end{enumerate}
+\end{lemma}
+
+\begin{proof}
+    $n \in \Z_{\ge 1}$とし、
+    写像$f_n$の構成を行う。
+    まず$d_\GH(\calX, \calY) = 0$より、
+    $X \sqcup Y$上の距離$d_{X \sqcup Y}$であって
+    条件$P(\tfrac{1}{2n}, X, Y)$をみたすものが存在する。
+    これを用いて、
+    各$x \in X$に対し、
+    $d_{X \sqcup Y}(x, y) < \tfrac{1}{2n}$をみたす
+    $y \in Y$をひとつ選んで
+    $f_n(x) \coloneqq y$と定める。
+    すると、各$x, x' \in X$に対して
+    \begin{alignat}{1}
+        \phantom{=}
+            &\myabs{
+                d_X(x, x') - d_Y(f_n(x), f_n(x'))
+            }
+            \\
+        &=
+            \myabs{
+                d_{X \sqcup Y}(x, x') - d_{X \sqcup Y}(f_n(x), f_n(x'))
+            }
+            \\
+        &=
+            \myabs{
+                d_{X \sqcup Y}(x, x') - d_{X \sqcup Y}(x, f_n(x'))
+                +
+                d_{X \sqcup Y}(f_n(x), f_n(x')) - d_{X \sqcup Y}(x, f_n(x'))
+            }
+            \\
+        &\le
+            \myabs{
+                d_{X \sqcup Y}(x, x') - d_{X \sqcup Y}(x, f_n(x'))
+            }
+            +
+            \myabs{
+                d_{X \sqcup Y}(f_n(x), f_n(x')) - d_{X \sqcup Y}(x, f_n(x'))
+            }
+            \\
+        &\le
+            d_{X \sqcup Y}(x', f_n(x'))
+            +
+            d_{X \sqcup Y}(f_n(x), x)
+            \\
+        &<
+            \frac{1}{2n} + \frac{1}{2n}
+            \\
+        &=
+            \frac{1}{n}
+    \end{alignat}
+    が成り立つ。
+    これで(1)がいえた。
+
+    また、各$y \in Y$に対し、
+    $d_{X \sqcup Y}(x, y) < \tfrac{1}{2n}$をみたす
+    $x \in X$をひとつ選ぶことができ、
+    \begin{alignat}{1}
+        d_Y(y, f_n(x))
+            &=
+                d_{X \sqcup Y}(y, f_n(x))
+                \\
+            &\le
+                d_{X \sqcup Y}(y, x)
+                +
+                d_{X \sqcup Y}(x, f_n(x))
+                \\
+            &\le
+                \frac{1}{2n}
+                +
+                \frac{1}{2n}
+                \\
+            &=
+                \frac{1}{n}
+    \end{alignat}
+    が成り立つ。
+    これで(2)がいえた。
+
+    したがってこの$f_n$が求める写像である。
+\end{proof}
+
+\begin{lemma}
+    \label[lemma]{lemma:GH_nondegeneracy_2}
+    $d_\GH(\calX, \calY) = 0 \implies \calX = \calY$が成り立つ。
+\end{lemma}
+
+\begin{proof}
+    補題を示すためには、
+    $d_\GH(\calX, \calY) = 0$とし、
+    $\calX, \calY$の代表元$X, Y$をひとつずつ選んで
+    等長同型写像$f \colon X \stackrel{\sim}{\to} Y$を構成すればよい。
+    そこで、\cref{lemma:GH_approx_map}の$f_n$たちを用いて
+    求める等長同型写像$f$を構成する。
+    いま$X$はコンパクト距離空間だからとくに可分である。
+    すなわち、$X$のある稠密部分集合であって高々加算なものが存在する。
+    そのひとつを選んで$\{ x_k \in X \mid k \in \N \}$とおく。
+    さらに$Y$はコンパクト距離空間だから、
+    任意の$k \in \N$に対し、
+    $Y$の点列$(f_n(x_k))_{n \in \N}$は収束部分列を持つ。
+    したがって対角線論法により、
+    関数列$(f_n)_{n \in \N}$のある部分列$(f_{n(j)})_{j \in \N}$が存在して、
+    任意の$k \in \N$に対し、
+    $(f_{n(j)}(x_k))_{j \in \N}$は
+    $Y$内の点に収束する。
+    このことを用いて写像
+    $f \colon \{ x_k \in X \mid k \in \N \} \to Y$を
+    $f(x_k) \coloneqq \lim_{j \to \infty} f_{n(j)}(x_k) \; (k \in \N)$
+    と定める。
+    すると$f$は
+    距離空間$X$の稠密部分集合$\{ x_k \in X \mid k \in \N \}$から
+    完備距離空間$Y$への一様連続写像だから、
+    $X$上への連続拡張$f \colon X \to Y$が一意に存在する。
+    このとき、\cref{lemma:GH_approx_map}の(1), (2)より明らかに
+    $f$は等長かつ全射となるから、等長同型写像である。
+    よって$X \cong Y$
+    したがって$\calX = \calY$である。
+\end{proof}
+
+最後に目標の定理を証明する。
+
+\begin{proof}[\cref{thm:GH_is_distance}の証明.]
+    $d_\GH$が$\CMet$上の距離であることを示すには、
+    正値性、非退化性、対称律、三角不等式を示せばよい。
+    正値性と対称律は$d_\GH$の定義から明らかである。
+    また、三角不等式と非退化性は
+    \cref{lemma:GH_triangle_inequality,lemma:GH_nondegeneracy_1,lemma:GH_nondegeneracy_2}
+    で示した。
+    したがって$d_\GH$は$\CMet$上の距離である。
+\end{proof}
+
+\end{document}
