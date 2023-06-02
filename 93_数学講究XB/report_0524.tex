@@ -1,0 +1,105 @@
+\documentclass[report, notitlepage]{jlreq}
+\usepackage{global}
+\usepackage{./sub/local}
+\def\assetspath{./}
+%\makeindex
+\makeglossaries
+
+\title{
+    数学講究XB レポート \\[1em]
+    シンプレクティック多様体において \\[0.5ex]
+    $C^\infty(M, \R)$が
+    Poisson 括弧により \\[0.5ex]
+    Lie 代数となることの証明
+}
+\author{05-220542 \\ Keiji Yahata}
+\date{}
+
+\lhead{数学講究XB レポート}
+\rhead{05-220542 Keiji Yahata}
+
+\begin{document}
+
+\maketitle
+
+% ============================================================
+%
+% ============================================================
+\newpage
+\setcounter{section}{1}
+
+本レポートでは、
+シンプレクティック多様体$(M, \omega)$において
+$C^\infty(M, \R)$が
+Poisson 括弧$\{ \cdot, \cdot \}$により
+Lie 代数となることを証明する。
+まずいくつか用語の定義を整理しておく。
+
+\begin{definition}[シンプレクティック多様体]
+    $M$を有限次元\smooth 多様体、
+    $\omega$を$M$上の2-形式とする。
+    組$(M, \omega)$が
+    \termsilent{シンプレクティック多様体}であるとは、
+    $\omega^n \neq 0$かつ$d\omega = 0$が成り立つことをいう。
+    ただし$\omega^n$は
+    $\omega \wedge \cdots \wedge \omega$のことである。
+\end{definition}
+
+\begin{propdef}[\smooth 関数の Hamilton ベクトル場]
+    $(M, \omega)$をシンプレクティック多様体とする。
+    このとき、
+    各$f \in C^\infty(M, \R)$に対し、
+    あるベクトル場$H_f \in \mathfrak{X}(M)$がただひとつ存在して、
+    任意のベクトル場$Y \in \mathfrak{X}(M)$に対して
+    \begin{equation}
+        \omega(H_f, Y) = df(Y)
+    \end{equation}
+    をみたす。
+    この$H_f$を\termsilent{$f$の Hamilton ベクトル場}という。
+\end{propdef}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+\begin{definition}[Poisson 括弧]
+    $(M, \omega)$をシンプレクティック多様体とする。
+    各$f, g \in C^\infty(M, \R)$に対し、
+    $f, g$の\termsilent{Poisson 括弧}$\{ f, g \} \in C^\infty(M, \R)$を
+    \begin{equation}
+        \{ f, g \} \coloneqq \omega(H_f, H_g)
+    \end{equation}
+    と定義する。
+\end{definition}
+
+目標の定理を示す。
+
+\begin{theorem}
+    $(M, \omega)$をシンプレクティック多様体とする。
+    このとき、
+    $C^\infty(M, \R)$は Poisson 括弧$\{ \cdot, \cdot \}$を
+    括弧積として Lie 代数となる。
+\end{theorem}
+
+\begin{proof}
+    示すべきことは、Poisson 括弧が次をみたすことである:
+    \begin{description}
+        \item[($\R$-双線型性)]
+            任意の$f, g, h \in C^\infty(M, \R)$と
+            $a, b \in \R$に対して、
+            $\{ af + bg, h \} = a \{ f, h \} + b \{ g, h \}$
+            および
+            $\{ h, af + bg \} = a \{ h, f \} + b \{ h, g \}$
+            が成り立つ。
+        \item[(反対称性)]
+            任意の$f, g \in C^\infty(M, \R)$に対して、
+            $\{ f, g \} = - \{ g, f \}$が成り立つ。
+        \item[(Jacobi 恒等式)]
+            任意の$f, g, h \in C^\infty(M, \R)$に対して、
+            $\{ \{ f, g \}, h \} + \{ \{ g, h \}, f \} + \{ \{ h, f \}, g \} = 0$
+            が成り立つ。
+    \end{description}
+    \TODO{}
+\end{proof}
+
+\end{document}

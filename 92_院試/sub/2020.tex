@@ -1,0 +1,201 @@
+\documentclass[report]{jlreq}
+\usepackage{global}
+\usepackage{./local}
+\subfiletrue
+\def\assetspath{../}
+%\makeindex
+\chead{2020}
+\begin{document}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\begin{proof}[2020 A6.]
+    気持ち: 各$m$に対し$\myparen{ a_{m, n} }_{n = 1}^\infty$は
+    $\Z_{\ge 1}$上の確率密度関数になっている。
+
+    \uline{(1)} \quad
+    級数$\sum_{n = 1}^\infty a_{m, n}$が
+    $m$に関し一様収束したと仮定すると、
+    ある$N \in \Z_{\ge 1}$が存在して、
+    すべての$m \in \Z_{\ge 1}$に対し
+    $\sum_{n = N + 1}^\infty a_{m, n} < \frac{1}{2}$が成り立つ。
+    さらに条件(c)より、
+    ある$M \in \Z_{\ge 1}$が存在して
+    $\sum_{n = 1}^N a_{M, n} < \frac{1}{2}$が成り立つ。
+    以上より
+    $\sum_{n = 1}^\infty a_{M, n} < \frac{1}{2} + \frac{1}{2} = 1$
+    が成り立つが、これは条件(b)に矛盾する。
+
+    \uline{(2)} \quad
+    \uline{Step 1:} \quad
+    まず各$m \in \Z_{\ge 1}$に対し
+    級数$\sum_{n = 1}^\infty a_{m, n} s_n$の収束を示す。
+    そのためには
+    実数列$\myparen{
+        \sum_{n = 1}^k a_{m, n} s_n
+    }_{k = 1}^\infty$が
+    $\R$の Cauchy 列であることを示せばよい。
+    そこで$\eps > 0$を任意とすると、
+    級数$\sum_{n = 1}^\infty a_{m, n}$が収束すること (条件(b))
+    と実数列$(s_n)_n$が$s$に収束すること (小問の仮定) より、
+    ある$N \in \Z_{\ge 1}$が存在して、
+    すべての$k, k' \ge N, \; k < k'$に対し
+    $\sum_{n = k + 1}^{k'} a_{m, n} < \eps$
+    かつ
+    $|s_k - s| < \eps$
+    が成り立つ。
+    したがって、
+    すべての$k, k' \ge N, \; k < k'$に対し
+    \begin{alignat}{2}
+        \myabs{
+            \sum_{n = k + 1}^{k'} a_{m, n} s_n
+        }
+            &\le
+                \sum_{n = k + 1}^{k'} a_{m, n} |s_n|
+                \qquad
+                &&(\because \text{条件(a)})
+                \\
+            &\le
+                \sum_{n = k + 1}^{k'}
+                    a_{m, n}
+                    (|s_n - s| + |s|)
+                \qquad
+                &&
+                \\
+            &\le
+                \sum_{n = k + 1}^{k'}
+                    a_{m, n}
+                    (\eps + |s|)
+                \qquad
+                &&
+                \\
+            &\le
+                \eps (\eps + |s|)
+    \end{alignat}
+    が成り立つ。
+    よって実数列
+    $\myparen{
+        \sum_{n = 1}^k a_{m, n} s_n
+    }_k$は$\R$の Cauchy 列である ($\eps$をとり直す議論は省略)。
+
+    \uline{Step 2:} \quad
+    つぎに
+    $\lim_{m \to \infty} \sum_{n = 1}^\infty a_{m, n} s_n = s$
+    となることを示す。
+    そこで$\eps > 0$を任意とする。
+    いま実数列$(s_n)_n$が$s$に収束すること (小問の仮定) より、
+    ある$N \in \Z_{\ge 1}$が存在して、
+    すべての$k \ge N$に対し
+    $|s_k - s| < \eps$
+    が成り立つ。
+    そこで実定数$c$を
+    $c \coloneqq \sup_{1 \le n \le N} |s_n - s| + 1$
+    とおいておく。
+    さらに条件(c)より、
+    ある$M \in \Z_{\ge 1}$が存在して
+    すべての$m \ge M$に対し
+    $\sum_{n = 1}^N a_{m, n} < \frac{\eps}{c}$
+    が成り立つ。
+    したがって、各$m \ge M$に対し
+    \begin{alignat}{2}
+        \myabs{
+            \sum_{n = 1}^\infty a_{m, n} s_n - s
+        }
+            &=
+                \myabs{
+                    \sum_{n = 1}^\infty a_{m, n} (s_n - s)
+                }
+                \qquad
+                &&(\because \text{条件(b)})
+                \\
+            &\le
+                \sum_{n = 1}^N a_{m, n} |s_n - s|
+                + \sum_{n = N + 1}^\infty a_{m, n} |s_n - s|
+                \qquad
+                &&(\because \text{条件(a)})
+                \\
+            &\le
+                \frac{\eps}{c}
+                \sup_{1 \le n \le N} |s_n - s|
+                +
+                \eps
+                \qquad
+                &&(\because \text{条件(b)})
+                \\
+            &\le
+                2\eps
+    \end{alignat}
+    が成り立つ。
+    よって
+    $\lim_{m \to \infty} \sum_{n = 1}^\infty a_{m, n} s_n = s$
+    が示された。
+\end{proof}
+
+\newpage
+\begin{proof}[2020 A7.]
+    まず集合族$\calL$は$X$の被覆であって2元の交叉で閉じているから、
+    $X$の位相の開基である。
+
+    \uline{(1)} \quad
+    $X$における$\{ (0, 0) \}$の閉包$\Cl_X \{ (0, 0) \}$は
+    $F \coloneqq (-\infty, 0] \times (-\infty, 0]$であることを示す。
+    まず$F$は$F = X \setminus \myparen{
+        \bigcup_{n \ge 1} O(-n, 0)
+        \cup
+        \bigcup_{n \ge 1} O(0, -n)
+    }$
+    というように開集合の補集合の形に表せるから、
+    $X$の閉集合である。
+    そこで背理法のために$F = \Cl_X \{ (0, 0) \}$でなかったとすると、
+    閉包の最小性より
+    $F \supsetneq \Cl_X \{ (0, 0) \}$となるから、
+    ある点$(x, y) \in F \setminus \Cl_X \{ (0, 0) \}$が存在する。
+    このとき
+    点$(x, y)$は$\Cl_X \{ (0, 0) \}$の外点だから、
+    $(x, y)$のある近傍$U$であって
+    $\Cl_X \{ (0, 0) \}$と交わらないものが存在する。
+    一方、
+    $(x, y) \in F$すなわち
+    $x \le 0, \; y \le 0$であるから、
+    $\calL$が開基であることより、
+    ある実数$a < x \le 0$と$b < y \le 0$であって
+    $O(a, b) \subset U$となるものが存在する。
+    したがって$U$は
+    点$(0, 0)$において$\Cl_X \{ (0, 0) \}$と交わることになり、
+    矛盾が従う。
+
+    \uline{(2)} \quad
+    $K$のいかなる開被覆も
+    点$(0, 0)$を含むある開集合$U$を含むが、
+    $\calL$が開基であることより、
+    ある実数$a < 0$と$b < 0$であって
+    $O(a, b) \subset U$となるものが存在する。
+    したがって$K \subset O(a, b) \subset U$が成り立つから、
+    $\{ U \}$は$K$の有限部分被覆となる。
+    したがって$K$は$X$のコンパクト部分集合である。
+
+    \uline{(3)} \quad
+    $F$を$X$の非空な閉集合として、
+    $F$がコンパクトでないことを示す。
+    $(x_0, y_0) \in F$をひとつ選ぶと、
+    $F$が閉であることより
+    $\Cl_X \{ (x_0, y_0) \} \subset F$だから、
+    (1)と同様の議論により
+    $(-\infty, x_0] \times (-\infty, y_0]
+        = \Cl_X \{ (x_0, y_0) \}
+        \subset F$
+    が成り立つ。
+    すると、
+    $F$の開被覆
+    $\{ O(-n, -n) \mid n \ge 1 \}$
+    は有限個の元で
+    $(-\infty, x_0] \times (-\infty, y_0]$
+    を覆うことはできず、
+    したがって
+    $F$を覆うこともできないから、
+    有限部分被覆を持たない。
+    よって$F$はコンパクトでない。
+\end{proof}
+
+\end{document}
