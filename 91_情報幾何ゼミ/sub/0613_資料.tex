@@ -23,6 +23,136 @@
 % ------------------------------------------------------------
 %
 % ------------------------------------------------------------
+\section{指数型分布族の構造}
+
+$\calP$には自然な多様体構造が定まることをみる。
+
+\begin{propdef}
+    指数型分布族$\calP$に関し、次は同値である:
+    \begin{enumerate}
+        \item ある最小次元実現$(V, T, \mu)$に対し、
+            $\Theta^\calP$は$V^\vee$で開である。
+        \item すべての最小次元実現$(V, T, \mu)$に対し、
+            $\Theta^\calP$は$V^\vee$で開である。
+    \end{enumerate}
+    $\calP$がこれらの同値な2条件をみたすとき、
+    $\calP$は\termsilent{開}[open]であるという。
+\end{propdef}
+
+\begin{proof}
+    (1) $\Rightarrow$ (2)は
+    \cref{thm:transformation-between-representations}より従う。
+    (2) $\Rightarrow$ (1)は
+    最小次元実現が存在することから従う。
+\end{proof}
+
+\begin{propdef}
+    $\calP$は開であるとする。
+    $\calP$の最小次元実現$(V, T, \mu)$をひとつ選ぶと、
+    自然パラメータ付け$P$により、
+    $\calP$上に多様体構造と平坦アファイン接続を定めることができる。
+    この多様体構造および平坦アファイン接続は
+    最小次元実現のとり方によらない。
+    これを$\calP$の
+    \termsilent{自然な多様体構造}
+    および
+    \termsilent{自然な平坦アファイン接続}
+    と呼ぶ。
+\end{propdef}
+
+\begin{proof}
+    下の (多様体の圏における) 図式の可換性と、
+    $P^{-1}, P'^{-1}$が diffeo. であること、
+    $\up{t}L$が線型同型であることから従う。
+    \begin{equation}
+        \begin{tikzcd}
+            (\calP, \calU_{(V, T, \mu)})
+                \ar{d}[swap]{P^{-1}}
+                \ar{r}{\id}
+                &(\calP, \calU_{(V', T', \mu')})
+                    \ar{d}{P'^{-1}}
+                \\
+            \Theta^\calP
+                \ar{r}{\up{t}L}
+                &\Theta'^\calP
+        \end{tikzcd}
+    \end{equation}
+\end{proof}
+
+\begin{propdef}[$\calP$の Fisher 計量]
+    $\calP$は開であるとする。
+    $\calP$の最小次元実現$(V, T, \mu)$をひとつ選ぶと、
+    $\Theta^\calP$上の Fisher 計量$g$を
+    $\theta$で引き戻して
+    $\calP$上の Riemann 計量
+    $\theta^* g$が定まる。
+    この計量は最小次元実現のとり方によらない。
+    これを$\calP$上の
+    \termsilent{Fisher 計量}
+    と呼ぶ。
+\end{propdef}
+
+\begin{proof}
+    期待値と分散のペアリングの命題と同様の議論により、
+    各$p \in \calP$に対し
+    $g_{\theta(p)} = (L \otimes L) g'_{\theta'(p)}$
+    が成り立つ。
+
+    示すべきことは
+    $\theta^* g = \theta'^* g'$が成り立つことである。
+    各$p \in \calP, \; u, v \in T_p\calP$に対し
+    \begin{alignat}{1}
+        (\theta^* g)_p(u, v)
+            &=
+                g_{\theta(p)} (d\theta_p(u), d\theta_p(v))
+                \\
+            &=
+                \myangle{
+                    g_{\theta(p)}
+                }{
+                    d\theta_p(u) \otimes d\theta_p(v)
+                }
+                \\
+            &=
+                \myangle{
+                    (L \otimes L) g'_{\theta'(p)}
+                }{
+                    d\theta_p(u) \otimes d\theta_p(v)
+                }
+                \\
+            &=
+                \myangle{
+                    g'_{\theta'(p)}
+                }{
+                    \up{t}L \circ d\theta_p(u) \otimes \up{t}L \circ d\theta_p(v)
+                }
+                \\
+            &=
+                \myangle{
+                    g'_{\theta'(p)}
+                }{
+                    d(\up{t}L \circ \theta)_p (u) \otimes d(\up{t}L \circ \theta)_p (v)
+                }
+                \\
+            &=
+                \myangle{
+                    g'_{\theta'(p)}
+                }{
+                    d\theta'_p (u) \otimes d\theta'_p (v)
+                }
+                \\
+            &=
+                g'_p (d\theta'_p(u), d\theta'_p(v))
+                \\
+            &=
+                (\theta'^* g')_p(u, v)
+    \end{alignat}
+    が成り立つ。
+\end{proof}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
 \section{Amari-Chentsov テンソル}
 
 Amari-Chentsov テンソルを定義する。
