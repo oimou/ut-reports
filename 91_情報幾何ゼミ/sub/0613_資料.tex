@@ -4,7 +4,7 @@
 \subfiletrue
 \def\assetspath{../}
 %\makeindex
-\chead{2023/06/06}
+\chead{2023/06/13}
 \begin{document}
 
 % ============================================================
@@ -14,449 +14,79 @@
 % ------------------------------------------------------------
 %
 % ------------------------------------------------------------
-\section{振り返りと導入}
+\section*{振り返りと導入}
 
 \begin{itemize}
-    \item 指数型分布族の "多様体化"
-    \item Amari-Chentsov テンソル
+    \item \TODO{}
 \end{itemize}
 
 % ------------------------------------------------------------
 %
 % ------------------------------------------------------------
-\section{指数型分布族の "多様体化"}
+\section{Amari-Chentsov テンソル}
 
-\begin{definition}[自然パラメータ付け]
+Amari-Chentsov テンソルを定義する。
+
+\begin{propdef}[Amari-Chentsov テンソル]
+    $\calP$は開であるとし、
+    $D$を$\Theta^\calP$上の標準的な\TODO{とは?}平坦アファイン接続、
+    $\theta^i \; (i = 1, \dots, m)$を
+    $\Theta^\calP$上の$D$-アファイン座標とする。
+    $\Theta^\calP$上の写像
+    $S \colon \Theta^\calP \to T^{(0, 3)} \Theta^\calP$
+    を
     \begin{equation}
-        P \colon \Theta_{(V, T, \mu)} \to \calP(\calX),
-            \quad
-            \theta
+        \theta
             \mapsto
-            \exp (\myangle{\theta}{T(x)} - \psi(\theta)) \, \mu(dx)
+                S_\theta
+                \coloneqq
+                E_{P(\theta)}[
+                    (T - E_{P(\theta)}[T])^{\otimes 3}
+                ]
     \end{equation}
-    を$(V, T, \mu)$による$\calP(\calX)$の
-    \term{自然パラメータ付け}[natural parameterization]
-        {自然パラメータ付け}[しぜんパラメータづけ]
-    という。
-\end{definition}
-
-\begin{definition}[真パラメータ空間]
+    で定めると\TODO{値域あってる?}、
+    座標$\theta^i$に関する$S$の成分表示は
     \begin{equation}
-        \Theta^\calP_{(V, T, \mu)}
-            \coloneqq P^{-1}(\calP)
+        S
+            = \del_i \del_j \del_k \psi \, d\theta^i d\theta^j d\theta^k
     \end{equation}
-    を$\calP$の$(V, T, \mu)$に関する
-    \term{真パラメータ空間}[strict parameter space]
-        {真パラメータ空間}[しんパラメータくうかん]
-    という。
-\end{definition}
-
-\subsection{最小次元実現}
-
-\begin{propdef}[単射性条件]
-    $\calP$の実現$(V, T, \mu)$に関する次の条件は同値である:
-    \begin{enumerate}
-        \item $P \colon \Theta_{(V, T, \mu)} \to \calP(\calX)$は単射である。
-        \item $\forall \theta \in V^\vee$
-            に対し
-            「
-                $\myangle{\theta}{T(x)} = \text{const. $\mu$-a.e.$x$}
-                \implies
-                \theta = 0$
-            」
-            が成り立つ。
-        \item $V$の任意の真アファイン部分空間$W$に対し、
-            「$T(x) \in W \; \text{$\mu$-a.e.$x$}$でない」
-            が成り立つ。
-    \end{enumerate}
-    これらの条件が成り立つとき、
-    $(V, T, \mu)$は\termsilent{単射性条件}をみたすという。
-\end{propdef}
-
-\begin{proof}
-    \TODO{}
-\end{proof}
-
-\begin{propdef}[Affine span 条件]
-    $\calP$の実現$(V, T, \mu)$に関する条件
-    \begin{enumerate}
-        \item $\Theta^\calP_{(V, T, \mu)}$は
-            $V^\vee$を affine span する。
-    \end{enumerate}
-    が成り立つとき、
-    $(V, T, \mu)$は\termsilent{affine span 条件}をみたすという。
-    \TODO{違う名称にすべき?}
-\end{propdef}
-
-\begin{remark}[条件をみたさない例]
-    \TODO{}
-\end{remark}
-
-\begin{proposition}[実現の間の変換]
-    \label[proposition]{prop:transformation-between-representations}
-    $(V, T, \mu), (V', T', \mu')$を$\calP$の実現、
-    $P, P'$をそれぞれの実現による自然パラメータ付けとする。
-    このとき、
-    $(V, T, \mu)$が
-    単射性条件と affine span 条件をみたすならば、
-    ある全射$\R$-線型写像$L \colon V' \to V$と
-    ベクトル$b \in V$
-    が存在して、
-    すべての$p \in \calP$に対し
-    \begin{equation}
-        T(x) = L(T'(x)) + b
-            \qquad
-            \text{$p$-a.e.$x$}
-    \end{equation}
-    が成り立つ。
-    \TODO{$\mu$-a.e. にすべき?}
-\end{proposition}
-
-\begin{proof}
-    $P, P'$の右逆写像
-    $\theta \colon \calP \to \Theta^\calP_{(V, T, \mu)}$
-    および
-    $\theta' \colon \calP \to \Theta^\calP_{(V', T', \mu')}$
-    をひとつずつ選んでおく。
-
-    まず$\mu = \mu'$の場合を考える。
-
-    まず$(V, T, \mu)$の affine span 条件より、
-    ある
-    $a^i \in \Theta^\calP_{(V, T, \mu)} \; (i = 0, \dots, m)$
-    が存在して、
-    $e^i \coloneqq a^i - a^0 \; (i = 1, \dots, m)$は
-    $V^\vee$の基底となる。
-    そこで$p^i \coloneqq P(a^i) \in \calP \; (i = 0, \dots, m)$とおき、
-    線型写像$L \colon V' \to V$を
-    $t' \mapsto
-        \myangle{\theta'(p^i) - \theta'(p^0)}{t'} e_i$
-    で定め、
-    ベクトル$b \in V$を
-    $b \coloneqq
-        \mybrace{
-            \psi(\theta(p^i)) - \psi(\theta(p^i))
-            - \psi(\theta'(p^0)) + \psi(\theta'(p^0))
-        } e_i$
-    で定める。
-    すべての$p \in \calP$に対し
-    \begin{equation}
-        T(x) = L(T'(x)) + b
-            \quad
-            \text{$p$-a.e.$x$}
-    \end{equation}
-    が成り立つことを示す。
-
-    指数型分布族の定義より、
-    すべての$p \in \calP$に対し
-    \begin{equation}
-        \exp(\myangle{\theta(p)}{T(x)} - \psi(\theta(p)))
-            =
-                \dd[p]{\mu}(x)
-            =
-                \exp(\myangle{\theta'(p)}{T'(x)} - \psi'(\theta'(p)))
-            \qquad
-                \text{$p$-a.e.$x$}
-    \end{equation}
-    が成り立つ ($p, \mu, \mu'$が互いに絶対連続であることを用いた)。
-    このことを
-    「a.e.」を使わずに言い換えると次のようになる:
-    すべての$p \in \calP$に対し、
-    ある$p$-零集合$N \subset \calX$が存在して、
-    すべての$x \in \calX \setminus N$に対し
-    上の等式が成り立つ。
-    $p \in \calP$とする。
-    上の等式を整理して
-    \begin{equation}
-        \myangle{\theta(p)}{T(x)}
-            - \myangle{\theta'(p)}{T'(x)}
-            =
-                \psi(\theta(p))
-                - \psi'(\theta'(p))
-            \qquad
-                (x \in \calX \setminus N)
-    \end{equation}
-    が成り立つ。
-    そこで
-    $x_0 \in \calX \setminus N$をひとつ選んで固定すると
-    \begin{equation}
-        \myangle{\theta(p)}{T(x) - T(x_0)}
-            =
-                \myangle{\theta'(p)}{T'(x) - T'(x_0)}
-            \qquad
-                (x \in \calX \setminus N)
-    \end{equation}
-    が成り立つ。
-
-    各$i = 0, \dots, m$に対し
-    \begin{equation}
-        \myangle{a^i}{T(x) - T(x_0)}
-            =
-                \myangle{\theta'(p^i)}{T'(x) - T'(x_0)}
-            \qquad
-                (x \in \calX \setminus N)
-    \end{equation}
-    となるから、
-    各$i = 1, \dots, m$に対し
-    \begin{alignat}{3}
-        &\phantom{\therefore}&
-            \myangle{e^i}{T(x) - T(x_0)}
-            &=
-                \myangle{\theta'(p^i) - \theta'(p^0)}{T'(x) - T'(x_0)}
-                &&\qquad
-                (x \in \calX \setminus N)
-                \\
-        &\therefore \quad&
-            \myangle{e^i}{T(x)}
-            &=
-                \myangle{\theta'(p^i) - \theta'(p^0)}{T'(x)}
-                \\
-        &&&\qquad
-            -
-            \myangle{\theta'(p^i) - \theta'(p^0)}{T'(x_0)}
-            +
-            \myangle{e^i}{T(x_0)}
-            &&\qquad
-            (x \in \calX \setminus N)
-    \end{alignat}
-    が成り立つ。
-    よって、すべての$x \in \calX \setminus N$に対し
-    \begin{alignat}{1}
-        T(x)
-            &=
-                L(T'(x))
-                + \mybrace{
-                    \myangle{\theta'(p^i) - \theta'(p^0)}{T'(x_0)}
-                    +
-                    \myangle{e^i}{T(x_0)}
-                } e_i
-                \\
-            &=
-                L(T'(x))
-                + b
-    \end{alignat}
-    が成り立つ。
-    もし$L$が全射でなかったとすると、
-    $T(x) = L(T'(x)) + b \in \Im L + b$
-    が$p$-a.e.$x$すなわち$\mu$-a.e.$x$に対し成り立つことになるが、
-    $\Im L + b$は$V$の真アファイン部分空間だから
-    $(V, T, \mu)$の単射性条件に反する。
-    したがって$L$は全射である。
-
-    $\mu \neq \mu'$の場合も、
-    $(V, T, \mu)$の単射性条件を用いて
-    $(V, T, \mu') \stackrel{\id, 0}{\leadsto} (V, T, \mu)$
-    が成り立つことから明らか。
-\end{proof}
-
-\begin{corollary}
-    上の命題の状況で
-    さらに$(V', T', \mu')$も
-    単射性条件と affine span 条件をみたすならば、
-    $L$は線型同型であり、
-    すべての$p \in \calP$に対し
-    \begin{equation}
-        \begin{cases}
-            T(x) = L(T'(x)) + b & \text{$p$-a.e.$x$} \\
-            \theta'(p) = \up{t}L(\theta(p))
-        \end{cases}
-    \end{equation}
-    が成り立つ。
-    ただし
-    写像$\theta \colon \calP \to \Theta^\calP_{(V, T, \mu)}$
-    および
-    $\theta' \colon \calP \to \Theta^\calP_{(V', T', \mu')}$は
-    $P, P'$の逆写像である。
-    \TODO{$L$は一意?}
-\end{corollary}
-
-\begin{proof}
-    上の証明の続きで、
-    すべての$x \in \calX \setminus N$に対し
-    \begin{alignat}{2}
-        &\phantom{\therefore}&
-            \myangle{\theta(p)}{L(T'(x)) + b}
-            - \myangle{\theta'(p)}{T'(x)}
-            &=
-                \psi(\theta(p)) - \psi'(\theta'(p))
-                \\
-        &\therefore \quad&
-            \myanglem{\up{t}L(\theta(p))}{T'(x)}
-            - \myangle{\theta'(p)}{T'(x)}
-            &=
-                \psi(\theta(p)) - \psi'(\theta'(p))
-                - \myangle{\theta(p)}{b}
-                \\
-        &\therefore \quad&
-            \myanglem{\up{t}L(\theta(p)) - \theta'(p)}{T'(x)}
-            &=
-                \psi(\theta(p)) - \psi'(\theta'(p))
-                - \myangle{\theta(p)}{b}
-    \end{alignat}
-    が成り立つ。
-    $(V', T', \mu)$の単射性条件より
-    $\up{t}L(\theta(p)) = \theta'(p)$
-    が成り立つ。
-
-    $\theta, \theta'$の役割を入れ替えて
-    $\up{t}L(\theta'(p)) = \theta(p)$も成り立つから、
-    とくに$V^\vee$の基底$e^i \; (i = 1, \dots, m)$に対し
-    $\up{t}L \up{t}L e^i = e^i$が成り立つ。
-    よって$\up{t}L, L$は線型同型写像である。
-\end{proof}
-
-\begin{theorem}[最小次元実現の特徴づけ]
-    $\calP$の実現$(V, T, \mu)$に関する次の条件は同値である:
-    \begin{enumerate}
-        \item $(V, T, \mu)$は$\calP$の最小次元実現である。
-        \item $(V, T, \mu)$は単射性条件と affine span 条件をみたす。
-    \end{enumerate}
-\end{theorem}
-
-\begin{proof}
-    \uline{(1) \Rightarrow (2)} \quad
-    以前示した。\TODO{affine span 条件は示してない?}
-
-    \uline{(2) \Rightarrow (1)} \quad
-    $(V, T, \mu)$が単射性条件と affine span 条件をみたすとする。
-    $\calP$の任意の実現
-    $(V', T', \mu')$に対し、
-    \cref{prop:transformation-between-representations}より
-    全射線型写像$L: V' \to V$が存在するから、
-    $\dim V \le \dim V'$である。
-    したがって$V$は$\calP$の最小次元実現である。
-\end{proof}
-
-\begin{remark}[正規分布族の最小次元実現]
-    \TODO{}
-\end{remark}
-
-\begin{propdef}
-    指数型分布族$\calP$に関し、次は同値である:
-    \begin{enumerate}
-        \item ある最小次元実現$(V, T, \mu)$に対し、
-            $\Theta^\calP_{(V, T, \mu)}$は$V^\vee$で開である。
-        \item すべての最小次元実現$(V, T, \mu)$に対し、
-            $\Theta^\calP_{(V, T, \mu)}$は$V^\vee$で開である。
-    \end{enumerate}
-    $\calP$がこれらの同値な2条件をみたすとき、
-    $\calP$は\termsilent{開}[open]であるという。
-\end{propdef}
-
-\begin{proof}
-    (1) $\Rightarrow$ (2)は
-    \cref{prop:transformation-between-representations}より従う。
-    (2) $\Rightarrow$ (1)は
-    最小次元実現が存在することから従う。
-\end{proof}
-
-\subsection{多様体構造}
-
-\begin{propdef}
-    $\calP$は開であるとする。
-    $\calP$の最小次元実現$(V, T, \mu)$をひとつ選ぶと、
-    自然パラメータ付け$P$により、
-    $\calP$上に多様体構造と平坦アファイン接続を定めることができる。
-    この多様体構造および平坦アファイン接続は
-    最小次元実現のとり方によらない。
-    これを$\calP$の
-    \termsilent{自然な多様体構造}
-    および
-    \termsilent{自然な平坦アファイン接続}
+    となる。
+    とくに
+    $\psi$の\smooth 性より
+    $S$は対称$(0, 3)$-テンソル場となる。
+    $S$を
+    \term{Amari-Chentsov テンソル}[Amari-Chentsov tensor]
+        {Amari-Chentsov テンソル}[Amari-Chentsov テンソル]
     と呼ぶ。
 \end{propdef}
 
 \begin{proof}
-    下の図式の可換性と、
-    $P^{-1}, P'^{-1}$が diffeo. であること、
-    $\up{t}L$が線型同型であることから従う。
-    \begin{equation}
-        \begin{tikzcd}
-            (\calP, \calU_{(V, T, \mu)})
-                \ar{d}[swap]{P^{-1}}
-                \ar{r}{\id}
-                &(\calP, \calU_{(V', T', \mu')})
-                    \ar{d}{P'^{-1}}
-                \\
-            \Theta^\calP
-                \ar{r}{\up{t}L}
-                &\Theta'^\calP
-        \end{tikzcd}
-    \end{equation}
+    成分表示は
+    \url{0516_資料.pdf}の系2.4を使って式変形すればわかる。
 \end{proof}
 
-\begin{propdef}[$\calP$の Fisher 計量]
+\begin{propdef}[$\calP$の Amari-Chentsov テンソル]
     $\calP$は開であるとする。
     $\calP$の最小次元実現$(V, T, \mu)$をひとつ選ぶと、
-    $\Theta^\calP_{(V, T, \mu)}$上の Fisher 計量$g$を
+    $\Theta^\calP_{(V, T, \mu)}$上の Amari-Chentsov テンソル$S$を
     $\theta$で引き戻して
-    $\calP$上の Riemann 計量
-    $\theta^* g$が定まる。
-    この計量は最小次元実現のとり方によらない。
+    $\calP$上の対称$(0, 3)$-テンソル場
+    $\theta^* S$が定まる。
+    このテンソル場は最小次元実現のとり方によらない。
     これを$\calP$上の
-    \termsilent{Fisher 計量}
+    \term{Amari-Chentsov テンソル}[Amari-Chentsov tensor]
+        {Amari-Chentsov テンソル}[Amari-Chentsov テンソル]
     と呼ぶ。
 \end{propdef}
 
 \begin{proof}
-    期待値と分散のペアリングの命題と同様の議論により、
-    各$p \in \calP$に対し
-    $g_{\theta(p)} = (L \otimes L) g'_{\theta'(p)}$
-    が成り立つ。
-
-    示すべきことは
-    $\theta^* g = \theta'^* g'$が成り立つことである。
-    各$p \in \calP, \; u, v \in T_p\calP$に対し
-    \begin{alignat}{1}
-        (\theta^* g)_p(u, v)
-            &=
-                g_{\theta(p)} (d\theta_p(u), d\theta_p(v))
-                \\
-            &=
-                \myangle{
-                    g_{\theta(p)}
-                }{
-                    d\theta_p(u) \otimes d\theta_p(v)
-                }
-                \\
-            &=
-                \myangle{
-                    (L \otimes L) g'_{\theta'(p)}
-                }{
-                    d\theta_p(u) \otimes d\theta_p(v)
-                }
-                \\
-            &=
-                \myangle{
-                    g'_{\theta'(p)}
-                }{
-                    \up{t}L \circ d\theta_p(u) \otimes \up{t}L \circ d\theta_p(v)
-                }
-                \\
-            &=
-                \myangle{
-                    g'_{\theta'(p)}
-                }{
-                    d(\up{t}L \circ \theta)_p (u) \otimes d(\up{t}L \circ \theta)_p (v)
-                }
-                \\
-            &=
-                \myangle{
-                    g'_{\theta'(p)}
-                }{
-                    d\theta'_p (u) \otimes d\theta'_p (v)
-                }
-                \\
-            &=
-                g'_p (d\theta'_p(u), d\theta'_p(v))
-                \\
-            &=
-                (\theta'^* g')_p(u, v)
-    \end{alignat}
-    が成り立つ。
+    $S$の定義より
+    $L^{\otimes 3} S'_{\theta'} = S_\theta$
+    が成り立つから、
+    Fisher 計量の場合と同様の議論により
+    $\theta^* S = \theta'^* S'$が成り立つ。
 \end{proof}
 
-\TODO{Amari-Chentsov もいける?}
 
 % ------------------------------------------------------------
 %
@@ -638,18 +268,16 @@ $\calP$に属する確率分布に関する$T$の期待値をすべて含んで�
 % ------------------------------------------------------------
 %
 % ------------------------------------------------------------
-\section{今後の予定}
+\section*{今後の予定}
 
 \begin{itemize}
-    \item KL ダイバージェンス
-    \item Fisher 計量
-    \item アファイン接続
+    \item \TODO{}
 \end{itemize}
 
 % ------------------------------------------------------------
 %
 % ------------------------------------------------------------
-\section{参考文献}
+\section*{参考文献}
 
 \nocite{amari_information_2016}
 

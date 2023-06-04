@@ -14,30 +14,32 @@
 % ------------------------------------------------------------
 %
 % ------------------------------------------------------------
-\section{振り返りと導入}
+\section*{振り返りと導入}
 
+前回は自然パラメータ空間に Fisher 計量を定義した。
+本稿では次のことを行う:
 \begin{itemize}
-    \item 指数型分布族の "多様体化"
-    \item Amari-Chentsov テンソル
+    \item 最小次元実現の間のアファイン変換の一意存在を述べる。
+    \item 指数型分布族$\calP$自体に構造を入れる。
 \end{itemize}
 
-% ------------------------------------------------------------
-%
-% ------------------------------------------------------------
-\section{指数型分布族の "多様体化"}
+$\calX$を可測空間、
+$\calP \subset \calP(\calX)$を$\calX$上の指数型分布族とする。
+新たな用語として次の2つを導入しておく。
 
 \begin{definition}[自然パラメータ付け]
     \begin{equation}
-        P \colon \Theta_{(V, T, \mu)} \to \calP(\calX),
+        P_{(V, T, \mu)} \colon V^\vee \to \calP(\calX),
             \quad
             \theta
             \mapsto
             \exp (\myangle{\theta}{T(x)} - \psi(\theta)) \, \mu(dx)
     \end{equation}
     を$(V, T, \mu)$による$\calP(\calX)$の
-    \term{自然パラメータ付け}[natural parameterization]
+    \term{自然パラメータ付け}[natural parametrization]
         {自然パラメータ付け}[しぜんパラメータづけ]
     という。
+    $P_{(V, T, \mu)}$を$P$と略記することがある。
 \end{definition}
 
 \begin{definition}[真パラメータ空間]
@@ -51,12 +53,62 @@
     という。
 \end{definition}
 
-\subsection{最小次元実現}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{最小次元実現の間のアファイン変換}
+
+本節の目標は、
+最小次元実現の間のアファイン変換の一意存在を述べた
+\cref{thm:transformation-between-representations}
+の証明である。
+本節では、
+ステートメントを簡潔にするために圏の言葉を用いる。
+
+\begin{propdef}[$\calP$の実現とアファイン写像の圏]
+    次のデータにより圏が定まる:
+    \begin{itemize}
+        \item 対象: $\calP$の実現$(V, T, \mu)$全体
+        \item 射: $(V, T, \mu)$から$(V', T', \mu')$への射は、
+            $V$から$V'$への全射アファイン写像
+            $(L, b), \; L \in \Lin(V, V'), \; b \in V'$
+            であって
+            $T'(x) = L(T(x)) + b \; \text{$\mu$-a.e.$x$}$をみたすもの
+        \item 合成: アファイン写像の合成
+            $(L, b)(K, c) = (LK, Lc + b)$
+    \end{itemize}
+    この圏を\termsilent{$\calP$の実現の圏}と呼び、
+    $\bfC_\calP$と書く。
+\end{propdef}
+
+\begin{proof}
+    示すべきことは、射の合成が射であること、恒等射の存在、結合律の3点である。
+    射の合成が射であることは、
+    全射と全射の合成が全射であることと、
+    $\mu \ll \mu'$かつ$\mu' \ll \mu$
+    が成り立つことより従う。
+
+    また、$(V, T, \mu)$の恒等射は明らかに恒等写像$(\id_V, 0)$であり、
+    結合律はアファイン写像の合成の結合律より従う。
+\end{proof}
+
+最小次元実現を特徴づける2つの条件を導入する。
+
+\begin{definition}[Affine span 条件]
+    $\calP$の実現$(V, T, \mu)$に関する条件
+    \begin{enumerate}
+        \item $\Theta^\calP_{(V, T, \mu)}$は
+            $V^\vee$を affine span する。
+    \end{enumerate}
+    が成り立つとき、
+    $(V, T, \mu)$は\termsilent{affine span 条件}をみたすという。
+\end{definition}
 
 \begin{propdef}[単射性条件]
     $\calP$の実現$(V, T, \mu)$に関する次の条件は同値である:
     \begin{enumerate}
-        \item $P \colon \Theta_{(V, T, \mu)} \to \calP(\calX)$は単射である。
+        \item $P \colon V^\vee \to \calP(\calX)$は単射である。
         \item $\forall \theta \in V^\vee$
             に対し
             「
@@ -74,192 +126,206 @@
 \end{propdef}
 
 \begin{proof}
-    \TODO{}
+    (2) $\iff$ (3) は\url{0502_資料.pdf}の命題2.2で示した。
+    (1) $\iff$ (2) は\url{0523_板書.pdf}に書き留めてある。
 \end{proof}
 
-\begin{propdef}[Affine span 条件]
-    $\calP$の実現$(V, T, \mu)$に関する条件
-    \begin{enumerate}
-        \item $\Theta^\calP_{(V, T, \mu)}$は
-            $V^\vee$を affine span する。
-    \end{enumerate}
-    が成り立つとき、
-    $(V, T, \mu)$は\termsilent{affine span 条件}をみたすという。
-    \TODO{違う名称にすべき?}
-\end{propdef}
-
 \begin{remark}[条件をみたさない例]
-    \TODO{}
+    単射性条件をみたすが affine span 条件をみたさない例として
+    \url{0425_資料.pdf}の例4.4がある。
+    Affine span 条件をみたさないことは
+    後の\cref{thm:characterization-of-minimal-representation}から従う。
+
+    \TODO{affine span 条件をみたすが単射性条件をみたさない例?}
 \end{remark}
 
-\begin{proposition}[実現の間の変換]
-    \label[proposition]{prop:transformation-between-representations}
-    $(V, T, \mu), (V', T', \mu')$を$\calP$の実現、
-    $P, P'$をそれぞれの実現による自然パラメータ付けとする。
-    このとき、
-    $(V, T, \mu)$が
-    単射性条件と affine span 条件をみたすならば、
-    ある全射$\R$-線型写像$L \colon V' \to V$と
-    ベクトル$b \in V$
-    が存在して、
-    すべての$p \in \calP$に対し
-    \begin{equation}
-        T(x) = L(T'(x)) + b
-            \qquad
-            \text{$p$-a.e.$x$}
-    \end{equation}
-    が成り立つ。
-    \TODO{$\mu$-a.e. にすべき?}
-\end{proposition}
+\begin{lemma}[基底測度だけを変化させた対象からの射]
+    $(V, T, \mu')$から$(V, T, \mu)$への射が存在する。
+\end{lemma}
+
+\begin{proof}
+    $(\id, 0)$が求める射である。
+\end{proof}
+
+\begin{lemma}[基底測度以外を変化させた対象からの射]
+    $(V, T, \mu)$が affine span 条件と単射性条件をみたすならば、
+    任意の対象$(V', T', \mu)$から$(V, T, \mu)$への射が存在する。
+\end{lemma}
 
 \begin{proof}
     $P, P'$の右逆写像
-    $\theta \colon \calP \to \Theta^\calP_{(V, T, \mu)}$
+    $\theta \colon \calP \to \Theta^\calP$
     および
-    $\theta' \colon \calP \to \Theta^\calP_{(V', T', \mu')}$
+    $\theta' \colon \calP \to \Theta'^\calP$
     をひとつずつ選んでおく。
 
-    まず$\mu = \mu'$の場合を考える。
-
+    \uline{Step 1: 射$(L, b)$の構成} \quad
     まず$(V, T, \mu)$の affine span 条件より、
-    ある
-    $a^i \in \Theta^\calP_{(V, T, \mu)} \; (i = 0, \dots, m)$
+    $V^\vee$のあるアファイン基底
+    $a^i \in \Theta^\calP \; (i = 0, \dots, m)$
     が存在して、
     $e^i \coloneqq a^i - a^0 \; (i = 1, \dots, m)$は
     $V^\vee$の基底となる。
     そこで$p^i \coloneqq P(a^i) \in \calP \; (i = 0, \dots, m)$とおき、
-    線型写像$L \colon V' \to V$を
-    $t' \mapsto
-        \myangle{\theta'(p^i) - \theta'(p^0)}{t'} e_i$
-    で定め、
-    ベクトル$b \in V$を
-    $b \coloneqq
-        \mybrace{
-            \psi(\theta(p^i)) - \psi(\theta(p^i))
-            - \psi(\theta'(p^0)) + \psi(\theta'(p^0))
-        } e_i$
-    で定める。
+    $(L, b)$を次のように定める:
+    \begin{alignat}{1}
+        &L \colon V' \to V,
+            \quad
+            t' \mapsto
+                \myangle{\theta'(p^i) - \theta'(p^0)}{t'} e_i
+            \\
+        &b \coloneqq
+            \mybrace{
+                \psi(\theta(p^i)) - \psi(\theta(p^i))
+                - \psi(\theta'(p^0)) + \psi(\theta'(p^0))
+            } e_i
+            \in V
+    \end{alignat}
+    示すべきことは、
     すべての$p \in \calP$に対し
     \begin{equation}
         T(x) = L(T'(x)) + b
             \quad
-            \text{$p$-a.e.$x$}
+            \text{$\mu$-a.e.$x$}
     \end{equation}
-    が成り立つことを示す。
+    が成り立つことと、
+    $(L, b)$が全射となることである。
 
+    \uline{Step 2: $T(x) = L(T'(x)) + b$の証明} \quad
     指数型分布族の定義より、
-    すべての$p \in \calP$に対し
-    \begin{equation}
-        \exp(\myangle{\theta(p)}{T(x)} - \psi(\theta(p)))
-            =
-                \dd[p]{\mu}(x)
-            =
-                \exp(\myangle{\theta'(p)}{T'(x)} - \psi'(\theta'(p)))
-            \qquad
-                \text{$p$-a.e.$x$}
-    \end{equation}
-    が成り立つ ($p, \mu, \mu'$が互いに絶対連続であることを用いた)。
-    このことを
-    「a.e.」を使わずに言い換えると次のようになる:
-    すべての$p \in \calP$に対し、
-    ある$p$-零集合$N \subset \calX$が存在して、
-    すべての$x \in \calX \setminus N$に対し
-    上の等式が成り立つ。
-    $p \in \calP$とする。
-    上の等式を整理して
-    \begin{equation}
-        \myangle{\theta(p)}{T(x)}
-            - \myangle{\theta'(p)}{T'(x)}
-            =
-                \psi(\theta(p))
-                - \psi'(\theta'(p))
-            \qquad
-                (x \in \calX \setminus N)
-    \end{equation}
+    任意の$p \in \calP$に対し、
+    ある$\mu$-零集合$N_p \subset \calX$が存在して
+    \begin{alignat}{2}
+        &\phantom{\therefore}& \quad
+            \exp(\myangle{\theta(p)}{T(x)} - \psi(\theta(p)))
+                =
+                    \dd[p]{\mu}(x)
+                &=
+                    \exp(\myangle{\theta'(p)}{T'(x)} - \psi'(\theta'(p)))
+                \qquad
+                    (x \in \calX \setminus N_p)
+            \\
+        &\therefore& \quad
+            \myangle{\theta(p)}{T(x)}
+                - \myangle{\theta'(p)}{T'(x)}
+                &=
+                    \psi(\theta(p))
+                    - \psi'(\theta'(p))
+                \qquad
+                    (x \in \calX \setminus N_p)
+    \end{alignat}
     が成り立つ。
-    そこで
-    $x_0 \in \calX \setminus N$をひとつ選んで固定すると
+    とくに各$i = 0, \dots, m$に対し
     \begin{equation}
-        \myangle{\theta(p)}{T(x) - T(x_0)}
+        \myangle{\theta(p^i)}{T(x)}
+            - \myangle{\theta'(p^i)}{T'(x)}
             =
-                \myangle{\theta'(p)}{T'(x) - T'(x_0)}
+                \psi(\theta(p^i))
+                - \psi'(\theta'(p^i))
             \qquad
-                (x \in \calX \setminus N)
+                (x \in \calX \setminus N_{p^i})
     \end{equation}
-    が成り立つ。
-
-    各$i = 0, \dots, m$に対し
+    が成り立つから、
     \begin{equation}
-        \myangle{a^i}{T(x) - T(x_0)}
-            =
-                \myangle{\theta'(p^i)}{T'(x) - T'(x_0)}
-            \qquad
-                (x \in \calX \setminus N)
-    \end{equation}
-    となるから、
-    各$i = 1, \dots, m$に対し
-    \begin{alignat}{3}
-        &\phantom{\therefore}&
-            \myangle{e^i}{T(x) - T(x_0)}
-            &=
-                \myangle{\theta'(p^i) - \theta'(p^0)}{T'(x) - T'(x_0)}
-                &&\qquad
-                (x \in \calX \setminus N)
+        \begin{alignedat}{1}
+            &\phantom{=}
+                \myangle{\theta(p^i) - \theta(p^0)}{T(x)}
+                - \myangle{\theta'(p^i) - \theta'(p^0)}{T'(x)}
                 \\
-        &\therefore \quad&
+            &=
+                \psi(\theta(p^i))
+                - \psi'(\theta'(p^i))
+                - \psi(\theta(p^0))
+                + \psi'(\theta'(p^0))
+                \qquad
+                (x \in \calX \setminus (N_{p^0} \cup N_{p^i}))
+        \end{alignedat}
+    \end{equation}
+    となる。
+    ここで$(V, T, \mu)$の単射性条件より
+    $\theta(p^i) = \theta(P(a^i)) = a^i$
+    が成り立つから、
+    上の式より
+    \begin{equation}
+        \begin{alignedat}{1}
             \myangle{e^i}{T(x)}
-            &=
-                \myangle{\theta'(p^i) - \theta'(p^0)}{T'(x)}
-                \\
-        &&&\qquad
-            -
-            \myangle{\theta'(p^i) - \theta'(p^0)}{T'(x_0)}
-            +
-            \myangle{e^i}{T(x_0)}
-            &&\qquad
-            (x \in \calX \setminus N)
-    \end{alignat}
+                &=
+                    \myangle{\theta'(p^i) - \theta'(p^0)}{T'(x)}
+                    \\
+                &\qquad
+                    + \psi(\theta(p^i))
+                    - \psi'(\theta'(p^i))
+                    - \psi(\theta(p^0))
+                    + \psi'(\theta'(p^0))
+                    \qquad
+                    (x \in \calX \setminus (N_{p^0} \cup N_{p^i}))
+        \end{alignedat}
+    \end{equation}
+    したがって
+    \begin{equation}
+        T(x) = L(T'(x)) + b
+            \qquad
+                (x \in \calX \setminus (N_{p^0} \cup \cdots \cup N_{p^m}))
+    \end{equation}
     が成り立つ。
-    よって、すべての$x \in \calX \setminus N$に対し
-    \begin{alignat}{1}
-        T(x)
-            &=
-                L(T'(x))
-                + \mybrace{
-                    \myangle{\theta'(p^i) - \theta'(p^0)}{T'(x_0)}
-                    +
-                    \myangle{e^i}{T(x_0)}
-                } e_i
-                \\
-            &=
-                L(T'(x))
-                + b
-    \end{alignat}
-    が成り立つ。
+    これで Step 2 が完了した。
+
+    \uline{Step 3: $(L, b)$が全射であることの証明} \quad
+    $L$が全射であることをいえばよい。
     もし$L$が全射でなかったとすると、
     $T(x) = L(T'(x)) + b \in \Im L + b$
     が$p$-a.e.$x$すなわち$\mu$-a.e.$x$に対し成り立つことになるが、
     $\Im L + b$は$V$の真アファイン部分空間だから
     $(V, T, \mu)$の単射性条件に反する。
     したがって$L$は全射である。
-
-    $\mu \neq \mu'$の場合も、
-    $(V, T, \mu)$の単射性条件を用いて
-    $(V, T, \mu') \stackrel{\id, 0}{\leadsto} (V, T, \mu)$
-    が成り立つことから明らか。
 \end{proof}
 
-\begin{corollary}
-    上の命題の状況で
-    さらに$(V', T', \mu')$も
-    単射性条件と affine span 条件をみたすならば、
-    $L$は線型同型であり、
-    すべての$p \in \calP$に対し
+\begin{lemma}[2条件をみたす対象への射]
+    \label[lemma]{lemma:affine-map-between-representations}
+    $(V, T, \mu)$が affine span 条件と単射性条件をみたすならば、
+    任意の対象$(V', T', \mu')$から$(V, T, \mu)$への射が存在する。
+\end{lemma}
+
+\begin{proof}
+    上の2つの補題より存在する2つの射
+    $(V', T', \mu') \to (V', T', \mu) \to (V, T, \mu)$
+    を合成すればよい。
+\end{proof}
+
+\begin{theorem}[最小次元実現の特徴づけ]
+    \label[theorem]{thm:characterization-of-minimal-representation}
+    $\calP$の実現$(V, T, \mu)$に関する次の条件は同値である:
+    \begin{enumerate}
+        \item $(V, T, \mu)$は$\calP$の最小次元実現である。
+        \item $(V, T, \mu)$は単射性条件と affine span 条件をみたす。
+    \end{enumerate}
+\end{theorem}
+
+\begin{proof}
+    \uline{(1) \Rightarrow (2)} \quad
+    以前示した。\TODO{affine span 条件は示してない?}
+
+    \uline{(2) \Rightarrow (1)} \quad
+    $(V, T, \mu)$が単射性条件と affine span 条件をみたすとする。
+    $\calP$の任意の実現
+    $(V', T', \mu')$に対し、
+    \cref{lemma:affine-map-between-representations}より
+    全射線型写像$L: V' \to V$が存在するから、
+    $\dim V \le \dim V'$である。
+    したがって$V$は$\calP$の最小次元実現である。
+\end{proof}
+
+\begin{lemma}[自然パラメータの変換]
+    $(V, T, \mu)$が
+    affine span 条件と単射性条件をみたし、
+    $(V', T', \mu')$が
+    単射性条件をみたすならば、
+    射$(L, b) \colon (V', T', \mu') \to (V, T, \mu)$がただひとつ存在して
     \begin{equation}
-        \begin{cases}
-            T(x) = L(T'(x)) + b & \text{$p$-a.e.$x$} \\
-            \theta'(p) = \up{t}L(\theta(p))
-        \end{cases}
+        \theta'(p)
+            = \up{t}L(\theta(p))
+            \qquad
+            (\forall p \in \calP)
     \end{equation}
     が成り立つ。
     ただし
@@ -267,8 +333,7 @@
     および
     $\theta' \colon \calP \to \Theta^\calP_{(V', T', \mu')}$は
     $P, P'$の逆写像である。
-    \TODO{$L$は一意?}
-\end{corollary}
+\end{lemma}
 
 \begin{proof}
     上の証明の続きで、
@@ -298,38 +363,50 @@
     $\up{t}L(\theta(p)) = \theta'(p)$
     が成り立つ。
 
-    $\theta, \theta'$の役割を入れ替えて
-    $\up{t}L(\theta'(p)) = \theta(p)$も成り立つから、
-    とくに$V^\vee$の基底$e^i \; (i = 1, \dots, m)$に対し
-    $\up{t}L \up{t}L e^i = e^i$が成り立つ。
-    よって$\up{t}L, L$は線型同型写像である。
+    $(V, T, \mu)$の
+    affine span 条件より、
+    $\up{t}L$による$V^\vee$の基底の写り方が決まるから、
+    $\up{t}L$したがって$L$は$(V, T, \mu), (V', T', \mu')$に対し
+    一意に決まる。
 \end{proof}
 
-\begin{theorem}[最小次元実現の特徴づけ]
-    $\calP$の実現$(V, T, \mu)$に関する次の条件は同値である:
-    \begin{enumerate}
-        \item $(V, T, \mu)$は$\calP$の最小次元実現である。
-        \item $(V, T, \mu)$は単射性条件と affine span 条件をみたす。
-    \end{enumerate}
+\begin{theorem}[最小次元実現の間のアファイン変換]
+    \label[theorem]{thm:transformation-between-representations}
+    $(V, T, \mu), (V', T', \mu')$が
+    ともに最小次元実現ならば、
+    同型射$(V, T, \mu) \to (V', T', \mu')$がただひとつ存在する。
 \end{theorem}
 
 \begin{proof}
-    \uline{(1) \Rightarrow (2)} \quad
-    以前示した。\TODO{affine span 条件は示してない?}
-
-    \uline{(2) \Rightarrow (1)} \quad
-    $(V, T, \mu)$が単射性条件と affine span 条件をみたすとする。
-    $\calP$の任意の実現
-    $(V', T', \mu')$に対し、
-    \cref{prop:transformation-between-representations}より
-    全射線型写像$L: V' \to V$が存在するから、
-    $\dim V \le \dim V'$である。
-    したがって$V$は$\calP$の最小次元実現である。
+    上の系から存在する射
+    $(L, b) \colon (V', T', \mu') \to (V, T, \mu)$
+    および
+    $(K, c) \colon (V, T, \mu) \to (V', T', \mu')$
+    について、
+    $(K, c)$が$(L, b)$の逆射であることを示せばよい。
+    いま$V^\vee$の基底$e^i \; (i = 1, \dots, m)$に対し
+    $\up{t}L \up{t}K e'^i = e'^i$が成り立つから、
+    $\up{t}L$は全射かつ単射なので線型同型写像である。
+    したがって$L$も線型同型写像であり、
+    圏$\bfC_\calP$の射の定義から
+    $(L, b)$は$(K, c)$を逆射とする同型射である。
 \end{proof}
 
 \begin{remark}[正規分布族の最小次元実現]
-    \TODO{}
+    \url{0425_資料.pdf}の例3.2でみた正規分布族の例は
+    最小次元実現である。
+    単射性条件は、$(\theta_1, \theta_2)$が異なれば
+    平均か分散の少なくとも一方が異なることになり、
+    異なる確率分布を与えることからわかる。
+    Affine span 条件も明らか。
 \end{remark}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{指数型分布族の構造}
+
+$\calP$には自然な多様体構造が定まることをみる。
 
 \begin{propdef}
     指数型分布族$\calP$に関し、次は同値である:
@@ -345,12 +422,10 @@
 
 \begin{proof}
     (1) $\Rightarrow$ (2)は
-    \cref{prop:transformation-between-representations}より従う。
+    \cref{thm:transformation-between-representations}より従う。
     (2) $\Rightarrow$ (1)は
     最小次元実現が存在することから従う。
 \end{proof}
-
-\subsection{多様体構造}
 
 \begin{propdef}
     $\calP$は開であるとする。
@@ -456,202 +531,25 @@
     が成り立つ。
 \end{proof}
 
-\TODO{Amari-Chentsov もいける?}
 
 % ------------------------------------------------------------
 %
 % ------------------------------------------------------------
-\section{期待値パラメータ空間}
-
-\begin{definition}[期待値パラメータ空間]
-    集合$\calM_{(V, T, \nu)}$
-    \begin{equation}
-        \calM_{(V, T, \nu)}
-            \coloneqq \mybrace{
-                \mu \in V
-                \mid
-                \exists \;
-                p \colon \text{$\calX$上の確率分布}
-                \; \text{s.t.} \;
-                p \ll \nu, \;
-                E_p[T] = \mu
-            }
-    \end{equation}
-    を$(V, T, \nu)$の
-    \term{期待値パラメータ空間}[mean parameter space]
-        {期待値パラメータ空間}[きたいちぱらめーたくうかん]
-    という。
-\end{definition}
-
-期待値パラメータ空間$\calM$は、
-$\calP$に属する確率分布に関する$T$の期待値をすべて含んでいる
-(一般には真に含んでいる)。
-
-\begin{proposition}
-    $\mu \in V$が
-    ある$p \in \calP$に関する
-    $T$の期待値ならば (すなわち$\mu = E_p[T]$ならば)、
-    $\mu$は$\calM_{(V, T, \nu)}$に属する。
-\end{proposition}
-
-\begin{proof}
-    \TODO{}
-\end{proof}
-
-\begin{proposition}[$\calM$は凸集合]
-    $\calM_{(V, T, \nu)}$は$V$の凸集合である。
-\end{proposition}
-
-\begin{proof}
-    \TODO{}
-\end{proof}
-
-
-% ------------------------------------------------------------
-%
-% ------------------------------------------------------------
-\section{Fisher 計量}
-
-\begin{example}[正規分布族]
-    \TODO{ちゃんと書く}
-    $\calP$を$\calX = \R$上の正規分布族とし、
-    実現$(V, T, \mu)$を
-    $V = \R^2, \;
-        T(x) = (x, x^2), \;
-        \mu = \lambda$
-    とおく。
-    これは条件Aをみたす。
-
-    自然パラメータ空間は
-    $\Theta = \Theta^\circ = \R \times \R_{< 0}$である。
-
-    対数分配関数は
-    \begin{equation}
-        \psi(\theta)
-            = \frac{\mu^2}{2 \sigma^2}
-            + \log \sigma
-            + \frac{1}{2} \log 2\pi
-    \end{equation}
-    である。
-    ただし$\theta^1 = \frac{\mu}{\sigma^2}, \;
-        \theta^2 = -\frac{1}{2 \sigma^2}$
-    とおいた。
-    よって
-    \begin{alignat}{1}
-        d\psi
-            &=
-                \frac{\mu}{\sigma^2}
-                d\mu
-                + \frac{\sigma^2 - \mu^2}{\sigma^3}
-                d\sigma
-                \\
-            &=
-                -\frac{\theta^1}{2\theta^2} d\theta^1
-                +\myparen{
-                    -\frac{1}{2\theta^2}
-                    + \frac{(\theta^1)^2}{4(\theta^2)^2}
-                }
-                d\theta^2
-                \\
-        \Hess\psi
-            &= Dd\psi \\
-            &=
-                \myparen{
-                    -\frac{1}{2\theta^2}
-                    d\theta^1
-                    + \frac{\theta^1}{2(\theta^2)^2}
-                    d\theta^2
-                }
-                d\theta^1
-                +
-                \myparen{
-                    \frac{\theta^1}{2(\theta^2)^2}
-                    d\theta^1
-                    + \myparen{
-                        \frac{1}{2(\theta^2)^2}
-                        - \frac{(\theta^1)^2}{2(\theta^2)^3}
-                    }
-                    d\theta^2
-                }
-                d\theta^2
-                \\
-            &=
-                \frac{1}{\sigma^2} (d\mu)^2
-                + \frac{2}{\sigma^2} (d\sigma)^2
-    \end{alignat}
-    である。
-    Fisher 計量$g \coloneqq \Hess\psi$から定まる
-    Levi-Civita 接続$\nabla^{(g)}$の、
-    座標$\mu, \sigma$に関する接続係数を求めてみる。
-    \begin{alignat}{2}
-        {\Gamma^{(g)}}_{11}^1
-            = 0,
-            &\qquad
-                {\Gamma^{(g)}}_{12}^1
-                    = {\Gamma^{(g)}}_{21}^1
-                    = -\frac{1}{\sigma},
-            &&\qquad
-                {\Gamma^{(g)}}_{22}^1
-                    = 0,
-            \\
-        {\Gamma^{(g)}}_{11}^2
-            = \frac{1}{2\sigma},
-            &\qquad
-                {\Gamma^{(g)}}_{12}^2
-                    = {\Gamma^{(g)}}_{21}^2
-                    = 0,
-            &&\qquad
-                {\Gamma^{(g)}}_{22}^2
-                    = -\frac{1}{\sigma}
-    \end{alignat}
-    測地線の方程式は
-    \begin{equation}
-        \begin{cases}
-            x'' - \frac{2}{y} x' y' = 0 \\
-            y'' + \frac{1}{2y} (x')^2 - \frac{1}{y} (y')^2 = 0
-        \end{cases}
-    \end{equation}
-    である。
-    これを直接解くのは少し大変である。
-    その代わりに、
-    既知の Riemann 多様体との間の等長同型を利用して測地線を求める。
-    $(\Theta, g)$は、
-    上半平面$H$に計量
-    $\breve{g} = \frac{(dx)^2 + (dy)^2}{2y^2}$
-    を入れた Riemann 多様体との間に
-    等長同型$(\Theta, g) \to (H, \breve{g}), \;
-        (x, y) \mapsto (x, \sqrt{2}y)$
-    を持つ。
-    Levi-Civita 接続に関する測地線は
-    等長同型で保たれるから、
-    $(H, \breve{g})$の測地線を求めればよい。
-    $(H, \breve{g})$の測地線は、
-    $y$軸に平行な直線と
-    $x$軸上に中心を持つ半円で尽くされることが知られている。
-    これらを等長同型で写して、
-    $(\Theta, g)$の測地線として
-    $y$軸に平行な直線と
-    $x$軸上に長軸を持つ半楕円が得られる。
-\end{example}
-
-
-% ------------------------------------------------------------
-%
-% ------------------------------------------------------------
-\section{今後の予定}
+\section*{今後の予定}
 
 \begin{itemize}
-    \item KL ダイバージェンス
-    \item Fisher 計量
-    \item アファイン接続
+    \item Amari-Chentsov テンソルを定義する。
+    \item 正規分布族の場合の具体的な計算を行う
+        (Fisher 計量、Levi-Civita 接続、測地線など)。
 \end{itemize}
 
 % ------------------------------------------------------------
 %
 % ------------------------------------------------------------
-\section{参考文献}
+\section*{参考文献}
 
 \nocite{amari_information_2016}
+\nocite{bn1970_pdf}
 
 {
     \renewcommand{\bibsection}{}
