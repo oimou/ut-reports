@@ -30,11 +30,11 @@ $\calP \subset \calP(\calX)$を$\calX$上の指数型分布族とする。
     $(V, T, \mu)$を$\calP$の実現、
     $\psi$を$(V, T, \mu)$の対数分配関数とする。
     \begin{equation}
-        P_{(V, T, \mu)} \colon V^\vee \to \calP(\calX),
+        P_{(V, T, \mu)} \colon \Theta_{(V, T, \mu)} \to \calP(\calX),
             \quad
             \theta
             \mapsto
-            \exp (\myangle{\theta}{T(x)} - \psi(\theta)) \, \mu(dx)
+            \exp (\myangle{\theta}{T(x)} - \psi(\theta)) \cdot \mu
     \end{equation}
     を$(V, T, \mu)$による$\calP(\calX)$の
     \term{自然パラメータ付け}[natural parametrization]
@@ -77,11 +77,11 @@ $\calP$の実現$(V, T, \mu), (V', T', \mu')$に対し、
         \item 対象: $\calP$の実現$(V, T, \mu)$全体
         \item 射: $(V, T, \mu)$から$(V', T', \mu')$への射は、
             $V$から$V'$への全射アファイン写像
-            $(L, b), \; L \in \Lin(V, V'), \; b \in V'$
+            $(L, b) \; (L \in \Lin(V, V'), \; b \in V')$
             であって
             $T'(x) = L(T(x)) + b \; \text{$\mu$-a.e.$x$}$をみたすもの
         \item 合成: アファイン写像の合成
-            $(L, b)(K, c) = (LK, Lc + b)$
+            $(L, b) \circ (K, c) = (LK, Lc + b)$
     \end{itemize}
     この圏を\termsilent{$\calP$の実現とアファイン写像の圏}と呼び、
     $\bfC_\calP$と書く。
@@ -99,20 +99,10 @@ $\calP$の実現$(V, T, \mu), (V', T', \mu')$に対し、
 
 最小次元実現を特徴づける2つの条件を導入する。
 
-\begin{definition}[Affine span 条件]
-    $\calP$の実現$(V, T, \mu)$に関する条件
-    \begin{enumerate}
-        \item $\Theta^\calP$は
-            $V^\vee$を affine span する。
-    \end{enumerate}
-    が成り立つとき、
-    $(V, T, \mu)$は\termsilent{affine span 条件}をみたすという。
-\end{definition}
-
-\begin{propdef}[単射性条件]
+\begin{propdef}[条件A]
     $\calP$の実現$(V, T, \mu)$に関する次の条件は同値である:
     \begin{enumerate}
-        \item $P \colon V^\vee \to \calP(\calX)$は単射である。
+        \item $P \colon \Theta \to \calP(\calX)$は単射である。
         \item $\forall \theta \in V^\vee$
             に対し
             「
@@ -126,21 +116,31 @@ $\calP$の実現$(V, T, \mu), (V', T', \mu')$に対し、
             が成り立つ。
     \end{enumerate}
     これらの条件が成り立つとき、
-    $(V, T, \mu)$は\termsilent{単射性条件}をみたすという。
+    $(V, T, \mu)$は\termsilent{条件A}をみたすという。
 \end{propdef}
 
 \begin{proof}
     (1) $\iff$ (2) は\url{0502_資料.pdf}の命題2.2で示した。
-    (2) $\iff$ (3) は\url{0523_板書.pdf}に書き留めてある。
+    (2) $\iff$ (3) は\url{0523_コメント.pdf}の命題0.4に記した。
 \end{proof}
 
-単射性条件は射の一意性を保証する。
+\begin{definition}[条件B]
+    $\calP$の実現$(V, T, \mu)$に関する条件
+    \begin{enumerate}
+        \item $\Theta^\calP$は
+            $V^\vee$を affine span する。
+    \end{enumerate}
+    が成り立つとき、
+    $(V, T, \mu)$は\termsilent{条件B}をみたすという。
+\end{definition}
+
+条件Aは射の一意性を保証する。
 
 \begin{lemma}[射の一意性]
     \label[lemma]{lemma:uniqueness-of-morphism}
     $(V, T, \mu), (V', T', \mu')$を$\bfC_\calP$の対象とする。
     このとき、
-    $(V, T, \mu)$が単射性条件をみたすならば
+    $(V, T, \mu)$が条件Aをみたすならば
     $(V, T, \mu)$から$(V', T', \mu')$への射は一意である。
 \end{lemma}
 
@@ -152,26 +152,40 @@ $\calP$の実現$(V, T, \mu), (V', T', \mu')$に対し、
             T'(x) = L(T(x)) + b & \text{$\mu$-a.e.$x$} \\
             T'(x) = K(T(x)) + c & \text{$\mu$-a.e.$x$}
         \end{cases}
-        \locallabel{eq:1}
     \end{equation}
     が成り立つから、2式を合わせて
     \begin{equation}
         (K - L)(T(x)) = b - c \qquad \text{$\mu$-a.e.$x$}
     \end{equation}
     となる。
-    そこで$V'$の基底をひとつ選んで固定し、
-    成分ごとに$(V, T, \mu)$の単射性条件(2)を適用すれば、
+    そこで基底を固定して
+    成分ごとに$(V, T, \mu)$の条件A(2)を適用すれば、
     $K = L$を得る。
     よって
-    \localcref{eq:1}で$K = L$として
+    上式で$K = L$として
     $b = c \; \text{$\mu$-a.e.}$
     したがって$b = c$を得る。
     以上より$(L, b) = (K, c)$である。
 \end{proof}
 
 射が存在するための十分条件を調べる。
+この後の中間目標は
+\cref{lemma:affine-map-between-representations}
+であり、その証明は次の図のような2段階に分けて行う。
+\begin{equation}
+    \begin{tikzcd}
+        (V', T', \mu')
+            \ar{rd}[swap]{\cref{lemma:mu_dash_to_mu}}
+            \ar{rr}{\cref{lemma:affine-map-between-representations}}
+            && (V, T, \mu)
+            \\
+        &(V', T', \mu)
+            \ar{ru}[swap]{\cref{lemma:V_dash_T_dash_to_V_T}}
+    \end{tikzcd}
+\end{equation}
 
 \begin{lemma}[基底測度だけを変化させた対象からの射]
+    \label[lemma]{lemma:mu_dash_to_mu}
     $(V, T, \mu')$から$(V, T, \mu)$への射が存在する。
 \end{lemma}
 
@@ -180,25 +194,30 @@ $\calP$の実現$(V, T, \mu), (V', T', \mu')$に対し、
 \end{proof}
 
 \begin{lemma}[基底測度以外を変化させた対象からの射]
-    $(V, T, \mu)$が affine span 条件と単射性条件をみたすならば、
+    \label[lemma]{lemma:V_dash_T_dash_to_V_T}
+    $(V, T, \mu)$が 条件Aと条件Bをみたすならば、
     任意の対象$(V', T', \mu)$から$(V, T, \mu)$への射が存在する。
 \end{lemma}
 
 \begin{proof}
+    \uline{Step 0: $V, V^\vee$の基底を選ぶ} \quad
+    $(V, T, \mu)$の条件Bより、
+    $V^\vee$のあるアファイン基底
+    $a^i \in \Theta^\calP \; (i = 0, \dots, m)$
+    が存在する。
+    そこで
+    $e^i \coloneqq a^i - a^0 \in V^\vee \; (i = 1, \dots, m)$
+    とおくとこれは$V^\vee$の基底である。
+    さらに$e^i$の双対基底を$V$の元と同一視したものを
+    $e_i \in V \; (i = 1, \dots, m)$とおいておく。
+
+    \uline{Step 1: 射$(L, b)$の構成} \quad
     $P, P'$の右逆写像
     $\theta \colon \calP \to \Theta^\calP$
     および
     $\theta' \colon \calP \to \Theta'^\calP$
-    をひとつずつ選んでおく。
-
-    \uline{Step 1: 射$(L, b)$の構成} \quad
-    まず$(V, T, \mu)$の affine span 条件より、
-    $V^\vee$のあるアファイン基底
-    $a^i \in \Theta^\calP \; (i = 0, \dots, m)$
-    が存在して、
-    $e^i \coloneqq a^i - a^0 \; (i = 1, \dots, m)$は
-    $V^\vee$の基底となる。
-    そこで$p^i \coloneqq P(a^i) \in \calP \; (i = 0, \dots, m)$とおき、
+    をひとつずつ選んで
+    $p^i \coloneqq P(a^i) \in \calP \; (i = 0, \dots, m)$とおき、
     $(L, b)$を次のように定める:
     \begin{alignat}{1}
         &L \colon V' \to V,
@@ -259,6 +278,7 @@ $\calP$の実現$(V, T, \mu), (V', T', \mu')$に対し、
                 (x \in \calX \setminus N_{p^i})
     \end{equation}
     が成り立つから、
+    $\text{($i$の場合)} - \text{($0$の場合)}$を考えて
     \begin{equation}
         \begin{alignedat}{1}
             &\phantom{=}
@@ -273,15 +293,16 @@ $\calP$の実現$(V, T, \mu), (V', T', \mu')$に対し、
                 \qquad
                 (x \in \calX \setminus (N_{p^0} \cup N_{p^i}))
         \end{alignedat}
+        \locallabel{eq:1}
     \end{equation}
     となる。
-    ここで$(V, T, \mu)$の単射性条件より
-    $\theta(p^i) = \theta(P(a^i)) = a^i$
+    ここで$(V, T, \mu)$の条件A (1)より
+    $\theta(p^i) = a^i$
     が成り立つから、
-    上の式より
+    \localcref{eq:1}より
     \begin{equation}
         \begin{alignedat}{1}
-            \myangle{e^i}{T(x)}
+            \myangle{a^i - a^0}{T(x)}
                 &=
                     \myangle{\theta'(p^i) - \theta'(p^0)}{T'(x)}
                     \\
@@ -309,13 +330,13 @@ $\calP$の実現$(V, T, \mu), (V', T', \mu')$に対し、
     $T(x) = L(T'(x)) + b \in \Im L + b$
     が$p$-a.e.$x$すなわち$\mu$-a.e.$x$に対し成り立つことになるが、
     $\Im L + b$は$V$の真アファイン部分空間だから
-    $(V, T, \mu)$の単射性条件に反する。
+    $(V, T, \mu)$の条件A (3)に反する。
     したがって$L$は全射である。
 \end{proof}
 
 \begin{lemma}[2条件をみたす対象への射]
     \label[lemma]{lemma:affine-map-between-representations}
-    $(V, T, \mu)$が affine span 条件と単射性条件をみたすならば、
+    $(V, T, \mu)$が 条件Aと条件Bをみたすならば、
     任意の対象$(V', T', \mu')$から$(V, T, \mu)$への射が存在する。
 \end{lemma}
 
@@ -325,15 +346,304 @@ $\calP$の実現$(V, T, \mu), (V', T', \mu')$に対し、
     を合成すればよい。
 \end{proof}
 
-\begin{lemma}
-    $(V, T, \mu)$が affine span 条件をみたさないならば、
+各条件をみたさない場合にも、射の存在が保証される。
+
+\begin{lemma}[単調性条件をみたさない場合の射]
+    \label[lemma]{lemma:morphism-existence-a}
+    $(V, T, \mu)$が条件Aをみたさないならば、
     $(V, T, \mu)$よりも次元の小さい
-    ある対象$(\wt{V}, \wt{T}, \wt{\mu})$への
-    ある射$(V, T, \mu) \to (\wt{V}, \wt{T}, \wt{\mu})$が存在する。
+    ある対象$(V', T', \mu')$への
+    射$(V, T, \mu) \to (V', T', \mu')$が存在する。
 \end{lemma}
 
 \begin{proof}
-    $(V, T, \mu)$が affine span 条件をみたさないとする。
+    末尾の付録に載せた。
+\end{proof}
+
+\begin{lemma}[条件Bをみたさない場合の射]
+    \label[lemma]{lemma:morphism-existence-b}
+    $(V, T, \mu)$が条件Bをみたさないならば、
+    $(V, T, \mu)$よりも次元の小さい
+    ある対象$(V', T', \mu')$への
+    射$(V, T, \mu) \to (V', T', \mu')$が存在する。
+\end{lemma}
+
+\begin{proof}
+    末尾の付録に載せた。
+\end{proof}
+
+以上の補題を用いて
+最小次元実現の特徴づけが得られる。
+
+\begin{theorem}[最小次元実現の特徴づけ]
+    \label[theorem]{thm:characterization-of-minimal-representation}
+    $\calP$の実現$(V, T, \mu)$に関する次の条件は同値である:
+    \begin{enumerate}
+        \item $(V, T, \mu)$は$\calP$の最小次元実現である。
+        \item $(V, T, \mu)$は条件Aと条件Bをみたす。
+    \end{enumerate}
+\end{theorem}
+
+\begin{proof}
+    \uline{(1) \Rightarrow (2)} \quad
+    最小次元実現$(V, T, \mu)$が条件A, Bのいずれかをみたさなかったとすると、
+    \cref{lemma:morphism-existence-a,lemma:morphism-existence-b}
+    よりとくに$(V, T, \mu)$よりも次元の小さい実現が存在することになり、
+    矛盾が従う。
+
+    \uline{(2) \Rightarrow (1)} \quad
+    $(V, T, \mu)$が条件Aと条件Bをみたすとする。
+    $\calP$の任意の実現
+    $(V', T', \mu')$に対し、
+    \cref{lemma:affine-map-between-representations}より
+    全射線型写像$L: V' \to V$が存在するから、
+    $\dim V \le \dim V'$である。
+    したがって$V$は$\calP$の最小次元実現である。
+\end{proof}
+
+\begin{example}[正規分布族の最小次元実現]
+    \cref{thm:characterization-of-minimal-representation}により、
+    \url{0425_資料.pdf}の例3.2でみた正規分布族の例は
+    最小次元実現であることがわかる。
+    実際、
+    $T(x) = \up{t}(x, x^2)$の像は
+    $\R^2$のいかなる真アファイン部分空間にも
+    含まれないから、
+    条件A (3)が成り立つ。
+    また、$\Theta^\calP = \R \times \R_{< 0}$となることから
+    条件Bも成り立つ。
+\end{example}
+
+本節の目標の定理を示す。
+
+\begin{theorem}[最小次元実現の間のアファイン変換]
+    $(V, T, \mu), (V', T', \mu')$が
+    ともに最小次元実現ならば、
+    $(V, T, \mu)$から$(V', T', \mu')$への射$(L, b)$がただひとつ存在する。
+    さらに、$L$は線型同型写像である。
+\end{theorem}
+
+\begin{proof}
+    \cref{lemma:uniqueness-of-morphism,lemma:affine-map-between-representations}
+    より、射$(L, b) \colon (V, T, \mu) \to (V', T', \mu')$はただひとつ存在する。
+    また、
+    \cref{lemma:affine-map-between-representations}
+    より存在する射$(V', T', \mu') \to (V, T, \mu)$をひとつ選んで
+    $(K, c)$とおくと、
+    合成射$(K, c) \circ (L, b), \; (L, b) \circ (K, c)$は
+    \cref{lemma:uniqueness-of-morphism}より
+    恒等射$(\id_V, 0), \; (\id_{V'}, 0)$に一致する。
+    したがって$L$は線型同型写像である。
+\end{proof}
+
+同じことを圏の言葉を使わずに言い換えると次のようになる。
+
+\begin{theorem}[最小次元実現の間のアファイン変換]
+    \label[theorem]{thm:transformation-between-representations}
+    $(V, T, \mu), (V', T', \mu')$が
+    ともに最小次元実現ならば、
+    全射線型写像$L: V \to V'$と
+    ベクトル$b \in V'$であって
+    \begin{equation}
+        T(x) = L(T'(x)) + b
+            \qquad
+            \text{$\mu$-a.e.$x$}
+    \end{equation}
+    をみたすものがただひとつ存在する。
+    さらに、$L$は線型同型写像である。
+    \qed
+\end{theorem}
+
+\begin{corollary}[自然パラメータの変換]
+    上の定理の$L$は
+    \begin{equation}
+        \theta'(p)
+            = \up{t}L(\theta(p))
+            \qquad
+            (\forall p \in \calP)
+    \end{equation}
+    をみたす。
+    ただし
+    写像$\theta \colon \calP \to \Theta^\calP$
+    および
+    $\theta' \colon \calP \to \Theta'^\calP$は
+    $P, P'$ (の$\Theta^\calP, \Theta'^\calP$上への制限) の逆写像である。
+\end{corollary}
+
+\begin{proof}
+    $p \in \calP$を任意とすると、
+    指数型分布族の定義より、
+    $\mu'$-a.e.$x$に対し
+    \begin{alignat}{2}
+        &\phantom{\therefore} \quad&
+            \exp(\myangle{\theta(p)}{T(x)} - \psi(\theta(p)))
+                =
+                    \dd[p]{\mu}(x)
+                &=
+                    \exp(\myangle{\theta'(p)}{T'(x)} - \psi'(\theta'(p)))
+            \\
+        &\therefore \quad&
+            \myangle{\theta(p)}{T(x)}
+                - \myangle{\theta'(p)}{T'(x)}
+                &=
+                    \psi(\theta(p))
+                    - \psi'(\theta'(p))
+            \\
+        &\therefore \quad&
+            \myangle{\theta(p)}{L(T'(x)) + b}
+            - \myangle{\theta'(p)}{T'(x)}
+            &=
+                \psi(\theta(p)) - \psi'(\theta'(p))
+                \\
+        &\therefore \quad&
+            \myanglem{\up{t}L(\theta(p))}{T'(x)}
+            - \myangle{\theta'(p)}{T'(x)}
+            &=
+                \psi(\theta(p)) - \psi'(\theta'(p))
+                - \myangle{\theta(p)}{b}
+                \\
+        &\therefore \quad&
+            \myanglem{\up{t}L(\theta(p)) - \theta'(p)}{T'(x)}
+            &=
+                \psi(\theta(p)) - \psi'(\theta'(p))
+                - \myangle{\theta(p)}{b}
+    \end{alignat}
+    が成り立つ。
+    したがって、
+    $(V', T', \mu')$の条件A (2)より
+    $\up{t}L(\theta(p)) = \theta'(p)$
+    が成り立つ。
+\end{proof}
+
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section*{今後の予定}
+
+\begin{itemize}
+    \item 指数型分布族$\calP$自体に構造を入れる。
+    \item Amari-Chentsov テンソルを定義する。
+    \item 正規分布族の場合の具体的な計算を行う
+        (Fisher 計量、Levi-Civita 接続、測地線など)。
+\end{itemize}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section*{参考文献}
+
+\nocite{amari_information_2016}
+\nocite{bn1970_pdf}
+\nocite{BN78}
+
+{
+    \renewcommand{\bibsection}{}
+    \bibliographystyle{amsalpha}
+    \bibliography{./bibliography,../../mybibliography}
+}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\newpage
+\appendix
+\section*{付録}
+
+\begin{proof}[\cref{lemma:morphism-existence-a}の証明]
+    $(V, T, \mu)$が
+    条件Aをみたさないという仮定から、
+    ある$\theta \in V^\vee, \; \theta \neq 0$および
+    $r \in \R$が存在して
+    \begin{equation}
+        \locallabel{eq:costant-pairing}
+        \langle \theta, T(x) \rangle
+            = r
+            \qquad
+            \text{$\mu$-a.e.$x$}
+    \end{equation}
+    が成り立つ。
+    そこで
+    $V' \coloneqq (\R\theta)^\perp
+        = \{ v \in V \mid \langle \theta, v \rangle = 0 \}$
+    とおくと、
+    ある可測写像$T' \colon \calX \to V'$および
+    $v_0 \in V$が存在して
+    $T(x) = T'(x) + v_0 \; (\text{$\mu$-a.e.$x$})$
+    が成り立つ。
+    このように定めた組$(V', T', \mu)$が
+    $\calP$の実現であることは一旦認めて最後に示すこととし、
+    まず次元と射について確かめる。
+
+    まず
+    $(V', T', \mu)$の次元は
+    $\dim V' = \dim V - 1 < \dim V$
+    より
+    $(V, T, \mu)$の次元よりも小さい。
+    また、
+    射影$\pi \colon V \to V'$をひとつ選べば、
+    $(\pi, 0)$は明らかに
+    $(V, T, \mu)$から$(V', T', \mu)$への射を与える。
+
+    あとは$(V', T', \mu)$が
+    $\calP$の実現であることを示せばよい。
+    指数型分布族の定義(\url{0502_資料.pdf})の条件
+    (E0), (E1), (E2)は明らかに成立しているから、
+    あとは条件(E3)を確認すればよい。
+    そこで$p \in \calP$を任意とする。
+    いま$(V, T, \mu)$が$\calP$の実現であることから、
+    ある$\theta \in V^\vee$が存在して
+    \begin{equation}
+        \dd[p]{\mu}(x)
+            = \frac{
+                \exp\langle \theta, T(x) \rangle
+            }{
+                \int_{\calX} \exp\langle \theta, T(y) \rangle \, \mu(dy)
+            }
+            \qquad
+            \text{$\mu$-a.e.$x$}
+    \end{equation}
+    が成り立つ。
+    $T', v_0$を用いて式変形すると、$\mu$-a.e.$x$に対し
+    \begin{alignat}{1}
+        \dd[p]{\mu}(x)
+            &= \frac{
+                \exp\myparen{
+                    \langle \theta, T(x) \rangle
+                }
+            }{
+                \int_{\calX} \exp\myparen{
+                    \langle \theta, T(x) \rangle
+                } \, \mu(dy)
+            } \\
+            &= \frac{
+                \exp\myparen{
+                    \langle \theta, T'(x) \rangle
+                    + \langle \theta, v_0 \rangle
+                }
+            }{
+                \int_{\calX} \exp\myparen{
+                    \langle \theta, T'(x) \rangle
+                    + \langle \theta, v_0 \rangle
+                } \, \mu(dy)
+            } \\
+            &= \frac{
+                \exp\myparen{
+                    \langle \theta, T'(x) \rangle
+                }
+            }{
+                \int_{\calX} \exp\myparen{
+                    \langle \theta, T'(x) \rangle
+                } \, \mu(dy)
+            }
+    \end{alignat}
+    が成り立つ。
+    したがって$(V', T', \mu)$は条件(E3)も満たし、
+    $\calP$の実現であることがいえた。
+\end{proof}
+
+\begin{proof}[\cref{lemma:morphism-existence-b}の証明]
+    $(V, T, \mu)$が条件Bをみたさないとする。
     すると、ある真ベクトル部分空間$W \subsetneq V^\vee$および
     $\theta_0 \in \Theta^\calP$が存在して
     $\aspan\Theta^\calP = W + \theta_0$が成り立つ。
@@ -446,170 +756,6 @@ $\calP$の実現$(V, T, \mu), (V', T', \mu')$に対し、
     以上より$(\wt{V}, \wt{T}, \wt{\mu})$は$\calP$の実現である。
     これで証明が完了した。
 \end{proof}
-
-\begin{lemma}
-    $(V, T, \mu)$が単射性条件をみたさないならば、
-    $(V, T, \mu)$よりも次元の小さい
-    ある対象$(\wt{V}, \wt{T}, \wt{\mu})$への
-    ある射$(V, T, \mu) \to (\wt{V}, \wt{T}, \wt{\mu})$が存在する。
-\end{lemma}
-
-\begin{proof}
-    $(V, T, \mu)$よりも次元の小さい実現
-    $(\wt{V}, \wt{T}, \wt{\mu})$の具体的な構成は、
-    最小次元実現が単射性条件をみたすことを述べた
-    \url{0425_コメント.pdf}の定理0.3
-    (あるいは\url{0425_資料.pdf}の定理4.2)
-    の証明において与えた。
-    その証明内の claim より
-    射の構成も明らかである。
-\end{proof}
-
-上の補題を用いて
-最小次元実現の特徴づけが得られる。
-
-\begin{theorem}[最小次元実現の特徴づけ]
-    \label[theorem]{thm:characterization-of-minimal-representation}
-    $\calP$の実現$(V, T, \mu)$に関する次の条件は同値である:
-    \begin{enumerate}
-        \item $(V, T, \mu)$は$\calP$の最小次元実現である。
-        \item $(V, T, \mu)$は affine span 条件と単射性条件をみたす。
-    \end{enumerate}
-\end{theorem}
-
-\begin{proof}
-    \uline{(1) \Rightarrow (2)} \quad
-    上の2つの補題と背理法により従う。
-
-    \uline{(2) \Rightarrow (1)} \quad
-    $(V, T, \mu)$が affine span 条件と単射性条件をみたすとする。
-    $\calP$の任意の実現
-    $(V', T', \mu')$に対し、
-    \cref{lemma:affine-map-between-representations}より
-    全射線型写像$L: V' \to V$が存在するから、
-    $\dim V \le \dim V'$である。
-    したがって$V$は$\calP$の最小次元実現である。
-\end{proof}
-
-\begin{remark}[正規分布族の最小次元実現]
-    \url{0425_資料.pdf}の例3.2でみた正規分布族の例は
-    最小次元実現である。
-    単射性条件は、$(\theta_1, \theta_2)$が異なれば
-    平均か分散の少なくとも一方が異なることになり、
-    異なる確率分布を与えることからわかる。
-    Affine span 条件も明らか。
-\end{remark}
-
-\begin{theorem}[最小次元実現の間のアファイン変換]
-    $(V, T, \mu), (V', T', \mu')$が
-    ともに最小次元実現ならば、
-    $(V, T, \mu)$から$(V', T', \mu')$への射$(L, b)$がただひとつ存在する。
-    さらに、$(L, b)$は同型射であり、$L$は線型同型写像である。
-\end{theorem}
-
-同じことを圏の言葉を使わずに言い換えると次のようになる。
-
-\addtocounter{theorem}{-1}
-\begin{theorem}[最小次元実現の間のアファイン変換]
-    \label[theorem]{thm:transformation-between-representations}
-    $(V, T, \mu), (V', T', \mu')$が
-    ともに最小次元実現ならば、
-    線型写像$L: V \to V'$と
-    ベクトル$b \in V'$であって
-    \begin{equation}
-        T(x) = L(T'(x)) + b
-            \qquad
-            \text{$\mu$-a.e.$x$}
-    \end{equation}
-    をみたすものがただひとつ存在する。
-    さらに、$L$は線型同型写像である。
-\end{theorem}
-
-\begin{proof}
-    \cref{lemma:uniqueness-of-morphism,lemma:affine-map-between-representations}
-    より、射$(L, b) \colon (V, T, \mu) \to (V', T', \mu')$はただひとつ存在する。
-    $(L, b)$の逆射は
-    \cref{lemma:affine-map-between-representations}
-    より存在する射$(K, c) \colon (V', T', \mu') \to (V, T, \mu)$である。
-    実際、合成射$(K, c) \circ (L, b), \; (L, b) \circ (K, c)$は
-    \cref{lemma:uniqueness-of-morphism}より
-    恒等射に一致する。
-\end{proof}
-
-\begin{corollary}[自然パラメータの変換]
-    上の定理の$L$は
-    \begin{equation}
-        \theta'(p)
-            = \up{t}L(\theta(p))
-            \qquad
-            (\forall p \in \calP)
-    \end{equation}
-    をみたす。
-    ただし
-    写像$\theta \colon \calP \to \Theta^\calP$
-    および
-    $\theta' \colon \calP \to \Theta'^\calP$は
-    $P, P'$の逆写像である。
-\end{corollary}
-
-\begin{proof}
-    $p \in \calP$を任意とすると、
-    式\cref{eq:pairings-and-log-partition}
-    のあたりと同様の議論により、
-    $\mu'$-a.e.$x$に対し
-    \begin{alignat}{2}
-        &\phantom{\therefore}&
-            \myangle{\theta(p)}{L(T'(x)) + b}
-            - \myangle{\theta'(p)}{T'(x)}
-            &=
-                \psi(\theta(p)) - \psi'(\theta'(p))
-                \\
-        &\therefore \quad&
-            \myanglem{\up{t}L(\theta(p))}{T'(x)}
-            - \myangle{\theta'(p)}{T'(x)}
-            &=
-                \psi(\theta(p)) - \psi'(\theta'(p))
-                - \myangle{\theta(p)}{b}
-                \\
-        &\therefore \quad&
-            \myanglem{\up{t}L(\theta(p)) - \theta'(p)}{T'(x)}
-            &=
-                \psi(\theta(p)) - \psi'(\theta'(p))
-                - \myangle{\theta(p)}{b}
-    \end{alignat}
-    が成り立つ。
-    したがって、
-    $(V', T', \mu)$の単射性条件より
-    $\up{t}L(\theta(p)) = \theta'(p)$
-    が成り立つ。
-\end{proof}
-
-
-% ------------------------------------------------------------
-%
-% ------------------------------------------------------------
-\section*{今後の予定}
-
-\begin{itemize}
-    \item 指数型分布族$\calP$自体に構造を入れる。
-    \item Amari-Chentsov テンソルを定義する。
-    \item 正規分布族の場合の具体的な計算を行う
-        (Fisher 計量、Levi-Civita 接続、測地線など)。
-\end{itemize}
-
-% ------------------------------------------------------------
-%
-% ------------------------------------------------------------
-\section*{参考文献}
-
-\nocite{amari_information_2016}
-\nocite{bn1970_pdf}
-
-{
-    \renewcommand{\bibsection}{}
-    \bibliographystyle{amsalpha}
-    \bibliography{./bibliography,../../mybibliography}
-}
 
 
 \end{document}

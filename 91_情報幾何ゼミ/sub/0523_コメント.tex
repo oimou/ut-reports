@@ -81,12 +81,42 @@ $f$の$\omega$の向きの分散が$0$であることは
     実現$(V, T, \mu)$に関し次は同値である:
     \begin{enumerate}
         \item $(V, T, \mu)$は条件Aをみたす。
-        \item $T$の像が$V$をほとんど affine span する\TODO{定義?}。
+        \item $V$の任意の真アファイン部分空間$W$に対し、
+            「$T(x) \in W \; \text{$\mu$-a.e.$x$}$でない」
+            が成り立つ。
     \end{enumerate}
 \end{proposition}
 
 \begin{proof}
-    \TODO{}
+    \uline{(1) \Rightarrow (2)} \quad
+    対偶を示す。
+    (2)の否定より、
+    ある真ベクトル部分空間$W \subsetneq V$および$b \in T(\calX)$が存在して
+    $T(x) \in W + b \; \text{$\mu$-a.e.$x$}$が成り立つ。
+    すると$W^\perp \subset V^\vee$は空でないから、
+    ある$\theta \in W^\perp, \; \theta \neq 0$が存在する。
+    よって
+    $\myangle{\theta}{T(x)}
+        = \myangle{\theta}{T(x) - b}
+        + \myangle{\theta}{b}
+        = \myangle{\theta}{b} \; \text{$\mu$-a.e.$x$}$
+    となり、(1)の否定が従う。
+
+    \uline{(2) \Rightarrow (1)} \quad
+    対偶を示す。
+    (1)の否定より、
+    ある$\theta \in V^\vee, \; \theta \neq 0$および
+    $c \in \R$が存在して
+    $\myangle{\theta}{T(x)} = c \; \text{$\mu$-a.e.$x$}$が成り立つ。
+    そこで$A \coloneqq \mybrace{
+        v \in V
+        \mid
+        \myangle{\theta}{v} = c
+    }$
+    とおけば、
+    $A$は$V$の真アファイン部分空間であり、
+    $T(x) \in A \; \text{$\mu$-a.e.$x$}$が成り立つから、
+    (2)の否定が従う。
 \end{proof}
 
 \begin{definition}
