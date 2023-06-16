@@ -1,0 +1,100 @@
+\documentclass[report]{jlreq}
+\usepackage{global}
+\usepackage{./local}
+\subfiletrue
+\def\assetspath{../}
+%\makeindex
+\chead{2023/06/06}
+\begin{document}
+
+% ============================================================
+%
+% ============================================================
+
+発表中にコメントがあった事柄を整理する。
+
+\begin{propdef}[測度の押し出し]
+    $\calX, \calY$を可測空間、
+    $\mu$を$\calX$上の測度、
+    $f \colon \calX \to \calY$を可測写像とする。
+    このとき、
+    $\mu \circ f^{-1}$は$\calY$上の測度となる。
+    これを
+    \termsilent{$f$による$\mu$の押し出し}と呼び、
+    $f_* \mu$と書く。
+\end{propdef}
+
+\begin{proof}
+    $\mu \circ f^{-1}$が$\calY$上の測度となることは、
+    測度の定義を直接確かめればすぐにわかる。
+\end{proof}
+
+\begin{problem}
+    条件A (3) は次と同値か？
+    \begin{enumerate}
+        \setcounter{enumi}{3}
+        \item $\aspan(\supp T_* \mu) = V$
+    \end{enumerate}
+\end{problem}
+
+\begin{answer}
+    \TODO{}
+\end{answer}
+
+\begin{problem}
+    条件A (2) は次と同値か？
+    \begin{enumerate}
+        \setcounter{enumi}{4}
+        \item 任意の$\R$-ベクトル空間$V'$および
+            線型写像$F \in \Lin(V, V')$に対し
+            「$F(T(x)) = \text{const.} \; \text{$\mu$-a.e.$x$}$
+                \Rightarrow $F = 0$」が成り立つ。
+    \end{enumerate}
+\end{problem}
+
+\begin{answer}
+    \TODO{任意の$V'$ではなく、有限次元に限定すれば言えそう}
+\end{answer}
+
+\begin{proposition}
+    $(V, T, \mu), (V', T', \mu')$を
+    $\calP$の実現とする。
+    このとき、
+    ある$c > 0$および$\theta^0 \in V^\vee$であって
+    \begin{equation}
+        \mu'
+            = c \exp\myangle{\theta^0}{T(x)} \cdot \mu
+    \end{equation}
+    をみたすものがただ1組存在する。
+\end{proposition}
+
+\begin{proof}
+    $\mu, \mu'$がみたす関係式
+    \begin{equation}
+        \myangle{\theta}{T(x)} - \psi(\theta)
+            = \myangle{\theta'}{T'(x)} - \psi'(\theta')
+            + \log \dd[\mu']{\mu}(x)
+            \qquad
+            \text{$\mu$-a.e.$x$}
+    \end{equation}
+    に定理1.12と系1.13を合わせて式変形するとわかる。
+\end{proof}
+
+
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section*{参考文献}
+
+\nocite{amari_information_2016}
+\nocite{bn1970_pdf}
+\nocite{BN78}
+
+{
+    \renewcommand{\bibsection}{}
+    \bibliographystyle{amsalpha}
+    \bibliography{./bibliography,../../mybibliography}
+}
+
+\end{document}

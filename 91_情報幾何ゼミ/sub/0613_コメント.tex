@@ -1,0 +1,173 @@
+\documentclass[report]{jlreq}
+\usepackage{global}
+\usepackage{./local}
+\subfiletrue
+\def\assetspath{../}
+%\makeindex
+\chead{2023/06/13}
+\begin{document}
+
+% ============================================================
+%
+% ============================================================
+
+発表中にコメントがあった事柄を整理する。
+
+\begin{problem}
+    $\wt{g}$を勝手な Riemann 計量とし、
+    何らかの方法で座標を取り替えたとして、
+    同じ方法で$\calP$上に引き戻した$g$は
+    well-defined となるか？
+    \TODO{もっときちんと定式化する}
+\end{problem}
+
+\begin{proposition}
+    $M$を多様体とする。
+    このとき、
+    $M$上のアファイン接続全体の集合$\calA(M)$は、
+    $\R$-ベクトル空間
+    $\Hom_\R(\Gamma(TM), \Gamma(T^\vee M \otimes TM))$
+    のアファイン部分空間であり、
+    そのモデル空間は
+    $\Gamma(T^\vee M \otimes T^\vee M \otimes TM)$である。
+\end{proposition}
+
+\begin{proof}
+    $M$上のアファイン接続$\nabla^0$をひとつ選んで固定する。
+    このとき、
+    $\nabla^0$に任意の$A \in \Gamma(T^\vee M \otimes T^\vee M \otimes TM)$を
+    加えた$\nabla^0 + A$は
+    $M$上のアファイン接続となるから、
+    $\nabla_0 + \Gamma(T^\vee M \otimes T^\vee M \otimes TM)
+        \subset \calA(M)$
+    が成り立つ。
+    逆に
+    任意の$\nabla \in \calA(M)$に対し
+    $\nabla - \nabla_0$は
+    $\Gamma(T^\vee M \otimes T^\vee M \otimes TM)$の元となるから、
+    $\calA(M) \subset \nabla_0 + \Gamma(T^\vee M \otimes T^\vee M \otimes TM)$
+    が成り立つ。
+    したがって
+    $\calA(M) = \nabla_0 + \Gamma(T^\vee M \otimes T^\vee M \otimes TM)$
+    となり、
+    $\calA(M)$は
+    $\Hom_\R(\Gamma(TM), \Gamma(T^\vee M \otimes TM))$の
+    アファイン部分空間となることがわかる。
+\end{proof}
+
+\begin{problem}
+    $R^{(-1)} = 0$を示せ。
+\end{problem}
+
+\begin{answer}
+    $\nabla$-アファイン座標をひとつ選ぶと、
+    \url{0613_資料.pdf}命題1.12 (2) より
+    \begin{equation}
+        {R^{(-1)}}_{ijk}^l
+            =
+                \del_i A_{jk}^l
+                -
+                \del_j A_{ik}^l
+                +
+                A_{jk}^m A_{im}^l
+                -
+                A_{ik}^m A_{jm}^l
+                \locallabel{eq:1}
+    \end{equation}
+    と表せるから、
+    この右辺が$0$となることを示せばよい。
+    まず
+    \begin{alignat}{1}
+        &\phantom{=}
+            (\text{式\localcref{eq:1}の右辺第1項})
+            \\
+        &=
+            \del_i A_{jk}^l
+            \\
+        &=
+            \del_i (g^{ln} S_{jkn})
+            \\
+        &=
+            \del_i (g^{ln}) S_{jkn}
+            +
+            g^{lm} \del_i S_{jkm}
+            \\
+        &=
+            - \del_i (g_{mn}) g^{mn} g^{ln} S_{jkn}
+            +
+            g^{lm} \del_i S_{jkm}
+            \qquad
+            (\del_i(g_{nm} g^{lm}) = 0)
+            \\
+        &=
+            - S_{imn} g^{mn} g^{ln} S_{jkn}
+            +
+            g^{lm} \del_i S_{jkm}
+            \\
+        &=
+            - A_{im}^l A_{jk}^m
+            +
+            g^{lm} \del_i S_{jkm}
+    \end{alignat}
+    同様にして
+    \begin{alignat}{1}
+        &\phantom{=}
+            (\text{式\localcref{eq:1}の右辺第2項})
+            \\
+        &=
+            - \del_j A_{ik}^l
+            \\
+        &=
+            \cdots
+            \\
+        &=
+            A_{jm}^l A_{ik}^m
+            -
+            g^{lm} \del_j S_{ikm}
+    \end{alignat}
+    を得る。
+    これらを合わせて
+    \begin{alignat}{1}
+        &\phantom{=}
+            (\text{式\localcref{eq:1}の右辺第1項})
+                + (\text{式\localcref{eq:1}の右辺第2項})
+            \\
+        &=
+            - A_{im}^l A_{jk}^m
+            +
+            g^{lm} \del_i S_{jkm}
+            +
+            A_{jm}^l A_{ik}^m
+            -
+            g^{lm} \del_j S_{ikm}
+            \\
+        &=
+            - A_{im}^l A_{jk}^m
+            +
+            A_{jm}^l A_{ik}^m
+            \qquad
+            (\del_i S_{jkm} = \del_j S_{ikm})
+    \end{alignat}
+    となる。
+    これは
+    式\localcref{eq:1}の右辺第3, 4項
+    の符号を反転させたものに一致するから、
+    ${R^{(-1)}}_{ijk}^l = 0$が従う。
+    よって$R^{(-1)} = 0$である。
+\end{answer}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section*{参考文献}
+
+\nocite{amari_information_2016}
+
+{
+    \renewcommand{\bibsection}{}
+    \bibliographystyle{amsalpha}
+    \bibliography{./bibliography,../../mybibliography}
+}
+
+
+\end{document}

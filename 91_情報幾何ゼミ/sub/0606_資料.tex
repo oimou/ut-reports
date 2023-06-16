@@ -19,14 +19,14 @@
 前回は自然パラメータ空間に Fisher 計量を定義した。
 本稿では次のことを行う:
 \begin{itemize}
-    \item 最小次元実現の間のアファイン変換の一意存在を述べる。
+    \item 最小次元実現の間のアファイン変換の存在と一意性を示す。
 \end{itemize}
 
 $\calX$を可測空間、
 $\calP \subset \calP(\calX)$を$\calX$上の指数型分布族とする。
-新たな用語として次の2つを導入しておく。
+新たな記号として次の2つを導入しておく。
 
-\begin{definition}[自然パラメータ付け]
+\begin{definition}
     $(V, T, \mu)$を$\calP$の実現、
     $\psi$を$(V, T, \mu)$の対数分配関数とする。
     \begin{equation}
@@ -36,10 +36,7 @@ $\calP \subset \calP(\calX)$を$\calX$上の指数型分布族とする。
             \mapsto
             \exp (\myangle{\theta}{T(x)} - \psi(\theta)) \cdot \mu
     \end{equation}
-    を$(V, T, \mu)$による$\calP(\calX)$の
-    \term{自然パラメータ付け}[natural parametrization]
-        {自然パラメータ付け}[しぜんパラメータづけ]
-    という。
+    と定義する。
 \end{definition}
 
 \begin{definition}[真パラメータ空間]
@@ -56,8 +53,10 @@ $\calP \subset \calP(\calX)$を$\calX$上の指数型分布族とする。
 
 以降、
 $\calP$の実現$(V, T, \mu), (V', T', \mu')$に対し、
-それぞれによる自然パラメータ付けを$P, P'$と略記したり、
-それぞれに関する真パラメータ空間を$\Theta, \Theta'$と略記したりすることがある。
+$P_{(V, T, \mu)}, P_{(V', T', \mu')}$を$P, P'$と略記したり、
+$\Theta^\calP_{(V, T, \mu)}, \Theta^\calP_{(V', T', \mu')}$を
+\xcancel{$\Theta, \Theta'$}
+$\Theta^\calP, \Theta'^\calP$と略記したりすることがある。
 
 % ------------------------------------------------------------
 %
@@ -69,9 +68,9 @@ $\calP$の実現$(V, T, \mu), (V', T', \mu')$に対し、
 \cref{thm:transformation-between-representations}
 の証明である。
 本節では、
-ステートメントを簡潔にするために圏の言葉を用いる。
+定理などのステートメントを簡潔にするために圏の言葉を用いる。
 
-\begin{propdef}[$\calP$の実現とアファイン写像の圏]
+\begin{propdef}
     次のデータにより圏が定まる:
     \begin{itemize}
         \item 対象: $\calP$の実現$(V, T, \mu)$全体
@@ -83,16 +82,14 @@ $\calP$の実現$(V, T, \mu), (V', T', \mu')$に対し、
         \item 合成: アファイン写像の合成
             $(L, b) \circ (K, c) = (LK, Lc + b)$
     \end{itemize}
-    この圏を\termsilent{$\calP$の実現とアファイン写像の圏}と呼び、
-    $\bfC_\calP$と書く。
+    この圏を$\bfC_\calP$と書く。
 \end{propdef}
 
 \begin{proof}
     示すべきことは、射の合成が射であること、恒等射の存在、結合律の3点である。
     射の合成が射であることは、
     全射と全射の合成が全射であることと、
-    $\mu \ll \mu'$かつ$\mu' \ll \mu$
-    が成り立つことより従う。
+    $\mu$と$\mu'$が互いに絶対連続であることから従う。
     また、$(V, T, \mu)$の恒等射は明らかに恒等写像$(\id_V, 0)$であり、
     結合律はアファイン写像の合成の結合律より従う。
 \end{proof}
@@ -136,13 +133,13 @@ $\calP$の実現$(V, T, \mu), (V', T', \mu')$に対し、
 
 条件Aは射の一意性を保証する。
 
-\begin{lemma}[射の一意性]
-    \label[lemma]{lemma:uniqueness-of-morphism}
+\begin{proposition}[条件Aをみたす対象からの射の一意性]
+    \label[proposition]{proposition:uniqueness-of-morphism}
     $(V, T, \mu), (V', T', \mu')$を$\bfC_\calP$の対象とする。
     このとき、
-    $(V, T, \mu)$が条件Aをみたすならば
+    $(V, T, \mu)$が条件Aをみたすならば、
     $(V, T, \mu)$から$(V', T', \mu')$への射は一意である。
-\end{lemma}
+\end{proposition}
 
 \begin{proof}
     $(L, b), (K, c)$を$(V, T, \mu)$から$(V', T', \mu')$への射とする。
@@ -169,37 +166,94 @@ $\calP$の実現$(V, T, \mu), (V', T', \mu')$に対し、
 \end{proof}
 
 射が存在するための十分条件を調べる。
-この後の中間目標は
-\cref{lemma:affine-map-between-representations}
-であり、その証明は次の図のような2段階に分けて行う。
-\begin{equation}
-    \begin{tikzcd}
-        (V', T', \mu')
-            \ar{rd}[swap]{\cref{lemma:mu_dash_to_mu}}
-            \ar{rr}{\cref{lemma:affine-map-between-representations}}
-            && (V, T, \mu)
-            \\
-        &(V', T', \mu)
-            \ar{ru}[swap]{\cref{lemma:V_dash_T_dash_to_V_T}}
-    \end{tikzcd}
-\end{equation}
 
-\begin{lemma}[基底測度だけを変化させた対象からの射]
-    \label[lemma]{lemma:mu_dash_to_mu}
-    $(V, T, \mu')$から$(V, T, \mu)$への射が存在する。
+\begin{proposition}[条件A, Bをみたす対象への射の存在]
+    \label[proposition]{proposition:affine-map-between-representations}
+    $(V, T, \mu)$を$\bfC_\calP$の対象とする。
+    このとき、
+    $(V, T, \mu)$が 条件Aと条件Bをみたすならば、
+    任意の対象\xcancel{$(V', T', \mu)$}$(V', T', \mu')$から$(V, T, \mu)$への射が存在する。
+\end{proposition}
+
+この命題の証明には次の補題を用いる。
+
+\begin{lemma}
+    \label[lemma]{lemma:pairings_and_log_partition}
+    $(V, T, \mu), (V', T', \mu')$を$\bfC_\calP$の対象とし、
+    $\theta \colon \calP \to \Theta^\calP$
+    および
+    $\theta' \colon \calP \to \Theta'^\calP$
+    を
+    $P, P'$の右逆写像とする。
+    このとき、
+    任意の$p, q \in \calP$に対し、
+    \begin{equation}
+        \begin{alignedat}{1}
+            &\phantom{=}
+                \myangle{\theta(p) - \theta(q)}{T(x)}
+                - \psi(\theta(p)) + \psi(\theta(q))
+                \\
+            &=
+                \myangle{\theta'(p) - \theta'(q)}{T'(x)}
+                - \psi'(\theta'(p)) + \psi'(\theta'(q))
+        \end{alignedat}
+        \qquad
+        \text{$\mu$-a.e.$x$}
+    \end{equation}
+    が成り立つ。
 \end{lemma}
 
 \begin{proof}
-    $(\id, 0)$が求める射である。
+    $p, q \in \calP$を任意とすると、
+    指数型分布族の定義と
+    $\mu, \mu'$が互いに絶対連続であることより、
+    $\mu$-a.e.$x$に対し
+    \begin{equation}
+        \begin{alignedat}{2}
+            \dd[p]{\mu}(x)
+                &=
+                    \exp(\myangle{\theta(p)}{T(x)} - \psi(\theta(p))),
+                    \qquad
+            &\dd[p]{\mu'}(x)
+                &=
+                    \exp(\myangle{\theta'(p)}{T'(x)} - \psi'(\theta'(p)))
+                \\
+            \dd[q]{\mu}(x)
+                &=
+                    \exp(\myangle{\theta(q)}{T(x)} - \psi(\theta(q))),
+                    \qquad
+            &\dd[q]{\mu'}(x)
+                &=
+                    \exp(\myangle{\theta'(q)}{T'(x)} - \psi'(\theta'(q)))
+        \end{alignedat}
+    \end{equation}
+    が成り立つ。
+    さらに$p, q$が互いに絶対連続であることから、
+    $\mu$-a.e.$x$に対し
+    \begin{alignat}{2}
+        \dd[p]{q}(x)
+            &=
+                \dd[p]{\mu}(x) \Bigg/ \dd[q]{\mu}(x)
+            &&=
+                \exp\mybrace{
+                    \myangle{\theta(p) - \theta(q)}{T(x)}
+                    - \psi(\theta(p)) + \psi(\theta(q))
+                }
+                \\
+        \dd[p]{q}(x)
+            &=
+                \dd[p]{\mu'}(x) \Bigg/ \dd[q]{\mu'}(x)
+            &&=
+                \exp\mybrace{
+                    \myangle{\theta'(p) - \theta'(q)}{T'(x)}
+                    - \psi'(\theta'(p)) + \psi'(\theta'(q))
+                }
+    \end{alignat}
+    が成り立つ。
+    $\log$をとって補題の主張の等式を得る。
 \end{proof}
 
-\begin{lemma}[基底測度以外を変化させた対象からの射]
-    \label[lemma]{lemma:V_dash_T_dash_to_V_T}
-    $(V, T, \mu)$が 条件Aと条件Bをみたすならば、
-    任意の対象$(V', T', \mu)$から$(V, T, \mu)$への射が存在する。
-\end{lemma}
-
-\begin{proof}
+\begin{proof}[\cref{proposition:affine-map-between-representations}の証明]
     \uline{Step 0: $V, V^\vee$の基底を選ぶ} \quad
     $(V, T, \mu)$の条件Bより、
     $V^\vee$のあるアファイン基底
@@ -227,72 +281,38 @@ $\calP$の実現$(V, T, \mu), (V', T', \mu')$に対し、
             \\
         &b \coloneqq
             \mybrace{
-                \psi(\theta(p^i)) - \psi(\theta(p^i))
-                - \psi(\theta'(p^0)) + \psi(\theta'(p^0))
+                \psi(\theta(p^i)) - \psi(\theta(p^0))
+                - \psi'(\theta'(p^0)) + \psi'(\theta'(p^0))
             } e_i
             \in V
     \end{alignat}
     示すべきことは、
-    すべての$p \in \calP$に対し
+    \xcancel{すべての$p \in \calP$に対し}
     \begin{equation}
         T(x) = L(T'(x)) + b
             \quad
-            \text{$\mu$-a.e.$x$}
+            \text{$\mu'$-a.e.$x$}
     \end{equation}
     が成り立つことと、
     $(L, b)$が全射となることである。
 
     \uline{Step 2: $T(x) = L(T'(x)) + b$の証明} \quad
-    指数型分布族の定義より、
-    任意の$p \in \calP$に対し、
-    ある$\mu$-零集合$N_p \subset \calX$が存在して
-    \begin{alignat}{2}
-        &\phantom{\therefore}& \quad
-            \exp(\myangle{\theta(p)}{T(x)} - \psi(\theta(p)))
-                =
-                    \dd[p]{\mu}(x)
-                &=
-                    \exp(\myangle{\theta'(p)}{T'(x)} - \psi'(\theta'(p)))
-                \qquad
-                    (x \in \calX \setminus N_p)
-            \\
-        &\therefore& \quad
-            \myangle{\theta(p)}{T(x)}
-                - \myangle{\theta'(p)}{T'(x)}
-                &=
-                    \psi(\theta(p))
-                    - \psi'(\theta'(p))
-                \qquad
-                    (x \in \calX \setminus N_p)
-            \label{eq:pairings-and-log-partition}
-    \end{alignat}
-    が成り立つ。
-    とくに各$i = 0, \dots, m$に対し
-    \begin{equation}
-        \myangle{\theta(p^i)}{T(x)}
-            - \myangle{\theta'(p^i)}{T'(x)}
-            =
-                \psi(\theta(p^i))
-                - \psi'(\theta'(p^i))
-            \qquad
-                (x \in \calX \setminus N_{p^i})
-    \end{equation}
-    が成り立つから、
-    $\text{($i$の場合)} - \text{($0$の場合)}$を考えて
+    各$i = 1, \dots, m$に対し、
+    \cref{lemma:pairings_and_log_partition}より
     \begin{equation}
         \begin{alignedat}{1}
             &\phantom{=}
                 \myangle{\theta(p^i) - \theta(p^0)}{T(x)}
-                - \myangle{\theta'(p^i) - \theta'(p^0)}{T'(x)}
+                - \psi(\theta(p^i))
+                + \psi(\theta(p^0))
                 \\
             &=
-                \psi(\theta(p^i))
+                \myangle{\theta'(p^i) - \theta'(p^0)}{T'(x)}
                 - \psi'(\theta'(p^i))
-                - \psi(\theta(p^0))
                 + \psi'(\theta'(p^0))
-                \qquad
-                (x \in \calX \setminus (N_{p^0} \cup N_{p^i}))
         \end{alignedat}
+        \qquad
+        \text{$\mu'$-a.e.$x$}
         \locallabel{eq:1}
     \end{equation}
     となる。
@@ -308,48 +328,41 @@ $\calP$の実現$(V, T, \mu), (V', T', \mu')$に対し、
                     \\
                 &\qquad
                     + \psi(\theta(p^i))
-                    - \psi'(\theta'(p^i))
                     - \psi(\theta(p^0))
+                    - \psi'(\theta'(p^i))
                     + \psi'(\theta'(p^0))
                     \qquad
-                    (x \in \calX \setminus (N_{p^0} \cup N_{p^i}))
+                    \text{$\mu'$-a.e.$x$}
         \end{alignedat}
     \end{equation}
     したがって
     \begin{equation}
         T(x) = L(T'(x)) + b
             \qquad
-                (x \in \calX \setminus (N_{p^0} \cup \cdots \cup N_{p^m}))
+            \text{$\mu'$-a.e.$x$}
     \end{equation}
     が成り立つ。
-    これで Step 2 が完了した。
 
     \uline{Step 3: $(L, b)$が全射であることの証明} \quad
     $L$が全射であることをいえばよい。
     もし$L$が全射でなかったとすると、
     $T(x) = L(T'(x)) + b \in \Im L + b$
-    が$p$-a.e.$x$すなわち$\mu$-a.e.$x$に対し成り立つことになるが、
+    が
+    $\mu'$-a.e.$x$
+    したがって
+    $\mu$-a.e.$x$
+    に対し成り立つことになるが、
     $\Im L + b$は$V$の真アファイン部分空間だから
     $(V, T, \mu)$の条件A (3)に反する。
     したがって$L$は全射である。
 \end{proof}
 
-\begin{lemma}[2条件をみたす対象への射]
-    \label[lemma]{lemma:affine-map-between-representations}
-    $(V, T, \mu)$が 条件Aと条件Bをみたすならば、
-    任意の対象$(V', T', \mu')$から$(V, T, \mu)$への射が存在する。
-\end{lemma}
+各条件をみたさない場合にも、射が存在する。
 
-\begin{proof}
-    上の2つの補題より存在する2つの射
-    $(V', T', \mu') \to (V', T', \mu) \to (V, T, \mu)$
-    を合成すればよい。
-\end{proof}
-
-各条件をみたさない場合にも、射の存在が保証される。
-
-\begin{lemma}[単調性条件をみたさない場合の射]
+\begin{lemma}[条件Aをみたさない対象からの射の存在]
     \label[lemma]{lemma:morphism-existence-a}
+    $(V, T, \mu)$を$\bfC_\calP$の対象とする。
+    このとき、
     $(V, T, \mu)$が条件Aをみたさないならば、
     $(V, T, \mu)$よりも次元の小さい
     ある対象$(V', T', \mu')$への
@@ -357,11 +370,13 @@ $\calP$の実現$(V, T, \mu), (V', T', \mu')$に対し、
 \end{lemma}
 
 \begin{proof}
-    末尾の付録に載せた。
+    末尾の付録に記した。
 \end{proof}
 
-\begin{lemma}[条件Bをみたさない場合の射]
+\begin{lemma}[条件Bをみたさない対象からの射の存在]
     \label[lemma]{lemma:morphism-existence-b}
+    $(V, T, \mu)$を$\bfC_\calP$の対象とする。
+    このとき、
     $(V, T, \mu)$が条件Bをみたさないならば、
     $(V, T, \mu)$よりも次元の小さい
     ある対象$(V', T', \mu')$への
@@ -369,7 +384,7 @@ $\calP$の実現$(V, T, \mu), (V', T', \mu')$に対し、
 \end{lemma}
 
 \begin{proof}
-    末尾の付録に載せた。
+    末尾の付録に記した。
 \end{proof}
 
 以上の補題を用いて
@@ -395,7 +410,7 @@ $\calP$の実現$(V, T, \mu), (V', T', \mu')$に対し、
     $(V, T, \mu)$が条件Aと条件Bをみたすとする。
     $\calP$の任意の実現
     $(V', T', \mu')$に対し、
-    \cref{lemma:affine-map-between-representations}より
+    \cref{proposition:affine-map-between-representations}より
     全射線型写像$L: V' \to V$が存在するから、
     $\dim V \le \dim V'$である。
     したがって$V$は$\calP$の最小次元実現である。
@@ -408,7 +423,7 @@ $\calP$の実現$(V, T, \mu), (V', T', \mu')$に対し、
     実際、
     $T(x) = \up{t}(x, x^2)$の像は
     $\R^2$のいかなる真アファイン部分空間にも
-    含まれないから、
+    a.e.で含まれることはないから、
     条件A (3)が成り立つ。
     また、$\Theta^\calP = \R \times \R_{< 0}$となることから
     条件Bも成り立つ。
@@ -424,14 +439,14 @@ $\calP$の実現$(V, T, \mu), (V', T', \mu')$に対し、
 \end{theorem}
 
 \begin{proof}
-    \cref{lemma:uniqueness-of-morphism,lemma:affine-map-between-representations}
+    \cref{proposition:uniqueness-of-morphism,proposition:affine-map-between-representations}
     より、射$(L, b) \colon (V, T, \mu) \to (V', T', \mu')$はただひとつ存在する。
     また、
-    \cref{lemma:affine-map-between-representations}
+    \cref{proposition:affine-map-between-representations}
     より存在する射$(V', T', \mu') \to (V, T, \mu)$をひとつ選んで
     $(K, c)$とおくと、
     合成射$(K, c) \circ (L, b), \; (L, b) \circ (K, c)$は
-    \cref{lemma:uniqueness-of-morphism}より
+    \cref{proposition:uniqueness-of-morphism}より
     恒等射$(\id_V, 0), \; (\id_{V'}, 0)$に一致する。
     したがって$L$は線型同型写像である。
 \end{proof}
@@ -440,14 +455,18 @@ $\calP$の実現$(V, T, \mu), (V', T', \mu')$に対し、
 
 \begin{theorem}[最小次元実現の間のアファイン変換]
     \label[theorem]{thm:transformation-between-representations}
+    $(V, T, \mu), (V', T', \mu')$を$\bfC_\calP$の対象とする。
+    このとき、
     $(V, T, \mu), (V', T', \mu')$が
     ともに最小次元実現ならば、
     全射線型写像$L: V \to V'$と
     ベクトル$b \in V'$であって
     \begin{equation}
-        T(x) = L(T'(x)) + b
+        \xcancel{T(x) = L(T'(x)) + b} \quad
+        T'(x) = L(T(x)) + b
             \qquad
             \text{$\mu$-a.e.$x$}
+            \label{eq:transformation-of-T}
     \end{equation}
     をみたすものがただひとつ存在する。
     さらに、$L$は線型同型写像である。
@@ -455,64 +474,111 @@ $\calP$の実現$(V, T, \mu), (V', T', \mu')$に対し、
 \end{theorem}
 
 \begin{corollary}[自然パラメータの変換]
-    上の定理の$L$は
+    上の定理の状況で、
+    さらに$\theta^0 \in V^\vee$であって
     \begin{equation}
-        \theta'(p)
-            = \up{t}L(\theta(p))
+        \xcancel{\theta'(p)
+            = \up{t}L(\theta(p)) + \theta^0} \quad
+        \theta(p)
+            = \up{t}L(\theta'(p)) + \theta^0
             \qquad
             (\forall p \in \calP)
+            \label{eq:transformation-of-theta}
     \end{equation}
-    をみたす。
+    をみたすものがただひとつ存在する。
     ただし
     写像$\theta \colon \calP \to \Theta^\calP$
     および
     $\theta' \colon \calP \to \Theta'^\calP$は
-    $P, P'$ (の$\Theta^\calP, \Theta'^\calP$上への制限) の逆写像である。
+    $P, P'$の$\Theta^\calP, \Theta'^\calP$上への制限の逆写像である。
 \end{corollary}
 
 \begin{proof}
-    $p \in \calP$を任意とすると、
-    指数型分布族の定義より、
-    $\mu'$-a.e.$x$に対し
+    \uline{Step 1: 一意性} \quad
+    $\theta^0$が
+    $(V, T, \mu), (V', T', \mu')$に対し一意であることは
+    $L, \theta, \theta'$の一意性より明らかである。
+
+    \uline{Step 2: 存在} \quad
+    $q \in \calP$をひとつ選んで
+    $\theta^0
+        \coloneqq
+            - \up{t}L(\theta(q)) + \theta'(q) \in V^\vee$
+    と定め、
+    この$\theta^0$が
+    \cref{eq:transformation-of-theta}をみたすことを示せばよい。
+    そこで$p \in \calP$を任意とすると、
+    \cref{lemma:pairings_and_log_partition}より
+    \begin{equation}
+        \begin{alignedat}{1}
+            &\phantom{=}
+                \myangle{\theta(p) - \theta(q)}{T(x)}
+                - \psi(\theta(p)) + \psi(\theta(q))
+                \\
+            &=
+                \myangle{\theta'(p) - \theta'(q)}{T'(x)}
+                - \psi'(\theta'(p)) + \psi'(\theta'(q))
+        \end{alignedat}
+        \qquad
+        \text{$\mu$-a.e.$x$}
+    \end{equation}
+    が成り立ち、
+    さらに\cref{eq:transformation-of-T}より
+    \begin{equation}
+        \begin{alignedat}{1}
+            &\phantom{=}
+                \myangle{\theta(p) - \theta(q)}{L(T(x)) + b}
+                - \psi(\theta(p)) + \psi(\theta(q))
+                \\
+            &=
+                \myangle{\theta'(p) - \theta'(q)}{T'(x)}
+                - \psi'(\theta'(p)) + \psi'(\theta'(q))
+        \end{alignedat}
+        \qquad
+        \text{$\mu$-a.e.$x$}
+    \end{equation}
+    が成り立つから、
+    式を整理して
+    \begin{equation}
+        \begin{alignedat}{1}
+            &\phantom{=}
+                \myangle{
+                    \up{t}L(\theta(p) - \theta(q))
+                    - (\theta'(p) - \theta'(q))
+                }{T'(x)}
+                \\
+            &=
+                - \myangle{\theta(p) - \theta(q)}{b}
+                + \psi(\theta(p)) - \psi(\theta(q))
+                - \psi'(\theta'(p)) + \psi'(\theta'(q))
+        \end{alignedat}
+        \qquad
+        \text{$\mu$-a.e.$x$}
+    \end{equation}
+    となる。
+    この右辺は$x$によらないから、
+    $(V', T', \mu')$の条件A (2)より
     \begin{alignat}{2}
         &\phantom{\therefore} \quad&
-            \exp(\myangle{\theta(p)}{T(x)} - \psi(\theta(p)))
+            \up{t}L(\theta(p) - \theta(q))
+                - \theta'(p) - \theta'(q)
+                &= 0
+            \\
+        &\therefore \quad&
+            \up{t}L(\theta(p)) - \theta'(p)
+                &=
+                    \up{t}L(\theta(q)) - \theta'(q)
                 =
-                    \dd[p]{\mu}(x)
-                &=
-                    \exp(\myangle{\theta'(p)}{T'(x)} - \psi'(\theta'(p)))
+                    - \theta^0
             \\
         &\therefore \quad&
-            \myangle{\theta(p)}{T(x)}
-                - \myangle{\theta'(p)}{T'(x)}
+            \up{t}L(\theta(p)) + \theta^0
                 &=
-                    \psi(\theta(p))
-                    - \psi'(\theta'(p))
-            \\
-        &\therefore \quad&
-            \myangle{\theta(p)}{L(T'(x)) + b}
-            - \myangle{\theta'(p)}{T'(x)}
-            &=
-                \psi(\theta(p)) - \psi'(\theta'(p))
-                \\
-        &\therefore \quad&
-            \myanglem{\up{t}L(\theta(p))}{T'(x)}
-            - \myangle{\theta'(p)}{T'(x)}
-            &=
-                \psi(\theta(p)) - \psi'(\theta'(p))
-                - \myangle{\theta(p)}{b}
-                \\
-        &\therefore \quad&
-            \myanglem{\up{t}L(\theta(p)) - \theta'(p)}{T'(x)}
-            &=
-                \psi(\theta(p)) - \psi'(\theta'(p))
-                - \myangle{\theta(p)}{b}
+                    \theta'(p)
     \end{alignat}
     が成り立つ。
-    したがって、
-    $(V', T', \mu')$の条件A (2)より
-    $\up{t}L(\theta(p)) = \theta'(p)$
-    が成り立つ。
+    $p \in \calP$は任意であったから、
+    \cref{eq:transformation-of-theta}の成立が示された。
 \end{proof}
 
 

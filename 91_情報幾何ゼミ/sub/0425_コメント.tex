@@ -34,40 +34,47 @@
 
 \begin{answer}
     答え: 持つ。
-
-    $n = 1$の場合は
-    写像$T \colon \calX \to \R^0, \; k \mapsto 0$を十分統計量、
-    数え上げ測度$\gamma$を基底測度として
-    $0$次元の表現を得る。
-
-    $n \ge 2$の場合、
-    各$a_j$が$0 < a_j < 1$をみたすことに注意すれば、
-    \begin{equation}
-        P(dk)
-            = \exp\myparen{
-                \sum_{j = 1}^{n - 1}
-                    (\log a_j)
+    \begin{alignat}{1}
+        p(dk)
+            &=
+                \exp\mybrace{
+                    \sum_{i = 1}^{n - 1}
+                        (\log p_i) \delta_{ik}
+                    +
                     \myparen{
-                        \delta_{jk}
-                        + \frac{1}{n - 1} \frac{\log a_n}{\log a_j} \delta_{nk}
+                        \log\myparen{
+                            1 - \sum_{i = 1}^{n - 1} p_i
+                        }
                     }
-            } \, \gamma(dk)
-    \end{equation}
-    が成り立つから、
-    $T \colon \calX \to \R^{n - 1},$
-    \begin{equation}
-        T(k)
-            \coloneqq \begin{bmatrix}
-                \delta_{1k}
-                    + \frac{1}{n - 1} \frac{\log a_n}{\log a_1} \delta_{nk} \\
-                \vdots \\
-                \delta_{(n - 1)k}
-                    + \frac{1}{n - 1} \frac{\log a_n}{\log a_{n - 1}} \delta_{nk}
-            \end{bmatrix}
-    \end{equation}
+                    \delta_{n - 1, k}
+                }
+                \gamma(dk)
+                \\
+            &=
+                \exp\mybrace{
+                    \sum_{i = 1}^{n - 1}
+                        \myparen{
+                            \log p_i
+                            -
+                            \log\myparen{
+                                1 - \sum_{i = 1}^{n - 1} p_i
+                            }
+                        }
+                        \delta_{ik}
+                    +
+                    \log\myparen{
+                        1 - \sum_{i = 1}^{n - 1} p_i
+                    }
+                }
+                \gamma(dk)
+    \end{alignat}{1}
+    と表せるから、
+    $T \colon \calX \to \R^{n - 1}, \;
+        k \mapsto (\delta_{1k}, \dots, \delta_{n - 1, k})$
     を十分統計量、
     数え上げ測度$\gamma$を基底測度として
-    $n - 1$次元の表現を得る。
+    $(\R^{n - 1}, T, \gamma)$は
+    $n - 1$次元の実現となる。
 \end{answer}
 
 \begin{problem}
@@ -112,7 +119,7 @@
 \begin{answer}
     条件(as-a), (as-b)を確かめれば、
     2が最小であることがわかる。
-    \TODO{}
+    (cf. \url{0606_資料.pdf})
 \end{answer}
 
 指数型分布族の定義の$\R^m$を有限次元ベクトル空間$V$に置き換えてみる。

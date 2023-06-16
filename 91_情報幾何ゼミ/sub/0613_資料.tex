@@ -16,8 +16,11 @@
 % ------------------------------------------------------------
 \section*{振り返りと導入}
 
+前回は最小次元実現の間のアファイン変換について調べた。
+本稿では次のことを行う:
 \begin{itemize}
-    \item \TODO{}
+    \item 指数型分布族自体に構造を入れる。
+    \item Amari-Chentsov テンソルおよび$\alpha$-接続を定義する。
 \end{itemize}
 
 % ------------------------------------------------------------
@@ -25,81 +28,252 @@
 % ------------------------------------------------------------
 \section{指数型分布族の構造}
 
-$\calP$には自然な多様体構造が定まることをみる。
+本節では、
+指数型分布族にいくつかの構造を定め、
+さらに Amari-Chentsov テンソルおよび$\alpha$-接続の定義を行う。
 
-\begin{propdef}
+以降、本節では
+$\calX$を可測空間、
+$\calP \subset \calP(\calX)$を$\calX$上の指数型分布族とする。
+また、
+\url{0606_資料.pdf}定義0.1, 0.2で定めた
+写像や真パラメータ空間の記号
+「$P_{(V, T, \mu)}$」「$\Theta^\calP_{(V, T, \mu)}$」をよく用いる。
+さらに次の記号を定義しておく:
+
+\begin{definition}
+    $\calP$の最小次元実現$(V, T, \mu)$に対し、
+    $P_{(V, T, \mu)}|_{\Theta^\calP_{(V, T, \mu)}}$の
+    逆写像$\calP \to \Theta^\calP_{(V, T, \mu)}$を
+    $\theta_{(V, T, \mu)}$と書くことにする。
+\end{definition}
+
+\subsection{多様体構造と平坦アファイン接続}
+
+\begin{propdef}[$\calP$が開であること]
     指数型分布族$\calP$に関し、次は同値である:
     \begin{enumerate}
         \item ある最小次元実現$(V, T, \mu)$に対し、
-            $\Theta^\calP$は$V^\vee$で開である。
+            $\Theta^\calP_{(V, T, \mu)}$は$V^\vee$で開である。
         \item すべての最小次元実現$(V, T, \mu)$に対し、
-            $\Theta^\calP$は$V^\vee$で開である。
+            $\Theta^\calP_{(V, T, \mu)}$は$V^\vee$で開である。
     \end{enumerate}
     $\calP$がこれらの同値な2条件をみたすとき、
     $\calP$は\termsilent{開}[open]であるという。
 \end{propdef}
 
 \begin{proof}
-    (1) $\Rightarrow$ (2)は
-    \cref{thm:transformation-between-representations}より従う。
+    (1) $\Rightarrow$ (2)は、
+    \url{0606_資料.pdf}系1.13より、
+    最小次元実現の真パラメータ空間がアファイン変換で写り合うことから従う。
     (2) $\Rightarrow$ (1)は
     最小次元実現が存在することから従う。
 \end{proof}
 
-\begin{propdef}
-    $\calP$は開であるとする。
-    $\calP$の最小次元実現$(V, T, \mu)$をひとつ選ぶと、
-    自然パラメータ付け$P$により、
-    $\calP$上に多様体構造と平坦アファイン接続を定めることができる。
-    この多様体構造および平坦アファイン接続は
-    最小次元実現のとり方によらない。
-    これを$\calP$の
+以降、本節では$\calP$は開とする。
+
+\begin{propdef}[$\calP$の自然な多様体構造]
+    $\calP$上の多様体構造$\calU$であって
+    次をみたすものがただひとつ存在する:
+    \begin{itemize}
+        \item $\calP$の任意の最小次元実現$(V, T, \mu)$に対し、
+            $\calU$は全単射$\theta_{(V, T, \mu)}$により
+            $\Theta^\calP_{(V, T, \mu)}$から$\calP$上に誘導された多様体構造に一致する。
+    \end{itemize}
+    この$\calU$を$\calP$の
     \termsilent{自然な多様体構造}
-    および
-    \termsilent{自然な平坦アファイン接続}
-    と呼ぶ。
+    という。
 \end{propdef}
 
 \begin{proof}
-    下の (多様体の圏における) 図式の可換性と、
-    $P^{-1}, P'^{-1}$が diffeo. であること、
-    $\up{t}L$が線型同型であることから従う。
+    \uline{Step 1: $\calU$の一意性} \quad
+    $\calU$の存在を仮定すれば、
+    最小次元実現をひとつ選ぶことで
+    $\calU$が決まるから、
+    $\calU$は一意である。
+
+    \uline{Step 2: $\calU$の存在} \quad
+    最小次元実現$(V, T, \mu)$をひとつ選び、
+    $\theta \coloneqq \theta_{(V, T, \mu)}$とおき、
+    $\theta$により
+    $\Theta^\calP_{(V, T, \mu)}$から$\calP$上に誘導された多様体構造を$\calU$とおく。
+    この$\calU$が求めるものであることを示せばよい。
+    示すべきことは、
+    $(V', T', \mu')$を最小次元実現とし、
+    $\theta' \coloneqq \theta_{(V', T', \mu')}$とおき、
+    $\calU'$を
+    $\theta'$により
+    $\Theta^\calP_{(V', T', \mu')}$から
+    $\calP$上に誘導された多様体構造とするとき、
+    恒等写像$\id \colon (\calP, \calU) \to (\calP, \calU')$が
+    微分同相となることである。
+    これは図式
     \begin{equation}
         \begin{tikzcd}
-            (\calP, \calU_{(V, T, \mu)})
-                \ar{d}[swap]{P^{-1}}
+            (\calP, \calU)
+                \ar{d}[swap]{\theta}
                 \ar{r}{\id}
-                &(\calP, \calU_{(V', T', \mu')})
-                    \ar{d}{P'^{-1}}
+                &(\calP, \calU')
+                    \ar{d}{\theta'}
                 \\
-            \Theta^\calP
-                \ar{r}{\up{t}L}
-                &\Theta'^\calP
+            \Theta^\calP_{(V, T, \mu)}
+                \ar{r}[swap]{F}
+                &\Theta^\calP_{(V', T', \mu')}
         \end{tikzcd}
     \end{equation}
+    の可換性と、
+    $\theta, \theta', F$が微分同相であることから従う。
+    ただし$F$とは、
+    \url{0606_資料.pdf}系1.13より一意に存在する
+    アファイン変換$V^\vee \to V'^\vee$の制限である。
 \end{proof}
 
-\begin{propdef}[$\calP$の Fisher 計量]
-    $\calP$は開であるとする。
-    $\calP$の最小次元実現$(V, T, \mu)$をひとつ選ぶと、
-    $\Theta^\calP$上の Fisher 計量$g$を
-    $\theta$で引き戻して
-    $\calP$上の Riemann 計量
-    $\theta^* g$が定まる。
-    この計量は最小次元実現のとり方によらない。
-    これを$\calP$上の
-    \termsilent{Fisher 計量}
-    と呼ぶ。
+以降、本節では
+$\calP$に自然な多様体構造が定まっているものとする。
+
+\begin{propdef}[$\calP$上の自然な平坦アファイン接続]
+    \label[propdef]{propdef:natural-flat-connection}
+    $\calP$上の平坦アファイン接続$\nabla$であって
+    次をみたすものがただひとつ存在する:
+    \begin{itemize}
+        \item $\calP$の任意の最小次元実現$(V, T, \mu)$に対し、
+            $\Theta^\calP_{(V, T, \mu)}$上の
+            標準的な平坦アファイン接続を$\wt{\nabla}$とおくと、
+            $\nabla$は$\nabla = \theta_{(V, T, \mu)}^* \wt{\nabla}$をみたす。
+    \end{itemize}
+    この$\nabla$を$\calP$上の
+    \termsilent{自然な平坦アファイン接続}
+    という。
 \end{propdef}
 
-\begin{proof}
-    期待値と分散のペアリングの命題と同様の議論により、
-    各$p \in \calP$に対し
-    $g_{\theta(p)} = (L \otimes L) g'_{\theta'(p)}$
-    が成り立つ。
+証明には次の補題を用いる。
 
-    示すべきことは
+\begin{lemma}[アファイン変換によるアファイン接続の引き戻し]
+    \label[lemma]{lemma:pullback-affine-connection}
+    $V, V'$を有限次元$\R$-ベクトル空間、
+    $F \colon V \to V'$をアファイン変換、
+    $\nabla, \nabla'$をそれぞれ$V, V'$上の標準的な平坦アファイン接続とする。
+    このとき
+    $F^* \nabla' = \nabla$が成り立つ。
+\end{lemma}
+
+\begin{proof}
+    資料末尾の付録に記した。
+\end{proof}
+
+\begin{proof}[\cref{propdef:natural-flat-connection}の証明]
+    \uline{Step 1: $\nabla$の一意性} \quad
+    $\nabla$の存在を仮定すれば、
+    最小次元実現をひとつ選ぶことで$\nabla$が決まるから、
+    $\nabla$は一意である。
+
+    \uline{Step 2: $\nabla$の存在} \quad
+    最小次元実現$(V, T, \mu)$をひとつ選び、
+    $\theta \coloneqq \theta_{(V, T, \mu)}$、
+    $\Theta^\calP_{(V, T, \mu)}$上の
+    標準的な平坦アファイン接続を$\wt{\nabla}$、
+    $\nabla \coloneqq \theta^* \wt{\nabla}$と定める。
+    この$\nabla$が求めるものであることを示せばよい。
+    示すべきことは、
+    $(V', T', \mu')$を最小次元実現とし、
+    $\theta' \coloneqq \theta_{(V', T', \mu')}$、
+    $\Theta^\calP_{(V', T', \mu')}$上の
+    標準的な平坦アファイン接続を$\wt{\nabla}'$とおくとき、
+    $\theta^* \wt{\nabla} = \theta'^* \wt{\nabla}'$が成り立つことである。
+    そこで、
+    \url{0606_資料.pdf}系1.13より一意に存在する
+    アファイン変換$V^\vee \to V'^\vee$を$F$とおくと、
+    \begin{alignat}{1}
+        \theta'^* \wt{\nabla}'
+            &=
+                \theta^* F^* \wt{\nabla}'
+                \quad
+                (\text{$F$と$\theta, \theta'$の関係})
+                \\
+            &=
+                \theta^* \wt{\nabla}
+                \quad
+                (\text{\cref{lemma:pullback-affine-connection}})
+    \end{alignat}
+    が成り立つ。
+    したがって$\theta^* \wt{\nabla} = \theta'^* \wt{\nabla}'$が示された。
+    よって$\nabla$は命題-定義の主張の条件をみたす。
+\end{proof}
+
+以降、本節では
+$\calP$に自然な平坦アファイン接続$\nabla$が定まっているものとする。
+
+\subsection{Fisher 計量}
+
+\begin{propdef}[$\calP$上の Fisher 計量]
+    \label[propdef]{propdef:Fisher-metric}
+    $\calP$上の Riemann 計量$g$であって
+    次をみたすものがただひとつ存在する:
+    \begin{itemize}
+        \item $\calP$の任意の最小次元実現$(V, T, \mu)$に対し、
+            $\Theta^\calP_{(V, T, \mu)}$上の Fisher 計量を$\wt{g}$とおくと、
+            $g = \theta_{(V, T, \mu)}^* \wt{g}$が成り立つ。
+    \end{itemize}
+    これを$\calP$上の
+    \termsilent{Fisher 計量}
+    という。
+\end{propdef}
+
+証明には次の補題を用いる。
+
+\begin{lemma}
+    \label[lemma]{lemma:relationship-between-Fisher-metrics}
+    $(V, T, \mu), (V', T', \mu')$を
+    $\calP$の最小次元実現とし、
+    $\theta \coloneqq \theta_{(V, T, \mu)}, \;
+        \theta' \coloneqq \theta_{(V', T', \mu')}$
+    とおき、
+    $\Theta^\calP_{(V, T, \mu)}, \;
+        \Theta^\calP_{(V', T', \mu')}$上の
+    Fisher 計量をそれぞれ$g, g'$とおき、
+    \url{0606_資料.pdf}定理1.12より一意に存在する
+    線型同型写像$V \to V'$を$L$とおく。
+    このとき、
+    各$p \in \calP$に対し
+    $g_{\theta(p)} = (L \otimes L)(g'_{\theta'(p)})$
+    が成り立つ。
+\end{lemma}
+
+\begin{proof}
+    $L$は
+    $T'(x) = L(T(x)) + \text{const.} \; \text{$\mu$-a.e.$x$}$
+    をみたし、
+    また
+    各$p \in \calP$に対し
+    $g_{\theta(p)} = \Var_{p}[T], \;
+        g'_{\theta'(p)} = \Var_{p}[T']$
+    が成り立つから、
+    期待値と分散のペアリングの命題
+    (\url{0523_資料.pdf}命題1.1)
+    と同様の議論により補題の主張の等式が成り立つ。
+\end{proof}
+
+\begin{proof}[\cref{propdef:Fisher-metric}の証明]
+    \uline{Step 1: $g$の一意性} \quad
+    $g$の存在を仮定すれば、
+    最小次元実現をひとつ選ぶことで
+    $g$が決まるから、
+    $g$は一意である。
+
+    \uline{Step 2: $g$の存在} \quad
+    最小次元実現$(V, T, \mu)$をひとつ選び、
+    $\theta \coloneqq \theta_{(V, T, \mu)}$、
+    $\Theta^\calP_{(V, T, \mu)}$上の Fisher 計量を$\wt{g}$とおき、
+    $g \coloneqq \theta^* \wt{g}$と定める。
+    この$g$が求めるものであることを示せばよい。
+    示すべきことは、
+    $(V', T', \mu')$を最小次元実現とし、
+    $\theta' \coloneqq \theta_{(V', T', \mu')}$、
+    $\Theta^\calP_{(V', T', \mu')}$上の Fisher 計量を$\wt{g}'$とおいて、
     $\theta^* g = \theta'^* g'$が成り立つことである。
+    そこで
+    \url{0606_資料.pdf}定理1.12より一意に存在する
+    線型同型写像$V \to V'$を$L$とおくと、
     各$p \in \calP, \; u, v \in T_p\calP$に対し
     \begin{alignat}{1}
         (\theta^* g)_p(u, v)
@@ -119,6 +293,8 @@ $\calP$には自然な多様体構造が定まることをみる。
                 }{
                     d\theta_p(u) \otimes d\theta_p(v)
                 }
+                \quad
+                (\cref{lemma:relationship-between-Fisher-metrics})
                 \\
             &=
                 \myangle{
@@ -140,6 +316,8 @@ $\calP$には自然な多様体構造が定まることをみる。
                 }{
                     d\theta'_p (u) \otimes d\theta'_p (v)
                 }
+                \quad
+                (\text{$L$と$\theta, \theta'$の関係})
                 \\
             &=
                 g'_p (d\theta'_p(u), d\theta'_p(v))
@@ -148,251 +326,384 @@ $\calP$には自然な多様体構造が定まることをみる。
                 (\theta'^* g')_p(u, v)
     \end{alignat}
     が成り立つ。
+    したがって$\theta^* g = \theta'^* g'$が示された。
+    よって$g$は命題-定義の主張の条件をみたす。
 \end{proof}
 
-% ------------------------------------------------------------
-%
-% ------------------------------------------------------------
-\section{Amari-Chentsov テンソル}
+以降、本節では
+$\calP$に Fisher 計量$g$が定まっているものとする。
 
-Amari-Chentsov テンソルを定義する。
+\subsection{Amari-Chentsov テンソルと$\alpha$-接続}
 
-\begin{propdef}[Amari-Chentsov テンソル]
-    $\calP$は開であるとし、
-    $D$を$\Theta^\calP$上の標準的な\TODO{とは?}平坦アファイン接続、
-    $\theta^i \; (i = 1, \dots, m)$を
-    $\Theta^\calP$上の$D$-アファイン座標とする。
-    $\Theta^\calP$上の写像
-    $S \colon \Theta^\calP \to T^{(0, 3)} \Theta^\calP$
-    を
-    \begin{equation}
-        \theta
-            \mapsto
-                S_\theta
-                \coloneqq
-                E_{P(\theta)}[
-                    (T - E_{P(\theta)}[T])^{\otimes 3}
-                ]
-    \end{equation}
-    で定めると\TODO{値域あってる?}、
-    座標$\theta^i$に関する$S$の成分表示は
-    \begin{equation}
-        S
-            = \del_i \del_j \del_k \psi \, d\theta^i d\theta^j d\theta^k
-    \end{equation}
-    となる。
-    とくに
-    $\psi$の\smooth 性より
-    $S$は対称$(0, 3)$-テンソル場となる。
-    $S$を
-    \term{Amari-Chentsov テンソル}[Amari-Chentsov tensor]
-        {Amari-Chentsov テンソル}[Amari-Chentsov テンソル]
-    と呼ぶ。
-\end{propdef}
-
-\begin{proof}
-    成分表示は
-    \url{0516_資料.pdf}の系2.4を使って式変形すればわかる。
-\end{proof}
-
-\begin{propdef}[$\calP$の Amari-Chentsov テンソル]
-    $\calP$は開であるとする。
-    $\calP$の最小次元実現$(V, T, \mu)$をひとつ選ぶと、
-    $\Theta^\calP_{(V, T, \mu)}$上の Amari-Chentsov テンソル$S$を
-    $\theta$で引き戻して
-    $\calP$上の対称$(0, 3)$-テンソル場
-    $\theta^* S$が定まる。
-    このテンソル場は最小次元実現のとり方によらない。
+\begin{definition}[Amari-Chentsov テンソル]
+    $\calP$上の$(0, 3)$-テンソル場$S$を
+    $S \coloneqq \nabla g$で定め、
     これを$\calP$上の
     \term{Amari-Chentsov テンソル}[Amari-Chentsov tensor]
         {Amari-Chentsov テンソル}[Amari-Chentsov テンソル]
-    と呼ぶ。
-\end{propdef}
-
-\begin{proof}
-    $S$の定義より
-    $L^{\otimes 3} S'_{\theta'} = S_\theta$
-    が成り立つから、
-    Fisher 計量の場合と同様の議論により
-    $\theta^* S = \theta'^* S'$が成り立つ。
-\end{proof}
-
-
-% ------------------------------------------------------------
-%
-% ------------------------------------------------------------
-\section{期待値パラメータ空間}
-
-\begin{definition}[期待値パラメータ空間]
-    集合$\calM_{(V, T, \nu)}$
+    という。
+    また、
+    $\calP$上の$(1, 2)$-テンソル場$A$を
+    次の関係式により定める:
     \begin{equation}
-        \calM_{(V, T, \nu)}
-            \coloneqq \mybrace{
-                \mu \in V
-                \mid
-                \exists \;
-                p \colon \text{$\calX$上の確率分布}
-                \; \text{s.t.} \;
-                p \ll \nu, \;
-                E_p[T] = \mu
+        g(A(X, Y), Z)
+            = S(X, Y, Z)
+            \quad
+            (\forall X, Y, Z \in \Gamma(T\calP))
+    \end{equation}
+
+    以降、「Amari-Chentsov テンソル」を
+    「ACテンソル」と略記することがある。
+\end{definition}
+
+以降、本節では
+$\calP$に Amari-Chentsov テンソル$S$が定まっているものとする。
+
+\begin{proposition}[ACテンソルの成分]
+    \label[proposition]{prop:components-of-AC-tensor}
+    $(V, T, \mu)$を$\calP$の最小次元実現、
+    $\Theta^\calP \coloneqq \Theta^\calP_{(V, T, \mu)}, \;
+        \theta \coloneqq \theta_{(V, T, \mu)}$、
+    $(V, T, \mu)$の対数分配関数を$\psi$とおく。
+    このとき、
+    $\calP$上の任意の
+    $\nabla$-アファイン座標
+    $x \coloneqq (x^1, \dots, x^m) \colon \calP \to \R^m$に対し、
+    $\varphi \coloneqq (\varphi^1, \dots, \varphi^m)
+        \coloneqq x \circ \theta^{-1} \colon \Theta^\calP \to \R^m$とおくと、
+    $S$の成分は
+    \begin{equation}
+        S_{ijk}(p)
+            = \frac{
+                \del^3 \psi
+            }{
+                \del \varphi^i \del \varphi^j \del \varphi^k
+            }(\theta(p))
+            = E_p\mybracket{
+                (T_i - E_p[T_i])
+                (T_j - E_p[T_j])
+                (T_k - E_p[T_k])
             }
     \end{equation}
-    を$(V, T, \nu)$の
-    \term{期待値パラメータ空間}[mean parameter space]
-        {期待値パラメータ空間}[きたいちぱらめーたくうかん]
+    をみたす。
+    ただし$T_i \; (i = 1, \dots, m)$とは、
+    同一視$V = V^{\vee\vee} = T^\vee_{\theta(p)} \Theta^\calP$により
+    $d\varphi^i \; (i = 1, \dots, m)$を$V$の基底とみなしたときの
+    $T$の成分である。
+\end{proposition}
+
+\begin{proof}
+    左側の等号と右側の等号についてそれぞれ示す。
+
+    \uline{Step 1: 左側の等号} \quad
+    $\Theta^\calP$上の標準的な平坦アファイン接続を$\wt{\nabla}$とおき、
+    $\psi$の定める$\Theta^\calP$上の Fisher 計量を$\wt{g}$とおくと、
+    \begin{alignat}{1}
+        S\myparen{
+            \deldel{x^i},
+            \deldel{x^j},
+            \deldel{x^k}
+        }
+            &=
+                \myparen{
+                    \nabla_{\deldel{x^i}}
+                    g
+                }
+                \myparen{
+                    \deldel{x^j},
+                    \deldel{x^k}
+                }
+                \\
+            &=
+                \myparen{
+                    \myparen{
+                        \theta^* \wt{\nabla}
+                    }_{\deldel{x^i}}
+                    \myparen{
+                        \theta^* \wt{g}
+                    }
+                }
+                \myparen{
+                    \deldel{x^j},
+                    \deldel{x^k}
+                }
+                \\
+            &=
+                \myparen{
+                    \theta^{-1}_*
+                    \myparen{
+                        \wt{\nabla}_{\theta_* \deldel{x^i}}
+                        \wt{g}
+                    }
+                }
+                \myparen{
+                    \deldel{x^j},
+                    \deldel{x^k}
+                }
+                \\
+            &=
+                \myparen{
+                    \wt{\nabla}_{\theta_* \deldel{x^i}}
+                    \wt{g}
+                }
+                \myparen{
+                    d\theta\myparen{
+                        \deldel{x^j}
+                    },
+                    d\theta\myparen{
+                        \deldel{x^k}
+                    }
+                }
+                \\
+            &=
+                \myparen{
+                    \wt{\nabla}_{\deldel{\varphi^i}}
+                    \wt{g}
+                }
+                \myparen{
+                    \deldel{\varphi^j},
+                    \deldel{\varphi^k}
+                }
+                \\
+            &=
+                \myparen{
+                    \deldel{\varphi^i}
+                    \myparen{
+                        \frac{\del^2 \psi}{\del \varphi^l \del \varphi^n}
+                    }
+                    d\varphi^l d\varphi^n
+                }
+                \myparen{
+                    \deldel{\varphi^j},
+                    \deldel{\varphi^k}
+                }
+                \quad
+                (\text{$\varphi$は$\wt{\nabla}$-アファイン座標})
+                \\
+            &=
+                \frac{\del^3 \psi}{\del \varphi^i \del \varphi^j \del \varphi^k}
+    \end{alignat}
+    となるから、命題の主張の左側の等号が従う。
+
+    \uline{Step 2: 右側の等号} \quad
+    「$E_p$」の下付きの$p$を省略して書けば、
+    直接計算より
+    \begin{alignat}{1}
+        &\phantom{=}
+            E[(T_i - E[T_i])(T_j - E[T_j])(T_k - E[T_k])]
+            \\
+        &=
+            E[T_i T_j T_k]
+            - E[T_i] E[T_j T_k]
+            - E[T_j] E[T_k T_i]
+            - E[T_k] E[T_i T_j]
+            + 2 E[T_i] E[T_j] E[T_k]
+            \locallabel{eq:1}
+    \end{alignat}
+    が成り立つ。
+    一方、
+    $\lambda \coloneqq \exp \psi$とおき、
+    $\deldel{\varphi^i}$を$\del_i$と略記すれば、
+    直接計算より
+    \begin{alignat}{1}
+        \frac{\del^3 \psi}{\del \varphi^i \del \varphi^j \del \varphi^k}
+            &=
+                \del_i
+                \del_j
+                \del_k
+                \log \lambda
+                \\
+            &=
+                \frac{\del_i \del_j \del_k \lambda}{\lambda}
+                - \frac{(\del_i \lambda) (\del_j \del_k \lambda)}{\lambda^2}
+                - \frac{(\del_j \lambda) (\del_k \del_i \lambda)}{\lambda^2}
+                - \frac{(\del_k \lambda) (\del_i \del_j \lambda)}{\lambda^2}
+                + 2 \frac{(\del_i \lambda) (\del_j \lambda) (\del_k \lambda)}{\lambda^3}
+    \end{alignat}
+    が成り立つ。
+    この右辺を
+    \url{0516_資料.pdf}系2.4により期待値の形で表せば
+    式\localcref{eq:1}に一致するから、
+    命題の主張の右側の等号が従う。
+\end{proof}
+
+\begin{definition}[$\alpha$-接続]
+    $\alpha \in \R$とする。
+    $\calP$上のアファイン接続$\nabla^{(\alpha)}$を
+    次の関係式により定める:
+    \begin{equation}
+        g(\nabla^{(\alpha)}_X Y, Z)
+            =
+                g(\nabla^{(g)}_X Y, Z)
+                -
+                \frac{\alpha}{2} S(X, Y, Z)
+                \qquad
+                (X, Y, Z \in \Gamma(T\calP))
+    \end{equation}
+    この$\nabla^{(\alpha)}$を
+    $(g, S)$の定める
+    \term{$\alpha$-接続}[$\alpha$-connection]
+        {$\alpha$-接続}[alphaせつぞく]
+    という。
+    とくに$\alpha = 1, -1$の場合をそれぞれ
+    \term{e-接続}[e-connection]
+        {e-接続}[eせつぞく]、
+    \term{m-接続}[m-connection]
+        {m-接続}[mせつぞく]
     という。
 \end{definition}
 
-期待値パラメータ空間$\calM$は、
-$\calP$に属する確率分布に関する$T$の期待値をすべて含んでいる
-(一般には真に含んでいる)。
-
-\begin{proposition}
-    $\mu \in V$が
-    ある$p \in \calP$に関する
-    $T$の期待値ならば (すなわち$\mu = E_p[T]$ならば)、
-    $\mu$は$\calM_{(V, T, \nu)}$に属する。
+\begin{proposition}[$\nabla^{(g)}, \nabla^{(\alpha)}$のACテンソルによる表示]
+    \label[proposition]{prop:connections_by_AC_tensor}
+    $\calP$上の任意の$\nabla$-アファイン座標に関し、
+    $\nabla^{(g)}$および$\nabla^{(\alpha)}$の
+    接続係数は次をみたす:
+    \begin{enumerate}
+        \item
+            \begin{equation}
+                {\Gamma^{(g)}}_{ij}^k
+                    = \frac{1}{2} A_{ij}^k,
+                    \quad
+                {\Gamma^{(g)}}_{ijk}
+                    = \frac{1}{2} S_{ijk}
+                \label{eq:Gamma_g}
+            \end{equation}
+        \item すべての$\alpha \in \R$に対し
+            \begin{equation}
+                {\Gamma^{(\alpha)}}_{ij}^k
+                    = \frac{1 - \alpha}{2} A_{ij}^k,
+                    \quad
+                {\Gamma^{(\alpha)}}_{ijk}
+                    = \frac{1 - \alpha}{2} S_{ijk}
+                \label{eq:Gamma_alpha}
+            \end{equation}
+            とくに$\alpha = 1$のとき
+            ${\Gamma^{(1)}}_{ij}^k = 0, \;
+                {\Gamma^{(1)}}_{ijk} = 0$である。
+    \end{enumerate}
 \end{proposition}
 
 \begin{proof}
-    \TODO{}
-\end{proof}
-
-\begin{proposition}[$\calM$は凸集合]
-    $\calM_{(V, T, \nu)}$は$V$の凸集合である。
-\end{proposition}
-
-\begin{proof}
-    \TODO{}
-\end{proof}
-
-
-% ------------------------------------------------------------
-%
-% ------------------------------------------------------------
-\section{Fisher 計量}
-
-\begin{example}[正規分布族]
-    \TODO{ちゃんと書く}
-    $\calP$を$\calX = \R$上の正規分布族とし、
-    実現$(V, T, \mu)$を
-    $V = \R^2, \;
-        T(x) = (x, x^2), \;
-        \mu = \lambda$
-    とおく。
-    これは条件Aをみたす。
-
-    自然パラメータ空間は
-    $\Theta = \Theta^\circ = \R \times \R_{< 0}$である。
-
-    対数分配関数は
-    \begin{equation}
-        \psi(\theta)
-            = \frac{\mu^2}{2 \sigma^2}
-            + \log \sigma
-            + \frac{1}{2} \log 2\pi
-    \end{equation}
-    である。
-    ただし$\theta^1 = \frac{\mu}{\sigma^2}, \;
-        \theta^2 = -\frac{1}{2 \sigma^2}$
-    とおいた。
-    よって
+    \uline{(1)} \quad
+    \cref{eq:Gamma_g}の左側の等式は
     \begin{alignat}{1}
-        d\psi
+        {\Gamma^{(g)}}_{ij}^k
             &=
-                \frac{\mu}{\sigma^2}
-                d\mu
-                + \frac{\sigma^2 - \mu^2}{\sigma^3}
-                d\sigma
+                \frac{1}{2} g^{kl}
+                \myparen{
+                    \del_i g_{jl}
+                    + \del_j g_{li}
+                    - \del_l g_{ij}
+                }
                 \\
             &=
-                -\frac{\theta^1}{2\theta^2} d\theta^1
-                +\myparen{
-                    -\frac{1}{2\theta^2}
-                    + \frac{(\theta^1)^2}{4(\theta^2)^2}
+                \frac{1}{2} g^{kl}
+                \myparen{
+                    S_{ijl}
+                    + S_{jli}
+                    - S_{lij}
                 }
-                d\theta^2
+                \quad
+                (\text{\cref{prop:components-of-AC-tensor}})
                 \\
-        \Hess\psi
-            &= Dd\psi \\
             &=
-                \myparen{
-                    -\frac{1}{2\theta^2}
-                    d\theta^1
-                    + \frac{\theta^1}{2(\theta^2)^2}
-                    d\theta^2
-                }
-                d\theta^1
-                +
-                \myparen{
-                    \frac{\theta^1}{2(\theta^2)^2}
-                    d\theta^1
-                    + \myparen{
-                        \frac{1}{2(\theta^2)^2}
-                        - \frac{(\theta^1)^2}{2(\theta^2)^3}
+                \frac{1}{2} g^{kl} S_{ijl}
+                \\
+            &=
+                \frac{1}{2} A_{ij}^k
+    \end{alignat}
+    より従う。
+    $g$で添字を下げて\cref{eq:Gamma_g}の右側の等式も従う。
+
+    \uline{(2)} \quad
+    $\alpha$-接続の定義より
+    ${\Gamma^{(\alpha)}}_{ijk}
+        = {\Gamma^{(g)}}_{ijk}
+            - \frac{\alpha}{2} S_{ijk}$
+    だから、
+    (1)とあわせて\cref{eq:Gamma_alpha}の左側の等式が従う。
+    $g$で添字を下げて\cref{eq:Gamma_g}の右側の等式も従う。
+\end{proof}
+
+\begin{proposition}[捩率と曲率のACテンソルによる表示]
+    $\calP$上の任意の$\nabla$-アファイン座標に関し、
+    $\nabla^{(\alpha)}$の捩率テンソル$T^{(\alpha)}$
+    および$(1, 3)$-曲率テンソル$R^{(\alpha)}$の成分表示は
+    次をみたす:
+    \begin{enumerate}
+        \item すべての$\alpha \in \R$に対し
+            \begin{equation}
+                {T^{(\alpha)}}_{ij}^k
+                    = 0
+            \end{equation}
+        \item すべての$\alpha \in \R$に対し
+            \begin{equation}
+                {R^{(\alpha)}}_{ijk}^l
+                    = \frac{1 - \alpha}{2} \myparen{
+                        \del_i A_{jk}^l
+                        -
+                        \del_j A_{ik}^l
                     }
-                    d\theta^2
-                }
-                d\theta^2
+                    + \myparen{\frac{1 - \alpha}{2}}^2
+                    \myparen{
+                        A_{jk}^m A_{im}^l
+                        -
+                        A_{ik}^m A_{jm}^l
+                    }
+            \end{equation}
+            とくに$\alpha = 1$のとき
+            ${R^{(1)}}_{ijk}^l = 0$である。
+    \end{enumerate}
+\end{proposition}
+
+\begin{proof}
+    \uline{(1)} \quad
+    \begin{alignat}{1}
+        {T^{(\alpha)}}_{ij}
+            &=
+                {\Gamma^{(\alpha)}}_{ij}^k
+                - {\Gamma^{(\alpha)}}_{ji}^k
                 \\
             &=
-                \frac{1}{\sigma^2} (d\mu)^2
-                + \frac{2}{\sigma^2} (d\sigma)^2
+                \frac{1 - \alpha}{2} A_{ij}^k
+                - \frac{1 - \alpha}{2} A_{ji}^k
+                \quad
+                (\cref{prop:connections_by_AC_tensor} (2))
+                \\
+            &=
+                0
+                \quad
+                (\text{$A_{ij}^k = A_{ji}^k$})
     \end{alignat}
-    である。
-    Fisher 計量$g \coloneqq \Hess\psi$から定まる
-    Levi-Civita 接続$\nabla^{(g)}$の、
-    座標$\mu, \sigma$に関する接続係数を求めてみる。
-    \begin{alignat}{2}
-        {\Gamma^{(g)}}_{11}^1
-            = 0,
-            &\qquad
-                {\Gamma^{(g)}}_{12}^1
-                    = {\Gamma^{(g)}}_{21}^1
-                    = -\frac{1}{\sigma},
-            &&\qquad
-                {\Gamma^{(g)}}_{22}^1
-                    = 0,
-            \\
-        {\Gamma^{(g)}}_{11}^2
-            = \frac{1}{2\sigma},
-            &\qquad
-                {\Gamma^{(g)}}_{12}^2
-                    = {\Gamma^{(g)}}_{21}^2
-                    = 0,
-            &&\qquad
-                {\Gamma^{(g)}}_{22}^2
-                    = -\frac{1}{\sigma}
+    より従う。
+
+    \uline{(2)} \quad
+    \begin{alignat}{1}
+        {R^{(\alpha)}}_{ijk}^l
+            &=
+                \del_i {\Gamma^{(\alpha)}}_{jk}^l
+                - \del_j {\Gamma^{(\alpha)}}_{ik}^l
+                + {\Gamma^{(\alpha)}}_{jk}^m
+                    {\Gamma^{(\alpha)}}_{im}^l
+                - {\Gamma^{(\alpha)}}_{ik}^m
+                    {\Gamma^{(\alpha)}}_{jm}^l
+                \\
+            &=
+                \frac{1 - \alpha}{2}
+                \myparen{
+                    \del_i A_{jk}^l
+                    - \del_j A_{ik}^l
+                }
+                + \myparen{\frac{1 - \alpha}{2}}^2
+                \myparen{
+                    A_{jk}^m A_{im}^l
+                    - A_{ik}^m A_{jm}^l
+                }
+                \quad
+                (\cref{prop:connections_by_AC_tensor} (2))
     \end{alignat}
-    測地線の方程式は
-    \begin{equation}
-        \begin{cases}
-            x'' - \frac{2}{y} x' y' = 0 \\
-            y'' + \frac{1}{2y} (x')^2 - \frac{1}{y} (y')^2 = 0
-        \end{cases}
-    \end{equation}
-    である。
-    これを直接解くのは少し大変である。
-    その代わりに、
-    既知の Riemann 多様体との間の等長同型を利用して測地線を求める。
-    $(\Theta, g)$は、
-    上半平面$H$に計量
-    $\breve{g} = \frac{(dx)^2 + (dy)^2}{2y^2}$
-    を入れた Riemann 多様体との間に
-    等長同型$(\Theta, g) \to (H, \breve{g}), \;
-        (x, y) \mapsto (x, \sqrt{2}y)$
-    を持つ。
-    Levi-Civita 接続に関する測地線は
-    等長同型で保たれるから、
-    $(H, \breve{g})$の測地線を求めればよい。
-    $(H, \breve{g})$の測地線は、
-    $y$軸に平行な直線と
-    $x$軸上に中心を持つ半円で尽くされることが知られている。
-    これらを等長同型で写して、
-    $(\Theta, g)$の測地線として
-    $y$軸に平行な直線と
-    $x$軸上に長軸を持つ半楕円が得られる。
-\end{example}
+    より従う。
+\end{proof}
 
 
 % ------------------------------------------------------------
@@ -401,7 +712,8 @@ $\calP$に属する確率分布に関する$T$の期待値をすべて含んで�
 \section*{今後の予定}
 
 \begin{itemize}
-    \item \TODO{}
+    \item 具体例: 有限集合上の full support な確率分布の族
+    \item 具体例: 正規分布族
 \end{itemize}
 
 % ------------------------------------------------------------
@@ -416,6 +728,128 @@ $\calP$に属する確率分布に関する$T$の期待値をすべて含んで�
     \bibliographystyle{amsalpha}
     \bibliography{./bibliography,../../mybibliography}
 }
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\newpage
+\appendix
+\renewcommand\thesection{\Alph{section}}
+\setcounter{section}{0}
+\section{付録}
+
+\begin{fact}[ベクトル場の押し出しと関数]
+    \label[fact]{fact:apx1}
+    $M, N$を (有限次元実\smooth) 多様体、
+    $F \colon M \to N$を微分同相写像とする。
+    このとき、次が成り立つ:
+    \begin{enumerate}
+        \item 任意の$f \in \smooth(M)$に対し
+            $F_*(fX) = f \circ F^{-1} \, F_*X$が成り立つ。
+        \item 任意の$g \in \smooth(N)$に対し
+            $((F_* X) g) \circ F = X(g \circ F)$が成り立つ。
+    \end{enumerate}
+    \vspace{-2em}
+    \qed
+\end{fact}
+
+\begin{fact}[アファイン変換によるベクトル場の押し出し]
+    \label[fact]{fact:apx2}
+    $V, V'$を$m$次元$\R$-ベクトル空間、
+    $\del_i, \del'_i \; (i = 1, \dots, m)$をそれぞれ$V, V'$の
+    基底をベクトル場とみなしたもの、
+    $F \colon V \to V'$をアファイン変換とし、
+    $\del_i, \del'_i$に関する$F$の行列表示を
+    $(a^i_j)_{i, j}$とする。
+    このとき、
+    $F_* \del_j = a_i^j \del'_j$が成り立つ。
+    \qed
+\end{fact}
+
+\begin{proof}[\cref{lemma:pullback-affine-connection}の証明]
+    $\del_i, \del'_i \; (i = 1, \dots, m)$をそれぞれ$V, V'$の
+    基底をベクトル場とみなしたものとし、
+    $\del_i, \del'_i$に関する$F$の行列表示を
+    $(a^i_j)_{i, j}$とおき、
+    その逆行列を
+    $(\wt{a}^i_j)_{i, j}$とおく。
+    任意の$X = X^i \del_i, \; Y = Y^i \del_i \in \Gamma(TV)$に対し
+    \begin{alignat}{1}
+        (F^* \nabla')_X Y
+            &=
+                F^{-1}_* \myparen{
+                    \nabla'_{F_* X}
+                    F_* Y
+                }
+                \\
+            &=
+                F^{-1}_* \myparen{
+                    \nabla'_{F_* (X^i \del_i)}
+                    F_* (Y^j \del_j)
+                }
+                \\
+            &=
+                F^{-1}_* \myparen{
+                    \nabla'_{X^i \circ F^{-1} \, F_* \del_i}
+                    (Y^j \circ F^{-1} \, F_* \del_j)
+                }
+                \quad
+                (\text{\cref{fact:apx1} (1)})
+                \\
+            &=
+                F^{-1}_* \myparen{
+                    \nabla'_{X^i \circ F^{-1} \, a^k_i \del'_k}
+                    (Y^j \circ F^{-1} \, a^l_j \del'_l)
+                }
+                \quad
+                (\text{\cref{fact:apx2}})
+                \\
+            &=
+                F^{-1}_* \myparen{
+                    X^i \circ F^{-1} \, a^k_i a^l_j
+                    \nabla'_{\del'_k}
+                    (Y^j \circ F^{-1} \del'_l)
+                }
+                \\
+            &=
+                F^{-1}_* \myparen{
+                    X^i \circ F^{-1} \, a^k_i a^l_j
+                    \del'_k (Y^j \circ F^{-1}) \del'_l
+                }
+                \quad
+                (\text{基底$\del'_i$の定める座標は$\nabla'$-アファイン})
+                \\
+            &=
+                F^{-1}_* \myparen{
+                    X^i \circ F^{-1} \, a^k_i a^l_j
+                    ((F^{-1}_* \del'_k) Y^j) \circ F^{-1} \del'_l
+                }
+                \quad
+                (\text{\cref{fact:apx1} (2)})
+                \\
+            &=
+                X^i a^k_i a^l_j
+                (F^{-1}_* \del'_k) (Y^j)
+                F^{-1}_* \del'_l
+                \quad
+                (\text{\cref{fact:apx1} (1)})
+                \\
+            &=
+                X^i a^k_i a^l_j
+                \wt{a}^m_k \del_m (Y^j)
+                \wt{a}^n_l \del_n
+                \quad
+                (\text{\cref{fact:apx2}})
+                \\
+            &=
+                X^i \del_i (Y^j) \del_j
+                \\
+            &=
+                \nabla_X Y
+    \end{alignat}
+    となる。
+    よって$F^* \nabla' = \nabla$が成り立つ。
+\end{proof}
 
 
 \end{document}

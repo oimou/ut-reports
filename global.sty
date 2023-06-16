@@ -83,6 +83,7 @@
     \newtheorem{corollary}[theorem]{系}
     \theoremstyle{definition}
     \newtheorem{definition}[theorem]{定義}
+    \newtheorem{settings}[theorem]{設定}
     \newtheorem{remark}[theorem]{注意}
     \newtheorem{example}[theorem]{例}
     \newtheorem*{example*}{例}
@@ -156,6 +157,11 @@
         mythm
     }
     \tcolorboxenvironment{definition}{
+        mytcb,
+        borderline west={1pt}{1em}{BrickRed},
+        colback=BrickRed!3!
+    }
+    \tcolorboxenvironment{settings}{
         mytcb,
         borderline west={1pt}{1em}{BrickRed},
         colback=BrickRed!3!
@@ -243,7 +249,7 @@
         colorlinks,
         linkcolor={red!50!black},
         citecolor={blue!50!black},
-        urlcolor={blue!80!black}
+        urlcolor={blue!60!black}
     }
 
 % cleveref
@@ -260,6 +266,7 @@
     \crefname{corollary}{系}{系}
     \crefname{example}{例}{例}
     \crefname{definition}{定義}{定義}
+    \crefname{settings}{設定}{設定}
     \crefname{figure}{図}{図}
     \crefname{equation}{}{}
     \crefname{problem}{問題}{問題}
@@ -354,6 +361,7 @@
 % cancel
 % 打ち消し線を引くのに使う
 \usepackage{cancel}
+    \renewcommand{\CancelColor}{\color{red}}
 
 % enumitem
 \usepackage{enumitem}
