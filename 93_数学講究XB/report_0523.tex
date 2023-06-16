@@ -374,7 +374,7 @@ Gromov-Hausdorff 距離が距離であることを示す。
     したがって$d_\GH$は三角不等式をみたす。
 \end{proof}
 
-非退化性の一方を示す。
+まず非退化性の右向きの含意を示す。
 
 \begin{lemma}
     \label[lemma]{lemma:GH_nondegeneracy_1}
@@ -476,7 +476,15 @@ Gromov-Hausdorff 距離が距離であることを示す。
     したがって$d_\GH(\calX, \calY) = \inf A_{X, Y} = 0$である。
 \end{proof}
 
-非退化性のもう一方を示すため、次の補題を用意しておく。
+非退化性の左向きの含意を示す。
+
+\begin{lemma}
+    \label[lemma]{lemma:GH_nondegeneracy_2}
+    $d_\GH(\calX, \calY) = 0 \implies \calX = \calY$が成り立つ。
+\end{lemma}
+
+この補題の証明には次の補題を用いる。
+イメージとしては、"ほとんど"等長な全射の存在を示すものである。
 
 \begin{lemma}
     \label[lemma]{lemma:GH_approx_map}
@@ -577,41 +585,162 @@ Gromov-Hausdorff 距離が距離であることを示す。
     したがってこの$f_n$が求める写像である。
 \end{proof}
 
-\begin{lemma}
-    \label[lemma]{lemma:GH_nondegeneracy_2}
-    $d_\GH(\calX, \calY) = 0 \implies \calX = \calY$が成り立つ。
-\end{lemma}
-
-\begin{proof}
+\begin{proof}[\cref{lemma:GH_nondegeneracy_2}の証明]
     補題を示すためには、
     $d_\GH(\calX, \calY) = 0$とし、
     $\calX, \calY$の代表元$X, Y$をひとつずつ選んで
-    等長同型写像$f \colon X \stackrel{\sim}{\to} Y$を構成すればよい。
-    そこで、\cref{lemma:GH_approx_map}の$f_n$たちを用いて
-    求める等長同型写像$f$を構成する。
+    等長同型写像$F \colon X \stackrel{\sim}{\to} Y$を構成すればよい。
+    これは次の3ステップで行う:
+    \begin{enumerate}[label=Step \arabic*:]
+        \setlength{\leftskip}{1.5em}
+        \item \cref{lemma:GH_approx_map}を用いて、
+            $X$のある稠密部分集合から$Y$への一様連続写像$f$を構成する。
+        \item $f$の$X$上への連続拡張$F$が等長写像であることを示す。
+        \item $F$が全射、したがって等長同型であることを示す。
+    \end{enumerate}
+
+    \uline{Step 1:} \quad
+    \cref{lemma:GH_approx_map}が存在を主張する写像列
+    $(f_n)_n$をひとつ選ぶ。
     いま$X$はコンパクト距離空間だからとくに可分である。
-    すなわち、$X$のある稠密部分集合であって高々加算なものが存在する。
-    そのひとつを選んで$\{ x_k \in X \mid k \in \N \}$とおく。
+    すなわち、$X$の稠密かつ可算なある部分集合
+    $D \coloneqq \{ x_k \in X \mid k \in \N \}$
+    が存在する。
     さらに$Y$はコンパクト距離空間だから、
+    とくに点列コンパクトであり、
+    したがって
     任意の$k \in \N$に対し、
     $Y$の点列$(f_n(x_k))_{n \in \N}$は収束部分列を持つ。
     したがって対角線論法により、
-    関数列$(f_n)_{n \in \N}$のある部分列$(f_{n(j)})_{j \in \N}$が存在して、
+    写像列$(f_n)_{n \in \N}$のある部分列$(f_{n(j)})_{j \in \N}$が存在して、
     任意の$k \in \N$に対し、
     $(f_{n(j)}(x_k))_{j \in \N}$は
     $Y$内の点に収束する。
     このことを用いて写像
-    $f \colon \{ x_k \in X \mid k \in \N \} \to Y$を
+    $f \colon D \to Y$を
     $f(x_k) \coloneqq \lim_{j \to \infty} f_{n(j)}(x_k) \; (k \in \N)$
     と定める。
-    すると$f$は
-    距離空間$X$の稠密部分集合$\{ x_k \in X \mid k \in \N \}$から
+    このとき、$f$は
+    \cref{lemma:GH_approx_map}の(1)より明らかに
+    $D$上の等長写像だから、とくに$D$上一様連続である。
+
+    \uline{Step 2:} \quad
+    $Y$がコンパクト距離空間ゆえに完備距離空間であることに注意すれば、
+    $f$は
+    距離空間$X$の稠密部分集合$D$から
     完備距離空間$Y$への一様連続写像だから、
-    $X$上への連続拡張$f \colon X \to Y$が一意に存在する。
-    このとき、\cref{lemma:GH_approx_map}の(1), (2)より明らかに
-    $f$は等長かつ全射となるから、等長同型写像である。
-    よって$X \cong Y$
-    したがって$\calX = \calY$である。
+    $X$上への連続拡張$F \colon X \to Y$が一意に存在する。
+    $f$は$D$上等長で
+    $F$は$X$上連続だから、
+    $F$は$X$上等長である。
+
+    \uline{Step 3:} \quad
+    $F$が全射であることを示す。
+    すなわち$y \in Y$とし、ある$p \in X$であって
+    $F(p) = y$となるものの存在を示す。
+    いま\cref{lemma:GH_approx_map}の(2)より、
+    $X$の点列$(p_n)_{n \in \N}$であって、
+    各$n \in \N$に対し
+    $d_Y(y, f_n(p_n)) \le \frac{1}{n}$
+    をみたすものが存在する。
+    この収束部分列を改めて$(p_n)_n$とおき、
+    その極限を$p \; (\in X)$とおく。
+    示すべきことは$F(p) = y$の成立であり、
+    そのためには
+    任意の$\eps > 0$に対し
+    $d_Y(y, F(p)) < \eps$が成り立つことを示せばよい。
+    次の補助図は、
+    以下に箇条書きで述べる(i)-(vi)および(1)-(5)の関係性を
+    模式的に表したものである:
+    \begin{equation}
+        \begin{tikzcd}[every arrow/.append style={no head,no tail},row sep=huge]
+            f_N(d)
+                \ar{rr}{(2)}
+                \ar{dd}{\text{(v)}}[swap]{(3)}
+                \ar[dashed]{rd}[near start]{\text{(iii)}}
+                &&f_N(p_N)
+                    \ar{rr}{(1)}[swap]{\text{(ii)}}
+                    \ar[dashed]{rd}[near start]{\text{(iii)}}
+                &&y
+                \\
+            &d
+                \ar{rr}[swap]{\text{(vi)}}
+                \ar[bend left]{rrrr}[swap]{\text{(i)}}
+                &&p_N
+                    \ar{rr}[swap]{\text{(iv)}}
+                &&p
+                \\
+            F(d)
+                \ar{rr}{(4)}
+                \ar[dashed]{ru}
+                &&F(p_N)
+                    \ar{rr}{(5)}
+                    \ar[dashed]{ru}
+                &&F(p)
+                    \ar[dashed]{ru}
+        \end{tikzcd}
+    \end{equation}
+    いま次が成り立っていることに注意する:
+    \begin{enumerate}[label=(\roman*)]
+        \item $X$における$D$の稠密性より、
+            ある$d \in D$が存在して、
+            $d_X(p, d) < \frac{\eps}{10}$が成り立つ。
+        \item $(p_n)_n$の定め方より、
+            ある$N_1 \in \N$が存在して、
+            すべての$n \ge N_1$に対し
+            $d_Y(y, f_n(p_n)) < \frac{\eps}{5}$が成り立つ。
+        \item \cref{lemma:GH_approx_map}の(1)より、
+            ある$N_2 \ge N_1$が存在して、
+            すべての$n \ge N_2$および
+            すべての$x, x' \in X$に対し
+            $|d_X(x, x') - d_Y(f_n(x), f_n(x'))| < \frac{\eps}{10}$
+            が成り立つ。
+        \item $(p_n)_n$が$p$に収束することより、
+            ある$N_3 \ge N_2$が存在して、
+            すべての$n \ge N_3$に対し
+            $d_X(p_n, p) < \frac{\eps}{10}$が成り立つ。
+        \item $F(d) = f(d) = \lim_{j \to \infty} f_{n(j)}(d)$であることより、
+            ある$J_0 \in \N$が存在して、
+            すべての$j \ge J_0$に対し
+            $n(j) \ge N_3$かつ
+            $d_Y(F(d), f_{n(j)}(d)) < \frac{\eps}{5}$が成り立つ。
+        \item (iv)より
+            $d_X(p_N, p) < \frac{\eps}{10}$が成り立つ。
+            さらに(i)より
+            $d_X(p, d) < \frac{\eps}{10}$が成り立つ。
+            したがって
+            $d_X(d, p_N) < \frac{\eps}{5}$が成り立つ。
+    \end{enumerate}
+    以上のことを用いて$d_Y(y, F(p)) < \eps$を示す。
+    そこで$N \coloneqq n(J_0) \; (\ge N_3 \ge N_2 \ge N_1)$
+    とおくと次が成り立つ:
+    \begin{enumerate}
+        \item (ii)より
+            $d_Y(y, f_N(p_N)) < \frac{\eps}{5}$が成り立つ。
+        \item (iii)より
+            $|d_X(p_N, d) - d_Y(f_N(p_N), f_N(d))| < \frac{\eps}{10}$が成り立つ。
+            さらに(vi)より
+            $d_X(p_N, d) < \frac{\eps}{10}$が成り立つ。
+            したがって
+            $d_Y(f_N(p_N), f_N(d)) < \frac{\eps}{5}$が成り立つ。
+        \item (v)より
+            $d_Y(f_N(d), F(d)) < \frac{\eps}{5}$が成り立つ。
+        \item (vi)より$d_X(d, p_N) < \frac{\eps}{5}$が成り立つことと、
+            $F$が$X$上の等長写像であることより、
+            $d_Y(F(d), F(p_N)) < \frac{\eps}{5}$が成り立つ。
+        \item (iv)より$d_X(p_N, p) < \frac{\eps}{10} < \frac{\eps}{5}$が成り立つことと、
+            $F$が$X$上の等長写像であることより、
+            $d_Y(F(p_N), F(p)) < \frac{\eps}{5}$が成り立つ。
+    \end{enumerate}
+    したがって、三角不等式より$d_Y(y, F(p)) < \eps$が成り立つ。
+    $\eps > 0$は任意だったので、
+    $d_Y(y, F(p)) = 0$が成り立ち、
+    したがって$y = F(p)$が示された。
+    よって$F$は全射、したがって等長同型である。
+    これで Step 3 が完了した。
+
+    以上より$X \cong Y$となり、
+    したがって$\calX = \calY$となることが示された。
 \end{proof}
 
 最後に目標の定理を証明する。
