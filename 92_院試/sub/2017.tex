@@ -1,0 +1,123 @@
+\documentclass[report]{jlreq}
+\usepackage{global}
+\usepackage{./local}
+\subfiletrue
+\def\assetspath{../}
+%\makeindex
+\chead{2020}
+\begin{document}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\begin{proof}[2017 A6.]
+    \uline{(1)} \quad
+    $\dim \Ker A \neq \dim \Ker B \implies [A] \neq [B]$
+    より
+    $X = \{ [O] \} \sqcup \{ [I] \} \sqcup \{ [A] : \dim \Ker A = 1 \}$だから、
+    $\{ [A] : \dim \Ker A = 1 \}$が
+    $\R P^1$に同相であることを示せばよい。
+    \begin{description}
+        \item[claim] 集合として次のような一致が成り立つ:
+            \begin{equation}
+                \{ [A] \in X : \dim \Ker A = 1 \}
+                    =
+                        \mybrace{
+                            \mybracket{
+                                P_\theta
+                            }
+                            \in X
+                            \, \Bigg| \,
+                            P_\theta =
+                                \begin{pmatrix}
+                                    \cos^2 \theta & \cos \theta \sin \theta \\
+                                    \cos \theta \sin \theta & \sin^2 \theta
+                                \end{pmatrix}, \;
+                            \theta \in \R
+                        }
+            \end{equation}
+    \end{description}
+    \begin{innerproof}
+        「$\supset$」は明らかなので、「$\subset$」を示す。
+        各$\alpha \in X$に対し、
+        $\alpha = [A]$となる$A \in M_2(\R), \; \dim \Ker A = 1$
+        をひとつ選ぶ。
+        このとき
+        $\dim (\Ker f_A)^\perp = 2 - \dim \Ker f_A = 1$
+        ゆえに
+        $(\Ker f_A)^\perp$は
+        $\R^2$内の原点を通る直線だから、
+        ある$\theta \in \R$であって
+        $(\Ker f_A)^\perp = \R e^{i\theta}$
+        なるものが存在する。
+        このとき
+        $P_\theta$は$(\Ker f_A)^\perp$への直交射影である。
+        したがって$\Ker A = \Ker P_\theta$だから
+        $\alpha = [A] = [P_\theta]$となる。
+        これで「$\subset$」が示されて、claim の証明が完了した。
+    \end{innerproof}
+
+    あとは
+    $X' \coloneqq \{ [P_\theta] : \theta \in \R \}$
+    とおいて
+    $X' \approx \R P^1$を示せばよい。
+    まず写像$\R \to M_2(\R), \; \theta \mapsto P_\theta$は連続かつ
+    $2\pi\Z$の作用で不変だから、
+    連続写像$S^1 \to M_2(\R), \; e^{i\theta} \mapsto P_\theta$が誘導される。
+    これより連続全射
+    $S^1 \to X', \; e^{i\theta} \mapsto [P_\theta]$
+    が得られる。
+    これは
+    $\{ \pm 1 \}$の作用で不変
+    (\because \,
+        $P_{-\theta}$は$\R \up{t}(\cos(-\theta), \sin(-\theta))
+            = \R \up{t}e^{i\theta}$
+        への直交射影ゆえに$\Ker P_{-\theta} = \Ker P_\theta$)
+    だから、
+    連続全射$\R P^1 \to X', \; [e^{i\theta}]_{\text{proj}} \mapsto [P_\theta]$が誘導される。
+    ここで、この写像は単射である。
+    \begin{innerproof}
+        $\theta, \theta' \in \R$に関し、
+        $[P_\theta] = [P_{\theta'}]$ならば
+        $\Ker P_\theta = \Ker P_{\theta'}$ゆえに
+        $(\Ker P_\theta)^\perp = (\Ker P_{\theta'})^\perp$であり、
+        $e^{i\theta} \in (\Ker P_\theta)^\perp, \;
+            e^{i\theta'} \in (\Ker P_{\theta'})^\perp$
+        であることとあわせて
+        $e^{i\theta}, e^{i\theta'}$は同じ直線上にあることがわかる。
+        したがって$[e^{i\theta}]_{\text{proj}} = [e^{i\theta'}]_{\text{proj}}$である。
+    \end{innerproof}
+    コンパクト空間から Hausdorff 空間への連続全単射は同相であるから、
+    $\R P^1 \approx X'$が示された。
+
+    \uline{(2)} \quad
+    $[O] \in U \opensubset X$とすると、
+    $O \in \pi^{-1}(U) \opensubset M_2(\R)$である。
+    ここで、
+    任意の$A \in M_2(\R)$に対し、
+    ある$c > 0$であって
+    $cA \in \pi^{-1}(U)$となるものが存在することに注意すれば、
+    $[A] = [cA] \in U$
+    である。
+    したがって$U = X$である。
+
+    \uline{(3)} \quad
+    次のことが成り立つ:
+    \begin{itemize}
+        \item $\{ [O] \}$は$X$の開集合でなく、閉集合である。
+            $\{ [O] \}$を含む開集合は$X$全体のみである。
+        \item $\{ [I] \}$は$X$の開集合であり、閉集合でない。
+        \item $X'$は$X$の開集合でない。
+            $X'$を含む開集合として$X \setminus \{ [O] \}$が存在する。
+    \end{itemize}
+    したがって
+    $X$の自己同相写像は$[O], [I]$を固定する。
+    よって、
+    (1)の同相$\R P^1 \to X'$を$F$とおけば、
+    各$\varphi \in \mathrm{Homeo}(X)$に対し
+    $F^{-1} \circ (\varphi|_{X'}) \circ F \in \mathrm{Homeo}(\R P^1)$
+    を割り当てる対応が
+    全単射$\mathrm{Homeo}(X) \to \mathrm{Homeo}(\R P^1)$を与える。
+\end{proof}
+
+\end{document}

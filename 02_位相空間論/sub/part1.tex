@@ -101,7 +101,7 @@
 % ------------------------------------------------------------
 \section{近傍基}
 
-"規則的" な位相、
+"等質的"な位相、
 すなわち各点ごとに局所的な位相の様子に違いが無いような位相を扱う場合には
 近傍基の概念が有効である。
 
@@ -293,13 +293,16 @@
 \end{proof}
 
 \begin{definition}[局所同相写像]
+    $X, Y$を位相空間とする。
     連続写像$f \colon X \to Y$が
-    \term{局所同相写像}[local homeomorphism]{局所同相写像}[きょくしょどうそうしゃぞう]
+    \term{局所同相写像}[local homeomorphism]
+        {局所同相写像}[きょくしょどうそうしゃぞう]
     であるとは、
-    各$x \in X$に対し
-    $x$のある開近傍$U \opensubset X$と
-    $f(x)$のある開近傍$V \opensubset Y$が存在して
-    $f|_U$が$V$の上への同相写像となることをいう。
+    各$x \in X$に対し、
+    $x \in \exists U \opensubset X$および
+    $f(x) \in \exists V \opensubset Y$であって、
+    $f|_U$が$V$の上への同相写像となるものが
+    存在することをいう。
 \end{definition}
 
 \begin{definition}[位相的埋め込み]
@@ -504,6 +507,60 @@
 %
 % ============================================================
 \chapter{New from Old}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{始位相と終位相}
+
+\begin{definition}[始位相]
+    $X$を集合、
+    $\{ (Y_\lambda, \calO_\lambda) \}_{\lambda \in \Lambda}$を
+    位相空間の族、
+    $\{ f_\lambda \colon X \to Y_\lambda \}_{\lambda \in \Lambda}$を
+    写像の族とする。
+    $X$上の位相$\calO$であって、
+    すべての$f_\lambda$が連続となるようなもののうち
+    最も粗いものを、
+    $\{ f_\lambda \}_\lambda$による
+    $X$の
+    \term{始位相}[initial topology]
+        {始位相}[しいそう]という。
+\end{definition}
+
+\begin{definition}[終位相]
+    $X$を集合、
+    $\{ (Y_\lambda, \calO_\lambda) \}_{\lambda \in \Lambda}$を
+    位相空間の族、
+    $\{ f_\lambda \colon Y_\lambda \to X \}_{\lambda \in \Lambda}$を
+    写像の族とする。
+    $X$上の位相$\calO$であって、
+    すべての$f_\lambda$が連続となるようなもののうち
+    最も細かいものを、
+    $\{ f_\lambda \}_\lambda$による
+    $X$の
+    \term{終位相}[final topology]
+        {終位相}[しゅういそう]という。
+\end{definition}
+
+\begin{proposition}[終位相の具体的な表示]
+    $X$を集合、
+    $\{ (Y_\lambda, \calO_\lambda) \}_{\lambda \in \Lambda}$を
+    位相空間の族、
+    $\{ f_\lambda \colon Y_\lambda \to X \}_{\lambda \in \Lambda}$を
+    写像の族とする。
+    このとき、$X$の終位相$\calO$は次のように表される:
+    \begin{alignat}{1}
+        \calO = \{ U \subset X \mid
+            \forall \lambda \in \Lambda
+            \colon
+            f_\lambda^{-1}(U) \in \calO_\lambda \}.
+    \end{alignat}
+\end{proposition}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
 
 % ------------------------------------------------------------
 %

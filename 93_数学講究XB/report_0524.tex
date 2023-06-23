@@ -31,23 +31,24 @@
 本レポートでは、
 シンプレクティック多様体$(M, \omega)$において
 $C^\infty(M, \R)$が
-Poisson 括弧$\{ \cdot, \cdot \}$により
+Poisson 括弧$\{ {-}, {-} \}$により
 Lie 代数となることを証明する。
 まずいくつか用語の定義を整理しておく。
 
 \begin{definition}[シンプレクティック多様体]
-    $M$を有限次元\smooth 多様体、
+    $M$を有限次元実\smooth 多様体、
     $\omega$を$M$上の2-形式とする。
     組$(M, \omega)$が
     \termsilent{シンプレクティック多様体}であるとは、
     $\omega^n \neq 0$かつ$d\omega = 0$が成り立つことをいう。
-    ただし$\omega^n$は
-    $\omega \wedge \cdots \wedge \omega$のことである。
+    ただし$\omega^n$とは
+    $\underbrace{\omega \wedge \cdots \wedge \omega}_{\text{$n$個}}$
+    のことである。
 \end{definition}
 
+以降、$(M, \omega)$をシンプレクティック多様体とする。
+
 \begin{propdef}[\smooth 関数の Hamilton ベクトル場]
-    $(M, \omega)$をシンプレクティック多様体とする。
-    このとき、
     各$f \in C^\infty(M, \R)$に対し、
     あるベクトル場$H_f \in \mathfrak{X}(M)$がただひとつ存在して、
     任意のベクトル場$Y \in \mathfrak{X}(M)$に対して
@@ -59,11 +60,15 @@ Lie 代数となることを証明する。
 \end{propdef}
 
 \begin{proof}
-    \TODO{}
+    $\omega^n \neq 0$ゆえに$\omega$は非退化であるから、
+    写像
+    $\Gamma(TM) \to \Gamma(T^*M), \; X \mapsto \omega(X, {-})$は
+    $\smooth(M)$-加群の同型となる。
+    このことから直ちに
+    $H_f$の存在と一意性が従う。
 \end{proof}
 
 \begin{definition}[Poisson 括弧]
-    $(M, \omega)$をシンプレクティック多様体とする。
     各$f, g \in C^\infty(M, \R)$に対し、
     $f, g$の\termsilent{Poisson 括弧}$\{ f, g \} \in C^\infty(M, \R)$を
     \begin{equation}
@@ -72,16 +77,84 @@ Lie 代数となることを証明する。
     と定義する。
 \end{definition}
 
-目標の定理を示す。
+本レポートの目標の定理は次である:
 
 \begin{theorem}
-    $(M, \omega)$をシンプレクティック多様体とする。
-    このとき、
-    $C^\infty(M, \R)$は Poisson 括弧$\{ \cdot, \cdot \}$を
+    \label[theorem]{thm:main}
+    $C^\infty(M, \R)$は Poisson 括弧$\{ {-}, {-} \}$を
     括弧積として Lie 代数となる。
 \end{theorem}
 
+この定理の証明には次の補題を用いる:
+
+\begin{lemma}[Poisson 括弧と Lie 括弧の関係]
+    \label[lemma]{lemma:poisson-lie}
+    任意の$f, g \in \smooth(M, \R)$に対し
+    \begin{equation}
+        H_{\{f, g\}} = - [H_f, H_g]
+    \end{equation}
+    が成り立つ。
+\end{lemma}
+
 \begin{proof}
+    すべての$Y \in \Gamma(TM)$に対し
+    $\omega(H_{\{f, g\}}, Y) + \omega([H_f, H_g], Y) = 0$
+    が成り立つことを示せばよい。
+    まず
+    Hamilton ベクトル場および Poisson 括弧の定義より
+    \begin{alignat}{1}
+        \omega(H_{\{f, g\}}, Y)
+            &=
+                Y \{ f, g \}
+                \\
+            &=
+                Y(\omega(H_f, H_g))
+                \\
+            &=
+                Y H_g f
+    \end{alignat}
+    である。
+    一方、
+    $i_{H_g} \omega = dg$および$d\omega = 0$より
+    Cartan の公式
+    $L_{H_g} \omega = d(i_{H_g} \omega) + i_{H_g} d\omega$
+    \; ($i$は内部積)
+    の右辺は$0$となるから、
+    \begin{alignat}{1}
+        0
+            &=
+                (L_{H_g} \omega) (H_f, Y)
+                \\
+            &=
+                H_g(\omega(H_f, Y)) - \omega([H_g, H_f], Y) - \omega(H_f, [H_g, Y])
+                \\
+            &=
+                H_g Y f
+                - \omega([H_g, H_f], Y)
+                - [H_g, Y] f
+                \\
+            &=
+                - \omega([H_g, H_f], Y)
+                + Y H_g f
+                \\
+        \therefore \quad
+        \omega([H_f, H_g], Y)
+            &=
+                - \omega([H_g, H_f], Y)
+            =
+                - Y H_g f
+    \end{alignat}
+    を得る。
+    したがって
+    \begin{equation}
+        \omega(H_{\{f, g\}}, Y) + \omega([H_f, H_g], Y)
+            = 0
+    \end{equation}
+    が成り立つ。
+    よって$H_{\{f, g\}} = - [H_f, H_g]$が示された。
+\end{proof}
+
+\begin{proof}[\cref{thm:main}の証明]
     示すべきことは、Poisson 括弧が次をみたすことである:
     \begin{description}
         \item[($\R$-双線型性)]
@@ -99,7 +172,85 @@ Lie 代数となることを証明する。
             $\{ \{ f, g \}, h \} + \{ \{ g, h \}, f \} + \{ \{ h, f \}, g \} = 0$
             が成り立つ。
     \end{description}
-    \TODO{}
+
+    \uline{Step 1: $\R$-双線型性} \quad
+    $\R$-双線型性を示す。
+    まず Hamilton ベクトル場の定義より
+    \begin{alignat}{1}
+        \omega(H_{af + bg}, {-})
+            &=
+                d(af + bg)
+                \\
+            &=
+                a df + b dg
+                \\
+            &=
+                a \omega(H_f, {-}) + b \omega(H_g, {-})
+                \\
+            &=
+                \omega(aH_f + bH_g, {-})
+                \\
+        \therefore \quad
+        H_{af + bg}
+            &=
+                aH_f + bH_g
+    \end{alignat}
+    が成り立つことに注意すれば、
+    第1引数に関する線型性は
+    \begin{alignat}{1}
+        \{ af + bg, h \}
+            &=
+                \omega(H_{af + bg}, H_h)
+                \\
+            &=
+                \omega(aH_f + bH_g, H_h)
+                \\
+            &=
+                a\omega(H_f, H_h) + b\omega(H_g, H_h)
+                \\
+            &=
+                a\{ f, h \} + b\{ g, h \}
+    \end{alignat}
+    より従う。第2引数に関しても同様である。
+    よって$\R$-双線型性が示された。
+
+    \uline{Step 2: 反対称性} \quad
+    $\omega$の交代性より明らか。
+
+    \uline{Step 3: Jacobi 恒等式} \quad
+    任意の$f, g, h \in C^\infty(M, \R)$に対し
+    \begin{alignat}{1}
+        \{ \{ f, g \}, h \}
+            &=
+                \omega(H_{\{ f, g \}}, H_h)
+                \\
+            &=
+                - \omega([H_f, H_g], H_h)
+                \quad
+                (\text{\cref{lemma:poisson-lie}})
+                \\
+            &=
+                \omega(H_h, [H_f, H_g])
+                \\
+            &=
+                [H_f, H_g] h
+                \\
+            &=
+                H_f H_g h - H_g H_f h
+                \\
+            &=
+                H_f \{ h, g \} - H_g \{ h, f \}
+                \\
+            &=
+                \{ \{ h, g \}, f \} - \{ \{ h, f \}, g \}
+                \\
+            &=
+                - \{ \{ g, h \}, f \} - \{ \{ h, f \}, g \}
+                \quad
+                (\text{$\R$-双線型性および反対称性})
+    \end{alignat}
+    が成り立つから、
+    Jacobi 恒等式が示された。
 \end{proof}
 
 \end{document}

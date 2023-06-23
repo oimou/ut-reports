@@ -649,9 +649,12 @@ Gromov-Hausdorff 距離が距離であることを示す。
     そのためには
     任意の$\eps > 0$に対し
     $d_Y(y, F(p)) < \eps$が成り立つことを示せばよい。
+
     次の補助図は、
     以下に箇条書きで述べる(i)-(vi)および(1)-(5)の関係性を
-    模式的に表したものである:
+    模式的に表したものである
+    (ただし、実線は2点間の距離が上から評価されることを表し、
+    破線は$X$の点と$Y$の点のつながりを表す):
     \begin{equation}
         \begin{tikzcd}[every arrow/.append style={no head,no tail},row sep=huge]
             f_N(d)
@@ -705,10 +708,9 @@ Gromov-Hausdorff 距離が距離であることを示す。
             $n(j) \ge N_3$かつ
             $d_Y(F(d), f_{n(j)}(d)) < \frac{\eps}{5}$が成り立つ。
         \item (iv)より
-            $d_X(p_N, p) < \frac{\eps}{10}$が成り立つ。
+            $d_X(p_N, p) < \frac{\eps}{10}$が成り立つことと、
             さらに(i)より
-            $d_X(p, d) < \frac{\eps}{10}$が成り立つ。
-            したがって
+            $d_X(p, d) < \frac{\eps}{10}$が成り立つことより、
             $d_X(d, p_N) < \frac{\eps}{5}$が成り立つ。
     \end{enumerate}
     以上のことを用いて$d_Y(y, F(p)) < \eps$を示す。
@@ -718,10 +720,9 @@ Gromov-Hausdorff 距離が距離であることを示す。
         \item (ii)より
             $d_Y(y, f_N(p_N)) < \frac{\eps}{5}$が成り立つ。
         \item (iii)より
-            $|d_X(p_N, d) - d_Y(f_N(p_N), f_N(d))| < \frac{\eps}{10}$が成り立つ。
+            $|d_X(p_N, d) - d_Y(f_N(p_N), f_N(d))| < \frac{\eps}{10}$が成り立つことと、
             さらに(vi)より
-            $d_X(p_N, d) < \frac{\eps}{10}$が成り立つ。
-            したがって
+            $d_X(p_N, d) < \frac{\eps}{10}$が成り立つことより、
             $d_Y(f_N(p_N), f_N(d)) < \frac{\eps}{5}$が成り立つ。
         \item (v)より
             $d_Y(f_N(d), F(d)) < \frac{\eps}{5}$が成り立つ。

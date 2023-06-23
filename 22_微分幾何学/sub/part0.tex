@@ -477,7 +477,7 @@ Euclid 空間の幾何学的な接ベクトルの性質を一般化して定義�
 % ------------------------------------------------------------
 %
 % ------------------------------------------------------------
-\section{埋め込み、はめ込み、沈め込み}
+\section{はめ込み、埋め込み、沈め込み}
 
 本節では、写像の微分からもとの写像の性質を調べることを考える。
 微分の階数を利用した写像の分類として、
@@ -502,37 +502,32 @@ Euclid 空間の幾何学的な接ベクトルの性質を一般化して定義�
     \end{enumerate}
 \end{definition}
 
-\begin{definition}[沈め込み]
-    {\smooth}写像$f \colon M \to N$が
-    \term{沈め込み}[submersion]{沈め込み}[しずめこみ]
-    であるとは、各$p \in M$に対し$df_p$が全射であることをいう。
-\end{definition}
+上の定義からわかるように、
+はめ込みは{\smooth}写像の局所的性質で決まる一方、
+埋め込みは大域的性質にも依存する概念である。
 
 \begin{example}[単射はめ込みだが埋め込みでない例]
     \TODO{8の字曲線}
 \end{example}
 
-\subsection{普遍性}
+次の定理より、はめ込みは「局所埋め込み」とでも呼ぶべき概念であることがわかる。
 
-\begin{theorem}[埋め込みの普遍性]
-    $i \colon A \to M$を埋め込みとする。
-    このとき次が成り立つ:
-    \begin{alignat}{1}
-        &\forall \; g \colon N \to M
-            \colon \text{ {\smooth} with $g(N) \subset A$} \\
-        &\exists! \; f \colon N \to A
-            \colon \smooth
-            \quad \text{s.t.} \quad \\
-        &\quad \begin{tikzcd}[ampersand replacement=\&]
-            N \ar[dashed]{rd}[swap]{f} \ar{r}{g} \& M \\
-            \& A \ar{u}[swap]{i}
-        \end{tikzcd}
-    \end{alignat}
+\begin{theorem}[局所埋め込み定理]
+    はめ込みとは、局所的には埋め込みであることと同値である。
+    \TODO{}
 \end{theorem}
 
 \begin{proof}
     \TODO{}
 \end{proof}
+
+次に沈め込みを定義する。
+
+\begin{definition}[沈め込み]
+    {\smooth}写像$f \colon M \to N$が
+    \term{沈め込み}[submersion]{沈め込み}[しずめこみ]
+    であるとは、各$p \in M$に対し$df_p$が全射であることをいう。
+\end{definition}
 
 \begin{theorem}[沈め込みの普遍性]
     $q \colon M \to N$を全射かつ沈め込みとする。
@@ -593,20 +588,33 @@ Euclid 空間の幾何学的な接ベクトルの性質を一般化して定義�
 \begin{definition}[部分多様体]
     $M$を多様体、$S \subset M$とする。
     $S$が$M$の
-    \term{埋め込み部分多様体}[embedded submanifold]{埋め込み部分多様体}[うめこみぶぶんたようたい]
+    \term{はめ込み部分多様体}[immersed submanifold]
+        {はめ込み部分多様体}[はめこみぶぶんたようたい]
     あるいは単に
     \term{部分多様体}[submanifold]{部分多様体}[ぶぶんたようたい]
     であるとは、
-    $S$が$M$の部分空間としての位相を持ち、
-    包含写像$S \hookrightarrow M$が埋め込みであるような
-    可微分構造を持つことをいう。
+    \begin{enumerate}
+        \item $S$は ($M$の部分空間位相とは限らない) 位相を持ち、
+        \item $S$は包含写像$S \hookrightarrow M$がはめ込みであるような
+            可微分構造を持つ
+    \end{enumerate}
+    が成り立つことをいう。
     このとき、$\dim M - \dim S$を$S$の
     \term{余次元}[codimension]{余次元}[よじげん]
     という。
+    また、とくに$S$が$M$の部分空間としての位相を持つとき、
+    $S$は$M$の
+    \term{埋め込み部分多様体}[embedded submanifold]
+        {埋め込み部分多様体}[うめこみぶぶんたようたい]
+    であるという。
 \end{definition}
 
-\begin{proposition}[開部分多様体]
+\begin{example}[開部分多様体]
     \TODO{}
+\end{example}
+
+\begin{proposition}[はめ込みの像は部分多様体]
+    \TODO{cf. \url{https://math.stackexchange.com/a/3254739}}
 \end{proposition}
 
 \begin{proof}
@@ -653,6 +661,36 @@ Euclid 空間の幾何学的な接ベクトルの性質を一般化して定義�
 \begin{definition}[defining map]
     \TODO{}
 \end{definition}
+
+\begin{theorem}[はめ込み多様体への値域の制限]
+    $M, N$を多様体、
+    $S \subset N$をはめ込み部分多様体、
+    $f \colon M \to N$を{\smooth}写像とする。
+    このとき、
+    \begin{enumerate}
+        \item $f(M) \subset S$
+        \item $f$は$M$から ($N$へのではなく) $S$への写像として連続
+    \end{enumerate}
+    が成り立つならば、
+    $f \colon M \to S$は{\smooth}写像である。
+\end{theorem}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+\begin{corollary}[埋め込み多様体への値域の制限]
+    $M, N$を多様体、
+    $S \subset N$を埋め込み部分多様体、
+    $f \colon M \to N$を{\smooth}写像とする。
+    このとき、
+    \begin{enumerate}
+        \item $f(M) \subset S$
+    \end{enumerate}
+    が成り立つならば、
+    $f \colon M \to S$は{\smooth}写像である。
+    \qed
+\end{corollary}
 
 \subsection{部分多様体の接空間}
 
