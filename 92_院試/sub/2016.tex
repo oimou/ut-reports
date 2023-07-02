@@ -1,0 +1,436 @@
+\documentclass[report]{jlreq}
+\usepackage{global}
+\usepackage{./local}
+\subfiletrue
+\def\assetspath{../}
+%\makeindex
+\chead{2016}
+\begin{document}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\begin{proof}[2016 A1.]
+    \uline{(1)} \quad
+    $A_1$の階数は
+    $A_1$の$\C$上1次独立な行ベクトルの最大個数に等しい。
+    したがって、
+    $a = 0$または$a = 1$のとき$\rank A_1 = 3$であり、
+    $a \neq 0, a \neq 1$のとき$\rank A_1 = 4$である。
+
+    \uline{(2)} \quad
+    答えは$a = 1$で尽くされることを以下で示す。
+
+    まず$a = 0, 1$が必要であることを示す。
+    そこで$a \neq 0, \, a \neq 1$を仮定すると、
+    (1)より$\dim V_1 = 5 - 4 = 1$であり、
+    $\rank A_2 = 4$より$\dim V_2 = 5 - 4 = 1$であり、
+    さらに$\dim V_3 = 2$である。
+    したがって
+    $\dim (V_1 + V_2 + V_3) \le 1 + 1 + 2 = 4 < 5$となり、
+    $V_1 \oplus V_2 \oplus V_3 = \C^5$とはなりえない。
+    よって$a \neq 0, \, a \neq 1$が必要である。
+
+    $a = 0$の場合を考える。
+    各$v \in \C^5$に対し$v$の第2成分を$(v)_2$と書くことにすれば、
+    任意の$v_i \in V_i \; (i = 1, 2, 3)$に対し
+    $(v_1)_2 = (A_1 v_1)_2 = 0, \;
+        (v_2)_2 = (A_2 v_2)_2 = 0, \;
+        (v_3)_2 = 0$
+    が成り立つから、
+    $e_2 \not\in V_1 + V_2 + V_3$である。
+    よって$V_1 \oplus V_2 \oplus V_3 = \C^5$とはなりえない。
+
+    $a = 1$の場合を考える。
+    明らかに
+    $V_3 = \C \up{t}(1, 1, 0, 0, 0)$である。
+    また、$\up{t}(x_1, \dots, x_5) \in \C^5$が
+    $V_1$に属する条件は
+    \begin{alignat}{1}
+        \begin{pmatrix}
+            x_1 \\ x_2 \\ x_3 \\ x_4 \\ x_5
+        \end{pmatrix}
+            \in V_1
+            &\iff
+                \begin{pmatrix}
+                    x_1 + x_4 \\
+                    x_2 \\
+                    x_3 \\
+                    0
+                \end{pmatrix}
+                = 0
+            \iff
+                \exists \, s, t \in \C
+                \quad \text{s.t.} \quad
+                \left(
+                    \;
+                    \begin{aligned}
+                        x_1 &= s \\
+                        x_2 &= 0 \\
+                        x_3 &= 0 \\
+                        x_4 &= -s \\
+                        x_5 &= t
+                    \end{aligned}
+                \right.
+    \end{alignat}
+    となるから
+    $V_1 = \C \up{t}(1, 0, 0, -1, 0) \oplus \C \up{t}(0, 0, 0, 0, 1)$である。
+    同様にして
+    $V_2 = \C \up{t}(1, 0, 1, -1, 0) \oplus \C \up{t}(0, 1, 0, 0, 0)$
+    を得る。
+    以上の$V_1, V_2, V_3$の基底たちを並べた行列
+    $\begin{pmatrix}
+        1 & 1 & 0 & 1 & 0 \\
+        1 & 0 & 0 & -1 & 1 \\
+        0 & 0 & 0 & 1 & 0 \\
+        0 & -1 & 0 & -1 & 0 \\
+        0 & 0 & 1 & 0 & 0
+    \end{pmatrix}$
+    は行と列の基本変形により単位行列となるから階数は$5$で、
+    したがって正則である。
+    よってこの行列の列ベクトルは$\C^5$の基底であり、
+    $V_1 \oplus V_2 \oplus V_3 = \C^5$が示された。
+\end{proof}
+
+\begin{proof}[2016 A2.]
+    \uline{(1)} \quad
+    $I_n \coloneqq \int_0^{\pi / 2} (\sin x)^{2n + 1} \, dx \; (n \in \Z_{\ge 0})$とおくと、
+    $n = 0$に対しては
+    \begin{equation}
+        I_0 = \int_0^{\pi / 2} \sin x \, dx
+            = \mybrace{ - \cos x }_0^{\pi / 2}
+            = 1
+    \end{equation}
+    であり、
+    各$n \in \Z_{\ge 1}$に対しては
+    部分積分より
+    \begin{alignat}{1}
+        I_n
+            &=
+                \int_0^{\pi / 2} (\sin x)^{2n + 1} \, dx
+                \\
+            &=
+                \mybrace{
+                    - \cos x (\sin x)^{2n}
+                }_0^{\pi / 2}
+                +
+                \int_0^{\pi / 2} 2n \cos^2 x (\sin x)^{2n - 1} \, dx
+                \\
+            &=
+                2n \int_0^{\pi / 2} (1 - \sin^2 x) (\sin x)^{2n - 1} \, dx
+                \\
+            &=
+                2n I_{n - 1} - 2n I_n
+                \\
+        \therefore \quad
+        I_n
+            &=
+                \frac{2n}{2n + 1} I_{n - 1}
+    \end{alignat}
+    となる。
+    したがって
+    $I_n
+        =
+            \frac{2n}{2n + 1} I_{n - 1}
+        =
+            \cdots
+        =
+            \frac{2n}{2n + 1} \cdot \frac{2(n - 1)}{2(n - 1) + 1} \cdots \frac{2}{3}$
+    である。
+
+    \uline{(2)} \quad
+    $\sum_{n = 0}^\infty \frac{1}{(2n + 1)!}$が優級数となることを示せばよい。
+    まず、この級数が収束することは
+    $\frac{1}{(2n + 1)!} \le \frac{1}{n!} \; (n \in \Z_{\ge 0})$と
+    $\sum_{n = 0}^\infty \frac{1}{n!} = e$より従う。
+    また、各$n \ge 0$に対し
+    \begin{equation}
+        \myabs{
+            \frac{(-1)^n}{(2n + 1)!}
+            (\sin x)^{2n + 1}
+        }
+            \le
+                \frac{1}{(2n + 1)!}
+                \quad
+                (\forall x \in [0, \pi / 2])
+    \end{equation}
+    が成り立つ。
+    したがって、
+    $\sum_{n = 0}^\infty \frac{1}{(2n + 1)!}$を優級数として
+    $\sum_{n = 0}^\infty \frac{(-1)^n}{(2n + 1)!} (\sin x)^{2n + 1}$は
+    $[0, \pi / 2]$上一様収束する。
+
+    \uline{(3)} \quad
+    求める答えは$0.89$であることを示す。
+    そのためには
+    \begin{equation}
+        \myabs{
+            \int_0^{\pi / 2}
+                \sin (\sin x) \, dx
+            - 0.895
+        }
+            < 0.005
+    \end{equation}
+    の成立を示せば十分である。
+    まず所与の積分を式変形すると
+    \begin{alignat}{1}
+        \int_0^{\pi / 2} \sin (\sin x) \, dx
+            &=
+                \int_0^{\pi / 2}
+                    \sum_{n = 0}^\infty
+                        \frac{(-1)^n}{(2n + 1)!} (\sin x)^{2n + 1}
+                    \, dx
+                \\
+            &=
+                \sum_{n = 0}^\infty
+                    \frac{(-1)^n}{(2n + 1)!}
+                    \int_0^{\pi / 2} (\sin x)^{2n + 1}
+                    \, dx
+                \qquad
+                (\text{一様収束性より項別積分が可能})
+                \\
+            &=
+                \sum_{n = 0}^\infty
+                    \frac{(-1)^n}{(2n + 1)!}
+                    I_n
+    \end{alignat}
+    となる。
+    よって
+    \begin{alignat}{1}
+        \myabs{
+            \int_0^{\pi / 2}
+                \sin (\sin x) \, dx
+            -
+            0.895
+        }
+            &=
+                \myabs{
+                    \sum_{n = 0}^\infty
+                        \frac{(-1)^n}{(2n + 1)!}
+                        I_n
+                    -
+                    0.895
+                }
+                \\
+            &\le
+                \myabs{
+                    \sum_{n = 3}^\infty
+                        \frac{(-1)^n}{(2n + 1)!}
+                        I_n
+                }
+                +
+                \myabs{
+                    \myparen{
+                        I_0 - \frac{1}{3!} I_1 + \frac{1}{5!} I_2
+                    }
+                    -
+                    0.895
+                }
+                \locallabel{eq:1}
+    \end{alignat}
+    の右辺を評価すればよい。
+
+    まず\localcref{eq:1}の第1項を評価すると
+    \begin{alignat}{1}
+        \myabs{
+            \sum_{n = 3}^\infty
+                \frac{(-1)^n}{(2n + 1)!}
+                I_n
+        }
+            &\le
+                \sum_{n = 3}^\infty
+                    \frac{1}{(2n + 1)!}
+                \qquad
+                (|I_n| \le 1)
+                \\
+            &\le
+                \sum_{n = 3}^\infty
+                    \frac{1}{10^n}
+                \qquad
+                (\text{*})
+                \\
+            &=
+                \frac{1}{10^3} \frac{1}{9}
+                \\
+            &\le
+                \frac{1}{10^3}
+                \frac{1}{8}
+                \\
+            &=
+                0.00125
+    \end{alignat}
+    を得る。
+    ただし(*)の式変形は、
+    帰納法よりすべての$n \ge 3$に対し
+    $(2n + 1)! \ge 10^n$が成り立つことを用いた。
+
+    次に\localcref{eq:1}の第2項を評価すると
+    \begin{alignat}{1}
+        \myabs{
+            \myparen{
+                I_0 - \frac{1}{3!} I_1 + \frac{1}{5!} I_2
+            }
+            -
+            0.895
+        }
+            &=
+                \myabs{
+                    1 - \frac{1}{3!} \frac{2}{3} + \frac{1}{5!} \frac{4}{5} \frac{2}{3}
+                    -
+                    0.895
+                }
+                \\
+            &=
+                \myabs{
+                    \frac{105}{1000}
+                    - \frac{1}{3!} \frac{2}{3} + \frac{1}{5!} \frac{4}{5} \frac{2}{3}
+                }
+                \\
+            &=
+                \frac{3}{2^3 \cdot 3^2 \cdot 5^2}
+                \\
+            &=
+                \frac{30}{2^4 \cdot 3^2 \cdot 5^3}
+                \\
+            &<
+                \frac{36}{2^4 \cdot 3^2 \cdot 5^3}
+                \\
+            &=
+                \frac{4}{2^4 \cdot 5^3}
+                \\
+            &=
+                0.002
+    \end{alignat}
+    を得る。
+
+    以上の評価を用いて\localcref{eq:1}から
+    \begin{equation}
+        \myabs{
+            \int_0^{\pi / 2}
+                \sin (\sin x)
+                \, dx
+            -
+            0.895
+        }
+            < 0.00125 + 0.002
+            < 0.005
+    \end{equation}
+    が得られた。
+\end{proof}
+
+\begin{proof}[2016 A4.]
+    \uline{(1)} \quad
+    以下$T \in \R$は固定し、
+    $S_T \coloneqq \{ x \in X \mid g(x) \le T \}$とおいておく。
+    $X = \R^n$だから、
+    Heine-Borel の定理より、
+    $S_T$がコンパクトであることを示すには
+    $S_T$が$X$で有界かつ閉であることを示せばよい。
+
+    \uline{Step 1: $S_T$が閉であること} \quad
+    $S_T$は
+    $\R$の閉集合$(\infty, T]$の$g$による逆像であり、
+    また$g$はふたつの連続写像$d_Y({-}, y_0) \colon Y \to \R$
+    および$f \colon X \to Y$の合成ゆえに連続だから、
+    $S_T$は$X$で閉である。
+
+    \uline{Step 2: $S_T$が有界であること} \quad
+    任意の$x \in S_T$に対し
+    $d_X(x, x_0) \in T + d_Y(f(x_0), y_0)$が成り立つことを示せば十分。
+    \begin{alignat}{1}
+        d_X(x, x_0)
+            &\le
+                d_Y(f(x), f(x_0))
+                \qquad
+                (\text{問題の仮定})
+                \\
+            &\le
+                d_Y(f(x), y_0)
+                    + d_Y(f(x_0), y_0)
+                \\
+            &\le
+                g(x)
+                    + d_Y(f(x_0), y_0)
+                \\
+            &\le
+                T
+                    + d_Y(f(x_0), y_0)
+                \qquad
+                (g(x) \in S_T)
+                \\
+    \end{alignat}
+    より、$S_T$は有界である。
+
+    以上より$S_T$は$X$で有界かつ閉だから、コンパクトである。
+
+    \uline{(2)} \quad
+    $T_0 \coloneqq g(x_0)$とおくと、
+    集合$S_{T_0}$は(1)よりコンパクトであり、
+    $x_0$を含むから非空である。
+    よって連続関数$g$の$S_{T_0}$上への制限は、
+    非空コンパクト空間上の連続関数だから最小値をもつ。
+    すなわち、
+    ある$x_1 \in S_{T_0}$が存在して、
+    すべての$x \in S_{T_0}$に対し
+    $g(x) \ge g(x_1)$が成り立つ。
+    このとき$g(x_1)$は$X$上の$g$の最小値でもある。
+    実際、
+    $x \in X$に関し
+    $x \in S_{T_0}$ならば$g(x) \ge g(x_1)$であるし、
+    $x \not\in S_{T_0}$ならば
+    $g(x) > T_0 \ge g(x_1)$である。
+    よって$g$は$X$上で最小値をもつことが示された。
+\end{proof}
+
+\begin{proof}[2016 A6.]
+    求める解のひとつは
+    \begin{equation}
+        \begin{cases}
+            x(t) = (t^2 + 2t) e^{2t} \\
+            y(t) = (-2t^2 - 2t + 1) e^{2t}
+        \end{cases}
+    \end{equation}
+    であり、初期値問題の解の一意性より、これが求める解のすべてである。
+    以下に求め方を記す。
+
+    所与の方程式から$y$を消去すると
+    \begin{equation}
+        \locallabel{eq:1}
+        x'' - 4x' + 4x = 2e^{2t}
+    \end{equation}
+    を得る。
+    この斉次解は$x = c e^{2t}, \; (\text{$c$は任意定数})$である。
+    定数変化法により
+    $c$を$t$の関数とみると
+    \begin{equation}
+        x'' - 4x' + 4x = c'' e^{2t}
+    \end{equation}
+    となるから、
+    \localcref{eq:1}と比較して
+    $c'' = 2$、
+    したがって
+    $c = t^2 + c_0 t + c_1 \; (\text{$c_0, c_1$は任意定数})$を得る。
+    よって$x = (t^2 + c_0 t + c_1) e^{2t}$であるが、
+    初期条件$x(0) = 0$より
+    $c_1 = 0$だから
+    $x = (t^2 + c_0 t) e^{2t}$である。
+    所与の方程式の第1式より
+    \begin{alignat}{1}
+        y
+            &=
+                x' - 4x - e^{2t}
+                \\
+    \intertext{$x = (t^2 + c_0 t) e^{2t}$を代入して整理すると}
+            &=
+                (-2t^2 + 2(-c_0 + 1)t + c_0 - 1) e^{2t}
+    \end{alignat}
+    を得る。
+    初期条件$y(0) = 1$より
+    $c_0 = 2$を得る。
+    以上より
+    $x(t) = (t^2 + 2t) e^{2t}, \;
+        y(t) = (-2t^2 - 2t + 1) e^{2t}$
+    が得られた。
+\end{proof}
+
+\end{document}

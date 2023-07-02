@@ -4,7 +4,7 @@
 \subfiletrue
 \def\assetspath{../}
 %\makeindex
-\chead{2023/06/13}
+\chead{2023/07/04}
 \begin{document}
 
 % ============================================================
@@ -16,10 +16,31 @@
 % ------------------------------------------------------------
 \section*{振り返りと導入}
 
+前回は、指数型分布族にいくつかの構造を定め、
+Amari-Chentsov テンソルと$\alpha$-接続を定義した。
+本稿では次のことを行う:
+
 \begin{itemize}
-    \item \TODO{}
+    \item 具体例の計算 (有限集合上の full support な確率分布の族)
+    \item 具体例の計算 (正規分布族)
 \end{itemize}
 
+今回以降、次のように記法を変更する\footnote{
+    \cite{BN78}での記法によった。
+}。
+
+\begin{definition}[パラメータの空間の記法の変更]
+    可測空間$\calX$上の
+    指数型分布族$\calP$と
+    その実現$(V, T, \mu)$に対し、
+    \begin{itemize}
+        \item 自然パラメータ空間$\Theta_{(V, T, \mu)}$を
+            $\wt{\Theta}_{(V, T, \mu)}$と書くことにし、
+        \item 真パラメータ空間$\Theta_{(V, T, \mu)}^\calP$を
+            $\Theta_{(V, T, \mu)}$と書くことにする。
+    \end{itemize}
+    文脈から明らかな場合は添字を省略することがある。
+\end{definition}
 
 % ------------------------------------------------------------
 %
@@ -28,17 +49,16 @@
 
 本節では、
 有限集合上の full support な確率分布の族について、
-Fisher 計量や Amari-Chentsov テンソルなどを計算してみる。
+$\alpha$-接続に関する測地線方程式を求めてみる。
 
 \begin{settings}[有限集合上の full support な確率分布の族]
-    $\calX = \{ 1, \dots, n \} \; (n \in \Z_{\ge 1})$とし、
+    $\calX \coloneqq \{ 1, \dots, n \} \; (n \in \Z_{\ge 1})$とし、
     \begin{equation}
         \calP \coloneqq \mybrace{
-            p = \sum_{i = 1}^n p_i \delta^i
+            \sum_{i = 1}^n p_i \delta^i
             \in \calP(\calX)
             \, \Big| \,
-            0 < p_i < 1 \; (i = 1, \dots, n), \;
-            \sum_{i = 1}^n p_i = 1
+            0 < p_i < 1 \; (i = 1, \dots, n)
         }
     \end{equation}
     とおく。
@@ -51,52 +71,47 @@ Fisher 計量や Amari-Chentsov テンソルなどを計算してみる。
 まず$\calP$が開であることを確かめる。
 
 \begin{proposition}[最小次元実現の構成および$\calP$が開であることの確認]
+    \label[proposition]{prop:minimal_representation}
     ~
     \begin{enumerate}
         \item $(V, T, \mu)$を次のように定めると、
-            これは$\calP$の最小次元実現となる:
+            これは$\calP$の実現となる:
             \begin{alignat}{1}
                 &V = \R^{n - 1}, \\
                 &T \colon \calX \to V, \quad
                     k \mapsto \up{t}(\delta_{1k}, \dots, \delta_{(n - 1)k}), \\
                 &\mu = \gamma \quad (\text{数え上げ測度})
             \end{alignat}
-        \item この実現の対数分配関数$\psi \colon \Theta_{(V, T, \mu)} \to \R$は
-            \begin{equation}
-                \psi(\theta)
-                    =
-                        \log\myparen{
-                            1 + \sum_{l = 1}^{n - 1} \exp\theta^l
-                        }
-            \end{equation}
+        \item この実現の対数分配関数$\psi \colon \wt{\Theta} \to \R$は
+            $\psi(\theta)
+                =
+                    \log\myparen{
+                        1 + \sum_{l = 1}^{n - 1} \exp\theta^l
+                    }$
             となる。
-        \item 写像$P \coloneqq P_{(V, T, \mu)} \colon \Theta_{(V, T, \mu)} \to \calP$は
+        \item 写像$P \coloneqq P_{(V, T, \mu)} \colon \wt{\Theta} \to \calP$は
+            次をみたす:
             \begin{equation}
-                \theta = (\theta^1, \dots, \theta^{n - 1})
-                    \mapsto
-                        \exp\myparen{
-                            \myangle{\theta}{T(k)}
-                            -
-                            \psi(\theta)
-                        }
-                        \cdot
-                        \gamma
-                        =
+                P(\theta)
+                    =
                         \frac{
                             1
                         }{
                             1 + \sum_{l = 1}^{n - 1} \exp\theta^l
                         }
-                        \sum_{i = 1}^{n - 1}
-                            (\exp\theta^i)
-                            \delta^i
+                        \myparen{
+                            \sum_{i = 1}^{n - 1}
+                                (\exp\theta^i)
+                                \delta^i
+                                +
+                                \delta^n
+                        }
             \end{equation}
-            となる。
-        \item 次の写像$\theta$は$P$の逆写像である:
+        \item 次の写像$\theta \colon \calP \to \Theta$は$P$の逆写像である:
             \begin{alignat}{1}
                 \theta
                     \colon
-                        \calP \to \Theta_{(V, T, \mu)},
+                        \calP \to \Theta,
                     \quad
                         \sum_{i = 1}^n p_i \delta^i
                         \mapsto
@@ -104,55 +119,158 @@ Fisher 計量や Amari-Chentsov テンソルなどを計算してみる。
                             \log \frac{p_i}{p_n}
                         }_{i = 1}^{n - 1}
             \end{alignat}
-            となる。
-        \item $\calP$の$(V, T, \mu)$に関する
-            真パラメータ空間$\Theta^\calP$は
-            $\Theta^\calP = \R^{n - 1}$となり、
-            したがって$\calP$は開である。
+        \item $\Theta = \wt{\Theta} = \R^{n - 1}$が成り立つ。
+        \item $(V, T, \mu)$は最小次元実現である。
+            とくに$\calP$は開である。
     \end{enumerate}
 \end{proposition}
 
 \begin{proof}
-    \uline{Step 1: $(V, T, \mu)$が最小次元実現であること} \quad
-    条件A(3)は$T$の定義から明らか。
-    条件Bの成立は$p_i = \frac{\exp\theta^i}{\lambda(\theta)}$
-    と表せることからわかる。
+    \uline{(1)} \quad
+    実現であることはよい。
 
-    \uline{Step 2: $P$と$\theta$が互いに逆写像であること} \quad
-    \TODO{}
+    \uline{(2)} \quad
+    対数分配関数の定義より
+    \begin{alignat}{1}
+        \psi(\theta)
+            &=
+                \log \int_\calX
+                    \exp \myangle{\theta}{T(x)}
+                    \, \mu(dx)
+                \\
+            &=
+                \log \sum_{i = 1}^n
+                    \exp \myparen{
+                        \sum_{l = 1}^{n - 1}
+                            \theta^l
+                            \delta_{li}
+                    }
+                \\
+            &=
+                \log \myparen{
+                    \sum_{i = 1}^{n - 1}
+                        \exp \theta^i
+                    + 1
+                }
+    \end{alignat}
+    である。
 
-    \uline{Step 3: $\Theta^\calP = \R^{n - 1}$であること} \quad
-    \TODO{}
+    \uline{(3)} \quad
+    $P(\theta) = \exp(\myangle{\theta}{T(k)} - \psi(\theta)) \cdot \gamma$を
+    直接計算すれば得られる。
+
+    \uline{(4)} \quad
+    $P \circ \theta, \; \theta \circ P$を
+    直接計算すれば確かめられる。
+
+    \uline{(5)} \quad
+    すべての$\theta \in \R^{n - 1}$に対し
+    $\int_\calX \exp \myangle{\theta}{T(x)} \, \mu(dx)
+        = \sum_{l = 1}^{n - 1} \exp \theta^l + 1
+        < \infty$
+    が成り立つから
+    $\Theta = \R^{n - 1}$である。
+
+    \uline{(6)} \quad
+    最小次元実現の特徴づけを確かめる。
+    条件A(3)と条件Bが成り立つことから、
+    最小次元実現であることがわかる。
 \end{proof}
 
 以降、
-$\calP$には自然な多様体構造が入っているものとして扱い、
+$\calP$には自然な位相および多様体構造が入っているものとして扱い、
 $\calP$上の自然な平坦アファイン接続を$\nabla$、
 Fisher 計量を$g$とおく。
-また、$\theta \colon \calP \to \Theta^\calP$は
+また、$\theta \colon \calP \to \Theta$は
 多様体$\calP$上の座標とみなす。
 
+図形的には、$P$は
+$\R^{n - 1}$から$\R^n$内の$(n - 1)$-単体 (の内部) への微分同相写像になっている。
+
+\begin{proposition}[$\calP$の2通りの位相と多様体構造]
+    $\calP$上の位相 (resp. 多様体構造) として、
+    $\calX$上の符号付き測度全体のなす
+    ベクトル空間$\calS(\calX) \cong \R^n$の位相部分空間 (resp. 部分多様体) としての構造と、
+    指数型分布族としての自然な構造の2通りを考えられるが、
+    これらの構造は互いに一致する。
+\end{proposition}
+
+\begin{proof}
+    いずれの位相 (resp. 多様体構造) に関しても
+    写像$P \colon \wt{\Theta} \to \calP$は同相 (resp. 微分同相) 写像だからである。
+\end{proof}
+
 \begin{proposition}[Fisher 計量の成分]
-    座標$\theta$に関する
+    \label[proposition]{prop:fisher_metric_components}
+    座標$\theta = (\theta^1, \dots, \theta^{n - 1})$に関する
     Fisher 計量$g$の成分は
     \begin{equation}
-        g_{ij}
-            = p_i \delta_{ij} - p_i p_j
+        g_{ij}(p)
+            = \delta_{ij} p_i - p_i p_j
+            \qquad
+            (p \in \calP, \; i, j = 1, \ldots, n - 1)
     \end{equation}
     となる。
 \end{proposition}
 
 \begin{proof}
-    $\psi$の定める
-    $(V, T, \mu)$上の Fisher 計量を$\wt{g}$とおく。
-    $g$は定義より
-    $g = \theta^* \wt{g}$
-    をみたすから、
-    座標$\theta$に関する$g$の成分は
-    \TODO{}
+    \cref{prop:minimal_representation}の
+    $(V, T, \mu)$に関する Fisher 計量を$\wt{g}$とおくと、
+    各点$p \in \calP$に対し
+    \begin{alignat}{1}
+        g_{ij}(p)
+            &=
+                g_p \myparen{
+                    \deldel{\theta^i},
+                    \deldel{\theta^j}
+                }
+                \\
+            &=
+                (\theta^* \wt{g})_{p} \myparen{
+                    \deldel{\theta^i},
+                    \deldel{\theta^j}
+                }
+                \\
+            &=
+                \wt{g}_{\theta(p)} \myparen{
+                    d\theta \myparen{
+                        \deldel{\theta^i}
+                    },
+                    d\theta \myparen{
+                        \deldel{\theta^j}
+                    }
+                }
+                \\
+            &=
+                (\Hess \psi)_{\theta(p)} \myparen{
+                    d\theta \myparen{
+                        \deldel{\theta^i}
+                    },
+                    d\theta \myparen{
+                        \deldel{\theta^j}
+                    }
+                }
+                \\
+            &=
+                (\Var_p [T])(e^i, e^j)
+                \\
+            &=
+                E_p[(T^i - E_p[T^i])(T^j - E_p[T^j])]
+                \\
+            &=
+                \sum_{l = 1}^n
+                    (\delta_{il} - p_i)
+                    (\delta_{jl} - p_j)
+                    p_l
+                \\
+            &=
+                \delta_{ij} p_i - p_i p_j
+    \end{alignat}
+    が成り立つ。
 \end{proof}
 
 \begin{proposition}[ACテンソルの成分]
+    \label[proposition]{prop:ac_tensor_components}
     座標$\theta$に関する
     ACテンソル$S$の成分は
     \begin{equation}
@@ -162,12 +280,25 @@ Fisher 計量を$g$とおく。
                 - p_i p_j \delta_{jk}
                 - p_j p_k \delta_{ik}
                 + 2 p_i p_j p_k
+            \qquad
+            (p \in \calP, \; i, j, k = 1, \ldots, n - 1)
     \end{equation}
     となる。
 \end{proposition}
 
 \begin{proof}
-    \TODO{}
+    前回 (\url{0613_資料.pdf}) の命題1.9を用いると
+    \begin{equation}
+        S_{ijk}(p)
+            = E_p [
+                (T^i - E_p[T^i])
+                (T^j - E_p[T^j])
+                (T^k - E_p[T^k])
+            ]
+    \end{equation}
+    となるから、
+    \cref{prop:fisher_metric_components}と同様に直接計算して
+    命題の主張の等式が得られる。
 \end{proof}
 
 以降、$n = 3$の場合を考える。
@@ -178,8 +309,8 @@ Fisher 計量を$g$とおく。
     \begin{equation}
         (g_{ij})_{i, j}
             = \begin{pmatrix}
-                p_1 - p_1^2 & - p_1 p_2 \\
-                - p_2 p_1 & p_2 - p_2^2
+                p_1 (1 - p_1) & - p_1 p_2 \\
+                - p_1 p_2 & p_2 (1 - p_2)
             \end{pmatrix},
             \quad
         (g^{ij})_{i, j}
@@ -204,31 +335,31 @@ Fisher 計量を$g$とおく。
     となる。
     $A$の成分は
     \begin{alignat}{2}
-        A_{11}^1
+        A_{11}^{\hphantom{11}1}
             &=
                 1 - 2p_1,
                 \qquad
-        &A_{11}^2
+        &A_{11}^{\hphantom{11}2}
             &=
                 0
                 \\
-        A_{12}^1
+        A_{12}^{\hphantom{12}1}
             &=
-                A_{21}^1
+                A_{21}^{\hphantom{21}1}
             =
                 - p_2,
                 \qquad
-        &A_{12}^2
+        &A_{12}^{\hphantom{12}2}
             &=
-                A_{21}^2
+                A_{21}^{\hphantom{21}2}
             =
                 - p_1
                 \\
-        A_{22}^1
+        A_{22}^{\hphantom{22}1}
             &=
-                - p_1,
+                0,
                 \qquad
-        &A_{22}^2
+        &A_{22}^{\hphantom{22}2}
             &=
                 1 - 2p_2
     \end{alignat}
@@ -236,7 +367,12 @@ Fisher 計量を$g$とおく。
 \end{proposition}
 
 \begin{proof}
-    \TODO{}
+    $g$の行列表示は
+    \cref{prop:fisher_metric_components}よりわかる。
+    その逆行列は直接計算よりわかる。
+    $S$の成分は
+    \cref{prop:ac_tensor_components}よりわかる。
+    $A$の成分は直接計算よりわかる。
 \end{proof}
 
 \begin{proposition}[$n = 3$での測地線方程式]
@@ -246,22 +382,21 @@ Fisher 計量を$g$とおく。
     \begin{alignat}{1}
         \ddot{\theta^1}
             &=
-                \frac{1 - \alpha}{2}
+                - \frac{1 - \alpha}{2}
                 \myparen{
                     (1 - 2p_1) \dot{\theta^1}^2
                     - 2p_2 \dot{\theta^1} \dot{\theta^2}
-                    - p_1 \dot{\theta^2}^2
                 }
                 \\
         \ddot{\theta^2}
             &=
-                \frac{1 - \alpha}{2}
+                - \frac{1 - \alpha}{2}
                 \myparen{
                     - 2p_1 \dot{\theta^1} \dot{\theta^2}
                     + (1 - 2p_2) \dot{\theta^2}^2
                 }
     \end{alignat}
-    となる。
+    となる ($p_1, p_2$は$\theta^1, \theta^2$の関数であることに注意)。
     とくに$\alpha = 1$のとき
     \begin{equation}
         \ddot{\theta^1} = 0,
@@ -272,13 +407,18 @@ Fisher 計量を$g$とおく。
 \end{proposition}
 
 \begin{proof}
-    ${\Gamma^{(\alpha)}}_{ij}^k = \frac{1 - \alpha}{2} A_{ij}^k$
-    であることより従う。
+    測地線の方程式
+    \begin{equation}
+        \ddot{\theta^k}
+            = - \Gamma_{ij}^k \dot{\theta^i} \dot{\theta^j}
+    \end{equation}
+    に、前回 (\url{0613_資料.pdf}) の命題1.11の等式
+    ${\Gamma^{(\alpha)}}_{ij}^k = \frac{1 - \alpha}{2} A_{ij}^{\hphantom{ij}k}$
+    を代入して得られる。
 \end{proof}
 
 $\alpha \neq 1$の場合に
 上の測地線方程式を解くのは難しい(ように思う)。
-
 
 
 % ------------------------------------------------------------
@@ -286,135 +426,483 @@ $\alpha \neq 1$の場合に
 % ------------------------------------------------------------
 \section{具体例: 正規分布族}
 
-\begin{example}[正規分布族]
-    \TODO{ちゃんと書く}
-    $\calP$を$\calX = \R$上の正規分布族とし、
-    実現$(V, T, \mu)$を
-    $V = \R^2, \;
-        T(x) = (x, x^2), \;
-        \mu = \lambda$
-    とおく。
-    これは条件A, Bをみたす。
-    真パラメータ空間は
-    $\Theta^\calP = \R \times \R_{< 0}$である。
-    この実現に関する対数分配関数は
+本節では、
+正規分布族について、
+$\alpha$-接続に関する測地線方程式を求めてみる。
+
+\begin{settings}[正規分布族]
+    $\calX \coloneqq \R$とし、
     \begin{equation}
-        \psi(\theta)
-            = \frac{\mu^2}{2 \sigma^2}
-            + \log \sigma
-            + \frac{1}{2} \log 2\pi
+        \calP \coloneqq \mybrace{
+            \frac{1}{\sqrt{2 \pi \sigma^2}}
+            \exp\myparen{
+                - \frac{(x - \mu)^2}{2 \sigma^2}
+            }
+            \lambda(dx)
+            \in \calP(\calX)
+            \, \Big| \,
+            (\mu, \sigma) \in \R \times \R_{> 0}
+        }
     \end{equation}
+    とおく。
+\end{settings}
+
+\begin{proposition}[最小次元実現の構成および$\calP$が開であることの確認]
+    \label[proposition]{prop:minimal_representation}
+    ~
+    \begin{enumerate}
+        \item $(V, T, \mu)$を次のように定めると、
+            これは$\calP$の実現となる:
+            \begin{alignat}{1}
+                &V = \R^2, \\
+                &T \colon \calX \to V, \quad
+                    x \mapsto \up{t}(x, x^2), \\
+                &\mu = \lambda \quad (\text{Lebesgue 測度}).
+            \end{alignat}
+        \item この実現の対数分配関数$\psi \colon \wt{\Theta} \to \R$は
+            $\psi(\theta)
+                =
+                    - \frac{(\theta^1)^2}{8 \theta^2}
+                    - \frac{1}{2} \log (- \theta^2)
+                    + \frac{1}{2} \log \pi
+                $
+            となる。
+        \item 写像$P \coloneqq P_{(V, T, \mu)} \colon \wt{\Theta} \to \calP$は
+            次をみたす:
+            \begin{equation}
+                P(\theta)
+                    =
+                        \exp \myparen{
+                            \theta^1 x
+                            + \theta^2 x^2
+                            - \psi(\theta)
+                        }
+                        \lambda(dx)
+            \end{equation}
+        \item 次の写像$\theta \colon \calP \to \Theta$は$P$の逆写像である:
+            \begin{alignat}{1}
+                \theta
+                    \colon
+                        \calP \to \Theta,
+                    \quad
+                        p
+                        \mapsto
+                        \myparen{
+                            \frac{E_p[x]}{\Var_p[x]},
+                            - \frac{1}{2 \Var_p[x]}
+                        }
+            \end{alignat}
+        \item $\Theta = \wt{\Theta} = \R \times \R_{< 0}$が成り立つ。
+        \item $(V, T, \mu)$は最小次元実現である。
+            とくに$\calP$は開である。
+    \end{enumerate}
+\end{proposition}
+
+\begin{proof}
+    \uline{(1)} \quad
+    実現であることはよい。
+
+    \uline{(2)} \quad
+    直接計算よりわかる。
+
+    \uline{(3)} \quad
+    $P_{(V, T, \mu)}$の定義よりわかる。
+
+    \uline{(4)} \quad
+    $(\theta^1, \theta^2) \in \R \times \R_{< 0}$と
+    $(\mu, \sigma) \in \R \times \R_{> 0}$の対応に注意すれば
+    直接計算よりわかる。
+
+    \uline{(5)} \quad
+    $\theta^2 \ge 0$だと
+    $\exp\myparen{
+        \theta^1 x
+        + \theta^2 x^2
+        - \psi(\theta)
+    }$
+    は積分可能でないから
+    $\Theta \subset \wt{\Theta} \subset \R \times \R_{< 0}$
     である。
-    ただし$\theta^1 = \frac{\mu}{\sigma^2}, \;
+    逆に$\theta$の定義より明らかに
+    $\R \times \R_{< 0} \subset \Theta$である。
+    したがって
+    $\Theta = \wt{\Theta} = \R \times \R_{< 0}$である。
+
+    \uline{(6)} \quad
+    最小次元実現の特徴づけの条件A(3)と条件Bが成り立つことから、
+    最小次元実現であることがわかる。
+\end{proof}
+
+\begin{proposition}
+    Fisher 計量$g$について
+    \begin{enumerate}
+        \item 座標$(\theta^1, \theta^2)$に関する$g$の成分は
+            \begin{equation}
+                g_{ij}
+                    =
+                        \myparen{
+                            -\frac{1}{2\theta^2}
+                            d\theta^1
+                            + \frac{\theta^1}{2(\theta^2)^2}
+                            d\theta^2
+                        }
+                        d\theta^1
+                        +
+                        \myparen{
+                            \frac{\theta^1}{2(\theta^2)^2}
+                            d\theta^1
+                            + \myparen{
+                                \frac{1}{2(\theta^2)^2}
+                                - \frac{(\theta^1)^2}{2(\theta^2)^3}
+                            }
+                            d\theta^2
+                        }
+                        d\theta^2
+            \end{equation}
+            である。
+        \item 座標$(\mu, \sigma)$に関する$g$の成分は
+            \begin{equation}
+                g_{ij}
+                    =
+                        \frac{1}{\sigma^2} (d\mu)^2
+                        + \frac{2}{\sigma^2} (d\sigma)^2
+            \end{equation}
+            である。
+    \end{enumerate}
+\end{proposition}
+
+\begin{proof}
+    座標$(\theta^1, \theta^2)$と
+    座標$(\mu, \sigma)$の間の座標変換は
+    $\theta^1 = \frac{\mu}{\sigma^2}, \;
         \theta^2 = -\frac{1}{2 \sigma^2}$
-    とおいた
-    (したがって
+    および
     $\mu = -\frac{\theta^1}{2\theta^2}, \;
         \sigma = \sqrt{-\frac{1}{2\theta^2}}$
-    )。
+    である。
+    \begin{alignat}{1}
+        d\mu
+            &=
+                - \frac{1}{2\theta^2} d\theta^1
+                + \frac{\theta^1}{2(\theta^2)^2} d\theta^2,
+                \\
+        d\sigma
+            &=
+                \frac{1}{2\sqrt{2}} (-\theta^2)^{-3/2} d\theta^2,
+                \\
+        d\theta^1
+            &=
+                \frac{1}{\sigma^2} d\mu
+                - \frac{2\mu}{\sigma^3} d\sigma
+                \\
+        d\theta^2
+            &=
+                \frac{1}{\sigma^3} d\sigma
+    \end{alignat}
     よって
-    Fisher 計量$g = \Hess\psi$を計算すると
+    \begin{alignat}{1}
+        (d\theta^1)^2
+            &=
+                \frac{1}{\sigma^4} (d\mu)^2
+                - \frac{\mu}{\sigma^5} d\mu d\sigma
+                + \frac{4\mu^2}{\sigma^6} (d\sigma)^2
+                \\
+        d\theta^1 d\theta^2
+            &=
+                \frac{1}{\sigma^5} d\mu d\sigma
+                - \frac{2\mu}{\sigma^6} (d\sigma)^2
+                \\
+        (d\theta^2)^2
+            &=
+                \frac{1}{\sigma^6} (d\sigma)^2
+    \end{alignat}
+    である。
+    したがって
+    \begin{alignat}{1}
+        Dd\mu
+            &=
+                \frac{1}{(\theta^2)^2} d\theta^1 d\theta^2
+                - \frac{\theta^1}{(\theta^2)^3} (d\theta^2)^2
+                \\
+            &=
+                \frac{4}{\sigma} d\mu d\sigma,
+                \\
+        Dd\sigma
+            &=
+                \frac{3}{4\sqrt{2}} (-\theta^2)^{-5/2} (d\theta^2)^2
+                \\
+            &=
+                \frac{3}{\sigma} (d\sigma)^2
+    \end{alignat}
+    である。
+    よって
     \begin{alignat}{1}
         d\psi
             &=
                 \frac{\mu}{\sigma^2}
                 d\mu
-                + \frac{\sigma^2 - \mu^2}{\sigma^3}
+                + \myparen{
+                    - \frac{\mu^2}{\sigma^3}
+                    + \frac{1}{\sigma}
+                }
                 d\sigma
                 \\
-            &=
-                -\frac{\theta^1}{2\theta^2} d\theta^1
-                +\myparen{
-                    -\frac{1}{2\theta^2}
-                    + \frac{(\theta^1)^2}{4(\theta^2)^2}
-                }
-                d\theta^2
-                \\
         \Hess\psi
-            &= Dd\psi \\
             &=
-                \myparen{
-                    -\frac{1}{2\theta^2}
-                    d\theta^1
-                    + \frac{\theta^1}{2(\theta^2)^2}
-                    d\theta^2
+                Dd\psi
+                \\
+            &=
+                d\myparen{
+                    \frac{\mu}{\sigma^2}
                 }
-                d\theta^1
-                +
-                \myparen{
-                    \frac{\theta^1}{2(\theta^2)^2}
-                    d\theta^1
-                    + \myparen{
-                        \frac{1}{2(\theta^2)^2}
-                        - \frac{(\theta^1)^2}{2(\theta^2)^3}
-                    }
-                    d\theta^2
+                d\mu
+                + \frac{\mu}{\sigma^2} Dd\mu
+                + d\myparen{
+                    - \frac{\mu^2}{\sigma^3}
+                    + \frac{1}{\sigma}
                 }
-                d\theta^2
+                d\sigma
+                + \myparen{
+                    - \frac{\mu^2}{\sigma^3}
+                    + \frac{1}{\sigma}
+                }
+                Dd\sigma
                 \\
             &=
                 \frac{1}{\sigma^2} (d\mu)^2
                 + \frac{2}{\sigma^2} (d\sigma)^2
     \end{alignat}
-    となる。
-    ACテンソルは
-    \begin{equation}
-        ?
-    \end{equation}
-    となる。
-    Levi-Civita 接続$\nabla^{(g)}$の、
-    座標$\mu, \sigma$に関する接続係数を求めてみる
-    (自然パラメータ座標に関するものではないことに注意)。
-    \begin{alignat}{2}
-        {\Gamma^{(g)}}_{11}^1
-            = 0,
-            &\qquad
-                {\Gamma^{(g)}}_{12}^1
-                    = {\Gamma^{(g)}}_{21}^1
-                    = -\frac{1}{\sigma},
-            &&\qquad
-                {\Gamma^{(g)}}_{22}^1
-                    = 0,
-            \\
-        {\Gamma^{(g)}}_{11}^2
-            = \frac{1}{2\sigma},
-            &\qquad
-                {\Gamma^{(g)}}_{12}^2
-                    = {\Gamma^{(g)}}_{21}^2
-                    = 0,
-            &&\qquad
-                {\Gamma^{(g)}}_{22}^2
-                    = -\frac{1}{\sigma}
+    である。
+    座標変換により
+    $(\theta^1, \theta^2)$に関する$\Hess\psi$の成分も得られる。
+\end{proof}
+
+\begin{proposition}[ACテンソルの成分]
+    座標$(\mu, \sigma)$に関するACテンソル$S$の成分は
+    \begin{alignat}{1}
+        S_{111}
+            &=
+                0
+                \\
+        S_{112} = S_{121} = S_{211}
+            &=
+                \frac{2}{\sigma^3}
+                \\
+        S_{122} = S_{212} = S_{221}
+            &=
+                0
+                \\
+        S_{222}
+            &=
+                \frac{8}{\sigma^3}
     \end{alignat}
-    測地線の方程式は
+    である。
+    座標$(\mu, \sigma)$に関する$A$の成分は
+    \begin{alignat}{2}
+        A_{11}^{\hphantom{11}1}
+            &=
+                0,
+                \qquad
+        &A_{11}^{\hphantom{11}2}
+            &=
+                \frac{1}{\sigma},
+                \\
+        A_{12}^{\hphantom{12}1}
+            &=
+                A_{21}^{\hphantom{21}1}
+            =
+                \frac{2}{\sigma},
+                \qquad
+        &A_{12}^{\hphantom{12}2}
+            &=
+                A_{21}^{\hphantom{21}2}
+            =
+                0,
+                \\
+        A_{22}^{\hphantom{22}1}
+            &=
+                0,
+                \qquad
+        &A_{22}^{\hphantom{22}2}
+            &=
+                \frac{4}{\sigma}
+    \end{alignat}
+    である。
+\end{proposition}
+
+\begin{proof}
+    \begin{alignat}{1}
+        DD\psi
+            &=
+                D \myparen{
+                    \frac{1}{\sigma^2} (d\mu)^2
+                    + \frac{2}{\sigma^2} (d\sigma)^2
+                }
+                \\
+            &=
+                - \frac{2}{\sigma^3} (d\mu)^2 d\sigma
+                + \frac{1}{\sigma^2} D(d\mu)^2
+                - \frac{4}{\sigma^3} (d\sigma)^3
+                + \frac{2}{\sigma^2} D(d\sigma)^2
+    \end{alignat}
+    ここで
+    \begin{alignat}{1}
+        D(d\mu)^2
+            &=
+                2 d\mu Dd\mu
+            =
+                \frac{8}{\sigma} (d\mu)^2 d\sigma
+                \\
+        D(d\sigma)^2
+            &=
+                2 d\sigma Dd\sigma
+            =
+                \frac{6}{\sigma} (d\sigma)^3
+    \end{alignat}
+    だから
+    \begin{equation}
+        DDd\psi
+            =
+                \frac{6}{\sigma^3} (d\mu)^2 d\sigma
+                + \frac{8}{\sigma^3} (d\sigma)^3
+    \end{equation}
+    である。
+    これより命題の主張の式が得られる。
+    $A$の成分は直接計算より得られる。
+\end{proof}
+
+\begin{proposition}[接続係数]
+    ~
+    \begin{enumerate}
+        \item 座標$(\mu, \sigma)$に関する
+            $\Gamma^g$の成分は
+            \begin{alignat}{2}
+                {\Gamma^{g}}_{11}^1
+                    = 0,
+                    &\qquad
+                        {\Gamma^{g}}_{12}^1
+                            = {\Gamma^{g}}_{21}^1
+                            = -\frac{1}{\sigma},
+                    &&\qquad
+                        {\Gamma^{g}}_{22}^1
+                            = 0,
+                    \\
+                {\Gamma^{g}}_{11}^2
+                    = \frac{1}{2\sigma},
+                    &\qquad
+                        {\Gamma^{g}}_{12}^2
+                            = {\Gamma^{g}}_{21}^2
+                            = 0,
+                    &&\qquad
+                        {\Gamma^{g}}_{22}^2
+                            = -\frac{1}{\sigma}
+            \end{alignat}
+            である。
+        \item 座標$(\mu, \sigma)$に関する
+            $\Gamma^{(\alpha)} \; (\alpha \in \R)$の成分は
+            \begin{alignat}{2}
+                {\Gamma^{(\alpha)}}_{11}^1
+                    = 0,
+                    &\qquad
+                        {\Gamma^{(\alpha)}}_{12}^1
+                            = {\Gamma^{(\alpha)}}_{21}^1
+                            = - \frac{1 + \alpha}{\sigma},
+                    &&\qquad
+                        {\Gamma^{(\alpha)}}_{22}^1
+                            = 0,
+                    \\
+                {\Gamma^{(\alpha)}}_{11}^2
+                    = \frac{1 - \alpha}{2 \sigma},
+                    &\qquad
+                        {\Gamma^{(\alpha)}}_{12}^2
+                            = {\Gamma^{(\alpha)}}_{21}^2
+                            = 0,
+                    &&\qquad
+                        {\Gamma^{(\alpha)}}_{22}^2
+                            = - \frac{1 + 2\alpha}{\sigma}
+            \end{alignat}
+            である。
+    \end{enumerate}
+\end{proposition}
+
+\begin{proof}
+    $\Gamma^g$は
+    ${\Gamma^g}_{ij}^k
+        = \frac{1}{2} g^{kl} \myparen{
+            \partial_i g_{jl}
+            + \partial_j g_{li}
+            - \partial_l g_{ij}
+        }$
+    を直接計算することで得られる。
+    $\Gamma^{(\alpha)}$は
+    ${\Gamma^{(\alpha)}}_{ij}^k
+        = {\Gamma^g}_{ij}^k - \frac{\alpha}{2} A_{ij}^{\hphantom{ij}k}$
+    より得られる。
+\end{proof}
+
+\begin{proposition}[測地線方程式]
+    $(\mu, \sigma)$座標に関する$\nabla^{(\alpha)}$-測地線の方程式は
     \begin{equation}
         \begin{cases}
-            x'' - \frac{2}{y} x' y' = 0 \\
-            y'' + \frac{1}{2y} (x')^2 - \frac{1}{y} (y')^2 = 0
+            \ddot{\mu}
+                - \frac{2 (1 + \alpha)}{\sigma} \dot{\mu} \dot{\sigma}
+                = 0,
+                \\
+            \ddot{\sigma}
+                + \frac{1 - \alpha}{2 \sigma} \dot{\mu}^2
+                - \frac{1 + 2 \alpha}{\sigma} \dot{\sigma}^2
+                = 0
         \end{cases}
     \end{equation}
     である。
-    これを直接解くのは少し大変である。
-    その代わりに、
-    既知の Riemann 多様体との間の等長同型を利用して測地線を求める。
-    $(\Theta, g)$は、
-    上半平面$H$に計量
-    $\breve{g} = \frac{(dx)^2 + (dy)^2}{2y^2}$
-    を入れた Riemann 多様体との間に
-    等長同型$(\Theta, g) \to (H, \breve{g}), \;
-        (x, y) \mapsto (x, \sqrt{2}y)$
-    を持つ。
-    Levi-Civita 接続に関する測地線は
-    等長同型で保たれるから、
-    $(H, \breve{g})$の測地線を求めればよい。
-    $(H, \breve{g})$の測地線は、
-    $y$軸に平行な直線と
-    $x$軸上に中心を持つ半円で尽くされることが知られている。
-    これらを等長同型で写して、
-    $(\Theta, g)$の測地線として
-    $y$軸に平行な直線と
-    $x$軸上に長軸を持つ半楕円が得られる。
-\end{example}
+    とくに$\alpha = 0$のとき
+    \begin{equation}
+        \begin{cases}
+            \ddot{\mu}
+                - \frac{2}{\sigma} \dot{\mu} \dot{\sigma}
+                = 0,
+                \\
+            \ddot{\sigma}
+                + \frac{1}{2 \sigma} \dot{\mu}^2
+                - \frac{1}{\sigma} \dot{\sigma}^2
+                = 0
+        \end{cases}
+    \end{equation}
+    である。
+\end{proposition}
+
+\begin{proof}
+    測地線の方程式
+    「$\ddot{x^k} = - {\Gamma^k}_{ij} \dot{x^i} \dot{x^j}$」
+    に接続係数を代入して得られる。
+\end{proof}
+
+\begin{fact}
+    $\H \coloneqq \R \times \R_{> 0}$とし、
+    $\breve{g}$を$\H$上の双曲計量とする。
+    このとき、
+    写像$f \colon \bbH \to \calP, \; (x, y) \to (x, \sqrt{2} y)$は
+    $(\bbH, \breve{g})$から$(\calP, g)$への等長同型写像である。
+    \qed
+\end{fact}
+
+\begin{fact}
+    局所等長同型写像は測地線を保つ。
+    \qed
+\end{fact}
+
+\begin{fact}
+    $\bbH$の測地線は、
+    $x$軸上に中心を持つ円弧または
+    $y$軸に平行な直線である。
+    \qed
+\end{fact}
+
+\begin{proposition}
+    $\bbH$の測地線は、
+    長軸が$x$軸に重なる$\text{長軸}:\text{短軸} = 2:1$の楕円または
+    $y$軸に平行な直線である。
+\end{proposition}
 
 
 % ------------------------------------------------------------
@@ -438,6 +926,24 @@ $\alpha \neq 1$の場合に
     \bibliographystyle{amsalpha}
     \bibliography{./bibliography,../../mybibliography}
 }
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\newpage
+\appendix
+\renewcommand\thesection{\Alph{section}}
+\setcounter{section}{0}
+\section{付録}
+
+% show geodesics_1.png
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.9\linewidth]{{\assetspath}/sub/geodesics_1.png}
+    \caption{$\alpha$を変化させたときの$\nabla^{\alpha}$-測地線の様子}
+    \label{fig:geodesics_1}
+\end{figure}
+
 
 
 \end{document}
