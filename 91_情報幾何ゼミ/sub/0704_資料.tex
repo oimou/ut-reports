@@ -105,7 +105,7 @@ $\alpha$-接続に関する測地線方程式を求めてみる。
                                 \delta^n
                         }
             \end{equation}
-        \item $\Theta = \wt{\Theta} = V$が成り立つ。
+        \item $\Theta = \wt{\Theta} = V^\vee$が成り立つ。
         \item 次の写像$\theta \colon \calP \to \Theta$は$P$の逆写像である:
             \begin{alignat}{1}
                 \theta
@@ -128,7 +128,7 @@ $\alpha$-接続に関する測地線方程式を求めてみる。
 \begin{proof}
     \uline{(1)} \quad
     $(V, T, \gamma)$が
-    実現であることは\url{0425_コメント.pdf}演習問題0.1で確かめた。
+    実現であることは\url{0425_コメント.pdf}演習問題0.1に記した。
 
     \uline{(2)} \quad
     対数分配関数の定義より
@@ -136,15 +136,15 @@ $\alpha$-接続に関する測地線方程式を求めてみる。
         \psi(\theta)
             &=
                 \log \int_\calX
-                    \exp \myangle{\theta}{T(x)}
-                    \, \gamma(dx)
+                    \exp \myangle{\theta}{T(k)}
+                    \, \gamma(dk)
                 \\
             &=
                 \log \sum_{i = 1}^n
                     \exp \myparen{
-                        \sum_{l = 1}^{n - 1}
-                            \theta^l
-                            \delta_{li}
+                        \sum_{j = 1}^{n - 1}
+                            \theta^j
+                            \delta_{ji}
                     }
                 \\
             &=
@@ -157,17 +157,48 @@ $\alpha$-接続に関する測地線方程式を求めてみる。
     である。
 
     \uline{(3)} \quad
-    $P$の定義
-    $P(\theta) = \exp(\myangle{\theta}{T(k)} - \psi(\theta)) \gamma(dk)$を
-    直接計算すれば確かめられる。
+    $P$の定義より
+    \begin{alignat}{1}
+        P(\theta)
+            &=
+                \exp(\myangle{\theta}{T(k)} - \psi(\theta)) \gamma
+                \\
+            &=
+                \frac{
+                    1
+                }{
+                    1 + \sum_{i = 1}^{n - 1} \exp\theta^i
+                }
+                \exp \myparen{
+                    \sum_{i = 1}^{n - 1}
+                        \theta^i
+                        \delta_{ik}
+                }
+                \gamma
+                \\
+            &=
+                \frac{
+                    1
+                }{
+                    1 + \sum_{i = 1}^{n - 1} \exp\theta^i
+                }
+                \myparen{
+                    \sum_{i = 1}^{n - 1}
+                        (\exp\theta^i)
+                        \delta^i
+                        +
+                        \delta^n
+                }
+    \end{alignat}
+    である。
 
     \uline{(4)} \quad
     可積分性を考えると
-    明らかに$\wt{\Theta} = V$である。
+    明らかに$\wt{\Theta} = V^\vee$である。
     また$P$が(3)のように表せることから
     $P(\wt{\Theta}) \subset \calP$がわかる。
-    したがって$V = \wt{\Theta} \subset P^{-1}(\calP) = \Theta$である。
-    よって$\Theta = \wt{\Theta} = V$である。
+    したがって$V^\vee = \wt{\Theta} \subset P^{-1}(\calP) = \Theta$である。
+    よって$\Theta = \wt{\Theta} = V^\vee$である。
 
     \uline{(5)} \quad
     $P \circ \theta, \; \theta \circ P$を
@@ -177,33 +208,32 @@ $\alpha$-接続に関する測地線方程式を求めてみる。
     最小次元実現の特徴づけを確かめればよい。
     条件A(3)が成り立つことは、
     いま$V$の任意のアファイン部分空間に対し
-    「$T(x) \in W \; \text{$\mu$-a.e.$x$}$」
+    「$T(x) \in W \; \text{$\gamma$-a.e.$x$}$」
     と
     「$T(x) \in W \; \text{$\forall x$}$」
     が同値であることから明らか。
     条件Bが成り立つことは
-    $\Theta = V$よりわかる。
+    $\Theta = V^\vee$よりわかる。
 \end{proof}
 
 以降、
 $\calP$には自然な位相および多様体構造が入っているものとして扱い、
 $\calP$上の自然な平坦アファイン接続を$\nabla$、
-Fisher 計量を$g$とおく。
+Fisher 計量を$g$、
+$(0, 3), (1, 2)$型の Amari-Chentsov テンソルを
+それぞれ$S, A$とおく。
 また、$\theta \colon \calP \to \Theta$は
-多様体$\calP$上の座標とみなす。
+多様体$\calP$の座標とみなす。
 
-図形的には、$P$は
-$\R^{n - 1}$から$\R^n$内の$(n - 1)$-単体 (の内部) への微分同相写像になっている。
-
-\begin{remark}[$\calP$の2通りの位相と多様体構造]
-    $\calP$上の位相 (resp. 多様体構造) として、
+\begin{remark}[$\calP$の2通りの位相 \& 多様体構造]
+    $\calP$上の位相 \& 多様体構造として、
     $\calX$上の符号付き測度全体のなす
-    ベクトル空間$\calS(\calX) \cong \R^n$の位相部分空間 (resp. 部分多様体) としてのものと、
+    ベクトル空間$\calS(\calX) \cong \R^n$の部分多様体としてのものと、
     指数型分布族としての自然なものの2通りを考えられるが、
     これらは互いに一致する。
     なぜならば、
-    いずれの位相 (resp. 多様体構造) に関しても
-    写像$\theta \colon \calP \to \Theta$は同相 (resp. 微分同相) 写像だからである。
+    いずれの位相 \& 多様体構造に関しても
+    写像$\theta \colon \calP \to \Theta$は微分同相写像だからである。
 \end{remark}
 
 \begin{proposition}[Fisher 計量の成分]
@@ -220,43 +250,11 @@ $\R^{n - 1}$から$\R^n$内の$(n - 1)$-単体 (の内部) への微分同相写
 \end{proposition}
 
 \begin{proof}
-    \cref{prop:minimal_representation}の
-    $(V, T, \gamma)$に関する Fisher 計量を$\wt{g}$とおくと、
-    各点$p \in \calP$に対し
+    微分同相写像$\theta$により
+    $g$を$\Theta$上のテンソル場とみなして計算すれば、
+    各$p \in \calP$に対し
     \begin{alignat}{1}
         g_{ij}(p)
-            &=
-                g_p \myparen{
-                    \deldel{\theta^i},
-                    \deldel{\theta^j}
-                }
-                \\
-            &=
-                (\theta^* \wt{g})_{p} \myparen{
-                    \deldel{\theta^i},
-                    \deldel{\theta^j}
-                }
-                \\
-            &=
-                \wt{g}_{\theta(p)} \myparen{
-                    d\theta \myparen{
-                        \deldel{\theta^i}
-                    },
-                    d\theta \myparen{
-                        \deldel{\theta^j}
-                    }
-                }
-                \\
-            &=
-                (\Hess \psi)_{\theta(p)} \myparen{
-                    d\theta \myparen{
-                        \deldel{\theta^i}
-                    },
-                    d\theta \myparen{
-                        \deldel{\theta^j}
-                    }
-                }
-                \\
             &=
                 (\Var_p [T])(e^i, e^j)
                 \\
@@ -264,10 +262,10 @@ $\R^{n - 1}$から$\R^n$内の$(n - 1)$-単体 (の内部) への微分同相写
                 E_p[(T^i - E_p[T^i])(T^j - E_p[T^j])]
                 \\
             &=
-                \sum_{l = 1}^n
-                    (\delta_{il} - p_i)
-                    (\delta_{jl} - p_j)
-                    p_l
+                \sum_{k = 1}^n
+                    (\delta_{ik} - p_i)
+                    (\delta_{jk} - p_j)
+                    p_k
                 \\
             &=
                 \delta_{ij} p_i - p_i p_j
@@ -280,7 +278,7 @@ $\R^{n - 1}$から$\R^n$内の$(n - 1)$-単体 (の内部) への微分同相写
     座標$\theta$に関する
     ACテンソル$S$の成分は
     \begin{equation}
-        S_{ijk}
+        S_{ijk}(p)
             = p_i \delta_{ij} \delta_{jk}
                 - p_i p_k \delta_{ij}
                 - p_i p_j \delta_{jk}
@@ -421,7 +419,7 @@ $\R^{n - 1}$から$\R^n$内の$(n - 1)$-単体 (の内部) への微分同相写
                     \myparen{
                         1 - \frac{2 \exp \theta^1}{1 + \exp \theta^1 + \exp \theta^2}
                     }
-                    \dot{\theta^1}^2
+                    (\dot{\theta^1})^2
                     -
                     \frac{2 \exp \theta^2}{1 + \exp \theta^1 + \exp \theta^2}
                     \dot{\theta^1} \dot{\theta^2}
@@ -437,7 +435,7 @@ $\R^{n - 1}$から$\R^n$内の$(n - 1)$-単体 (の内部) への微分同相写
                     + \myparen{
                         1 - \frac{2 \exp \theta^2}{1 + \exp \theta^1 + \exp \theta^2}
                     }
-                    \dot{\theta^2}^2
+                    (\dot{\theta^2})^2
                 }
     \end{alignat}
     となる。
@@ -612,42 +610,31 @@ $\alpha$-接続に関する測地線方程式を求めてみる。
     最小次元実現であることがわかる。
 \end{proof}
 
+以降、
+$\calP$には自然な位相および多様体構造が入っているものとして扱い、
+$\calP$上の自然な平坦アファイン接続を$\nabla$、
+Fisher 計量を$g$、
+$(0, 3), (1, 2)$型の Amari-Chentsov テンソルを
+それぞれ$S, A$とおく。
+また、$\theta \colon \calP \to \Theta$は
+多様体$\calP$の座標とみなす。
+
 \begin{proposition}
-    Fisher 計量$g$について
-    \begin{enumerate}
-        \item 座標$(\theta^1, \theta^2)$に関する$g$の成分は
-            \begin{equation}
-                g_{ij}
-                    =
-                        \myparen{
-                            -\frac{1}{2\theta^2}
-                            d\theta^1
-                            + \frac{\theta^1}{2(\theta^2)^2}
-                            d\theta^2
-                        }
-                        d\theta^1
-                        +
-                        \myparen{
-                            \frac{\theta^1}{2(\theta^2)^2}
-                            d\theta^1
-                            + \myparen{
-                                \frac{1}{2(\theta^2)^2}
-                                - \frac{(\theta^1)^2}{2(\theta^2)^3}
-                            }
-                            d\theta^2
-                        }
-                        d\theta^2
-            \end{equation}
-            である。
-        \item 座標$(\mu, \sigma)$に関する$g$の成分は
-            \begin{equation}
-                g_{ij}
-                    =
-                        \frac{1}{\sigma^2} (d\mu)^2
-                        + \frac{2}{\sigma^2} (d\sigma)^2
-            \end{equation}
-            である。
-    \end{enumerate}
+    座標$(\mu, \sigma)$に関する$g$の行列表示は
+    \begin{equation}
+        (g_{ij})_{i, j}
+            = \begin{pmatrix}
+                \frac{1}{\sigma^2} & 0 \\
+                0 & \frac{2}{\sigma^2}
+            \end{pmatrix},
+            \qquad
+        (g^{ij})_{i, j}
+            = \begin{pmatrix}
+                \sigma^2 & 0 \\
+                0 & \frac{\sigma^2}{2}
+            \end{pmatrix}
+    \end{equation}
+    となる。
 \end{proposition}
 
 \begin{proof}
@@ -705,15 +692,13 @@ $\alpha$-接続に関する測地線方程式を求めてみる。
             &=
                 \frac{1}{(\theta^2)^2} d\theta^1 d\theta^2
                 - \frac{\theta^1}{(\theta^2)^3} (d\theta^2)^2
-                \\
-            &=
+            =
                 \frac{4}{\sigma} d\mu d\sigma,
                 \\
         Dd\sigma
             &=
                 \frac{3}{4\sqrt{2}} (-\theta^2)^{-5/2} (d\theta^2)^2
-                \\
-            &=
+            =
                 \frac{3}{\sigma} (d\sigma)^2
     \end{alignat}
     である。
@@ -755,8 +740,7 @@ $\alpha$-接続に関する測地線方程式を求めてみる。
                 + \frac{2}{\sigma^2} (d\sigma)^2
     \end{alignat}
     である。
-    座標変換により
-    $(\theta^1, \theta^2)$に関する$\Hess\psi$の成分も得られる。
+    これより命題の主張が従う。
 \end{proof}
 
 \begin{proposition}[ACテンソルの成分]
@@ -853,14 +837,16 @@ $\alpha$-接続に関する測地線方程式を求めてみる。
     \end{equation}
     である。
     これより命題の主張の式が得られる。
-    $A$の成分は直接計算より得られる。
+    $A$の成分は
+    「$A_{ij}^{\hphantom{ij}k} = g^{kl} S_{ijl}$」
+    を用いて直接計算より得られる。
 \end{proof}
 
 \begin{proposition}[接続係数]
     ~
     \begin{enumerate}
         \item 座標$(\mu, \sigma)$に関する
-            $\Gamma^g$の成分は
+            $\nabla^g$の接続係数は
             \begin{alignat}{2}
                 {\Gamma^{g}}_{11}^1
                     = 0,
@@ -884,7 +870,7 @@ $\alpha$-接続に関する測地線方程式を求めてみる。
             \end{alignat}
             である。
         \item 座標$(\mu, \sigma)$に関する
-            $\Gamma^{(\alpha)} \; (\alpha \in \R)$の成分は
+            $\nabla^{(\alpha)}$の接続係数は
             \begin{alignat}{2}
                 {\Gamma^{(\alpha)}}_{11}^1
                     = 0,
@@ -958,7 +944,7 @@ $\alpha$-接続に関する測地線方程式を求めてみる。
 
 \begin{proof}
     測地線の方程式
-    「$\ddot{x^k} = - {\Gamma^k}_{ij} \dot{x^i} \dot{x^j}$」
+    「$\ddot{x^k} = - {\Gamma}_{ij}^k \dot{x^i} \dot{x^j}$」
     に接続係数を代入して得られる。
 \end{proof}
 
@@ -971,13 +957,15 @@ $\alpha$-接続に関する測地線方程式を求めてみる。
         }^2
             + y^2 = r^2
             \qquad
-            (x_0 \in R, \; r \in \R_{> 0})
+            (x_0 \in \R, \; r \in \R_{> 0})
     \end{equation}
     の一部または
     $y$軸に平行な直線の一部である。
 \end{proposition}
 
-\begin{proof}
+\begin{proof}[証明\footnote{
+    証明の流れは\cite[Chap.3 14.4]{Tu17}を参考にした。
+}]
     測地線の方程式
     \begin{alignat}{1}
         \ddot{\mu}

@@ -76,6 +76,7 @@
     \newtheorem*{proposition*}{命題}
     \newtheorem{propdef}[theorem]{命題-定義}
     \newtheorem*{propdef*}{命題-定義}
+    \newtheorem{axiom}[theorem]{公理}
     \newtheorem{lemma}[theorem]{補題}
     \newtheorem*{lemma*}{補題}
     \newtheorem{fact}[theorem]{事実}
@@ -176,6 +177,11 @@
         borderline west={1pt}{1em}{BrickRed},
         colback=BrickRed!3!
     }
+    \tcolorboxenvironment{axiom}{
+        mytcb,
+        borderline west={1pt}{1em}{BrickRed},
+        colback=BrickRed!3!
+    }
     \tcolorboxenvironment{remark}{
         mytcb,
         borderline west={1pt}{1em}{Dandelion},
@@ -263,6 +269,7 @@
     \crefname{fact}{事実}{事実}
     \crefname{proposition}{命題}{命題}
     \crefname{propdef}{命題-定義}{命題-定義}
+    \crefname{axiom}{公理}{公理}
     \crefname{corollary}{系}{系}
     \crefname{example}{例}{例}
     \crefname{definition}{定義}{定義}

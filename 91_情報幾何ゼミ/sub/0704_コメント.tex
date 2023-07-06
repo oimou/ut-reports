@@ -1,0 +1,85 @@
+\documentclass[report]{jlreq}
+\usepackage{global}
+\usepackage{./local}
+\subfiletrue
+\def\assetspath{../}
+%\makeindex
+\chead{2023/07/04}
+\begin{document}
+
+% ============================================================
+%
+% ============================================================
+
+発表中にコメントがあった事柄を整理する。
+
+\begin{axiom}[分出公理 (axiom schema of specification)]
+    $x$を自由変項にもつ任意の論理式$\phi(x)$に対し
+    \begin{equation}
+        \forall x
+        \exists y
+        \forall z
+        \mybracket{
+            z \in y
+            \leftrightarrow
+            z \in x \land \phi(z)
+        }.
+    \end{equation}
+    この公理により、
+    $x$を自由変項にもつ任意の論理式$\phi(x)$と
+    任意の集合$A$に対し、
+    $\phi(a)$を満たす元$a \in A$全体の集合がただひとつ存在する。
+    これを$\{ a \in A \mid \phi(a) \}$と書く。
+\end{axiom}
+
+\begin{axiom}[置換公理 (axiom schema of replacement)]
+    \TODO{
+        $\phi(x, y)$を1変項関数論理式とする。
+        任意の集合$A$に対し、$A$の元$a$の$\phi$による
+        $\llangle\text{像}\rrangle$であるような
+        $z$の全体は集合である。
+    }
+\end{axiom}
+
+\begin{proposition}
+    有限集合上の full support な確率分布の族について、
+    $n = 3$のとき、
+    $\nabla^{(\alpha)}$のスカラー曲率$S^{(\alpha)} \; (\alpha \in \R)$は
+    \begin{equation}
+        S^{(\alpha)}(p)
+            =
+                \frac{1 - \alpha}{p_3} \myparen{
+                    - 2(p_1^2 + p_2^2)
+                    + 3(p_1 + p_2)
+                    - 2
+                }
+            =
+                - \frac{2(1 - \alpha)}{p_3} \myparen{
+                    (p_1 - 3/4)^2
+                    + (p_2 - 3/4)^2
+                    - 1/8
+                }
+    \end{equation}
+    をみたす。
+    さらに、すべての$p \in \calP$に対し
+    \begin{equation}
+        \sgn S^{(\alpha)}(p)
+            = \begin{cases}
+                +1 & \alpha > 1 \\
+                0  & \alpha = 1 \\
+                -1 & \alpha < 1
+            \end{cases}
+    \end{equation}
+    が成り立つ。
+\end{proposition}
+
+\begin{proof}
+    スカラー曲率が命題の主張の式で表せることは直接計算によりわかる。
+    さらに$0 < p_1 < 1, \; 0 < p_2 < 1, \; 0 < p_1 + p_2 < 1$より
+    $(p_1 - 3/4)^2 + (p_2 - 3/4)^2 - 1/8 > 0$だから、
+    $S^{(\alpha)}(p)$の符号は命題の主張のようになる。
+\end{proof}
+
+
+
+\end{document}
