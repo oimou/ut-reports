@@ -44,40 +44,33 @@
 \begin{proposition}
     有限集合上の full support な確率分布の族について、
     $n = 3$のとき、
-    $\nabla^{(\alpha)}$のスカラー曲率$S^{(\alpha)} \; (\alpha \in \R)$は
+    $\nabla^{(\alpha)}$の
+    Ricci 曲率テンソル$\Ric^{(\alpha)}$の
+    $(\mu, \sigma)$-座標に関する成分は
+    \begin{alignat}{1}
+        \Ric^{(\alpha)}_{11}
+            =
+                \frac{p_1 (1 - p_1) (1 - a^2)}{2},
+                \qquad
+        \Ric^{(\alpha)}_{12} = \Ric^{(\alpha)}_{12}
+            =
+                \frac{p_1 p_2 (1 - a^2)}{2},
+                \qquad
+        \Ric^{(\alpha)}_{22}
+            =
+                \frac{p_2 (1 - p_2) (1 - a^2)}{2}
+    \end{alignat}
+    をみたし、
+    $g$に関するスカラー曲率$S^{(\alpha)} \; (\alpha \in \R)$は
     \begin{equation}
         S^{(\alpha)}(p)
-            =
-                \frac{1 - \alpha}{p_3} \myparen{
-                    - 2(p_1^2 + p_2^2)
-                    + 3(p_1 + p_2)
-                    - 2
-                }
-            =
-                - \frac{2(1 - \alpha)}{p_3} \myparen{
-                    (p_1 - 3/4)^2
-                    + (p_2 - 3/4)^2
-                    - 1/8
-                }
+            = 1 - a^2
     \end{equation}
     をみたす。
-    さらに、すべての$p \in \calP$に対し
-    \begin{equation}
-        \sgn S^{(\alpha)}(p)
-            = \begin{cases}
-                +1 & \alpha > 1 \\
-                0  & \alpha = 1 \\
-                -1 & \alpha < 1
-            \end{cases}
-    \end{equation}
-    が成り立つ。
 \end{proposition}
 
 \begin{proof}
-    スカラー曲率が命題の主張の式で表せることは直接計算によりわかる。
-    さらに$0 < p_1 < 1, \; 0 < p_2 < 1, \; 0 < p_1 + p_2 < 1$より
-    $(p_1 - 3/4)^2 + (p_2 - 3/4)^2 - 1/8 > 0$だから、
-    $S^{(\alpha)}(p)$の符号は命題の主張のようになる。
+    直接計算によりわかる。
 \end{proof}
 
 

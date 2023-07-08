@@ -19,8 +19,9 @@
 前回は指数型分布族の具体例の計算を行った。
 本稿では次のことを行う:
 \begin{itemize}
-    \item 一般化を念頭に置きながら、指数型分布族の双対構造の性質を整理する！！！
-    \item \TODO{}
+    \item 双対構造を定義し、とくに$\alpha$-接続の性質を調べる。
+    \item Legendre 変換を定義する。
+    \item 指数型分布族の期待値パラメータを定義する。
 \end{itemize}
 
 % ------------------------------------------------------------
@@ -30,13 +31,12 @@
 
 \subsection{一般の多様体の場合}
 
-\begin{definition}[双対接続]
-    $(M, g)$を Riemann 多様体、
-    $\nabla, \nabla'$を$M$上のアファイン接続とする。
-    $\nabla'$が
-    $g$に関する$\nabla$の
-    \term{双対接続}[dual connection]
-        {双対接続}[そうついせつぞく]
+\begin{definition}[双対構造]
+    $M$を多様体とする。
+    3つ組$(g, \nabla, \nabla^*)$
+    が$M$上の
+    \term{双対構造}[dualistic structure]
+        {双対構造}[そうついこうぞう]
     であるとは、
     すべての$X, Y, Z \in \frakX(M)$に対し
     \begin{equation}
@@ -45,30 +45,13 @@
                 g(\nabla_X Y, Z) + g(Y, \nabla'_X Z)
     \end{equation}
     が成り立つことをいう。
-\end{definition}
-
-\begin{proposition}
-    $\nabla$を$M$上のアファイン接続とする。
     このとき、
-    $g$に関する$\nabla$の双対接続がただひとつ存在する。
-\end{proposition}
+    $\nabla, \nabla'$はそれぞれ$g$に関する$\nabla', \nabla$の
+    \term{双対接続}[dual connection]
+        {双対接続}[そうついせつぞく]
+    であるという。
 
-\begin{proof}
-    \TODO{}
-\end{proof}
-
-\begin{definition}[双対構造]
-    $(g, \nabla, \nabla^*)$
-    が$M$上の
-    \term{双対構造}[dualistic structure]
-        {双対構造}[そうついこうぞう]
-    であるとは、
-    $\nabla$と$\nabla'$が
-    $g$に関し互いに双対接続であることをいう。
-\end{definition}
-
-\begin{definition}[双対平坦]
-    $\nabla, \nabla'$がいずれも$M$上平坦であるとき、
+    さらに$\nabla, \nabla'$がいずれも$M$上平坦であるとき、
     $(g, \nabla, \nabla')$は
     \term{双対平坦}[dually flat]
         {双対平坦}[そうついへいたん]
@@ -78,6 +61,17 @@
         {双対平坦構造}[そうついへいたんこうぞう]
     という。
 \end{definition}
+
+\begin{proposition}[双対接続の存在と一意性]
+    \label[proposition]{prop:dual-connection-existence-uniqueness}
+    $\nabla$を$M$上のアファイン接続とする。
+    このとき、
+    $g$に関する$\nabla$の双対接続がただひとつ存在する。
+\end{proposition}
+
+\begin{proof}
+    証明は付録に記した。
+\end{proof}
 
 たとえ双対平坦であっても、
 両方の接続係数が同一の座標のもとで消えるとは限らない。
@@ -89,11 +83,11 @@
     このとき、
     $x$に関する$\nabla, \nabla'$の接続係数が
     $U$上つねに$0$ならば、
-    $g$は$U$上定数である。
+    $(U, g|_U)$は$\R^m$のある開集合と等長同型である。
 \end{proposition}
 
 \begin{proof}
-    $\del_i g_{jk} = \Gamma_{ij}^l g_{lk} + \Gamma_{ik}^l g_{lj}$
+    $\del_i g_{jk} = \Gamma_{ij}^l g_{lk} + {\Gamma'}_{ik}^l g_{lj}$
     より従う。
 \end{proof}
 
@@ -106,20 +100,18 @@
     $R^{(\alpha)}$を$\nabla^{(\alpha)}$の
     $(1, 3)$-曲率テンソルとする。
     このとき、
-    $\calP$の任意の$\nabla$-アファイン座標に関し\TODO{$\nabla^{(\alpha)}$ではなく?}、
+    $\calP$の任意の$\nabla^{(1)}$-アファイン座標に関し、
     $R^{(\alpha)}$の成分は
     \begin{equation}
         {R^{(\alpha)}}_{ijk}^{\hphantom{ijk}l}
             =
-                - \frac{1 - \alpha^2}{2}
+                - \frac{1 - \alpha^2}{4}
                 \myparen{
                     A_{jk}^{\hphantom{jk}m} A_{im}^{\hphantom{im}l}
                     - A_{ik}^{\hphantom{ik}m} A_{jm}^{\hphantom{jm}l}
                 }
     \end{equation}
     となる。
-    とくに$\alpha = \pm 1$のとき
-    $R^{(\alpha)} = 0$となる。
 \end{proposition}
 
 \begin{proof}
@@ -140,34 +132,32 @@
     \end{equation}
     を変形する。
     \begin{alignat}{1}
-        &\phantom{=}
-            \del_i A_{jk}^{\hphantom{jk}l}
-            \\
-        &=
-            \del_i (g^{ln} S_{jkn})
-            \\
-        &=
-            \del_i (g^{ln}) S_{jkn}
-            +
-            g^{lm} \del_i S_{jkm}
-            \\
-        &=
-            - \del_i (g_{mn}) g^{mn} g^{ln} S_{jkn}
-            +
-            g^{lm} \del_i S_{jkm}
-            \qquad
-            (\del_i(g_{nm} g^{lm}) = 0)
-            \\
-        &=
-            - S_{imn} g^{mn} g^{ln} S_{jkn}
-            +
-            g^{lm} \del_i S_{jkm}
-            \qquad
-            (\del_i g_{mn} = S_{imn})
-            \\
-        &=
-            - A_{im}^{\hphantom{im}l} A_{jk}^{\hphantom{jk}m}
-            + g^{lm} \del_i S_{jkm}.
+        \del_i A_{jk}^{\hphantom{jk}l}
+            &=
+                \del_i (g^{ln} S_{jkn})
+                \\
+            &=
+                \del_i (g^{ln}) S_{jkn}
+                +
+                g^{lm} \del_i S_{jkm}
+                \\
+            &=
+                - \del_i (g_{mn}) g^{mn} g^{ln} S_{jkn}
+                +
+                g^{lm} \del_i S_{jkm}
+                \qquad
+                (\del_i(g_{nm} g^{lm}) = 0)
+                \\
+            &=
+                - S_{imn} g^{mn} g^{ln} S_{jkn}
+                +
+                g^{lm} \del_i S_{jkm}
+                \qquad
+                (\del_i g_{mn} = S_{imn})
+                \\
+            &=
+                - A_{im}^{\hphantom{im}l} A_{jk}^{\hphantom{jk}m}
+                + g^{lm} \del_i S_{jkm}.
     \end{alignat}
     同様にして
     \begin{alignat}{1}
@@ -180,37 +170,40 @@
 \end{proof}
 
 \begin{corollary}
-    すべての$\alpha \in \R$に対し
-    \begin{equation}
-        R^{(\alpha)}
-            =
-                R^{(-\alpha)}
-    \end{equation}
-    が成り立つ。
+    ~
+    \begin{enumerate}
+        \item $\forall \alpha \in \R$に対し
+            $R^{(\alpha)}
+                =
+                    (1 - \alpha^2)
+                    R^{(0)}
+                =
+                    R^{(-\alpha)}$.
+        \item 次は同値:
+            \begin{enumerate}
+                \item すべての$\alpha \in \R$に対し、
+                    $\nabla^{(\alpha)}$は平坦である。
+                \item ある$\alpha \neq \pm 1$が存在し、
+                    $\nabla^{(\alpha)}$は平坦である。
+            \end{enumerate}
+    \end{enumerate}
 \end{corollary}
 
 \begin{proof}
-    $\frac{1 - \alpha}{2} = \frac{1 + \alpha}{2} - \alpha$
-    および
-    $\myparen{
-        \frac{1 - \alpha}{2}
-    }^2
-        =
-            \myparen{
-                \frac{1 + \alpha}{2}
-            }^2 - \alpha$
-    が成り立つことより、
-    命題から
-    \begin{equation}
-        {R^{(\alpha)}}_{ijk}^{\hphantom{ijk}l}
-            =
-                {R^{(-\alpha)}}_{ijk}^{\hphantom{ijk}l}
-                - \alpha {R^{(-1)}}_{ijk}^{\hphantom{ijk}l}
-    \end{equation}
-    となる。
-    さらに
-    $R^{(-1)} = 0$だから
-    系の主張が得られた。
+    \uline{(1)} \quad
+    上の命題より明らか。
+
+    \uline{(2)} \quad
+    まず、上の命題より次は同値である:
+    \begin{enumerate}
+        \item $\forall \alpha \in \R$に対し
+            $R^{(\alpha)} = 0$.
+        \item $\exists \alpha \neq \pm 1$
+            \, s.t. \,
+            $R^{(\alpha)} = 0$.
+    \end{enumerate}
+    さらに$\alpha$-接続はすべて torsion-free だから、
+    曲率が$0$であることと平坦であることは同値である。
 \end{proof}
 
 \begin{theorem}
@@ -221,7 +214,6 @@
     $\alpha = \pm 1$ならば
     $(g, \nabla^{(\alpha)}, \nabla^{(-\alpha)})$は
     双対平坦である。
-    \TODO{逆はいえるか?}
 \end{theorem}
 
 \begin{proof}
@@ -233,7 +225,7 @@
                 g(\nabla^{g}_X Y, Z)
                 - \frac{1 - \alpha}{2} S(X, Y, Z)
                 + g(Y, \nabla^{g}_X Z)
-                - \frac{1 + \alpha}{2} S(X, Z, Y
+                - \frac{1 + \alpha}{2} S(X, Z, Y)
                 \\
             &=
                 g(\nabla^{g}_X Y, Z)
@@ -250,93 +242,202 @@
 % ------------------------------------------------------------
 %
 % ------------------------------------------------------------
-\section{期待値パラメータ}
+\section{Legendre 変換}
 
-\begin{lemma}
-    $W$を$\R$-ベクトル空間、
+本節では
+$W$を有限次元$\R$-ベクトル空間、
+$\nabla$を$W$上の標準的なアファイン接続とする。
+
+\begin{propdef}[古典的な Legendre 変換]
     $U \subset W$を開集合、
     $f \colon U \to \R$を$C^\infty$関数であって
-    $\Hess f$が$U$上各点で正定値であるものとする。
+    $\nabla f \colon U \to W^\vee$が可逆であるものとする。
     このとき、
-    $\nabla f \colon U \to W^\vee$は単射である。
-\end{lemma}
+    関数$f^\vee \colon U' \to \R$ \;
+    (ただし$U' \coloneqq (\nabla f)(U)$)
+    であって
+    次をみたすものがただひとつ存在する:
+    \begin{equation}
+        f(x) + f^\vee(y) = \langle x, y \rangle,
+            \quad \text{where} \quad
+            x \coloneqq (\nabla f)^{-1}(y)
+            \qquad (y \in U').
+    \end{equation}
+    $f^\vee$を$f$の
+    \term{Legendre 変換}[Legendre transform]
+        {Legendre 変換}[Legendre へんかん]
+    という。
+\end{propdef}
 
 \begin{proof}
-    \TODO{}
+    一意性は明らか。
+    存在は
+    $f^\vee(y)
+        \coloneqq
+            \myangle{(\nabla f)^{-1}(y)}{y} - f((\nabla f)^{-1}(y))$
+    と定義すればよい。
 \end{proof}
 
-\begin{definition}[古典的な Legendre 変換]
-    $W$を$\R$-ベクトル空間、
-    $U \subset W$を開集合、
-    $f \colon U \to \R$を$C^\infty$関数であって
-    $\Hess f$が$U$上各点で正定値であるものとする。
-    関数
-    \begin{equation}
-        f^\vee \colon U' \to \R,
-            \quad
-            y
-            \mapsto
-            \myangle{y}{(\nabla f)^{-1}(y)} - f((\nabla f)^{-1}(y))
-            \quad \text{where} \quad
-            U' \coloneqq (\nabla f)(U)
-    \end{equation}
-    を$f$の
-    \term{凸共役}[convex conjugate]
-        {凸共役}[とつきょうやく]
-    という。
-\end{definition}
-
-\begin{example}[凸共役の例]
+\begin{example}[Legendre 変換の例]
     ~
     \begin{itemize}
         \item $e^x$ (Poisson 分布族の実現の対数分配関数)
             $\to y \log y - y$
         \item $\log (1 + e^x)$ (Bernoulli 分布族の実現の対数分配関数)
             $\to y \log y + (1 - y) \log (1 - y)$
-        \item $x^2$ (分散既知の正規分布族の実現の対数分配関数)
-            $\to y^2 / 4$
+        \item $x^2 / 2$ (分散既知の正規分布族の実現の対数分配関数)
+            $\to y^2 / 2$
     \end{itemize}
 \end{example}
 
-\begin{proposition}[凸共役の性質]
-    \TODO{}
+\begin{proposition}[Legendre 変換の性質]
+    \label[proposition]{prop:Legendre-transform-properties}
+    ~
+    \begin{enumerate}
+        \item $(\nabla f)^{-1} = \nabla f^\vee$
+        \item $f^{\vee \vee} = f$
+    \end{enumerate}
 \end{proposition}
 
 \begin{proof}
-    \TODO{何が必要?}
+    \uline{(1)} \quad
+    \begin{alignat}{1}
+        (\nabla f^\vee)(y)
+            &=
+                (\nabla f)^{-1}(y)
+                + \myangle{
+                    y
+                }{
+                    (\nabla
+                        (\nabla f)^{-1}
+                    )(y)
+                }
+                - \myangle{
+                    (\nabla f)
+                    (\nabla f)^{-1}
+                    (y)
+                }{
+                    (\nabla
+                        (\nabla f)^{-1}
+                    )(y)
+                }
+            =
+                (\nabla f)^{-1}(y)
+    \end{alignat}
+    よって$(\nabla f)^{-1} = \nabla f^\vee$である。
+
+    \uline{(2)} \quad
+    \begin{alignat}{1}
+        f^{\vee\vee}(x)
+            &=
+                \myangle{
+                    x
+                }{
+                    (\nabla f^\vee)^{-1}
+                    (x)
+                }
+                - f^\vee(
+                    (\nabla f^\vee)^{-1}
+                    (x)
+                )
+                \\
+            &=
+                \myangle{
+                    x
+                }{
+                    (\nabla f)
+                    (x)
+                }
+                - f^\vee(
+                    (\nabla f)
+                    (x)
+                )
+                \\
+            &=
+                \myangle{
+                    x
+                }{
+                    (\nabla f)
+                    (x)
+                }
+                - \myparen{
+                    \myangle{
+                        (\nabla f)
+                        (x)
+                    }{
+                        (\nabla f)^{-1}
+                        (\nabla f)
+                        (x)
+                    }
+                    - f(
+                        (\nabla f)^{-1}
+                        (\nabla f)
+                        (x)
+                    )
+                }
+                \\
+            &=
+                f(x)
+    \end{alignat}
+    よって$f^{\vee\vee} = f$である。
 \end{proof}
 
-\begin{proposition}
-    $(\nabla \psi)|_{\Int \wt{\Theta}}
-        \colon \Int \wt{\Theta} \to V^{\vee\vee} = V$
-    は{\smooth}埋め込みかつ開写像である。
-\end{proposition}
+本稿では、とくに次の状況下で Legendre 変換を考えることになる。
 
 \begin{lemma}
-    $\Int \wt{\Theta}$は$V^\vee$の凸集合である。
+    $W$を有限次元$\R$-ベクトル空間、
+    $U \subset W$を凸開集合、
+    $f \colon U \to \R$を$C^\infty$関数であって
+    $\Hess f$が$U$上各点で正定値であるものとする。
+    このとき、
+    $\nabla f \colon U \to W^\vee$は単射である\footnote{
+        逆は成立しない。
+        すなわち、$f'$が単射であっても
+        $\Hess f$が正定値であるとは限らない。
+        $f(x) = x^4$が反例となる。
+    }。
 \end{lemma}
 
 \begin{proof}
-    $\wt{\Theta}$が$V^\vee$の凸集合であることは
-    \url{0425_資料.pdf}命題2.2で確かめた。
-    一般に、位相ベクトル空間の凸集合の内部は凸集合だから、補題が従う。
+    $u, u' \in U, \; u \neq u'$を固定する。
+    $u_t \coloneqq (1 - t)u + tu' \; (t \in [0, 1])$とおき、
+    $\varphi \colon [0, 1] \to U, \; t \mapsto f(u_t)$と定める
+    ($U$は凸だから$\varphi$の像はたしかに$U$に属する)。
+    平均値の定理より、
+    ある$\tau \in (0, 1)$が存在して
+    \begin{alignat}{1}
+        \myangle{
+            (\nabla f)(u') - (\nabla f)(u)
+        }{
+            u' - u
+        }
+            &=
+                \varphi'(1) - \varphi'(0)
+                \\
+            &=
+                \varphi''(\tau)
+                \\
+            &=
+                \myangle{
+                    (\Hess f)(u_\tau) (u' - u)
+                }{
+                    u' - u
+                }
+                \\
+            &> 0
+    \end{alignat}
+    が成り立つ。
+    よって$(\nabla f)(u') \neq (\nabla f)(u)$である。
+    したがって$\nabla f$は単射である。
 \end{proof}
 
-\begin{proof}[命題の証明]
-    $\psi$は{\smooth}だから$\nabla \psi$も{\smooth}である。
-    また、
-    $\nabla \psi$
-    $\Hess \psi$は正定値だから
-    $\nabla \psi$の微分は全単射である。
-    逆写像定理より
-    $\nabla \psi$は局所微分同相写像であり、
-    とくに開写像である。
-    また、補題より$\Int \wt{\Theta}$は$V^\vee$の凸集合だから、
-    $\nabla \psi$は単射である。
-    したがって$\nabla \psi$は埋め込みである。
-\end{proof}
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{期待値パラメータ}
 
 \begin{propdef}[期待値パラメータ空間]
+    \label[propdef]{propdef:mean-parameter-space}
     $\calP$は開であるとし、
     $(V, T, \mu)$を$\calP$の最小次元実現とする。
     このとき、集合
@@ -352,6 +453,7 @@
     は$V$の開部分多様体となり、
     写像$\eta \colon \calP \to \calM, \; p \mapsto E_p[T]$
     は微分同相写像となる。
+
     $\calM$を
     $(V, T, \mu)$に関する$\calP$の
     \term{期待値パラメータ空間}[mean parameter space]
@@ -363,7 +465,49 @@
     という。
 \end{propdef}
 
+\begin{lemma}
+    写像$\nabla \psi \colon \Theta \to V^{\vee\vee} = V$は
+    \begin{equation}
+        (\nabla \psi)(\theta(p))
+            =
+                \eta(p)
+                \qquad
+                (p \in \calP)
+    \end{equation}
+    をみたす。
+\end{lemma}
+
 \begin{proof}
+    明らか。
+\end{proof}
+
+\begin{lemma}
+    $(\nabla \psi)|_{\Int \wt{\Theta}}
+        \colon \Int \wt{\Theta} \to V^{\vee\vee} = V$
+    は{\smooth}埋め込みかつ開写像である。
+\end{lemma}
+
+\begin{fact}
+    位相ベクトル空間の凸集合の内部は凸集合である。
+    \qed
+\end{fact}
+
+\begin{proof}[補題の証明]
+    $\psi$は{\smooth}だから$\nabla \psi$も{\smooth}である。
+    また、
+    $\Hess \psi$は正定値だから
+    $\nabla \psi$の微分は可逆である。
+    逆写像定理より
+    $\nabla \psi$は局所微分同相写像であり、
+    とくに開写像である。
+    また、
+    $\wt{\Theta}$が$V^\vee$の凸集合であること (\url{0425_資料.pdf}命題2.2) と
+    上の事実より$\Int \wt{\Theta}$は$V^\vee$の凸集合だから、
+    $\nabla \psi$は単射である。
+    したがって$\nabla \psi$は埋め込みである。
+\end{proof}
+
+\begin{proof}[\cref{propdef:mean-parameter-space}の証明]
     まず$\calM = (\nabla \psi)(\Theta)$である。
     いま$\calP$は開だから$\Theta$は$V^\vee$の開集合である。
     このことと$\nabla \psi$が開写像であることから
@@ -376,7 +520,7 @@
 
 \begin{proposition}
     $\calP$は開であるとし、
-    $\phi$を$\psi|_\Theta$の凸共役とする。
+    $\phi$を$\psi|_\Theta$の Legendre 変換とする。
     このとき次が成り立つ:
     \begin{enumerate}
         \item
@@ -394,7 +538,9 @@
                         }{
                             \del \theta^i
                             \del \theta^j
-                        },
+                        }
+                    =
+                        \deldel[\eta_j]{\theta^i},
                         \qquad
                 g^{ij}
                     =
@@ -403,23 +549,115 @@
                         }{
                             \del \eta_i
                             \del \eta_j
-                        }.
+                        }
+                    =
+                        \deldel[\theta^i]{\eta_j}.
+            \end{equation}
+        \item
+            \begin{equation}
+                g\myparen{
+                    \deldel{\theta^i},
+                    \deldel{\eta_j}
+                }
+                    =
+                        \delta_i^j.
             \end{equation}
     \end{enumerate}
 \end{proposition}
-
-\TODO{$g^{ij}$は$T^\vee \calP$上の計量を定める?}
 
 \begin{proof}
     \uline{(1)} \quad
     $\deldel[\psi]{\theta^i}(\theta(p)) = E_p[T^i] = \eta_i(p)$
     である。
-    \TODO{}
+    また、Legendre 変換の定義より
+    \begin{equation}
+        \phi(\eta)
+            =
+                \myangle{\eta}{(\nabla \psi)^{-1}(\eta)}
+                - \psi((\nabla \psi)^{-1}(\eta))
+    \end{equation}
+    だから
+    \begin{alignat}{1}
+        (\nabla \phi)(\eta)
+            &=
+                (\nabla \psi)^{-1}(\eta)
+                + \myangle{
+                    \eta
+                }{
+                    \nabla
+                    (\nabla \psi)^{-1}
+                    (\eta)
+                }
+                - \myangle{
+                    (\nabla \psi)
+                    (\nabla \psi)^{-1}
+                    (\eta)
+                }{
+                    \nabla
+                    (\nabla \psi)^{-1}
+                    (\eta)
+                }
+                \\
+            &=
+                (\nabla \psi)^{-1}(\eta)
+                + \myangle{
+                    \eta
+                }{
+                    \nabla
+                    (\nabla \psi)^{-1}
+                    (\eta)
+                }
+                - \myangle{
+                    \eta
+                }{
+                    \nabla
+                    (\nabla \psi)^{-1}
+                    (\eta)
+                }
+                \\
+            &=
+                (\nabla \psi)^{-1}
+                (\eta)
+    \end{alignat}
+    である。
+    したがって
+    $(\nabla \phi)(\eta(p)) = (\nabla \psi)^{-1}(\eta(p)) = \theta(p)$
+    よって
+    $\deldel[\phi]{\eta_i}(\eta(p)) = \theta^i(p)$
+    である。
 
     \uline{(2)} \quad
     $g_{ij}(\theta(p)) = \frac{\del^2 \psi}{\del \theta^i \del \theta^j}(\theta(p))$
     は$g$の定義から明らか。
-    \TODO{}
+    また
+    $\delta^j_k
+        = \deldel[\eta_i]{\theta^k} \deldel[\theta^j]{\eta_i}
+        = g_{ik} \deldel[\theta^j]{\eta_i}$
+    より
+    $g^{ij}
+        = \deldel[\theta^j]{\eta_i}
+        = \frac{\del^2 \phi}{\del \eta_i \del \eta_j}$
+    である。
+
+    \uline{(3)} \quad
+    \begin{alignat}{1}
+        g\myparen{
+            \deldel{\theta^i},
+            \deldel{\eta_j}
+        }
+            =
+                g\myparen{
+                    \deldel{\theta^i},
+                    \deldel[\theta^k]{\eta_j}
+                    \deldel{\theta^k}
+                }
+            =
+                g_{ik} \deldel[\theta^k]{\eta_j}
+            =
+                g_{ik} g^{kj}
+            =
+                \delta_i^j.
+    \end{alignat}
 \end{proof}
 
 \begin{theorem}
@@ -429,23 +667,59 @@
 \end{theorem}
 
 \begin{proof}
-    \begin{equation}
-        {\Gamma^{(-1)}}_{\gamma}^{\alpha\beta}
+    $\del_i = \deldel{\theta^i}, \; \del^i = \deldel{\eta_i}$
+    と略記すれば、
+    上の命題の(3)より
+    \begin{alignat}{1}
+        0
             =
-                \deldel[\eta_\gamma]{\theta^k}
-                \myparen{
-                    \frac{\del \theta^k}{\del \eta_\alpha \del \eta_\beta}
-                    +
-                    {\Gamma^{(-1)}}_{ij}^k
-                    \deldel[\theta^i]{\eta_\alpha}
-                    \deldel[\theta^j]{\eta_\beta}
+                \del^i \delta_k^j
+            =
+                g\myparen{
+                    \nabla^{(1)}_{\del^i} \del_k,
+                    \del^j
                 }
-    \end{equation}
-    が$0$となることをいえばよい。
+                + g\myparen{
+                    \del_k,
+                    \nabla^{(1)}_{\del^i} \del^j
+                }
+    \end{alignat}
+    だから
+    \begin{alignat}{1}
+        {\Gamma^{(-1)}}_k^{ij}
+            &=
+                g\myparen{
+                    \del_k,
+                    \nabla^{(-1)}_{\del^i} \del^j
+                }
+                \\
+            &=
+                -g\myparen{
+                    \nabla^{(1)}_{\del^i} \del_k,
+                    \del^j
+                }
+                \\
+            &=
+                - \deldel[\theta^l]{\eta_i}
+                g\myparen{
+                    \nabla^{(1)}_{\del_l} \del_k,
+                    \del^j
+                }
+                \\
+            &=
+                - \deldel[\theta^l]{\eta_i}
+                {\Gamma^{(1)}}_{lk}^j
+                \\
+            &=
+                0
+                \qquad
+                ({\Gamma^{(1)}}_{lk}^j = 0)
+    \end{alignat}
+    となる。
 \end{proof}
 
 \begin{example}[$\nabla^{(-1)}$-測地線]
-    \TODO{}
+    \TODO{有限集合上の場合の$\nabla^{(-1)}$-測地線を自然パラメータ座標で表すとどうなる?}
 \end{example}
 
 %\begin{propdef}[KLダイバージェンス]
@@ -510,6 +784,28 @@
 \renewcommand\thesection{\Alph{section}}
 \setcounter{section}{0}
 \section{付録}
+
+\begin{proof}[\cref{prop:dual-connection-existence-uniqueness}の証明]
+    一意性は$g$の非退化性より明らか。
+    以下、存在を示す。
+    まず、$X, Z \in \frakX(TM)$を固定すると
+    写像$\frakX(TM) \to \smooth(M), \;
+        Y \mapsto X(g(Y, Z)) - g(\nabla_X Y, Z)$
+    は$\smooth(M)$-線型だから$\Omega^1(M)$に属する。
+    これを$g$で添字を上げて得られるベクトル場を
+    $\nabla'_X Z$と書くことにすれば、
+    $\nabla'_X Z$は目的の式をみたす。
+    これで写像$\nabla' \colon \Gamma(TM) \to \Map(\Gamma(TM), \Gamma(TM))$
+    が得られた。
+    $\nabla'$の像が
+    $\Hom_{\smooth(M)}(\Gamma(TM), \Gamma(TM)) = \Gamma(T^\vee M \otimes TM)$
+    に属することは、
+    各$Z \in \frakX(M)$に対し
+    $\nabla' Z$の$\smooth(M)$-線型性を確かめればよく、すぐにわかる。
+    あとは$\nabla'$の$\R$-線型性と Leibniz 則を確かめればよいが、
+    これらも$\nabla'$の定め方から明らか。
+    よって存在が示された。
+\end{proof}
 
 
 \end{document}
