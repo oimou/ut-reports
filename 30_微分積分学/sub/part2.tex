@@ -27,28 +27,50 @@ G\^ateaux 微分と Fr\'echet 微分の導入から始める。
 % ------------------------------------------------------------
 \section{オーダー記法}
 
-位相ベクトル空間上の写像の極限を扱う際には、
+写像の漸近挙動を扱う際には、
 オーダー記法が便利である。
 
-\begin{definition}[オーダー記法]
+\begin{definition}[Little-o 記法]
     $X$を位相空間、
     $Y$を$\R$上の位相ベクトル空間、
-    $f \colon X \to Y$を写像、
+    $f \colon X \to Y$および
     $g \colon X \to \R$を写像、
     $a \in X$とする。
-    $a$の$X$におけるある近傍$U$が存在して
-    $U \setminus \{a\}$上$g(x) \neq 0$が成り立ち、
-    さらに
-    \begin{equation}
-        \lim_{\substack{x \to a \\ x \neq a}} \frac{f(x)}{g(x)} = 0
-    \end{equation}
-    が成り立つとき、
+    次の条件が成り立つとき
     \begin{equation}
         f(x) = o(g(x)) \quad (x \to a, \; x \neq a)
     \end{equation}
-    と記す。
+    と記す:
+    \begin{itemize}
+        \item $a$のまわりで$a$を除いて$g(x) \neq 0$が成り立ち、
+            さらに
+            \begin{equation}
+                \lim_{\substack{x \to a \\ x \neq a}} \frac{f(x)}{g(x)} = 0
+            \end{equation}
+            が成り立つ。
+    \end{itemize}
 \end{definition}
 
+\begin{definition}[Big-O 記法]
+    $X$を位相空間、
+    $Y$をノルム空間、
+    $f \colon X \to Y$および
+    $g \colon X \to \R$を写像、
+    $a \in X$とする。
+    次の条件が成り立つとき
+    \begin{equation}
+        f(x) = O(g(x)) \quad (x \to a, \; x \neq a)
+    \end{equation}
+    と記す:
+    \begin{itemize}
+        \item ある$M \ge 0$が存在して、
+            $a$のまわりで
+            \begin{equation}
+                \| f(x) \| \le M \| g(x) \|
+            \end{equation}
+            が成り立つ。
+    \end{itemize}
+\end{definition}
 
 
 % ------------------------------------------------------------
@@ -122,25 +144,119 @@ G\^ateaux 微分と Fr\'echet 微分の導入から始める。
 % ------------------------------------------------------------
 \section{Taylor の定理}
 
-平均値の定理は
-1次近似の最も基本的な形を与えるものである (?)。
+平均値定理は
+1次近似の最も基本的な形を与えるものである。
 
-\begin{theorem}[平均値の定理]
+\begin{theorem}[平均値定理]
     \TODO{}
 \end{theorem}
 
 \begin{proof}
     \TODO{}
 \end{proof}
+
+平均値の定理は2通りの拡張がある。
+ひとつは次に示す Cauchy の平均値定理である。
+
+\begin{theorem}[Cauchy の平均値定理]
+    \TODO{}
+\end{theorem}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+もうひとつの拡張は、
+高次の導関数を用いた近似を与える Taylor の定理である。
 
 \begin{theorem}[Taylor の定理]
-    \TODO{}
+    $f$を$[a, x]$上で$n$回微分可能な実数値関数とする。
+    このとき、
+    実数$R_n(x)$を
+    \begin{equation}
+        f(x)
+            =
+                f(a)
+                + \frac{f'(a)}{1!} (x - a)
+                + \cdots
+                + \frac{f^{(n - 1)}(a)}{(n - 1)!} (x - a)^{n - 1}
+                + R_n(x)
+    \end{equation}
+    で定義すると、
+    ある$c \in (a, x)$が存在して
+    $R_n(x) = \frac{f^{(n)}(c)}{n!} (x - a)^n$が成り立つ。
 \end{theorem}
 
 \begin{proof}
     \TODO{}
 \end{proof}
 
+\begin{theorem}
+    $f$が$a$のまわりで$C^{n - 1}$級で$n$階微分可能ならば
+    \begin{equation}
+        f(x)
+            =
+                f(a)
+                + \frac{f'(a)}{1!} (x - a)
+                + \cdots
+                + \frac{f^{(n)}(a)}{n!} (x - a)^n
+                + o((x - a)^n)
+    \end{equation}
+    が成り立つ。
+    さらに$C^n$級ならば
+    \begin{equation}
+        f(x)
+            =
+                f(a)
+                + \frac{f'(a)}{1!} (x - a)
+                + \cdots
+                + \frac{f^{(n - 1)}(a)}{(n - 1)!} (x - a)^{n - 1}
+                + O((x - a)^n)
+    \end{equation}
+    が成り立つ。
+\end{theorem}
+
+Little-O は最高次の項に付け加わる形であるのに対し、
+Big-O は最高次の項を置き換える形であることに注意する。
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+多変数の Taylor の定理も
+「$d^k f$」という記号を次のように導入すれば
+1変数の場合と同様に表せる。
+
+\begin{theorem}
+    $U \subset \R^n$を開集合、
+    $f$を$U$上の$C^n$級実数値関数とする。
+    このとき
+    \begin{equation}
+        f(x)
+            =
+                f(a)
+                    + \frac{1}{1!} (df)_a (x - a)
+                    + \frac{1}{2!} (d^2 f)_a (x - a)
+                    + \cdots
+                    + \frac{1}{(n - 1)!} (d^{n - 1} f)_a (x - a)
+                    + O(\| x - a \|^n)
+    \end{equation}
+    が成り立つ。
+    ただし
+    \begin{equation}
+        (d^k f)_a (x)
+            \coloneqq
+                \sum_{
+                    \substack{
+                        i_1, \ldots, i_k \\
+                        \in \{ 1, \ldots, n \}
+                    }
+                }
+                    \frac{\del^k f}{\del x_{i_1} \cdots \del x_{i_k}} (a)
+                    x_{i_1} \cdots x_{i_k}
+    \end{equation}
+    と定義する。
+\end{theorem}
 
 
 % ============================================================

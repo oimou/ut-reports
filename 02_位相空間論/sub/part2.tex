@@ -1252,9 +1252,7 @@ Cauchy 列を定義する。
         {全有界}[ぜんゆうかい]
     であるとは、
     任意の$\eps > 0$に対し、
-    $A$の有限個の点$x_1, \ldots, x_n \in X$であって、
-    $A \subset \bigcup_{i = 1}^n B_\eps (x_i)$
-    をみたすものが存在することをいう。
+    有限個の$\eps$-開球で$A$を被覆できることをいう。
 \end{definition}
 
 \begin{proposition}[全有界ならば有界]
@@ -1264,6 +1262,29 @@ Cauchy 列を定義する。
 
 \begin{proof}
     \TODO{}
+\end{proof}
+
+\begin{proposition}[全有界と Cauchy 列]
+    \label[proposition]{prop:tot-bdd-and-cauchy-seq}
+    $(X, d)$を距離空間とする。
+    このとき次は同値である:
+    \begin{enumerate}
+        \item $X$は全有界である。
+        \item $X$の任意の点列は Cauchy 部分列を持つ。
+    \end{enumerate}
+\end{proposition}
+
+\begin{proof}
+    \uline{(1) \Rightarrow (2)} \quad
+    $X$を被覆する有限個の$\eps$-開球のうち
+    少なくとも1個は点列の無限個の点を含むから、
+    それを部分列とすればよい。
+
+    \uline{(2) \Rightarrow (1)} \quad
+    対偶を示す。
+    被覆の外にある点を選びながら
+    $\eps$-開球を1個ずつ付け加えていくことで
+    点列を構成すればよい。
 \end{proof}
 
 % ------------------------------------------------------------
@@ -1284,20 +1305,36 @@ Cauchy 列を定義する。
 
 \begin{theorem}[コンパクト空間の特徴づけ]
     $(X, d)$を距離空間とする。
-    $X$がコンパクトであることと、
-    $X$が完備かつ全有界であることは同値である。
+    このとき次は同値である:
+    \begin{enumerate}
+        \item $X$はコンパクトである。
+        \item $X$は点列コンパクトである。
+        \item $X$は完備かつ全有界である。
+    \end{enumerate}
 \end{theorem}
 
 \begin{proof}
+    \uline{(3) \Rightarrow (2)} \quad
+    全有界性より\cref{prop:tot-bdd-and-cauchy-seq}から
+    任意の点列は Cauchy 部分列を持ち、
+    完備性よりそれは収束する。
+    よって点列コンパクトである。
+
     \TODO{}
 \end{proof}
 
 \begin{theorem}[Arzelà-Ascoli]
     $X$をコンパクトハウスドルフ空間、
-    $C(X)$を$X$上の連続関数全体の集合に
+    $C(X)$を$X$上の実数値連続関数全体の集合に
     一様収束位相を入れた位相空間とする。
-    このとき、$S \subset C(X)$が相対コンパクトであるための必要十分条件は、
-    $S$が一様有界かつ同程度連続であることである。
+    このとき、
+    関数列$( f_n )_n \subset C(X)$に関し
+    次は同値である:
+    \begin{enumerate}
+        \item $(f_n)_n$は相対コンパクトである。
+            すなわち、$(f_n)_n$は$X$上一様収束する部分列を持つ。
+        \item $(f_n)_n$は一様有界かつ同程度連続である。
+    \end{enumerate}
 \end{theorem}
 
 \begin{proof}

@@ -149,6 +149,16 @@ Riemann 積分をネット$S_f$の極限として定義する。
     \TODO{}
 \end{definition}
 
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{Riemann 積分と連続関数}
+
+\begin{proposition}
+    \TODO{}
+\end{proposition}
+
 % ------------------------------------------------------------
 %
 % ------------------------------------------------------------
@@ -466,10 +476,28 @@ Riemann 積分をネット$S_f$の極限として定義する。
     このとき$f$が$\calA$に関し
     \term{可測}[measurable]{可測関数}[かそくかんすう]
     であるとは、
+    すべての strict sublevel sets が可測集合であること、
+    すなわち
     任意の$c \in \R$に対し
     $f^{-1}((-\infty, c)) \in \calA$
     が成り立つことをいう。
 \end{definition}
+
+\begin{proposition}
+    可測関数は単関数の各点収束極限として表せる。
+\end{proposition}
+
+\begin{proof}
+    まず有界関数の場合、
+    値域を等分して単関数列を定義すればよい。
+    一般の場合は値域を徐々に広げるように有界可測関数の列を定義し、
+    それに沿って単関数列を定義すればよい。
+\end{proof}
+
+\begin{example}[可測な確率変数]
+    $E(X, \calA)$の説明はここに詳しく書いてある:
+    cf. \url{https://math.stackexchange.com/a/690905}
+\end{example}
 
 % ------------------------------------------------------------
 %
@@ -685,7 +713,7 @@ $+\infty$を許す測度を扱う場合にのみこの条件を課すことに�
 \end{proof}
 
 \begin{corollary}[Chebyshev の不等式]
-    \TODO{}
+    \TODO{平均まわりでみた裾の確率を標準偏差を使って評価する}
 \end{corollary}
 
 \begin{proof}
@@ -760,8 +788,23 @@ $+\infty$を許す測度を扱う場合にのみこの条件を課すことに�
 \end{proof}
 
 \begin{theorem}[Fatou の定理]
-    \TODO{}
+    \highlight{非負}可積分関数列$(f_n), \; f_n \to f$が
+    \begin{equation}
+        \sup_n \int_X f_n \, \mu(dx) < \infty
+    \end{equation}
+    をみたすとき、
+    \begin{equation}
+        \int_X f \, \mu(dx)
+            \le
+                \liminf_{n \to \infty} \int_X f_n \, \mu(dx)
+    \end{equation}
+    が成り立つ。
 \end{theorem}
+
+Fatou の定理は優収束定理や単調収束定理と違い、
+各関数が非負であることを仮定している。
+また、極限の交換を主張しているわけではなく、
+式の形は下半連続性に似ている。
 
 \begin{proof}
     \TODO{}
@@ -919,6 +962,61 @@ Riemann 積分と Lebesgue 積分との関係性について調べる。
 % ------------------------------------------------------------
 %
 % ------------------------------------------------------------
+\section{積分不等式}
+
+\begin{proposition}[H\"older の不等式]
+    $(\calX, \calB)$を可測空間、
+    $\mu$を$\calX$上の測度とする。
+    $1 < p < \infty$、$q = p(p - 1)^{-1}$、
+    $f$を$p$乗$\mu$-可積分関数、
+    $g$を$q$乗$\mu$-可積分関数とする。
+    このとき、$fg$は$\mu$-可積分であり、かつ
+    \begin{equation}
+        \int_\calX |fg| \mu(dx)
+            \le \myparen{
+                \int_\calX |f|^{p} \mu(dx)
+            }^{\frac{1}{p}}
+            \myparen{
+                \int_\calX |g|^{q} \mu(dx)
+            }^{\frac{1}{q}}
+    \end{equation}
+    が成り立つ。
+\end{proposition}
+
+\begin{proof}
+    積に関する Young の不等式
+    $xy \le \frac{1}{p} x^p + \frac{1}{q} y^q$
+    を使う (これは Fenchel の不等式の特別な場合でもある)。
+\end{proof}
+
+\begin{proposition}[Jensen の不等式]
+    $p$を\highlight{確率測度}、
+    $\psi$を凸関数とする。
+    このとき
+    \begin{equation}
+        \psi\myparen{
+            \int_\calX f(x) p(dx)
+        }
+            \le
+                \int_\calX \psi\myparen{
+                    f(x)
+                } p(dx)
+    \end{equation}
+    が成り立つ。
+\end{proposition}
+
+\begin{proof}
+    凸関数の性質より、
+    $y_0 \coloneqq \int_\calX f(x) p(dx)$とおくと、
+    ある$\alpha(y_0) \in \R$が存在して
+    $\psi(y) \ge \psi(y_0) + \alpha(y_0) (y - y_0) \; (y \in \dom\psi)$
+    が成り立つ。
+    各辺を積分して命題の不等式を得る。
+\end{proof}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
 \section{測度収束}
 
 \TODO{その他の収束概念もまとめるべき？}
@@ -926,6 +1024,27 @@ Riemann 積分と Lebesgue 積分との関係性について調べる。
 \begin{definition}[測度 Cauchy 列と測度収束]
     \TODO{}
 \end{definition}
+
+\begin{proposition}
+    \begin{enumerate}
+        \item 概収束すれば測度収束する。
+        \item $L^1$収束すれば測度収束する。
+    \end{enumerate}
+\end{proposition}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+上の命題の部分的な逆を述べたものが次の Riesz の定理である。
+
+\begin{theorem}[Riesz]
+    測度収束すれば、概収束する部分列が存在する。
+\end{theorem}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
 
 % ------------------------------------------------------------
 %

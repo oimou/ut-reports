@@ -759,7 +759,7 @@ $E$の向きづけ可能性は様々な方法で特徴付けることができ�
 
 \begin{definition}[コンパクト台を持つ最高次形式の積分 (Euclid 空間)]
     $\R^n$の標準的な座標を$x = (x_1, \dots, x_n)$、
-    $\omega$をコンパクト台を持つ$\R^n$上の最高次形式とする。
+    $\omega$をコンパクト台を持つ$\R^n$上の (連続) 最高次形式とする。
     このとき$\omega$は
     \begin{equation}
         \omega = f \, dx_1 \wedge \dots \wedge dx_n
@@ -822,8 +822,7 @@ Euclid 空間の最高次形式の積分を用いて
 \begin{definition}[コンパクト台を持つ最高次形式の積分 (多様体)]
     \label[definition]{definition:integration-on-manifold}
     $M$を向きづけられた$n$次元多様体、
-    $\omega$をコンパクト台を持つ$M$上の最高次形式とする。
-    さて、
+    $\omega$をコンパクト台を持つ$M$上の (連続) 最高次形式とする。
     $M$の向きと整合的な有限個のチャートの族
     $\calU = \{ (U_i, \varphi_i) \}_{i}$であって
     $\supp \omega = \bigcup_{i} U_i$なるものを
@@ -1368,6 +1367,10 @@ Euclid 空間の最高次形式の積分を用いて
 %
 % ------------------------------------------------------------
 \section{Stokes の定理}
+
+Stokes の定理について述べる。
+Stokes の定理は Hopf 不変量の定義にも用いられるという点で、
+微分トポロジーに重要な定理である。
 
 \begin{theorem}
     $M$をコンパクトかつ向きづけられた$n$次元多様体、
@@ -1995,7 +1998,7 @@ de Rham コホモロジーは大域的なデータ (= 微分形式) により定
 \end{proof}
 
 上で de Rham コホモロジーと \v{C}ech コホモロジーの間の同型対応をみたが、
-実は de Rham コホモロジーと$\\smooth$特異コホモロジーの間にも同型が成り立つ。
+実は de Rham コホモロジーと{\smooth}特異コホモロジーの間にも同型が成り立つ。
 
 \begin{remark}[de Rham コホモロジーと特異コホモロジー]
     $M$をパラコンパクトな多様体とする。
@@ -2197,6 +2200,151 @@ de Rham コホモロジーは大域的なデータ (= 微分形式) により定
     右作用についても同様に定義される。
 \end{definition}
 
+\begin{definition}[proper 作用]
+    $G \times M \to M \times M, \; (g, x) \mapsto (gx, x)$
+    が proper であるとき、
+    $G$の$M$への作用は
+    \term{proper}[proper]{proper}[proper]
+    であるという。
+\end{definition}
+
+\begin{proposition}[proper な作用の特徴づけ]
+    $M$を多様体、$G$を Lie 群であって$M$に連続に作用しているとする。
+    このとき、次は同値である:
+    \begin{enumerate}
+        \item $G$の$M$への作用は proper である。
+        \item \TODO{点列の収束}
+        \item 任意のコンパクト集合$K \subset M$に対し、
+            集合$G_K \coloneqq \{ g \in G \mid gK \cap K \neq \emptyset \}$
+            はコンパクトである。
+    \end{enumerate}
+\end{proposition}
+
+すなわち Lie 群の作用が proper であることは、
+直感的には
+「$M$のコンパクト集合は
+$G$の"ほとんど" (i.e. あるコンパクト集合を除いて) の元により
+自分自身と分離される」
+ということを言っている\footnote{
+    cf. \url{https://math.stackexchange.com/a/989168}
+}。
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+\subsection{離散 Lie 群の場合}
+
+$0$次元 Lie 群、すなわち離散 Lie 群の場合がとくに基本的である。
+
+\begin{proposition}[離散 Lie 群における proper な作用の特徴づけ]
+    $M$を多様体、$G$を離散 Lie 群であって$M$に連続に作用しているとする。
+    このとき、次は同値である:
+    \begin{enumerate}
+        \item $G$の$M$への作用は proper である。
+        \item 任意のコンパクト集合$K \subset M$に対し、
+            集合$G_K \coloneqq \{ g \in G \mid gK \cap K \neq \emptyset \}$
+            は有限集合である。
+    \end{enumerate}
+\end{proposition}
+
+\begin{proof}
+    一般の Lie 群に関する命題より従う。
+\end{proof}
+
+とくに積による部分群の作用の場合は、
+proper であることの判定は非常に簡単である。
+ここで proper 性は位相的性質であることに注意されたい。
+
+\begin{theorem}[積による作用が proper であることの特徴づけ]
+    $G$を Lie 群、
+    $\Gamma$を$G$の部分群とする。
+    このとき、次は同値である:
+    \begin{enumerate}
+        \item $\Gamma$は$G$の位相部分空間として離散的である。
+        \item \TODO{}
+        \item \TODO{}
+        \item $\Gamma$に離散位相を入れたとき、
+            積による作用$\Gamma \curvearrowright G$は proper である。
+    \end{enumerate}
+\end{theorem}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+\begin{corollary}
+    $G$を Lie 群、
+    $\Gamma$を$G$の離散部分群とし、
+    $\Gamma$を$0$次元 Lie 群とみなす。
+    このとき、
+    積による作用$\Gamma \curvearrowright G$は
+    $C^\infty$かつ free かつ proper である。
+\end{corollary}
+
+\begin{proof}
+    $\Gamma \times G$は$G \times G$の部分多様体だから、
+    $G$の乗法が{\smooth}であることより
+    $\Gamma \curvearrowright G$は$C^\infty$である。
+    free であることは作用が群の演算であることより明らか。
+    proper であることは上の定理より従う。
+\end{proof}
+
+\subsection{商多様体}
+
+Lie 群の作用による商空間が多様体となるための条件を考えたい。
+
+\begin{theorem}[商多様体定理]
+    $M$を多様体、
+    $G$を$M$に{\smooth}に作用する Lie 群とする。
+    このとき、
+    $G$の作用が free かつ proper ならば、
+    $M / G$は等化写像$\pi \colon M \to M / G$が沈め込みとなるような
+    多様体構造をただひとつ持つ。
+\end{theorem}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+とくに重要なものは被覆空間である。
+予備的考察として次の定理を述べておく。
+
+\begin{theorem}[被覆変換群の作用]
+    $M$を多様体、
+    $\pi \colon E \to M$を被覆空間とする。
+    このとき、
+    $\Aut_\pi(E)$に離散位相を入れると
+    $0$-次元 Lie 群となり、
+    $E$への作用は free かつ proper かつ \smooth となる。
+\end{theorem}
+
+この定理の主張する作用の3性質はそれぞれ
+\begin{itemize}
+    \item free: 代数的
+    \item proper: 位相的
+    \item \smooth: 微分幾何的
+\end{itemize}
+という特徴を持っている。
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+上の命題の部分的な逆を主張するのが次の定理である。
+
+\begin{theorem}
+    $E$を連結な多様体、
+    $\Gamma$を離散的な Lie 群とする。
+    このとき、
+    $\Gamma$が$E$に free かつ proper かつ \smooth に作用しているならば、
+    $E / \Gamma$は多様体となり、
+    $\pi \colon E \to E / \Gamma$は正規被覆空間となる。
+\end{theorem}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
 
 % ------------------------------------------------------------
 %
@@ -2208,13 +2356,20 @@ Lie 群の接束について考える。
 
 \subsection{左不変性}
 
-ベクトル場の左不変性を定義する。
+左不変性とは、テンソル場が Lie 群の演算と両立していることを表す概念である。
+左不変性は Lie 群の作用による商多様体を考える際に重要となる。
+
+まずベクトル場の左不変性を定義する。
 
 \begin{definition}[左不変ベクトル場]
     $G$を Lie 群とする。
     ベクトル場$X \in \frakX(G)$が
     \term{左不変}[left-invariant]{左不変}[ひだりふへん]
-    であるとは、すべての$g \in G$に対し図式
+    であるとは、
+    すべての$g \in G$に対し
+    $(L_g)_* X = X$が成り立つこと、
+    すなわち
+    すべての$g \in G$に対し図式
     \begin{equation}
         \begin{tikzcd}
             TG \ar{r}{d(L_g)} & TG \\
@@ -2224,7 +2379,7 @@ Lie 群の接束について考える。
     が可換となることをいう。
 \end{definition}
 
-共変テンソル場にも左不変性を定義することができる。
+微分形式などの共変テンソル場にも左不変性を定義することができる。
 
 \begin{definition}[左不変共変テンソル場]
     $G$を Lie 群とする。

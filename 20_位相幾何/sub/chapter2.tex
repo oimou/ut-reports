@@ -826,8 +826,12 @@ $X$のレトラクト$A$であって$X$を$A$に連続的に変形できるよ�
     $p$による$f$のリフト$\wt{f}$は存在しない。
     \begin{equation}
         \begin{tikzcd}
-            & \R \ar[d, "{p}"] \\
-            S^1 \ar[ur, dashed, "{\wt{f}}"] \ar[r, "{f}"'] & S^1
+            & \R
+                \ar{d}{p} \\
+            S^1
+                \ar[dashed]{ur}{\wt{f}}
+                \ar{r}{f}
+                & S^1
         \end{tikzcd}
     \end{equation}
     実際、もしこのようなリフト$\wt{f}$が存在するとしたら、
@@ -879,9 +883,13 @@ $X$のレトラクト$A$であって$X$を$A$に連続的に変形できるよ�
     $Y$は連結だから、$B$が$Y$で開かつ閉であることを示せば$B = Y$となり定理の主張が従う。
     \begin{equation}
         \begin{tikzcd}[row sep=huge, column sep=huge]
-            & E \ar[d, "{p}"] \\
-            Y \ar[ur, shift left, "{\wt{\varphi}_1}"]
-                \ar[ur, shift right, "{\wt{\varphi}_2}"'] \ar[r, "{\varphi}"'] & X
+            & E
+                \ar{d}{p} \\
+            Y
+                \ar[shift left]{ur}{\wt{\varphi}_1}
+                \ar[shift right]{ur}{\wt{\varphi}_2}
+                \ar{r}{\varphi}
+                & X
         \end{tikzcd}
     \end{equation}
 
@@ -915,7 +923,7 @@ $X$のレトラクト$A$であって$X$を$A$に連続的に変形できるよ�
             & \wt{U} \ar{d}{p}[swap, anchor=center, rotate=90, yshift=1ex]{\approx} \\
             V \ar[shift left]{ur}{\wt{\varphi}_1}
                 \ar[shift right]{ur}[swap]{\wt{\varphi}_2}
-                \ar[r, "{\varphi}"']
+                \ar{r}{\varphi}
                 & U
         \end{tikzcd}
     \end{equation}
@@ -1301,8 +1309,12 @@ $S^1$の基本群は最も身近にある非自明な例というばかりでな
     補題の$(\tilde{\omega}_k)_0$は
     \begin{equation}
         \begin{tikzcd}
-            & \R \ar[d, "{p}"] \\
-            I \ar[ur, "{(\tilde{\omega}_k)_0}"] \ar[r, "{\omega_k}"'] & S^1
+            & \R
+                \ar{d}{p} \\
+            I
+                \ar{ur}{(\tilde{\omega}_k)_0}
+                \ar{r}{\omega_k}
+                & S^1
         \end{tikzcd}
     \end{equation}
     を可換にする連続写像だから$\omega_k$のリフトであり、

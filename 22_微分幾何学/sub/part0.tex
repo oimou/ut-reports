@@ -581,9 +581,43 @@ Euclid 空間の幾何学的な接ベクトルの性質を一般化して定義�
 % ------------------------------------------------------------
 %
 % ------------------------------------------------------------
+\section{被覆空間}
+
+被覆空間の概念は
+後で述べる Lie 群の作用と密接に関係している。
+
+\begin{definition}[被覆空間]
+    $M$を多様体、
+    $\pi \colon E \to M$を{\smooth}写像とする。
+    $\pi$ (あるいは$E$) が$M$の
+    \term{被覆空間}[covering space]{ひふくくうかん}
+    であるとは、
+    各$p \in M$に対し、
+    $p$の開近傍$U \opensubset M$であって
+    $\pi^{-1}(U)$の各連結成分が$\pi$のもとで$U$と微分同相となるものが存在することをいう。
+\end{definition}
+
+\begin{proposition}[位相的被覆空間は{\smooth}被覆空間]
+    $M$を多様体、
+    $\pi \colon E \to M$を位相的被覆空間とする。
+    このとき、
+    $E$の多様体構造であって
+    $\pi$が{\smooth}となるものがただひとつ存在する。
+\end{proposition}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
 \section{部分多様体}
 
-部分多様体について述べる。
+本節では部分多様体について述べる。
+部分多様体の概念は、既存の多様体から新たな多様体を構成するために不可欠なものである。
 
 \begin{definition}[部分多様体]
     $M$を多様体、$S \subset M$とする。
@@ -659,8 +693,14 @@ Euclid 空間の幾何学的な接ベクトルの性質を一般化して定義�
 \end{proof}
 
 \begin{definition}[defining map]
-    \TODO{}
+    \TODO{defining map がわかると何が嬉しい?}
 \end{definition}
+
+部分多様体への写像が{\smooth}かどうかを
+定義から直接判定するのは(おそらく)面倒である。
+そこで、次のような判定法がある。
+これらの判定法は、たとえば level set として定義された部分多様体の
+座標を具体的に構成するために利用できる。
 
 \begin{theorem}[はめ込み多様体への値域の制限]
     $M, N$を多様体、
@@ -3045,6 +3085,27 @@ Lie 微分とよばれる演算を定義する。
     。
 \end{definition}
 
+\begin{proposition}[Lie 微分と $t$-微分]
+    Lie 微分は$t$-微分で表せる。すなわち
+    \begin{equation}
+        \begin{tikzcd}
+            \Omega^k(M)
+                \ar{r}{L_X}
+                \ar{d}[swap]{X_t^*}
+                & \Omega^k(M)
+                    \ar{d}{X_t^*}
+                \\
+            \Omega^k(M)
+                \ar{r}[swap]{\dd{t}}
+                & \Omega^k(M)
+        \end{tikzcd}
+    \end{equation}
+\end{proposition}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
 ベクトル場$X$による Lie 微分は定義に基づいて計算しようとすると
 $X$のフローを考えなければならないが、
 以下に挙げるようないくつかのケースではフローを持ち出すことなく、
@@ -3288,15 +3349,16 @@ Lie 微分は対称積に関して導分の性質を持つ。
 \section{微分形式}
 
 \begin{definition}[微分形式]
-    \idxsym{space of $s$-forms}{$\Omega^s(U)$}{$U$上の$s$-形式全体の空間}
+    \idxsym{space of smooth $s$-forms}{$\Omega^s(U)$}{$U$上の{\smooth} $s$-形式全体の空間}
     $M$を$m$次元多様体、
     $U \opensubset M$とする。
     \begin{itemize}
-        \item $\Gamma_U(\bigwedge^s(T^*M))$の元を
+        \item ベクトル束$\bigwedge^s(T^*M)$の切断を
             $U$上の\term{微分$s$-形式}[differential $s$-form]{微分$s$形式}[びぶんsけいしき]
             あるいは単に
             \emph{$s$形式}
             という。
+            とくに{\smooth}な切断の全体
             $\Gamma_U(\bigwedge^s(T^*M))$を$\Omega^s(U)$とも書く。
         \item $s = 0$のとき、形式的に$\Omega^0(U) \coloneqq \smooth(U)$
             と定める。
@@ -3347,9 +3409,10 @@ Lie 微分は対称積に関して導分の性質を持つ。
 \begin{definition}[微分形式の外積]
     \idxsym{exterior product of differential forms}
         {$\omega \wedge \mu$}{微分形式の外積}
-    $M$を多様体、$U \opensubset M$とする。
-    $\omega \in \Omega^r(U), \; \mu \in \Omega^s(U)$とする。
-    $U$上の$r + s$次微分形式
+    $M$を多様体、$U \opensubset M$、
+    $\omega$を$U$上の$r$-形式、
+    $\mu$を$U$上の$s$-形式とする。
+    $U$上の$(r + s)$-形式
     \begin{alignat}{1}
         (\omega \wedge \mu)_p (v_1, \dots, v_{r + s})
             &\coloneqq \frac{1}{r! s!}
@@ -3396,12 +3459,12 @@ Lie 微分は対称積に関して導分の性質を持つ。
     \label[proposition]{prop:exterior-product-basic-properties}
     $M$を多様体、$U \opensubset M$とする。
     \begin{enumerate}
-        \item $\omega \in \Omega^r(U), \; \mu \in \Omega^s(U)$に対し
+        \item $U$上の$r$-形式$\omega$と$s$-形式$\mu$に対し、
             \begin{equation}
                 \omega \wedge \eta = (-1)^{rs} \eta \wedge \omega
             \end{equation}
             が成り立つ。
-        \item $\omega_1, \dots, \omega_k \in \Omega^1(U)$に対し
+        \item $U$上の1-形式$\omega_1, \dots, \omega_k$に対し、
             \begin{equation}
                 \omega_1 \wedge \cdots \wedge \omega_k
                     = \sum_{\sigma \in \frakS_k}
@@ -3447,15 +3510,17 @@ Lie 微分は対称積に関して導分の性質を持つ。
     \label[proposition]{prop:top-degree-form-pullback-formula}
     $M, N$を$n$次元多様体、
     $F \colon M \to N$を{\smooth}写像、
-    $(x^i), (y^j)$をそれぞれ$U \opensubset M, V \opensubset N$上の局所座標とする。
+    $(x^i), (y^j)$をそれぞれ$U \opensubset M, V \opensubset N$上の座標とする。
     このとき、$V$上の任意の連続関数$u$に対し、
     $U \cap F^{-1}(V)$上で
     \begin{equation}
         F^* (u \,dy^1 \wedge \dots \wedge dy^n)
-            = (u \circ F) (\det JF) \, dx^1 \wedge \dots \wedge dx^n
+            =
+                (u \circ F)
+                \det \frac{\del (y^1 \circ F, \dots, y^n \circ F)}{\del (x^1, \dots, x^n)}
+                \, dx^1 \wedge \dots \wedge dx^n
     \end{equation}
     が成り立つ。
-    \TODO{連続関数でいいのか？}
 \end{proposition}
 
 \begin{proof}
@@ -3502,7 +3567,9 @@ Lie 微分は外積に関して導分の性質を持つ (反導分ではない�
 % ------------------------------------------------------------
 \section{外微分}
 
-微分形式全体の空間$\Omega^*(M)$に外微分とよばれる演算を定義する。
+前節で導入した外積は、連続微分形式に対する演算であった。
+本節では、
+{\smooth}微分形式に対し外微分とよばれる演算を定義する。
 外微分を境界作用素として$\Omega^*(M)$は
 チェイン複体となるが\footnote{
     より詳しくいえば、$\Omega^*(M)$は wedge 積により次数付き代数となり、

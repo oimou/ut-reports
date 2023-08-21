@@ -152,6 +152,22 @@
     であるとは、$\R^n$と局所等長であることをいう。
 \end{definition}
 
+\begin{theorem}[平坦性と正規直交フレーム]
+    $(M, g)$を Riemann 多様体とする。
+    このとき、次は同値である:
+    \begin{enumerate}
+        \item $g$は平坦である。
+        \item 各点$p \in M$に対し、$p$のまわりの正規直交座標が存在する。
+        \item 各点$p \in M$に対し、$p$のまわりの可換な正規直交フレームが存在する。
+    \end{enumerate}
+\end{theorem}
+
+\begin{proof}
+    (1) \Rightarrow (2) \Rightarrow (3) は定義から明らかである。
+    (3) \Rightarrow (1) は、Frobenius の定理により正規直交座標が存在し、
+    これが$\R^n$の標準座標に対応することから従う。
+\end{proof}
+
 % ------------------------------------------------------------
 %
 % ------------------------------------------------------------
@@ -251,7 +267,15 @@
         \div X \coloneqq *^{-1} d(\beta(X))
     \end{equation}
     を$X$の\term{発散}[divergence]{発散}[はっさん]という。
-    \TODO{}
+    ただし$* \colon \smooth(M) \to \Omega^n(M)$は
+    体積形式を掛ける写像、すなわち
+    $*f = f \vol_g$である。
+\end{definition}
+
+\begin{definition}[発散の別定義]
+    $L_X \vol_g = f \vol_g$なるただ一つの関数$f$を
+    $\div X$と書き、
+    $X$の\term{発散}[divergence]{発散}[はっさん]という。
 \end{definition}
 
 
@@ -290,35 +314,76 @@
 
 体積分は最高次の積分である。
 
-\begin{definition}[計量に付随する体積形式]
-    \idxsym{volume form w.r.t. metric}{$d\vol_g, \vol_g$}
-        {計量$g$に付随する体積形式}
+%\begin{definition}[計量に付随する体積形式]
+%    \idxsym{volume form w.r.t. metric}{$d\vol_g, \vol_g$}
+%        {計量$g$に付随する体積形式}
+%    $M$を向きづけられた$n$次元多様体、
+%    $g$を$M$上の計量、
+%    $\{ (U_\alpha, \varphi_\alpha) \}_{\alpha \in A}$を
+%    与えられた$M$の向きを定める atlas とし、
+%    各$\alpha \in A$に対し
+%    $\varphi_\alpha \eqqcolon (x_{\alpha 1}, \dots, x_{\alpha n})$
+%    とおいて$U_\alpha$上で
+%    \begin{equation}
+%        g = g_{\alpha ij} dx_{\alpha i} \otimes dx_{\alpha j}
+%    \end{equation}
+%    と座標表示する。
+%    このとき、$\omega_\alpha \in \Omega^n(U_\alpha)$を
+%    \begin{equation}
+%        \omega_\alpha \coloneqq
+%            \sqrt{|\det g_\alpha|} \, dx_{\alpha 1} \wedge \dots \wedge dx_{\alpha n}
+%    \end{equation}
+%    と定めると、
+%    $\omega_\alpha$らをはりあわせて
+%    $M$上の nonvanishing な最高次形式$\omega$が定まる (このあとすぐ示す)。
+%    $\omega$を$g$に付随する\term{体積形式}[volume form]{体積形式}[たいせきけいしき]といい、
+%    $d\vol_g$や$\vol_g$と書く。
+%\end{definition}
+%
+%\begin{proof}
+%    \TODO{}
+%\end{proof}
+
+\begin{propdef}[計量に付随する体積形式]
     $M$を向きづけられた$n$次元多様体、
-    $g$を$M$上の計量、
-    $\{ (U_\alpha, \varphi_\alpha) \}_{\alpha \in A}$を
-    与えられた$M$の向きを定める atlas とし、
-    各$\alpha \in A$に対し
-    $\varphi_\alpha \eqqcolon (x_{\alpha 1}, \dots, x_{\alpha n})$
-    とおいて$U_\alpha$上で
-    \begin{equation}
-        g = g_{\alpha ij} dx_{\alpha i} \otimes dx_{\alpha j}
-    \end{equation}
-    と座標表示する。
-    このとき、$\omega_\alpha \in \Omega^n(U_\alpha)$を
-    \begin{equation}
-        \omega_\alpha \coloneqq
-            \sqrt{|\det g_\alpha|} \, dx_{\alpha 1} \wedge \dots \wedge dx_{\alpha n}
-    \end{equation}
-    と定めると、
-    $\omega_\alpha$らをはりあわせて
-    $M$上の nonvanishing な最高次形式$\omega$が定まる (このあとすぐ示す)。
-    $\omega$を$g$に付随する\term{体積形式}[volume form]{体積形式}[たいせきけいしき]といい、
-    $d\vol_g$や$\vol_g$と書く。
-\end{definition}
+    $g$を$M$上の計量とする。
+    このとき、$\omega \in \Omega^n(M)$に関する
+    次の3条件は同値である:
+    \begin{enumerate}
+        \item 任意の向きづけられた正規直交余フレーム$\eps^1, \dots, \eps^n \in \Omega^1(M)$
+            に対し
+            \begin{equation}
+                \omega = \eps^1 \wedge \dots \wedge \eps^n
+            \end{equation}
+            が成り立つ。
+        \item 任意の向きづけられた正規直交フレーム$E_1, \dots, E_n \in \frakX(M)$
+            に対し
+            \begin{equation}
+                \omega(E_1, \dots, E_n) = 1
+            \end{equation}
+            が成り立つ。
+        \item 任意の向きづけられた座標$x^1, \dots, x^n$に対し
+            \begin{equation}
+                \omega = \sqrt{|\det (g_{ij})|} \, dx^1 \wedge \dots \wedge dx^n
+            \end{equation}
+            が成り立つ。
+    \end{enumerate}
+    これらの条件をみたす$\omega \in \Omega^n(M)$がただひとつ存在する。
+    これを$d\vol_g$や$\vol_g$と書き、
+    $g$に付随する\term{体積形式}[volume form]{体積形式}[たいせきけいしき]という。
+\end{propdef}
 
 \begin{proof}
     \TODO{}
 \end{proof}
+
+\begin{definition}[連続関数の積分]
+    $(M, g)$を向き付けられた Riemann 多様体、
+    $f$をコンパクト台を持つ実数値連続関数とする。
+    すると$f \vol_g$はコンパクト台を持つ$M$上の (連続) 最高次形式であるから、
+    $\int_M f \vol_g$が定まる。
+    これを$M$上の$f$の\term{積分}[integral]{積分}[せきぶん]という。
+\end{definition}
 
 \begin{example}[$S^n$の体積]
     $S^n$の体積 ($n=1$なら円周の長さ、$n=2$なら球の表面積) を求める。
@@ -398,14 +463,14 @@
     である。
 \end{example}
 
-\begin{theorem}[発散定理; Green の定理]
+\begin{theorem}[発散定理; Gauss の定理]
     \termhidden[divergence theorem]{発散定理}[はっさんていり]
-    \termhidden[Green's theorem]{Green の定理}[Greenのていり]
+    \termhidden[Gauss's theorem]{Gauss の定理}[Gaussのていり]
     $(M, g)$を向き付けられた Riemann 多様体とする。
     このとき、$M$上の compactly supported な任意のベクトル場$X$に対し
     \begin{equation}
-        \int_M \div X \, dV_g
-            = \int_{\partial M} \langle X, N \rangle_g \,dV_{\tilde{g}}
+        \int_M \div X \, \vol_g
+            = \int_{\partial M} \langle X, N \rangle_g \, \vol_{\tilde{g}}
     \end{equation}
     が成り立つ。
     ただし、$N$は$\partial M$に沿った外向き単位法線ベクトル場であり、
@@ -415,6 +480,29 @@
 \begin{proof}
     cf. [Lee] p.424
 \end{proof}
+
+\begin{example}[球と勾配ベクトル場]
+    $M = D^3, \; X = \grad f$の場合、
+    \begin{equation}
+        \int_{D^3} \myparen{
+            \frac{\del^2 f}{\del x^2}
+            + \frac{\del^2 f}{\del y^2}
+            + \frac{\del^2 f}{\del z^2}
+        } \, \vol_{g}
+            =
+                \int_{S^2}
+                    \myparen{
+                        x \deldel{x}
+                        + y \deldel{y}
+                        + z \deldel{z}
+                    } f
+                    \, \vol_{\tilde{g}}
+    \end{equation}
+    が成り立つ。
+    ここで$S^2 = \del D^3$に沿った外向き単位法線ベクトル場は
+    $N = x \deldel{x} + y \deldel{y} + z \deldel{z}$
+    に他ならないことに注意されたい。
+\end{example}
 
 \begin{definition}[表面積分]
     \TODO{}

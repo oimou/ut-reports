@@ -651,6 +651,7 @@ PID上の有限生成加群の構造定理について述べる。
 次のように$K[X]$-加群構造が入る。
 
 \begin{definition}
+    \label[definition]{def:endo-module}
     \idxsym{vector space on which polynomials act}
         {$\down{f}K^n$}{$K^n$に$K[X]$-加群構造を定めたもの}
     $V$を$K$-ベクトル空間、
@@ -841,18 +842,47 @@ PID上の有限生成加群の構造定理について述べる。
 最小多項式を導入する。
 最小多項式は、ベクトル空間の自己準同型を調べるために用いられる。
 
-\begin{definition}[最小多項式]
+\begin{propdef}[最小多項式]
     $K$を体、
     $n \in \Z_{\ge 1}$、
-    $A \in M_n(K)$とする。
-    $K[X]$はPIDだから、
-    $\down{A}K^n$の annihilator 
-    $\Ann_{K[X]}(\down{A}K^n)$は単項イデアルである。
-    $\Ann_{K[X]}(\down{A}K^n)$のモニックな生成元$f_0$を
-    $A$の
+    $A \in M_n(K)$とし、
+    $K^n$を\cref{def:endo-module}のように
+    $K[X]$-加群とみなして$\down{A}K^n$と書く。
+    このとき、
+    $\Ann_{K[X]}(\down{A}K^n)$のモニックな生成元$\varphi_A$がただひとつ存在する。
+    $\varphi_A$を$A$の
     \term{最小多項式}[minimal polynomial]{最小多項式}[さいしょうたこうしき]
     という。
-\end{definition}
+\end{propdef}
+
+\begin{proof}
+    $K[X]$はPIDだから
+    そのイデアル$\Ann_{K[X]}(\down{A}K^n)$は単項イデアルである。
+    よってその生成元が存在する。
+    一意性はモニックの条件から従う。
+\end{proof}
+
+\begin{example}[最小多項式の計算]
+    $A$の最小多項式を具体的に計算するには、
+    $A$の固有多項式の約元を計算してみるという方法がある。
+    たとえば$\Phi_A(X) = (X - 3)(X - 1)^3$なら
+    $(A - 3I)(A - I), \; (A - 3I)(A - I)^2$
+    を計算してみればよい。
+    いずれも$O$でないならば
+    最小多項式は$\Phi_A(X)$に一致する。
+\end{example}
+
+最小多項式の定義から明らかに次がわかる。
+
+\begin{proposition}
+    $f(X) \in K[X]$が
+    $f(A) = O$をみたすならば
+    $\varphi_A \mid f$である。
+\end{proposition}
+
+\begin{proof}
+    Annihilator の定義から明らか。
+\end{proof}
 
 Jordan 細胞を定義する。
 
@@ -897,13 +927,13 @@ $\down{A}K^n$の$K[X]$-加群構造は非常に単純な形になる。
 
 \begin{proposition}[最小多項式の根の重複度と一般固有空間]
     $V$を有限次元$K$-ベクトル空間、
-    $f$を$V$の自己準同型とする。
-    このとき、$f$の任意の固有値$a \in K$に対し、
-    $f$の最小多項式の根$a$の重複度を$d$とおくと
+    $f \in \End(V)$とする。
+    このとき、$f$の任意の固有値$a \in K$に対し
     \begin{equation}
         V_{[a]} = \Ker (f - a\id)^d
     \end{equation}
     が成り立つ。
+    ただし$d$は$f$の最小多項式の根としての$a$の重複度である。
 \end{proposition}
 
 \begin{proof}
@@ -993,8 +1023,28 @@ $\down{A}K^n$の$K[X]$-加群構造は非常に単純な形になる。
     $f$の固有多項式の根としての$a$の重複度を
     固有値$a$の
     \term{重複度}[multiplicity]{重複度!固有値の---}[ちょうふくど]
+    あるいは
+    \term{代数的重複度}[algebraic multiplicity]{重複度!代数的---}[だいすうてきちょうふくど]
+    という。
+
+    $a$に属する固有空間$V_a$の次元を
+    固有値$a$の
+    \term{幾何学的重複度}[geometric multiplicity]{重複度!幾何学的---}[きかがくてきちょうふくど]
     という。
 \end{definition}
+
+\begin{proposition}
+    \begin{equation}
+        (\text{幾何学的重複度}) \le (\text{代数的重複度})
+    \end{equation}
+    であり、
+    すべての固有値に対して等号が成り立つことと
+    対角化可能性は同値である。
+\end{proposition}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
 
 \begin{proposition}[固有値の重複度と一般固有空間の次元]
     \label[proposition]{prop:multiplicity-and-dim-of-generalized-eigenspace}
@@ -1007,6 +1057,35 @@ $\down{A}K^n$の$K[X]$-加群構造は非常に単純な形になる。
 
 \begin{proof}
     \TODO{cf. \cref[p.117]{齋藤07}}
+\end{proof}
+
+\subsection{同伴行列}
+
+\begin{definition}[同伴行列]
+    $f(X) = c_0 + c_1 X + \cdots + c_{n-1} X^{n-1} + X^n \in K[X]$を
+    モニックな多項式とする。
+    行列
+    \begin{equation}
+        \begin{pmatrix}
+            0 & 0 & \cdots & 0 & -c_0 \\
+            1 & 0 & \cdots & 0 & -c_1 \\
+            0 & 1 & \cdots & 0 & -c_2 \\
+            \vdots & \vdots & \ddots & \vdots & \vdots \\
+            0 & 0 & \cdots & 1 & -c_{n-1}
+        \end{pmatrix}
+    \end{equation}
+    を$f$の
+    \term{同伴行列}[companion matrix]{同伴行列}[どうはんぎょうれつ]
+    という。
+\end{definition}
+
+\begin{proposition}
+    多項式$f(X) \in K[X]$に対し、
+    $f$の同伴行列の固有多項式と最小多項式は$f$に一致する。
+\end{proposition}
+
+\begin{proof}
+    \TODO{}
 \end{proof}
 
 % ------------------------------------------------------------
@@ -1073,22 +1152,34 @@ $\down{A}K^n$の$K[X]$-加群構造は非常に単純な形になる。
 対角化可能性は最小多項式を用いて特徴づけることができる。
 
 \begin{theorem}[対角化可能性の特徴づけ]
-    $K$を体、
+    $K$を代数的閉体、
     $n \in \Z_{\ge 1}$、
     $A \in M_n(K)$とする。
-    このとき、$A$が対角化可能であることと
-    $A$の最小多項式が重根を持たないことは同値である。
+    このとき次は同値である:
+    \begin{enumerate}
+        \item $A$は対角化可能である。
+        \item $A$の最小多項式$\varphi_A$は重根を持たない。
+    \end{enumerate}
 \end{theorem}
 
 \begin{proof}
     \TODO{}
 \end{proof}
 
-エルミート行列はユニタリ行列で対角化できる。
+\begin{corollary}
+    $A$の固有多項式$\Phi_A$が重根を持たないならば、
+    $A$は対角化可能である。
+\end{corollary}
 
-\begin{theorem}[エルミート行列の対角化]
-    \TODO{}
-\end{theorem}
+\begin{proof}
+    $\Phi_A$が重根を持たないならば、
+    $\varphi_A$も重根を持たないから、
+    定理より$A$は対角化可能である。
+\end{proof}
+
+\subsection{直交対角化とユニタリ対角化}
+
+\TODO{}
 
 
 % ------------------------------------------------------------
@@ -2292,6 +2383,39 @@ $K$-ベクトル空間$V$上の双線型写像で$K$に値をもつものを双�
 % ------------------------------------------------------------
 %
 % ------------------------------------------------------------
+\section{直交変換とユニタリ変換}
+
+\begin{definition}[Gram 行列]
+    $v_1, \dots, v_n$を$V$の基底とする。
+    \begin{equation}
+        \begin{pmatrix}
+            \myangle{v_1}{v_1} & \cdots & \myangle{v_1}{v_n} \\
+            \vdots & \ddots & \vdots \\
+            \myangle{v_n}{v_1} & \cdots & \myangle{v_n}{v_n}
+        \end{pmatrix}
+    \end{equation}
+    を$v_1, \dots, v_n$の
+    \term{Gram 行列}[Gram matrix]{Gram 行列}[Gram ぎょうれつ]という。
+\end{definition}
+
+\begin{definition}[直交変換とユニタリ変換]
+    $\myangle{\varphi(v)}{\varphi(w)} = \myangle{v}{w}$をみたす
+    線型写像$\varphi \colon V \to V$を
+    \term{ユニタリ変換}[unitary transformation]{ユニタリ変換}[ユニタリへんかん]という。
+    とくに$K = \R$のとき
+    \term{直交変換}[orthogonal transformation]{直交変換}[ちょっこうへんかん]という。
+\end{definition}
+
+\begin{definition}[対称行列と随伴行列]
+    $\up{t}A$を
+    $A$の\term{転置行列}[transpose matrix]{転置行列}[てんちぎょうれつ]といい、
+    $A^*$を
+    $A$の\term{随伴行列}[adjoint matrix]{随伴行列}[ずいはんぎょうれつ]という。
+\end{definition}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
 \section{2次形式}
 
 \begin{definition}[符号]
@@ -2324,7 +2448,45 @@ $K$-ベクトル空間$V$上の双線型写像で$K$に値をもつものを双�
 % ------------------------------------------------------------
 \section{Banach 空間と Hilbert 空間}
 
-\TODO{}
+\begin{definition}[有界線型作用素]
+    $X, Y$をノルム空間、
+    $f \colon X \to Y$を線型作用素とする。
+    \begin{equation}
+        \sup_{\| x \| \le 1} \| f(x) \| < \infty
+    \end{equation}
+    のとき、
+    $f$は
+    \term{有界}[bounded]{有界}[ゆうかい]
+    であるという。
+\end{definition}
+
+\begin{theorem}[有界性の特徴づけ]
+    $X, Y$をノルム空間、
+    $f \colon X \to Y$を線型作用素とする。
+    このとき、次は同値である:
+    \begin{enumerate}
+        \item $f$は有界である。
+        \item $f$は連続である。
+        \item $f$はある1点で連続である。
+    \end{enumerate}
+\end{theorem}
+
+連続性は点列連続性で置き換えられることは重要である。
+なぜならば、ノルム空間は距離化可能ゆえに第1可算だからである。
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+\begin{theorem}[開写像定理]
+    $X, Y$を Banach 空間とする。
+    有界線型作用素$f \colon X \to Y$が全射ならば、
+    $f$は開写像である。
+\end{theorem}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
 
 
 
