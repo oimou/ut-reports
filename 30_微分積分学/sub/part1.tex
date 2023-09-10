@@ -735,10 +735,10 @@ $+\infty$を許す測度を扱う場合にのみこの条件を課すことに�
     \termhidden[dominated convergence theorem]{優収束定理}[ゆうしゅうそくていり]
     $(X, \calA)$を可測空間、
     $\mu$を$X$上の測度、
-    $(f_n)_{n \in \N}$を$\mu$-可積分関数$X \to \R$の列とする。
+    $(f_n)_{n \in \N}$を可測関数$X \to \R$の列とする。
     このとき、条件
     \begin{enumerate}
-        \item $\mu$-a.e.$x \in X$に対し、
+        \item a.e.$x$に対し
             $\lim_{n \to \infty} f_n(x)$が
             $[-\infty, +\infty]$内に存在する。
             \TODO{a.e.でいいのか？}
@@ -748,9 +748,7 @@ $+\infty$を許す測度を扱う場合にのみこの条件を課すことに�
             をみたす。
     \end{enumerate}
     が成り立つならば、
-    $f \colon X \to [-\infty, +\infty], \;
-        x \mapsto \lim_{n \to \infty} f_n(x)$
-    は$\mu$-可積分であり\TODO{値域あってる？}、
+    $f, f_n$は$\mu$-可積分であり、
     \begin{equation}
         \int_X f(x) \, \mu(dx)
             = \lim_{n \to \infty} \int_X f_n(x) \, \mu(dx)
@@ -762,7 +760,45 @@ $+\infty$を許す測度を扱う場合にのみこの条件を課すことに�
     \TODO{}
 \end{proof}
 
-\begin{theorem}[単調収束定理; MCT]
+\begin{corollary}[有界収束定理; BCT]
+    \termhidden[bounded convergence theorem]{有界収束定理}[ゆうかいしゅうそくていり]
+    $(X, \calA)$を可測空間、
+    $\mu$を$X$上の\highlight{有限}測度、
+    $(f_n)_{n \in \N}$を可測関数$X \to \R$の列とする。
+    このとき、条件
+    \begin{enumerate}
+        \item a.e.$x$に対し
+            $\lim_{n \to \infty} f_n(x)$が
+            $[-\infty, +\infty]$内に存在する。
+            \TODO{a.e.でいいのか？}
+        \item ある$M \ge 0$が存在して、
+            すべての$n \in \N$に対し
+            $|f_n(x)| \le M \; \text{a.e.$x$}$
+            をみたす。
+    \end{enumerate}
+    が成り立つならば、
+    $f \colon X \to [-\infty, +\infty], \;
+        x \mapsto \lim_{n \to \infty} f_n(x)$
+    は$\mu$-可積分であり\TODO{値域あってる？}、
+    \begin{equation}
+        \int_X f(x) \, \mu(dx)
+            = \lim_{n \to \infty} \int_X f_n(x) \, \mu(dx)
+    \end{equation}
+    が成り立つ。
+\end{corollary}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+次に単調収束定理を述べる。
+単調収束定理には非負性を仮定するものとしないものがある。
+
+\begin{theorem}[単調収束定理; MCT (非負 ver.)]
+    \TODO{}
+\end{theorem}
+
+\begin{theorem}[単調収束定理; MCT (非負性を除いた ver.)]
     \termhidden[monotone convergence theorem]{単調収束定理}[たんちょうしゅうそくていり]
     $(X, \calA)$を可測空間、
     $\mu$を$\calA$上の$[0, +\infty]$に値をもつ測度、
@@ -783,12 +819,34 @@ $+\infty$を許す測度を扱う場合にのみこの条件を課すことに�
     が成り立つ。
 \end{theorem}
 
+単調収束定理は、優関数を持ち出す必要がないという点が特徴である。
+
 \begin{proof}
     \TODO{}
 \end{proof}
 
+\begin{corollary}[和と積分の交換]
+    \highlight{非負}可測関数列に対し
+    \begin{equation}
+        \int \sum f_n \, d\mu = \sum \int f_n \, d\mu
+            \in [0, +\infty]
+    \end{equation}
+    \qed
+\end{corollary}
+
+\begin{example}[局所可積分でない可測関数]
+    ~
+    cf. \url{https://math.stackexchange.com/questions/1731553/where-are-measurable-functions-not-locally-integrable}
+
+    この例では、
+    まず$\infty$を値に許す関数を構成してから、
+    MCTで和と積分を交換して有限性を示すことで、
+    関数がほとんどいたるところ有限であることを示すという流れになっている。
+    MCTを経由して関数の有限性を示すという点が特徴である。
+\end{example}
+
 \begin{theorem}[Fatou の定理]
-    \highlight{非負}可積分関数列$(f_n), \; f_n \to f$が
+    \highlight{非負}可積分関数列$(f_n), \; f_n \to f \, \text{a.e.}$が
     \begin{equation}
         \sup_n \int_X f_n \, \mu(dx) < \infty
     \end{equation}
@@ -801,9 +859,8 @@ $+\infty$を許す測度を扱う場合にのみこの条件を課すことに�
     が成り立つ。
 \end{theorem}
 
-Fatou の定理は優収束定理や単調収束定理と違い、
-各関数が非負であることを仮定している。
-また、極限の交換を主張しているわけではなく、
+Fatou の定理は
+極限の交換を主張しているわけではなく、
 式の形は下半連続性に似ている。
 
 \begin{proof}
@@ -1049,7 +1106,26 @@ Riemann 積分と Lebesgue 積分との関係性について調べる。
 % ------------------------------------------------------------
 %
 % ------------------------------------------------------------
-\section{$L^p$ノルム}
+\section{$L^p, L^\infty$空間}
+
+\begin{definition}[$L^p$空間、$L^\infty$空間]
+    \TODO{}
+\end{definition}
+
+\begin{proposition}
+    $1 \le p < \infty$に対し、
+    $(L^p)^* \cong L^q$が成り立つ。
+    ただし$q$は$p$の共役指数である。
+\end{proposition}
+
+\begin{remark}
+    $L^\infty$の双対空間は
+    $L^1$とはならないことに注意すべきである。
+\end{remark}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
 
 \begin{theorem}[Minkowski の不等式]
     \TODO{}
@@ -1063,6 +1139,25 @@ Riemann 積分と Lebesgue 積分との関係性について調べる。
 %
 % ------------------------------------------------------------
 \section{Hilbert 空間$L^2$}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{Hahn-Banach の定理}
+
+\begin{theorem}[Hahn-Banach]
+    $X$を線型空間、$X_0$を$X$の線型部分空間とする。
+    $X_0$上の線型関数$l_0$が
+    $X$上の凸関数$p$で抑えられるとき、
+    $l_0$は$X$上の線型関数$l$であって
+    $X$上$p$で抑えられるものに拡張できる。
+\end{theorem}
+
+\begin{corollary}
+    $X$をノルム空間、$X_0$を$X$の (閉とは限らない) 線型部分空間とする。
+    $l_0$が$X_0$上の連続線型関数であるとき、
+    $l_0$は$X$上の連続線型関数$l$にノルムを保って拡張できる。
+\end{corollary}
 
 
 
