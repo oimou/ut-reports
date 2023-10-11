@@ -1,0 +1,163 @@
+\documentclass[report]{jlreq}
+\usepackage{global}
+\usepackage{../sub/local}
+\subfiletrue
+\def\assetspath{../}
+\begin{document}
+
+% ============================================================
+%
+% ============================================================
+\chapter{Hessian}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{Hessian}
+
+本節では
+$W$を$m$次元$\R$-ベクトル空間 ($m \in \Z_{\ge 0}$)、
+$U \opensubset W$を開部分集合とする。
+
+本節では$U$上の$C^\infty$関数に対し Hessian を定義したい。
+そこで、まず$U$上にアファイン接続を定義し、それを用いて Hessian を定義する。
+
+\subsection{$U$上のアファイン接続}
+
+一般のアファイン接続の平坦性を定義しておく。
+
+\begin{definition}[平坦アファイン接続]
+    $M$を多様体、
+    $\nabla$を$M$上のアファイン接続とする。
+    \begin{itemize}
+        \item $M$の開部分集合$O \opensubset M$上の座標であって、
+            それに関する$\nabla$の接続係数がすべて$0$となるものを、
+            $O$上の
+            \term{$\nabla$-アファイン座標}[$\nabla$-affine coordinates]
+                {アファイン座標}[アファインざひょう]
+            という。
+        \item 各$p \in M$に対し、
+            $p$のまわりの$\nabla$-アファイン座標が存在するとき、
+            $\nabla$は$M$上
+            \term{平坦}[flat]{平坦}[へいたん]であるという。
+    \end{itemize}
+\end{definition}
+
+今考えている$U$上には、次のような平坦アファイン接続が定まる。
+
+\begin{propdef}[$U$上の平坦アファイン接続]
+    $U$上のアファイン接続
+    $D \colon \Gamma(TU) \to \Gamma(T^\vee U \otimes TU)$を、
+    次の規則で well-defined に定めることができる:
+    \begin{itemize}
+        \item 各$X \in \Gamma(TU)$に対し、
+            $W$の基底が定める$U$上の座標
+            $x^i \; (i = 1, \dots, m)$
+            をひとつ選び、
+            \begin{equation}
+                \label{eq:def_connection_d}
+                DX
+                    \coloneqq dX^i \otimes \deldel{x^i}
+                    \in \Gamma(T^\vee U \otimes TU)
+            \end{equation}
+            と定める。
+            ただし、
+            $X$の成分表示を$X = X^i \deldel{x^i}$とおいた。
+    \end{itemize}
+    さらに、この$D$は$U$上のアファイン接続として平坦である。
+\end{propdef}
+
+\begin{proof}
+    写像として well-defined であることを一旦認め、
+    先に$\R$-線型性、Leibniz 則、平坦性を確かめる。
+    $D$の$\R$-線型性と Leibniz 則は、
+    外微分$d$の$\R$-線型性と Leibniz 則から従う。
+    平坦性は、
+    式\cref{eq:def_connection_d}で用いた座標$x^i$が
+    $D$-アファイン座標となることから従う。
+    最後に、$D$が写像として well-defined であることを示す。
+    $y^\alpha \; (\alpha = 1, \dots, m)$を
+    $W$の基底が定める$U$上の座標とすると、
+    \begin{alignat}{1}
+        dX^i \otimes \deldel{x^i}
+            &=
+                d\myparen{
+                    X^\alpha \deldel[x^i]{y^\alpha}
+                }
+                \otimes
+                \deldel[y^\alpha]{x^i}
+                \deldel{y^\alpha}
+                \\
+            &=
+                \Bigg(
+                    \deldel[x^i]{y^\alpha} dX^\alpha
+                    +
+                    X^\alpha \underbrace{
+                        d\myparen{
+                            \deldel[x^i]{y^\alpha}
+                        }
+                    }_{=0}
+                \Bigg)
+                \otimes
+                \deldel[y^\alpha]{x^i}
+                \deldel{y^\alpha}
+                \\
+            &=
+                dX^\alpha
+                \otimes
+                \deldel{y^\alpha}
+    \end{alignat}
+    となる。ただし「$= 0$」の部分は
+    $x^i$と$y^\alpha$の間の座標変換がアファイン変換となることを用いた。
+    これで well-defined 性も示された。
+\end{proof}
+
+\subsection{Hessian}
+
+$U$上のアファイン接続$D$により、
+$T^\vee U$の接続が誘導される。
+これを用いて Hessian を定義する。
+
+\begin{definition}[Hessian]
+    \smooth 関数$f \colon U \to \R$に対し、
+    $f$の\term{Hessian}{Hessian}[Hessian]を
+    \begin{equation}
+        \Hess f \coloneqq Ddf
+            \in \Gamma(T^\vee U \otimes T^\vee U)
+    \end{equation}
+    と定義する。
+\end{definition}
+
+$D$-アファイン座標を用いると、
+Hessian の成分表示は簡単な形になる。
+
+\begin{proposition}[Hessian の成分表示]
+    \label[proposition]{prop:hessian_components}
+    $x^i \; (i = 1, \dots, m)$を
+    $U$上の$D$-アファイン座標とする。
+    このとき、
+    座標$x^i$に関する$\Hess f$の成分表示は
+    \begin{equation}
+        \Hess f
+            = \frac{\del^2 f}{\del x^i \del x^j} \, dx^i \otimes dx^j
+    \end{equation}
+    となる。
+    とくに$f$の\smooth 性より
+    $\Hess f$は対称テンソルである。
+\end{proposition}
+
+\begin{proof}
+    $(\Hess f)(\del_i, \del_j)
+        = \langle D_{\del_i} df, \del_j \rangle
+        = \del_i \langle df, \del_j \rangle
+            - \langle
+                df,
+                \underbrace{D_{\del_i} \del_j}_{= 0}
+            \rangle
+        = \del_i (\del_j f)
+        = \frac{\del^2 f}{\del x^i \del x^j}$
+    より従う。
+\end{proof}
+
+
+\end{document}

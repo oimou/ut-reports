@@ -1,0 +1,70 @@
+\documentclass[report, notitlepage]{jlreq}
+\usepackage{docmute}
+\usepackage{global}
+\usepackage{./sub/local}
+\def\assetspath{./}
+%\makeindex
+%\makeglossaries
+
+\def\mydate{\leavevmode\hbox{\the\year\twodigits\month\twodigits\day}}
+\def\twodigits#1{\ifnum#1<10 0\fi\the#1}
+
+\chead{便覧 (ver. \mydate)}
+\begin{document}
+
+\tableofcontents
+\markboth{\contentsname}{}
+
+% ============================================================
+%
+% ============================================================
+\input{sub_handbook/chapter1}
+
+% ============================================================
+%
+% ============================================================
+\input{sub_handbook/chapter2}
+
+% ============================================================
+%
+% ============================================================
+\input{sub_handbook/chapter3}
+
+
+
+% ============================================================
+%
+% ============================================================
+\newpage
+\phantomsection
+\addcontentsline{toc}{part}{参考文献}
+\renewcommand{\bibname}{参考文献}
+\markboth{\bibname}{}
+\part*{参考文献}
+
+\nocite{amari_information_2016}
+
+{
+    \renewcommand{\bibsection}{}
+    \bibliographystyle{amsalpha}
+    \bibliography{./bibliography,../../mybibliography}
+}
+
+% ============================================================
+%
+% ============================================================
+\newpage
+\phantomsection
+\addcontentsline{toc}{part}{記号一覧}
+\printglossary[title={記号一覧}]
+
+% ============================================================
+%
+% ============================================================
+\newpage
+\phantomsection
+\addcontentsline{toc}{part}{索引}
+\printindex
+
+
+\end{document}

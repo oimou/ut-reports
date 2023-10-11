@@ -1,0 +1,438 @@
+\documentclass[report]{jlreq}
+\usepackage{global}
+\usepackage{./local}
+\subfiletrue
+\def\assetspath{../}
+%\makeindex
+\chead{2023/10/11}
+\begin{document}
+
+% ============================================================
+%
+% ============================================================
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section*{振り返りと導入}
+
+前回までは指数型分布族について調べていた。
+本稿では次のことを行う:
+\begin{itemize}
+    \item 統計モデルを定義する。
+    \item 最尤推定量を定義する。
+    \item Kullback-Leibler ダイバージェンスを定義する。
+\end{itemize}
+
+本稿では指数型分布族は open であるとする。
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{統計モデル}
+
+\begin{definition}[統計モデル]
+    $\calX$を可測空間とする。
+    多様体$\Theta \neq \emptyset$と
+    写像$\bfp \colon \Theta \to \calP(\calX)$の組$(\Theta, \bfp)$が
+    $\calX$上の\term{統計モデル}[statistical model]
+        {統計モデル}[とうけいもでる]
+    であるとは、
+    ある
+    \term{実現}{実現}[じつげん]
+    $(p, \mu)$が存在して次をみたすことをいう:
+    \begin{enumerate}[label=(\roman*)]
+        \item $p \colon \Theta \times \calX \to \R_{> 0}, \; (\theta, x) \mapsto p_\theta(x)$
+            \begin{enumerate}[label=(\roman{enumi}-\alph*)]
+                \item $\forall \theta \in \Theta,$ \; $p_\theta$は可測関数
+                \item $\text{$\mu$-a.e.} x \in \calX,$ \; $p(\cdot, x)$は{\smooth}関数
+            \end{enumerate}
+        \item $\mu$は$\sigma$-有限な測度である。
+        \item $\bfp(\theta) = p_\theta \cdot \mu$
+    \end{enumerate}
+\end{definition}
+
+\begin{proposition}
+    指数型分布族$\calP$と
+    その最小次元実現$(V, T, \mu)$をひとつ固定したとき、
+    $(\Theta, P)$は$\calX$上の統計モデルである。
+    ただし
+    $\Theta$は自然パラメータ空間、
+    $P$は自然パラメータ座標の逆写像である。
+\end{proposition}
+
+\begin{proof}
+    $p_\theta(x) = \exp \mybracket{ \myangle{\theta}{T(x)} - \psi(\theta) }$
+    とおけばよい。
+\end{proof}
+
+\begin{example}[統計モデルの例]
+    ~
+    \begin{itemize}
+        \item Cauchy 分布族
+    \end{itemize}
+\end{example}
+
+\begin{propdef}[スコア関数]
+    実現$(p, \mu)$に対し
+    関数
+    $l \colon \Theta \times \calX \to \R,
+        \; (\theta, x) \mapsto l_x(\theta) \coloneqq \log p_\theta(x)$
+    と定め、
+    実現$(p', \mu')$に対し同様に$l'$を定めると、
+    $dl_x = dl'_x \; (\text{a.e.$x$})$
+    が成り立つ。
+    そこで
+    $dl \colon \Theta \times \calX \to T^\vee \Theta$を
+    統計モデル$(\Theta, \bfp)$の
+    \term{スコア}[score]
+        {スコア}[すこあ]
+    という。
+\end{propdef}
+
+\begin{proof}
+    $(p, \mu), (p', \mu')$を考えると、
+    \begin{equation}
+        \frac{p'_\theta(x)}{p_\theta(x)}
+            =
+                \frac{d\mu}{d\mu'}(x)
+                \quad
+                (\text{a.e.$x$})
+    \end{equation}
+    $\log$をとって$\theta$で微分すれば
+    $dl'_\theta = dl_\theta \; (\text{a.e.$x$})$
+    を得る。
+\end{proof}
+
+\begin{proposition}
+    指数型分布族において
+    \begin{equation}
+        E_{\bfp(\theta)}[(dl_\theta)^2]
+            =
+                g_\theta
+    \end{equation}
+    が成り立つ。
+\end{proposition}
+
+\begin{proof}
+    $dl_\theta = d(\myangle{\theta}{T} - \psi(\theta)) = T(x) - d\psi_\theta$
+    だから、
+    $E[T] = d\psi_\theta$
+    に注意すれば
+    \begin{equation}
+        E[(dl_x)_\theta^2]
+            =
+                E[(T - E[T])^2]
+            =
+                \Var[T]
+            =
+                g_\theta
+    \end{equation}
+    である。
+\end{proof}
+
+\begin{definition}[Fisher 計量]
+    $E_{\bfp(\theta)}[(dl_x)_\theta^2]$を
+    統計モデル$(\Theta, \bfp)$の
+    \term{Fisher 計量}[Fisher metric]
+        {Fisher 計量}[Fisher けいりょう]
+    という。
+\end{definition}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{最尤推定}
+
+\begin{definition}[i.i.d.拡張]
+    $\calX$上の統計モデル$(\Theta, \bfp)$に対し、
+    $\calX^k$上の統計モデル$(\Theta, \bfp^k)$を
+    $(\Theta, \bfp)$の
+    \term{i.i.d.拡張}[i.i.d. extension]
+        {i.i.d.拡張}[i.i.d.かくちょう]
+    という。
+    ただし
+    $\bfp^k(\theta)
+        \coloneqq
+            \bfp(\theta) \times \cdots \times \bfp(\theta)$
+    (積測度) である。
+\end{definition}
+
+\begin{proposition}
+    指数型分布族のi.i.d.拡張は指数型分布族である。
+\end{proposition}
+
+\begin{proof}
+    元の指数型分布族の実現$(V, T, \mu)$に対し、
+    $(V, T', \mu^k), \; T'(x) \coloneqq \sum_{i = 1}^k T(x_i)$
+    がi.i.d.拡張の実現となる。
+\end{proof}
+
+\begin{propdef}[最尤推定量]
+    可測写像$\hat{\theta} \colon \calX \to \Theta$に関する条件を考える。
+    実現$(p, \mu)$に対し
+    $\text{a.e.} x \in \calX, \;
+        \hat{\theta}(x) \in \argmax_{\theta \in \Theta} p_\theta(x)$
+    が成り立つとき、
+    $\hat{\theta}$を
+    \termsilent{$(p, \mu)$に関する最尤推定量}
+    と呼ぶことにする。
+    このとき次は同値である:
+    \begin{enumerate}
+        \item $\hat{\theta}$はある実現$(p, \mu)$に関する最尤推定量である。
+        \item $\hat{\theta}$は任意の実現$(p, \mu)$に関する最尤推定量である。
+    \end{enumerate}
+    そこで、上の条件のいずれかが成り立つとき、
+    $\hat{\theta}$を統計モデル$(\Theta, \bfp)$の
+    \term{最尤推定量}[maximum likelihood estimator]
+        {最尤推定量}[さいゆうすいていりょう]
+    と呼ぶ。
+\end{propdef}
+
+\begin{proof}
+    (2) $\Rightarrow$ (1) は明らか。
+    (1) $\Rightarrow$ (2) は
+    $\argmax$の定義および
+    $q_\theta = p_\theta \dd[\mu]{\nu}$に注意すればわかる。
+\end{proof}
+
+\begin{proposition}[尤度方程式]
+    (1) $\hat{\theta}$が最尤推定量
+    ならば、
+    (2) a.e.$x$に対し
+    $\hat{\theta}(x)$は
+    \term{尤度方程式}[likelihood equation]
+        {尤度方程式}[ゆうどほうていしき]
+    $(dl_x)_\theta = 0$の解である。
+    さらに指数型分布族においては逆も成り立つ。
+\end{proposition}
+
+\begin{proof}
+    (1) $\Rightarrow$ (2) は
+    $l_x$が$\theta$に関し微分可能であることから従う。
+    指数型分布族の場合、
+    (2) $\Rightarrow$ (1) は
+    $l_x(\theta) = \myangle{\theta}{T(x)} - \psi(\theta)$
+    が上に凸であることから従う。
+\end{proof}
+
+\begin{example}[最尤推定量の例]
+    ~
+    \begin{itemize}
+        \item 正規分布族の場合
+        \item Cauchy 分布族の場合
+    \end{itemize}
+\end{example}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{Kullback-Leibler ダイバージェンス}
+
+\begin{definition}[Kullback-Leibler ダイバージェンス]
+    関数$D \colon \calP(\calX) \times \calP(\calX) \to [0, \infty],$
+    \begin{equation}
+        D(\mu \| \nu)
+            \coloneqq
+                \begin{cases}
+                    E_\mu \mybracket{
+                        \log \frac{d\mu}{d\nu}
+                    }
+                        & (\mu \sim \nu) \\
+                    \infty
+                        & (\mu \not\sim \nu)
+                \end{cases}
+    \end{equation}
+    を
+    \term{Kullback-Leibler ダイバージェンス}
+        {Kullback-Leibler ダイバージェンス}[Kullback-Leibler ダイバージェンス]
+    と呼ぶ。
+\end{definition}
+
+\begin{example}[KLダイバージェンスの例]
+    ~
+    \begin{itemize}
+        \item 有限集合上の確率分布の族の場合
+        \item 正規分布族の場合
+    \end{itemize}
+\end{example}
+
+$\calX = \{ 1, \ldots, n \}, n \in \N$の場合に
+最尤推定量とKLダイバージェンスの関係を考える。
+
+\begin{definition}[経験分布]
+    $x = (x_1, \dots, x_k) \in \calX^k$に対し
+    \begin{equation}
+        \hat{p}_x
+            \coloneqq
+                \frac{1}{k}
+                \sum_{i = 1}^k
+                    \delta^{x_i}
+    \end{equation}
+    を$x$により定まる
+    \term{経験分布}[empirical distribution]
+        {経験分布}[けいけんぶんぷ]
+    という。
+\end{definition}
+
+\begin{proposition}[最尤推定量とKLダイバージェンス]
+    $(\Theta, \bfp)$を$\calX$上の統計モデルとし、
+    $k$個のi.i.d.拡張$(\Theta, \bfp^k)$を考える。
+    $x = (x_1, \dots, x_k) \in \calX^k$とし、
+    $\hat{p}_x$を$x$により定まる経験分布とする。
+    このとき、
+    $\bfp(\Theta)$が$\hat{p}_x$と同値な確率測度を含むならば
+    次が成り立つ:
+    \begin{equation}
+        \argmin_{\theta \in \Theta} D(\hat{p}_x \| \bfp^k(\theta))
+            \subset
+                \argmax_{\theta \in \Theta} p_\theta^k(x)
+    \end{equation}
+\end{proposition}
+
+\begin{proof}
+    $\argmin$を考えるから
+    $\hat{p}_x \sim \bfp^k(\theta)$なる$\theta$を考えればよい。
+    \begin{alignat}{1}
+        D(\hat{p}_x \| \bfp^k(\theta))
+            &=
+                E_{\hat{p}_x} \mybracket{
+                    \log \frac{d\hat{p}_x}{d(\bfp^k(\theta))}
+                } \\
+            &=
+                E_{\hat{p}_x} \mybracket{
+                    \log \frac{d\hat{p}_x}{di}
+                }
+                -
+                E_{\hat{p}_x} \mybracket{
+                    \log \frac{d(\bfp^k(\theta))}{di}
+                } \\
+            &=
+                (\text{$\theta$によらない項})
+                -
+                \frac{1}{k}
+                \log p_\theta^k(x)
+    \end{alignat}
+\end{proof}
+
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+%\section{ダイバージェンスと双対構造}
+%
+%ダイバージェンスにより双対構造が誘導されることをみる。
+%
+%\begin{proposition}
+%    $M$を多様体、
+%    $D$を$M$上のダイバージェンスとする。
+%    ダイバージェンスは
+%    $M$上の双対構造を誘導する。
+%\end{proposition}
+%
+%\begin{proof}
+%    \begin{alignat}{1}
+%        g_{ij}
+%            &=
+%                - D_{i; j}, \\
+%        \Gamma_{ijk}
+%            &=
+%                - D_{ij; k}, \\
+%        \Gamma^*_{ijk}
+%            &=
+%                - D_{k; ij}
+%    \end{alignat}
+%    と定めればよい。
+%\end{proof}
+%
+%\begin{theorem}[一般化 Pythagoras の定理]
+%    $P$と$Q$をつなぐ$\nabla^*$-測地線と
+%    $Q$と$R$をつなぐ$\nabla$-測地線が
+%    直交するとき、
+%    次が成り立つ:
+%    \begin{equation}
+%        D(R \mid P)
+%            =
+%                D(Q \mid P)
+%                +
+%                D(R \mid Q)
+%    \end{equation}
+%\end{theorem}
+%
+%\begin{proof}
+%    \TODO{}
+%\end{proof}
+%
+%\begin{definition}[測地射影]
+%    $\hat{P}_S$が$P$の$S$への\term{測地射影}[geodesic projection]
+%        {測地射影}[そくちしゃえい]
+%    であるとは、
+%    $P$と$\hat{P}_S$をつなぐ$\nabla$-測地線が
+%    $S$と直交することをいう。
+%\end{definition}
+%
+%\begin{theorem}[射影定理]
+%    $R$が$D[P \mid R], \; R \in S$
+%    を最小化する点ならば、
+%    $R$は$P$の$S$への双対測地射影
+%    $\hat{P}^*_S$である。
+%\end{theorem}
+%
+%\begin{proof}
+%    一般化 Pythagoras の定理より
+%    $D[P \mid Q] = D[P \mid \hat{P}^*_S] + D[\hat{P}^*_S \mid Q]$
+%    であるから、
+%    $Q = \hat{P}^*_S$は
+%    $D[P \mid Q]$の臨界点である。
+%\end{proof}
+%
+%\begin{theorem}
+%    $S$が平坦ならば、
+%    $P$の$S$への双対測地射影は一意的であり、
+%    ダイバージェンスを最小化する点である。
+%\end{theorem}
+%
+%\begin{proof}
+%    primary および dual の一般化 Pythagoras の定理が成り立つことから従う。
+%\end{proof}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section*{今後の予定}
+
+\begin{itemize}
+    \item 射影
+\end{itemize}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section*{参考文献}
+
+%Legendre 変換については
+%\cite{niculescu_convex_2018}
+%を参考にした。
+%期待値パラメータに関しては
+%\cite{wainwright_graphical_2007}を参考にした。
+
+\nocite{amari_information_2016}
+\nocite{amari_methods_2007}
+\nocite{ay_information_2017}
+
+{
+    \renewcommand{\bibsection}{}
+    \bibliographystyle{amsalpha}
+    \bibliography{./bibliography,../../mybibliography}
+}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+%\newpage
+%\appendix
+%\renewcommand\thesection{\Alph{section}}
+%\setcounter{section}{0}
+%\section{付録}
+
+\end{document}

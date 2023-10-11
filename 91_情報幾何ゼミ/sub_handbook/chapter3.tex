@@ -1,0 +1,4127 @@
+\documentclass[report]{jlreq}
+\usepackage{global}
+\usepackage{../sub/local}
+\subfiletrue
+\def\assetspath{../}
+\begin{document}
+
+% ============================================================
+%
+% ============================================================
+\chapter{指数型分布族}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{指数型分布族}
+
+\begin{definition}[指数型分布族]
+    \label[definition]{def:exponential-family}
+    \idxsym{exponential family}{$(V, T, \mu)$}{指数型分布族}
+    $\calX$を可測空間、
+    $\emptyset \neq \calP \subset \calP(\calX)$とする。
+    $\calP$が$\calX$上の
+    \term{指数型分布族}[exponential family]
+        {指数型分布族}[しすうがたぶんぷぞく]
+    であるとは、次が成り立つことをいう:
+    $\exists \; (V, T, \mu)$ s.t.
+    \begin{description}
+        \item[(E0)] $V$は有限次元$\R$-ベクトル空間である。
+        \item[(E1)] $T \colon \calX \to V$は可測写像である。
+        \item[(E2)] $\mu$は$\calX$上の$\sigma$-有限測度であり、
+            $\forall \; p \in \calP$に対し$p \ll \mu$をみたす。
+        \item[(E3)] $\forall \; p \in \calP$に対し、
+            $\exists \; \theta \in V^\vee$ s.t.
+            \begin{equation}
+                \dd[p]{\mu}(x)
+                    = \frac{
+                        \exp \langle \theta, T(x) \rangle
+                    }{
+                        \int_\calX \exp \langle \theta, T(y) \rangle \, \mu(dy)
+                    }
+                    \quad
+                    \text{$\mu$-a.e. $x \in \calX$}
+            \end{equation}
+            である。
+            ただし$\langle \cdot, \cdot \rangle$は
+            自然なペアリング$V^\vee \times V \to \R$である。
+    \end{description}
+    さらに次のように定める:
+    \begin{itemize}
+        \item $(V, T, \mu)$を$\calP$の
+            \term{実現}[representation]
+            {実現}[じつげん]
+            という。
+            \begin{itemize}
+                \item $V$の次元を$(V, T, \mu)$の
+                    \term{次元}[dimension]{次元}[じげん]
+                    という。
+                \item $T$を$(V, T, \mu)$の
+                    \term{十分統計量}[sufficient statistic]
+                    {十分統計量}[じゅうぶんとうけいりょう]
+                    という。
+                \item $\mu$を$(V, T, \mu)$の
+                    \term{基底測度}[base measure]
+                    {基底測度}[きていそくど]
+                    という。
+            \end{itemize}
+        \item 集合$\Theta_{(V, T, \mu)}$
+            \begin{equation}
+                \Theta_{(V, T, \mu)}
+                    \coloneqq \mybrace{
+                        \theta \in V^\vee
+                        \;\Big|\;
+                        \int_\calX \exp \langle \theta, T(y) \rangle \, \mu(dy) < +\infty
+                    }
+            \end{equation}
+            を$(V, T, \mu)$の
+            \term{自然パラメータ空間}[natural parameter space]
+            {自然パラメータ空間}[しぜんぱらめーたくうかん]
+            という。
+        \item 関数$\psi \colon \Theta_{(V, T, \mu)} \to \R,$
+            \begin{equation}
+                \psi(\theta)
+                    \coloneqq
+                    \log \int_\calX \exp \langle \theta, T(y) \rangle \, \mu(dy)
+            \end{equation}
+            を$(V, T, \mu)$の
+            \term{対数分配関数}[log-partition function]
+            {対数分配関数}[たいすうぶんぱいかんすう]
+            という。
+    \end{itemize}
+\end{definition}
+
+\begin{proposition}[自然パラメータ空間は凸集合]
+    $\Theta_{(T, \mu)}$は$\R^m$の凸集合である。
+    \TODO{$V$に修正}
+\end{proposition}
+
+\begin{proof}
+    表記の簡略化のため$\Theta \coloneqq \Theta_{(T, \mu)}$とおく。
+    $\theta, \theta' \in \Theta, \; t \in (0, 1)$とし、
+    $(1 - t) \theta + t \theta' \in \Theta$を示せばよい。
+    そこで$p \coloneqq \frac{1}{1 - t}, \; q \coloneqq \frac{1}{t}$とおくと、
+    $p, q \in (1, +\infty)$であり、
+    $\frac{1}{p} + \frac{1}{q} = (1 - t) + t = 1$であり、
+    $e^{(1 - t)\langle \theta, T(x) \rangle} \in L^p(\calX, \mu)$かつ
+    $e^{t \langle \theta', T(x) \rangle} \in L^q(\calX, \mu)$だから、
+    H\"older の不等式より
+    \begin{alignat}{1}
+        \int_\calX e^{\langle (1 - t) \theta + t \theta', T(x) \rangle} \, \mu(dx)
+            &= \int_\calX
+                e^{(1 - t) \langle \theta, T(x) \rangle}
+                e^{t \langle \theta', T(x) \rangle}
+                \, \mu(dx) \\
+            &\le \myparen{
+                \int_\calX
+                e^{(1 - t) \langle \theta, T(x) \rangle p}
+                \, \mu(dx)
+            }^{1 / p}
+            \myparen{
+                \int_\calX
+                e^{t \langle \theta, T(x) \rangle q}
+                \, \mu(dx)
+            }^{1 / q} \\
+            &= \myparen{
+                \int_\calX
+                e^{\langle \theta, T(x) \rangle}
+                \, \mu(dx)
+            }^{1 / p}
+            \myparen{
+                \int_\calX
+                e^{\langle \theta, T(x) \rangle}
+                \, \mu(dx)
+            }^{1 / q} \\
+            &< +\infty
+    \end{alignat}
+    が成り立つ。
+    したがって$(1 - t) \theta + t \theta' \in \Theta$である。
+\end{proof}
+
+\begin{example}[有限集合上の確率分布]
+    \label[example]{ex:finite-set}
+    \TODO{$V$に修正}
+    $\calX = \{ 1, \dots, n \}$、$\gamma$を$\calX$上の数え上げ測度とする。
+    $\calX$上の確率分布全体の集合$\calP(\calX)$が
+    $\calX$上の指数型分布族であることを確かめる。
+    $\delta^j \; (j = 1, \dots, n)$を点$j$での Dirac 測度とおく。
+    任意の$P \in \calP(\calX)$に対し、
+    \begin{equation}
+        P(dk)
+            \coloneqq \sum_{j = 1}^n a_j \delta^j(dk),
+            \quad
+            a_1, \dots, a_n \in \R_{> 0},
+            \quad
+            \sum_{j = 1}^n a_j = 1
+    \end{equation}
+    が成り立つから、
+    $\delta_{jk} \; (j, k = 1, \dots, n)$を
+    Kronecker のデルタとして
+    \begin{alignat}{1}
+        P(dk)
+            &= \exp\myparen{
+                \sum_{j = 1}^n (\log a_j) \delta_{jk}
+            } \, \gamma(dk) \\
+            &= \exp\myparen{
+                \sum_{j = 1}^n \theta_j \delta_{jk}
+            } \, \gamma(dk)
+    \end{alignat}
+    (ただし$\theta_j \coloneqq \log a_j$)
+    と表せる。
+    したがって$T \colon \calX \to \R^n, \;
+        k \mapsto \up{t}(\delta_{1k}, \dots, \delta_{nk})$
+    とおけば、
+    $(T, \gamma)$を実現として
+    $\calP(\calX)$は指数型分布族となることがわかる。
+\end{example}
+
+\begin{example}[正規分布族]
+    \TODO{$V$に修正}
+    $\calX = \R$、
+    $\lambda$を$\R$上の Lebesgue 測度とする。
+    $\calX$上の確率分布の集合
+    \begin{equation}
+        \calP \coloneqq \mybrace{
+            P_{(\mu, \sigma^2)}(dx)
+                = \frac{1}{\sqrt{2\pi\sigma^2}} \exp\myparen{
+                    -\frac{(x - \mu)^2}{2\sigma^2}
+                } \lambda(dx)
+            \;\Big|\;
+            \mu \in \R, \; \sigma^2 > 0
+        }
+    \end{equation}
+    を\term{正規分布族}[family of normal distributions]
+        {正規分布族}[せいきぶんぷぞく]
+    という。
+    このとき$\calP$が$\calX$上の指数型分布族であることを確かめる。
+    任意の$P_{(\mu, \sigma^2)} \in \calP$に対し
+    \begin{alignat}{1}
+        P_{(\mu, \sigma^2)}(dx)
+            &= \frac{1}{\sqrt{2\pi\sigma^2}} \exp\myparen{
+                -\frac{(x - \mu)^2}{2\sigma^2}
+            } \lambda(dx) \\
+            &= \exp\myparen{
+                -\frac{1}{2\sigma^2} (x^2 - 2\mu x + \mu^2)
+                -\frac{1}{2} \log 2\pi\sigma^2
+            } \lambda(dx) \\
+            &= \exp\myparen{
+                \begin{bmatrix}
+                    \frac{\mu}{\sigma^2} & -\frac{1}{2\sigma^2}
+                \end{bmatrix}
+                \begin{bmatrix}
+                    x \\ x^2
+                \end{bmatrix}
+                - \frac{\mu^2}{2\sigma^2}
+                - \frac{1}{2} \log 2\pi\sigma^2
+            } \lambda(dx) \\
+            &= \exp\myparen{
+                \begin{bmatrix}
+                    \theta_1 & \theta_2
+                \end{bmatrix}
+                \begin{bmatrix}
+                    x \\ x^2
+                \end{bmatrix}
+                + \frac{\theta_1^2}{4\theta_2}
+                - \frac{1}{2} \log\myparen{-\frac{\pi}{\theta_2}}
+            } \lambda(dx)
+    \end{alignat}
+    (ただし$\theta_1 \coloneqq \frac{\mu}{\sigma^2}, \;
+        \theta_2 \coloneqq -\frac{1}{2\sigma^2}$)
+    が成り立つから、
+    $T \colon \calX \to \R^2, x \mapsto \up{t}(x, x^2)$
+    とおけば、
+    $(T, \lambda)$を実現として
+    $\calP$は指数型分布族となることがわかる。
+\end{example}
+
+\begin{example}[Poisson 分布族]
+    \TODO{$V$に修正}
+    $\calX = \N$、
+    $\gamma$を$\N$上の数え上げ測度とする。
+    $\calX$上の確率分布の集合
+    \begin{equation}
+        \calP \coloneqq \mybrace{
+            P_\lambda(dk)
+                = \frac{\lambda^k}{k!} e^{-\lambda} \, \gamma(dk)
+            \;\Big|\;
+            \lambda > 0
+        }
+    \end{equation}
+    を$P_\lambda$を\term{Poisson 分布族}[family of Poisson distributions]
+        {Poisson 分布族}[Poisson ぶんぷぞく]
+    という。
+    このとき$\calP$が$\calX$上の指数型分布族であることを確かめる。
+    任意の$P_\lambda \in \calP$に対し
+    \begin{alignat}{1}
+        P_\lambda(dk)
+            &= \frac{\lambda^k}{k!} e^{-\lambda} \, \gamma(dk) \\
+            &= \exp\myparen{
+                k \log\lambda - \lambda
+            } \frac{1}{k!} \, \gamma(dk) \\
+            &= \exp\myparen{
+                \theta k - e^\theta
+            } \frac{1}{k!} \, \gamma(dk)
+    \end{alignat}
+    (ただし$\theta \coloneqq \log \lambda$)
+    が成り立つから、
+    $T \colon \calX \to \R, k \mapsto k$
+    とおけば、
+    $\myparen{ T, \frac{1}{k!} \gamma(dk) }$を実現として
+    $\calP$は指数型分布族となることがわかる。
+\end{example}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{最小次元実現}
+
+\TODO{節の内容を整理する}
+
+\begin{definition}[最小次元実現]
+    実現$(V, T, \mu)$が
+    $\calP$の実現のうちで次元が最小のものであるとき、
+    $(V, T, \mu)$を$\calP$の
+    \term{最小次元実現}[minimal representation]
+        {最小次元実現}[さいしょうじげんじつげん]という。
+\end{definition}
+
+\begin{theorem}[「$\theta$が一意の実現」の存在]
+    \TODO{「単射性条件」の言葉に修正}
+    $\calX$を可測空間、
+    $\calP \subset \calP(\calX)$を
+    $\calX$上の指数型分布族とする。
+    このとき、$\calP$の「$\theta$が一意の実現」が存在する。
+\end{theorem}
+
+\begin{proof}
+    $(V, T, \mu)$は$\calP$の実現のうちで次元が最小のものであるとする。
+    $(V, T, \mu)$の次元 ($m$とおく) が$0$ならば
+    $V^\vee$は1点集合だから証明は終わる。
+
+    以下$m \ge 1$の場合を考え、
+    $(V, T, \mu)$が「$\theta$が一意の実現」であることを示す。
+    背理法のために$(V, T, \mu)$が「$\theta$が一意の実現」でないこと、
+    すなわちある$p_0 \in \calP$および
+    $\theta_0, \theta_0' \in V^\vee, \; \theta_0 \neq \theta_0'$が存在して
+    \begin{equation}
+        \locallabel{eq:assumption}
+        \exp\myparen{\langle \theta_0, T(x) \rangle - \psi(\theta_0)}
+            = \dd[p_0]{\mu}(x)
+            = \exp\myparen{\langle \theta_0', T(x) \rangle - \psi(\theta_0')}
+            \qquad
+            \text{$\mu$-a.e. $x \in \calX$}
+    \end{equation}
+    が成り立つことを仮定する。
+    証明の方針としては、
+    次元$m - 1$の実現$(V', T', \mu)$を具体的に構成することにより、
+    $(V, T, \mu)$の次元$m$が最小であることとの矛盾を導く。
+
+    さて、式\localcref{eq:assumption}を整理して
+    \begin{equation}
+        \langle \theta_0 - \theta_0', T(x) \rangle
+            = \psi(\theta_0) - \psi(\theta_0')
+            \qquad
+            \text{$\mu$-a.e. $x \in \calX$}
+    \end{equation}
+    を得る。
+    表記の簡略化のために
+    $\theta_1 \coloneqq \theta_0 - \theta_0' \in V^\vee, \;
+        r \coloneqq \psi(\theta_0) - \psi(\theta_0') \in \R$
+    とおけば
+    \begin{equation}
+        \locallabel{eq:costant-pairing}
+        \langle \theta_1, T(x) \rangle
+            = r
+            \qquad
+            \text{$\mu$-a.e. $x \in \calX$}
+    \end{equation}
+    を得る。
+    ここで
+    $V' \coloneqq (\R\theta)^\top = \{ v \in V \mid \langle \theta, v \rangle = 0 \}$
+    とおき、
+    次の claim を示す。
+    \begin{description}
+        \item[Claim] ある可測写像$T' \colon \calX \to V'$および
+            $v_0 \in V$が存在して
+            $T(x) = T'(x) + v_0 \; (\text{$\mu$-a.e.$x$})$
+            が成り立つ。
+    \end{description}
+    \begin{innerproof}
+        いま背理法の仮定より$\theta_1 \neq 0$であるから、
+        $\theta_1$を延長した$V^\vee$の基底$\theta_1, \dots, \theta_m$が存在する。
+        このとき、$\theta_1, \dots, \theta_m$を双対基底に持つ
+        $V$の基底$v_1, \dots, v_m$が存在する。
+        この基底$v_1, \dots, v_m$に関する
+        $T$の成分表示を
+        $T(x) = \sum_{i = 1}^m T^i(x) v_i, \;
+            T^i \colon \calX \to \R$とおくと、
+        \localcref{eq:costant-pairing}より
+        $T^1(x) = \langle \theta_1, T(x) \rangle = r \; (\text{$\mu$-a.e.$x$})$
+        が成り立つ。
+        そこで$v_0 \coloneqq rv_1 \in V$とおくと
+        $\langle \theta_1, T(x) - v_0 \rangle = 0 \; (\text{$\mu$-a.e.$x$})$
+        が成り立つから、
+        可測写像$T' \colon \calX \to V'$を
+        \begin{equation}
+            T'(x) \coloneqq \begin{cases}
+                T(x) - v_0 & (\langle \theta_1, T(x) - v_0 \rangle = 0) \\
+                0 & (\text{otherwise})
+            \end{cases}
+        \end{equation}
+        と定めることができる。
+        この$T, v_0$が求めるものである。
+    \end{innerproof}
+    $(V', T', \mu)$が$\calP$の実現であることを示す。
+    \cref{def:exponential-family}の条件(E0)-(E2)は明らかに成立しているから、
+    あとは条件(E3)を確認すればよい。
+    そこで$p \in \calP$とする。
+    いま$(V, T, \mu)$が$\calP$の実現であることより、
+    ある$\theta \in V^\vee$が存在して
+    \begin{equation}
+        \dd[p]{\mu}(x)
+            = \frac{
+                \exp\langle \theta, T(x) \rangle
+            }{
+                \int_{\calX} \exp\langle \theta, T(y) \rangle \, \mu(dy)
+            }
+            \qquad
+            \text{$\mu$-a.e. $x \in \calX$}
+    \end{equation}
+    が成り立つ。
+    $T', v_0$を用いて式変形すると、$\mu$-a.e.$x$に対し
+    \begin{alignat}{1}
+        \dd[p]{\mu}(x)
+            &= \frac{
+                \exp\myparen{
+                    \langle \theta, T(x) \rangle
+                }
+            }{
+                \int_{\calX} \exp\myparen{
+                    \langle \theta, T(x) \rangle
+                } \, \mu(dy)
+            } \\
+            &= \frac{
+                \exp\myparen{
+                    \langle \theta, T'(x) \rangle
+                    + \langle \theta, v_0 \rangle
+                }
+            }{
+                \int_{\calX} \exp\myparen{
+                    \langle \theta, T'(x) \rangle
+                    + \langle \theta, v_0 \rangle
+                } \, \mu(dy)
+            } \\
+            &= \frac{
+                \exp\myparen{
+                    \langle \theta, T'(x) \rangle
+                }
+            }{
+                \int_{\calX} \exp\myparen{
+                    \langle \theta, T'(x) \rangle
+                } \, \mu(dy)
+            }
+    \end{alignat}
+    が成り立つ。
+    したがって$(V', T', \mu)$は条件(E3)も満たし、
+    $\calP$の実現であることがいえた。
+    $(V', T', \mu)$は次元$m - 1$だから
+    $(V, T, \mu)$の次元$m$の最小性に矛盾する。
+    背理法より$(V, T, \mu)$は$\calP$の「$\theta$が一意の実現」である。
+\end{proof}
+
+\begin{theorem}[極小実現の性質]
+    \TODO{$V$に修正}
+    $\calX$を可測空間、
+    $\calP \subset \calP(\calX)$を
+    $\calX$上の指数型分布族、
+    $(T, \mu)$を$\calP$の次元$m$の実現とする。
+    このとき、
+    $(T, \mu)$が極小実現ならば、
+    $\langle u, T(x) \rangle$が$\mu$-a.e. 定数であるような
+    $u \in \R^m$は$u = 0$のみである。
+\end{theorem}
+
+\begin{proof}
+    $(T, \mu)$を$\calP$の極小実現とする。
+    背理法のため、ある$u \neq 0$が存在して
+    $\langle u, T(x) \rangle$が$\calX$上$\mu$-a.e. 定数であると仮定しておく。
+    $p \in \calP$とし、
+    \cref{def:exponential-family}の条件(E3)の
+    $\theta \in \R^m$をひとつ選ぶと、
+    \begin{alignat}{1}
+        \dd[p]{\mu}(x)
+            &= \frac{
+                e^{\langle \theta, T(x) \rangle}
+            }{
+                \int_{\calX} e^{\langle \theta, T(y) \rangle} \, \mu(dy)
+            } \\
+            &= \frac{
+                e^{\langle \theta, T(x) \rangle}
+            }{
+                \int_{\calX} e^{\langle \theta, T(y) \rangle} \, \mu(dy)
+            }
+            \cdot \frac{
+                e^{\langle u, T(x) \rangle}
+            }{
+                e^{\langle u, T(x) \rangle}
+            } \\
+            &= \frac{
+                e^{\langle \theta + u, T(x) \rangle}
+            }{
+                \int_{\calX}
+                e^{\langle \theta, T(y) \rangle}
+                e^{\langle u, T(x) \rangle}
+                \, \mu(dy)
+            } \\
+            &= \frac{
+                e^{\langle \theta + u, T(x) \rangle}
+            }{
+                \int_{\calX}
+                e^{\langle \theta, T(y) \rangle}
+                e^{\langle u, T(y) \rangle}
+                \, \mu(dy)
+            } \\
+            &= \frac{
+                e^{\langle \theta + u, T(x) \rangle}
+            }{
+                \int_{\calX}
+                e^{\langle \theta + u, T(y) \rangle}
+                \, \mu(dy)
+            }
+    \end{alignat}
+    を得る。
+    したがって$\theta + u$も
+    \cref{def:exponential-family}の条件(E3)を満たすが、
+    いま$u \neq 0$より$\theta + u \neq \theta$だから、
+    $(T, \mu)$が$\calP$の極小実現であることに反する。
+    背理法より定理が示された。
+\end{proof}
+
+\begin{example}[有限集合上の確率分布族]
+    \cref{ex:finite-set}の$(T, \gamma)$は
+    $\calP(\calX)$の極小実現である。
+    実際、任意の$P \in \calP(\calX)$に対し、
+    $\theta_j$は
+    $\theta_j = \log P(\{ j \}) \; (j = 1, \dots, n)$として
+    一意に決まる。
+\end{example}
+
+\begin{proposition}
+    \label[proposition]{prop:as-a}
+    \TODO{上の命題とあわせる}
+    $(V, T, \mu)$に関する次の条件は同値である:
+    \begin{enumerate}
+        \item $\langle \theta, T(x) \rangle$が
+            $\calX$上$\mu$-a.e.定数であるような
+            $\theta \in V^\vee$は$\theta = 0$のみである。
+        \item 各$p \in \calP$に対し、
+            \cref{def:exponential-family}の条件(E3)をみたす$\theta \in V^\vee$は
+            ただひとつである。
+    \end{enumerate}
+\end{proposition}
+
+\begin{proof}
+    \uline{(2) \Rightarrow (1)} \quad
+    前回示した。
+
+    \uline{(1) \Rightarrow (2)} \quad
+    $\theta, \theta' \in V^\vee$が
+    \cref{def:exponential-family}の条件(E3)をみたすとすると、
+    \begin{equation}
+        e^{\langle \theta, T(x) \rangle - \psi(\theta)}
+            = \dd[p]{\mu}(x)
+            = e^{\langle \theta', T(x) \rangle - \psi(\theta')}
+            \qquad
+            \text{$\mu$-a.e.$x \in \calX$}
+    \end{equation}
+    が成り立つ。式を整理して
+    \begin{equation}
+        \langle \theta - \theta', T(x) \rangle
+            = \psi(\theta) - \psi(\theta')
+            \qquad
+            \text{$\mu$-a.e.$x \in \calX$}
+    \end{equation}
+    が成り立つ。
+    したがって(1)より$\theta = \theta'$である。
+\end{proof}
+
+
+本節の目標は、
+最小次元実現の間のアファイン変換の一意存在を述べた
+\cref{thm:transformation-between-representations}
+の証明である。
+本節では、
+定理などのステートメントを簡潔にするために圏の言葉を用いる。
+
+\begin{propdef}
+    次のデータにより圏が定まる:
+    \begin{itemize}
+        \item 対象: $\calP$の実現$(V, T, \mu)$全体
+        \item 射: $(V, T, \mu)$から$(V', T', \mu')$への射は、
+            $V$から$V'$への全射アファイン写像
+            $(L, b) \; (L \in \Lin(V, V'), \; b \in V')$
+            であって
+            $T'(x) = L(T(x)) + b \; \text{$\mu$-a.e.$x$}$をみたすもの
+        \item 合成: アファイン写像の合成
+            $(L, b) \circ (K, c) = (LK, Lc + b)$
+    \end{itemize}
+    この圏を$\bfC_\calP$と書く。
+\end{propdef}
+
+\begin{proof}
+    示すべきことは、射の合成が射であること、恒等射の存在、結合律の3点である。
+    射の合成が射であることは、
+    全射と全射の合成が全射であることと、
+    $\mu$と$\mu'$が互いに絶対連続であることから従う。
+    また、$(V, T, \mu)$の恒等射は明らかに恒等写像$(\id_V, 0)$であり、
+    結合律はアファイン写像の合成の結合律より従う。
+\end{proof}
+
+最小次元実現を特徴づける2つの条件を導入する。
+
+\begin{propdef}[条件A]
+    $\calP$の実現$(V, T, \mu)$に関する次の条件は同値である:
+    \begin{enumerate}
+        \item $P \colon \Theta \to \calP(\calX)$は単射である。
+        \item $\forall \theta \in V^\vee$
+            に対し
+            「
+                $\myangle{\theta}{T(x)} = \text{const. $\mu$-a.e.$x$}
+                \implies
+                \theta = 0$
+            」
+            が成り立つ。
+        \item $V$の任意の真アファイン部分空間$W$に対し、
+            「$T(x) \in W \; \text{$\mu$-a.e.$x$}$でない」
+            が成り立つ。
+    \end{enumerate}
+    これらの条件が成り立つとき、
+    $(V, T, \mu)$は\termsilent{条件A}をみたすという。
+\end{propdef}
+
+\begin{proof}
+    (1) $\iff$ (2) は\url{0502_資料.pdf}の命題2.2で示した。
+    (2) $\iff$ (3) は\url{0523_コメント.pdf}の命題0.4に記した。
+\end{proof}
+
+\begin{definition}[条件B]
+    $\calP$の実現$(V, T, \mu)$に関する条件
+    \begin{enumerate}
+        \item $\Theta^\calP$は
+            $V^\vee$を affine span する。
+    \end{enumerate}
+    が成り立つとき、
+    $(V, T, \mu)$は\termsilent{条件B}をみたすという。
+\end{definition}
+
+条件Aは射の一意性を保証する。
+
+\begin{proposition}[条件Aをみたす対象からの射の一意性]
+    \label[proposition]{proposition:uniqueness-of-morphism}
+    $(V, T, \mu), (V', T', \mu')$を$\bfC_\calP$の対象とする。
+    このとき、
+    $(V, T, \mu)$が条件Aをみたすならば、
+    $(V, T, \mu)$から$(V', T', \mu')$への射は一意である。
+\end{proposition}
+
+\begin{proof}
+    $(L, b), (K, c)$を$(V, T, \mu)$から$(V', T', \mu')$への射とする。
+    射の定義より
+    \begin{equation}
+        \begin{cases}
+            T'(x) = L(T(x)) + b & \text{$\mu$-a.e.$x$} \\
+            T'(x) = K(T(x)) + c & \text{$\mu$-a.e.$x$}
+        \end{cases}
+    \end{equation}
+    が成り立つから、2式を合わせて
+    \begin{equation}
+        (K - L)(T(x)) = b - c \qquad \text{$\mu$-a.e.$x$}
+    \end{equation}
+    となる。
+    そこで基底を固定して
+    成分ごとに$(V, T, \mu)$の条件A(2)を適用すれば、
+    $K = L$を得る。
+    よって
+    上式で$K = L$として
+    $b = c \; \text{$\mu$-a.e.}$
+    したがって$b = c$を得る。
+    以上より$(L, b) = (K, c)$である。
+\end{proof}
+
+射が存在するための十分条件を調べる。
+
+\begin{proposition}[条件A, Bをみたす対象への射の存在]
+    \label[proposition]{proposition:affine-map-between-representations}
+    $(V, T, \mu)$を$\bfC_\calP$の対象とする。
+    このとき、
+    $(V, T, \mu)$が 条件Aと条件Bをみたすならば、
+    任意の対象\xcancel{$(V', T', \mu)$}$(V', T', \mu')$から$(V, T, \mu)$への射が存在する。
+\end{proposition}
+
+この命題の証明には次の補題を用いる。
+
+\begin{lemma}
+    \label[lemma]{lemma:pairings_and_log_partition}
+    $(V, T, \mu), (V', T', \mu')$を$\bfC_\calP$の対象とし、
+    $\theta \colon \calP \to \Theta^\calP$
+    および
+    $\theta' \colon \calP \to \Theta'^\calP$
+    を
+    $P, P'$の右逆写像とする。
+    このとき、
+    任意の$p, q \in \calP$に対し、
+    \begin{equation}
+        \begin{alignedat}{1}
+            &\phantom{=}
+                \myangle{\theta(p) - \theta(q)}{T(x)}
+                - \psi(\theta(p)) + \psi(\theta(q))
+                \\
+            &=
+                \myangle{\theta'(p) - \theta'(q)}{T'(x)}
+                - \psi'(\theta'(p)) + \psi'(\theta'(q))
+        \end{alignedat}
+        \qquad
+        \text{$\mu$-a.e.$x$}
+    \end{equation}
+    が成り立つ。
+\end{lemma}
+
+\begin{proof}
+    $p, q \in \calP$を任意とすると、
+    指数型分布族の定義と
+    $\mu, \mu'$が互いに絶対連続であることより、
+    $\mu$-a.e.$x$に対し
+    \begin{equation}
+        \begin{alignedat}{2}
+            \dd[p]{\mu}(x)
+                &=
+                    \exp(\myangle{\theta(p)}{T(x)} - \psi(\theta(p))),
+                    \qquad
+            &\dd[p]{\mu'}(x)
+                &=
+                    \exp(\myangle{\theta'(p)}{T'(x)} - \psi'(\theta'(p)))
+                \\
+            \dd[q]{\mu}(x)
+                &=
+                    \exp(\myangle{\theta(q)}{T(x)} - \psi(\theta(q))),
+                    \qquad
+            &\dd[q]{\mu'}(x)
+                &=
+                    \exp(\myangle{\theta'(q)}{T'(x)} - \psi'(\theta'(q)))
+        \end{alignedat}
+    \end{equation}
+    が成り立つ。
+    さらに$p, q$が互いに絶対連続であることから、
+    $\mu$-a.e.$x$に対し
+    \begin{alignat}{2}
+        \dd[p]{q}(x)
+            &=
+                \dd[p]{\mu}(x) \Bigg/ \dd[q]{\mu}(x)
+            &&=
+                \exp\mybrace{
+                    \myangle{\theta(p) - \theta(q)}{T(x)}
+                    - \psi(\theta(p)) + \psi(\theta(q))
+                }
+                \\
+        \dd[p]{q}(x)
+            &=
+                \dd[p]{\mu'}(x) \Bigg/ \dd[q]{\mu'}(x)
+            &&=
+                \exp\mybrace{
+                    \myangle{\theta'(p) - \theta'(q)}{T'(x)}
+                    - \psi'(\theta'(p)) + \psi'(\theta'(q))
+                }
+    \end{alignat}
+    が成り立つ。
+    $\log$をとって補題の主張の等式を得る。
+\end{proof}
+
+\begin{proof}[\cref{proposition:affine-map-between-representations}の証明]
+    \uline{Step 0: $V, V^\vee$の基底を選ぶ} \quad
+    $(V, T, \mu)$の条件Bより、
+    $V^\vee$のあるアファイン基底
+    $a^i \in \Theta^\calP \; (i = 0, \dots, m)$
+    が存在する。
+    そこで
+    $e^i \coloneqq a^i - a^0 \in V^\vee \; (i = 1, \dots, m)$
+    とおくとこれは$V^\vee$の基底である。
+    さらに$e^i$の双対基底を$V$の元と同一視したものを
+    $e_i \in V \; (i = 1, \dots, m)$とおいておく。
+
+    \uline{Step 1: 射$(L, b)$の構成} \quad
+    $P, P'$の右逆写像
+    $\theta \colon \calP \to \Theta^\calP$
+    および
+    $\theta' \colon \calP \to \Theta'^\calP$
+    をひとつずつ選んで
+    $p^i \coloneqq P(a^i) \in \calP \; (i = 0, \dots, m)$とおき、
+    $(L, b)$を次のように定める:
+    \begin{alignat}{1}
+        &L \colon V' \to V,
+            \quad
+            t' \mapsto
+                \myangle{\theta'(p^i) - \theta'(p^0)}{t'} e_i
+            \\
+        &b \coloneqq
+            \mybrace{
+                \psi(\theta(p^i)) - \psi(\theta(p^0))
+                - \psi'(\theta'(p^0)) + \psi'(\theta'(p^0))
+            } e_i
+            \in V
+    \end{alignat}
+    示すべきことは、
+    \xcancel{すべての$p \in \calP$に対し}
+    \begin{equation}
+        T(x) = L(T'(x)) + b
+            \quad
+            \text{$\mu'$-a.e.$x$}
+    \end{equation}
+    が成り立つことと、
+    $(L, b)$が全射となることである。
+
+    \uline{Step 2: $T(x) = L(T'(x)) + b$の証明} \quad
+    各$i = 1, \dots, m$に対し、
+    \cref{lemma:pairings_and_log_partition}より
+    \begin{equation}
+        \begin{alignedat}{1}
+            &\phantom{=}
+                \myangle{\theta(p^i) - \theta(p^0)}{T(x)}
+                - \psi(\theta(p^i))
+                + \psi(\theta(p^0))
+                \\
+            &=
+                \myangle{\theta'(p^i) - \theta'(p^0)}{T'(x)}
+                - \psi'(\theta'(p^i))
+                + \psi'(\theta'(p^0))
+        \end{alignedat}
+        \qquad
+        \text{$\mu'$-a.e.$x$}
+        \locallabel{eq:1}
+    \end{equation}
+    となる。
+    ここで$(V, T, \mu)$の条件A (1)より
+    $\theta(p^i) = a^i$
+    が成り立つから、
+    \localcref{eq:1}より
+    \begin{equation}
+        \begin{alignedat}{1}
+            \myangle{a^i - a^0}{T(x)}
+                &=
+                    \myangle{\theta'(p^i) - \theta'(p^0)}{T'(x)}
+                    \\
+                &\qquad
+                    + \psi(\theta(p^i))
+                    - \psi(\theta(p^0))
+                    - \psi'(\theta'(p^i))
+                    + \psi'(\theta'(p^0))
+                    \qquad
+                    \text{$\mu'$-a.e.$x$}
+        \end{alignedat}
+    \end{equation}
+    したがって
+    \begin{equation}
+        T(x) = L(T'(x)) + b
+            \qquad
+            \text{$\mu'$-a.e.$x$}
+    \end{equation}
+    が成り立つ。
+
+    \uline{Step 3: $(L, b)$が全射であることの証明} \quad
+    $L$が全射であることをいえばよい。
+    もし$L$が全射でなかったとすると、
+    $T(x) = L(T'(x)) + b \in \Im L + b$
+    が
+    $\mu'$-a.e.$x$
+    したがって
+    $\mu$-a.e.$x$
+    に対し成り立つことになるが、
+    $\Im L + b$は$V$の真アファイン部分空間だから
+    $(V, T, \mu)$の条件A (3)に反する。
+    したがって$L$は全射である。
+\end{proof}
+
+各条件をみたさない場合にも、射が存在する。
+
+\begin{lemma}[条件Aをみたさない対象からの射の存在]
+    \label[lemma]{lemma:morphism-existence-a}
+    $(V, T, \mu)$を$\bfC_\calP$の対象とする。
+    このとき、
+    $(V, T, \mu)$が条件Aをみたさないならば、
+    $(V, T, \mu)$よりも次元の小さい
+    ある対象$(V', T', \mu')$への
+    射$(V, T, \mu) \to (V', T', \mu')$が存在する。
+\end{lemma}
+
+\begin{proof}
+    末尾の付録に記した。
+\end{proof}
+
+\begin{lemma}[条件Bをみたさない対象からの射の存在]
+    \label[lemma]{lemma:morphism-existence-b}
+    $(V, T, \mu)$を$\bfC_\calP$の対象とする。
+    このとき、
+    $(V, T, \mu)$が条件Bをみたさないならば、
+    $(V, T, \mu)$よりも次元の小さい
+    ある対象$(V', T', \mu')$への
+    射$(V, T, \mu) \to (V', T', \mu')$が存在する。
+\end{lemma}
+
+\begin{proof}
+    末尾の付録に記した。
+\end{proof}
+
+以上の補題を用いて
+最小次元実現の特徴づけが得られる。
+
+\begin{theorem}[最小次元実現の特徴づけ]
+    \label[theorem]{thm:characterization-of-minimal-representation}
+    $\calP$の実現$(V, T, \mu)$に関する次の条件は同値である:
+    \begin{enumerate}
+        \item $(V, T, \mu)$は$\calP$の最小次元実現である。
+        \item $(V, T, \mu)$は条件Aと条件Bをみたす。
+    \end{enumerate}
+\end{theorem}
+
+\begin{proof}
+    \uline{(1) \Rightarrow (2)} \quad
+    最小次元実現$(V, T, \mu)$が条件A, Bのいずれかをみたさなかったとすると、
+    \cref{lemma:morphism-existence-a,lemma:morphism-existence-b}
+    よりとくに$(V, T, \mu)$よりも次元の小さい実現が存在することになり、
+    矛盾が従う。
+
+    \uline{(2) \Rightarrow (1)} \quad
+    $(V, T, \mu)$が条件Aと条件Bをみたすとする。
+    $\calP$の任意の実現
+    $(V', T', \mu')$に対し、
+    \cref{proposition:affine-map-between-representations}より
+    全射線型写像$L: V' \to V$が存在するから、
+    $\dim V \le \dim V'$である。
+    したがって$V$は$\calP$の最小次元実現である。
+\end{proof}
+
+\begin{example}[正規分布族の最小次元実現]
+    \cref{thm:characterization-of-minimal-representation}により、
+    \url{0425_資料.pdf}の例3.2でみた正規分布族の例は
+    最小次元実現であることがわかる。
+    実際、
+    $T(x) = \up{t}(x, x^2)$の像は
+    $\R^2$のいかなる真アファイン部分空間にも
+    a.e.で含まれることはないから、
+    条件A (3)が成り立つ。
+    また、$\Theta^\calP = \R \times \R_{< 0}$となることから
+    条件Bも成り立つ。
+\end{example}
+
+本節の目標の定理を示す。
+
+\begin{theorem}[最小次元実現の間のアファイン変換]
+    $(V, T, \mu), (V', T', \mu')$が
+    ともに最小次元実現ならば、
+    $(V, T, \mu)$から$(V', T', \mu')$への射$(L, b)$がただひとつ存在する。
+    さらに、$L$は線型同型写像である。
+\end{theorem}
+
+\begin{proof}
+    \cref{proposition:uniqueness-of-morphism,proposition:affine-map-between-representations}
+    より、射$(L, b) \colon (V, T, \mu) \to (V', T', \mu')$はただひとつ存在する。
+    また、
+    \cref{proposition:affine-map-between-representations}
+    より存在する射$(V', T', \mu') \to (V, T, \mu)$をひとつ選んで
+    $(K, c)$とおくと、
+    合成射$(K, c) \circ (L, b), \; (L, b) \circ (K, c)$は
+    \cref{proposition:uniqueness-of-morphism}より
+    恒等射$(\id_V, 0), \; (\id_{V'}, 0)$に一致する。
+    したがって$L$は線型同型写像である。
+\end{proof}
+
+同じことを圏の言葉を使わずに言い換えると次のようになる。
+
+\begin{theorem}[最小次元実現の間のアファイン変換]
+    \label[theorem]{thm:transformation-between-representations}
+    $(V, T, \mu), (V', T', \mu')$を$\bfC_\calP$の対象とする。
+    このとき、
+    $(V, T, \mu), (V', T', \mu')$が
+    ともに最小次元実現ならば、
+    全射線型写像$L: V \to V'$と
+    ベクトル$b \in V'$であって
+    \begin{equation}
+        \xcancel{T(x) = L(T'(x)) + b} \quad
+        T'(x) = L(T(x)) + b
+            \qquad
+            \text{$\mu$-a.e.$x$}
+            \label{eq:transformation-of-T}
+    \end{equation}
+    をみたすものがただひとつ存在する。
+    さらに、$L$は線型同型写像である。
+    \qed
+\end{theorem}
+
+\begin{corollary}[自然パラメータの変換]
+    上の定理の状況で、
+    さらに$\theta^0 \in V^\vee$であって
+    \begin{equation}
+        \xcancel{\theta'(p)
+            = \up{t}L(\theta(p)) + \theta^0} \quad
+        \theta(p)
+            = \up{t}L(\theta'(p)) + \theta^0
+            \qquad
+            (\forall p \in \calP)
+            \label{eq:transformation-of-theta}
+    \end{equation}
+    をみたすものがただひとつ存在する。
+    ただし
+    写像$\theta \colon \calP \to \Theta^\calP$
+    および
+    $\theta' \colon \calP \to \Theta'^\calP$は
+    $P, P'$の$\Theta^\calP, \Theta'^\calP$上への制限の逆写像である。
+\end{corollary}
+
+\begin{proof}
+    \uline{Step 1: 一意性} \quad
+    $\theta^0$が
+    $(V, T, \mu), (V', T', \mu')$に対し一意であることは
+    $L, \theta, \theta'$の一意性より明らかである。
+
+    \uline{Step 2: 存在} \quad
+    $q \in \calP$をひとつ選んで
+    $\theta^0
+        \coloneqq
+            - \up{t}L(\theta(q)) + \theta'(q) \in V^\vee$
+    と定め、
+    この$\theta^0$が
+    \cref{eq:transformation-of-theta}をみたすことを示せばよい。
+    そこで$p \in \calP$を任意とすると、
+    \cref{lemma:pairings_and_log_partition}より
+    \begin{equation}
+        \begin{alignedat}{1}
+            &\phantom{=}
+                \myangle{\theta(p) - \theta(q)}{T(x)}
+                - \psi(\theta(p)) + \psi(\theta(q))
+                \\
+            &=
+                \myangle{\theta'(p) - \theta'(q)}{T'(x)}
+                - \psi'(\theta'(p)) + \psi'(\theta'(q))
+        \end{alignedat}
+        \qquad
+        \text{$\mu$-a.e.$x$}
+    \end{equation}
+    が成り立ち、
+    さらに\cref{eq:transformation-of-T}より
+    \begin{equation}
+        \begin{alignedat}{1}
+            &\phantom{=}
+                \myangle{\theta(p) - \theta(q)}{L(T(x)) + b}
+                - \psi(\theta(p)) + \psi(\theta(q))
+                \\
+            &=
+                \myangle{\theta'(p) - \theta'(q)}{T'(x)}
+                - \psi'(\theta'(p)) + \psi'(\theta'(q))
+        \end{alignedat}
+        \qquad
+        \text{$\mu$-a.e.$x$}
+    \end{equation}
+    が成り立つから、
+    式を整理して
+    \begin{equation}
+        \begin{alignedat}{1}
+            &\phantom{=}
+                \myangle{
+                    \up{t}L(\theta(p) - \theta(q))
+                    - (\theta'(p) - \theta'(q))
+                }{T'(x)}
+                \\
+            &=
+                - \myangle{\theta(p) - \theta(q)}{b}
+                + \psi(\theta(p)) - \psi(\theta(q))
+                - \psi'(\theta'(p)) + \psi'(\theta'(q))
+        \end{alignedat}
+        \qquad
+        \text{$\mu$-a.e.$x$}
+    \end{equation}
+    となる。
+    この右辺は$x$によらないから、
+    $(V', T', \mu')$の条件A (2)より
+    \begin{alignat}{2}
+        &\phantom{\therefore} \quad&
+            \up{t}L(\theta(p) - \theta(q))
+                - \theta'(p) - \theta'(q)
+                &= 0
+            \\
+        &\therefore \quad&
+            \up{t}L(\theta(p)) - \theta'(p)
+                &=
+                    \up{t}L(\theta(q)) - \theta'(q)
+                =
+                    - \theta^0
+            \\
+        &\therefore \quad&
+            \up{t}L(\theta(p)) + \theta^0
+                &=
+                    \theta'(p)
+    \end{alignat}
+    が成り立つ。
+    $p \in \calP$は任意であったから、
+    \cref{eq:transformation-of-theta}の成立が示された。
+\end{proof}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{対数分配関数}
+
+\TODO{一般化した命題を使って証明を修正する}
+
+本節では
+$\calX$を可測空間、
+$\calP \subset \calP(\calX)$を$\calX$上の指数型分布族、
+$(V, T, \mu)$を$\calP$の次元$m$の実現、
+$\Theta \subset V^\vee$を自然パラメータ空間、
+$\psi \colon \Theta \to \R$を対数分配関数とする。
+$V^\vee$における$\Theta$の内部を$\Theta^\circ$と書くことにする。
+さらに
+関数$h \colon \calX \times \Theta \to \R$および
+$\lambda \colon \Theta \to \R$を
+\begin{alignat}{2}
+    h(x, \theta)
+        &\coloneqq e^{\langle \theta, T(x) \rangle}
+        &&\quad ((x, \theta) \in \calX \times \Theta) \\
+    \lambda(\theta)
+        &\coloneqq \int_\calX h(x, \theta) \, \mu(dx)
+        &&\quad (\theta \in \Theta)
+\end{alignat}
+と定める (つまり$\psi(\theta) = \log \lambda(\theta)$である)。
+
+本節の目標は次の定理を示すことである。
+
+\begin{theorem}[$\lambda$と$\psi$の\smooth 性と積分記号下の微分]
+    \label[theorem]{thm:smoothness_of_lambda}
+    $\varphi = (\theta_1, \dots, \theta_m) \colon \Theta^\circ \to \R^m$
+    を$\Theta^\circ$上のチャートとする。
+    このとき、
+    任意の$k \in \Z_{\ge 1}, \;
+        i_1, \dots, i_k \in \{ 1, \dots, m \}$
+    に対し、
+    \begin{equation}
+        \label{eq:smoothness_of_lambda_1}
+        \del_{i_k} \cdots \del_{i_1} \lambda(\theta)
+            = \int_\calX
+                \del_{i_k} \cdots \del_{i_1} h(x, \theta)
+                \, \mu(dx)
+            \quad (\theta \in \Theta^\circ)
+    \end{equation}
+    が成り立つ
+    ($\del_i$は$\deldel{\theta_i} \in \Gamma(T\Theta^\circ)$の略記)。
+    ただし、
+    左辺の微分可能性および
+    右辺の可積分性も定理の主張に含まれる。
+    とくに$\lambda$および$\psi$は$\Theta^\circ$上の\smooth 関数である。
+\end{theorem}
+
+\cref{thm:smoothness_of_lambda}の証明には次の事実を用いる。
+
+\begin{fact}[積分記号下の微分]
+    \label[fact]{fact:diff-under-integral}
+    $\calY$を可測空間、
+    $\nu$を$\calY$上の測度、
+    $I \subset \R$を開区間、
+    $f \colon \calY \times I \to \R$を
+    \begin{enumerate}[label=(\roman*)]
+        \item 各$t \in I$に対し$f(\cdot, t) \colon \calY \to \R$が可測
+        \item 各$y \in \calY$に対し$f(y, \cdot) \colon I \to \R$が微分可能
+    \end{enumerate}
+    をみたす関数とする。
+    このとき、$f$に関する条件
+    \begin{enumerate}
+        \item 各$t \in I$に対し
+            $f(\cdot, t) \in L^1(\calY, \nu)$である。
+        \item ある$\nu$-可積分関数
+            $\Phi \colon \calY \to \R$が存在し、
+            すべての$t' \in I$に対し
+            $\myabs{
+                \deldel[f]{t}(y, t')
+            } \le \Phi(y) \; \text{a.e.$y$}$
+            である。
+    \end{enumerate}
+    が成り立つならば、
+    関数$I \to \R, \; t \mapsto \int_\calY f(y, t) \, \nu(dy)$は微分可能で、
+    \begin{equation}
+        \deldel{t} \int_\calY f(y, t) \, \nu(dy)
+            = \int_\calY \deldel[f]{t}(y, t) \, \nu(dy)
+    \end{equation}
+    が成り立つ。
+    \qed
+\end{fact}
+
+\cref{thm:smoothness_of_lambda}の証明において最も重要なステップは、
+\cref{fact:diff-under-integral}の前提が満たされることの確認である。
+そのための補題を次に示す。
+
+\begin{lemma}[優関数の存在]
+    \label[lemma]{lemma:existence_of_dominant_function}
+    $e^i \; (i = 1, \dots, m)$を$V^\vee$の基底とし、
+    この基底が定める$\Theta^\circ$上のチャートを
+    $\varphi = (\theta_1, \dots, \theta_m) \colon \Theta^\circ \to \R^m$
+    とおく。
+    このとき、
+    任意の$k \in \Z_{\ge 1}, \;
+        i_1, \dots, i_k \in \{ 1, \dots, m \}$
+    に対し、次が成り立つ:
+    \begin{enumerate}
+        \item 任意の$\theta \in \Theta^\circ$に対し、
+            関数
+            $\del_{i_k} \cdots \del_{i_1} h(\cdot, \theta)
+                \colon \calX \to \R$
+            は$L^1(\calX, \mu)$に属する。
+        \item 任意の$\theta \in \Theta^\circ$に対し、
+            $\Theta^\circ$における$\theta$のある近傍$U$と、
+            ある$\mu$-可積分関数$\Phi \colon \calX \to \R$が存在し、
+            すべての$\theta' \in U$に対し
+            $\myabs{
+                \del_{i_k} \cdots \del_{i_1} h(x, \theta')
+            } \le \Phi(x) \; \text{a.e.$x$}$
+            が成り立つ。
+    \end{enumerate}
+\end{lemma}
+
+\begin{proof}
+    (1)は(2)より直ちに従うから、(2)を示す。
+    そこで$\theta \in \Theta^\circ$を任意とする。
+    補題の主張は座標$\theta_1, \dots, \theta_m$を
+    平行移動して考えても等価だから、
+    点$\theta$の座標は
+    $\varphi(\theta) = 0 \in \R^m$
+    であるとしてよい。
+
+    \uline{Step 1: $U$の構成} \quad
+    $\eps > 0$を十分小さく選び、
+    $\R^m$内の閉立方体
+    \begin{alignat}{1}
+        A_{2\eps}
+            \coloneqq
+            \prod_{i = 1}^m [- 2\eps, 2\eps]
+        \quad
+        A_{\eps}
+            \coloneqq
+            \prod_{i = 1}^m [- \eps, \eps]
+    \end{alignat}
+    が$\varphi(\Theta^\circ)$に含まれるようにしておく。
+    すると
+    $U \coloneqq \varphi^{-1}(\Int A_{\eps})
+        \subset \varphi(\Theta^\circ)$は
+    $\theta$の近傍となるが、
+    これが求める$U$の条件を満たすことを示す。
+
+    \uline{Step 2: $h$の座標表示} \quad
+    まず具体的な計算のために
+    $h$の座標表示を求める。
+    いま各$\theta' \in U$に対し
+    \begin{equation}
+        h(x, \theta')
+            = \exp\langle \theta', T(x) \rangle
+            = \exp\langle \theta_i(\theta') e^i, T(x) \rangle
+            = \exp\myparen{\theta_i(\theta') T^i(x)}
+    \end{equation}
+    が成り立っている。
+    ただし
+        $T^i \colon \calX \to \R, \;
+        x \mapsto \langle e^i, T(x) \rangle \;
+        (i = 1, \dots, m)$
+    とおいた。
+    したがって
+    \begin{equation}
+        \locallabel{eq:partial-derivative-of-h}
+        \del_{i_k} \cdots \del_{i_1} h(x, \theta')
+            = T^{i_1}(x) \cdots T^{i_k}(x)
+                \exp\myparen{\theta_i(\theta') T^i(x)}
+    \end{equation}
+    と表せることがわかる。
+
+    \uline{Step 3: $\Phi$の構成} \quad
+    $\Phi$を構成するため、
+    式\localcref{eq:partial-derivative-of-h}の絶対値を上から評価する。
+    表記の簡略化のため
+    $t' \coloneqq (t'_1, \dots, t'_m)
+        \coloneqq \varphi(\theta')
+        \in \R^m$
+    とおいておく。
+    まず$\frac{k + 1}{\eps} \frac{\eps}{k + 1} = 1$より
+    \begin{alignat}{1}
+        \myabs{
+            T^{i_1}(x) \cdots T^{i_k}(x)
+            \exp\myparen{
+                \sum_{i = 1}^m
+                t'_i T^i(x)
+            }
+        }
+            &=
+                \myparen{
+                    \frac{k + 1}{\eps}
+                }^k
+                \myparen{
+                    \prod_{\alpha = 1}^k
+                        \frac{\eps}{k + 1}
+                        |T^{i_\alpha}(x)|
+                }
+                \exp\myparen{
+                    \sum_{i = 1}^m
+                    t'_i T^i(x)
+                } 
+                \locallabel{eq:estimate}
+    \end{alignat}
+    であり、$\prod$の部分を評価すると
+    \begin{alignat}{1}
+        \prod_{\alpha = 1}^k
+            \frac{\eps}{k + 1}
+            |T^{i_\alpha}(x)|
+            &\le \prod_{\alpha = 1}^k
+                \myparen{
+                    \exp\myparen{
+                        \frac{\eps}{k + 1}
+                        T^{i_\alpha}(x)
+                    }
+                    + \exp\myparen{
+                        - \frac{\eps}{k + 1}
+                        T^{i_\alpha}(x)
+                    }
+                }
+                \quad
+                (\because s \le e^s + e^{-s} \; (s \in \R))
+                \\
+            &= \sum_{\sigma \in \{ \pm 1 \}^k}
+                \exp\myparen{
+                    \sum_{\alpha = 1}^k
+                        \frac{\eps}{k + 1}
+                        \sigma_\alpha
+                        T^{i_\alpha}(x)
+                }
+                \quad
+                (\because \text{式の展開})
+                \locallabel{eq:estimate-part}
+    \end{alignat}
+    (ただし$\sigma_\alpha$は$\sigma$の第$\alpha$成分)
+    となるから、
+    式\localcref{eq:estimate}と式\localcref{eq:estimate-part}を合わせて
+    \begin{alignat}{1}
+        \localcref{eq:estimate}
+            &\le
+                C
+                \sum_{\sigma \in \{ \pm 1 \}^k}
+                    \exp\myparen{
+                        \sum_{\alpha = 1}^k
+                            \frac{\eps}{k + 1}
+                            \sigma_\alpha
+                            T^{i_\alpha}(x)
+                    }
+                \exp\myparen{
+                    \sum_{i = 1}^m
+                    t'_i T^i(x)
+                }
+                \\
+            &=
+                C
+                \sum_{\sigma \in \{ \pm 1 \}^k}
+                    \exp\myparen{
+                        \sum_{\alpha = 1}^k
+                            \frac{\eps}{k + 1}
+                            \sigma_\alpha
+                            T^{i_\alpha}(x)
+                        + \sum_{i = 1}^m
+                            t'_i T^i(x)
+                    }
+                \locallabel{eq:estimate-2}
+    \end{alignat}
+    となる。
+    ただし$C \coloneqq \myparen{\frac{k + 1}{\eps}}^k \in \R_{> 0}$とおいた。
+    ここで最終行の$\exp$の中身について、
+    各$i = 1, \dots, m$に対し
+    $T^i(x)$の係数を評価することで、
+    ある$t'' \in A_{2\eps}$が存在して
+    \begin{equation}
+        \localcref{eq:estimate-2}
+            =
+                C
+                \sum_{\sigma \in \{ \pm 1 \}^k}
+                    \exp\myparen{
+                        \sum_{i = 1}^m
+                            t''_i T^i(x)
+                    }
+            =
+                2^k C
+                    \exp\myparen{
+                        \sum_{i = 1}^m
+                            t''_i T^i(x)
+                    }
+                \locallabel{eq:estimate-3}
+    \end{equation}
+    と表せることがわかる。
+    そこで
+    $|t''_i| \le 2\eps \; (i = 1, \dots, m)$より
+    \begin{alignat}{1}
+        \localcref{eq:estimate-3}
+            &\le
+                2^k C
+                \prod_{i = 1}^m
+                    \myparen{
+                        \exp\myparen{
+                            2\eps
+                            T^i(x)
+                        }
+                        + \exp\myparen{
+                            - 2\eps
+                            T^i(x)
+                        }
+                    }
+                \\
+            &=
+                2^k C
+                \sum_{\tau \in \{ \pm 1 \}^m}
+                    \exp\myparen{
+                        \sum_{i = 1}^m
+                            2\eps
+                            \tau_i
+                            T^i(x)
+                    }
+    \end{alignat}
+    を得る。
+    この右辺は
+    ($t'$によらないから) $\theta'$によらない$\calX$上の関数であり、
+    また$\sum$の各項が
+    $2\eps \tau \in A_{2\eps}$ゆえに$\mu$-可積分だから
+    式全体も$\mu$-可積分である。
+    したがってこれが求める優関数である。
+\end{proof}
+
+目標の\cref{thm:smoothness_of_lambda}を証明する。
+
+\begin{proof}[\cref{thm:smoothness_of_lambda}の証明.]
+    \cref{thm:smoothness_of_lambda}のステートメントで
+    与えられているチャート$\varphi = (\theta_1, \dots, \theta_m)$は
+    ($V^\vee$の基底が定めるものとは限らない)
+    任意のものであるが、
+    実は定理の主張を示すには、
+    $V^\vee$の基底をひとつ選び、
+    その基底が定めるチャート
+    $\wt{\varphi} = (\wt{\theta}_1, \dots, \wt{\theta}_m)$
+    に対して定理の主張を示せば十分である。
+    その理由は次である:
+    \begin{itemize}
+        \item 式\cref{eq:smoothness_of_lambda_1}の左辺の微分可能性は、
+            $\lambda$が$C^\infty$であればよいから、
+            チャート$\wt{\varphi}$で考えれば十分。
+        \item 式\cref{eq:smoothness_of_lambda_1}の右辺の可積分性および
+            式\cref{eq:smoothness_of_lambda_1}の等号の成立については、
+            Leibniz 則より、
+            $\lambda$の$\wt{\theta}_1, \dots, \wt{\theta}_m$に関する
+            $k$回偏導関数が、
+            $\lambda$の$\theta_1, \dots, \theta_m$に関する
+            $k$回以下の偏導関数たちの
+            ($x$によらない) $C^\infty(\Theta^\circ)$-係数の
+            線型結合に書けることから従う。
+    \end{itemize}
+    そこで、以降$\varphi$は
+    $V^\vee$の基底が定めるチャートとする。
+
+    \cref{lemma:existence_of_dominant_function} (1)より、
+    式\cref{eq:smoothness_of_lambda_1}の右辺の可積分性はわかっている。
+    よって、残りの示すべきことは
+    \begin{enumerate}[label=(\roman*)]
+        \item 式\cref{eq:smoothness_of_lambda_1}の左辺の微分可能性
+        \item 式\cref{eq:smoothness_of_lambda_1}の等号の成立
+    \end{enumerate}
+    の2点である。
+
+    まず$k = 1, i_k = 1$の場合に(i), (ii)が成り立つことを示す。
+    そのためには、
+    $t = (t_1, \dots, t_m) \in \varphi(\Theta^\circ)$を任意に固定したとき、
+    $t_1$を含む$\R$の十分小さな開区間$I$が存在して、
+    関数
+    \begin{equation}
+        \locallabel{eq:h_restriction}
+        g \colon \calX \times I \to \R,
+            \quad
+            (x, s) \mapsto h(x, \varphi^{-1}(s, t_2, \dots, t_m))
+    \end{equation}
+    が\cref{fact:diff-under-integral}の仮定(1), (2)をみたすことをいえばよい。
+
+    いま
+    $\varphi^{-1}(t) \in \Theta^\circ$だから、
+    \cref{lemma:existence_of_dominant_function}(2)のいう
+    $\Theta^\circ$における$\varphi^{-1}(t)$の近傍$U$と
+    $\mu$-可積分関数$\Phi \colon \calX \to \R$が存在する。
+    このとき$\varphi(U)$は$\R^m$における$t$の近傍となるから、
+    $t_1$を含む$\R$の十分小さな開区間$I$が存在して
+    \begin{equation}
+        I \times \{ t_2 \} \times \cdots \times \{ t_m \}
+            \subset \varphi(U)
+    \end{equation}
+    が成り立つ。
+    この$I$を用いて定まる関数$g$が
+    \cref{fact:diff-under-integral}の仮定(1), (2)をみたすことを確認する。
+
+    まず\cref{lemma:existence_of_dominant_function}の結果(1)より、
+    $g$は\cref{fact:diff-under-integral}の仮定(1)をみたす。
+    また\cref{lemma:existence_of_dominant_function}の結果(2)より、
+    $g$は\cref{fact:diff-under-integral}の仮定(2)をみたす。
+    したがって$k = 1, i_k = 1$の場合について(i),(ii)が示された。
+
+    同様にして$i_k = 2, \dots, m$の場合についても示される。
+    以降、$k$に関する帰納法で、すべての$k \in \Z_{\ge 1}$および
+    $i_1, \dots, i_k \in \{ 1, \dots, m \}$に対して示される。
+    これで定理の証明が完了した。
+\end{proof}
+
+\cref{thm:smoothness_of_lambda}から次の系が従う。
+
+\begin{corollary}
+    $\varphi = (\varphi_1, \dots, \varphi_m) \colon \Theta^\circ \to \R^m$を
+    $V^\vee$の基底が定めるチャートとする。
+    また、各$\theta \in \Theta$に対し、
+    $\calX$上の確率測度$P_\theta$を
+    $P_\theta(dx)
+        = e^{\langle \theta, T(x) \rangle - \psi(\theta)} \, \mu(dx)$
+    と定める。
+    このとき、
+    任意の$k \in \Z_{\ge 1}, \;
+        i_1, \dots, i_k \in \{ 1, \dots, m \}$
+    に対し、
+    \begin{equation}
+        E_{P_\theta}[T^{i_k}(x) \cdots T^{i_1}(x)]
+            = \frac{
+                \del_{i_k} \cdots \del_{i_1} \lambda(\theta)
+            }{
+                \lambda(\theta)
+            }
+            \quad
+            (\theta \in \Theta^\circ)
+    \end{equation}
+    が成り立つ。
+    ただし、左辺の期待値の存在も系の主張に含まれる。
+    \qed
+\end{corollary}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{Fisher 計量}
+
+Fisher 計量を定義する。
+
+\begin{propdef}[Fisher 計量]
+    $\psi$を$\Theta^\circ$上の\smooth 関数とみなすと、
+    各$\theta \in \Theta^\circ$に対し
+    $(\Hess \psi)_\theta
+        \in T^{(0, 2)}_\theta \Theta^\circ$
+    は
+    $\Var_{P_\theta}[T]$に一致する。
+    さらに$(V, T, \mu)$が条件Aをみたすならば、
+    $\Hess \psi$は正定値である。
+
+    したがって
+    $(V, T, \mu)$が条件Aをみたすとき、
+    $\Hess\psi$は
+    $\Theta^\circ$上の Riemann 計量となり、
+    これを$\psi$の定める
+    \term{Fisher 計量}[Fisher metric]{Fisher 計量}[Fisher けいりょう]
+    という。
+\end{propdef}
+
+\begin{proof}
+    まず
+    $(\Hess \psi)_\theta = \Var_{P_\theta}[T] \;
+        (\theta \in \Theta^\circ)$
+    を示す。
+    $\Theta^\circ$上の$D$-アファイン座標
+    $\theta^i \; (i = 1, \dots, m)$をひとつ選ぶと、
+    \cref{prop:hessian_components}より、
+    座標$\theta^i$に関する$\Hess \psi$の成分表示は
+    $\Hess\psi
+        = \frac{\del^2 \psi}{\del \theta^i \del \theta^j}
+        \, d\theta^i \otimes d\theta^j$
+    となる。
+    ここで前回 (\url{0516_資料.pdf}) の系2.4より
+    \begin{alignat}{1}
+        \frac{\del^2 \psi}{\del \theta^i \del \theta^j}(\theta)
+            &=
+                \del_i \del_j \log \lambda(\theta)
+                \\
+            &=
+                \del_i \myparen{
+                    \frac{\del_j \lambda(\theta)}{\lambda(\theta)}
+                }
+                \\
+            &=
+                \frac{
+                    \del_i \del_j \lambda(\theta)
+                }{
+                    \lambda(\theta)
+                }
+                -
+                \frac{
+                    \del_i \lambda(\theta)
+                    \del_j \lambda(\theta)
+                }{
+                    \lambda(\theta)^2
+                }
+                \\
+            &=
+                E[T^i(x) T^j(x)]
+                -
+                E[T^i(x)]
+                E[T^j(x)]
+                \\
+            &=
+                E[
+                    (T^i(x) - E[T^i(x)])
+                    (T^j(x) - E[T^j(x)])
+                ]
+    \end{alignat}
+    を得る。
+    ただし$E[\cdot]$は$P_\theta$に関する期待値$E_{P_\theta}[\cdot]$の略記である。
+    したがって
+    $\Hess_\theta \psi = \Var_{P_\theta}[T]$
+    が成り立つ。
+
+    次に、$(V, T, \mu)$が条件Aをみたすとし、
+    $\Hess\psi$が正定値であることを示す。
+    すなわち、
+    各$\theta \in \Theta^\circ$に対し
+    $(\Hess\psi)_\theta$が正定値であることを示す。
+    そのためには各$u \in V^\vee$に対し
+    「$(\Hess\psi)_\theta(u, u) = 0$ならば$u = 0$」
+    を示せばよいが、
+    上で示したことと
+    \cref{prop:expectation-variance-pairing}より
+    \begin{equation}
+        (\Hess\psi)_\theta(u, u)
+            = (\Var_{P_\theta}[T])(u, u)
+            = \langle u \otimes u, \Var_{P_\theta}[T] \rangle
+            = \Var_{P_\theta}[\langle u, T(x) \rangle]
+    \end{equation}
+    と式変形できるから、
+    $(\Hess\psi)_\theta(u, u) = 0$ならば
+    \cref{prop:zero_variance_condition}より
+    $\langle u, T(x) \rangle$は$\text{a.e.}$定数であり、
+    したがって条件Aより$u = 0$となる。
+    よって$(\Hess\psi)_\theta$は正定値である。
+    したがって$\Hess\psi$は正定値である。
+\end{proof}
+
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{Amari-Chentsov テンソルと$\alpha$-接続}
+
+
+\subsection{多様体構造と平坦アファイン接続}
+
+\begin{propdef}[$\calP$が開であること]
+    指数型分布族$\calP$に関し、次は同値である:
+    \begin{enumerate}
+        \item ある最小次元実現$(V, T, \mu)$に対し、
+            $\Theta^\calP_{(V, T, \mu)}$は$V^\vee$で開である。
+        \item すべての最小次元実現$(V, T, \mu)$に対し、
+            $\Theta^\calP_{(V, T, \mu)}$は$V^\vee$で開である。
+    \end{enumerate}
+    $\calP$がこれらの同値な2条件をみたすとき、
+    $\calP$は\termsilent{開}[open]であるという。
+\end{propdef}
+
+\begin{proof}
+    (1) $\Rightarrow$ (2)は、
+    \url{0606_資料.pdf}系1.13より、
+    最小次元実現の真パラメータ空間がアファイン変換で写り合うことから従う。
+    (2) $\Rightarrow$ (1)は
+    最小次元実現が存在することから従う。
+\end{proof}
+
+以降、本節では$\calP$は開とする。
+
+\begin{propdef}[$\calP$の自然な多様体構造]
+    $\calP$上の多様体構造$\calU$であって
+    次をみたすものがただひとつ存在する:
+    \begin{itemize}
+        \item $\calP$の任意の最小次元実現$(V, T, \mu)$に対し、
+            $\calU$は全単射$\theta_{(V, T, \mu)}$により
+            $\Theta^\calP_{(V, T, \mu)}$から$\calP$上に誘導された多様体構造に一致する。
+    \end{itemize}
+    この$\calU$を$\calP$の
+    \termsilent{自然な多様体構造}
+    という。
+\end{propdef}
+
+\begin{proof}
+    \uline{Step 1: $\calU$の一意性} \quad
+    $\calU$の存在を仮定すれば、
+    最小次元実現をひとつ選ぶことで
+    $\calU$が決まるから、
+    $\calU$は一意である。
+
+    \uline{Step 2: $\calU$の存在} \quad
+    最小次元実現$(V, T, \mu)$をひとつ選び、
+    $\theta \coloneqq \theta_{(V, T, \mu)}$とおき、
+    $\theta$により
+    $\Theta^\calP_{(V, T, \mu)}$から$\calP$上に誘導された多様体構造を$\calU$とおく。
+    この$\calU$が求めるものであることを示せばよい。
+    示すべきことは、
+    $(V', T', \mu')$を最小次元実現とし、
+    $\theta' \coloneqq \theta_{(V', T', \mu')}$とおき、
+    $\calU'$を
+    $\theta'$により
+    $\Theta^\calP_{(V', T', \mu')}$から
+    $\calP$上に誘導された多様体構造とするとき、
+    恒等写像$\id \colon (\calP, \calU) \to (\calP, \calU')$が
+    微分同相となることである。
+    これは図式
+    \begin{equation}
+        \begin{tikzcd}
+            (\calP, \calU)
+                \ar{d}[swap]{\theta}
+                \ar{r}{\id}
+                &(\calP, \calU')
+                    \ar{d}{\theta'}
+                \\
+            \Theta^\calP_{(V, T, \mu)}
+                \ar{r}[swap]{F}
+                &\Theta^\calP_{(V', T', \mu')}
+        \end{tikzcd}
+    \end{equation}
+    の可換性と、
+    $\theta, \theta', F$が微分同相であることから従う。
+    ただし$F$とは、
+    \url{0606_資料.pdf}系1.13より一意に存在する
+    アファイン変換$V^\vee \to V'^\vee$の制限である。
+\end{proof}
+
+以降、本節では
+$\calP$に自然な多様体構造が定まっているものとする。
+
+\begin{propdef}[$\calP$上の自然な平坦アファイン接続]
+    \label[propdef]{propdef:natural-flat-connection}
+    $\calP$上の平坦アファイン接続$\nabla$であって
+    次をみたすものがただひとつ存在する:
+    \begin{itemize}
+        \item $\calP$の任意の最小次元実現$(V, T, \mu)$に対し、
+            $\Theta^\calP_{(V, T, \mu)}$上の
+            標準的な平坦アファイン接続を$\wt{\nabla}$とおくと、
+            $\nabla$は$\nabla = \theta_{(V, T, \mu)}^* \wt{\nabla}$をみたす。
+    \end{itemize}
+    この$\nabla$を$\calP$上の
+    \termsilent{自然な平坦アファイン接続}
+    という。
+\end{propdef}
+
+証明には次の補題を用いる。
+
+\begin{lemma}[アファイン変換によるアファイン接続の引き戻し]
+    \label[lemma]{lemma:pullback-affine-connection}
+    $V, V'$を有限次元$\R$-ベクトル空間、
+    $F \colon V \to V'$をアファイン変換、
+    $\nabla, \nabla'$をそれぞれ$V, V'$上の標準的な平坦アファイン接続とする。
+    このとき
+    $F^* \nabla' = \nabla$が成り立つ。
+\end{lemma}
+
+\begin{proof}
+    資料末尾の付録に記した。
+\end{proof}
+
+\begin{proof}[\cref{propdef:natural-flat-connection}の証明]
+    \uline{Step 1: $\nabla$の一意性} \quad
+    $\nabla$の存在を仮定すれば、
+    最小次元実現をひとつ選ぶことで$\nabla$が決まるから、
+    $\nabla$は一意である。
+
+    \uline{Step 2: $\nabla$の存在} \quad
+    最小次元実現$(V, T, \mu)$をひとつ選び、
+    $\theta \coloneqq \theta_{(V, T, \mu)}$、
+    $\Theta^\calP_{(V, T, \mu)}$上の
+    標準的な平坦アファイン接続を$\wt{\nabla}$、
+    $\nabla \coloneqq \theta^* \wt{\nabla}$と定める。
+    この$\nabla$が求めるものであることを示せばよい。
+    示すべきことは、
+    $(V', T', \mu')$を最小次元実現とし、
+    $\theta' \coloneqq \theta_{(V', T', \mu')}$、
+    $\Theta^\calP_{(V', T', \mu')}$上の
+    標準的な平坦アファイン接続を$\wt{\nabla}'$とおくとき、
+    $\theta^* \wt{\nabla} = \theta'^* \wt{\nabla}'$が成り立つことである。
+    そこで、
+    \url{0606_資料.pdf}系1.13より一意に存在する
+    アファイン変換$V^\vee \to V'^\vee$を$F$とおくと、
+    \begin{alignat}{1}
+        \theta'^* \wt{\nabla}'
+            &=
+                \theta^* F^* \wt{\nabla}'
+                \quad
+                (\text{$F$と$\theta, \theta'$の関係})
+                \\
+            &=
+                \theta^* \wt{\nabla}
+                \quad
+                (\text{\cref{lemma:pullback-affine-connection}})
+    \end{alignat}
+    が成り立つ。
+    したがって$\theta^* \wt{\nabla} = \theta'^* \wt{\nabla}'$が示された。
+    よって$\nabla$は命題-定義の主張の条件をみたす。
+\end{proof}
+
+以降、本節では
+$\calP$に自然な平坦アファイン接続$\nabla$が定まっているものとする。
+
+\subsection{Fisher 計量}
+
+\begin{propdef}[$\calP$上の Fisher 計量]
+    \label[propdef]{propdef:Fisher-metric}
+    $\calP$上の Riemann 計量$g$であって
+    次をみたすものがただひとつ存在する:
+    \begin{itemize}
+        \item $\calP$の任意の最小次元実現$(V, T, \mu)$に対し、
+            $\Theta^\calP_{(V, T, \mu)}$上の Fisher 計量を$\wt{g}$とおくと、
+            $g = \theta_{(V, T, \mu)}^* \wt{g}$が成り立つ。
+    \end{itemize}
+    これを$\calP$上の
+    \termsilent{Fisher 計量}
+    という。
+\end{propdef}
+
+証明には次の補題を用いる。
+
+\begin{lemma}
+    \label[lemma]{lemma:relationship-between-Fisher-metrics}
+    $(V, T, \mu), (V', T', \mu')$を
+    $\calP$の最小次元実現とし、
+    $\theta \coloneqq \theta_{(V, T, \mu)}, \;
+        \theta' \coloneqq \theta_{(V', T', \mu')}$
+    とおき、
+    $\Theta^\calP_{(V, T, \mu)}, \;
+        \Theta^\calP_{(V', T', \mu')}$上の
+    Fisher 計量をそれぞれ$g, g'$とおき、
+    \url{0606_資料.pdf}定理1.12より一意に存在する
+    線型同型写像$V \to V'$を$L$とおく。
+    このとき、
+    各$p \in \calP$に対し
+    $g_{\theta(p)} = (L \otimes L)(g'_{\theta'(p)})$
+    が成り立つ。
+\end{lemma}
+
+\begin{proof}
+    $L$は
+    $T'(x) = L(T(x)) + \text{const.} \; \text{$\mu$-a.e.$x$}$
+    をみたし、
+    また
+    各$p \in \calP$に対し
+    $g_{\theta(p)} = \Var_{p}[T], \;
+        g'_{\theta'(p)} = \Var_{p}[T']$
+    が成り立つから、
+    期待値と分散のペアリングの命題
+    (\url{0523_資料.pdf}命題1.1)
+    と同様の議論により補題の主張の等式が成り立つ。
+\end{proof}
+
+\begin{proof}[\cref{propdef:Fisher-metric}の証明]
+    \uline{Step 1: $g$の一意性} \quad
+    $g$の存在を仮定すれば、
+    最小次元実現をひとつ選ぶことで
+    $g$が決まるから、
+    $g$は一意である。
+
+    \uline{Step 2: $g$の存在} \quad
+    最小次元実現$(V, T, \mu)$をひとつ選び、
+    $\theta \coloneqq \theta_{(V, T, \mu)}$、
+    $\Theta^\calP_{(V, T, \mu)}$上の Fisher 計量を$\wt{g}$とおき、
+    $g \coloneqq \theta^* \wt{g}$と定める。
+    この$g$が求めるものであることを示せばよい。
+    示すべきことは、
+    $(V', T', \mu')$を最小次元実現とし、
+    $\theta' \coloneqq \theta_{(V', T', \mu')}$、
+    $\Theta^\calP_{(V', T', \mu')}$上の Fisher 計量を$\wt{g}'$とおいて、
+    $\theta^* g = \theta'^* g'$が成り立つことである。
+    そこで
+    \url{0606_資料.pdf}定理1.12より一意に存在する
+    線型同型写像$V \to V'$を$L$とおくと、
+    各$p \in \calP, \; u, v \in T_p\calP$に対し
+    \begin{alignat}{1}
+        (\theta^* g)_p(u, v)
+            &=
+                g_{\theta(p)} (d\theta_p(u), d\theta_p(v))
+                \\
+            &=
+                \myangle{
+                    g_{\theta(p)}
+                }{
+                    d\theta_p(u) \otimes d\theta_p(v)
+                }
+                \\
+            &=
+                \myangle{
+                    (L \otimes L) g'_{\theta'(p)}
+                }{
+                    d\theta_p(u) \otimes d\theta_p(v)
+                }
+                \quad
+                (\cref{lemma:relationship-between-Fisher-metrics})
+                \\
+            &=
+                \myangle{
+                    g'_{\theta'(p)}
+                }{
+                    \up{t}L \circ d\theta_p(u) \otimes \up{t}L \circ d\theta_p(v)
+                }
+                \\
+            &=
+                \myangle{
+                    g'_{\theta'(p)}
+                }{
+                    d(\up{t}L \circ \theta)_p (u) \otimes d(\up{t}L \circ \theta)_p (v)
+                }
+                \\
+            &=
+                \myangle{
+                    g'_{\theta'(p)}
+                }{
+                    d\theta'_p (u) \otimes d\theta'_p (v)
+                }
+                \quad
+                (\text{$L$と$\theta, \theta'$の関係})
+                \\
+            &=
+                g'_p (d\theta'_p(u), d\theta'_p(v))
+                \\
+            &=
+                (\theta'^* g')_p(u, v)
+    \end{alignat}
+    が成り立つ。
+    したがって$\theta^* g = \theta'^* g'$が示された。
+    よって$g$は命題-定義の主張の条件をみたす。
+\end{proof}
+
+以降、本節では
+$\calP$に Fisher 計量$g$が定まっているものとする。
+
+\subsection{Amari-Chentsov テンソルと$\alpha$-接続}
+
+\begin{definition}[Amari-Chentsov テンソル]
+    $\calP$上の$(0, 3)$-テンソル場$S$を
+    $S \coloneqq \nabla g$で定め、
+    これを$\calP$上の
+    \term{Amari-Chentsov テンソル}[Amari-Chentsov tensor]
+        {Amari-Chentsov テンソル}[Amari-Chentsov テンソル]
+    という。
+    また、
+    $\calP$上の$(1, 2)$-テンソル場$A$を
+    次の関係式により定める:
+    \begin{equation}
+        g(A(X, Y), Z)
+            = S(X, Y, Z)
+            \quad
+            (\forall X, Y, Z \in \Gamma(T\calP))
+    \end{equation}
+
+    以降、「Amari-Chentsov テンソル」を
+    「ACテンソル」と略記することがある。
+\end{definition}
+
+以降、本節では
+$\calP$に Amari-Chentsov テンソル$S$が定まっているものとする。
+
+\begin{proposition}[ACテンソルの成分]
+    \label[proposition]{prop:components-of-AC-tensor}
+    $(V, T, \mu)$を$\calP$の最小次元実現、
+    $\Theta^\calP \coloneqq \Theta^\calP_{(V, T, \mu)}, \;
+        \theta \coloneqq \theta_{(V, T, \mu)}$、
+    $(V, T, \mu)$の対数分配関数を$\psi$とおく。
+    このとき、
+    $\calP$上の任意の
+    $\nabla$-アファイン座標
+    $x \coloneqq (x^1, \dots, x^m) \colon \calP \to \R^m$に対し、
+    $\varphi \coloneqq (\varphi^1, \dots, \varphi^m)
+        \coloneqq x \circ \theta^{-1} \colon \Theta^\calP \to \R^m$とおくと、
+    $S$の成分は
+    \begin{equation}
+        S_{ijk}(p)
+            = \frac{
+                \del^3 \psi
+            }{
+                \del \varphi^i \del \varphi^j \del \varphi^k
+            }(\theta(p))
+            = E_p\mybracket{
+                (T_i - E_p[T_i])
+                (T_j - E_p[T_j])
+                (T_k - E_p[T_k])
+            }
+    \end{equation}
+    をみたす。
+    ただし$T_i \; (i = 1, \dots, m)$とは、
+    同一視$V = V^{\vee\vee} = T^\vee_{\theta(p)} \Theta^\calP$により
+    $d\varphi^i \; (i = 1, \dots, m)$を$V$の基底とみなしたときの
+    $T$の成分である。
+\end{proposition}
+
+\begin{proof}
+    左側の等号と右側の等号についてそれぞれ示す。
+
+    \uline{Step 1: 左側の等号} \quad
+    $\Theta^\calP$上の標準的な平坦アファイン接続を$\wt{\nabla}$とおき、
+    $\psi$の定める$\Theta^\calP$上の Fisher 計量を$\wt{g}$とおくと、
+    \begin{alignat}{1}
+        S\myparen{
+            \deldel{x^i},
+            \deldel{x^j},
+            \deldel{x^k}
+        }
+            &=
+                \myparen{
+                    \nabla_{\deldel{x^i}}
+                    g
+                }
+                \myparen{
+                    \deldel{x^j},
+                    \deldel{x^k}
+                }
+                \\
+            &=
+                \myparen{
+                    \myparen{
+                        \theta^* \wt{\nabla}
+                    }_{\deldel{x^i}}
+                    \myparen{
+                        \theta^* \wt{g}
+                    }
+                }
+                \myparen{
+                    \deldel{x^j},
+                    \deldel{x^k}
+                }
+                \\
+            &=
+                \myparen{
+                    \theta^{-1}_*
+                    \myparen{
+                        \wt{\nabla}_{\theta_* \deldel{x^i}}
+                        \wt{g}
+                    }
+                }
+                \myparen{
+                    \deldel{x^j},
+                    \deldel{x^k}
+                }
+                \\
+            &=
+                \myparen{
+                    \wt{\nabla}_{\theta_* \deldel{x^i}}
+                    \wt{g}
+                }
+                \myparen{
+                    d\theta\myparen{
+                        \deldel{x^j}
+                    },
+                    d\theta\myparen{
+                        \deldel{x^k}
+                    }
+                }
+                \\
+            &=
+                \myparen{
+                    \wt{\nabla}_{\deldel{\varphi^i}}
+                    \wt{g}
+                }
+                \myparen{
+                    \deldel{\varphi^j},
+                    \deldel{\varphi^k}
+                }
+                \\
+            &=
+                \myparen{
+                    \deldel{\varphi^i}
+                    \myparen{
+                        \frac{\del^2 \psi}{\del \varphi^l \del \varphi^n}
+                    }
+                    d\varphi^l d\varphi^n
+                }
+                \myparen{
+                    \deldel{\varphi^j},
+                    \deldel{\varphi^k}
+                }
+                \quad
+                (\text{$\varphi$は$\wt{\nabla}$-アファイン座標})
+                \\
+            &=
+                \frac{\del^3 \psi}{\del \varphi^i \del \varphi^j \del \varphi^k}
+    \end{alignat}
+    となるから、命題の主張の左側の等号が従う。
+
+    \uline{Step 2: 右側の等号} \quad
+    「$E_p$」の下付きの$p$を省略して書けば、
+    直接計算より
+    \begin{alignat}{1}
+        &\phantom{=}
+            E[(T_i - E[T_i])(T_j - E[T_j])(T_k - E[T_k])]
+            \\
+        &=
+            E[T_i T_j T_k]
+            - E[T_i] E[T_j T_k]
+            - E[T_j] E[T_k T_i]
+            - E[T_k] E[T_i T_j]
+            + 2 E[T_i] E[T_j] E[T_k]
+            \locallabel{eq:1}
+    \end{alignat}
+    が成り立つ。
+    一方、
+    $\lambda \coloneqq \exp \psi$とおき、
+    $\deldel{\varphi^i}$を$\del_i$と略記すれば、
+    直接計算より
+    \begin{alignat}{1}
+        \frac{\del^3 \psi}{\del \varphi^i \del \varphi^j \del \varphi^k}
+            &=
+                \del_i
+                \del_j
+                \del_k
+                \log \lambda
+                \\
+            &=
+                \frac{\del_i \del_j \del_k \lambda}{\lambda}
+                - \frac{(\del_i \lambda) (\del_j \del_k \lambda)}{\lambda^2}
+                - \frac{(\del_j \lambda) (\del_k \del_i \lambda)}{\lambda^2}
+                - \frac{(\del_k \lambda) (\del_i \del_j \lambda)}{\lambda^2}
+                + 2 \frac{(\del_i \lambda) (\del_j \lambda) (\del_k \lambda)}{\lambda^3}
+    \end{alignat}
+    が成り立つ。
+    この右辺を
+    \url{0516_資料.pdf}系2.4により期待値の形で表せば
+    式\localcref{eq:1}に一致するから、
+    命題の主張の右側の等号が従う。
+\end{proof}
+
+\begin{definition}[$\alpha$-接続]
+    $\alpha \in \R$とする。
+    $\calP$上のアファイン接続$\nabla^{(\alpha)}$を
+    次の関係式により定める:
+    \begin{equation}
+        g(\nabla^{(\alpha)}_X Y, Z)
+            =
+                g(\nabla^{(g)}_X Y, Z)
+                -
+                \frac{\alpha}{2} S(X, Y, Z)
+                \qquad
+                (X, Y, Z \in \Gamma(T\calP))
+    \end{equation}
+    この$\nabla^{(\alpha)}$を
+    $(g, S)$の定める
+    \term{$\alpha$-接続}[$\alpha$-connection]
+        {$\alpha$-接続}[alphaせつぞく]
+    という。
+    とくに$\alpha = 1, -1$の場合をそれぞれ
+    \term{e-接続}[e-connection]
+        {e-接続}[eせつぞく]、
+    \term{m-接続}[m-connection]
+        {m-接続}[mせつぞく]
+    という。
+\end{definition}
+
+\begin{proposition}[$\nabla^{(g)}, \nabla^{(\alpha)}$のACテンソルによる表示]
+    \label[proposition]{prop:connections_by_AC_tensor}
+    $\calP$上の任意の$\nabla$-アファイン座標に関し、
+    $\nabla^{(g)}$および$\nabla^{(\alpha)}$の
+    接続係数は次をみたす:
+    \begin{enumerate}
+        \item
+            \begin{equation}
+                {\Gamma^{(g)}}_{ij}^k
+                    = \frac{1}{2} A_{ij}^k,
+                    \quad
+                {\Gamma^{(g)}}_{ijk}
+                    = \frac{1}{2} S_{ijk}
+                \label{eq:Gamma_g}
+            \end{equation}
+        \item すべての$\alpha \in \R$に対し
+            \begin{equation}
+                {\Gamma^{(\alpha)}}_{ij}^k
+                    = \frac{1 - \alpha}{2} A_{ij}^k,
+                    \quad
+                {\Gamma^{(\alpha)}}_{ijk}
+                    = \frac{1 - \alpha}{2} S_{ijk}
+                \label{eq:Gamma_alpha}
+            \end{equation}
+            とくに$\alpha = 1$のとき
+            ${\Gamma^{(1)}}_{ij}^k = 0, \;
+                {\Gamma^{(1)}}_{ijk} = 0$である。
+    \end{enumerate}
+\end{proposition}
+
+\begin{proof}
+    \uline{(1)} \quad
+    \cref{eq:Gamma_g}の左側の等式は
+    \begin{alignat}{1}
+        {\Gamma^{(g)}}_{ij}^k
+            &=
+                \frac{1}{2} g^{kl}
+                \myparen{
+                    \del_i g_{jl}
+                    + \del_j g_{li}
+                    - \del_l g_{ij}
+                }
+                \\
+            &=
+                \frac{1}{2} g^{kl}
+                \myparen{
+                    S_{ijl}
+                    + S_{jli}
+                    - S_{lij}
+                }
+                \quad
+                (\text{\cref{prop:components-of-AC-tensor}})
+                \\
+            &=
+                \frac{1}{2} g^{kl} S_{ijl}
+                \\
+            &=
+                \frac{1}{2} A_{ij}^k
+    \end{alignat}
+    より従う。
+    $g$で添字を下げて\cref{eq:Gamma_g}の右側の等式も従う。
+
+    \uline{(2)} \quad
+    $\alpha$-接続の定義より
+    ${\Gamma^{(\alpha)}}_{ijk}
+        = {\Gamma^{(g)}}_{ijk}
+            - \frac{\alpha}{2} S_{ijk}$
+    だから、
+    (1)とあわせて\cref{eq:Gamma_alpha}の左側の等式が従う。
+    $g$で添字を下げて\cref{eq:Gamma_g}の右側の等式も従う。
+\end{proof}
+
+\begin{proposition}[捩率と曲率のACテンソルによる表示]
+    $\calP$上の任意の$\nabla$-アファイン座標に関し、
+    $\nabla^{(\alpha)}$の捩率テンソル$T^{(\alpha)}$
+    および$(1, 3)$-曲率テンソル$R^{(\alpha)}$の成分表示は
+    次をみたす:
+    \begin{enumerate}
+        \item すべての$\alpha \in \R$に対し
+            \begin{equation}
+                {T^{(\alpha)}}_{ij}^k
+                    = 0
+            \end{equation}
+        \item すべての$\alpha \in \R$に対し
+            \begin{equation}
+                {R^{(\alpha)}}_{ijk}^l
+                    = \frac{1 - \alpha}{2} \myparen{
+                        \del_i A_{jk}^l
+                        -
+                        \del_j A_{ik}^l
+                    }
+                    + \myparen{\frac{1 - \alpha}{2}}^2
+                    \myparen{
+                        A_{jk}^m A_{im}^l
+                        -
+                        A_{ik}^m A_{jm}^l
+                    }
+            \end{equation}
+            とくに$\alpha = 1$のとき
+            ${R^{(1)}}_{ijk}^l = 0$である。
+    \end{enumerate}
+\end{proposition}
+
+\begin{proof}
+    \uline{(1)} \quad
+    \begin{alignat}{1}
+        {T^{(\alpha)}}_{ij}
+            &=
+                {\Gamma^{(\alpha)}}_{ij}^k
+                - {\Gamma^{(\alpha)}}_{ji}^k
+                \\
+            &=
+                \frac{1 - \alpha}{2} A_{ij}^k
+                - \frac{1 - \alpha}{2} A_{ji}^k
+                \quad
+                (\cref{prop:connections_by_AC_tensor} (2))
+                \\
+            &=
+                0
+                \quad
+                (\text{$A_{ij}^k = A_{ji}^k$})
+    \end{alignat}
+    より従う。
+
+    \uline{(2)} \quad
+    \begin{alignat}{1}
+        {R^{(\alpha)}}_{ijk}^l
+            &=
+                \del_i {\Gamma^{(\alpha)}}_{jk}^l
+                - \del_j {\Gamma^{(\alpha)}}_{ik}^l
+                + {\Gamma^{(\alpha)}}_{jk}^m
+                    {\Gamma^{(\alpha)}}_{im}^l
+                - {\Gamma^{(\alpha)}}_{ik}^m
+                    {\Gamma^{(\alpha)}}_{jm}^l
+                \\
+            &=
+                \frac{1 - \alpha}{2}
+                \myparen{
+                    \del_i A_{jk}^l
+                    - \del_j A_{ik}^l
+                }
+                + \myparen{\frac{1 - \alpha}{2}}^2
+                \myparen{
+                    A_{jk}^m A_{im}^l
+                    - A_{ik}^m A_{jm}^l
+                }
+                \quad
+                (\cref{prop:connections_by_AC_tensor} (2))
+    \end{alignat}
+    より従う。
+\end{proof}
+
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{指数型分布族の具体例}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\subsection{具体例: 有限集合上の full support な確率分布の族}
+
+本節では、
+有限集合上の full support な確率分布の族について、
+$\alpha$-接続に関する測地線方程式を求めてみる。
+
+\begin{settings}[有限集合上の full support な確率分布の族]
+    $\calX \coloneqq \{ 1, \dots, n \} \; (n \in \Z_{\ge 1})$とし、
+    \begin{equation}
+        \calP \coloneqq \mybrace{
+            \sum_{i = 1}^n p_i \delta^i
+            \in \calP(\calX)
+            \, \Big| \,
+            0 < p_i < 1 \; (i = 1, \dots, n)
+        }
+    \end{equation}
+    とおく。
+    ただし$\delta^i$は
+    1点$i \in \calX$での Dirac 測度である。
+    これが$\calX$上の指数型分布族であることは
+    \url{0425_資料.pdf}例3.1で確かめた。
+\end{settings}
+
+\begin{proposition}[最小次元実現の構成および$\calP$が開であることの確認]
+    \label[proposition]{prop:minimal_representation}
+    ~
+    \begin{enumerate}
+        \item $(V, T, \gamma)$を次のように定めると、
+            これは$\calP$の実現となる:
+            \begin{alignat}{1}
+                &V \coloneqq \R^{n - 1}, \\
+                &T \colon \calX \to V, \quad
+                    k \mapsto \up{t}(\delta_{1k}, \dots, \delta_{(n - 1)k}), \\
+                &\gamma \colon \text{数え上げ測度}
+            \end{alignat}
+        \item この実現の対数分配関数$\psi \colon \wt{\Theta} \to \R$は
+            $\psi(\theta)
+                =
+                    \log\myparen{
+                        1 + \sum_{i = 1}^{n - 1} \exp\theta^i
+                    }$
+            となる。
+        \item 写像$P \coloneqq P_{(V, T, \gamma)} \colon \wt{\Theta} \to \calP(\calX)$は
+            次をみたす:
+            \begin{equation}
+                P(\theta)
+                    =
+                        \frac{
+                            1
+                        }{
+                            1 + \sum_{i = 1}^{n - 1} \exp\theta^i
+                        }
+                        \myparen{
+                            \sum_{i = 1}^{n - 1}
+                                (\exp\theta^i)
+                                \delta^i
+                                +
+                                \delta^n
+                        }
+            \end{equation}
+        \item $\Theta = \wt{\Theta} = V^\vee$が成り立つ。
+        \item 次の写像$\theta \colon \calP \to \Theta$は$P$の逆写像である:
+            \begin{alignat}{1}
+                \theta
+                    \colon
+                        \calP \to \Theta,
+                    \quad
+                        \sum_{i = 1}^n p_i \delta^i
+                        \mapsto
+                        \myparen{
+                            \log \frac{p_1}{p_n},
+                            \dots,
+                            \log \frac{p_{n - 1}}{p_n}
+                        }
+            \end{alignat}
+        \item $(V, T, \gamma)$は最小次元実現である。
+            とくに$\calP$は開である。
+    \end{enumerate}
+\end{proposition}
+
+\begin{proof}
+    \uline{(1)} \quad
+    $(V, T, \gamma)$が
+    実現であることは\url{0425_コメント.pdf}演習問題0.1に記した。
+
+    \uline{(2)} \quad
+    対数分配関数の定義より
+    \begin{alignat}{1}
+        \psi(\theta)
+            &=
+                \log \int_\calX
+                    \exp \myangle{\theta}{T(k)}
+                    \, \gamma(dk)
+                \\
+            &=
+                \log \sum_{i = 1}^n
+                    \exp \myparen{
+                        \sum_{j = 1}^{n - 1}
+                            \theta^j
+                            \delta_{ji}
+                    }
+                \\
+            &=
+                \log \myparen{
+                    \sum_{i = 1}^{n - 1}
+                        \exp \theta^i
+                    + 1
+                }
+    \end{alignat}
+    である。
+
+    \uline{(3)} \quad
+    $P$の定義より
+    \begin{alignat}{1}
+        P(\theta)
+            &=
+                \exp(\myangle{\theta}{T(k)} - \psi(\theta)) \gamma
+                \\
+            &=
+                \frac{
+                    1
+                }{
+                    1 + \sum_{i = 1}^{n - 1} \exp\theta^i
+                }
+                \exp \myparen{
+                    \sum_{i = 1}^{n - 1}
+                        \theta^i
+                        \delta_{ik}
+                }
+                \gamma
+                \\
+            &=
+                \frac{
+                    1
+                }{
+                    1 + \sum_{i = 1}^{n - 1} \exp\theta^i
+                }
+                \myparen{
+                    \sum_{i = 1}^{n - 1}
+                        (\exp\theta^i)
+                        \delta^i
+                        +
+                        \delta^n
+                }
+    \end{alignat}
+    である。
+
+    \uline{(4)} \quad
+    可積分性を考えると
+    明らかに$\wt{\Theta} = V^\vee$である。
+    また$P$が(3)のように表せることから
+    $P(\wt{\Theta}) \subset \calP$がわかる。
+    したがって$V^\vee = \wt{\Theta} \subset P^{-1}(\calP) = \Theta$である。
+    よって$\Theta = \wt{\Theta} = V^\vee$である。
+
+    \uline{(5)} \quad
+    $P \circ \theta, \; \theta \circ P$を
+    直接計算すれば確かめられる。
+
+    \uline{(6)} \quad
+    最小次元実現の特徴づけを確かめればよい。
+    条件A(3)が成り立つことは、
+    いま$V$の任意のアファイン部分空間に対し
+    「$T(x) \in W \; \text{$\gamma$-a.e.$x$}$」
+    と
+    「$T(x) \in W \; \text{$\forall x$}$」
+    が同値であることから明らか。
+    条件Bが成り立つことは
+    $\Theta = V^\vee$よりわかる。
+\end{proof}
+
+以降、
+$\calP$には自然な位相および多様体構造が入っているものとして扱い、
+$\calP$上の自然な平坦アファイン接続を$\nabla$、
+Fisher 計量を$g$、
+$(0, 3), (1, 2)$型の Amari-Chentsov テンソルを
+それぞれ$S, A$とおく。
+また、$\theta \colon \calP \to \Theta$は
+多様体$\calP$の座標とみなす。
+
+\begin{remark}[$\calP$の2通りの位相 \& 多様体構造]
+    $\calP$上の位相 \& 多様体構造として、
+    $\calX$上の符号付き測度全体のなす
+    ベクトル空間$\calS(\calX) \cong \R^n$の部分多様体としてのものと、
+    指数型分布族としての自然なものの2通りを考えられるが、
+    これらは互いに一致する。
+    なぜならば、
+    いずれの位相 \& 多様体構造に関しても
+    写像$\theta \colon \calP \to \Theta$は微分同相写像だからである。
+\end{remark}
+
+\begin{proposition}[Fisher 計量の成分]
+    \label[proposition]{prop:fisher_metric_components}
+    座標$\theta = (\theta^1, \dots, \theta^{n - 1})$に関する
+    Fisher 計量$g$の成分は
+    \begin{equation}
+        g_{ij}(p)
+            = \delta_{ij} p_i - p_i p_j
+            \qquad
+            (p \in \calP, \; i, j = 1, \ldots, n - 1)
+    \end{equation}
+    となる。
+\end{proposition}
+
+\begin{proof}
+    微分同相写像$\theta$により
+    $g$を$\Theta$上のテンソル場とみなして計算すれば、
+    各$p \in \calP$に対し
+    \begin{alignat}{1}
+        g_{ij}(p)
+            &=
+                (\Var_p [T])(e^i, e^j)
+                \\
+            &=
+                E_p[(T^i - E_p[T^i])(T^j - E_p[T^j])]
+                \\
+            &=
+                \sum_{k = 1}^n
+                    (\delta_{ik} - p_i)
+                    (\delta_{jk} - p_j)
+                    p_k
+                \\
+            &=
+                \delta_{ij} p_i - p_i p_j
+    \end{alignat}
+    が成り立つ。
+\end{proof}
+
+\begin{proposition}[ACテンソルの成分]
+    \label[proposition]{prop:ac_tensor_components}
+    座標$\theta$に関する
+    ACテンソル$S$の成分は
+    \begin{equation}
+        S_{ijk}(p)
+            = p_i \delta_{ij} \delta_{jk}
+                - p_i p_k \delta_{ij}
+                - p_i p_j \delta_{jk}
+                - p_j p_k \delta_{ik}
+                + 2 p_i p_j p_k
+            \qquad
+            (p \in \calP, \; i, j, k = 1, \ldots, n - 1)
+    \end{equation}
+    となる。
+\end{proposition}
+
+\begin{proof}
+    前回 (\url{0613_資料.pdf}) の命題1.9を用いると
+    \begin{equation}
+        S_{ijk}(p)
+            = E_p [
+                (T^i - E_p[T^i])
+                (T^j - E_p[T^j])
+                (T^k - E_p[T^k])
+            ]
+    \end{equation}
+    となるから、
+    \cref{prop:fisher_metric_components}と同様に直接計算して
+    命題の主張の等式が得られる。
+\end{proof}
+
+以降、$n = 3$の場合を考える。
+
+\begin{proposition}[$n = 3$での$g, S, A$の計算]
+    座標$\theta$に関し、
+    $g$の行列表示は
+    \begin{equation}
+        (g_{ij})_{i, j}
+            = \begin{pmatrix}
+                p_1 (1 - p_1) & - p_1 p_2 \\
+                - p_1 p_2 & p_2 (1 - p_2)
+            \end{pmatrix},
+            \quad
+        (g^{ij})_{i, j}
+            = \frac{1}{p_3}
+                \begin{pmatrix}
+                    \frac{p_3}{p_1} + 1 & 1 \\
+                    1 & \frac{p_3}{p_2} + 1
+                \end{pmatrix}
+    \end{equation}
+    となる。
+    $S$の成分は
+    \begin{alignat}{1}
+        S_{111}
+            &= p_1 - 3 p_1^2 + 2 p_1^3, \\
+        S_{112} = S_{121} = S_{211}
+            &= - p_1 p_2 + 2 p_1^2 p_2, \\
+        S_{122} = S_{212} = S_{221}
+            &= - p_1 p_2 + 2 p_1 p_2^2, \\
+        S_{222}
+            &= p_2 - 3 p_2^2 + 2 p_2^3
+    \end{alignat}
+    となる。
+    $A$の成分は
+    \begin{alignat}{2}
+        A_{11}^{\hphantom{11}1}
+            &=
+                1 - 2p_1,
+                \qquad
+        &A_{11}^{\hphantom{11}2}
+            &=
+                0
+                \\
+        A_{12}^{\hphantom{12}1}
+            =
+                A_{21}^{\hphantom{21}1}
+            &=
+                - p_2,
+                \qquad
+        &A_{12}^{\hphantom{12}2}
+            =
+                A_{21}^{\hphantom{21}2}
+            &=
+                - p_1
+                \\
+        A_{22}^{\hphantom{22}1}
+            &=
+                0,
+                \qquad
+        &A_{22}^{\hphantom{22}2}
+            &=
+                1 - 2p_2
+    \end{alignat}
+    となる。
+\end{proposition}
+
+\begin{proof}
+    $g$の行列表示は
+    \cref{prop:fisher_metric_components}よりわかる。
+    その逆行列は直接計算よりわかる。
+    $S$の成分は
+    \cref{prop:ac_tensor_components}よりわかる。
+    $A$の成分は「$A_{ij}^{\hphantom{ij}k} = g^{kl} S_{ijl}$」
+    を用いて求める。
+    具体的には以下の行列を直接計算すればわかる:
+    \begin{equation}
+        \begin{pmatrix}
+            A_{11}^{\hphantom{11}1}
+                & A_{12}^{\hphantom{12}1}
+                & A_{22}^{\hphantom{22}1}
+                \\
+            A_{11}^{\hphantom{11}2}
+                & A_{12}^{\hphantom{12}2}
+                & A_{22}^{\hphantom{22}2}
+        \end{pmatrix}
+            =
+                \frac{1}{p_3}
+                \begin{pmatrix}
+                    \frac{p_3}{p_1} + 1 & 1 \\
+                    1 & \frac{p_3}{p_2} + 1
+                \end{pmatrix}
+                \begin{pmatrix}
+                    S_{111}
+                        & S_{121}
+                        & S_{221}
+                        \\
+                    S_{112}
+                        & S_{122}
+                        & S_{222}
+                \end{pmatrix}
+    \end{equation}
+\end{proof}
+
+\begin{proposition}[$n = 3$での測地線方程式]
+    各$\alpha \in \R$に対し、
+    座標$\theta$に関する
+    $\nabla^{(\alpha)}$-測地線の方程式は
+    \begin{alignat}{1}
+        \ddot{\theta^1}
+            &=
+                - \frac{1 - \alpha}{2}
+                \myparen{
+                    \myparen{
+                        1 - \frac{2 \exp \theta^1}{1 + \exp \theta^1 + \exp \theta^2}
+                    }
+                    (\dot{\theta^1})^2
+                    -
+                    \frac{2 \exp \theta^2}{1 + \exp \theta^1 + \exp \theta^2}
+                    \dot{\theta^1} \dot{\theta^2}
+                }
+                \\
+        \ddot{\theta^2}
+            &=
+                - \frac{1 - \alpha}{2}
+                \myparen{
+                    -
+                    \frac{2 \exp \theta^1}{1 + \exp \theta^1 + \exp \theta^2}
+                    \dot{\theta^1} \dot{\theta^2}
+                    + \myparen{
+                        1 - \frac{2 \exp \theta^2}{1 + \exp \theta^1 + \exp \theta^2}
+                    }
+                    (\dot{\theta^2})^2
+                }
+    \end{alignat}
+    となる。
+    とくに$\alpha = 1$のとき
+    \begin{equation}
+        \ddot{\theta^1} = 0,
+            \quad
+            \ddot{\theta^2} = 0
+    \end{equation}
+    である。
+\end{proposition}
+
+\begin{proof}
+    測地線の方程式
+    \begin{equation}
+        \ddot{\theta^k}
+            = - \Gamma_{ij}^k \dot{\theta^i} \dot{\theta^j}
+    \end{equation}
+    に、前回 (\url{0613_資料.pdf}) の命題1.11の等式
+    ${\Gamma^{(\alpha)}}_{ij}^k = \frac{1 - \alpha}{2} A_{ij}^{\hphantom{ij}k}$
+    を代入して得られる。
+\end{proof}
+
+$\alpha \neq 1$の場合に
+上の測地線方程式を解くのは難しいように思う。
+数値計算の結果を資料末尾の付録に載せた。
+
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\subsection{具体例: 正規分布族}
+
+本節では、
+正規分布族について、
+$\alpha$-接続に関する測地線方程式を求めてみる。
+
+\begin{settings}[正規分布族]
+    $\calX \coloneqq \R$とし、
+    \begin{equation}
+        \calP \coloneqq \mybrace{
+            \frac{1}{\sqrt{2 \pi \sigma^2}}
+            \exp\myparen{
+                - \frac{(x - \mu)^2}{2 \sigma^2}
+            }
+            \lambda(dx)
+            \in \calP(\calX)
+            \, \Big| \,
+            (\mu, \sigma) \in \R \times \R_{> 0}
+        }
+    \end{equation}
+    とおく。
+    これが$\calX$上の指数型分布族であることは
+    \url{0425_資料.pdf}例3.2で確かめた。
+\end{settings}
+
+以降、次の事実をしばしば用いる:
+
+\begin{fact}
+    次の2つの写像は互いに逆な{\smooth}写像である:
+    \begin{alignat}{1}
+        \R \times \R_{> 0} \to \R \times \R_{< 0},
+            \qquad
+            &(\mu, \sigma)
+            \mapsto
+            \myparen{
+                \frac{\mu}{\sigma^2},
+                - \frac{1}{2\sigma^2}
+            },
+            \\
+        \R \times \R_{< 0} \to \R \times \R_{> 0},
+            \qquad
+            &(\theta^1, \theta^2)
+            \mapsto
+            \myparen{
+                - \frac{\theta^1}{2\theta^2},
+                \sqrt{- \frac{1}{2\theta^2}}
+            }
+    \end{alignat}
+    \qed
+\end{fact}
+
+\begin{proposition}[最小次元実現の構成および$\calP$が開であることの確認]
+    \label[proposition]{prop:minimal_representation_nd}
+    ~
+    \begin{enumerate}
+        \item $(V, T, \lambda)$を次のように定めると、
+            これは$\calP$の実現となる:
+            \begin{alignat}{1}
+                &V = \R^2, \\
+                &T \colon \calX \to V, \quad
+                    x \mapsto \up{t}(x, x^2), \\
+                &\lambda \colon \text{Lebesgue 測度}.
+            \end{alignat}
+        \item この実現の対数分配関数$\psi \colon \wt{\Theta} \to \R$は
+            $\psi(\theta)
+                =
+                    - \frac{(\theta^1)^2}{4 \theta^2}
+                    - \frac{1}{2} \log (- \theta^2)
+                    + \frac{1}{2} \log \pi
+                $
+            となる。
+        \item $\Theta = \wt{\Theta} = \R \times \R_{< 0}$が成り立つ。
+        \item 次の写像$\theta \colon \calP \to \Theta$は
+            $P \coloneqq P_{(V, T, \lambda)}$の逆写像である:
+            \begin{alignat}{1}
+                \theta
+                    \colon
+                        \calP \to \Theta,
+                    \quad
+                        p
+                        \mapsto
+                        \myparen{
+                            \frac{E_p[x]}{\Var_p[x]},
+                            - \frac{1}{2 \Var_p[x]}
+                        }
+            \end{alignat}
+        \item $(V, T, \lambda)$は最小次元実現である。
+            とくに$\calP$は開である。
+    \end{enumerate}
+\end{proposition}
+
+\begin{proof}
+    \uline{(1)} \quad
+    実現であることは\url{0425_資料.pdf}例3.2で確かめた。
+
+    \uline{(2)} \quad
+    対数分配関数の定義から直接計算よりわかる。
+
+    \uline{(3)} \quad
+    $\theta^2 \ge 0$だと
+    $\exp\myparen{
+        \theta^1 x
+        + \theta^2 x^2
+        - \psi(\theta)
+    }$
+    は積分可能でないから
+    $\Theta \subset \wt{\Theta} \subset \R \times \R_{< 0}$
+    である。
+    逆に写像$P \coloneqq P_{(V, T, \lambda)}$について、
+    すべての$p \in P(\R \times \R_{< 0})$は
+    $p(dx) = \exp(
+        \theta^1 x
+        + \theta^2 x^2
+        - \psi(\theta)
+    ) \lambda(dx)
+        \; (\exists (\theta^1, \theta^2) \in \R \times \R_{< 0})$
+    と表せるから、
+    $(\mu, \sigma) \coloneqq \myparen{
+        - \frac{\theta^1}{2\theta^2}, \;
+        \sqrt{- \frac{1}{2\theta^2}}
+    } \in \R \times \R_{> 0}$
+    とおけば
+    $p(dx) = \frac{1}{\sqrt{2 \pi \sigma^2}}
+        \exp\myparen{
+            - \frac{(x - \mu)^2}{2 \sigma^2}
+        } \lambda(dx)$
+    と表せることになり$p \in \calP$がわかる。
+    したがって
+    $P(\R \times \R_{< 0}) \subset \calP$をみたすから
+    $\R \times \R_{< 0} \subset P^{-1}(\calP) =  \Theta$である。
+    よって
+    $\Theta = \wt{\Theta} = \R \times \R_{< 0}$である。
+
+    \uline{(4)} \quad
+    $(\theta^1, \theta^2) \in \R \times \R_{< 0}$と
+    $(\mu, \sigma) \in \R \times \R_{> 0}$の対応に注意すれば
+    直接計算よりわかる。
+
+    \uline{(5)} \quad
+    最小次元実現の特徴づけの条件A(3)と条件Bが成り立つことから、
+    最小次元実現であることがわかる。
+\end{proof}
+
+以降、
+$\calP$には自然な位相および多様体構造が入っているものとして扱い、
+$\calP$上の自然な平坦アファイン接続を$\nabla$、
+Fisher 計量を$g$、
+$(0, 3), (1, 2)$型の Amari-Chentsov テンソルを
+それぞれ$S, A$とおく。
+また、$\theta \colon \calP \to \Theta$は
+多様体$\calP$の座標とみなす。
+
+\begin{proposition}
+    座標$(\mu, \sigma)$に関する$g$の行列表示は
+    \begin{equation}
+        (g_{ij})_{i, j}
+            = \begin{pmatrix}
+                \frac{1}{\sigma^2} & 0 \\
+                0 & \frac{2}{\sigma^2}
+            \end{pmatrix},
+            \qquad
+        (g^{ij})_{i, j}
+            = \begin{pmatrix}
+                \sigma^2 & 0 \\
+                0 & \frac{\sigma^2}{2}
+            \end{pmatrix}
+    \end{equation}
+    となる。
+\end{proposition}
+
+\begin{proof}
+    微分同相写像$\theta$により
+    $g$を$\Theta$上のテンソル場とみなして計算する。
+    座標$(\theta^1, \theta^2)$と
+    座標$(\mu, \sigma)$の間の座標変換が
+    $\theta^1 = \frac{\mu}{\sigma^2}, \;
+        \theta^2 = -\frac{1}{2 \sigma^2}$
+    および
+    $\mu = -\frac{\theta^1}{2\theta^2}, \;
+        \sigma = \sqrt{-\frac{1}{2\theta^2}}$
+    であることに注意すると
+    \begin{alignat}{2}
+        d\mu
+            &=
+                - \frac{1}{2\theta^2} d\theta^1
+                + \frac{\theta^1}{2(\theta^2)^2} d\theta^2,
+            &\qquad
+        d\sigma
+            &=
+                \frac{1}{2\sqrt{2}} (-\theta^2)^{-3/2} d\theta^2,
+                \\
+        d\theta^1
+            &=
+                \frac{1}{\sigma^2} d\mu
+                - \frac{2\mu}{\sigma^3} d\sigma,
+            &\qquad
+        d\theta^2
+            &=
+                \frac{1}{\sigma^3} d\sigma,
+    \end{alignat}
+    さらに
+    \begin{alignat}{1}
+        (d\theta^1)^2
+            &=
+                \frac{1}{\sigma^4} (d\mu)^2
+                - \frac{\mu}{\sigma^5} d\mu d\sigma
+                + \frac{4\mu^2}{\sigma^6} (d\sigma)^2,
+                \\
+        d\theta^1 d\theta^2
+            &=
+                \frac{1}{\sigma^5} d\mu d\sigma
+                - \frac{2\mu}{\sigma^6} (d\sigma)^2,
+                \\
+        (d\theta^2)^2
+            &=
+                \frac{1}{\sigma^6} (d\sigma)^2
+    \end{alignat}
+    である。
+    したがって、
+    $\Theta$上の標準的な平坦アファイン接続を$D$とおくと
+    \begin{alignat}{1}
+        Dd\mu
+            &=
+                \frac{1}{(\theta^2)^2} d\theta^1 d\theta^2
+                - \frac{\theta^1}{(\theta^2)^3} (d\theta^2)^2
+            =
+                \frac{4}{\sigma} d\mu d\sigma,
+                \\
+        Dd\sigma
+            &=
+                \frac{3}{4\sqrt{2}} (-\theta^2)^{-5/2} (d\theta^2)^2
+            =
+                \frac{3}{\sigma} (d\sigma)^2
+    \end{alignat}
+    である。
+    よって
+    \begin{alignat}{1}
+        d\psi
+            &=
+                \frac{\mu}{\sigma^2}
+                d\mu
+                + \myparen{
+                    - \frac{\mu^2}{\sigma^3}
+                    + \frac{1}{\sigma}
+                }
+                d\sigma,
+                \\
+        \Hess\psi
+            &=
+                Dd\psi
+                \\
+            &=
+                d\myparen{
+                    \frac{\mu}{\sigma^2}
+                }
+                d\mu
+                + \frac{\mu}{\sigma^2} Dd\mu
+                + d\myparen{
+                    - \frac{\mu^2}{\sigma^3}
+                    + \frac{1}{\sigma}
+                }
+                d\sigma
+                + \myparen{
+                    - \frac{\mu^2}{\sigma^3}
+                    + \frac{1}{\sigma}
+                }
+                Dd\sigma
+                \\
+            &=
+                \frac{1}{\sigma^2} (d\mu)^2
+                + \frac{2}{\sigma^2} (d\sigma)^2
+    \end{alignat}
+    である。
+    これより命題の主張が従う。
+\end{proof}
+
+\begin{proposition}[ACテンソルの成分]
+    座標$(\mu, \sigma)$に関するACテンソル$S$の成分は
+    \begin{alignat}{1}
+        S_{111}
+            &=
+                0
+                \\
+        S_{112} = S_{121} = S_{211}
+            &=
+                \frac{2}{\sigma^3}
+                \\
+        S_{122} = S_{212} = S_{221}
+            &=
+                0
+                \\
+        S_{222}
+            &=
+                \frac{8}{\sigma^3}
+    \end{alignat}
+    である。
+    座標$(\mu, \sigma)$に関する$A$の成分は
+    \begin{alignat}{2}
+        A_{11}^{\hphantom{11}1}
+            &=
+                0,
+                \qquad
+        &A_{11}^{\hphantom{11}2}
+            &=
+                \frac{1}{\sigma},
+                \\
+        A_{12}^{\hphantom{12}1}
+            &=
+                A_{21}^{\hphantom{21}1}
+            =
+                \frac{2}{\sigma},
+                \qquad
+        &A_{12}^{\hphantom{12}2}
+            &=
+                A_{21}^{\hphantom{21}2}
+            =
+                0,
+                \\
+        A_{22}^{\hphantom{22}1}
+            &=
+                0,
+                \qquad
+        &A_{22}^{\hphantom{22}2}
+            &=
+                \frac{4}{\sigma}
+    \end{alignat}
+    である。
+\end{proposition}
+
+\begin{proof}
+    微分同相写像$\theta$により
+    $S, A$を$\Theta$上のテンソル場とみなして計算する。
+    $\Theta$上の標準的な平坦アファイン接続を$D$とおくと
+    \begin{alignat}{1}
+        DDd\psi
+            &=
+                D \myparen{
+                    \frac{1}{\sigma^2} (d\mu)^2
+                    + \frac{2}{\sigma^2} (d\sigma)^2
+                }
+                \\
+            &=
+                - \frac{2}{\sigma^3} (d\mu)^2 d\sigma
+                + \frac{1}{\sigma^2} D(d\mu)^2
+                - \frac{4}{\sigma^3} (d\sigma)^3
+                + \frac{2}{\sigma^2} D(d\sigma)^2
+    \end{alignat}
+    ここで
+    \begin{alignat}{1}
+        D(d\mu)^2
+            &=
+                2 d\mu Dd\mu
+            =
+                \frac{8}{\sigma} (d\mu)^2 d\sigma,
+                \\
+        D(d\sigma)^2
+            &=
+                2 d\sigma Dd\sigma
+            =
+                \frac{6}{\sigma} (d\sigma)^3
+    \end{alignat}
+    だから
+    \begin{equation}
+        DDd\psi
+            =
+                \frac{6}{\sigma^3} (d\mu)^2 d\sigma
+                + \frac{8}{\sigma^3} (d\sigma)^3
+    \end{equation}
+    である。
+    これより命題の主張の式が得られる。
+    $A$の成分は
+    「$A_{ij}^{\hphantom{ij}k} = g^{kl} S_{ijl}$」
+    を用いて直接計算より得られる。
+\end{proof}
+
+\begin{proposition}[接続係数]
+    ~
+    \begin{enumerate}
+        \item 座標$(\mu, \sigma)$に関する
+            $\nabla^g$の接続係数は
+            \begin{alignat}{2}
+                {\Gamma^{g}}_{11}^1
+                    = 0,
+                    &\qquad
+                        {\Gamma^{g}}_{12}^1
+                            = {\Gamma^{g}}_{21}^1
+                            = -\frac{1}{\sigma},
+                    &&\qquad
+                        {\Gamma^{g}}_{22}^1
+                            = 0,
+                    \\
+                {\Gamma^{g}}_{11}^2
+                    = \frac{1}{2\sigma},
+                    &\qquad
+                        {\Gamma^{g}}_{12}^2
+                            = {\Gamma^{g}}_{21}^2
+                            = 0,
+                    &&\qquad
+                        {\Gamma^{g}}_{22}^2
+                            = -\frac{1}{\sigma}
+            \end{alignat}
+            である。
+        \item 座標$(\mu, \sigma)$に関する
+            $\nabla^{(\alpha)}$の接続係数は
+            \begin{alignat}{2}
+                {\Gamma^{(\alpha)}}_{11}^1
+                    = 0,
+                    &\qquad
+                        {\Gamma^{(\alpha)}}_{12}^1
+                            = {\Gamma^{(\alpha)}}_{21}^1
+                            = - \frac{1 + \alpha}{\sigma},
+                    &&\qquad
+                        {\Gamma^{(\alpha)}}_{22}^1
+                            = 0,
+                    \\
+                {\Gamma^{(\alpha)}}_{11}^2
+                    = \frac{1 - \alpha}{2 \sigma},
+                    &\qquad
+                        {\Gamma^{(\alpha)}}_{12}^2
+                            = {\Gamma^{(\alpha)}}_{21}^2
+                            = 0,
+                    &&\qquad
+                        {\Gamma^{(\alpha)}}_{22}^2
+                            = - \frac{1 + 2\alpha}{\sigma}
+            \end{alignat}
+            である。
+    \end{enumerate}
+\end{proposition}
+
+\begin{proof}
+    $\Gamma^g$は
+    ${\Gamma^g}_{ij}^k
+        = \frac{1}{2} g^{kl} \myparen{
+            \partial_i g_{jl}
+            + \partial_j g_{li}
+            - \partial_l g_{ij}
+        }$
+    を直接計算することで得られる。
+    $\Gamma^{(\alpha)}$は
+    ${\Gamma^{(\alpha)}}_{ij}^k
+        = {\Gamma^g}_{ij}^k - \frac{\alpha}{2} A_{ij}^{\hphantom{ij}k}$
+    より得られる。
+\end{proof}
+
+\begin{proposition}[測地線方程式]
+    $(\mu, \sigma)$座標に関する$\nabla^{(\alpha)}$-測地線の方程式は
+    \begin{equation}
+        \begin{cases}
+            \ddot{\mu}
+                - \frac{2 (1 + \alpha)}{\sigma} \dot{\mu} \dot{\sigma}
+                = 0,
+                \\
+            \ddot{\sigma}
+                + \frac{1 - \alpha}{2 \sigma} \dot{\mu}^2
+                - \frac{1 + 2 \alpha}{\sigma} \dot{\sigma}^2
+                = 0
+        \end{cases}
+    \end{equation}
+    である。
+    とくに$\alpha = 0$のとき
+    \begin{equation}
+        \begin{cases}
+            \ddot{\mu}
+                - \frac{2}{\sigma} \dot{\mu} \dot{\sigma}
+                = 0,
+                \\
+            \ddot{\sigma}
+                + \frac{1}{2 \sigma} \dot{\mu}^2
+                - \frac{1}{\sigma} \dot{\sigma}^2
+                = 0
+        \end{cases}
+    \end{equation}
+    である。
+\end{proposition}
+
+\begin{proof}
+    測地線の方程式
+    「$\ddot{x^k} = - {\Gamma}_{ij}^k \dot{x^i} \dot{x^j}$」
+    に接続係数を代入して得られる。
+\end{proof}
+
+\begin{proposition}
+    $\nabla^g$-測地線の像は、
+    楕円
+    \begin{equation}
+        \myparen{
+            \frac{x - x_0}{\sqrt{2}}
+        }^2
+            + y^2 = r^2
+            \qquad
+            (x_0 \in \R, \; r \in \R_{> 0})
+    \end{equation}
+    の一部または
+    $y$軸に平行な直線の一部である。
+\end{proposition}
+
+\begin{proof}[証明\footnote{
+    証明の流れは\cite[Chap.3 14.4]{Tu17}を参考にした。
+}]
+    測地線の方程式
+    \begin{alignat}{1}
+        \ddot{\mu}
+            - \frac{2}{\sigma} \dot{\mu} \dot{\sigma}
+            &= 0,
+            \locallabel{eq:1}
+            \\
+        \ddot{\sigma}
+            + \frac{1}{2 \sigma} \dot{\mu}^2
+            - \frac{1}{\sigma} \dot{\sigma}^2
+            &= 0
+            \locallabel{eq:2}
+    \end{alignat}
+    を変形していく。
+
+    $\dot{\mu} = 0$の場合は
+    $\mu = \text{const.}$ゆえに
+    測地線は$y$軸に平行な直線の一部である。
+
+    以下、$\dot{\mu} \neq 0$の場合を考える。
+    \localcref{eq:1}の両辺を$\dot{\mu}$で割って
+    \begin{equation}
+        \frac{\ddot{\mu}}{\dot{\mu}}
+            - 2\frac{\dot{\sigma}}{\sigma}
+            = 0
+    \end{equation}
+    これより
+    $\log \dot{\mu} = 2 \log \sigma + \text{const.}$
+    したがって
+    \begin{equation}
+        \dot{\mu} = k \sigma^2
+            \qquad
+            (k \in \R)
+            \locallabel{eq:3}
+    \end{equation}
+    である。
+    一方、$\nabla^g$は$g$の Levi-Civita 接続であるから、
+    測地線の速度ベクトルの$g$に関する大きさは一定、
+    すなわち
+    \begin{equation}
+        \frac{\dot{\mu}^2 + 2 \dot{\sigma}^2}{\sigma^2}
+            = r^2
+            \qquad
+            (a \in \R)
+            \locallabel{eq:4}
+    \end{equation}
+    である。
+    \localcref{eq:4}に\localcref{eq:3}を代入して
+    \begin{alignat}{1}
+        \frac{k^2 \sigma^4 + 2 \dot{\sigma}^2}{\sigma^2}
+            &=
+                a^2
+                \\
+        \dot{\sigma}
+            &=
+                \pm \sigma \sqrt{\frac{a^2 - k^2 \sigma^2}{2}}
+    \end{alignat}
+    を得る。
+    これと\localcref{eq:3}より
+    \begin{alignat}{1}
+        \dd[\mu]{\sigma}
+            =
+                \frac{\dot{\mu}}{\dot{\sigma}}
+            &=
+                \frac{k \sigma^2}{\pm \sigma \sqrt{\frac{a^2 - k^2 \sigma^2}{2}}}
+                \\
+            &=
+                \mp \frac{\sqrt{2} |a|}{k}
+                \frac{
+                    \myparen{
+                        \frac{k}{a}
+                    }^2
+                    \sigma
+                }{
+                    \sqrt{
+                        1 - \myparen{
+                            \frac{k}{a}
+                        }^2
+                        \sigma^2
+                    }
+                }
+                \\
+        \therefore \mu
+            &=
+                \mp \frac{\sqrt{2} |a|}{k}
+                \sqrt{
+                    1 - \myparen{
+                        \frac{k}{a}
+                    }^2
+                    \sigma^2
+                }
+                + \mu_0
+                \qquad
+                (\mu_0 \in \R)
+    \end{alignat}
+    を得る。
+    よって
+    \begin{equation}
+        (\mu - \mu_0)^2
+            =
+                \frac{2 a^2}{k^2}
+                - 2 \sigma^2
+    \end{equation}
+    $r \coloneqq \frac{a}{k}$とおいて整理すれば
+    \begin{equation}
+        \myparen{
+            \frac{\mu - \mu_0}{\sqrt{2}}
+        }^2
+            + \sigma^2
+            = r^2
+    \end{equation}
+    が得られる。
+\end{proof}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{双対構造}
+
+
+\begin{definition}[双対構造]
+    $M$を多様体とする。
+    $M$上の
+    Riemann 計量$g$と
+    アファイン接続$\nabla, \nabla^*$の組
+    $(g, \nabla, \nabla^*)$
+    が$M$上の
+    \term{双対構造}[dualistic structure]
+        {双対構造}[そうついこうぞう]
+    であるとは、
+    すべての$X, Y, Z \in \frakX(M)$に対し
+    \begin{equation}
+        X(g(Y, Z))
+            =
+                g(\nabla_X Y, Z) + g(Y, \nabla^*_X Z)
+    \end{equation}
+    が成り立つことをいう。
+    このとき、
+    $\nabla, \nabla^*$はそれぞれ$g$に関する$\nabla^*, \nabla$の
+    \term{双対接続}[dual connection]
+        {双対接続}[そうついせつぞく]
+    であるという。
+
+    さらに$\nabla, \nabla^*$がいずれも$M$上平坦であるとき、
+    $(g, \nabla, \nabla^*)$は
+    \term{双対平坦}[dually flat]
+        {双対平坦}[そうついへいたん]
+    であるという。
+    双対平坦な双対構造を
+    \term{双対平坦構造}[dually flat structure]
+        {双対平坦構造}[そうついへいたんこうぞう]
+    という。
+\end{definition}
+
+\begin{proposition}[双対接続の存在と一意性]
+    \label[proposition]{prop:dual-connection-existence-uniqueness}
+    $M$を多様体、
+    $g$を$M$上のRiemann 計量、
+    $\nabla$を$M$上のアファイン接続とする。
+    このとき、
+    $g$に関する$\nabla$の双対接続がただひとつ存在する。
+\end{proposition}
+
+\begin{proof}
+    証明は付録に記した。
+\end{proof}
+
+指数型分布族の$\alpha$-接続について考える。
+以降、$\calP$を可測空間$\calX$上の open な指数型分布族、
+$\nabla$を$\calP$上の自然な平坦アファイン接続、
+$g$を$\calP$上の Fisher 計量、
+$S, A$をそれぞれ$(0, 3), (1, 2)$型の Amari-Chentsov テンソル、
+$\nabla^{(\alpha)} \; (\alpha \in \R)$を$\alpha$-接続とする。
+
+\begin{proposition}[曲率のACテンソルによる表示]
+    \label[proposition]{prop:curvature-AC-tensor}
+    $\alpha \in \R$、
+    $R^{(\alpha)}$を$\nabla^{(\alpha)}$の
+    $(1, 3)$-曲率テンソルとする。
+    このとき、
+    $\calP$の任意の$\nabla$-アファイン座標に関し、
+    $R^{(\alpha)}$の成分は
+    \begin{equation}
+        {R^{(\alpha)}}_{ijk}^{\hphantom{ijk}l}
+            =
+                - \frac{1 - \alpha^2}{4}
+                \myparen{
+                    A_{jk}^{\hphantom{jk}m} A_{im}^{\hphantom{im}l}
+                    - A_{ik}^{\hphantom{ik}m} A_{jm}^{\hphantom{jm}l}
+                }
+    \end{equation}
+    となる。
+\end{proposition}
+
+\begin{proof}
+    \url{0613_資料.pdf}命題1.12の式
+    \begin{equation}
+        {R^{(\alpha)}}_{ijk}^{\hphantom{ijk}l}
+            = \frac{1 - \alpha}{2} \myparen{
+                \del_i A_{jk}^{\hphantom{jk}l}
+                -
+                \del_j A_{ik}^{\hphantom{ik}l}
+            }
+            + \myparen{\frac{1 - \alpha}{2}}^2
+            \myparen{
+                A_{jk}^{\hphantom{jk}m} A_{im}^{\hphantom{im}l}
+                -
+                A_{ik}^{\hphantom{ik}m} A_{jm}^{\hphantom{jm}l}
+            }
+    \end{equation}
+    を変形する。
+    \begin{alignat}{1}
+        \del_i A_{jk}^{\hphantom{jk}l}
+        -
+        \del_j A_{ik}^{\hphantom{ik}l}
+            &=
+                \del_i (
+                    g^{la} S_{jka}
+                )
+                -
+                \del_j (
+                    g^{la} S_{ika}
+                )
+                \\
+            &=
+                \del_i (g^{la})
+                S_{jka}
+                +
+                g^{la}
+                \del_i S_{jka}
+                -
+                \del_j (g^{la})
+                S_{ika}
+                -
+                g^{la}
+                \del_j S_{ika}
+                \\
+            &=
+                \del_i (g^{la})
+                S_{jka}
+                -
+                \del_j (g^{la})
+                S_{ika}
+    \end{alignat}
+    である。
+    右辺第1項について、
+    $0
+        =
+            \del_i \delta_m^l
+        =
+            \del_i (g^{la} g_{ma})
+        =
+            \del_i (g^{la}) g_{ma}
+            +
+            g^{lb} \del_i (g_{mb})$
+    より
+    $\del_i (g^{la})
+        =
+            - g^{ma} g^{lb} \del_i (g_{mb})$
+    だから
+    \begin{alignat}{1}
+        \del_i (g^{la})
+            S_{jka}
+            &=
+                -
+                g^{ma}
+                g^{lb}
+                \del_i (g_{mb})
+                S_{jka}
+                \\
+            &=
+                -
+                g^{ma}
+                g^{lb}
+                S_{imb}
+                S_{jka}
+                \\
+            &=
+                -
+                A_{im}^{\hphantom{im}l}
+                A_{jk}^{\hphantom{jk}m}
+    \end{alignat}
+    同様にして
+    \begin{equation}
+        \del_j (g^{la})
+            S_{ika}
+                =
+                    -
+                    A_{jm}^{\hphantom{jm}l}
+                    A_{ik}^{\hphantom{ik}m}
+    \end{equation}
+    を得る。
+    したがって
+    $\del_i A_{jk}^{\hphantom{jk}l} - \del_j A_{ik}^{\hphantom{ik}l}
+        =
+            - A_{im}^{\hphantom{im}l} A_{jk}^{\hphantom{jk}m}
+            + A_{jm}^{\hphantom{jm}l} A_{ik}^{\hphantom{ik}m}$
+    だから
+    \begin{equation}
+        {R^{(\alpha)}}_{ijk}^{\hphantom{ijk}l}
+            =
+                \myparen{
+                    - \frac{1 - \alpha}{2}
+                    + \myparen{\frac{1 - \alpha}{2}}^2
+                }
+                \myparen{
+                    A_{jk}^{\hphantom{jk}m} A_{im}^{\hphantom{im}l}
+                    - A_{ik}^{\hphantom{ik}m} A_{jm}^{\hphantom{jm}l}
+                }
+            =
+                -
+                \frac{1 - \alpha^2}{4}
+                \myparen{
+                    A_{jk}^{\hphantom{jk}m} A_{im}^{\hphantom{im}l}
+                    - A_{ik}^{\hphantom{ik}m} A_{jm}^{\hphantom{jm}l}
+                }
+    \end{equation}
+    となる。
+\end{proof}
+
+\begin{corollary}
+    \label[corollary]{corollary:flatness}
+    ~
+    \begin{enumerate}
+        \item $\forall \alpha \in \R$に対し
+            $R^{(\alpha)}
+                =
+                    (1 - \alpha^2)
+                    R^{(0)}
+                =
+                    R^{(-\alpha)}$.
+        \item 次は同値:
+            \begin{enumerate}
+                \item すべての$\alpha \in \R$に対し、
+                    $\nabla^{(\alpha)}$は平坦である。
+                \item ある$\alpha \neq \pm 1$が存在し、
+                    $\nabla^{(\alpha)}$は平坦である。
+            \end{enumerate}
+    \end{enumerate}
+\end{corollary}
+
+\begin{proof}
+    \uline{(1)} \quad
+    \cref{prop:curvature-AC-tensor}
+    より明らか。
+
+    \uline{(2)} \quad
+    まず(1)より次は同値である:
+    \begin{enumerate}[label=(\alph*)']
+        \item $\forall \alpha \in \R$に対し
+            $R^{(\alpha)} = 0$.
+        \item $\exists \alpha \neq \pm 1$
+            \, s.t. \,
+            $R^{(\alpha)} = 0$.
+    \end{enumerate}
+    さらに$\alpha$-接続はすべて torsion-free だから、
+    曲率が$0$であることと平坦であることは同値である。
+\end{proof}
+
+\begin{theorem}[$\alpha$-接続による双対構造]
+    任意の$\alpha \in \R$に対し、
+    3つ組$(g, \nabla^{(\alpha)}, \nabla^{(-\alpha)})$は
+    $\calP$上の双対構造となる。
+    さらに、
+    $\alpha = \pm 1$ならば
+    $(g, \nabla^{(\alpha)}, \nabla^{(-\alpha)})$は
+    双対平坦である。
+\end{theorem}
+
+\begin{proof}
+    双対構造であることは、
+    すべての$X, Y, Z \in \frakX(\calP)$に対し
+    \begin{alignat}{1}
+        g(\nabla^{(\alpha)}_X Y, Z)
+            + g(Y, \nabla^{(-\alpha)}_X Z)
+            &=
+                g(\nabla^{g}_X Y, Z)
+                - \frac{\alpha}{2} S(X, Y, Z)
+                + g(Y, \nabla^{g}_X Z)
+                + \frac{\alpha}{2} S(X, Z, Y)
+                \\
+            &=
+                g(\nabla^{g}_X Y, Z)
+                + g(Y, \nabla^{g}_X Z)
+                \\
+            &=
+                X(g(Y, Z))
+    \end{alignat}
+    より従う。
+    $\alpha = \pm 1$で双対平坦となることは
+    \cref{corollary:flatness}
+    よりわかる。
+\end{proof}
+
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{Legendre 変換}
+
+
+\begin{definition}[Legendre 変換]
+    $U \subset W$を開集合、
+    $f \colon U \to \R$を$C^\infty$関数であって
+    $\nabla f \colon U \to W^\vee$が単射であるものとする。
+    関数
+    \begin{equation}
+        f^\vee \colon U' \to \R,
+            \quad
+            y
+            \mapsto
+            \myangle{(\nabla f)^{-1}(y)}{y} - f((\nabla f)^{-1}(y))
+            \quad
+            \text{where}
+            \quad
+            U' \coloneqq \nabla f(U)
+    \end{equation}
+    を$f$の
+    \term{Legendre 変換}[Legendre transform]
+        {Legendre 変換}[Legendre へんかん]
+    という。
+\end{definition}
+
+\begin{example}[Legendre 変換の例]
+    前回 (\url{0704_資料.pdf}) 扱った具体例について
+    対数分配関数の Legendre 変換を計算してみる。
+    \begin{itemize}
+        \item \uline{Bernoulli 分布族 (i.e. 2元集合上の full support な確率分布の族):} \quad
+            対数分配関数は
+            $\psi \colon \R \to \R, \; \theta \mapsto \log (1 + \exp \theta)$
+            であった。
+            よって
+            $\nabla \psi(\theta)
+                =
+                    \frac{\exp \theta}{1 + \exp \theta}$
+            であり、
+            $(\nabla \psi)^{-1}(\eta)
+                =
+                    \log \eta - \log (1 - \eta)$
+            である。
+            したがって
+            $\psi^\vee(\eta)
+                =
+                    \eta \log \eta
+                    + (1 - \eta) \log (1 - \eta)$
+            である。
+        \item \uline{正規分布族:} \quad
+            対数分配関数は
+            $\psi \colon \R \times \R_{< 0} \to \R, \;
+                \theta
+                \mapsto
+                - \frac{(\theta^1)^2}{4 \theta^2}
+                - \frac{1}{2} \log (- \theta^2)
+                + \frac{1}{2} \log \pi$
+            であった。
+            よって
+            $\nabla \psi(\theta)
+                =
+                    \begin{pmatrix}
+                        - \frac{\theta^1}{2 \theta^2}
+                        &
+                        \frac{(\theta^1)^2}{4 (\theta^2)^2} - \frac{1}{2 \theta^2}
+                    \end{pmatrix}$
+            であり、
+            $(\nabla \psi)^{-1}(\eta)
+                =
+                    \frac{1}{\eta_2 - (\eta_1)^2}
+                    \begin{pmatrix}
+                        \eta_1
+                        \\
+                        - 1/2
+                    \end{pmatrix}$
+            である。
+            よって
+            $\psi^\vee(\eta)
+                =
+                    - \frac{1}{2}
+                    \myparen{
+                        1 + \log 2\pi
+                        + \log(\eta_2 - (\eta_1)^2)
+                    }$
+            である。
+    \end{itemize}
+\end{example}
+
+本稿では、とくに次の状況を考えることになる。
+
+\begin{proposition}
+    \label[proposition]{prop:Legendre-transform-properties}
+    $U \subset W$を凸開集合、
+    $f \colon U \to \R$を$C^\infty$関数であって
+    $\Hess f$が$U$上各点で (対称であることも含む意味で) 正定値であるものとする。
+    このとき、次が成り立つ:
+    \begin{enumerate}
+        \item $\nabla f$は局所微分同相である。
+            とくに$U' \coloneqq \nabla f(U)$は$W^\vee$の開集合である。
+        \item $\nabla f \colon U \to U'$は微分同相である。
+            とくに$\nabla f$は単射である。
+    \end{enumerate}
+    したがって$f^\vee$が定義でき、$f^\vee$は次をみたす:
+    \begin{enumerate}
+        \setcounter{enumi}{2}
+        \item $f^\vee \colon U' \to \R$は$C^\infty$関数である。
+        \item $\nabla f^\vee = (\nabla f)^{-1}$が成り立つ。
+            とくに$\nabla f^\vee$は単射である。
+        \item 各$y \in U'$に対し
+            $(\Hess f^\vee)_y = ((\Hess f)_x)^{-1}$が成り立つ
+            (ただし$x \coloneqq (\nabla f)^{-1}(y)$)。
+            とくに$(\Hess f^\vee)_y$は正定値である。
+    \end{enumerate}
+\end{proposition}
+
+\begin{proof}
+    \uline{(1)} \quad
+    命題の仮定より$\Hess f$は$U$上各点で正定値だから、
+    $\nabla f$の微分は各点で線型同型である。
+    したがって$\nabla f$は局所微分同相であり、
+    とくに開写像である。
+    よって$U' = \nabla f(U)$は$W^\vee$の開集合である。
+
+    \uline{(2)} \quad
+    $u, \wt{u} \in U, \; u \neq \wt{u}$を固定し、
+    $[0, 1]$を含む$\R$の開区間$I$であって、
+    すべての$t \in I$に対し
+    $(1 - t)u + t\wt{u}$が
+    $U$に属するようなものをひとつ選ぶ
+    ($U$は$W$の凸開集合だからこれは可能)。
+    さらに
+    $\varphi \colon I \to U, \; t \mapsto f((1 - t)u + t\wt{u})$と定めると、
+    平均値定理より、
+    ある$\tau \in (0, 1)$が存在して
+    \begin{alignat}{1}
+        \myangle{
+            \nabla f(\wt{u}) - \nabla f(u)
+        }{
+            \wt{u} - u
+        }
+            &=
+                \varphi'(1) - \varphi'(0)
+                \\
+            &=
+                \varphi''(\tau)
+                \qquad
+                (\text{平均値定理})
+                \\
+            &=
+                \myangle{
+                    (\Hess f)_{(1 - \tau)u + \tau\wt{u}}
+                }{
+                    (\wt{u} - u)^2
+                }
+                \\
+            &>
+                0
+                \qquad
+                (\text{$\Hess f$は正定値})
+    \end{alignat}
+    が成り立つ。
+    よって$\nabla f(\wt{u}) \neq \nabla f(u)$である。
+    したがって$\nabla f$は単射である。
+    このことと (1) より
+    $\nabla f \colon U \to U'$は微分同相である。
+
+    \uline{(3)} \quad
+    $\nabla f \colon U \to U'$が微分同相ゆえに
+    $(\nabla f)^{-1} \colon U' \to U$は{\smooth}だから、
+    $f^\vee$は{\smooth}関数である。
+
+    \uline{(4)} \quad
+    $f^\vee$の定義式を$\nabla$で微分すると、
+    すべての$y \in U'$に対し
+    \begin{alignat}{1}
+        (\nabla f^\vee)(y)
+            &=
+                (\nabla f)^{-1}(y)
+                + \myangle{
+                    y
+                }{
+                    \nabla
+                    (\nabla f)^{-1}
+                    (y)
+                }
+                - \myangle{
+                    (\nabla f)(
+                        (\nabla f)^{-1}
+                        (y)
+                    )
+                }{
+                    \nabla
+                    (\nabla f)^{-1}
+                    (y)
+                }
+            =
+                (\nabla f)^{-1}(y)
+    \end{alignat}
+    が成り立つ。
+    よって$(\nabla f)^{-1} = \nabla f^\vee$である。
+
+    \uline{(5)} \quad
+    (4)より
+    \begin{alignat}{1}
+        (\Hess f^\vee)_y
+            &=
+                d(\nabla f^\vee)_y
+                \\
+            &=
+                d((\nabla f)^{-1})_y
+                \\
+            &=
+                (d(\nabla f)_x)^{-1}
+                \\
+            &=
+                ((\Hess f)_x)^{-1}
+    \end{alignat}
+    となる。
+\end{proof}
+
+\begin{corollary}[Legendre 変換の対合性]
+    $f^{\vee \vee} = f$.
+\end{corollary}
+
+\begin{proof}
+    Legendre 変換の定義より、
+    すべての$x \in U$に対し
+    \begin{alignat}{1}
+        f^{\vee\vee}(x)
+            &=
+                \myangle{
+                    x
+                }{
+                    (\nabla f^\vee)^{-1}
+                    (x)
+                }
+                - f^\vee(
+                    (\nabla f^\vee)^{-1}
+                    (x)
+                )
+                \\
+            &=
+                \myangle{
+                    x
+                }{
+                    \nabla f
+                    (x)
+                }
+                - f^\vee(
+                    \nabla f
+                    (x)
+                )
+                \qquad
+                (\nabla f^\vee = (\nabla f)^{-1})
+                \\
+            &=
+                \myangle{
+                    x
+                }{
+                    \nabla f
+                    (x)
+                }
+                - \myparen{
+                    \myangle{
+                        \nabla f
+                        (x)
+                    }{
+                        (\nabla f)^{-1}(
+                            \nabla f
+                            (x)
+                        )
+                    }
+                    - f(
+                        (\nabla f)^{-1}(
+                            \nabla f
+                            (x)
+                        )
+                    )
+                }
+                \\
+            &=
+                f(x)
+    \end{alignat}
+    が成り立つ。
+    よって$f^{\vee\vee} = f$である。
+\end{proof}
+
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{期待値パラメータ}
+
+
+\begin{propdef}[期待値パラメータ空間]
+    \label[propdef]{propdef:mean-parameter-space}
+    集合
+    \begin{equation}
+        \calM
+            \coloneqq
+                \mybrace{
+                    E_p[T] \in V
+                    \mid
+                    p \in \calP
+                }
+    \end{equation}
+    は$V$の開部分多様体となり、
+    写像$\eta \colon \calP \to \calM, \; p \mapsto E_p[T]$
+    は微分同相写像となる。
+
+    $\calM$を
+    $(V, T, \mu)$に関する$\calP$の
+    \term{期待値パラメータ空間}[mean parameter space]
+        {期待値パラメータ空間}[きたいちぱらめーたくうかん]
+    といい、
+    $\eta$を
+    $(V, T, \mu)$に関する$\calP$上の
+    \term{期待値パラメータ座標}[mean parameter coordinates]
+        {期待値パラメータ座標}[きたいちぱらめーたざひょう]
+    という。
+\end{propdef}
+
+この証明には次の2つの事実を使う。
+
+\begin{fact}[$\psi$の微分は十分統計量の期待値]
+    \label[fact]{fact:mean-parameter-space}
+    写像$\nabla \psi \colon \Theta \to V^{\vee\vee} = V$は
+    \begin{equation}
+        (\nabla \psi)(\theta(p))
+            =
+                \eta(p)
+                \qquad
+                (p \in \calP)
+    \end{equation}
+    をみたす。
+    したがって
+    $\calM = \nabla \psi(\Theta)$である。
+    \qed
+\end{fact}
+
+\begin{fact}
+    \label[fact]{fact:convexity-of-interior}
+    位相ベクトル空間の凸集合の内部は凸集合である。
+    \qed
+\end{fact}
+
+\begin{proof}[\cref{propdef:mean-parameter-space}の証明]
+    まず$\calM$が$V$の開部分多様体となることを示す。
+    $\psi$を$\Int \wt{\Theta}$上の関数とみなすと、
+    \cref{fact:convexity-of-interior}とあわせて
+    $\psi$は\cref{prop:Legendre-transform-properties}の前提をみたすから、
+    \cref{prop:Legendre-transform-properties} (1)より
+    $\nabla \psi \colon \Int \wt{\Theta} \to V^{\vee\vee} = V$は
+    局所微分同相、とくに開写像でもある。
+    したがって$\nabla \psi(\Int \wt{\Theta})$は$V$の開部分多様体となる。
+    さらに$\Theta$は$\Int \wt{\Theta}$の開集合だから、
+    $\nabla \psi(\Theta)$は$\nabla \psi(\Int \wt{\Theta})$の開部分多様体となる。
+    このことと\cref{fact:mean-parameter-space}より、
+    $\calM = \nabla \psi(\Theta)$は
+    $\nabla \psi(\Int \wt{\Theta})$の開部分多様体となり、
+    とくに$V$の開部分多様体となる。
+
+    次に$\eta$が微分同相写像であることを示す。
+    \cref{prop:Legendre-transform-properties} (2)より
+    $\nabla \psi$は
+    $\Int \wt{\Theta}$から$\nabla \psi(\Int \wt{\Theta})$への微分同相だから、
+    部分多様体への制限により
+    $\nabla \psi$は
+    $\Theta$から$\calM$への微分同相を与える。
+    したがって
+    写像$\eta = (\nabla \psi) \circ \theta \colon \calP \to \calM$は
+    微分同相である。
+\end{proof}
+
+以降、
+$\psi|_{\Int \wt{\Theta}}$の Legendre 変換を
+$\calM$上に制限したものを$\phi$と書くことにする。
+
+\begin{theorem}[自然パラメータ座標と期待値パラメータ座標の関係]
+    関数
+    $\psi \colon \Theta \to \R$および
+    $\phi \colon \calM \to \R$と、
+    $\calP$上の
+    自然パラメータ座標$\theta = (\theta^1, \dots, \theta^n)$および
+    期待値パラメータ座標$\eta = (\eta_1, \dots, \eta_m)$
+    に関し次が成り立つ:
+    \begin{enumerate}
+        \item
+            \begin{equation}
+                \deldel[\psi]{\theta^i}(\theta(p)) = \eta_i(p),
+                    \qquad
+                    \deldel[\phi]{\eta_i}(\eta(p)) = \theta^i(p)
+                    \qquad
+                    (p \in \calP).
+            \end{equation}
+        \item $g$の$\theta$-座標に関する成分は
+            \begin{equation}
+                g_{ij}(p)
+                    =
+                        \frac{
+                            \del^2 \psi
+                        }{
+                            \del \theta^i
+                            \del \theta^j
+                        }
+                        (\theta(p))
+                    =
+                        \deldel[\eta_j]{\theta^i}(p),
+                        \qquad
+                g^{ij}(p)
+                    =
+                        \frac{
+                            \del^2 \phi
+                        }{
+                            \del \eta_i
+                            \del \eta_j
+                        }
+                        (\eta(p))
+                    =
+                        \deldel[\theta^i]{\eta_j}(p)
+                        \qquad
+                        (p \in \calP)
+            \end{equation}
+            をみたす。
+        \item $\delta_i^j$を Kronecker のデルタとして
+            \begin{equation}
+                g\myparen{
+                    \deldel{\theta^i},
+                    \deldel{\eta_j}
+                }
+                    =
+                        \delta_i^j
+            \end{equation}
+            が成り立つ。
+    \end{enumerate}
+\end{theorem}
+
+\begin{proof}
+    \uline{(1)} \quad
+    \cref{fact:mean-parameter-space}より
+    $\nabla \psi \circ \theta = \eta$であることと、
+    \cref{prop:Legendre-transform-properties} (4)より
+    $\nabla \phi = (\nabla \psi)^{-1}$であることから従う。
+
+    \uline{(2)} \quad
+    $g$の定義および
+    \cref{prop:Legendre-transform-properties} (5)より従う。
+
+    \uline{(3)} \quad
+    \begin{alignat}{1}
+        g\myparen{
+            \deldel{\theta^i},
+            \deldel{\eta_j}
+        }
+            =
+                g\myparen{
+                    \deldel{\theta^i},
+                    \deldel[\theta^k]{\eta_j}
+                    \deldel{\theta^k}
+                }
+            =
+                g_{ik} \deldel[\theta^k]{\eta_j}
+            =
+                g_{ik} g^{kj}
+            =
+                \delta_i^j.
+    \end{alignat}
+\end{proof}
+
+\begin{theorem}
+    期待値パラメータ座標は
+    $\calP$上の$\nabla^{(-1)}$-アファイン座標である。
+\end{theorem}
+
+\begin{proof}
+    $\del_i = \deldel{\theta^i}, \; \del^i = \deldel{\eta_i}$
+    と略記すれば、
+    上の定理の(3)より
+    \begin{alignat}{1}
+        0
+            =
+                \del^i \delta_k^j
+            =
+                g\myparen{
+                    \nabla^{(1)}_{\del^i} \del_k,
+                    \del^j
+                }
+                + g\myparen{
+                    \del_k,
+                    \nabla^{(1)}_{\del^i} \del^j
+                }
+    \end{alignat}
+    だから
+    \begin{alignat}{1}
+        {\Gamma^{(-1)}}_k^{ij}
+            &=
+                g\myparen{
+                    \del_k,
+                    \nabla^{(-1)}_{\del^i} \del^j
+                }
+                \\
+            &=
+                -g\myparen{
+                    \nabla^{(1)}_{\del^i} \del_k,
+                    \del^j
+                }
+                \\
+            &=
+                - \deldel[\theta^l]{\eta_i}
+                g\myparen{
+                    \nabla^{(1)}_{\del_l} \del_k,
+                    \del^j
+                }
+                \\
+            &=
+                - \deldel[\theta^l]{\eta_i}
+                {\Gamma^{(1)}}_{lk}^j
+                \\
+            &=
+                0
+                \qquad
+                ({\Gamma^{(1)}}_{lk}^j = 0)
+    \end{alignat}
+    となる。
+\end{proof}
+
+
+\end{document}
