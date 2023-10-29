@@ -1,0 +1,291 @@
+\documentclass[report]{jlreq}
+\usepackage{global}
+\usepackage{./local}
+\subfiletrue
+\def\assetspath{../}
+%\makeindex
+\chead{2023/11/01}
+\begin{document}
+
+% ============================================================
+%
+% ============================================================
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section*{振り返りと導入}
+
+前回は最尤推定量とKLダイバージェンスを定義した。
+本稿では次のことを行う:
+\begin{itemize}
+    \item KLダイバージェンスの性質を調べる。
+    \item 双対平坦多様体への一般化を考える。
+\end{itemize}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{Kullback-Leibler ダイバージェンス}
+
+\begin{definition}[Kullback-Leibler ダイバージェンス]
+    関数$D \colon \calP(\calX) \times \calP(\calX) \to [0, \infty],$
+    \begin{equation}
+        D(p \| q)
+            \coloneqq
+                \begin{cases}
+                    E_q \mybracket{
+                        \frac{dp}{dq}
+                        \log \frac{dp}{dq}
+                    }
+                        =
+                            E_p \mybracket{
+                                \log \frac{dp}{dq}
+                            }
+                        & (p \ll q) \\
+                    \infty
+                        & (p \not\ll q)
+                \end{cases}
+    \end{equation}
+    を$\calP(\calX)$上の
+    \term{Kullback-Leibler ダイバージェンス}
+        {Kullback-Leibler ダイバージェンス}[Kullback-Leibler ダイバージェンス]
+    と呼ぶ。
+\end{definition}
+
+\begin{proposition}
+    $\calP(\calX)$に
+    全変動で定まる位相を入れると、
+    KLダイバージェンスは連続とは限らない。
+\end{proposition}
+
+\begin{proof}
+    $\calX \coloneqq \{ 0, 1 \}$として
+    $p_n \coloneqq \frac{1}{n} \delta^0 + \myparen{1 - \frac{1}{n}} \delta^1, \;
+        q_n \coloneqq \frac{1}{e^n} \delta^0 + \myparen{1 - \frac{1}{e^n}} \delta^1$
+    が反例のひとつ。
+\end{proof}
+
+$\calX = \{ 1, \ldots, n \}, n \in \N$ (カテゴリカル分布\TODO{}) の場合に
+最尤推定量とKLダイバージェンスの関係を考える。
+
+\begin{definition}[経験分布]
+    $x = (x_1, \dots, x_k) \in \calX^k$に対し
+    \begin{equation}
+        \hat{p}_x
+            \coloneqq
+                \frac{1}{k}
+                \sum_{i = 1}^k
+                    \delta^{x_i}
+    \end{equation}
+    を$x$により定まる
+    \term{経験分布}[empirical distribution]
+        {経験分布}[けいけんぶんぷ]
+    という。
+\end{definition}
+
+\begin{proposition}[最尤推定量とKLダイバージェンス]
+    $(\Theta, \bfp)$を$\calX$上の統計モデルとし、
+    $k$個のi.i.d.拡張$(\Theta, \bfp^k)$を考える。
+    $x = (x_1, \dots, x_k) \in \calX^k$とし、
+    $\hat{p}_x$を$x$により定まる経験分布とする。
+    このとき、
+    $\bfp^k(\Theta)$が
+    $\hat{p}_x$を支配する確率測度を
+    少なくともひとつ含むならば、
+    次が成り立つ:
+    \begin{equation}
+        \argmin_{\theta \in \Theta} D(\hat{p}_x \| \bfp^k(\theta))
+            =
+                \argmax_{\theta \in \Theta} p_\theta^k(x)
+    \end{equation}
+\end{proposition}
+
+\begin{proof}
+    \TODO{もう少し丁寧に}
+    $\forall \theta \in \Theta$に対し
+    \begin{alignat}{1}
+        D(\hat{p}_x \| \bfp^k(\theta))
+            &=
+                E_{\hat{p}_x} \mybracket{
+                    \log \frac{d\hat{p}_x}{d(\bfp^k(\theta))}
+                } \\
+            &=
+                E_{\hat{p}_x} \mybracket{
+                    \log \frac{d\hat{p}_x}{di}
+                }
+                -
+                E_{\hat{p}_x} \mybracket{
+                    \log \frac{d(\bfp^k(\theta))}{di}
+                } \\
+            &=
+                (\text{$\theta$によらない項})
+                -
+                \frac{1}{k}
+                \log p_\theta^k(x)
+    \end{alignat}
+    ゆえに命題の主張が従う。
+\end{proof}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{双対平坦多様体とダイバージェンス}
+
+次のことを思い出しておく。
+
+\begin{proposition}
+    $\calP$を可測空間$\calX$上の open な指数型分布族とし、
+    $\calP$には自然な位相・多様体構造を入れる。
+    このとき次が成り立つ:
+    \begin{enumerate}[label=(\alph*)]
+        \item $\calP$の Fisher 計量を$g$、
+            自然な平坦アファイン接続を$\nabla$、
+            $g$に関する$\nabla$の双対接続を$\nabla^*$とおくと、
+            $(g, \nabla, \nabla^*)$は
+            $\calP$上の双対平坦構造となる。
+    \end{enumerate}
+    さらに次が成り立つ:
+    \begin{enumerate}
+        \item $(g, \nabla, \nabla^*)$に関する双対アファイン座標$(\theta, \eta)$が存在する。
+        \item ある関数$\psi, \varphi \in \smooth(\calP)$であって
+            $d\psi = \eta_i d\theta^i, \;
+                d\varphi = \theta^i d\eta_i$
+            をみたすものが存在する。
+        \item $\psi$は$g$のポテンシャルである。
+            $\varphi$は$g^{-1}$のポテンシャルである。
+    \end{enumerate}
+\end{proposition}
+
+\begin{proof}
+    (a) \url{便覧.pdf} 定理3.7.3 より。
+    (1), (2), (3) \url{便覧.pdf} 定理3.8.4 より。
+\end{proof}
+
+\begin{theorem}[双対アファイン座標と双対ポテンシャルの存在]
+    $M$を多様体、
+    $(g, \nabla, \nabla^*)$を$M$上の双対平坦構造とする。
+    このとき、次が成り立つ:
+    \begin{enumerate}
+        \item $(g, \nabla, \nabla^*)$に関する双対アファイン座標$(\theta, \eta)$が存在する。
+        \item ある関数$\psi, \varphi \in \smooth(M)$であって
+            $d\psi = \eta_i d\theta^i, \;
+                d\varphi = \theta^i d\eta_i$
+            をみたすものが存在する。
+        \item $\psi$は$g$のポテンシャルである。
+            $\varphi$は$g^{-1}$のポテンシャルである。
+    \end{enumerate}
+\end{theorem}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+\begin{proposition}[指数型分布族とKLダイバージェンス]
+    $\calP$を指数型分布族とする。
+    最小次元実現$(V, T, \mu)$に対し
+    対数分配関数$\psi$、自然パラメータ座標$\theta$、期待値パラメータ座標$\eta$を考える。
+    このとき
+    \begin{equation}
+        D(p \| q)
+            =
+                \psi(\theta_q) + \psi^\vee(\eta_p)
+                    - \myangle{\theta_q}{\eta_p}
+                \quad
+                (\forall p, q \in \calP)
+    \end{equation}
+    が成り立つ。
+    ただし$\psi^\vee$は$\psi$の Legendre 変換である。
+\end{proposition}
+
+\begin{proof}
+    Legendre 変換の定義より
+    $\psi(\theta_p) + \psi^\vee(\eta_p)
+        = \myangle{\theta_p}{\eta_p}$
+    ゆえに
+    \begin{alignat}{1}
+        \psi(\theta_q) + \psi^\vee(\eta_p)
+            - \myangle{\theta_q}{\eta_p}
+            &=
+                \psi(\theta_q) - \psi(\theta_p)
+                    + \myangle{\theta_p}{\eta_p}
+                    - \myangle{\theta_q}{\eta_p}
+                \\
+            &=
+                E_p \mybracket{
+                    \psi(\theta_q) - \psi(\theta_p)
+                        + \myangle{\theta_p}{T}
+                        - \myangle{\theta_q}{T}
+                }
+                \\
+            &=
+                E_p \mybracket{
+                    \log \frac{dp}{dq}
+                }
+                \\
+            &=
+                D(p \| q)
+    \end{alignat}
+\end{proof}
+
+\begin{propdef}[canonical ダイバージェンス]
+    \begin{equation}
+        \psi(\theta_q) - \varphi(\eta_p)
+            - \myangle{\theta_q}{\eta_p}
+    \end{equation}
+    の値は$\psi, \varphi$のとり方によらず定まる。
+    これを$D(p \| q)$とおき、
+    双対平坦多様体$(M, g, \nabla, \nabla^*)$の
+    \term{canonical ダイバージェンス}
+        {canonical ダイバージェンス}[canonical ダイバージェンス]
+    という。
+\end{propdef}
+
+\begin{proof}
+    \TODO{}
+\end{proof}
+
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section*{今後の予定}
+
+\begin{itemize}
+    \item 一般の多様体上のダイバージェンス
+    \item ダイバージェンスから誘導される双対平坦構造
+    \item ダイバージェンスから誘導されるシンプレクティック構造
+    \item Bayes 更新
+\end{itemize}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section*{参考文献}
+
+%Legendre 変換については
+%\cite{niculescu_convex_2018}
+%を参考にした。
+%期待値パラメータに関しては
+%\cite{wainwright_graphical_2007}を参考にした。
+
+\nocite{amari_information_2016}
+\nocite{amari_methods_2007}
+\nocite{ay_information_2017}
+
+{
+    \renewcommand{\bibsection}{}
+    \bibliographystyle{amsalpha}
+    \bibliography{./bibliography,../../mybibliography}
+}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+%\newpage
+%\appendix
+%\renewcommand\thesection{\Alph{section}}
+%\setcounter{section}{0}
+%\section{付録}
+
+\end{document}

@@ -244,12 +244,18 @@
 \begin{lemma}[分散の存在条件]
     \label[lemma]{lemma:f_otimes_f}
     可測写像$f \colon \calX \to V$に関し
-    次の2条件は同値である:
+    次の条件は同値である:
     \begin{enumerate}
         \item $f$および
-            $(f - E_p[f]) \otimes (f - E_p[f])$が
+            $(f - E_p[f])^2$が
             $p$-可積分
-        \item $f \otimes f$が$p$-可積分
+        \item $f^2$が$p$-可積分
+    \end{enumerate}
+    さらに$V$にノルム$\| \cdot \|$が定義されているとき、
+    次も同値である:
+    \begin{enumerate}
+        \setcounter{enumi}{2}
+        \item $\| f \| \in L^2(\calX, p)$
     \end{enumerate}
 \end{lemma}
 
@@ -340,19 +346,23 @@
         \in L^1(\calX, p) \; (i, j = 1, \dots, m)$
     が成り立つ。
     よって$(f - E_p[f]) \otimes (f - E_p[f])$は$p$-可積分である。
+
+    \uline{(2) \Leftrightarrow (3)} \quad
+    有限次元ベクトル空間のノルムの同値性より、
+    固定した基底に関する成分を用いた2-ノルムを考えればよい。
 \end{proof}
 
 この補題を踏まえて分散を定義する。
 
 \begin{definition}[分散]
-    $f \otimes f \colon \calX \to V \otimes_\R V$が$p$-可積分であるとき、
+    $f^2 \colon \calX \to V \otimes_\R V$が$p$-可積分であるとき、
     $f$の$p$に関する
     \term{分散}[variance]
         {分散}[ぶんさん]
     $V_p[f]$を
     \begin{equation}
         V_p[f]
-            \coloneqq E_p[(f - E_p[f]) \otimes (f - E_p[f])]
+            \coloneqq E_p[(f - E_p[f])^2]
             \in V \otimes V
     \end{equation}
     と定義する
@@ -499,6 +509,8 @@
 
 \begin{proposition}[期待値・分散とペアリング]
     \label[proposition]{prop:expectation-variance-pairing}
+    \TODO{$L(E_p[f]) = E_p[L \circ f]$の形の主張に修正する}
+
     $f \colon \calX \to V$を可測写像とする。
     \begin{enumerate}
         \item $f$が$p$に関する期待値を持つならば、

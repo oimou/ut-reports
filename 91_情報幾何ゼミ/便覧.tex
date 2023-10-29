@@ -1,7 +1,7 @@
 \documentclass[report, notitlepage]{jlreq}
 \usepackage{docmute}
 \usepackage{global}
-\usepackage{./sub/local}
+\usepackage{./sub_handbook/local}
 \def\assetspath{./}
 %\makeindex
 %\makeglossaries
@@ -30,6 +30,11 @@
 % ============================================================
 \input{sub_handbook/chapter3}
 
+% ============================================================
+%
+% ============================================================
+\input{sub_handbook/chapter4}
+
 
 
 % ============================================================
@@ -47,7 +52,7 @@
 {
     \renewcommand{\bibsection}{}
     \bibliographystyle{amsalpha}
-    \bibliography{./bibliography,../../mybibliography}
+    \bibliography{../sub/bibliography,../../mybibliography}
 }
 
 % ============================================================

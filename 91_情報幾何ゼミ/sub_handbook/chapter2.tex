@@ -8,7 +8,7 @@
 % ============================================================
 %
 % ============================================================
-\chapter{Hessian}
+\chapter{Hessian, Legendre 変換, Fourier-Laplace 変換}
 
 % ------------------------------------------------------------
 %
@@ -158,6 +158,320 @@ Hessian の成分表示は簡単な形になる。
         = \frac{\del^2 f}{\del x^i \del x^j}$
     より従う。
 \end{proof}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{Legendre 変換}
+
+
+\begin{definition}[Legendre 変換]
+    $U \subset W$を開集合、
+    $f \colon U \to \R$を$C^\infty$関数であって
+    $\nabla f \colon U \to W^\vee$が単射であるものとする。
+    関数
+    \begin{equation}
+        f^\vee \colon U' \to \R,
+            \quad
+            y
+            \mapsto
+            \myangle{(\nabla f)^{-1}(y)}{y} - f((\nabla f)^{-1}(y))
+            \quad
+            \text{where}
+            \quad
+            U' \coloneqq \nabla f(U)
+    \end{equation}
+    を$f$の
+    \term{Legendre 変換}[Legendre transform]
+        {Legendre 変換}[Legendre へんかん]
+    という。
+\end{definition}
+
+\begin{example}[Legendre 変換の例]
+    前回 (\url{0704_資料.pdf}) 扱った具体例について
+    対数分配関数の Legendre 変換を計算してみる。
+    \begin{itemize}
+        \item \uline{Bernoulli 分布族 (i.e. 2元集合上の full support な確率分布の族):} \quad
+            対数分配関数は
+            $\psi \colon \R \to \R, \; \theta \mapsto \log (1 + \exp \theta)$
+            であった。
+            よって
+            $\nabla \psi(\theta)
+                =
+                    \frac{\exp \theta}{1 + \exp \theta}$
+            であり、
+            $(\nabla \psi)^{-1}(\eta)
+                =
+                    \log \eta - \log (1 - \eta)$
+            である。
+            したがって
+            $\psi^\vee(\eta)
+                =
+                    \eta \log \eta
+                    + (1 - \eta) \log (1 - \eta)$
+            である。
+        \item \uline{正規分布族:} \quad
+            対数分配関数は
+            $\psi \colon \R \times \R_{< 0} \to \R, \;
+                \theta
+                \mapsto
+                - \frac{(\theta^1)^2}{4 \theta^2}
+                - \frac{1}{2} \log (- \theta^2)
+                + \frac{1}{2} \log \pi$
+            であった。
+            よって
+            $\nabla \psi(\theta)
+                =
+                    \begin{pmatrix}
+                        - \frac{\theta^1}{2 \theta^2}
+                        &
+                        \frac{(\theta^1)^2}{4 (\theta^2)^2} - \frac{1}{2 \theta^2}
+                    \end{pmatrix}$
+            であり、
+            $(\nabla \psi)^{-1}(\eta)
+                =
+                    \frac{1}{\eta_2 - (\eta_1)^2}
+                    \begin{pmatrix}
+                        \eta_1
+                        \\
+                        - 1/2
+                    \end{pmatrix}$
+            である。
+            よって
+            $\psi^\vee(\eta)
+                =
+                    - \frac{1}{2}
+                    \myparen{
+                        1 + \log 2\pi
+                        + \log(\eta_2 - (\eta_1)^2)
+                    }$
+            である。
+    \end{itemize}
+\end{example}
+
+本稿では、とくに次の状況を考えることになる。
+
+\begin{proposition}
+    \label[proposition]{prop:Legendre-transform-properties}
+    $U \subset W$を凸開集合、
+    $f \colon U \to \R$を$C^\infty$関数であって
+    $\Hess f$が$U$上各点で (対称であることも含む意味で) 正定値であるものとする。
+    このとき、次が成り立つ:
+    \begin{enumerate}
+        \item $\nabla f$は局所微分同相である。
+            とくに$U' \coloneqq \nabla f(U)$は$W^\vee$の開集合である。
+        \item $\nabla f \colon U \to U'$は微分同相である。
+            とくに$\nabla f$は単射である。
+    \end{enumerate}
+    したがって$f^\vee$が定義でき、$f^\vee$は次をみたす:
+    \begin{enumerate}
+        \setcounter{enumi}{2}
+        \item $f^\vee \colon U' \to \R$は$C^\infty$関数である。
+        \item $\nabla f^\vee = (\nabla f)^{-1}$が成り立つ。
+            とくに$\nabla f^\vee$は単射である。
+        \item 各$y \in U'$に対し
+            $(\Hess f^\vee)_y = ((\Hess f)_x)^{-1}$が成り立つ
+            (ただし$x \coloneqq (\nabla f)^{-1}(y)$)。
+            とくに$(\Hess f^\vee)_y$は正定値である。
+    \end{enumerate}
+\end{proposition}
+
+\begin{proof}
+    \uline{(1)} \quad
+    命題の仮定より$\Hess f$は$U$上各点で正定値だから、
+    $\nabla f$の微分は各点で線型同型である。
+    したがって$\nabla f$は局所微分同相であり、
+    とくに開写像である。
+    よって$U' = \nabla f(U)$は$W^\vee$の開集合である。
+
+    \uline{(2)} \quad
+    $u, \wt{u} \in U, \; u \neq \wt{u}$を固定し、
+    $[0, 1]$を含む$\R$の開区間$I$であって、
+    すべての$t \in I$に対し
+    $(1 - t)u + t\wt{u}$が
+    $U$に属するようなものをひとつ選ぶ
+    ($U$は$W$の凸開集合だからこれは可能)。
+    さらに
+    $\varphi \colon I \to U, \; t \mapsto f((1 - t)u + t\wt{u})$と定めると、
+    平均値定理より、
+    ある$\tau \in (0, 1)$が存在して
+    \begin{alignat}{1}
+        \myangle{
+            \nabla f(\wt{u}) - \nabla f(u)
+        }{
+            \wt{u} - u
+        }
+            &=
+                \varphi'(1) - \varphi'(0)
+                \\
+            &=
+                \varphi''(\tau)
+                \qquad
+                (\text{平均値定理})
+                \\
+            &=
+                \myangle{
+                    (\Hess f)_{(1 - \tau)u + \tau\wt{u}}
+                }{
+                    (\wt{u} - u)^2
+                }
+                \\
+            &>
+                0
+                \qquad
+                (\text{$\Hess f$は正定値})
+    \end{alignat}
+    が成り立つ。
+    よって$\nabla f(\wt{u}) \neq \nabla f(u)$である。
+    したがって$\nabla f$は単射である。
+    このことと (1) より
+    $\nabla f \colon U \to U'$は微分同相である。
+
+    \uline{(3)} \quad
+    $\nabla f \colon U \to U'$が微分同相ゆえに
+    $(\nabla f)^{-1} \colon U' \to U$は{\smooth}だから、
+    $f^\vee$は{\smooth}関数である。
+
+    \uline{(4)} \quad
+    $f^\vee$の定義式を$\nabla$で微分すると、
+    すべての$y \in U'$に対し
+    \begin{alignat}{1}
+        (\nabla f^\vee)(y)
+            &=
+                (\nabla f)^{-1}(y)
+                + \myangle{
+                    y
+                }{
+                    \nabla
+                    (\nabla f)^{-1}
+                    (y)
+                }
+                - \myangle{
+                    (\nabla f)(
+                        (\nabla f)^{-1}
+                        (y)
+                    )
+                }{
+                    \nabla
+                    (\nabla f)^{-1}
+                    (y)
+                }
+            =
+                (\nabla f)^{-1}(y)
+    \end{alignat}
+    が成り立つ。
+    よって$(\nabla f)^{-1} = \nabla f^\vee$である。
+
+    \uline{(5)} \quad
+    (4)より
+    \begin{alignat}{1}
+        (\Hess f^\vee)_y
+            &=
+                d(\nabla f^\vee)_y
+                \\
+            &=
+                d((\nabla f)^{-1})_y
+                \\
+            &=
+                (d(\nabla f)_x)^{-1}
+                \\
+            &=
+                ((\Hess f)_x)^{-1}
+    \end{alignat}
+    となる。
+\end{proof}
+
+\begin{corollary}[Legendre 変換の対合性]
+    $f^{\vee \vee} = f$.
+\end{corollary}
+
+\begin{proof}
+    Legendre 変換の定義より、
+    すべての$x \in U$に対し
+    \begin{alignat}{1}
+        f^{\vee\vee}(x)
+            &=
+                \myangle{
+                    x
+                }{
+                    (\nabla f^\vee)^{-1}
+                    (x)
+                }
+                - f^\vee(
+                    (\nabla f^\vee)^{-1}
+                    (x)
+                )
+                \\
+            &=
+                \myangle{
+                    x
+                }{
+                    \nabla f
+                    (x)
+                }
+                - f^\vee(
+                    \nabla f
+                    (x)
+                )
+                \qquad
+                (\nabla f^\vee = (\nabla f)^{-1})
+                \\
+            &=
+                \myangle{
+                    x
+                }{
+                    \nabla f
+                    (x)
+                }
+                - \myparen{
+                    \myangle{
+                        \nabla f
+                        (x)
+                    }{
+                        (\nabla f)^{-1}(
+                            \nabla f
+                            (x)
+                        )
+                    }
+                    - f(
+                        (\nabla f)^{-1}(
+                            \nabla f
+                            (x)
+                        )
+                    )
+                }
+                \\
+            &=
+                f(x)
+    \end{alignat}
+    が成り立つ。
+    よって$f^{\vee\vee} = f$である。
+\end{proof}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{Fourier-Laplace 変換}
+
+\TODO{ちゃんと書く。cf. \cite{BN78}}
+
+\begin{definition}[Fourier-Laplace 変換]
+    $V$を有限次元$\R$-ベクトル空間、
+    $\mu$を$V$上の測度とする。
+    \begin{equation}
+        L_\mu(\theta)
+            \coloneqq
+                \int_{v \in V}
+                    e^{\myangle{\theta}{v}}
+                    \, d\mu(v)
+                \quad
+                (\theta \in V^\vee \otimes \C)
+    \end{equation}
+    と定め、$L_\mu$を
+    \term{Fourier-Laplace 変換}[Fourier-Laplace transform]
+        {Fourier-Laplace 変換}[Fourier-Laplace へんかん]
+    という。
+\end{definition}
 
 
 \end{document}

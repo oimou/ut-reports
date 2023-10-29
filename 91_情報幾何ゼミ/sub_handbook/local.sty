@@ -8,14 +8,14 @@
 
 % titlesec
 % section
-\renewcommand{\thesection}{\arabic{section}}
+\renewcommand{\thesection}{\arabic{chapter}.\arabic{section}}
 
 % subsection
 \titleformat{\subsection}
     {\normalfont\large\sffamily}
     {\thesubsection}{1em}{}
 \titlespacing{\section}{0pt}{5pt}{5pt}
-\renewcommand{\thesubsection}{\arabic{section}.\arabic{subsection}}
+\renewcommand{\thesubsection}{\arabic{chapter}.\arabic{section}.\arabic{subsection}}
 
 \lhead{情報幾何ゼミ (数学講究XA)}
 \rhead{Keiji Yahata}

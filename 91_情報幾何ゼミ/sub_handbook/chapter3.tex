@@ -89,6 +89,8 @@
             {対数分配関数}[たいすうぶんぱいかんすう]
             という。
     \end{itemize}
+    \TODO{記号の修正}
+    \TODO{full の追加}
 \end{definition}
 
 \begin{proposition}[自然パラメータ空間は凸集合]
@@ -853,7 +855,95 @@
 \end{lemma}
 
 \begin{proof}
-    末尾の付録に記した。
+    $(V, T, \mu)$が
+    条件Aをみたさないという仮定から、
+    ある$\theta \in V^\vee, \; \theta \neq 0$および
+    $r \in \R$が存在して
+    \begin{equation}
+        \locallabel{eq:costant-pairing}
+        \langle \theta, T(x) \rangle
+            = r
+            \qquad
+            \text{$\mu$-a.e.$x$}
+    \end{equation}
+    が成り立つ。
+    そこで
+    $V' \coloneqq (\R\theta)^\perp
+        = \{ v \in V \mid \langle \theta, v \rangle = 0 \}$
+    とおくと、
+    ある可測写像$T' \colon \calX \to V'$および
+    $v_0 \in V$が存在して
+    $T(x) = T'(x) + v_0 \; (\text{$\mu$-a.e.$x$})$
+    が成り立つ。
+    このように定めた組$(V', T', \mu)$が
+    $\calP$の実現であることは一旦認めて最後に示すこととし、
+    まず次元と射について確かめる。
+
+    まず
+    $(V', T', \mu)$の次元は
+    $\dim V' = \dim V - 1 < \dim V$
+    より
+    $(V, T, \mu)$の次元よりも小さい。
+    また、
+    射影$\pi \colon V \to V'$をひとつ選べば、
+    $(\pi, 0)$は明らかに
+    $(V, T, \mu)$から$(V', T', \mu)$への射を与える。
+
+    あとは$(V', T', \mu)$が
+    $\calP$の実現であることを示せばよい。
+    指数型分布族の定義(\url{0502_資料.pdf})の条件
+    (E0), (E1), (E2)は明らかに成立しているから、
+    あとは条件(E3)を確認すればよい。
+    そこで$p \in \calP$を任意とする。
+    いま$(V, T, \mu)$が$\calP$の実現であることから、
+    ある$\theta \in V^\vee$が存在して
+    \begin{equation}
+        \dd[p]{\mu}(x)
+            = \frac{
+                \exp\langle \theta, T(x) \rangle
+            }{
+                \int_{\calX} \exp\langle \theta, T(y) \rangle \, \mu(dy)
+            }
+            \qquad
+            \text{$\mu$-a.e.$x$}
+    \end{equation}
+    が成り立つ。
+    $T', v_0$を用いて式変形すると、$\mu$-a.e.$x$に対し
+    \begin{alignat}{1}
+        \dd[p]{\mu}(x)
+            &= \frac{
+                \exp\myparen{
+                    \langle \theta, T(x) \rangle
+                }
+            }{
+                \int_{\calX} \exp\myparen{
+                    \langle \theta, T(x) \rangle
+                } \, \mu(dy)
+            } \\
+            &= \frac{
+                \exp\myparen{
+                    \langle \theta, T'(x) \rangle
+                    + \langle \theta, v_0 \rangle
+                }
+            }{
+                \int_{\calX} \exp\myparen{
+                    \langle \theta, T'(x) \rangle
+                    + \langle \theta, v_0 \rangle
+                } \, \mu(dy)
+            } \\
+            &= \frac{
+                \exp\myparen{
+                    \langle \theta, T'(x) \rangle
+                }
+            }{
+                \int_{\calX} \exp\myparen{
+                    \langle \theta, T'(x) \rangle
+                } \, \mu(dy)
+            }
+    \end{alignat}
+    が成り立つ。
+    したがって$(V', T', \mu)$は条件(E3)も満たし、
+    $\calP$の実現であることがいえた。
 \end{proof}
 
 \begin{lemma}[条件Bをみたさない対象からの射の存在]
@@ -867,7 +957,118 @@
 \end{lemma}
 
 \begin{proof}
-    末尾の付録に記した。
+    $(V, T, \mu)$が条件Bをみたさないとする。
+    すると、ある真ベクトル部分空間$W \subsetneq V^\vee$および
+    $\theta_0 \in \Theta^\calP$が存在して
+    $\aspan\Theta^\calP = W + \theta_0$が成り立つ。
+    そこで
+    $\wt{V} \coloneqq V / W^\perp$と定め、
+    $\pi \colon V \to \wt{V}$を自然な射影として
+    $\wt{T} \coloneqq \pi \circ T \colon \calX \to \wt{V}$
+    と定める。
+    また、$\calX$上の測度$\wt{\mu}$を
+    $\wt{\mu} \coloneqq \exp\myangle{\theta_0}{T(x)} \cdot \mu$
+    と定める。
+    このように定めた組$(\wt{V}, \wt{T}, \wt{\mu})$が
+    $\calP$の実現であることは一旦認めて最後に示すこととし、
+    まず次元と射について確かめる。
+
+    まず
+    $(\wt{V}, \wt{T}, \wt{\mu})$の次元は
+    $\dim \wt{V} = \dim V - \dim W^\perp = \dim W < \dim V^\vee = \dim V$
+    より
+    $(V, T, \mu)$の次元よりも小さい。
+    また、
+    $(\pi, 0)$は明らかに
+    $(V, T, \mu)$から$(\wt{V}, \wt{T}, \wt{\mu})$への射を与える。
+
+    あとは$(\wt{V}, \wt{T}, \wt{\mu})$が
+    $\calP$の実現であることを示せばよい。
+    指数型分布族の定義(\url{0502_資料.pdf})の条件
+    (E0), (E1), (E3)の成立は簡単に確かめられるから、
+    ここでは条件(E3)だけ確かめる。
+    そこで$p \in \calP$を任意とする。
+    $(V, T, \mu)$が$\calP$の実現であることから、
+    ある$\theta \in V^\vee$が存在して
+    \begin{equation}
+        p(dx) =
+            \frac{
+                \exp\myangle{\theta}{T(x)}
+            }{
+                \int_\calX \exp\myangle{\theta}{T(x)} \, d\mu(x)
+            }
+            \mu(dx)
+    \end{equation}
+    が成り立つ。
+    ここで線型写像$\myangle{\theta - \theta_0}{\cdot} \colon V \to \R$は
+    $\Ker \myangle{\theta_0}{\cdot} \supset W^\perp$をみたすから、
+    図式
+    \begin{equation}
+        \begin{tikzcd}
+            V
+                \ar[two heads]{d}
+                \ar{r}{\myangle{\theta - \theta_0}{\cdot}}
+                & \R
+                \\
+            \wt{V}
+                \ar[dashed]{ru}[swap]{\wt{\theta}}
+        \end{tikzcd}
+    \end{equation}
+    を可換にする線型写像$\wt{\theta} \colon \wt{V} \to \R$
+    すなわち
+    線型形式$\wt{\theta} \in \wt{V}^\vee$が存在する。
+    この$\wt{\theta}$が
+    条件(E3)をみたすものであることを確かめればよいが、
+    各$x \in \calX$に対し
+    \begin{alignat}{1}
+        \myangle{\wt{\theta}}{\wt{T}(x)}
+            &=
+                \myangle{\theta - \theta_0}{T(x)}
+                \\
+            &=
+                \myangle{\theta}{T(x)}
+                -
+                \myangle{\theta_0}{T(x)}
+    \end{alignat}
+    が成り立つから
+    \begin{alignat}{1}
+        p(dx)
+            &=
+                \frac{
+                    \exp\myangle{\theta}{T(x)}
+                }{
+                    \int_\calX
+                    \exp\myangle{\theta}{T(x)}
+                    \, \mu(dx)
+                }
+                \mu(dx)
+                \\
+            &=
+                \frac{
+                    \exp\myangle{\wt{\theta}}{\wt{T}(x)}
+                    \exp\myangle{\theta_0}{T(x)}
+                }{
+                    \int_\calX 
+                    \exp\myangle{\wt{\theta}}{\wt{T}(x)}
+                    \exp\myangle{\theta_0}{T(x)}
+                    \, \mu(dx)
+                }
+                \mu(dx)
+                \\
+            &=
+                \frac{
+                    \exp\myangle{\wt{\theta}}{\wt{T}(x)}
+                }{
+                    \int_\calX
+                    \exp\myangle{\wt{\theta}}{\wt{T}(x)}
+                    \, \wt{\mu}(dx)
+                }
+                \wt{\mu}(dx)
+    \end{alignat}
+    となる。
+    したがって条件(E3)の成立が確かめられた。
+    以上より$(\wt{V}, \wt{T}, \wt{\mu})$は$\calP$の実現である。
+    これで証明が完了した。
 \end{proof}
 
 以上の補題を用いて
@@ -1722,8 +1923,117 @@ $\calP$に自然な多様体構造が定まっているものとする。
     $F^* \nabla' = \nabla$が成り立つ。
 \end{lemma}
 
+\begin{fact}[ベクトル場の押し出しと関数]
+    \label[fact]{fact:apx1}
+    $M, N$を (有限次元実\smooth) 多様体、
+    $F \colon M \to N$を微分同相写像とする。
+    このとき、次が成り立つ:
+    \begin{enumerate}
+        \item 任意の$f \in \smooth(M)$に対し
+            $F_*(fX) = f \circ F^{-1} \, F_*X$が成り立つ。
+        \item 任意の$g \in \smooth(N)$に対し
+            $((F_* X) g) \circ F = X(g \circ F)$が成り立つ。
+    \end{enumerate}
+    \vspace{-2em}
+    \qed
+\end{fact}
+
+\begin{fact}[アファイン変換によるベクトル場の押し出し]
+    \label[fact]{fact:apx2}
+    $V, V'$を$m$次元$\R$-ベクトル空間、
+    $\del_i, \del'_i \; (i = 1, \dots, m)$をそれぞれ$V, V'$の
+    基底をベクトル場とみなしたもの、
+    $F \colon V \to V'$をアファイン変換とし、
+    $\del_i, \del'_i$に関する$F$の行列表示を
+    $(a^i_j)_{i, j}$とする。
+    このとき、
+    $F_* \del_j = a_i^j \del'_j$が成り立つ。
+    \qed
+\end{fact}
+
 \begin{proof}
-    資料末尾の付録に記した。
+    $\del_i, \del'_i \; (i = 1, \dots, m)$をそれぞれ$V, V'$の
+    基底をベクトル場とみなしたものとし、
+    $\del_i, \del'_i$に関する$F$の行列表示を
+    $(a^i_j)_{i, j}$とおき、
+    その逆行列を
+    $(\wt{a}^i_j)_{i, j}$とおく。
+    任意の$X = X^i \del_i, \; Y = Y^i \del_i \in \Gamma(TV)$に対し
+    \begin{alignat}{1}
+        (F^* \nabla')_X Y
+            &=
+                F^{-1}_* \myparen{
+                    \nabla'_{F_* X}
+                    F_* Y
+                }
+                \\
+            &=
+                F^{-1}_* \myparen{
+                    \nabla'_{F_* (X^i \del_i)}
+                    F_* (Y^j \del_j)
+                }
+                \\
+            &=
+                F^{-1}_* \myparen{
+                    \nabla'_{X^i \circ F^{-1} \, F_* \del_i}
+                    (Y^j \circ F^{-1} \, F_* \del_j)
+                }
+                \quad
+                (\text{\cref{fact:apx1} (1)})
+                \\
+            &=
+                F^{-1}_* \myparen{
+                    \nabla'_{X^i \circ F^{-1} \, a^k_i \del'_k}
+                    (Y^j \circ F^{-1} \, a^l_j \del'_l)
+                }
+                \quad
+                (\text{\cref{fact:apx2}})
+                \\
+            &=
+                F^{-1}_* \myparen{
+                    X^i \circ F^{-1} \, a^k_i a^l_j
+                    \nabla'_{\del'_k}
+                    (Y^j \circ F^{-1} \del'_l)
+                }
+                \\
+            &=
+                F^{-1}_* \myparen{
+                    X^i \circ F^{-1} \, a^k_i a^l_j
+                    \del'_k (Y^j \circ F^{-1}) \del'_l
+                }
+                \quad
+                (\text{基底$\del'_i$の定める座標は$\nabla'$-アファイン})
+                \\
+            &=
+                F^{-1}_* \myparen{
+                    X^i \circ F^{-1} \, a^k_i a^l_j
+                    ((F^{-1}_* \del'_k) Y^j) \circ F^{-1} \del'_l
+                }
+                \quad
+                (\text{\cref{fact:apx1} (2)})
+                \\
+            &=
+                X^i a^k_i a^l_j
+                (F^{-1}_* \del'_k) (Y^j)
+                F^{-1}_* \del'_l
+                \quad
+                (\text{\cref{fact:apx1} (1)})
+                \\
+            &=
+                X^i a^k_i a^l_j
+                \wt{a}^m_k \del_m (Y^j)
+                \wt{a}^n_l \del_n
+                \quad
+                (\text{\cref{fact:apx2}})
+                \\
+            &=
+                X^i \del_i (Y^j) \del_j
+                \\
+            &=
+                \nabla_X Y
+    \end{alignat}
+    となる。
+    よって$F^* \nabla' = \nabla$が成り立つ。
 \end{proof}
 
 \begin{proof}[\cref{propdef:natural-flat-connection}の証明]
@@ -2693,9 +3003,9 @@ $(0, 3), (1, 2)$型の Amari-Chentsov テンソルを
     を代入して得られる。
 \end{proof}
 
-$\alpha \neq 1$の場合に
-上の測地線方程式を解くのは難しいように思う。
-数値計算の結果を資料末尾の付録に載せた。
+%$\alpha \neq 1$の場合に
+%上の測地線方程式を解くのは難しいように思う。
+%数値計算の結果を資料末尾の付録に載せた。
 
 
 % ------------------------------------------------------------
@@ -3317,55 +3627,7 @@ $(0, 3), (1, 2)$型の Amari-Chentsov テンソルを
 % ------------------------------------------------------------
 %
 % ------------------------------------------------------------
-\section{双対構造}
-
-
-\begin{definition}[双対構造]
-    $M$を多様体とする。
-    $M$上の
-    Riemann 計量$g$と
-    アファイン接続$\nabla, \nabla^*$の組
-    $(g, \nabla, \nabla^*)$
-    が$M$上の
-    \term{双対構造}[dualistic structure]
-        {双対構造}[そうついこうぞう]
-    であるとは、
-    すべての$X, Y, Z \in \frakX(M)$に対し
-    \begin{equation}
-        X(g(Y, Z))
-            =
-                g(\nabla_X Y, Z) + g(Y, \nabla^*_X Z)
-    \end{equation}
-    が成り立つことをいう。
-    このとき、
-    $\nabla, \nabla^*$はそれぞれ$g$に関する$\nabla^*, \nabla$の
-    \term{双対接続}[dual connection]
-        {双対接続}[そうついせつぞく]
-    であるという。
-
-    さらに$\nabla, \nabla^*$がいずれも$M$上平坦であるとき、
-    $(g, \nabla, \nabla^*)$は
-    \term{双対平坦}[dually flat]
-        {双対平坦}[そうついへいたん]
-    であるという。
-    双対平坦な双対構造を
-    \term{双対平坦構造}[dually flat structure]
-        {双対平坦構造}[そうついへいたんこうぞう]
-    という。
-\end{definition}
-
-\begin{proposition}[双対接続の存在と一意性]
-    \label[proposition]{prop:dual-connection-existence-uniqueness}
-    $M$を多様体、
-    $g$を$M$上のRiemann 計量、
-    $\nabla$を$M$上のアファイン接続とする。
-    このとき、
-    $g$に関する$\nabla$の双対接続がただひとつ存在する。
-\end{proposition}
-
-\begin{proof}
-    証明は付録に記した。
-\end{proof}
+\section{$\alpha$-接続}
 
 指数型分布族の$\alpha$-接続について考える。
 以降、$\calP$を可測空間$\calX$上の open な指数型分布族、
@@ -3592,296 +3854,6 @@ $\nabla^{(\alpha)} \; (\alpha \in \R)$を$\alpha$-接続とする。
     $\alpha = \pm 1$で双対平坦となることは
     \cref{corollary:flatness}
     よりわかる。
-\end{proof}
-
-
-% ------------------------------------------------------------
-%
-% ------------------------------------------------------------
-\section{Legendre 変換}
-
-
-\begin{definition}[Legendre 変換]
-    $U \subset W$を開集合、
-    $f \colon U \to \R$を$C^\infty$関数であって
-    $\nabla f \colon U \to W^\vee$が単射であるものとする。
-    関数
-    \begin{equation}
-        f^\vee \colon U' \to \R,
-            \quad
-            y
-            \mapsto
-            \myangle{(\nabla f)^{-1}(y)}{y} - f((\nabla f)^{-1}(y))
-            \quad
-            \text{where}
-            \quad
-            U' \coloneqq \nabla f(U)
-    \end{equation}
-    を$f$の
-    \term{Legendre 変換}[Legendre transform]
-        {Legendre 変換}[Legendre へんかん]
-    という。
-\end{definition}
-
-\begin{example}[Legendre 変換の例]
-    前回 (\url{0704_資料.pdf}) 扱った具体例について
-    対数分配関数の Legendre 変換を計算してみる。
-    \begin{itemize}
-        \item \uline{Bernoulli 分布族 (i.e. 2元集合上の full support な確率分布の族):} \quad
-            対数分配関数は
-            $\psi \colon \R \to \R, \; \theta \mapsto \log (1 + \exp \theta)$
-            であった。
-            よって
-            $\nabla \psi(\theta)
-                =
-                    \frac{\exp \theta}{1 + \exp \theta}$
-            であり、
-            $(\nabla \psi)^{-1}(\eta)
-                =
-                    \log \eta - \log (1 - \eta)$
-            である。
-            したがって
-            $\psi^\vee(\eta)
-                =
-                    \eta \log \eta
-                    + (1 - \eta) \log (1 - \eta)$
-            である。
-        \item \uline{正規分布族:} \quad
-            対数分配関数は
-            $\psi \colon \R \times \R_{< 0} \to \R, \;
-                \theta
-                \mapsto
-                - \frac{(\theta^1)^2}{4 \theta^2}
-                - \frac{1}{2} \log (- \theta^2)
-                + \frac{1}{2} \log \pi$
-            であった。
-            よって
-            $\nabla \psi(\theta)
-                =
-                    \begin{pmatrix}
-                        - \frac{\theta^1}{2 \theta^2}
-                        &
-                        \frac{(\theta^1)^2}{4 (\theta^2)^2} - \frac{1}{2 \theta^2}
-                    \end{pmatrix}$
-            であり、
-            $(\nabla \psi)^{-1}(\eta)
-                =
-                    \frac{1}{\eta_2 - (\eta_1)^2}
-                    \begin{pmatrix}
-                        \eta_1
-                        \\
-                        - 1/2
-                    \end{pmatrix}$
-            である。
-            よって
-            $\psi^\vee(\eta)
-                =
-                    - \frac{1}{2}
-                    \myparen{
-                        1 + \log 2\pi
-                        + \log(\eta_2 - (\eta_1)^2)
-                    }$
-            である。
-    \end{itemize}
-\end{example}
-
-本稿では、とくに次の状況を考えることになる。
-
-\begin{proposition}
-    \label[proposition]{prop:Legendre-transform-properties}
-    $U \subset W$を凸開集合、
-    $f \colon U \to \R$を$C^\infty$関数であって
-    $\Hess f$が$U$上各点で (対称であることも含む意味で) 正定値であるものとする。
-    このとき、次が成り立つ:
-    \begin{enumerate}
-        \item $\nabla f$は局所微分同相である。
-            とくに$U' \coloneqq \nabla f(U)$は$W^\vee$の開集合である。
-        \item $\nabla f \colon U \to U'$は微分同相である。
-            とくに$\nabla f$は単射である。
-    \end{enumerate}
-    したがって$f^\vee$が定義でき、$f^\vee$は次をみたす:
-    \begin{enumerate}
-        \setcounter{enumi}{2}
-        \item $f^\vee \colon U' \to \R$は$C^\infty$関数である。
-        \item $\nabla f^\vee = (\nabla f)^{-1}$が成り立つ。
-            とくに$\nabla f^\vee$は単射である。
-        \item 各$y \in U'$に対し
-            $(\Hess f^\vee)_y = ((\Hess f)_x)^{-1}$が成り立つ
-            (ただし$x \coloneqq (\nabla f)^{-1}(y)$)。
-            とくに$(\Hess f^\vee)_y$は正定値である。
-    \end{enumerate}
-\end{proposition}
-
-\begin{proof}
-    \uline{(1)} \quad
-    命題の仮定より$\Hess f$は$U$上各点で正定値だから、
-    $\nabla f$の微分は各点で線型同型である。
-    したがって$\nabla f$は局所微分同相であり、
-    とくに開写像である。
-    よって$U' = \nabla f(U)$は$W^\vee$の開集合である。
-
-    \uline{(2)} \quad
-    $u, \wt{u} \in U, \; u \neq \wt{u}$を固定し、
-    $[0, 1]$を含む$\R$の開区間$I$であって、
-    すべての$t \in I$に対し
-    $(1 - t)u + t\wt{u}$が
-    $U$に属するようなものをひとつ選ぶ
-    ($U$は$W$の凸開集合だからこれは可能)。
-    さらに
-    $\varphi \colon I \to U, \; t \mapsto f((1 - t)u + t\wt{u})$と定めると、
-    平均値定理より、
-    ある$\tau \in (0, 1)$が存在して
-    \begin{alignat}{1}
-        \myangle{
-            \nabla f(\wt{u}) - \nabla f(u)
-        }{
-            \wt{u} - u
-        }
-            &=
-                \varphi'(1) - \varphi'(0)
-                \\
-            &=
-                \varphi''(\tau)
-                \qquad
-                (\text{平均値定理})
-                \\
-            &=
-                \myangle{
-                    (\Hess f)_{(1 - \tau)u + \tau\wt{u}}
-                }{
-                    (\wt{u} - u)^2
-                }
-                \\
-            &>
-                0
-                \qquad
-                (\text{$\Hess f$は正定値})
-    \end{alignat}
-    が成り立つ。
-    よって$\nabla f(\wt{u}) \neq \nabla f(u)$である。
-    したがって$\nabla f$は単射である。
-    このことと (1) より
-    $\nabla f \colon U \to U'$は微分同相である。
-
-    \uline{(3)} \quad
-    $\nabla f \colon U \to U'$が微分同相ゆえに
-    $(\nabla f)^{-1} \colon U' \to U$は{\smooth}だから、
-    $f^\vee$は{\smooth}関数である。
-
-    \uline{(4)} \quad
-    $f^\vee$の定義式を$\nabla$で微分すると、
-    すべての$y \in U'$に対し
-    \begin{alignat}{1}
-        (\nabla f^\vee)(y)
-            &=
-                (\nabla f)^{-1}(y)
-                + \myangle{
-                    y
-                }{
-                    \nabla
-                    (\nabla f)^{-1}
-                    (y)
-                }
-                - \myangle{
-                    (\nabla f)(
-                        (\nabla f)^{-1}
-                        (y)
-                    )
-                }{
-                    \nabla
-                    (\nabla f)^{-1}
-                    (y)
-                }
-            =
-                (\nabla f)^{-1}(y)
-    \end{alignat}
-    が成り立つ。
-    よって$(\nabla f)^{-1} = \nabla f^\vee$である。
-
-    \uline{(5)} \quad
-    (4)より
-    \begin{alignat}{1}
-        (\Hess f^\vee)_y
-            &=
-                d(\nabla f^\vee)_y
-                \\
-            &=
-                d((\nabla f)^{-1})_y
-                \\
-            &=
-                (d(\nabla f)_x)^{-1}
-                \\
-            &=
-                ((\Hess f)_x)^{-1}
-    \end{alignat}
-    となる。
-\end{proof}
-
-\begin{corollary}[Legendre 変換の対合性]
-    $f^{\vee \vee} = f$.
-\end{corollary}
-
-\begin{proof}
-    Legendre 変換の定義より、
-    すべての$x \in U$に対し
-    \begin{alignat}{1}
-        f^{\vee\vee}(x)
-            &=
-                \myangle{
-                    x
-                }{
-                    (\nabla f^\vee)^{-1}
-                    (x)
-                }
-                - f^\vee(
-                    (\nabla f^\vee)^{-1}
-                    (x)
-                )
-                \\
-            &=
-                \myangle{
-                    x
-                }{
-                    \nabla f
-                    (x)
-                }
-                - f^\vee(
-                    \nabla f
-                    (x)
-                )
-                \qquad
-                (\nabla f^\vee = (\nabla f)^{-1})
-                \\
-            &=
-                \myangle{
-                    x
-                }{
-                    \nabla f
-                    (x)
-                }
-                - \myparen{
-                    \myangle{
-                        \nabla f
-                        (x)
-                    }{
-                        (\nabla f)^{-1}(
-                            \nabla f
-                            (x)
-                        )
-                    }
-                    - f(
-                        (\nabla f)^{-1}(
-                            \nabla f
-                            (x)
-                        )
-                    )
-                }
-                \\
-            &=
-                f(x)
-    \end{alignat}
-    が成り立つ。
-    よって$f^{\vee\vee} = f$である。
 \end{proof}
 
 

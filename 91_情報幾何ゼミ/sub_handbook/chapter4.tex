@@ -1,0 +1,105 @@
+\documentclass[report]{jlreq}
+\usepackage{global}
+\usepackage{../sub/local}
+\subfiletrue
+\def\assetspath{../}
+\begin{document}
+
+% ============================================================
+%
+% ============================================================
+\chapter{統計的多様体}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{双対構造}
+
+\begin{definition}[双対構造]
+    $M$を多様体とする。
+    $M$上の
+    Riemann 計量$g$と
+    アファイン接続$\nabla, \nabla^*$の組
+    $(g, \nabla, \nabla^*)$
+    が$M$上の
+    \term{双対構造}[dualistic structure]
+        {双対構造}[そうついこうぞう]
+    であるとは、
+    すべての$X, Y, Z \in \frakX(M)$に対し
+    \begin{equation}
+        X(g(Y, Z))
+            =
+                g(\nabla_X Y, Z) + g(Y, \nabla^*_X Z)
+    \end{equation}
+    が成り立つことをいう。
+    このとき、
+    $\nabla, \nabla^*$はそれぞれ$g$に関する$\nabla^*, \nabla$の
+    \term{双対接続}[dual connection]
+        {双対接続}[そうついせつぞく]
+    であるという。
+
+    さらに$\nabla, \nabla^*$がいずれも$M$上平坦であるとき、
+    $(g, \nabla, \nabla^*)$は
+    \term{双対平坦}[dually flat]
+        {双対平坦}[そうついへいたん]
+    であるという。
+    双対平坦な双対構造を
+    \term{双対平坦構造}[dually flat structure]
+        {双対平坦構造}[そうついへいたんこうぞう]
+    という。
+\end{definition}
+
+\begin{proposition}[双対接続の存在と一意性]
+    \label[proposition]{prop:dual-connection-existence-uniqueness}
+    $M$を多様体、
+    $g$を$M$上のRiemann 計量、
+    $\nabla$を$M$上のアファイン接続とする。
+    このとき、
+    $g$に関する$\nabla$の双対接続がただひとつ存在する。
+\end{proposition}
+
+\begin{proof}
+    一意性は$g$の非退化性より明らか。
+    以下、存在を示す。
+    まず、$X, Z \in \frakX(TM)$を固定すると
+    写像$\frakX(TM) \to \smooth(M), \;
+        Y \mapsto X(g(Y, Z)) - g(\nabla_X Y, Z)$
+    は$\smooth(M)$-線型だから$\Omega^1(M)$に属する。
+    これを$g$で添字を上げて得られるベクトル場を
+    $\nabla^*_X Z$と書くことにすれば、
+    $\nabla^*_X Z$は目的の式をみたす。
+    ここまでで、目的の式をみたす
+    写像$\nabla^* \colon \Gamma(TM) \to \Map(\Gamma(TM), \Gamma(TM))$
+    が得られた。
+    $\nabla^*$の像が
+    $\Hom_{\smooth(M)}(\Gamma(TM), \Gamma(TM)) = \Gamma(T^\vee M \otimes TM)$
+    に属することは、
+    各$Z \in \frakX(M)$に対し
+    $\nabla^* Z$の$\smooth(M)$-線型性を確かめればよく、すぐにわかる。
+    あとは$\nabla^*$の$\R$-線型性と Leibniz 則を確かめればよいが、
+    これらも$\nabla^*$の定め方から明らか。
+    よって存在が示された。
+\end{proof}
+
+\begin{definition}[双対アファイン座標]
+    $(g, \nabla, \nabla^*)$を$M$上の双対構造とする。
+    $\nabla$-アファイン座標$\theta = (\theta^1, \ldots, \theta^n)$と
+    $\nabla^*$-アファイン座標$\eta = (\eta_1, \ldots, \eta_n)$の組
+    $(\theta, \eta)$が
+    $(g, \nabla, \nabla^*)$に関する
+    \term{双対アファイン座標}[dual affine coordinate]
+        {双対アファイン座標}[そうついアファインざひょう]
+    であるとは、
+    \begin{equation}
+        g(\del_i, \del^j) = \delta_i^j
+            \qquad
+            (\forall i, j)
+    \end{equation}
+    が成り立つことをいう。
+    ただし$\del_i \coloneqq \deldel{\theta^i}, \;
+        \del^i \coloneqq \deldel{\eta_i}$である。
+\end{definition}
+
+
+
+\end{document}
