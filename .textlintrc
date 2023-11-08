@@ -1,0 +1,18 @@
+{
+  "plugins": [
+    "latex2e"
+  ],
+  "filters": {},
+  "rules": {
+    "preset-japanese": {
+      "max-ten": false,
+      "no-doubled-joshi": false,
+      "sentence-length": false
+    },
+    "prh": {
+      "rulePaths": [
+        "./prh.yml"
+      ]
+    }
+  }
+}

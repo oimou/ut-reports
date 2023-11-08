@@ -1,6 +1,6 @@
 \documentclass[report]{jlreq}
 \usepackage{global}
-\usepackage{../sub/local}
+\usepackage{../sub_handbook/local}
 \subfiletrue
 \def\assetspath{../}
 \begin{document}
@@ -65,18 +65,54 @@
                     {基底測度}[きていそくど]
                     という。
             \end{itemize}
-        \item 集合$\Theta_{(V, T, \mu)}$
+    \end{itemize}
+\end{definition}
+
+\begin{definition}[自然パラメータ空間]
+    写像$P \colon V^\vee \to \calP$を
+    \begin{equation}
+        P(\theta)
+            \coloneqq
+                \frac{
+                    \exp \langle \theta, T(x) \rangle
+                }{
+                    \int_\calX \exp \langle \theta, T(y) \rangle \, \mu(dy)
+                }
+    \end{equation}
+    で定める。
+    \begin{itemize}
+        \item 集合
             \begin{equation}
                 \Theta_{(V, T, \mu)}
                     \coloneqq \mybrace{
                         \theta \in V^\vee
                         \;\Big|\;
-                        \int_\calX \exp \langle \theta, T(y) \rangle \, \mu(dy) < +\infty
+                        \int_\calX
+                            \exp \langle \theta, T(y) \rangle \, \mu(dy)
+                            < +\infty, \;
+                        P(\theta) \in \calP
                     }
             \end{equation}
-            を$(V, T, \mu)$の
+            を$(V, T, \mu)$に関する$\calP$の
             \term{自然パラメータ空間}[natural parameter space]
-            {自然パラメータ空間}[しぜんぱらめーたくうかん]
+                {自然パラメータ空間}[しぜんぱらめーたくうかん]
+            という。
+        \item 集合
+            \begin{equation}
+                \wt{\Theta}_{(V, T, \mu)}
+                    \coloneqq
+                        \mybrace{
+                            \theta \in V^\vee
+                            \;\Big|\;
+                            \int_\calX
+                                \exp \langle \theta, T(y) \rangle \, \mu(dy)
+                                < +\infty
+                        }
+            \end{equation}
+            を
+            \term{$(V, T, \mu)$により生成される自然パラメータ空間}
+                {自然パラメータ空間!実現により生成される---}
+                [しぜんぱらめーたくうかん!じつげんによりせいせいされる---]
             という。
         \item 関数$\psi \colon \Theta_{(V, T, \mu)} \to \R,$
             \begin{equation}
@@ -86,22 +122,31 @@
             \end{equation}
             を$(V, T, \mu)$の
             \term{対数分配関数}[log-partition function]
-            {対数分配関数}[たいすうぶんぱいかんすう]
+                {対数分配関数}[たいすうぶんぱいかんすう]
             という。
     \end{itemize}
-    \TODO{記号の修正}
-    \TODO{full の追加}
 \end{definition}
 
-\begin{proposition}[自然パラメータ空間は凸集合]
-    $\Theta_{(T, \mu)}$は$\R^m$の凸集合である。
-    \TODO{$V$に修正}
+\begin{definition}[full]
+    $\Theta_{(V, T, \mu)} = \wt{\Theta}_{(V, T, \mu)}$のとき、
+    $\calP$は
+    \term{full}
+        {full}[full]
+    であるという。
+\end{definition}
+
+以下$\Theta_{(V, T, \mu)}$や$\wt{\Theta}_{(V, T, \mu)}$を
+文脈に応じて単に$\Theta$や$\wt{\Theta}$と記すことがある。
+
+\begin{proposition}[$\wt{\Theta}$は凸集合]
+    $\wt{\Theta}_{(T, \mu)}$は$V^\vee$の凸集合である。
 \end{proposition}
 
 \begin{proof}
-    表記の簡略化のため$\Theta \coloneqq \Theta_{(T, \mu)}$とおく。
-    $\theta, \theta' \in \Theta, \; t \in (0, 1)$とし、
-    $(1 - t) \theta + t \theta' \in \Theta$を示せばよい。
+    $\theta, \theta' \in \wt{\Theta}, \;
+        t \in (0, 1)$
+    とし、
+    $(1 - t) \theta + t \theta' \in \wt{\Theta}$を示せばよい。
     そこで$p \coloneqq \frac{1}{1 - t}, \; q \coloneqq \frac{1}{t}$とおくと、
     $p, q \in (1, +\infty)$であり、
     $\frac{1}{p} + \frac{1}{q} = (1 - t) + t = 1$であり、
@@ -137,7 +182,7 @@
             &< +\infty
     \end{alignat}
     が成り立つ。
-    したがって$(1 - t) \theta + t \theta' \in \Theta$である。
+    したがって$(1 - t) \theta + t \theta' \in \wt{\Theta}$である。
 \end{proof}
 
 \begin{example}[有限集合上の確率分布]
@@ -178,6 +223,7 @@
 \end{example}
 
 \begin{example}[正規分布族]
+    \label[example]{ex:normal-distribution}
     \TODO{$V$に修正}
     $\calX = \R$、
     $\lambda$を$\R$上の Lebesgue 測度とする。
@@ -287,12 +333,140 @@
         {最小次元実現}[さいしょうじげんじつげん]という。
 \end{definition}
 
-\begin{theorem}[「$\theta$が一意の実現」の存在]
-    \TODO{「単射性条件」の言葉に修正}
-    $\calX$を可測空間、
-    $\calP \subset \calP(\calX)$を
-    $\calX$上の指数型分布族とする。
-    このとき、$\calP$の「$\theta$が一意の実現」が存在する。
+最小次元実現を特徴づける2つの条件を導入する。
+
+\begin{propdef}[条件A]
+    $\calP$の実現$(V, T, \mu)$に関する次の条件は同値である:
+    \begin{enumerate}
+        \item $P \colon \Theta \to \calP(\calX)$は単射である。
+        \item $\forall \theta \in V^\vee$
+            に対し
+            「
+                $\myangle{\theta}{T(x)} = \text{const. $\mu$-a.e.$x$}
+                \implies
+                \theta = 0$
+            」
+            が成り立つ。
+        \item $V$の任意の真アファイン部分空間$W$に対し、
+            「$T(x) \in W \; \text{$\mu$-a.e.$x$}$でない」
+            が成り立つ。
+    \end{enumerate}
+    これらの条件が成り立つとき、
+    $(V, T, \mu)$は\termsilent{条件A}をみたすという。
+\end{propdef}
+
+\begin{proof}
+    \TODO{修正}
+
+    \uline{(1) \Rightarrow (2)} \quad
+    $(V, T, \mu)$が条件Aをみたすとする。
+    背理法のため、ある$u \neq 0$が存在して
+    $\langle u, T(x) \rangle$が$\calX$上$\mu$-a.e. 定数であると仮定しておく。
+    $p \in \calP$とし、
+    \cref{def:exponential-family}の条件(E3)の
+    $\theta \in V^\vee$をひとつ選ぶと、
+    \begin{alignat}{1}
+        \dd[p]{\mu}(x)
+            &= \frac{
+                e^{\langle \theta, T(x) \rangle}
+            }{
+                \int_{\calX} e^{\langle \theta, T(y) \rangle} \, \mu(dy)
+            } \\
+            &= \frac{
+                e^{\langle \theta, T(x) \rangle}
+            }{
+                \int_{\calX} e^{\langle \theta, T(y) \rangle} \, \mu(dy)
+            }
+            \cdot \frac{
+                e^{\langle u, T(x) \rangle}
+            }{
+                e^{\langle u, T(x) \rangle}
+            } \\
+            &= \frac{
+                e^{\langle \theta + u, T(x) \rangle}
+            }{
+                \int_{\calX}
+                e^{\langle \theta, T(y) \rangle}
+                e^{\langle u, T(x) \rangle}
+                \, \mu(dy)
+            } \\
+            &= \frac{
+                e^{\langle \theta + u, T(x) \rangle}
+            }{
+                \int_{\calX}
+                e^{\langle \theta, T(y) \rangle}
+                e^{\langle u, T(y) \rangle}
+                \, \mu(dy)
+            } \\
+            &= \frac{
+                e^{\langle \theta + u, T(x) \rangle}
+            }{
+                \int_{\calX}
+                e^{\langle \theta + u, T(y) \rangle}
+                \, \mu(dy)
+            }
+    \end{alignat}
+    を得る。
+    したがって$\theta + u$も
+    \cref{def:exponential-family}の条件(E3)を満たすが、
+    いま$u \neq 0$より$\theta + u \neq \theta$だから、
+    $(T, \mu)$が$\calP$の極小実現であることに反する。
+    背理法より定理が示された。
+
+    \uline{(2) \Rightarrow (1)} \quad
+    $\theta, \theta' \in V^\vee$が
+    \cref{def:exponential-family}の条件(E3)をみたすとすると、
+    \begin{equation}
+        e^{\langle \theta, T(x) \rangle - \psi(\theta)}
+            = \dd[p]{\mu}(x)
+            = e^{\langle \theta', T(x) \rangle - \psi(\theta')}
+            \qquad
+            \text{$\mu$-a.e.$x \in \calX$}
+    \end{equation}
+    が成り立つ。式を整理して
+    \begin{equation}
+        \langle \theta - \theta', T(x) \rangle
+            = \psi(\theta) - \psi(\theta')
+            \qquad
+            \text{$\mu$-a.e.$x \in \calX$}
+    \end{equation}
+    が成り立つ。
+    したがって(1)より$\theta = \theta'$である。
+
+    \uline{(2) \Rightarrow (3)} \quad
+    対偶を示す。
+    (3)の否定より、
+    ある真ベクトル部分空間$W \subsetneq V$および$b \in T(\calX)$が存在して
+    $T(x) \in W + b \; \text{$\mu$-a.e.$x$}$が成り立つ。
+    すると$W^\perp \subset V^\vee$は空でないから、
+    ある$\theta \in W^\perp, \; \theta \neq 0$が存在する。
+    よって
+    $\myangle{\theta}{T(x)}
+        = \myangle{\theta}{T(x) - b}
+        + \myangle{\theta}{b}
+        = \myangle{\theta}{b} \; \text{$\mu$-a.e.$x$}$
+    となり、(2)の否定が従う。
+
+    \uline{(3) \Rightarrow (2)} \quad
+    対偶を示す。
+    (2)の否定より、
+    ある$\theta \in V^\vee, \; \theta \neq 0$および
+    $c \in \R$が存在して
+    $\myangle{\theta}{T(x)} = c \; \text{$\mu$-a.e.$x$}$が成り立つ。
+    そこで$A \coloneqq \mybrace{
+        v \in V
+        \mid
+        \myangle{\theta}{v} = c
+    }$
+    とおけば、
+    $A$は$V$の真アファイン部分空間であり、
+    $T(x) \in A \; \text{$\mu$-a.e.$x$}$が成り立つから、
+    (3)の否定が従う。
+\end{proof}
+
+\begin{theorem}[条件Aをみたす実現の存在]
+    $\calP$を可測空間$\calX$上の指数型分布族とする。
+    このとき、条件Aをみたす$\calP$の実現が存在する。
 \end{theorem}
 
 \begin{proof}
@@ -431,122 +605,25 @@
     背理法より$(V, T, \mu)$は$\calP$の「$\theta$が一意の実現」である。
 \end{proof}
 
-\begin{theorem}[極小実現の性質]
+\begin{example}
     \TODO{$V$に修正}
-    $\calX$を可測空間、
-    $\calP \subset \calP(\calX)$を
-    $\calX$上の指数型分布族、
-    $(T, \mu)$を$\calP$の次元$m$の実現とする。
-    このとき、
-    $(T, \mu)$が極小実現ならば、
-    $\langle u, T(x) \rangle$が$\mu$-a.e. 定数であるような
-    $u \in \R^m$は$u = 0$のみである。
-\end{theorem}
-
-\begin{proof}
-    $(T, \mu)$を$\calP$の極小実現とする。
-    背理法のため、ある$u \neq 0$が存在して
-    $\langle u, T(x) \rangle$が$\calX$上$\mu$-a.e. 定数であると仮定しておく。
-    $p \in \calP$とし、
-    \cref{def:exponential-family}の条件(E3)の
-    $\theta \in \R^m$をひとつ選ぶと、
-    \begin{alignat}{1}
-        \dd[p]{\mu}(x)
-            &= \frac{
-                e^{\langle \theta, T(x) \rangle}
-            }{
-                \int_{\calX} e^{\langle \theta, T(y) \rangle} \, \mu(dy)
-            } \\
-            &= \frac{
-                e^{\langle \theta, T(x) \rangle}
-            }{
-                \int_{\calX} e^{\langle \theta, T(y) \rangle} \, \mu(dy)
-            }
-            \cdot \frac{
-                e^{\langle u, T(x) \rangle}
-            }{
-                e^{\langle u, T(x) \rangle}
-            } \\
-            &= \frac{
-                e^{\langle \theta + u, T(x) \rangle}
-            }{
-                \int_{\calX}
-                e^{\langle \theta, T(y) \rangle}
-                e^{\langle u, T(x) \rangle}
-                \, \mu(dy)
-            } \\
-            &= \frac{
-                e^{\langle \theta + u, T(x) \rangle}
-            }{
-                \int_{\calX}
-                e^{\langle \theta, T(y) \rangle}
-                e^{\langle u, T(y) \rangle}
-                \, \mu(dy)
-            } \\
-            &= \frac{
-                e^{\langle \theta + u, T(x) \rangle}
-            }{
-                \int_{\calX}
-                e^{\langle \theta + u, T(y) \rangle}
-                \, \mu(dy)
-            }
-    \end{alignat}
-    を得る。
-    したがって$\theta + u$も
-    \cref{def:exponential-family}の条件(E3)を満たすが、
-    いま$u \neq 0$より$\theta + u \neq \theta$だから、
-    $(T, \mu)$が$\calP$の極小実現であることに反する。
-    背理法より定理が示された。
-\end{proof}
-
-\begin{example}[有限集合上の確率分布族]
     \cref{ex:finite-set}の$(T, \gamma)$は
-    $\calP(\calX)$の極小実現である。
+    $\calP(\calX)$の条件Aをみたす実現である。
     実際、任意の$P \in \calP(\calX)$に対し、
     $\theta_j$は
     $\theta_j = \log P(\{ j \}) \; (j = 1, \dots, n)$として
     一意に決まる。
 \end{example}
 
-\begin{proposition}
-    \label[proposition]{prop:as-a}
-    \TODO{上の命題とあわせる}
-    $(V, T, \mu)$に関する次の条件は同値である:
+\begin{definition}[条件B]
+    $\calP$の実現$(V, T, \mu)$に関する条件
     \begin{enumerate}
-        \item $\langle \theta, T(x) \rangle$が
-            $\calX$上$\mu$-a.e.定数であるような
-            $\theta \in V^\vee$は$\theta = 0$のみである。
-        \item 各$p \in \calP$に対し、
-            \cref{def:exponential-family}の条件(E3)をみたす$\theta \in V^\vee$は
-            ただひとつである。
+        \item $\Theta^\calP$は
+            $V^\vee$を affine span する。
     \end{enumerate}
-\end{proposition}
-
-\begin{proof}
-    \uline{(2) \Rightarrow (1)} \quad
-    前回示した。
-
-    \uline{(1) \Rightarrow (2)} \quad
-    $\theta, \theta' \in V^\vee$が
-    \cref{def:exponential-family}の条件(E3)をみたすとすると、
-    \begin{equation}
-        e^{\langle \theta, T(x) \rangle - \psi(\theta)}
-            = \dd[p]{\mu}(x)
-            = e^{\langle \theta', T(x) \rangle - \psi(\theta')}
-            \qquad
-            \text{$\mu$-a.e.$x \in \calX$}
-    \end{equation}
-    が成り立つ。式を整理して
-    \begin{equation}
-        \langle \theta - \theta', T(x) \rangle
-            = \psi(\theta) - \psi(\theta')
-            \qquad
-            \text{$\mu$-a.e.$x \in \calX$}
-    \end{equation}
-    が成り立つ。
-    したがって(1)より$\theta = \theta'$である。
-\end{proof}
-
+    が成り立つとき、
+    $(V, T, \mu)$は\termsilent{条件B}をみたすという。
+\end{definition}
 
 本節の目標は、
 最小次元実現の間のアファイン変換の一意存在を述べた
@@ -567,7 +644,7 @@
         \item 合成: アファイン写像の合成
             $(L, b) \circ (K, c) = (LK, Lc + b)$
     \end{itemize}
-    この圏を$\bfC_\calP$と書く。
+    この圏を$\bfC_\calP$と記す。
 \end{propdef}
 
 \begin{proof}
@@ -578,43 +655,6 @@
     また、$(V, T, \mu)$の恒等射は明らかに恒等写像$(\id_V, 0)$であり、
     結合律はアファイン写像の合成の結合律より従う。
 \end{proof}
-
-最小次元実現を特徴づける2つの条件を導入する。
-
-\begin{propdef}[条件A]
-    $\calP$の実現$(V, T, \mu)$に関する次の条件は同値である:
-    \begin{enumerate}
-        \item $P \colon \Theta \to \calP(\calX)$は単射である。
-        \item $\forall \theta \in V^\vee$
-            に対し
-            「
-                $\myangle{\theta}{T(x)} = \text{const. $\mu$-a.e.$x$}
-                \implies
-                \theta = 0$
-            」
-            が成り立つ。
-        \item $V$の任意の真アファイン部分空間$W$に対し、
-            「$T(x) \in W \; \text{$\mu$-a.e.$x$}$でない」
-            が成り立つ。
-    \end{enumerate}
-    これらの条件が成り立つとき、
-    $(V, T, \mu)$は\termsilent{条件A}をみたすという。
-\end{propdef}
-
-\begin{proof}
-    (1) $\iff$ (2) は\url{0502_資料.pdf}の命題2.2で示した。
-    (2) $\iff$ (3) は\url{0523_コメント.pdf}の命題0.4に記した。
-\end{proof}
-
-\begin{definition}[条件B]
-    $\calP$の実現$(V, T, \mu)$に関する条件
-    \begin{enumerate}
-        \item $\Theta^\calP$は
-            $V^\vee$を affine span する。
-    \end{enumerate}
-    が成り立つとき、
-    $(V, T, \mu)$は\termsilent{条件B}をみたすという。
-\end{definition}
 
 条件Aは射の一意性を保証する。
 
@@ -657,7 +697,7 @@
     $(V, T, \mu)$を$\bfC_\calP$の対象とする。
     このとき、
     $(V, T, \mu)$が 条件Aと条件Bをみたすならば、
-    任意の対象\xcancel{$(V', T', \mu)$}$(V', T', \mu')$から$(V, T, \mu)$への射が存在する。
+    任意の対象$(V', T', \mu')$から$(V, T, \mu)$への射が存在する。
 \end{proposition}
 
 この命題の証明には次の補題を用いる。
@@ -772,7 +812,6 @@
             \in V
     \end{alignat}
     示すべきことは、
-    \xcancel{すべての$p \in \calP$に対し}
     \begin{equation}
         T(x) = L(T'(x)) + b
             \quad
@@ -839,7 +878,7 @@
     に対し成り立つことになるが、
     $\Im L + b$は$V$の真アファイン部分空間だから
     $(V, T, \mu)$の条件A (3)に反する。
-    したがって$L$は全射である。
+    よって$L$は全射である。
 \end{proof}
 
 各条件をみたさない場合にも、射が存在する。
@@ -891,7 +930,7 @@
 
     あとは$(V', T', \mu)$が
     $\calP$の実現であることを示せばよい。
-    指数型分布族の定義(\url{0502_資料.pdf})の条件
+    指数型分布族の定義の条件
     (E0), (E1), (E2)は明らかに成立しているから、
     あとは条件(E3)を確認すればよい。
     そこで$p \in \calP$を任意とする。
@@ -984,7 +1023,7 @@
 
     あとは$(\wt{V}, \wt{T}, \wt{\mu})$が
     $\calP$の実現であることを示せばよい。
-    指数型分布族の定義(\url{0502_資料.pdf})の条件
+    指数型分布族の定義の条件
     (E0), (E1), (E3)の成立は簡単に確かめられるから、
     ここでは条件(E3)だけ確かめる。
     そこで$p \in \calP$を任意とする。
@@ -1102,7 +1141,7 @@
 
 \begin{example}[正規分布族の最小次元実現]
     \cref{thm:characterization-of-minimal-representation}により、
-    \url{0425_資料.pdf}の例3.2でみた正規分布族の例は
+    \cref{ex:normal-distribution}でみた正規分布族の例は
     最小次元実現であることがわかる。
     実際、
     $T(x) = \up{t}(x, x^2)$の像は
@@ -1146,7 +1185,6 @@
     全射線型写像$L: V \to V'$と
     ベクトル$b \in V'$であって
     \begin{equation}
-        \xcancel{T(x) = L(T'(x)) + b} \quad
         T'(x) = L(T(x)) + b
             \qquad
             \text{$\mu$-a.e.$x$}
@@ -1158,11 +1196,10 @@
 \end{theorem}
 
 \begin{corollary}[自然パラメータの変換]
+    \label[corollary]{cor:transformation-of-natural-parameters}
     上の定理の状況で、
     さらに$\theta^0 \in V^\vee$であって
     \begin{equation}
-        \xcancel{\theta'(p)
-            = \up{t}L(\theta(p)) + \theta^0} \quad
         \theta(p)
             = \up{t}L(\theta'(p)) + \theta^0
             \qquad
@@ -1278,7 +1315,7 @@ $\calP \subset \calP(\calX)$を$\calX$上の指数型分布族、
 $(V, T, \mu)$を$\calP$の次元$m$の実現、
 $\Theta \subset V^\vee$を自然パラメータ空間、
 $\psi \colon \Theta \to \R$を対数分配関数とする。
-$V^\vee$における$\Theta$の内部を$\Theta^\circ$と書くことにする。
+$V^\vee$における$\Theta$の内部を$\Theta^\circ$と記す。
 さらに
 関数$h \colon \calX \times \Theta \to \R$および
 $\lambda \colon \Theta \to \R$を
@@ -1499,7 +1536,7 @@ $\lambda \colon \Theta \to \R$を
                 (\because \text{式の展開})
                 \locallabel{eq:estimate-part}
     \end{alignat}
-    (ただし$\sigma_\alpha$は$\sigma$の第$\alpha$成分)
+    ($\sigma_\alpha$は$\sigma$の第$\alpha$成分)
     となるから、
     式\localcref{eq:estimate}と式\localcref{eq:estimate-part}を合わせて
     \begin{alignat}{1}
@@ -1674,6 +1711,7 @@ $\lambda \colon \Theta \to \R$を
 \cref{thm:smoothness_of_lambda}から次の系が従う。
 
 \begin{corollary}
+    \label[corollary]{cor:expectation-of-T}
     $\varphi = (\varphi_1, \dots, \varphi_m) \colon \Theta^\circ \to \R^m$を
     $V^\vee$の基底が定めるチャートとする。
     また、各$\theta \in \Theta$に対し、
@@ -1739,7 +1777,7 @@ Fisher 計量を定義する。
         = \frac{\del^2 \psi}{\del \theta^i \del \theta^j}
         \, d\theta^i \otimes d\theta^j$
     となる。
-    ここで前回 (\url{0516_資料.pdf}) の系2.4より
+    ここで\cref{cor:expectation-of-T}より
     \begin{alignat}{1}
         \frac{\del^2 \psi}{\del \theta^i \del \theta^j}(\theta)
             &=
@@ -1825,12 +1863,19 @@ Fisher 計量を定義する。
             $\Theta^\calP_{(V, T, \mu)}$は$V^\vee$で開である。
     \end{enumerate}
     $\calP$がこれらの同値な2条件をみたすとき、
-    $\calP$は\termsilent{開}[open]であるという。
+    $\calP$は
+    \term{開}[open]
+        {開}[かい]
+    であるという。
+    $\calP$が開かつ full のとき、$\calP$は
+    \term{regular}
+        {regular}[regular]
+    であるという。
 \end{propdef}
 
 \begin{proof}
     (1) $\Rightarrow$ (2)は、
-    \url{0606_資料.pdf}系1.13より、
+    \cref{cor:transformation-of-natural-parameters}より
     最小次元実現の真パラメータ空間がアファイン変換で写り合うことから従う。
     (2) $\Rightarrow$ (1)は
     最小次元実現が存在することから従う。
@@ -1890,7 +1935,8 @@ Fisher 計量を定義する。
     の可換性と、
     $\theta, \theta', F$が微分同相であることから従う。
     ただし$F$とは、
-    \url{0606_資料.pdf}系1.13より一意に存在する
+    \cref{cor:transformation-of-natural-parameters}より
+    一意に存在する
     アファイン変換$V^\vee \to V'^\vee$の制限である。
 \end{proof}
 
@@ -2056,7 +2102,8 @@ $\calP$に自然な多様体構造が定まっているものとする。
     標準的な平坦アファイン接続を$\wt{\nabla}'$とおくとき、
     $\theta^* \wt{\nabla} = \theta'^* \wt{\nabla}'$が成り立つことである。
     そこで、
-    \url{0606_資料.pdf}系1.13より一意に存在する
+    \cref{cor:transformation-of-natural-parameters}
+    より一意に存在する
     アファイン変換$V^\vee \to V'^\vee$を$F$とおくと、
     \begin{alignat}{1}
         \theta'^* \wt{\nabla}'
@@ -2106,7 +2153,8 @@ $\calP$に自然な平坦アファイン接続$\nabla$が定まっているも�
     $\Theta^\calP_{(V, T, \mu)}, \;
         \Theta^\calP_{(V', T', \mu')}$上の
     Fisher 計量をそれぞれ$g, g'$とおき、
-    \url{0606_資料.pdf}定理1.12より一意に存在する
+    \cref{thm:transformation-between-representations}
+    より一意に存在する
     線型同型写像$V \to V'$を$L$とおく。
     このとき、
     各$p \in \calP$に対し
@@ -2124,8 +2172,8 @@ $\calP$に自然な平坦アファイン接続$\nabla$が定まっているも�
         g'_{\theta'(p)} = \Var_{p}[T']$
     が成り立つから、
     期待値と分散のペアリングの命題
-    (\url{0523_資料.pdf}命題1.1)
-    と同様の議論により補題の主張の等式が成り立つ。
+    (\label[corollary]{prop:expectation-variance-pairing})
+    と同様の議論により補題の主張の等式が成り立つ\TODO{命題を一般化する}。
 \end{proof}
 
 \begin{proof}[\cref{propdef:Fisher-metric}の証明]
@@ -2147,7 +2195,8 @@ $\calP$に自然な平坦アファイン接続$\nabla$が定まっているも�
     $\Theta^\calP_{(V', T', \mu')}$上の Fisher 計量を$\wt{g}'$とおいて、
     $\theta^* g = \theta'^* g'$が成り立つことである。
     そこで
-    \url{0606_資料.pdf}定理1.12より一意に存在する
+    \cref{thm:transformation-between-representations}
+    より一意に存在する
     線型同型写像$V \to V'$を$L$とおくと、
     各$p \in \calP, \; u, v \in T_p\calP$に対し
     \begin{alignat}{1}
@@ -2397,7 +2446,8 @@ $\calP$に Amari-Chentsov テンソル$S$が定まっているものとする。
     \end{alignat}
     が成り立つ。
     この右辺を
-    \url{0516_資料.pdf}系2.4により期待値の形で表せば
+    \cref{cor:expectation-of-T}
+    により期待値の形で表せば
     式\localcref{eq:1}に一致するから、
     命題の主張の右側の等号が従う。
 \end{proof}
@@ -2429,7 +2479,7 @@ $\calP$に Amari-Chentsov テンソル$S$が定まっているものとする。
 \end{definition}
 
 \begin{proposition}[$\nabla^{(g)}, \nabla^{(\alpha)}$のACテンソルによる表示]
-    \label[proposition]{prop:connections_by_AC_tensor}
+    \label[proposition]{prop:connections-by-AC-tensor}
     $\calP$上の任意の$\nabla$-アファイン座標に関し、
     $\nabla^{(g)}$および$\nabla^{(\alpha)}$の
     接続係数は次をみたす:
@@ -2501,6 +2551,7 @@ $\calP$に Amari-Chentsov テンソル$S$が定まっているものとする。
 \end{proof}
 
 \begin{proposition}[捩率と曲率のACテンソルによる表示]
+    \label[proposition]{prop:torsion-and-curvature-by-AC-tensor}
     $\calP$上の任意の$\nabla$-アファイン座標に関し、
     $\nabla^{(\alpha)}$の捩率テンソル$T^{(\alpha)}$
     および$(1, 3)$-曲率テンソル$R^{(\alpha)}$の成分表示は
@@ -2543,7 +2594,7 @@ $\calP$に Amari-Chentsov テンソル$S$が定まっているものとする。
                 \frac{1 - \alpha}{2} A_{ij}^k
                 - \frac{1 - \alpha}{2} A_{ji}^k
                 \quad
-                (\cref{prop:connections_by_AC_tensor} (2))
+                (\cref{prop:connections-by-AC-tensor} (2))
                 \\
             &=
                 0
@@ -2575,7 +2626,7 @@ $\calP$に Amari-Chentsov テンソル$S$が定まっているものとする。
                     - A_{ik}^m A_{jm}^l
                 }
                 \quad
-                (\cref{prop:connections_by_AC_tensor} (2))
+                (\cref{prop:connections-by-AC-tensor} (2))
     \end{alignat}
     より従う。
 \end{proof}
@@ -2609,7 +2660,8 @@ $\alpha$-接続に関する測地線方程式を求めてみる。
     ただし$\delta^i$は
     1点$i \in \calX$での Dirac 測度である。
     これが$\calX$上の指数型分布族であることは
-    \url{0425_資料.pdf}例3.1で確かめた。
+    \cref{ex:finite-set}
+    で確かめた。
 \end{settings}
 
 \begin{proposition}[最小次元実現の構成および$\calP$が開であることの確認]
@@ -2671,8 +2723,41 @@ $\alpha$-接続に関する測地線方程式を求めてみる。
 
 \begin{proof}
     \uline{(1)} \quad
-    $(V, T, \gamma)$が
-    実現であることは\url{0425_コメント.pdf}演習問題0.1に記した。
+    \begin{alignat}{1}
+        p(dk)
+            &=
+                \exp\mybrace{
+                    \sum_{i = 1}^{n - 1}
+                        (\log p_i) \delta_{ik}
+                    +
+                    \myparen{
+                        \log\myparen{
+                            1 - \sum_{i = 1}^{n - 1} p_i
+                        }
+                    }
+                    \delta_{n, k}
+                }
+                \gamma(dk)
+                \\
+            &=
+                \exp\mybrace{
+                    \sum_{i = 1}^{n - 1}
+                        \myparen{
+                            \log p_i
+                            -
+                            \log\myparen{
+                                1 - \sum_{i = 1}^{n - 1} p_i
+                            }
+                        }
+                        \delta_{ik}
+                    +
+                    \log\myparen{
+                        1 - \sum_{i = 1}^{n - 1} p_i
+                    }
+                }
+                \gamma(dk)
+    \end{alignat}
+    と表せることから従う。
 
     \uline{(2)} \quad
     対数分配関数の定義より
@@ -2835,7 +2920,7 @@ $(0, 3), (1, 2)$型の Amari-Chentsov テンソルを
 \end{proposition}
 
 \begin{proof}
-    前回 (\url{0613_資料.pdf}) の命題1.9を用いると
+    \cref{prop:components-of-AC-tensor}を用いると
     \begin{equation}
         S_{ijk}(p)
             = E_p [
@@ -2998,7 +3083,9 @@ $(0, 3), (1, 2)$型の Amari-Chentsov テンソルを
         \ddot{\theta^k}
             = - \Gamma_{ij}^k \dot{\theta^i} \dot{\theta^j}
     \end{equation}
-    に、前回 (\url{0613_資料.pdf}) の命題1.11の等式
+    に、
+    \cref{prop:connections-by-AC-tensor}
+    の等式
     ${\Gamma^{(\alpha)}}_{ij}^k = \frac{1 - \alpha}{2} A_{ij}^{\hphantom{ij}k}$
     を代入して得られる。
 \end{proof}
@@ -3033,7 +3120,8 @@ $\alpha$-接続に関する測地線方程式を求めてみる。
     \end{equation}
     とおく。
     これが$\calX$上の指数型分布族であることは
-    \url{0425_資料.pdf}例3.2で確かめた。
+    \cref{ex:normal-distribution}
+    で確かめた。
 \end{settings}
 
 以降、次の事実をしばしば用いる:
@@ -3104,7 +3192,8 @@ $\alpha$-接続に関する測地線方程式を求めてみる。
 
 \begin{proof}
     \uline{(1)} \quad
-    実現であることは\url{0425_資料.pdf}例3.2で確かめた。
+    実現であることは
+    \cref{ex:normal-distribution}で確かめた。
 
     \uline{(2)} \quad
     対数分配関数の定義から直接計算よりわかる。
@@ -3657,7 +3746,8 @@ $\nabla^{(\alpha)} \; (\alpha \in \R)$を$\alpha$-接続とする。
 \end{proposition}
 
 \begin{proof}
-    \url{0613_資料.pdf}命題1.12の式
+    \cref{prop:torsion-and-curvature-by-AC-tensor}
+    の式
     \begin{equation}
         {R^{(\alpha)}}_{ijk}^{\hphantom{ijk}l}
             = \frac{1 - \alpha}{2} \myparen{
@@ -3945,7 +4035,7 @@ $\nabla^{(\alpha)} \; (\alpha \in \R)$を$\alpha$-接続とする。
 
 以降、
 $\psi|_{\Int \wt{\Theta}}$の Legendre 変換を
-$\calM$上に制限したものを$\phi$と書くことにする。
+$\calM$上に制限したものを$\phi$と記す。
 
 \begin{theorem}[自然パラメータ座標と期待値パラメータ座標の関係]
     関数

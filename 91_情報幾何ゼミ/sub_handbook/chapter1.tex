@@ -8,16 +8,19 @@
 % ============================================================
 %
 % ============================================================
-\chapter{確率論}
+\chapter{確率論の基本}
 
 % ------------------------------------------------------------
 %
 % ------------------------------------------------------------
 \section{Radon-Nikod\'ym の定理と H\"older の不等式}
 
-\TODO{$\sigma$-加法族は省略して書く}
+可測空間$(\calX, \calB)$は
+$\sigma$-加法族$\calB$を省略して単に$\calX$と記すことがある。
 
 \begin{definition}[絶対連続]
+    \idxsym{absolutely-continuous}
+        {$\nu \ll \mu$}{絶対連続}
     $(\calX, \calB)$を可測空間、
     $\mu, \nu$を$\calX$上の測度とする。
     $\nu$が$\mu$に関し
@@ -25,9 +28,12 @@
     であるとは、
     任意の$E \in \calB$に対し
     $\mu(E) = 0$ならば$\nu(E) = 0$が成り立つことをいう。
+    これを
+    $\nu \ll \mu$と記す。
 \end{definition}
 
-\begin{theorem}[Radon-NIkod\'ym の定理]
+\begin{fact}[Radon-Nikod\'ym の定理]
+    \label[fact]{fact:radon-nikodym}
     $(X, \calB)$を可測空間、
     $\mu$を$X$上の$\sigma$-有限測度、
     $\nu$を$X$上の測度とする。
@@ -41,24 +47,29 @@
             (E \in \calB)
     \end{equation}
     が成り立つことである。
-    この$f$を$\mu$に関する$\nu$の
+    \qed
+\end{fact}
+
+\begin{definition}[Radon-Nikod\'ym 微分]
+    \idxsym{radon-nikodym-derivative}
+        {$\dd[\nu]{\mu}$}{Radon-Nikod\'ym 微分}
+    \cref{fact:radon-nikodym}の$f$を
+    $\mu$に関する$\nu$の
     \term{Radon-Nikod\'ym 微分}[Radon-Nikod\'ym derivative]
         {Radon-Nikod\'ym 微分}[Radon-Nikod\'ym びぶん]
     といい、
-    $\frac{d\nu}{d\mu}$と書く。
-\end{theorem}
+    $\frac{d\nu}{d\mu}$と記す。
+\end{definition}
 
-\begin{proof}
-    関数族の$\sup$として$f$を構成する。
-\end{proof}
-
-\begin{proposition}[H\"older の不等式]
+\begin{fact}[H\"older の不等式]
     $(\calX, \calB)$を可測空間、
     $\mu$を$\calX$上の測度とする。
-    $1 < p < \infty$、$q = p(p - 1)^{-1}$、
+    $1 < p < \infty, \;
+        \frac{1}{p} + \frac{1}{q} = 1$
+    とし、
     $f$を$p$乗$\mu$-可積分関数、
     $g$を$q$乗$\mu$-可積分関数とする。
-    このとき、$fg$は$\mu$-可積分であり、かつ
+    このとき$fg$は$\mu$-可積分であり、かつ
     \begin{equation}
         \int_\calX |fg| \mu(dx)
             \le \myparen{
@@ -69,18 +80,13 @@
             }^{\frac{1}{q}}
     \end{equation}
     が成り立つ。
-\end{proposition}
-
-\begin{proof}
-    Young の不等式を使う。
-\end{proof}
+    \qed
+\end{fact}
 
 % ------------------------------------------------------------
 %
 % ------------------------------------------------------------
-\section{確率論の基本事項}
-
-\subsection{確率空間}
+\section{確率分布}
 
 \begin{definition}[確率空間]
     測度空間$(\Omega, \calF, P)$であって
@@ -390,8 +396,6 @@
     各$P = P_{(\mu, \sigma^2)} \in \calP$に対し、
     $T$の期待値$E_p[T] \in V$と
     分散$V_p[T] \in V \otimes V$を求めてみる。
-    ただし、以下$x, \dots, x^4$の$P$に関する可積分性は仮定する
-    (可積分性は次回示す)。
 
     まず期待値を求める。
     求めるべきものは、
@@ -507,10 +511,30 @@
     これは対称かつ正定値である。
 \end{example}
 
-\begin{proposition}[期待値・分散とペアリング]
-    \label[proposition]{prop:expectation-variance-pairing}
-    \TODO{$L(E_p[f]) = E_p[L \circ f]$の形の主張に修正する}
+\begin{proposition}[期待値と線型写像]
+    \label[proposition]{prop:expectation-linear}
+    $f \colon \calX \to V$を可測写像とする。
+    $f$が$p$に関する期待値を持つならば、
+    任意の線型写像$L \colon V \to W$に対し
+    $L(E_p[f]) = E_p[L \circ f]$が成り立つ。
+\end{proposition}
 
+\begin{proof}
+    \begin{alignat}{1}
+        L(E[f])
+            &=
+                L(E[f^i] e_i)
+                \\
+            &=
+                E[f^i] L(e_i)
+                \\
+            &=
+                E[L \circ f]
+    \end{alignat}
+\end{proof}
+
+\begin{corollary}[期待値・分散とペアリング]
+    \label[corollary]{prop:expectation-variance-pairing}
     $f \colon \calX \to V$を可測写像とする。
     \begin{enumerate}
         \item $f$が$p$に関する期待値を持つならば、
@@ -524,22 +548,11 @@
                 = \langle \omega \otimes \omega, \Var_p[f(x)] \rangle$
             が成り立つ。
     \end{enumerate}
-\end{proposition}
+\end{corollary}
 
 \begin{proof}
     \uline{(1)} \quad
-    $V$の基底をひとつ選んで固定し、
-    この基底および双対基底に関する$f, \omega$の成分を
-    それぞれ$f^i \colon \calX \to \R, \; \omega_i \in \R \; (i = 1, \dots, m)$とおけば、
-    \begin{equation}
-        E[\langle \omega, f(x) \rangle]
-            =
-                E[\omega_i f^i(x)]
-            =
-                \omega_i E[f^i(x)]
-            = \langle \omega, E[f(x)] \rangle
-    \end{equation}
-    となる。
+    上の命題より従う。
 
     \uline{(2)} \quad
     表記の簡略化のため$\alpha \coloneqq E[f] \in V$とおけば
@@ -664,7 +677,7 @@
     $f^i(x) = a^i \;
         \text{a.e.}$
     が成り立つ。
-    よって$f$はa.e.定数である。
+    したがって$f$はa.e.定数である。
 \end{proof}
 
 \end{document}

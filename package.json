@@ -1,0 +1,17 @@
+{
+  "name": "ut-reports",
+  "version": "0.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "yahata <s1190013@gmail.com>",
+  "license": "ISC",
+  "devDependencies": {
+    "textlint": "^13.4.0",
+    "textlint-plugin-latex2e": "^1.2.1",
+    "textlint-rule-preset-japanese": "^8.0.0",
+    "textlint-rule-prh": "^5.3.0"
+  }
+}

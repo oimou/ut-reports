@@ -17,5 +17,6 @@
 \titlespacing{\section}{0pt}{5pt}{5pt}
 \renewcommand{\thesubsection}{\arabic{chapter}.\arabic{section}.\arabic{subsection}}
 
-\lhead{情報幾何ゼミ (数学講究XA)}
-\rhead{Keiji Yahata}
+% fancyhdr
+\renewcommand{\chaptermark}[1]{\markboth{第\arabic{chapter}章\ #1}{}}
+\renewcommand{\sectionmark}[1]{\markright{\arabic{chapter}.\arabic{section}\ #1}{}}
