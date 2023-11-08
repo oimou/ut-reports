@@ -19,14 +19,16 @@
 前回は最尤推定量とKLダイバージェンスを定義した。
 本稿では次のことを行う:
 \begin{itemize}
-    \item KLダイバージェンスの性質を調べる。
-    \item 双対平坦多様体への一般化を考える。
+    \item KLダイバージェンスと最尤推定との関係を調べる。
+    \item KLダイバージェンスの双対平坦多様体への一般化を考える。
 \end{itemize}
 
 % ------------------------------------------------------------
 %
 % ------------------------------------------------------------
-\section{Kullback-Leibler ダイバージェンス}
+\section{KL ダイバージェンスと最尤推定}
+
+本節では1点$x$での Dirac 測度を$\delta^x$と記す。
 
 \begin{definition}[Kullback-Leibler ダイバージェンス]
     関数$D \colon \calP(\calX) \times \calP(\calX) \to [0, \infty],$
@@ -53,169 +55,192 @@
     と呼ぶ。
 \end{definition}
 
-\begin{proposition}
-    $\calP(\calX)$に
-    全変動で定まる位相を入れると、
-    KLダイバージェンスは連続とは限らない。
-\end{proposition}
+\begin{example}[有限でない例]
+    $p \ll q$であっても
+    $D(p \| q) < \infty$とは限らない。
+    $\calX \coloneqq \R$として
+    $p$を標準 Cauchy 分布、
+    $q$を標準正規分布とした場合が反例のひとつ。
+\end{example}
 
-\begin{proof}
+\begin{example}[連続でない例]
+    $\calP(\calX)$に
+    全変動で定まる位相を入れたとき、
+    KLダイバージェンスは連続とは限らない。
     $\calX \coloneqq \{ 0, 1 \}$として
     $p_n \coloneqq \frac{1}{n} \delta^0 + \myparen{1 - \frac{1}{n}} \delta^1, \;
         q_n \coloneqq \frac{1}{e^n} \delta^0 + \myparen{1 - \frac{1}{e^n}} \delta^1$
     が反例のひとつ。
-\end{proof}
+\end{example}
 
-$\calX = \{ 1, \ldots, n \}, n \in \N$ (カテゴリカル分布\TODO{}) の場合に
+$\calX = \{ 1, \ldots, n \}, n \in \N$の場合に
 最尤推定量とKLダイバージェンスの関係を考える。
 
 \begin{definition}[経験分布]
-    $x = (x_1, \dots, x_k) \in \calX^k$に対し
+    $x = (x_1, \dots, x_k) \in \calX^k$が与えられたとする。
+    $\calX$上の確率測度
     \begin{equation}
         \hat{p}_x
             \coloneqq
                 \frac{1}{k}
-                \sum_{i = 1}^k
-                    \delta^{x_i}
+                \sum_{j = 1}^k
+                    \delta^{x_j}
+            =
+                \sum_{i = 1}^n
+                    a_i \delta^i,
+                \qquad
+        a_i
+            \coloneqq
+                \frac{1}{k}
+                \#
+                \{
+                    j \in \{ 1, \ldots, k \}
+                    \mid
+                    x_j = i
+                \}
     \end{equation}
-    を$x$により定まる
+    を、$x$により定まる
     \term{経験分布}[empirical distribution]
         {経験分布}[けいけんぶんぷ]
     という。
 \end{definition}
 
-\begin{proposition}[最尤推定量とKLダイバージェンス]
-    $(\Theta, \bfp)$を$\calX$上の統計モデルとし、
-    $k$個のi.i.d.拡張$(\Theta, \bfp^k)$を考える。
-    $x = (x_1, \dots, x_k) \in \calX^k$とし、
+次の定理により、
+尤度最大化の問題は
+KLダイバージェンスの言葉で表せることがわかる。
+
+\begin{theorem}[最尤推定量とKLダイバージェンス]
+    $(\Theta, \bfp)$を$\calX$上の統計モデル、
+    $(\Theta, \bfp^k)$をその$k$個のi.i.d.拡張とする。
+    $x = (x_1, \dots, x_k) \in \calX^k$が与えられたとし、
     $\hat{p}_x$を$x$により定まる経験分布とする。
     このとき、
-    $\bfp^k(\Theta)$が
+    集合$\bfp(\Theta)$が
     $\hat{p}_x$を支配する確率測度を
     少なくともひとつ含むならば、
     次が成り立つ:
     \begin{equation}
-        \argmin_{\theta \in \Theta} D(\hat{p}_x \| \bfp^k(\theta))
+        \argmin_{\theta \in \Theta} D(\hat{p}_x \| \bfp(\theta))
             =
-                \argmax_{\theta \in \Theta} p_\theta^k(x)
+                \argmax_{\theta \in \Theta} p_\theta^k(x).
     \end{equation}
-\end{proposition}
+    ただし右辺で
+    $p_\theta^k(x) \coloneqq \prod_{j = 1}^k p_\theta(x_j), \;
+        p_\theta(x_j) \coloneqq \dd[(\bfp(\theta))]{i}(x_j) \;
+        (\text{数え上げ測度に関する確率密度関数})$
+    である。
+\end{theorem}
 
 \begin{proof}
-    \TODO{もう少し丁寧に}
-    $\forall \theta \in \Theta$に対し
+    定理の仮定より
+    $\exists \theta_0 \in \Theta \; \text{s.t.} \; \hat{p}_x \ll \bfp(\theta_0)$
+    であるが、
+    $(\Theta, \bfp)$が統計モデルゆえに
+    $\bfp(\Theta)$に属する測度はすべて同値だから
+    $\forall \theta \in \Theta, \; \hat{p}_x \ll \bfp(\theta)$
+    である。
+    そこで$\forall \theta \in \Theta$に対し、
+    $\hat{p}_x \eqqcolon \sum_{i = 1}^n a_i \delta^i, \;
+        a_i \in [0, 1]$
+    とおくと
     \begin{alignat}{1}
-        D(\hat{p}_x \| \bfp^k(\theta))
+        D(\hat{p}_x \| \bfp(\theta))
             &=
                 E_{\hat{p}_x} \mybracket{
-                    \log \frac{d\hat{p}_x}{d(\bfp^k(\theta))}
-                } \\
-            &=
-                E_{\hat{p}_x} \mybracket{
-                    \log \frac{d\hat{p}_x}{di}
+                    \log \dd[\hat{p}_x]{(\bfp(\theta))}
                 }
-                -
-                E_{\hat{p}_x} \mybracket{
-                    \log \frac{d(\bfp^k(\theta))}{di}
-                } \\
+                \\
             &=
-                (\text{$\theta$によらない項})
+                \int_\calX
+                    \log \dd[\hat{p}_x]{(\bfp(\theta))}(i)
+                    \, d\hat{p}_x(i)
+                \\
+            &=
+                \sum_{
+                    \substack{
+                        i \in \calX \\
+                        a_i > 0
+                    }
+                }
+                    a_i \log \frac{a_i}{p_\theta(i)}
+                \\
+            &=
+                -
+                \sum_{
+                    \substack{
+                        i \in \calX \\
+                        a_i > 0
+                    }
+                }
+                    a_i \log p_\theta(i)
+                + C
+                \qquad
+                (\text{$C$は$\theta$によらない実定数})
+                \\
+            &=
+                -
+                \frac{1}{k}
+                \sum_{j = 1}^k
+                    \log p_\theta(x_j)
+                + C
+                \\
+            &=
                 -
                 \frac{1}{k}
                 \log p_\theta^k(x)
+                + C
     \end{alignat}
-    ゆえに命題の主張が従う。
+    ゆえに定理の主張が従う。
 \end{proof}
 
 % ------------------------------------------------------------
 %
 % ------------------------------------------------------------
-\section{双対平坦多様体とダイバージェンス}
+\section{双対平坦多様体の性質}
 
-次のことを思い出しておく。
-
-\begin{proposition}
-    $\calP$を可測空間$\calX$上の open な指数型分布族とし、
-    $\calP$には自然な位相・多様体構造を入れる。
-    このとき次が成り立つ:
-    \begin{enumerate}[label=(\alph*)]
-        \item $\calP$の Fisher 計量を$g$、
-            自然な平坦アファイン接続を$\nabla$、
-            $g$に関する$\nabla$の双対接続を$\nabla^*$とおくと、
-            $(g, \nabla, \nabla^*)$は
-            $\calP$上の双対平坦構造となる。
-    \end{enumerate}
-    さらに次が成り立つ:
-    \begin{enumerate}
-        \item $(g, \nabla, \nabla^*)$に関する双対アファイン座標$(\theta, \eta)$が存在する。
-        \item ある関数$\psi, \varphi \in \smooth(\calP)$であって
-            $d\psi = \eta_i d\theta^i, \;
-                d\varphi = \theta^i d\eta_i$
-            をみたすものが存在する。
-        \item $\psi$は$g$のポテンシャルである。
-            $\varphi$は$g^{-1}$のポテンシャルである。
-    \end{enumerate}
-\end{proposition}
-
-\begin{proof}
-    (a) \url{便覧.pdf} 定理3.7.3 より。
-    (1), (2), (3) \url{便覧.pdf} 定理3.8.4 より。
-\end{proof}
-
-\begin{theorem}[双対アファイン座標と双対ポテンシャルの存在]
-    $M$を多様体、
-    $(g, \nabla, \nabla^*)$を$M$上の双対平坦構造とする。
-    このとき、次が成り立つ:
-    \begin{enumerate}
-        \item $(g, \nabla, \nabla^*)$に関する双対アファイン座標$(\theta, \eta)$が存在する。
-        \item ある関数$\psi, \varphi \in \smooth(M)$であって
-            $d\psi = \eta_i d\theta^i, \;
-                d\varphi = \theta^i d\eta_i$
-            をみたすものが存在する。
-        \item $\psi$は$g$のポテンシャルである。
-            $\varphi$は$g^{-1}$のポテンシャルである。
-    \end{enumerate}
-\end{theorem}
-
-\begin{proof}
-    \TODO{}
-\end{proof}
+本節では Einstein の記法を用いる。
+以下、再び一般の$\calX$を考える。
 
 \begin{proposition}[指数型分布族とKLダイバージェンス]
-    $\calP$を指数型分布族とする。
-    最小次元実現$(V, T, \mu)$に対し
-    対数分配関数$\psi$、自然パラメータ座標$\theta$、期待値パラメータ座標$\eta$を考える。
+    $\calP$を$\calX$上の open な指数型分布族とし、
+    $(V, T, \mu)$を$\calP$の最小次元実現、
+    $\psi \colon \Theta \to \R$を対数分配関数、
+    $\theta \colon \calP \to V^\vee$を自然パラメータ座標、
+    $\Theta = \theta(\calP)$を自然パラメータ空間とする。
     このとき
     \begin{equation}
         D(p \| q)
             =
-                \psi(\theta_q) + \psi^\vee(\eta_p)
-                    - \myangle{\theta_q}{\eta_p}
+                \psi(\theta(q)) - \psi(\theta(p))
+                    - \deldel[\psi]{\theta^i}(p)
+                    (
+                        \theta^i(q) - \theta^i(p)
+                    )
                 \quad
                 (\forall p, q \in \calP)
     \end{equation}
     が成り立つ。
-    ただし$\psi^\vee$は$\psi$の Legendre 変換である。
 \end{proposition}
 
 \begin{proof}
-    Legendre 変換の定義より
-    $\psi(\theta_p) + \psi^\vee(\eta_p)
-        = \myangle{\theta_p}{\eta_p}$
-    ゆえに
     \begin{alignat}{1}
-        \psi(\theta_q) + \psi^\vee(\eta_p)
-            - \myangle{\theta_q}{\eta_p}
+        \psi(\theta(q)) - \psi(\theta(p))
+            - \deldel[\psi]{\theta^i}(p)
+            (
+                \theta^i(q) - \theta^i(p)
+            )
             &=
-                \psi(\theta_q) - \psi(\theta_p)
-                    + \myangle{\theta_p}{\eta_p}
-                    - \myangle{\theta_q}{\eta_p}
+                \psi(\theta(q)) - \psi(\theta(p))
+                    - E_p[T_i]
+                    (
+                        \theta^i(q) - \theta^i(p)
+                    )
                 \\
             &=
                 E_p \mybracket{
-                    \psi(\theta_q) - \psi(\theta_p)
-                        + \myangle{\theta_p}{T}
-                        - \myangle{\theta_q}{T}
+                    \psi(\theta(q)) - \psi(\theta(p))
+                        - \myangle{\theta(q)}{T}
+                        + \myangle{\theta(p)}{T}
                 }
                 \\
             &=
@@ -228,22 +253,172 @@ $\calX = \{ 1, \ldots, n \}, n \in \N$ (カテゴリカル分布\TODO{}) の場�
     \end{alignat}
 \end{proof}
 
-\begin{propdef}[canonical ダイバージェンス]
-    \begin{equation}
-        \psi(\theta_q) - \varphi(\eta_p)
-            - \myangle{\theta_q}{\eta_p}
-    \end{equation}
-    の値は$\psi, \varphi$のとり方によらず定まる。
-    これを$D(p \| q)$とおき、
-    双対平坦多様体$(M, g, \nabla, \nabla^*)$の
-    \term{canonical ダイバージェンス}
-        {canonical ダイバージェンス}[canonical ダイバージェンス]
-    という。
-\end{propdef}
+一般の双対平坦多様体にも
+上の命題の$\theta, \psi$のようなものが存在するかどうかを考える。
+
+\begin{definition}[ポテンシャル]
+    $M$を多様体、
+    $g$を$M$上の Riemann 計量、
+    $\nabla$を$M$のアファイン接続とする。
+    $\psi \in \smooth(M)$が$g$の
+    \term{$\nabla$-ポテンシャル}
+        {$\nabla$-ポテンシャル}[$\nabla$-ポテンシャル]
+    であるとは、
+    $g = \nabla d\psi$が成り立つことをいう。
+\end{definition}
+
+\begin{definition}[Hessian チャート]
+    $M$を多様体、
+    $g$を$M$上の Riemann 計量、
+    $\nabla$を$M$のアファイン接続とする。
+    $M$のチャート$(U, \theta)$が
+    $\nabla$に関する
+    \term{Hessian チャート}
+        {Hessian チャート}[Hessian チャート]
+    であるとは、
+    $\theta$が$\nabla$-アファイン座標であり、
+    $U$上の$g$の$\nabla$-ポテンシャル$\psi \in \smooth(U)$が存在することをいう。
+\end{definition}
+
+\begin{theorem}[Hessian チャートの存在]
+    $M$を多様体、
+    $(g, \nabla, \nabla^*)$を$M$上の双対平坦構造とする。
+    このとき、各$q \in M$に対し次が成り立つ:
+    \begin{enumerate}
+        \item $q$のまわりの Hessian チャート$(U, \theta)$が存在する。
+        \item $U$上の$g$の$\nabla$-ポテンシャル$\psi \in \smooth(U)$をひとつ選んで
+            $\eta_i \coloneqq \deldel[\psi]{\theta^i}$とおくと、
+            $\eta \coloneqq (\eta_i)_i$は
+            $U$上の$\nabla^*$-アファイン座標であり、
+            $(\theta, \eta)$は$(g, \nabla, \nabla^*)$に関する双対アファイン座標である。
+        \item $\bar{\psi} \coloneqq \psi \circ \theta^{-1} \colon \theta(U) \to \R$
+            の Legendre 変換を
+            $\bar{\varphi} \coloneqq \bar{\psi}^\vee \colon \eta(U) \to \R$
+            とおき、
+            $\varphi \coloneqq \bar{\varphi} \circ \eta \colon U \to \R$とおくと、
+            $\varphi$は$U$上の$g$の$\nabla^*$-ポテンシャルである。
+    \end{enumerate}
+\end{theorem}
 
 \begin{proof}
-    \TODO{}
+    \uline{(1)} \quad
+    $(g, \nabla, \nabla^*)$が双対平坦ゆえ、とくに
+    $q$のまわりの$\nabla$-アファイン座標$\theta = (\theta^i)_i$が存在する。
+    以下$\del_i \coloneqq \deldel{\theta^i}$と記す。
+    ここで、$g$が対称であることと、
+    $\nabla, \nabla^*$が torsion-free であることと、
+    $(g, \nabla, \nabla^*)$が双対構造であることから、
+    $\nabla g \in \Gamma(T^{(0, 3)} M)$
+    は対称である。
+    そこで$h_j \coloneqq g_{ij} d\theta^i \; (j = 1, \ldots, n)$とおくと、
+    $\nabla g$の対称性より$h_j$は閉形式となるから、
+    Poincar\'e の補題より局所的に
+    $h_j = d\psi_j \; (\exists \psi_j)$
+    と表せる。
+    さらに$h \coloneqq \psi_j d\theta^j$とおくと、
+    再び$\nabla g$の対称性より$h$は閉形式となるから、
+    Poincar\'e の補題より局所的に
+    $h = d\psi \; (\exists \psi)$
+    と表せる。
+    したがって、
+    $q$の十分小さな開近傍$U$が存在し、
+    $\psi$を$\nabla$-ポテンシャルとして
+    $(U, \theta)$は Hessian チャートとなる。
+
+    \uline{(2)} \quad
+    以下$\del^i \coloneqq \deldel{\eta_i}$と記す。
+    まず$g$の正定値性より
+    $\eta \colon U \to \R^n$は局所微分同相ゆえ、
+    必要ならば$U$を小さく取り直して
+    $\eta$は微分同相となる。
+    したがって$\eta$は$U$上の座標となる。
+    また
+    \begin{equation}
+        g(\del_i, \del^j)
+            =
+                g\myparen{
+                    \del_i,
+                    \deldel[\theta^k]{\eta_j} \del_k
+                }
+            =
+                g^{jk}
+                g(\del_i, \del_k)
+            =
+                \delta_i^j
+    \end{equation}
+    が成り立つから、
+    あとは$\eta$が$\nabla^*$-アファイン座標であることを示せばよい。
+    これは次の計算により従う:
+    \begin{alignat}{1}
+        \Gamma_k^{ij}
+            &=
+                g(\del_k, \Gamma_l^{ij} \del^l)
+                \\
+            &=
+                g(\del_k, \nabla^*_{\del^i} \del^j)
+                \\
+            &=
+                \del^i (g(\del_k, \del^j))
+                - g(\nabla_{\del^i} \del_k, \del^j)
+                \\
+            &=
+                - g(g^{il} \nabla_{\del_l} \del_k, \del^j)
+                \\
+            &=
+                0
+    \end{alignat}
+
+    \uline{(3)} \quad
+    $\eta$の定義より$d\psi = \eta_i d\theta^i$であり、
+    また Legendre 変換の定義より$\psi + \varphi = \theta^i \eta_i$であることから、
+    $d\varphi = \theta^i d\eta_i$が成り立つ。
+    したがって
+    \begin{alignat}{1}
+        \nabla^* d\varphi
+            =
+                \nabla^* (\theta^i d\eta_i)
+            =
+                d\theta^i \otimes d\eta_i
+            =
+                g_{ij} d\theta^i d\theta^j
+            =
+                g
+    \end{alignat}
+    が成り立つ。
+    よって$\varphi$は$g$の$\nabla^*$-ポテンシャルである。
 \end{proof}
+
+%
+%これを踏まえて次のように定義をする。
+%
+%\begin{propdef}[canonical ダイバージェンス]
+%    各$q \in M$に対し、
+%    $U$すべての和集合を$U_q$と記す。
+%    このとき、
+%    各$p \in U_q$に対し
+%    \begin{equation}
+%        \psi(p) - \psi(q)
+%            - \deldel[\psi]{\theta^i}(q)
+%            (
+%                \theta^i(p) - \theta^i(q)
+%            )
+%    \end{equation}
+%    の値は$\nabla$-アファイン座標$\theta$や
+%    $\nabla$-ポテンシャル$\psi$のとり方によらず定まる。
+%    これを$D(p \| q)$と記し、
+%    双対平坦構造$(g, \nabla, \nabla^*)$の
+%    \term{canonical ダイバージェンス}
+%        {canonical ダイバージェンス}[canonical ダイバージェンス]
+%    という。
+%\end{propdef}
+%
+%\begin{proof}
+%    $\nabla d\psi = g = \nabla d\psi'$ゆえ
+%    $D^{\theta', \psi} = D^{\theta', \psi'}$が成り立つ。
+%    また2つの座標$\theta, \theta'$はアファイン変換で移り合うから
+%    $D^{\theta, \psi} = D^{\theta', \psi}$が成り立つ。
+%    よって$D^{\theta, \psi} = D^{\theta', \psi'}$が成り立つ。
+%\end{proof}
 
 
 % ------------------------------------------------------------
@@ -252,9 +427,8 @@ $\calX = \{ 1, \ldots, n \}, n \in \N$ (カテゴリカル分布\TODO{}) の場�
 \section*{今後の予定}
 
 \begin{itemize}
-    \item 一般の多様体上のダイバージェンス
-    \item ダイバージェンスから誘導される双対平坦構造
-    \item ダイバージェンスから誘導されるシンプレクティック構造
+    \item 双対平坦多様体の canonical ダイバージェンス
+    \item 一般のダイバージェンスと、そこから誘導される双対平坦構造・シンプレクティック構造
     \item Bayes 更新
 \end{itemize}
 
@@ -270,8 +444,6 @@ $\calX = \{ 1, \ldots, n \}, n \in \N$ (カテゴリカル分布\TODO{}) の場�
 %\cite{wainwright_graphical_2007}を参考にした。
 
 \nocite{amari_information_2016}
-\nocite{amari_methods_2007}
-\nocite{ay_information_2017}
 
 {
     \renewcommand{\bibsection}{}

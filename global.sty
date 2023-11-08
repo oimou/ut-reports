@@ -496,6 +496,7 @@
 \DeclareMathOperator\Tor{Tor}
 \DeclareMathOperator\Ext{Ext}
 \DeclareMathOperator\pr{pr}
+\DeclareMathOperator\diag{diag}
 
 % ------------------------------------------------------------
 % category
@@ -533,6 +534,7 @@
 % usage:
 %   点$0$における$f$の$x$による微分係数は$\deldel[f]{x}(0)$
 \NewDocumentCommand{\deldel}{om}{\frac{\del{\IfValueT{#1}{#1}}}{\del{#2}}}
+\NewDocumentCommand{\tdeldel}{om}{\tfrac{\del{\IfValueT{#1}{#1}}}{\del{#2}}}
 
 % \dd
 % usage:
