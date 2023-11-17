@@ -9,7 +9,7 @@
 \def\mydate{\leavevmode\hbox{\the\year/\twodigits\month/\twodigits\day}}
 \def\twodigits#1{\ifnum#1<10 0\fi\the#1}
 
-\chead{便覧 (ver. \mydate)}
+\chead{(ver. \mydate)}
 \begin{document}
 
 \tableofcontents
@@ -47,20 +47,20 @@
 \markboth{\bibname}{}
 \part*{参考文献}
 
-\nocite{amari_information_2016}
+セミナーのテーマテキストは\cite{amari_information_2016}である。
+指数型分布族については\cite{BN78}が詳しい。
+吉野先生の最小次元実現に関する資料\cite{bn1970_pdf}は dropbox にある。
+
+\nocite{amari_methods_2007}
 \nocite{wainwright_graphical_2007}
-\nocite{bn1970_pdf}
 \nocite{dudley_18466_2003}
 \nocite{brown_fundamentals_1986}
-\nocite{BN78}
-\nocite{amari_methods_2007}
 \nocite{ay_information_2017}
 
 {
     \renewcommand{\bibsection}{}
     \bibliographystyle{amsalpha}
-    %\bibliography{./sub/bibliography,../mybibliography}
-    \bibliography{mybibliography}
+    \bibliography{./sub/bibliography,../mybibliography}
 }
 
 % ============================================================

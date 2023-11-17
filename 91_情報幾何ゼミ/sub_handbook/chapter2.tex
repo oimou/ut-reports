@@ -8,44 +8,33 @@
 % ============================================================
 %
 % ============================================================
-\chapter{Hessian, Legendre 変換, Fourier-Laplace 変換}
+\chapter{凸集合と凸関数の基本}
 
 % ------------------------------------------------------------
 %
 % ------------------------------------------------------------
-\section{Hessian}
+\section{アファイン接続と凸性}
 
-本節では
-$W$を$m$次元$\R$-ベクトル空間 ($m \in \Z_{\ge 0}$)、
-$U \opensubset W$を開部分集合とする。
-
-本節では$U$上の$C^\infty$関数に対し Hessian を定義したい。
-そこで、まず$U$上にアファイン接続を定義し、それを用いて Hessian を定義する。
-
-\subsection{ベクトル空間の開部分集合上のアファイン接続}
-
-一般のアファイン接続の平坦性を定義しておく。
+$M$を多様体、
+$\nabla$を$M$上のアファイン接続とする。
 
 \begin{definition}[平坦アファイン接続]
-    $M$を多様体、
-    $\nabla$を$M$上のアファイン接続とする。
-    \begin{itemize}
-        \item $M$の開部分集合$O \opensubset M$上の座標であって、
-            それに関する$\nabla$の接続係数がすべて$0$となるものを、
-            $O$上の
-            \term{$\nabla$-アファイン座標}[$\nabla$-affine coordinates]
-                {アファイン座標}[アファインざひょう]
-            という。
-        \item 各$p \in M$に対し、
-            $p$のまわりの$\nabla$-アファイン座標が存在するとき、
-            $\nabla$は$M$上
-            \term{平坦}[flat]{平坦}[へいたん]であるという。
-    \end{itemize}
+    $M$の開部分集合$O \opensubset M$上の座標であって、
+    それに関する$\nabla$の接続係数がすべて$0$となるものを、
+    $O$上の
+    \term{$\nabla$-アファイン座標}[$\nabla$-affine coordinates]
+        {アファイン座標}[アファインざひょう]
+    という。
+
+    各$p \in M$に対し、
+    $p$のまわりの$\nabla$-アファイン座標が存在するとき、
+    $\nabla$は$M$上
+    \term{平坦}[flat]{平坦}[へいたん]であるという。
 \end{definition}
 
-今考えている$U$上には、次のような平坦アファイン接続が定まる。
-
-\begin{propdef}[$U$上の平坦アファイン接続]
+\begin{propdef}[$U$上の標準的な平坦アファイン接続]
+    \TODO{書き方を修正}
+    $U \opensubset M$とする。
     $U$上のアファイン接続
     $D \colon \Gamma(TU) \to \Gamma(T^\vee U \otimes TU)$を、
     次の規則で well-defined に定めることができる:
@@ -65,6 +54,10 @@ $U \opensubset W$を開部分集合とする。
             $X$の成分表示を$X = X^i \deldel{x^i}$とおいた。
     \end{itemize}
     さらに、この$D$は$U$上のアファイン接続として平坦である。
+    $D$を$U$上の
+    \term{標準的な平坦アファイン接続}[standard flat affine connection]
+        {標準的な平坦アファイン接続}[ひょうじゅんてきなへいたんアファインせつぞく]
+    という。
 \end{propdef}
 
 \begin{proof}
@@ -112,11 +105,34 @@ $U \opensubset W$を開部分集合とする。
     これで well-defined 性も示された。
 \end{proof}
 
-\subsection{Hessian}
+\begin{definition}[$\nabla$-凸集合]
+    部分集合$S \subset M$が
+    \term{$\nabla$-凸}[$\nabla$-convex]
+        {$\nabla$-凸集合}[nabla とつしゅうごう]
+    であるとは、
+    任意の$p, q \in S$に対し、
+    $p$から$q$への$S$内の$\nabla$-測地線が
+    ただひとつ存在することをいう。
+\end{definition}
 
-$U$上のアファイン接続$D$により、
-$T^\vee U$の接続が誘導される。
-これを用いて Hessian を定義する。
+\begin{definition}[$\nabla$-凸関数]
+    $U \opensubset M$を$\nabla$-凸開集合とする。
+    関数$f \in \smooth(U)$が
+    \term{$\nabla$-凸}[$\nabla$-convex]
+        {$\nabla$-凸関数}[nabla とつかんすう]
+    であるとは、
+    $U$内の任意の$\nabla$-測地線$\gamma \colon [0, 1] \to U$に対し、
+    $f \circ \gamma \colon [0, 1] \to \R$が凸関数であることをいう。
+\end{definition}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{Hessian}
+
+$W$を$m$次元$\R$-ベクトル空間 ($m \in \Z_{\ge 0}$)、
+$U \opensubset W$を開部分集合、
+$D$を$U$上の標準的な平坦アファイン接続とする。
 
 \begin{definition}[Hessian]
     \smooth 関数$f \colon U \to \R$に対し、
@@ -132,7 +148,7 @@ $D$-アファイン座標を用いると、
 Hessian の成分表示は簡単な形になる。
 
 \begin{proposition}[Hessian の成分表示]
-    \label[proposition]{prop:hessian_components}
+    \label[proposition]{prop:hessian-components}
     $x^i \; (i = 1, \dots, m)$を
     $U$上の$D$-アファイン座標とする。
     このとき、
@@ -188,7 +204,7 @@ Hessian の成分表示は簡単な形になる。
 \end{definition}
 
 \begin{example}[Legendre 変換の例]
-    前回 (\url{0704_資料.pdf}) 扱った具体例について
+    具体的な指数型分布族に対し、
     対数分配関数の Legendre 変換を計算してみる。
     \begin{itemize}
         \item \uline{Bernoulli 分布族 (i.e. 2元集合上の full support な確率分布の族):} \quad
@@ -253,6 +269,7 @@ Hessian の成分表示は簡単な形になる。
 
 \begin{proposition}
     \label[proposition]{prop:Legendre-transform-properties}
+    \TODO{単射の証明などは補題に切り出す}
     $U \subset W$を凸開集合、
     $f \colon U \to \R$を$C^\infty$関数であって
     $\Hess f$が$U$上各点で (対称であることも含む意味で) 正定値であるものとする。

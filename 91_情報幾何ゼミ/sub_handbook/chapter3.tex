@@ -10,6 +10,8 @@
 % ============================================================
 \chapter{指数型分布族}
 
+\TODO{記号の修正}
+
 % ------------------------------------------------------------
 %
 % ------------------------------------------------------------
@@ -112,7 +114,7 @@
             を
             \term{$(V, T, \mu)$により生成される自然パラメータ空間}
                 {自然パラメータ空間!実現により生成される---}
-                [しぜんぱらめーたくうかん!じつげんによりせいせいされる---]
+                [じつげんによりせいせいされるしぜんぱらめーたくうかん]
             という。
         \item 関数$\psi \colon \Theta_{(V, T, \mu)} \to \R,$
             \begin{equation}
@@ -1771,7 +1773,7 @@ Fisher 計量を定義する。
     を示す。
     $\Theta^\circ$上の$D$-アファイン座標
     $\theta^i \; (i = 1, \dots, m)$をひとつ選ぶと、
-    \cref{prop:hessian_components}より、
+    \cref{prop:hessian-components}より、
     座標$\theta^i$に関する$\Hess \psi$の成分表示は
     $\Hess\psi
         = \frac{\del^2 \psi}{\del \theta^i \del \theta^j}
@@ -2480,6 +2482,7 @@ $\calP$に Amari-Chentsov テンソル$S$が定まっているものとする。
 
 \begin{proposition}[$\nabla^{(g)}, \nabla^{(\alpha)}$のACテンソルによる表示]
     \label[proposition]{prop:connections-by-AC-tensor}
+    \TODO{テンソルの成分を${}_{ij}^k$から${}_{ij}^{\hphantom{ij}k}$の形に修正}
     $\calP$上の任意の$\nabla$-アファイン座標に関し、
     $\nabla^{(g)}$および$\nabla^{(\alpha)}$の
     接続係数は次をみたす:
@@ -2579,7 +2582,9 @@ $\calP$に Amari-Chentsov テンソル$S$が定まっているものとする。
             \end{equation}
             とくに$\alpha = 1$のとき
             ${R^{(1)}}_{ijk}^l = 0$である。
+            \TODO{$\alpha = -1$の場合も追加}
     \end{enumerate}
+
 \end{proposition}
 
 \begin{proof}

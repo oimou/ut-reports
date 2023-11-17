@@ -16,24 +16,32 @@
 % ------------------------------------------------------------
 \section*{振り返りと導入}
 
-前回はKLダイバージェンスの双対平坦多様体への一般化を考え始めた。
-本稿では次のことを行う:
-\begin{itemize}
-    \item 双対平坦構造の canonical ダイバージェンスを定義する。
-    \item 双対平坦構造からシンプレクティック構造が定まることをみる。
-\end{itemize}
+...
 
 % ------------------------------------------------------------
 %
 % ------------------------------------------------------------
 \section{双対平坦構造とシンプレクティック構造}
 
-\begin{proposition}[双対平坦構造のシンプレクティック構造]
-    $M$を多様体、
-    $(g, \nabla, \nabla^*)$を$M$上の双対平坦構造、
-    $D \colon \calU \to \R$を canonical ダイバージェンス、
+以下、$M$を多様体、
+$(g, \nabla, \nabla^*)$を$M$上の双対平坦構造、
+$\calU \opensubset M \times M$を canonical ダイバージェンスの定義域、
+$D \colon \calU \to \R$を canonical ダイバージェンスとする。
+
+\begin{definition}[良いチャート]
+    次をみたす
+    双対アファインチャート$(U, \theta, \eta)$を
+    ここだけの用語で
+    \termsilent{良いチャート}と呼ぶ:
+    \begin{enumerate}
+        \item $U \times U \subset \calU$である。
+        \item $U$は$g$-凸である。
+    \end{enumerate}
+\end{definition}
+
+\begin{propdef}[双対平坦構造のシンプレクティック構造]
     $\omega_0 \in \Omega^2(T^\vee M)$を
-    $T^\vee M$上の自然シンプレクティック構造とする。
+    $T^\vee M$上の自然シンプレクティック形式とする。
     写像$d_1 D \colon \calU \to T^\vee M$を
     第1成分に関する微分、すなわち
     $d_1 D \coloneqq D(\tdeldel{x^i} \|) \, dx^i$
@@ -57,22 +65,132 @@
             となる。
         \item $\omega$は$\calU$上のシンプレクティック形式である。
     \end{enumerate}
-\end{proposition}
+    $\omega$を
+    双対平坦構造$(g, \nabla, \nabla^*)$の
+    \term{シンプレクティック構造}
+        {シンプレクティック構造}[シンプレクティックこうぞう]
+    と呼ぶ。
+\end{propdef}
 
 \begin{proof}
     \uline{(1)} \quad
     前回示した。
 
     \uline{(2)} \quad
-    $\calU$の局所座標として$(\eta, \theta^*)$をとれば
-    $D(\tdeldel{\eta_i} \| \tdeldel{\theta^{*j}}) = - \delta_j^i$となるから
-    $d_1 D$ははめ込みである。
-    よって$\omega$は$\calU$上のシンプレクティック形式である。
+    $d_1 D$がはめ込みであることを示せばよい。
+    座標$(\theta, \theta^*)$に関する座標表示の
+    Jacobi 行列を考えると
+    $\begin{bmatrix}
+        I & O \\
+        O & -g
+    \end{bmatrix}$
+    の形になることから、$g$の非退化性より
+    $d_1 D$がはめ込みであることが従う。
 \end{proof}
 
-\begin{example}[$\R^n$の場合]
+\begin{proposition}[$\omega$の基本性質]
+    $\omega$を双対平坦構造$(g, \nabla, \nabla^*)$の
+    シンプレクティック構造、
+    $(U, \theta, \eta)$を良いチャートとすると、
+    $\forall p, q \in U, \; (p, q) \in \calU$に対し
+    次が成り立つ:
+    \begin{alignat}{1}
+        \omega_{(p, q)}
+            &=
+                - g_{ij}(p) \,
+                d\theta^i \wedge d\theta^{*j}
+                \\
+            &=
+                - d\eta_i \wedge d\theta^{*i}
+                \\
+            &=
+                - g_{ij}(p) g^{jk}(q) \,
+                d\theta^i \wedge d\eta^*_k
+                \\
+            &=
+                - g^{ij}(q) \,
+                d\eta_i \wedge d\eta^*_j
+    \end{alignat}
+\end{proposition}
+
+\begin{remark}
+    \textbf{任意の}双対アファインチャート$(U, \theta, \eta)$に対しては
+    $\omega = - d\eta_i \wedge d\theta^{*i}$
+    が成り立つとは限らない。
+\end{remark}
+
+\begin{proof}
     \TODO{}
+\end{proof}
+
+\begin{example}[$M = \R^n$の場合]
+    $M \coloneqq \R^n$とし、
+    $g$を Euclid 計量、
+    $\nabla \coloneqq \nabla^* \coloneqq \nabla^g$
+    とすると、
+    $(g, \nabla, \nabla^*)$は双対平坦構造となる。
+    このとき、
+    $(g, \nabla, \nabla^*)$の canonical ダイバージェンスは
+    $D \colon M \times M \to \R, \;
+        (p, q) \mapsto \frac{1}{2} \| p - q \|^2$
+    となり、
+    $(g, \nabla, \nabla^*)$のシンプレクティック構造$\omega$は、
+    同一視$M \times M \cong T^\vee M$のもとで
+    $T^\vee M$上の自然シンプレクティック構造$\omega_0$に対し
+    $\omega = - \omega_0$となる。
+    \begin{alignat}{1}
+        \omega
+            &=
+                D(\tdeldel{x^i} \| \tdeldel{x^{*j}}) \,
+                dx^i \wedge dx^{*j}
+                \\
+            &=
+                - \delta_j^i \,
+                dx^i \wedge dx^{*j}
+                \\
+            &=
+                - dx^i \wedge dx^{*i}
+                \\
+            &=
+                - \omega_0
+    \end{alignat}
 \end{example}
+
+\begin{propdef}[ダイバージェンスを使わない直接的な定義]
+    $g$-凸な任意の双対アファインチャート$(U, \theta, \eta)$に対し、
+    \begin{equation}
+        d\eta_i \wedge d\theta^{*i}
+    \end{equation}
+    は$(U, \theta, \eta)$の選び方によらない。
+\end{propdef}
+
+\begin{proof}
+    $g$-凸な双対アファインチャート$(U, \theta, \eta), (U', \theta', \eta')$に対し、
+    \begin{alignat}{1}
+        d\eta_i \wedge d\theta^{*i}
+            &=
+                \deldel[\eta_i]{\eta'_j}(p)
+                \deldel[\theta^i]{\theta'^k}(q) \,
+                d\eta'_j \wedge d\theta'^{*k}
+    \end{alignat}
+    が成り立つ。
+    $U, U'$の$g$-凸性より、
+    $p, q$を結ぶ$M$内の最短測地線は$U \cap U'$に含まれる。
+    したがって$p, q$は$U \cap U'$の単一の連結成分$C$に含まれる。
+    $C$上で
+    $\deldel[\eta_i]{\eta'_j} = \deldel[\theta'^j]{\theta^i}$は
+    定数だから、
+    $\deldel[\eta_i]{\eta'_j}(p)
+        \deldel[\theta^i]{\theta'^k}(q) = \delta_k^j$
+    が成り立つ。
+\end{proof}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{シンプレクティック幾何における Legendre 変換}
+
+\TODO{}
 
 % ------------------------------------------------------------
 %
@@ -80,7 +198,8 @@
 \section*{今後の予定}
 
 \begin{itemize}
-    \item 双対平坦構造のシンプレクティック構造と双対アファイン座標
+    \item Legendre 変換
+    \item モーメント写像
 \end{itemize}
 
 % ------------------------------------------------------------
@@ -112,112 +231,335 @@
 \setcounter{section}{0}
 \section{付録}
 
-\subsection{\cref{def:canonical-divergence-domain}の条件(i), (ii)について}
+\subsection{双対ポテンシャル}
 
-$M$を多様体、
-$g$を$M$上のRiemann 計量、
-$\nabla$を$M$上のアファイン接続とする。
-
-\begin{definition}[simple chain (ここだけの用語)]
-    $X$を位相空間とする。
-    $X$の開集合の有限列$(U_i)_{i = 1}^N$が
-    \term{simple chain}
-        {simple chain}[simple chain]
-    であるとは、
-    $U_i \cap U_j \neq \emptyset \;
-        \iff |i - j| \le 1$
+\begin{definition}[双対ポテンシャル]
+    $(U, \theta, \eta)$を双対アファインチャートとする。
+    関数$\psi, \varphi \colon U \to \R$の組
+    $(\psi, \varphi)$が$(U, \theta, \eta)$の
+    \term{双対ポテンシャル}[dual potential]
+        {双対ポテンシャル}[そうついぽてんしゃる]
+    であるとは、$U$上で
+    \begin{equation}
+        d\psi = \eta_i d\theta^i,
+            \quad
+            d\varphi = \theta^i d\eta_i,
+            \quad
+            \psi + \varphi = \theta^i \eta_i
+    \end{equation}
     が成り立つことをいう。
-    さらにすべての$U_i \cap U_{i + 1}$が連結のとき
-    \term{very simple chain}
-        {very simple chain}[very simple chain]
-    という。
 \end{definition}
 
-\begin{lemma}
-    $\nabla$-アファインチャートの列
-    $(U_i)_{i = 1}^N$が
-    very simple chain ならば、
-    $\textstyle \bigcup_{i = 1}^N U_i$を定義域とする
-    $\nabla$-アファイン座標が存在する。
-\end{lemma}
-
-\begin{proof}
-    $U_1 \cap U_2$は連結であり、
-    2つの座標はアファイン変換で移り合うから、
-    それに応じて$U_2$上の座標を調整すれば
-    $U_1 \cup U_2$上の$\nabla$-アファイン座標が得られる。
-    以下同様にして$U_1 \cup \cdots \cup U_N$上の
-    $\nabla$-アファイン座標が得られる。
-\end{proof}
-
-\begin{proposition}
-    $\gamma \colon I \to M$が単射な$\nabla$-測地線ならば、
-    $\gamma(I)$を覆う
-    単連結な$\nabla$-アファインチャートが存在する。
+\begin{proposition}[双対ポテンシャルの基本性質]
+    $(U, \theta, \eta)$を双対アファインチャート、
+    $(\psi, \varphi)$を$(U, \theta, \eta)$の双対ポテンシャルとする。
+    このとき次が成り立つ:
+    \begin{enumerate}
+        \item $U$上で
+            $\psi$は$g$の$\nabla$-ポテンシャルであり、
+            $\varphi$は$g$の$\nabla^*$-ポテンシャルである。
+        \item $(\psi, \varphi), (\psi', \varphi')$を
+            $(U, \theta, \eta)$の双対ポテンシャルとすると、
+            $U$の連結成分ごとに
+            $\psi' - \psi$および$\varphi' - \varphi$は定数である。
+    \end{enumerate}
 \end{proposition}
 
 \begin{proof}
-    \TODO{要確認}
-    $\gamma(I)$の各点のまわりの$\nabla$-アファインチャートを集めて
-    $\gamma(I)$の開被覆$\calU$を作る。
-    Lebesgue 数の補題より、
-    実数列$0 = t_0 < t_1 < \cdots < t_N = 1$が存在して
-    各$S_i \coloneqq \gamma([t_{i - 1}, t_i])$は
-    ある$U_i \in \calU$に含まれる。
-    $\gamma$の単射性より、
-    ある$\varepsilon > 0$であって
-    $(U(S_i, \varepsilon))_{i = 1}^N$が
-    very simple chain かつ
-    $U(S_i, \varepsilon) \subset U_i$
-    となるものが存在する
-    (ただし$U(S_i, \varepsilon)$は Riemann 距離に関する$\varepsilon$-近傍)。
-    そこで$\textstyle U \coloneqq \bigcup_{i = 1}^N U(S_i, \varepsilon)$とおくと、
-    補題より$U$上の$\nabla$-アファイン座標$\theta$が存在する。
-    $\theta(\gamma(I))$が$\theta(U)$内の線分であることに注意すると、
-    $\theta(\gamma(I))$の十分小さい近傍$V$をとれば、
-    $\theta^{-1}(V)$は$\gamma(I)$を覆う単連結な$\nabla$-アファインチャートとなる。
+    \uline{(1)} \quad
+    $(\theta, \eta)$が双対アファイン座標であることから
+    \begin{equation}
+        \nabla^2 \psi
+            =
+                \deldel[\eta_i]{\theta^j} \, d\theta^i d\theta^j
+            =
+                g_{ij} \, d\theta^i d\theta^j
+            =
+                g,
+                \quad
+        \nabla^{*2} \varphi
+            =
+                \deldel[\theta^i]{\eta_j} \, d\eta_i d\eta_j
+            =
+                g^{ij} \, d\eta_i d\eta_j
+            =
+                g
+    \end{equation}
+    を得る。
+
+    \uline{(2)} \quad
+    $\psi' - \psi$について示す。
+    $\psi, \psi'$が$g$の$\nabla$-ポテンシャルであることより
+    $U$上で$\nabla^2 (\psi' - \psi) = 0$である。
+    したがって$U$の各連結成分$C$に対し、
+    組$(a_C, b_C) \in \R^n \times \R$であって
+    $\psi'(r) - \psi(r)
+        = \myangle{a_C}{\theta(r)} + b_C \;
+        (\forall r \in C)$
+    なるものがただ1組存在する。
+    さらに$\psi, \psi'$が双対ポテンシャルであることより
+    $C$上で$d(\psi' - \psi) = 0$だから
+    $a_C = 0$が成り立つ。
+    よって$C$上で$\psi' - \psi = b_C$が成り立つ。
+    $\varphi' - \varphi$についても同様。
 \end{proof}
 
-\subsection{\cref{prop:canonical-divergence-domain}の証明}
+\subsection{canonical ダイバージェンスの定義域}
+
+\begin{definition}[$\nabla$-凸集合]
+    部分集合$S \subset M$が
+    \term{$\nabla$-凸}[$\nabla$-convex]
+        {$\nabla$-凸集合}[nabla とつしゅうごう]
+    であるとは、
+    任意の$p, q \in S$に対し、
+    $p$から$q$への$S$内の$\nabla$-測地線が
+    ただひとつ存在することをいう。
+\end{definition}
+
+\begin{definition}[$g$-凸集合]
+    部分集合$S \subset M$が
+    \term{$g$-凸}[$g$-convex]
+        {$g$-凸集合}[g とつしゅうごう]
+    であるとは、
+    任意の$p, q \in S$に対し、
+    $p$から$q$への$M$内の$\nabla^g$-測地線で
+    最短なものがただひとつ存在し、
+    かつそれが$S$内に含まれることをいう。
+\end{definition}
+
+\begin{definition}[canonical ダイバージェンスの定義域]
+    \begin{alignat}{1}
+        \calU
+            &\coloneqq
+                \mybrace{
+                    (p, q) \in M \times M
+                    \;\Bigg|\;
+                    \parbox{11cm}{
+                        \centering
+                        $p, q$を含む$g$-凸開集合を含む、
+                        \\
+                        $\nabla$-凸または$\nabla^*$-凸な
+                        双対アファインチャート$(U, \theta, \eta)$が存在する
+                    }
+                }
+    \end{alignat}
+\end{definition}
+
+\begin{proposition}
+    次は同値である:
+    \begin{enumerate}
+        \item $U$は$\nabla$-凸であり、$U$上の双対アファイン座標が存在する。
+        \item $U$は$\nabla$-凸であり、$U$上の$\nabla$-アファイン座標が存在する。
+    \end{enumerate}
+\end{proposition}
 
 \begin{proof}
-    $p \in M$を固定し、
-    $(p, p)$の$M \times M$におけるある開近傍が
-    $\calW$に含まれることを示せばよい。
-    そのような開近傍を次のように構成する。
+    \uline{(1) $\Rightarrow$ (2)} \quad
+    明らか。
 
-    まず$\nabla$の平坦性より
-    $p$のまわりの$\nabla$-アファインチャート$(U, \theta)$が存在する。
-    $p$の$M$における
-    (計量$g$から定まる距離に関する)
-    $3r$-近傍が$U$に含まれるように$r > 0$をとり、
-    $p$の$M$における$r$-近傍を$U'$とおく。
-    さらに$\theta(p)$の$\R^n$における$\eps$-近傍$V_\eps$が
-    $\theta(U')$に含まれるように$\eps > 0$をとる。
-    $U_\eps \coloneqq \theta^{-1}(V_\eps)$とおくと
-    $(p, p)$の$U_\eps \times U_\eps$は$M \times M$における
-    開近傍である。
-
-    以下$U_\eps \times U_\eps \subset \calW$を示す。
-    すなわち、$(a, b) \in U_\eps \times U_\eps$として
-    $(a, b) \in \calW$を示す。
-    $U_\eps$は$\nabla$-凸ゆえ、
-    $a, b$を結ぶ$U_\eps$内の$\nabla$-測地線$\gamma$が存在する。
-    このとき$\gamma$はとくに$U$内の$\nabla$-測地線でもあるが、
-    $U$は$\nabla$-アファインチャートだから
-    $\gamma$は$a, b$を結ぶ$U$内の唯一の$\nabla$-測地線である。
-    $U'$の定め方から、
-    $a, b$を結ぶ ($M$内の) 任意の$\nabla$-測地線は
-    $\gamma$より真に長いか$\gamma$自身である\TODO{怪しい}。
-    したがって、
-    $a, b$を結ぶ ($M$内の) $\nabla$-測地線のうち最短なものは
-    ただひとつ存在し、それは$\gamma$である。
-    よって$(a, b)$は条件(i)をみたす。
-    さらに$U_\eps$は$\gamma$の像を覆う
-    単連結$\nabla$-アファインチャートだから、
-    $(a, b)$は条件(ii)をみたす。
-    したがって$(a, b) \in \calW$である。
+    \uline{(2) $\Rightarrow$ (1)} \quad
+    $\nabla$-凸性より
+    $\eta \coloneqq (\eta_i)_i, \;
+        \eta_i \coloneqq \deldel[\psi]{\theta^i}$
+    は$U$上の座標となる。
+    このとき$(\theta, \eta)$は$U$上の双対アファイン座標となる。
+    さらに$\varphi \coloneqq \theta^i \eta_i - \psi$とおけば
+    $(\psi, \varphi)$は$(U, \theta, \eta)$の双対ポテンシャルとなる。
 \end{proof}
 
+\begin{remark}
+    ~
+    \begin{itemize}
+        \item $p, q$を含む$g$-凸開集合が存在したとしても、
+            $p, q$のまわりの良いチャートが存在するとは限らない。
+            たとえば、正規分布族を考え、自然パラメータ空間 (これは上半空間となる) から
+            $\{ 0 \} \times (0, 2)$を除いた空間を考えると、
+            2点$p = (2, 1), q = (-2, 1)$を含む$g$-凸開集合が存在するが、
+            2点を結ぶ$\nabla$-測地線も$\nabla^*$-測地線も存在しないため、
+            2点を含む$\nabla$-凸または$\nabla^*$-凸な双対アファインチャートは存在しない。
+    \end{itemize}
+\end{remark}
+
+\begin{lemma}[$g$-凸開近傍の存在]
+    各$p \in M$に対し、
+    ある$R > 0$が存在して、
+    任意の$r \in (0, R)$に対し
+    $B_r(p) \subset M$は$g$-凸である。
+\end{lemma}
+
+\begin{proof}
+    \TODO{cf. Riemann 多様体の教科書}
+\end{proof}
+
+\begin{lemma}[$\calU$の多様体構造]
+    $\calU$は$\Delta_M$を含む$M \times M$の開集合である。
+    したがって$\calU$には$M \times M$の開部分多様体の構造が入る。
+\end{lemma}
+
+\begin{proof}
+    開集合となることは定義から明らか。
+    また、各$p_0 \in M$に対し、
+    $p_0$のまわりの双対アファインチャート$(U, \theta, \eta)$が存在するから、
+    $p_0$の$\nabla$-凸開近傍$U'$を$U' \subset U$となるようにとれば、
+    補題より$U'$は
+    $p_0$の$g$-凸開近傍を含む。
+    したがって
+    $U' \times U'$は$M \times M$における
+    $p_0$の近傍であり、$\calU$に含まれる。
+    よって$\calU$は$\Delta_M$を含む。
+\end{proof}
+
+\subsection{canonical ダイバージェンス}
+
+\begin{propdef}[canonical ダイバージェンス]
+    \label[propdef]{propdef:canonical-divergence}
+    関数$D \colon \calU \to \R$を次のように定める:
+    $(p, q) \in \calU$を固定し、
+    $p, q$を含む$g$-凸開集合を含む
+    $\nabla$-凸または$\nabla^*$-凸な
+    双対アファインチャート$(U, \theta, \eta)$をひとつ選び、
+    その双対ポテンシャル$(\psi, \varphi)$を1組選ぶ。
+    このとき、点$(p, q)$における
+    \begin{equation}
+        \psi(q) + \varphi(p) - \myangle{\theta(q)}{\eta(p)}
+    \end{equation}
+    の値は
+    $(U, \theta, \eta)$や$(\psi, \varphi)$の選び方によらない。
+    この値を$D(p \| q)$と記す。
+    以上により定まる関数$D \colon \calU \to \R$を
+    双対平坦構造$(g, \nabla, \nabla^*)$の
+    \term{canonical ダイバージェンス}
+        {canonical ダイバージェンス}[canonical ダイバージェンス]
+    と呼ぶ。
+\end{propdef}
+
+\begin{proof}
+    $(p, q) \in \calU$とし、
+    $(U, \theta, \eta), (U', \theta', \eta')$を
+    それぞれ条件をみたす双対アファインチャート、
+    $(\psi, \varphi), (\psi', \varphi')$を
+    それぞれの双対ポテンシャルとする。
+    $(p, q) \in \calU$ゆえ
+    $p, q$を含む$g$-凸集合が存在するから、
+    $p$から$q$への$M$内の$\nabla^g$-測地線$\gamma$がただひとつ存在する。
+    ここで
+    $U, U'$は$p, q$を含む$g$-凸開集合を含んでいたから、
+    $U \cap U'$は$\gamma$の像を含む。
+    このとき$U \cap U'$の連結成分$C$であって
+    $\gamma$の像を含むものがただ1つ存在する。
+
+    $C$の連結性より
+    $\psi'(q) - \psi(q)
+        = (\text{$C$上の定数})
+        = \psi'(p) - \psi(p)$
+    が成り立つ。
+    よって
+    \begin{alignat}{1}
+        \psi'(q) + \varphi'(p) - \myangle{\theta'(q)}{\eta'(p)}
+            &=
+                \psi'(q) - \psi'(p) - \myangle{\theta'(q) - \theta'(p)}{\eta'(p)}
+                \\
+            &=
+                \psi(q) - \psi(p) - \myangle{\theta'(q) - \theta'(p)}{\eta'(p)}
+    \end{alignat}
+    が成り立つ。
+    あとは
+    $\myangle{\theta'(q) - \theta'(p)}{\eta'(p)}
+        = \myangle{\theta(q) - \theta(p)}{\eta(p)}$
+    を示せばよい。
+
+    $C$の連結性より、
+    組$(A = (A_i^j)_{i, j}, b) \in \GL_n(\R) \times \R^n$であって
+    $\theta'(r) = A \theta(r) + b \; (\forall r \in C)$
+    をみたすものがただ1組存在する。
+    よって任意の$r \in C$に対し
+    \begin{alignat}{1}
+        \eta_i(r)
+            &=
+                \deldel[\psi]{\theta^i}(r)
+                \qquad
+                (\because \text{$d\psi = \eta_i d\theta^i$})
+                \\
+            &=
+                \deldel[\psi']{\theta^i}(r)
+                \qquad
+                (\because \text{$\psi' - \psi$は$C$上定数})
+                \\
+            &=
+                \deldel[\theta'^j]{\theta^i}(r)
+                \deldel[\psi']{\theta'^j}(r)
+                \\
+            &=
+                A_i^j \eta'_j(r)
+                \qquad
+                (\because \text{$d\psi' = \eta'_j d\theta'^j$})
+                \\
+        \therefore \eta(r)
+            &=
+                A \eta'(r)
+    \end{alignat}
+    が成り立つ。
+    さらに任意の$r \in C$に対し
+    \begin{alignat}{1}
+        \theta'^i(r)
+            &=
+                \deldel[\varphi']{\eta'_i}(r)
+                \qquad
+                (\because \text{$d\varphi' = \theta'^i d\eta'_i$})
+                \\
+            &=
+                \deldel[\varphi]{\eta'_i}(r)
+                \qquad
+                (\because \text{$\varphi' - \varphi$は$C$上定数})
+                \\
+            &=
+                \deldel[\eta_j]{\eta'_i}(r)
+                \deldel[\varphi]{\eta_j}(r)
+                \\
+            &=
+                A_j^i \theta^j(r)
+                \qquad
+                (\because \text{$d\varphi = \theta^j d\eta_j, \; \eta = A \eta'$})
+                \\
+        \therefore \theta'(r)
+            &=
+                A \theta(r)
+    \end{alignat}
+    が成り立つ。
+    したがって
+    \begin{equation}
+        \myangle{\theta'(q) - \theta'(p)}{\eta'(p)}
+            =
+                \myangle{A(\theta(q) - \theta(p))}{A^{-1} \eta(p)}
+            =
+                \myangle{\theta(q) - \theta(p)}{\eta(p)}
+    \end{equation}
+    が示された。
+\end{proof}
+
+\begin{proposition}[canonical ダイバージェンスの性質]
+    $(g, \nabla^*, \nabla)$の canonical ダイバージェンスを$D^*$として
+    \begin{enumerate}
+        \item $D$は{\smooth}関数である。
+        \item $D(p \| q) \ge 0$
+        \item $D(p \| q) = 0 \iff p = q$
+        \item $D(p \| q) = D^*(q \| p)$
+    \end{enumerate}
+\end{proposition}
+
+\begin{proof}
+    \uline{(1)} \quad
+    局所的な{\smooth}性を示せばよい。
+    $(p, q) \in \calU$とし、
+    $(U, \theta, \eta)$を条件をみたす双対アファインチャートとすれば、
+    $(p, q)$の近傍$U \times U$上で$D$は{\smooth}である。
+
+    \uline{(2), (3)} \quad
+    $\psi$の$\nabla$-凸性あるいは
+    $\varphi$の$\nabla^*$-凸性より従う。
+
+    \uline{(4)} \quad
+    定義より明らか。
+\end{proof}
 
 \end{document}
