@@ -1,0 +1,615 @@
+\documentclass[report,dvipdfmx]{jlreq}
+\usepackage{global}
+\usepackage{./local}
+\subfiletrue
+\def\assetspath{../}
+%\makeindex
+\chead{2023/11/29}
+\begin{document}
+
+% ============================================================
+%
+% ============================================================
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section*{振り返りと導入}
+
+前回は双対平坦構造に付随するシンプレクティック構造と Legendre 変換について調べた。
+本稿では次のことを行う:
+\begin{enumerate}
+    \item Hamilton ベクトル場と Poisson 括弧を定義する。
+    \item 運動量写像を定義し Noether の定理を示す。
+\end{enumerate}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{Hamilton ベクトル場と Poisson 括弧}
+
+以下$(M, \omega)$を (一般の) シンプレクティック多様体とする。
+
+\begin{definition}[Hamilton ベクトル場]
+    $f \in \smooth(M)$に対し、
+    $X_f \in \mathfrak{X}(M)$であって
+    \begin{equation}
+        \iota_{X_f} \omega = -df
+    \end{equation}
+    を満たすもの (これはただひとつ存在する) を
+    $f$の
+    \term{Hamilton ベクトル場}[Hamiltonian vector field]
+        {Hamilton ベクトル場}[Hamilton べくとるば]
+    といい、
+    $f$を$X_f$の
+    \term{Hamilton 関数}[Hamiltonian function]
+        {Hamilton 関数}[Hamilton かんすう]
+    あるいは
+    \term{Hamiltonian}
+        {Hamiltonian}[Hamiltonian]
+    という。
+    $X_f$のフローを$f$の
+    \term{Hamilton フロー}
+        {Hamilton フロー}[Hamilton ふろー]
+    という。
+\end{definition}
+
+\begin{proposition}[Hamilton ベクトル場の基本性質]
+    \label[proposition]{prop:Hamilton-vector-field-basic-properties}
+    $f \in \smooth(M), \; Y \in \mathfrak{X}(M)$として次が成り立つ:
+    \begin{enumerate}
+        \item $\omega(X_f, Y) = - Yf$
+        \item $\omega$は Hamilton フローに沿って不変、
+            すなわち$L_{X_f} \omega = 0$である。
+        \item $\omega = dx^i \wedge d\xi_i$なる$M$の局所座標
+            (これは\termsilent{Darboux 座標}と呼ばれる)
+            $(x^i, \xi_i)$に関する$X_f$の成分表示は
+            \begin{equation}
+                X_f
+                    =
+                        - \deldel[f]{\xi_i} \deldel{x^i}
+                        + \deldel[f]{x^i} \deldel{\xi_i}
+            \end{equation}
+            である。
+    \end{enumerate}
+\end{proposition}
+
+\begin{proof}
+    cf. 資料末尾の付録
+\end{proof}
+
+\begin{definition}[Poisson 括弧]
+    演算$\{ {-}, {-} \} \colon \smooth(M) \times \smooth(M) \to \smooth(M)$を
+    \begin{equation}
+        \{f, g\}
+            \coloneqq
+                \omega(X_f, X_g)
+                \quad
+                (f, g \in \smooth(M))
+    \end{equation}
+    で定め、
+    これを
+    \term{Poisson 括弧}[Poisson bracket]
+        {Poisson かっこ}[Poisson かっこ]
+    と呼ぶ。
+\end{definition}
+
+\begin{proposition}[Poisson 括弧の基本性質]
+    \label[proposition]{prop:Poisson-bracket-basic-properties}
+    $f, g, h \in \smooth(M), \; Y \in \mathfrak{X}(M)$として次が成り立つ:
+    \begin{enumerate}
+        \item $\{ {-}, {-} \}$は交代$\R$-双線型写像であり、
+            $\{ f, g \} = X_f g = - X_g f$をみたす。
+        \item $[X_f, X_g] = X_{\{f, g\}}$
+        \item (Jacobi の恒等式)
+            $\{f, \{g, h\}\}
+                + \{g, \{h, f\}\}
+                + \{h, \{f, g\}\}
+                = 0$
+    \end{enumerate}
+    したがって$(\smooth(M), \{ {-}, {-} \})$は Lie 代数であり、
+    写像$\smooth(M) \to \mathfrak{X}(M), \; f \mapsto X_f$は
+    Lie 代数準同型である。
+    \begin{enumerate}
+        \setcounter{enumi}{3}
+        \item (Leibniz 則) $\{ f, gh \}
+                    =
+                        \{ f, g \} h
+                        + g \{ f, h \}$
+    \end{enumerate}
+\end{proposition}
+
+\begin{proof}
+    cf. 資料末尾の付録
+\end{proof}
+
+
+\begin{definition}[Hamilton 系]
+    $H \in \smooth(M)$に対し、
+    組$(M, \omega, H)$を
+    \term{Hamilton 系}[Hamiltonian system]
+        {Hamilton 系}[Hamilton けい]
+    といい、
+    $H$を$(M, \omega, H)$の
+    \term{Hamilton 関数}
+        {Hamilton 関数}[Hamilton かんすう]
+    あるいは
+    \term{Hamiltonian}
+        {Hamiltonian}[Hamiltonian]
+    という。
+    $f \in \smooth(M)$が
+    $L_{X_H} f = 0$をみたすとき、
+    $f$を$(M, \omega, H)$の
+    \term{保存量}[conserved quantity]
+        {保存量}[ほぞんりょう]
+    という。
+\end{definition}
+
+\begin{proposition}[保存量と Poisson 括弧]
+    $f \in \smooth(M)$が$(M, \omega, H)$の保存量であるための必要十分条件は
+    $\{ H, f \} = 0$が成り立つことである。
+    とくに$H$自身は保存量である。
+\end{proposition}
+
+\begin{proof}
+    必要十分性は$\{ H, f \} = X_H f$であることより従う。
+    また$\{ {-}, {-} \}$の交代性より
+    $\{ H, H \} = 0$だから
+    $H$は保存量である。
+\end{proof}
+
+\begin{example}[canonical ダイバージェンスの Hamilton フロー]
+    $M$を多様体、$(g, \nabla, \nabla^*)$を双対平坦構造、
+    $D \colon \calU \to \R$を canonical ダイバージェンス、
+    $\omega$を$(g, \nabla, \nabla^*)$に付随する$\calU$上のシンプレクティック構造とする。
+    $M$の$g$-凸な双対アファインチャート$(U, \theta, \eta)$をひとつ選ぶと、
+    $(\theta^*, \eta)$は$\calU$の局所的な Darboux 座標となり、
+    この座標に関する$X_D$の成分表示は
+    \begin{equation}
+        X_D
+            =
+                (\theta^{*i} - \theta^i) \deldel{\theta^{*i}}
+                +
+                (\eta^*_i - \eta_i) \deldel{\eta_i}
+    \end{equation}
+    となる。
+\end{example}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{運動量写像と Noether の定理}
+
+以下$(M, \omega)$を (一般の) シンプレクティック多様体、
+$G$を Lie 群とし、
+$G$が$M$に右から{\smooth}作用しているとする。
+
+\begin{definition}[シンプレクティック作用]
+    $G$の作用
+    \term{シンプレクティック作用}[symplectic action]
+        {シンプレクティックさよう}[シンプレクティックさよう]
+    であるとは、
+    各$g \in G$に対し右移動$R_g \colon M \to M$が
+    シンプレクティック同相写像であることをいう。
+\end{definition}
+
+\begin{definition}[運動量写像]
+    $G$のシンプレクティック作用が
+    \term{Hamilton 作用}[Hamiltonian action]
+        {Hamilton 作用}[Hamilton さよう]
+    であるとは、
+    次の2条件を満たす
+    {\smooth}写像$\mu \colon M \to \frakg^\vee$
+    が存在することをいう:
+    \begin{description}
+        \item[(M1)]
+            $X \in \frakg$に対し
+            $\mu_X \coloneqq \myangle{\mu}{X} \in \smooth(M)$
+            は$X$の基本ベクトル場$X^*$の Hamiltonian である。
+        \item[(M2)]
+            $X, Y \in \frakg$に対し
+            $\{\mu_X, \mu_Y\} = \mu_{[X, Y]}$
+            が成り立つ。
+    \end{description}
+    この写像$\mu \colon M \to \frakg^\vee$を
+    \term{運動量写像}[momentum map]
+        {運動量写像}[うんどうりょうしゃぞう]
+    という。
+\end{definition}
+
+\begin{remark}
+    ちなみに「モーメント (moment)」と「運動量 (momentum)」は
+    物理的に全く別の概念である。
+\end{remark}
+
+\begin{example}[力学における運動量]
+    $M \coloneqq T^\vee \R^3, \;
+        \omega = dx^i \wedge d\xi_i$
+    を$T^\vee \R^3$に標準的なシンプレクティック構造を入れたものとする。
+    $G \coloneqq \R^3$の$M$への作用を
+    $G \times M \to M, \;
+        (a, (x, \xi)) \mapsto (x + a, \xi)$
+    で定めると、これはシンプレクティック作用である。
+    運動量写像$\mu \colon M \to \frakg^\vee$は
+    次のように構成できる。
+    すなわち、
+    $\frakg = \R^3$の標準基底を$e_1, e_2, e_3$、
+    その双対基底を$e^1, e^2, e^3$とおき
+    \begin{equation}
+        \mu(x, \xi)
+            =
+                - \xi_i e^i
+    \end{equation}
+    と定める。
+    (M1)は
+    $X = X^i e_i \in \frakg$に対し
+    $- d\mu_X
+        = d (X^i \xi_i)
+        = X^i d\xi_i
+        = \iota_{X^i \deldel{x^i}} \omega
+        = \iota_{X^*} \omega$
+    より従う。
+    (M2)は
+    $\{ \mu_X, \mu_Y \}
+        = X^* \mu_Y
+        = X^i \deldel{x^i} (- Y^j \xi_j)
+        = 0
+        = \mu_0
+        = \mu_{[X, Y]}$
+    より従う。
+    別証明として後の
+    \cref{prop:Hamilton-action-induced-on-cotangent-bundle}
+    を用いることもできる。
+    $\mu$は力学における (線型) 運動量の符号を反転したものである。
+\end{example}
+
+%\begin{proposition}[運動量写像の基本性質]
+%    写像$\frakg \mapsto \smooth(M), \; X \mapsto \mu_X$は Lie 代数準同型である。
+%\end{proposition}
+%
+%\begin{proof}
+%    \TODO{orbit map の方がわかりやすい？}
+%    $\mu_X$の定義より線型性は明らか。
+%    あとは$X, Y \in \frakg$に対し
+%    $\{ \mu_X, \mu_Y \} = \mu_{[X, Y]}$を示せばよい。
+%    (M1)より
+%    \begin{equation}
+%        \myangle{\mu(x \exp tX)}{Y}
+%            =
+%                \myangle{\ltrans{\Ad}_{\exp tX} (\mu(x))}{Y}
+%            =
+%                \myangle{\mu(x)}{\Ad_{\exp tX} Y}
+%    \end{equation}
+%    が成り立つから、最左辺と最右辺を$t$で微分して$t = 0$での値を求める。
+%    左辺は
+%    \begin{alignat}{1}
+%        \dd{t} \myangle{\mu(x \exp tX)}{Y} \Big|_{t = 0}
+%            &=
+%                \myangle{(d\mu_X)_x}{X^*_x}
+%                \\
+%            &=
+%                X^* \mu_Y (x)
+%                \\
+%            &=
+%                \{ \mu_X, \mu_Y \} (x)
+%                \quad
+%                (\because \text{(M2)})
+%    \end{alignat}
+%    右辺は
+%    \begin{alignat}{1}
+%        \dd{t} \myangle{\mu(x)}{\Ad_{\exp tX} Y} \Big|_{t = 0}
+%            &=
+%                \myangle{\mu(x)}{\ad_X Y}
+%                \\
+%            &=
+%                \mu_{\ad_X Y} (x)
+%                \\
+%            &=
+%                \mu_{[X, Y]} (x)
+%    \end{alignat}
+%    したがって
+%    $\{ \mu_X, \mu_Y \} = \mu_{[X, Y]}$が成り立つ。
+%\end{proof}
+
+\begin{theorem}[Noether の定理]
+    $(M, \omega, H)$を Hamilton 系とする。
+    また$G$の作用が Hamilton 作用であるとし、
+    $\mu \colon M \to \frakg^\vee$を運動量写像とする。
+    このとき、
+    $H$が$G$-不変ならば、
+    すべての$X \in \frakg$に対し
+    $\mu_X \in \smooth(M)$は$(M, \omega, H)$の保存量である。
+\end{theorem}
+
+\begin{proof}
+    $\{ H, \mu_X \} = 0$を示せばよいが
+    \begin{alignat}{1}
+        \{ H, \mu_X \}(x)
+            &=
+                - \{ \mu_X, H \}(x)
+                \\
+            &=
+                - X^* H (x)
+                \\
+            &=
+                - \dd{t} H(x \exp tX) \Big|_{t = 0}
+                \\
+            &=
+                - \dd{t} H(x) \Big|_{t = 0}
+                \quad
+                (\because \text{$H$の$G$-不変性})
+                \\
+            &=
+                0
+    \end{alignat}
+    より従う。
+\end{proof}
+
+\begin{proposition}[余接束上に誘導される Hamilton 作用]
+    \label[proposition]{prop:Hamilton-action-induced-on-cotangent-bundle}
+    $T^\vee M$上に誘導される$G$の作用
+    $G \times T^\vee M \to T^\vee M, \;
+        (g, (x, \xi)) \mapsto (R_g (x), d(R_g)_* \xi)$
+    は Hamilton 作用である。
+\end{proposition}
+
+\begin{proof}
+    まず canonical 1-形式$\theta \in \Omega^1(T^\vee M)$が
+    $G$-不変であることを示しておく。
+    そのために$g \in G$を固定し、
+    $\what{R}_g$を$T^\vee M$上の右移動として
+    $(\what{R}_g)^* \theta = \theta$を示す。
+    \begin{alignat}{1}
+        \myangle{(\what{R}_g^* \theta)_{(x, \xi)}}{v}
+            &=
+                \myangle{\theta_{\what{R}_g(x, \xi)}}{d(\what{R}_g)(v)}
+                \\
+            &=
+                \myangle{d(R_g)_* \xi}{d\pi \circ d(\what{R}_g) (v)}
+                \\
+            &=
+                \myangle{d(R_g)_* \xi}{d(R_g) \circ d\pi (v)}
+                \\
+            &=
+                \myangle{d(R_g)^* d(R_g)_* \xi}{d\pi (v)}
+                \\
+            &=
+                \myangle{\xi}{d\pi (v)}
+                \\
+            &=
+                \myangle{\theta_{(x, \xi)}}{v}
+    \end{alignat}
+    よって$(R_g)^* \theta = \theta$である。
+    したがって$\theta$は$G$-不変である。
+    引き戻しと外微分の可換性より
+    $\omega = -d\theta$も$G$-不変である。
+
+    次に運動量写像を構成する。
+    $\frakg$の基底$E_i \; (i = 1, \dots, \dim G)$を1組選び、
+    その双対基底を$E^i \in \frakg^\vee$とおき
+    \begin{equation}
+        \mu \colon T^\vee M \to \frakg^\vee,
+            \qquad
+            (x, \xi)
+                \mapsto
+                    - \myangle{\theta_{(x, \xi)}}{(E_i)^*} E^i
+    \end{equation}
+    と定めると、これは{\smooth}である。
+    (M1)について、$X = X^i E_i \in \frakg$に対し
+    \begin{alignat}{1}
+        \mu_X
+            &\coloneqq
+                \myangle{\mu}{X}
+                \\
+            &=
+                \myangle{\mu}{X^i E_i}
+                \\
+            &=
+                X^i \myangle{\mu}{E_i}
+                \\
+            &=
+                - X^i \myangle{\theta}{E_i^*}
+                \\
+            &=
+                - \myangle{\theta}{X^*}
+                \\
+            &=
+                - \iota_{X^*} \theta
+                \locallabel{eq:1}
+    \end{alignat}
+    したがって
+    \begin{equation}
+        - d\mu_X
+            =
+                d \circ \iota_{X^*} \theta
+            =
+                L_{X^*} \theta - \iota_{X^*} \circ d\theta
+            =
+                0 + \iota_{X^*} \omega
+            =
+                \iota_{X^*} \omega
+    \end{equation}
+    となるから、$\mu_X$は$X^*$の Hamiltonian である。
+    よって(M1)が成り立つ。
+    (M2)について、
+    \localcref{eq:1}の関係式$\mu_X = - \iota_{X^*} \theta$も用いれば
+    \begin{alignat}{1}
+        \{\mu_X, \mu_Y\}
+            =
+                X^* \mu_Y
+            =
+                - X^* \iota_{Y^*} \theta
+            =
+                - L_{X^*} \iota_{Y^*} \theta
+    \end{alignat}
+    一方
+    \begin{alignat}{1}
+        \mu_{[X, Y]}
+            =
+                - \iota_{[X, Y]^*} \theta
+            =
+                - \iota_{[X^*, Y^*]} \theta
+            =
+                - L_{X^*} \iota_{Y^*} \theta
+    \end{alignat}
+    よって$\{\mu_X, \mu_Y\} = \mu_{[X, Y]}$を得る。
+    したがって(M2)が成り立つ。
+    以上より$\mu$は運動量写像である。
+\end{proof}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section*{今後の予定}
+
+\begin{itemize}
+    \item シンプレクティック商?
+\end{itemize}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section*{参考文献}
+
+\nocite{_bayes_2020}
+\nocite{BB19061613}
+\nocite{BB13785508}
+
+{
+    \renewcommand{\bibsection}{}
+    \bibliographystyle{amsalpha}
+    \bibliography{./bibliography,../../mybibliography}
+}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\newpage
+\appendix
+\renewcommand\thesection{\Alph{section}}
+\setcounter{section}{0}
+\section{付録}
+
+\begin{proof}[\cref{prop:Hamilton-vector-field-basic-properties}の証明.]
+    \uline{(1)} \quad
+    Hamilton ベクトル場の定義より明らか。
+
+    \uline{(2)} \quad
+    \begin{alignat}{2}
+        L_{X_f} \omega
+            &=
+                (d \circ \iota_{X_f} + \iota_{X_f} \circ d) \omega
+                \quad
+                &&(\because \text{Cartan の公式})
+                \\
+            &=
+                0 + 0
+                \quad
+                &&(\because \iota_{X_f} \omega = -df, \; d \omega = 0)
+                \\
+            &=
+                0
+    \end{alignat}
+
+    \uline{(3)} \quad
+    $\omega = dx^i \wedge d\xi_i$と表せるから
+    \begin{equation}
+        - df
+            =
+                \omega(X_f, Y)
+            =
+                dx^i(X_f) d\xi_i(Y)
+                - d\xi_i(X_f) dx^i(Y)
+    \end{equation}
+    係数を比較して
+    $dx^i(X_f) = - \deldel[f]{\xi_i}, \;
+        d\xi_i(X_f) = \deldel[f]{x^i}$
+    を得る。
+\end{proof}
+
+\begin{proof}[\cref{prop:Poisson-bracket-basic-properties}の証明.]
+    \uline{(1)} \quad
+    $\{ {-}, {-} \}$の交代性は$\omega$の交代性より従う。
+    Hamilton ベクトル場の性質より
+    $\{ f, g \} = \omega(X_f, X_g) = - X_g f$であり、
+    交代性より$\{ f, g \} = X_f g$も従う。
+    ベクトル場の関数への作用の$\R$-線型性より
+    $\{ {-}, {-} \}$は$\R$-双線型である。
+
+    \uline{(2)} \quad
+    $\omega([X_f, X_g], Y) = \omega(X_{\{f, g\}}, Y) \; (\forall Y \in \mathfrak{X}(M))$
+    を示せば$\omega$の非退化性より(2)が従う。
+    微分形式の Lie 微分の公式より
+    \begin{alignat}{1}
+        X_f (\omega(X_g, Y))
+            &=
+                (L_{X_f} \omega)(X_g, Y)
+                + \omega(L_{X_f} X_g, Y)
+                + \omega(X_g, L_{X_f} Y)
+                \\
+        \therefore \quad
+        - X_f Y g
+            &=
+                0
+                + \omega([X_f, X_g], Y)
+                + \omega(X_g, [X_f, Y])
+    \end{alignat}
+    整理して
+    \begin{alignat}{1}
+        \omega([X_f, X_g], Y)
+            &=
+                - X_f Y g
+                - \omega(X_g, [X_f, Y])
+                \\
+            &=
+                - X_f Y g
+                + [X_f, Y] g
+                \\
+            &=
+                - Y X_f g
+                \\
+            &=
+                - Y \{f, g\}
+                \quad
+                (\because (1))
+                \\
+            &=
+                \omega(X_{\{f, g\}}, Y)
+    \end{alignat}
+    を得る。
+    したがって$[X_f, X_g] = X_{\{f, g\}}$である。
+
+    \uline{(3)} \quad
+    (1), (2) を用いて
+    \begin{alignat}{2}
+        \{ f, \{ g, h \} \}
+            &=
+                - X_{\{g, h\}} f
+                \quad
+                &&(\because (1))
+                \\
+            &=
+                - [X_g, X_h] f
+                \quad
+                &&(\because (2))
+                \\
+            &=
+                - (X_g X_h f - X_h X_g f)
+                \\
+            &=
+                - (\{ g, \{ h, f \} \} - \{ h, \{ g, f \} \})
+                \quad
+                &&(\because (1))
+                \\
+            &=
+                - (\{ g, \{ h, f \} \} + \{ h, \{ f, g \} \})
+                \quad
+                &&(\because (1))
+    \end{alignat}
+    より従う。
+
+    \uline{(4)} \quad
+    ベクトル場の関数への作用が Leibniz 則を満たすことより従う。
+\end{proof}
+
+\end{document}

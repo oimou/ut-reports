@@ -16,30 +16,35 @@
 % ------------------------------------------------------------
 \section*{振り返りと導入}
 
-...
+前回は双対平坦構造に対して canonical ダイバージェンスと
+シンプレクティック構造を定義した。
+本稿では次のことを行う:
+\begin{itemize}
+    \item 双対平坦構造に付随するシンプレクティック構造の性質を調べる。
+    \item 接束/余接束上の関数の Legendre 変換を定義する。
+    \item 双対平坦構造に付随するシンプレクティック構造と Legendre 変換の関係を調べる。
+\end{itemize}
+
+なおシンプレクティック構造の話題は
+\cite{_bayes_2020}
+をベースにしている。
 
 % ------------------------------------------------------------
 %
 % ------------------------------------------------------------
-\section{双対平坦構造とシンプレクティック構造}
+\section{双対平坦構造に付随するシンプレクティック構造}
 
 以下、$M$を多様体、
-$(g, \nabla, \nabla^*)$を$M$上の双対平坦構造、
-$\calU \opensubset M \times M$を canonical ダイバージェンスの定義域、
-$D \colon \calU \to \R$を canonical ダイバージェンスとする。
+$(g, \nabla, \nabla^*)$を$M$上の双対平坦構造とする。
+また、
+\cref{propdef:canonical-divergence}
+で canonical ダイバージェンスが定義されることは一旦認めることにし、
+$D \colon \calU \to \R, \;
+    \Delta_M \subset \calU \opensubset M \times M$
+を$(g, \nabla, \nabla^*)$の canonical ダイバージェンスとする。
 
-\begin{definition}[良いチャート]
-    次をみたす
-    双対アファインチャート$(U, \theta, \eta)$を
-    ここだけの用語で
-    \termsilent{良いチャート}と呼ぶ:
-    \begin{enumerate}
-        \item $U \times U \subset \calU$である。
-        \item $U$は$g$-凸である。
-    \end{enumerate}
-\end{definition}
-
-\begin{propdef}[双対平坦構造のシンプレクティック構造]
+\begin{propdef}[双対平坦構造に付随するシンプレクティック構造]
+    \label[propdef]{propdef:symplectic-structure-associated-to-dual-flat-structure}
     $\omega_0 \in \Omega^2(T^\vee M)$を
     $T^\vee M$上の自然シンプレクティック形式とする。
     写像$d_1 D \colon \calU \to T^\vee M$を
@@ -47,150 +52,445 @@ $D \colon \calU \to \R$を canonical ダイバージェンスとする。
     $d_1 D \coloneqq D(\tdeldel{x^i} \|) \, dx^i$
     で定め、$\calU$上の2-形式
     $\omega \in \Omega^2(\calU)$を
-    $\omega \coloneqq (d_1 D)^* (\omega_0)$
+    $\omega \coloneqq (d_1 D)^* \omega_0$
     で定める。
     このとき次が成り立つ:
     \begin{enumerate}
-        \item $M$の任意の局所座標$x = (x_i)_i$に対し、
-            $x^* \coloneqq x$とおいて
-            $\calU$の局所座標$(x, x^*) = (x^1, \dots, x^n, x^{*1}, \dots, x^{*n})$
-            を定めると、
-            $\omega$の成分表示は
+        \item $x$を$M$の局所座標とし、
+            記号の濫用で
+            $\calU$の局所座標$(x, x^*)$を
+            $x(p, q) \coloneqq x(p), \; x^*(p, q) \coloneqq x(q)$
+            で定めると、
+            座標$(x, x^*)$に関する$\omega$の成分表示は
             \begin{equation}
                 \omega
                     =
-                        D(\tdeldel{x^i} \| \tdeldel{x^{*j}}) \,
+                        D(\tdeldel{x^i} \| \tdeldel{x^j}) \,
                         dx^i \wedge dx^{*j}
             \end{equation}
             となる。
         \item $\omega$は$\calU$上のシンプレクティック形式である。
     \end{enumerate}
     $\omega$を
-    双対平坦構造$(g, \nabla, \nabla^*)$の
-    \term{シンプレクティック構造}
+    双対平坦構造$(g, \nabla, \nabla^*)$に付随する
+    \term{シンプレクティック構造}[symplectic structure]
         {シンプレクティック構造}[シンプレクティックこうぞう]
     と呼ぶ。
 \end{propdef}
 
 \begin{proof}
     \uline{(1)} \quad
-    前回示した。
+    $x$を$M$の局所座標とし、
+    $\calU$の局所座標$(x, x^*)$を
+    $x(p, q) \coloneqq x(p), \; x^*(p, q) \coloneqq x(q)$
+    で定める。
+    $x$により定まる
+    $T^\vee M$の自然な局所座標を$(x^1, \dots, x^n, \xi_1, \dots, \xi_n)$
+    とおけば
+    \begin{alignat}{1}
+        \omega
+            &=
+                (d_1 D)^* \omega_0
+                \\
+            &=
+                (d_1 D)^* (dx^i \wedge d\xi_i)
+                \\
+            &=
+                d(x^i \circ d_1 D) \wedge d(\xi_i \circ d_1 D)
+                \\
+            &=
+                dx^i \wedge \myparen{
+                    D(\tdeldel{x^j} \tdeldel{x^i} \|) \, dx^j
+                    +
+                    D(\tdeldel{x^i} \| \tdeldel{x^j}) \, dx^{*j}
+                }
+                \\
+            &=
+                D(\tdeldel{x^i} \| \tdeldel{x^j}) \,
+                dx^i \wedge dx^{*j}
+    \end{alignat}
+    を得る。
 
     \uline{(2)} \quad
-    $d_1 D$がはめ込みであることを示せばよい。
-    座標$(\theta, \theta^*)$に関する座標表示の
-    Jacobi 行列を考えると
+    $d\omega = 0$であることと$\omega$が非退化であることを示せばよい。
+    $d\omega = 0$は$d\omega = (d_1 D)^* d\omega_0 = 0$より従う。
+    $\omega$が非退化であることを示す。
+    $(U, \theta, \eta)$を$g$-凸な双対アファインチャートとすると
+    (1)より
+    \begin{alignat}{1}
+        \omega
+            &=
+                D(\del_i \| \del_j) \, d\theta^i \wedge d\theta^{*j}
+                \\
+            &=
+                - g_{ij}(p) \, d\theta^i \wedge d\theta^{*j}
+    \end{alignat}
+    を得る。
+    したがって
+    $\calU$の局所座標$(\theta, \theta^*)$に関する
+    $\omega$の行列表示は
     $\begin{bmatrix}
-        I & O \\
-        O & -g
+        O & (-g_{ij}(p))_{ij} \\
+        (g_{ij}(p))_{ij} & O
     \end{bmatrix}$
-    の形になることから、$g$の非退化性より
-    $d_1 D$がはめ込みであることが従う。
+    となる。
+    $g$の非退化性より$\omega$は非退化である。
 \end{proof}
 
-\begin{proposition}[$\omega$の基本性質]
-    $\omega$を双対平坦構造$(g, \nabla, \nabla^*)$の
-    シンプレクティック構造、
-    $(U, \theta, \eta)$を良いチャートとすると、
-    $\forall p, q \in U, \; (p, q) \in \calU$に対し
-    次が成り立つ:
+\begin{proposition}[$\omega$の成分表示]
+    $\omega$を$(g, \nabla, \nabla^*)$に付随する
+    シンプレクティック構造とする。
+    このとき、
+    $g$-凸な任意の双対アファインチャート$(U, \theta, \eta)$に対し、
+    $\omega$は次の成分表示をもつ:
     \begin{alignat}{1}
-        \omega_{(p, q)}
+        \omega
             &=
-                - g_{ij}(p) \,
+                - g_{ij} \,
                 d\theta^i \wedge d\theta^{*j}
-                \\
-            &=
+            =
                 - d\eta_i \wedge d\theta^{*i}
-                \\
-            &=
-                - g_{ij}(p) g^{jk}(q) \,
+            =
+                - g_{ij} g^{*jk} \,
                 d\theta^i \wedge d\eta^*_k
-                \\
-            &=
-                - g^{ij}(q) \,
+            =
+                - g^{*ij} \,
                 d\eta_i \wedge d\eta^*_j
     \end{alignat}
+    ただし記号の濫用で
+    $g_{ij}, g^{*ij} \colon U \times U \to \R$は
+    $g_{ij}(p, q) \coloneqq g_{ij}(p), \;
+        g^{*ij}(p, q) \coloneqq g^{ij}(q)$
+    を表す。
 \end{proposition}
 
 \begin{remark}
     \textbf{任意の}双対アファインチャート$(U, \theta, \eta)$に対しては
-    $\omega = - d\eta_i \wedge d\theta^{*i}$
-    が成り立つとは限らない。
+    成り立つとは限らない。
 \end{remark}
 
 \begin{proof}
-    \TODO{}
+    一番左の等号は
+    \cref{propdef:symplectic-structure-associated-to-dual-flat-structure}
+    の証明(2)の中で示した。
+    残りの等号は$(\theta, \eta)$が
+    双対アファイン座標であることから従う。
 \end{proof}
 
-\begin{example}[$M = \R^n$の場合]
-    $M \coloneqq \R^n$とし、
-    $g$を Euclid 計量、
-    $\nabla \coloneqq \nabla^* \coloneqq \nabla^g$
-    とすると、
-    $(g, \nabla, \nabla^*)$は双対平坦構造となる。
-    このとき、
-    $(g, \nabla, \nabla^*)$の canonical ダイバージェンスは
-    $D \colon M \times M \to \R, \;
-        (p, q) \mapsto \frac{1}{2} \| p - q \|^2$
-    となり、
-    $(g, \nabla, \nabla^*)$のシンプレクティック構造$\omega$は、
-    同一視$M \times M \cong T^\vee M$のもとで
-    $T^\vee M$上の自然シンプレクティック構造$\omega_0$に対し
-    $\omega = - \omega_0$となる。
-    \begin{alignat}{1}
-        \omega
-            &=
-                D(\tdeldel{x^i} \| \tdeldel{x^{*j}}) \,
-                dx^i \wedge dx^{*j}
-                \\
-            &=
-                - \delta_j^i \,
-                dx^i \wedge dx^{*j}
-                \\
-            &=
-                - dx^i \wedge dx^{*i}
-                \\
-            &=
-                - \omega_0
-    \end{alignat}
-\end{example}
+%\begin{example}[$M = \R^n$の場合]
+%    \label[example]{example:canonical-symplectic-structure-on-Rn}
+%    $M \coloneqq \R^n$とし、
+%    $g$を Euclid 計量、
+%    $\nabla \coloneqq \nabla^* \coloneqq \nabla^g$
+%    とすると、
+%    $(g, \nabla, \nabla^*)$は双対平坦構造となる。
+%    このとき、
+%    $(g, \nabla, \nabla^*)$の canonical ダイバージェンスは
+%    $D \colon M \times M \to \R, \;
+%        (p, q) \mapsto \frac{1}{2} \| p - q \|^2$
+%    となり、
+%    $(g, \nabla, \nabla^*)$のシンプレクティック構造$\omega$は、
+%    同一視$M \times M \cong T^\vee M$のもとで
+%    $T^\vee M$上の自然シンプレクティック構造$\omega_0$に対し
+%    $\omega = - \omega_0$となる。
+%    \begin{alignat}{1}
+%        \omega
+%            &=
+%                D(\tdeldel{x^i} \| \tdeldel{x^{*j}}) \,
+%                dx^i \wedge dx^{*j}
+%            =
+%                - \delta_j^i \,
+%                dx^i \wedge dx^{*j}
+%            =
+%                - dx^i \wedge dx^{*i}
+%            =
+%                - \omega_0
+%    \end{alignat}
+%\end{example}
 
-\begin{propdef}[ダイバージェンスを使わない直接的な定義]
-    $g$-凸な任意の双対アファインチャート$(U, \theta, \eta)$に対し、
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+\section{接束/余接束上の関数の Legendre 変換}
+
+以下、
+$M$を多様体、
+$E \coloneqq TM$、
+$W \opensubset E$とし、
+$L \colon W \to \R$を{\smooth}関数とする。
+以下では$E = TM$の場合を考えるが、
+$E = T^\vee M$の場合も同様である。
+
+\begin{definition}[fiber derivative]
+    写像
+    $\bbF L \colon W \to E^\vee$を
+    $L$のファイバー方向の微分、すなわち
     \begin{equation}
-        d\eta_i \wedge d\theta^{*i}
+        \myangle{\bbF L(x, v)}{w}
+            \coloneqq
+                \dd{t} L(x, v + tw) \Big|_{t = 0}
+                \qquad
+                (x, v) \in W, \; w \in E_x
     \end{equation}
-    は$(U, \theta, \eta)$の選び方によらない。
-\end{propdef}
+    で定める。
+    $\bbF L$を$L$の\term{fiber derivative}
+        {fiber derivative}[fiber derivative]
+    という。
+\end{definition}
+
+\begin{remark}
+    $\bbF L$はファイバーごとに線型とは限らない。
+\end{remark}
+
+\begin{definition}[接束/余接束上の関数の Legendre 変換]
+    $\bbF L \colon W \to E^\vee$が
+    像への微分同相であるとき、
+    $\bbF L$を
+    $L$による\term{Legendre 変換}
+        {Legendre 変換}[Legendre へんかん]
+    と呼ぶことがある。
+    また、
+    $W' \coloneqq \bbF L(W) \subset E^\vee$とおき、
+    \begin{equation}
+        H \colon W' \to \R,
+            \qquad
+            (x, \xi) \mapsto \myangle{\xi}{v} - L(x, v),
+            \qquad
+            (x, v) \coloneqq (\bbF L)^{-1}(x, \xi) \in W
+    \end{equation}
+    を$L$の\term{Legendre 変換}
+        {Legendre 変換}[Legendre へんかん]
+    と呼ぶ。
+\end{definition}
+
+\begin{proposition}[凸関数としての Legendre 変換との関係]
+    各$x \in M$に対し$W_x \subset E_x$が凸集合で、
+    $L|_{W_x} \colon W_x \to \R$が
+    $\Hess (L|_{W_x}) > 0$をみたすとする
+    (とくに$L|_{W_x}$は凸関数となる)。
+    このとき、
+    $\bbF L$は像への微分同相であり、
+    $H$はファイバーごとに$L|_{W_x}$の凸関数としての Legendre 変換である。
+\end{proposition}
 
 \begin{proof}
-    $g$-凸な双対アファインチャート$(U, \theta, \eta), (U', \theta', \eta')$に対し、
-    \begin{alignat}{1}
-        d\eta_i \wedge d\theta^{*i}
-            &=
-                \deldel[\eta_i]{\eta'_j}(p)
-                \deldel[\theta^i]{\theta'^k}(q) \,
-                d\eta'_j \wedge d\theta'^{*k}
-    \end{alignat}
-    が成り立つ。
-    $U, U'$の$g$-凸性より、
-    $p, q$を結ぶ$M$内の最短測地線は$U \cap U'$に含まれる。
-    したがって$p, q$は$U \cap U'$の単一の連結成分$C$に含まれる。
-    $C$上で
-    $\deldel[\eta_i]{\eta'_j} = \deldel[\theta'^j]{\theta^i}$は
-    定数だから、
-    $\deldel[\eta_i]{\eta'_j}(p)
-        \deldel[\theta^i]{\theta'^k}(q) = \delta_k^j$
-    が成り立つ。
+    $H$がファイバーごとに$L|_{W_x}$の凸関数としての Legendre 変換であることは
+    $H$の定義から明らか。
+    あとは$\bbF L$が像への微分同相であることを示せばよい。
+    そのためには$\bbF L$が単射かつ局所微分同相であることを示せばよい。
+    $\bbF L$が単射であることは、
+    $\bbF L$がファイバーを保つことと、
+    各$L|_{W_x}$が凸ゆえに$\bbF L|_{W_x}$が単射となることより従う。
+    また$M$の局所座標$x$をひとつ選んで固定し、
+    $x$により定まる$E, E^\vee$の自然な局所座標を考えると、
+    これらの座標に関する$\bbF L$の座標表示は
+    $(x^i, v^i) \mapsto (x^i, \deldel[L]{v^i})$となる。
+    $\Hess (L|_{W_x}) > 0$より
+    この座標表示の Jacobi 行列は正則であるから、
+    $\bbF L$は局所微分同相となる。
+    以上より$\bbF L$は単射かつ局所微分同相、
+    したがって像への微分同相である。
 \end{proof}
 
 % ------------------------------------------------------------
 %
 % ------------------------------------------------------------
-\section{シンプレクティック幾何における Legendre 変換}
+\section{双対平坦構造に付随するシンプレクティック構造と Legendre 変換}
 
-\TODO{}
+本節では、2通りの方法で$\calU \subset T^\vee M$とみなし、
+それぞれの場合で$L, H$と$\psi, \varphi$との関係性を調べる。
+以下、簡単のため
+$M$が単一の$g$-凸な双対アファインチャートで覆われる場合を考える。
+
+\begin{proposition}[$L, H$が$\psi, \varphi$と"整合"する ver.]
+    \label[proposition]{prop:L-H-psi-varphi}
+    $M$上の双対アファインチャート$(M, \theta, \eta)$をひとつ選び固定する。
+    このとき次が成り立つ:
+    \begin{enumerate}
+        \item 写像
+            \begin{equation}
+                \Phi \colon \calU \to T^\vee M,
+                    \qquad
+                    (p, q) \mapsto (p, \theta^i(q) {d\eta_i}_p)
+            \end{equation}
+            は像への微分同相写像となる。
+            また$T^\vee M$上の自然なシンプレクティック構造$\omega_0$に対し
+            $\Phi^* \omega_0 = - \omega$が成り立つ。
+    \end{enumerate}
+    以下$W' \coloneqq \Phi(\calU)$とおく。
+    $(M, \theta, \eta)$の
+    双対ポテンシャル$(\psi, \varphi)$を1組選び固定する。
+    このとき次が成り立つ:
+    \begin{enumerate}
+        \setcounter{enumi}{1}
+        \item 関数
+            \begin{equation}
+                H \colon W' \to \R,
+                    \qquad
+                    (p, \theta^i(q) d\eta_i)
+                        \mapsto
+                            \psi(q)
+            \end{equation}
+            の fiber derivative $\bbF H \colon W' \to T^{\vee\vee} M = TM$は
+            \begin{equation}
+                \bbF H(p, \theta^i(q) d\eta_i)
+                    =
+                        (p, \eta_i(q) \tdeldel{\eta_i}),
+                        \qquad
+                        (p, q) \in \calU
+            \end{equation}
+            をみたす。
+        \item $H$の Legendre 変換$L \colon W \to \R, \; W \coloneqq \bbF H(W')$は
+            \begin{equation}
+                L(p, \eta_i(q) \tdeldel{\eta_i})
+                    + H(p, \theta^i(q) d\eta_i)
+                    =
+                        \myangle{\theta(q)}{\eta(q)},
+                        \qquad
+                        (p, q) \in \calU
+            \end{equation}
+            をみたす。
+            したがって$L(p, \eta_i(q) \tdeldel{\eta_i}) = \varphi(q)$が成り立ち、
+            この意味で$L, H$は$\psi, \varphi$と"整合"する。
+    \end{enumerate}
+\end{proposition}
+
+\begin{proof}
+    \uline{(1)} \quad
+    像への微分同相であることは明らか。
+    また、$\eta$により定まる
+    $T^\vee M$上の自然な座標を$(\eta_i, \xi^i)$とおけば
+    \begin{alignat}{1}
+        \Phi^* \omega_0
+            &=
+                \Phi^* (d\eta_i \wedge d\xi^i)
+                \\
+            &=
+                d(\eta_i \circ \Phi) \wedge d(\xi^i \circ \Phi)
+                \\
+            &=
+                d\eta_i \wedge d\theta^{*i}
+                \\
+            &=
+                - \omega
+    \end{alignat}
+    が成り立つ。
+
+    \uline{(2)} \quad
+    \begin{alignat}{1}
+        \myangle{
+            \bbF H(p, \theta^i(q) d\eta_i)
+        }{
+            d\eta_j
+        }
+            &=
+                \dd{t}
+                H(p, \theta^i(q) d\eta_i + t d\eta_j) \Big|_{t = 0}
+                \\
+            &=
+                \dd{t}
+                \psi \circ \theta^{-1} \myparen{
+                    \theta^1(q), \dots, \theta^j(q) + t, \dots, \theta^n(q)
+                }
+                \Big|_{t = 0}
+                \\
+            &=
+                \deldel[\psi]{\theta^j}(q)
+                \\
+            &=
+                \eta_j(q)
+    \end{alignat}
+    より従う。
+
+    \uline{(3)} \quad
+    $H$の Legendre 変換の定義と(2)より
+    \begin{equation}
+        L(p, \eta_i(q) \tdeldel{\eta_i})
+            =
+                \myangle{\theta(p)}{\eta(q)}
+                -
+                H(p, \theta^i(q) d\eta_i)
+    \end{equation}
+    が成り立つ。
+\end{proof}
+
+\begin{proposition}[$L, H$が$\psi, \varphi$と"整合"しない ver.]
+    次が成り立つ:
+    \begin{enumerate}
+        \item 写像$d_1 D \colon \calU \to T^\vee M$
+            は像へのシンプレクティック同相写像となる。
+    \end{enumerate}
+    以下$W' \coloneqq d_1 D(\calU)$とおく。
+    $M$上の双対アファインチャート$(M, \theta, \eta)$をひとつ選び固定し、
+    さらに$(M, \theta, \eta)$の
+    双対ポテンシャル$(\psi, \varphi)$を1組選び固定する。
+    このとき次が成り立つ:
+    \begin{enumerate}
+        \setcounter{enumi}{1}
+        \item 関数
+            \begin{equation}
+                H \colon W' \to \R,
+                    \qquad
+                    (p, \xi) \mapsto \psi(q),
+                    \qquad
+                    q \coloneqq \theta^{-1}\myparen{
+                        \theta^i(p)
+                        -
+                        \myangle{\xi}{\tdeldel{\eta_i}}
+                    }_{i = 1}^n
+            \end{equation}
+            の fiber derivative $\bbF H \colon W' \to T^{\vee\vee} M = TM$は
+            \begin{equation}
+                \bbF H(p, (\theta^i(p) - \theta^i(q)) d\eta_i)
+                    =
+                        (p, \eta_i(q) \tdeldel{\eta_i}),
+                        \qquad
+                        (p, q) \in \calU
+            \end{equation}
+            をみたす。
+        \item $H$の Legendre 変換$L \colon W \to \R, \; W \coloneqq \bbF H(W')$は
+            \begin{equation}
+                L(p, \eta_i(q) \tdeldel{\eta_i})
+                    + H(p, (\theta^i(p) - \theta^i(q)) d\eta_i)
+                    =
+                        \myangle{\theta(p) - \theta(q)}{\eta(q)},
+                        \qquad
+                        (p, q) \in \calU
+            \end{equation}
+            をみたす。
+    \end{enumerate}
+\end{proposition}
+
+\begin{proof}
+    任意の$(M, \theta, \eta)$に関し
+    $d_1 D(p, q) = (p, (\theta^i(p) - \theta^i(q)) d\eta_i)$
+    が成り立つことに注意すれば
+    \cref{prop:L-H-psi-varphi}の証明と同様。
+\end{proof}
+
+% ------------------------------------------------------------
+%
+% ------------------------------------------------------------
+%\section{双対平坦構造に付随する概複素構造/概K\"ahler構造}
+%
+%\begin{propdef}[双対平坦構造に付随する概複素構造]
+%    $\calU$上の概複素構造$J \colon T\calU \to T^\vee \calU$を
+%    次のように定めることができる:
+%    各$(p, q) \in \calU$に対し、
+%    $p, q$を含む
+%    $g$-凸な双対アファインチャート$(U, \theta, \eta)$をひとつ選び、
+%    \begin{equation}
+%        J \deldel{\eta_j} \coloneqq \deldel{\theta^{*j}},
+%            \qquad
+%            J \deldel{\theta^{*j}} \coloneqq - \deldel{\eta_j}
+%    \end{equation}
+%    と定める。
+%    この$J$は$(U, \theta, \eta)$のとり方によらない。
+%\end{propdef}
+%
+%\begin{propdef}[双対平坦構造に付随する概K\"ahler構造]
+%    $(g, \omega, J)$は$M$上の概K\"ahler構造を定める。
+%\end{propdef}
 
 % ------------------------------------------------------------
 %
@@ -198,7 +498,8 @@ $D \colon \calU \to \R$を canonical ダイバージェンスとする。
 \section*{今後の予定}
 
 \begin{itemize}
-    \item Legendre 変換
+    \item 概複素構造と概K\"ahler構造
+    \item Hamilton フロー
     \item モーメント写像
 \end{itemize}
 
@@ -207,14 +508,11 @@ $D \colon \calU \to \R$を canonical ダイバージェンスとする。
 % ------------------------------------------------------------
 \section*{参考文献}
 
-%Legendre 変換については
-%\cite{niculescu_convex_2018}
-%を参考にした。
-%期待値パラメータに関しては
-%\cite{wainwright_graphical_2007}を参考にした。
-
 \nocite{amari_information_2016}
 \nocite{_bayes_2020}
+\nocite{BB19061613}
+\nocite{BA87914734}
+\nocite{marsden_introduction_1999}
 
 {
     \renewcommand{\bibsection}{}
@@ -231,78 +529,97 @@ $D \colon \calU \to \R$を canonical ダイバージェンスとする。
 \setcounter{section}{0}
 \section{付録}
 
-\subsection{双対ポテンシャル}
+\subsection{多様体上の構造}
 
-\begin{definition}[双対ポテンシャル]
-    $(U, \theta, \eta)$を双対アファインチャートとする。
-    関数$\psi, \varphi \colon U \to \R$の組
-    $(\psi, \varphi)$が$(U, \theta, \eta)$の
-    \term{双対ポテンシャル}[dual potential]
-        {双対ポテンシャル}[そうついぽてんしゃる]
-    であるとは、$U$上で
-    \begin{equation}
-        d\psi = \eta_i d\theta^i,
-            \quad
-            d\varphi = \theta^i d\eta_i,
-            \quad
-            \psi + \varphi = \theta^i \eta_i
-    \end{equation}
-    が成り立つことをいう。
+\begin{definition}[シンプレクティックベクトル空間]
+    $2n$次元$\R$-ベクトル空間$V$と
+    $V$上の非退化交代形式$\omega \colon V \times V \to \R$の組
+    $(V, \omega)$を
+    \term{シンプレクティックベクトル空間}[symplectic vector space]
+        {シンプレクティックベクトル空間}[シンプレクティックベクトル空間]
+    という。
 \end{definition}
 
-\begin{proposition}[双対ポテンシャルの基本性質]
-    $(U, \theta, \eta)$を双対アファインチャート、
-    $(\psi, \varphi)$を$(U, \theta, \eta)$の双対ポテンシャルとする。
-    このとき次が成り立つ:
-    \begin{enumerate}
-        \item $U$上で
-            $\psi$は$g$の$\nabla$-ポテンシャルであり、
-            $\varphi$は$g$の$\nabla^*$-ポテンシャルである。
-        \item $(\psi, \varphi), (\psi', \varphi')$を
-            $(U, \theta, \eta)$の双対ポテンシャルとすると、
-            $U$の連結成分ごとに
-            $\psi' - \psi$および$\varphi' - \varphi$は定数である。
-    \end{enumerate}
+\begin{definition}[シンプレクティック形式]
+    $M$を$2n$次元多様体とする。
+    $\omega \in \Omega^2(M)$が
+    $M$上の
+    \term{シンプレクティック形式}[symplectic form]
+        {シンプレクティック形式}[シンプレクティックけいしき]
+    であるとは、
+    $\omega$が閉形式かつ
+    各点$x \in M$で
+    $(T_x M, \omega_x)$がシンプレクティックベクトル空間であることをいう。
+\end{definition}
+
+\begin{example}[標準シンプレクティック形式]
+    $\R^{2n}$の標準的な座標
+    $(x^1, \ldots, x^n, y_1, \ldots, y_n)$に対し
+    $\omega_0 \coloneqq dx^i \wedge dy_i \in \Omega^2(\R^{2n})$
+    は$\R^{2n}$上のシンプレクティック構造である。
+    $\omega_0$を$\R^{2n}$上の
+    \term{標準シンプレクティック形式}[standard symplectic form]
+        {標準シンプレクティック形式}[ひょうじゅんシンプレクティックけいしき]
+    という。
+\end{example}
+
+\begin{example}[余接束の自然シンプレクティック形式]
+    $M$を$n$次元多様体とする。
+    余接束$\pi \colon T^\vee M \to M$上の
+    1-形式$\theta \in \Omega^1(T^\vee M)$を
+    \begin{equation}
+        \theta_{(q, p)} (v)
+            \coloneqq
+                p(d\pi_{(q, p)} (v))
+    \end{equation}
+    で定め、これを
+    \term{トートロジカル1-形式}[tautological 1-form]
+        {トートロジカル1-形式}[トートロジカル1-けいしき]
+    と呼ぶ。
+    このとき
+    $\omega_0 \coloneqq -d\theta \in \Omega^2(T^\vee M)$は
+    $T^\vee M$上のシンプレクティック構造となり、
+    これを$T^\vee M$上の
+    \term{自然シンプレクティック形式}[canonical symplectic form]
+        {自然シンプレクティック形式}[しぜんシンプレクティックけいしき]
+    と呼ぶ。
+\end{example}
+
+\begin{proposition}[自然シンプレクティック形式の成分表示]
+    $M$を$n$次元多様体、
+    $x = (x^i)_i$を$M$の局所座標とする。
+    $x$により定まる$T^\vee M$の局所座標を
+    $(x^1, \dots, x^n, \xi_1, \dots, \xi_n)$とおくと、
+    これに関する自然シンプレクティック形式$\omega_0$の成分表示は
+    \begin{equation}
+        \omega_0
+            =
+                dx^i \wedge d\xi_i
+    \end{equation}
+    となる。
 \end{proposition}
 
 \begin{proof}
-    \uline{(1)} \quad
-    $(\theta, \eta)$が双対アファイン座標であることから
+    $\pi(q, p) = q$ゆえ
+    $d\pi^* (dx^i) = dx^i$であることに注意すると、
+    トートロジカル1-形式の成分表示
     \begin{equation}
-        \nabla^2 \psi
+        \theta_{(q, p)}
             =
-                \deldel[\eta_i]{\theta^j} \, d\theta^i d\theta^j
+                d\pi_{(q, p)}^* (\xi_i dx^i)
             =
-                g_{ij} \, d\theta^i d\theta^j
-            =
-                g,
-                \quad
-        \nabla^{*2} \varphi
-            =
-                \deldel[\theta^i]{\eta_j} \, d\eta_i d\eta_j
-            =
-                g^{ij} \, d\eta_i d\eta_j
-            =
-                g
+                \xi_i dx^i
     \end{equation}
-    を得る。
-
-    \uline{(2)} \quad
-    $\psi' - \psi$について示す。
-    $\psi, \psi'$が$g$の$\nabla$-ポテンシャルであることより
-    $U$上で$\nabla^2 (\psi' - \psi) = 0$である。
-    したがって$U$の各連結成分$C$に対し、
-    組$(a_C, b_C) \in \R^n \times \R$であって
-    $\psi'(r) - \psi(r)
-        = \myangle{a_C}{\theta(r)} + b_C \;
-        (\forall r \in C)$
-    なるものがただ1組存在する。
-    さらに$\psi, \psi'$が双対ポテンシャルであることより
-    $C$上で$d(\psi' - \psi) = 0$だから
-    $a_C = 0$が成り立つ。
-    よって$C$上で$\psi' - \psi = b_C$が成り立つ。
-    $\varphi' - \varphi$についても同様。
+    より命題の等式が従う。
 \end{proof}
+
+\begin{definition}[概複素構造]
+    \TODO{}
+\end{definition}
+
+\begin{definition}[概K\"ahler構造]
+    \TODO{}
+\end{definition}
 
 \subsection{canonical ダイバージェンスの定義域}
 
@@ -361,23 +678,26 @@ $D \colon \calU \to \R$を canonical ダイバージェンスとする。
     $\nabla$-凸性より
     $\eta \coloneqq (\eta_i)_i, \;
         \eta_i \coloneqq \deldel[\psi]{\theta^i}$
-    は$U$上の座標となる。
+    は$U$上単射である。
+    したがって$\eta$は$U$から像への微分同相であり、
+    $U$上の座標となる。
     このとき$(\theta, \eta)$は$U$上の双対アファイン座標となる。
     さらに$\varphi \coloneqq \theta^i \eta_i - \psi$とおけば
     $(\psi, \varphi)$は$(U, \theta, \eta)$の双対ポテンシャルとなる。
 \end{proof}
 
 \begin{remark}
-    ~
-    \begin{itemize}
-        \item $p, q$を含む$g$-凸開集合が存在したとしても、
-            $p, q$のまわりの良いチャートが存在するとは限らない。
-            たとえば、正規分布族を考え、自然パラメータ空間 (これは上半空間となる) から
-            $\{ 0 \} \times (0, 2)$を除いた空間を考えると、
-            2点$p = (2, 1), q = (-2, 1)$を含む$g$-凸開集合が存在するが、
-            2点を結ぶ$\nabla$-測地線も$\nabla^*$-測地線も存在しないため、
-            2点を含む$\nabla$-凸または$\nabla^*$-凸な双対アファインチャートは存在しない。
-    \end{itemize}
+    $p, q$を含む$g$-凸開集合が存在したとしても、
+    それを含む$\nabla$-凸または$\nabla^*$-凸な
+    双対アファインチャートが存在するとは限らない。
+    たとえば、正規分布族を考え、自然パラメータ空間 (これは上半空間となる) から
+    線分$\{ 0 \} \times (0, 2)$を除いた空間を考えると、
+    2点$p = (2, 1), q = (-2, 1)$を含む$g$-凸開集合が存在する
+    (上半楕円形にとればよい) が、
+    2点$p, q$を結ぶ$\nabla$-測地線も$\nabla^*$-測地線も存在しない
+    ($\nabla$-測地線は"水平線"、$\nabla^*$-測地線は"下に凸"な曲線)
+    ため、
+    2点$p, q$を含む$\nabla$-凸または$\nabla^*$-凸な双対アファインチャートは存在しない。
 \end{remark}
 
 \begin{lemma}[$g$-凸開近傍の存在]
@@ -388,7 +708,7 @@ $D \colon \calU \to \R$を canonical ダイバージェンスとする。
 \end{lemma}
 
 \begin{proof}
-    \TODO{cf. Riemann 多様体の教科書}
+    Riemann 多様体の教科書にある。
 \end{proof}
 
 \begin{lemma}[$\calU$の多様体構造]
@@ -415,8 +735,8 @@ $D \colon \calU \to \R$を canonical ダイバージェンスとする。
     \label[propdef]{propdef:canonical-divergence}
     関数$D \colon \calU \to \R$を次のように定める:
     $(p, q) \in \calU$を固定し、
-    $p, q$を含む$g$-凸開集合を含む
-    $\nabla$-凸または$\nabla^*$-凸な
+    $p, q$を含む$g$-凸開集合な
+    %$\nabla$-凸または$\nabla^*$-凸な
     双対アファインチャート$(U, \theta, \eta)$をひとつ選び、
     その双対ポテンシャル$(\psi, \varphi)$を1組選ぶ。
     このとき、点$(p, q)$における
@@ -468,6 +788,7 @@ $D \colon \calU \to \R$を canonical ダイバージェンスとする。
         = \myangle{\theta(q) - \theta(p)}{\eta(p)}$
     を示せばよい。
 
+    \TODO{locally const. の言葉で書き直す}
     $C$の連結性より、
     組$(A = (A_i^j)_{i, j}, b) \in \GL_n(\R) \times \R^n$であって
     $\theta'(r) = A \theta(r) + b \; (\forall r \in C)$

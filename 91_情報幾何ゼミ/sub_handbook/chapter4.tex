@@ -98,7 +98,84 @@
     が成り立つことをいう。
     ただし$\del_i \coloneqq \deldel{\theta^i}, \;
         \del^i \coloneqq \deldel{\eta_i}$である。
+    $U \opensubset M$と
+    $U$上の双対アファイン座標$(\theta, \eta)$の組
+    $(U, \theta, \eta)$を
+    \term{双対アファインチャート}[dual affine chart]
+        {双対アファインチャート}[そうついアファインチャート]
+    という。
 \end{definition}
+
+\begin{definition}[双対ポテンシャル]
+    $(U, \theta, \eta)$を双対アファインチャートとする。
+    関数$\psi, \varphi \colon U \to \R$の組
+    $(\psi, \varphi)$が$(U, \theta, \eta)$の
+    \term{双対ポテンシャル}[dual potential]
+        {双対ポテンシャル}[そうついぽてんしゃる]
+    であるとは、$U$上で
+    \begin{equation}
+        d\psi = \eta_i d\theta^i,
+            \quad
+            d\varphi = \theta^i d\eta_i,
+            \quad
+            \psi + \varphi = \theta^i \eta_i
+    \end{equation}
+    が成り立つことをいう。
+\end{definition}
+
+\begin{proposition}[双対ポテンシャルの基本性質]
+    $(U, \theta, \eta)$を双対アファインチャート、
+    $(\psi, \varphi)$を$(U, \theta, \eta)$の双対ポテンシャルとする。
+    このとき次が成り立つ:
+    \begin{enumerate}
+        \item $U$上で
+            $\psi$は$g$の$\nabla$-ポテンシャルであり、
+            $\varphi$は$g$の$\nabla^*$-ポテンシャルである。
+        \item $(\psi, \varphi), (\psi', \varphi')$を
+            $(U, \theta, \eta)$の双対ポテンシャルとすると、
+            $U$の連結成分ごとに
+            $\psi' - \psi$および$\varphi' - \varphi$は定数である。
+    \end{enumerate}
+\end{proposition}
+
+\begin{proof}
+    \uline{(1)} \quad
+    $(\theta, \eta)$が双対アファイン座標であることから
+    \begin{equation}
+        \nabla^2 \psi
+            =
+                \deldel[\eta_i]{\theta^j} \, d\theta^i d\theta^j
+            =
+                g_{ij} \, d\theta^i d\theta^j
+            =
+                g,
+                \quad
+        \nabla^{*2} \varphi
+            =
+                \deldel[\theta^i]{\eta_j} \, d\eta_i d\eta_j
+            =
+                g^{ij} \, d\eta_i d\eta_j
+            =
+                g
+    \end{equation}
+    を得る。
+
+    \uline{(2)} \quad
+    $\psi' - \psi$について示す。
+    $\psi, \psi'$が$g$の$\nabla$-ポテンシャルであることより
+    $U$上で$\nabla^2 (\psi' - \psi) = 0$である。
+    したがって$U$の各連結成分$C$に対し、
+    組$(a_C, b_C) \in \R^n \times \R$であって
+    $\psi'(r) - \psi(r)
+        = \myangle{a_C}{\theta(r)} + b_C \;
+        (\forall r \in C)$
+    なるものがただ1組存在する。
+    さらに$\psi, \psi'$が双対ポテンシャルであることより
+    $C$上で$d(\psi' - \psi) = 0$だから
+    $a_C = 0$が成り立つ。
+    よって$C$上で$\psi' - \psi = b_C$が成り立つ。
+    $\varphi' - \varphi$についても同様。
+\end{proof}
 
 \begin{definition}[統計的多様体]
     \TODO{}
